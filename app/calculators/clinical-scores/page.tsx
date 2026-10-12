@@ -1141,13 +1141,13 @@ export default function ClinicalScoresPage() {
                   ) : (
                     <>
                       <div className="bvscore-score-value">
-                        {active === "kdigo"
-                          ? renal.stage > 0
-                            ? `KDIGO ${renal.stage}`
-                            : "Chưa xác định"
-                          : "label" in renal
-                          ? renal.label
-                          : "Chưa xác định"}
+ {active === "kdigo"
+  ? Number(renal.stage ?? 0) > 0
+    ? `KDIGO ${String(renal.stage)}`
+    : "Chưa xác định"
+  : "label" in renal && renal.label != null
+    ? String(renal.label)
+    : "Chưa xác định"}
                       </div>
 
                       {renal.reasons.length > 0 ? (
