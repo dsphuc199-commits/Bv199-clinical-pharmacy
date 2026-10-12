@@ -1,0 +1,5558 @@
+@import "tailwindcss";
+
+/* ============================================================
+   BV199 CLINICAL PHARMACY
+   GLOBAL DESIGN SYSTEM
+   Khoa Dược - Bệnh viện 199 - Bộ Công an
+============================================================ */
+
+
+/* ============================================================
+   01. DESIGN TOKENS
+============================================================ */
+
+:root {
+  --primary: #0f9f9a;
+  --primary-dark: #087a78;
+  --primary-soft: #eaf8f7;
+  --primary-soft-2: #f0fafa;
+
+  --navy: #153f59;
+  --navy-dark: #102033;
+
+  --sidebar: #0e668e;
+  --sidebar-dark: #0b5274;
+
+  --background: #f6f8fa;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --surface-muted: #f1f5f9;
+
+  --text: #172033;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  --border: #e2e8f0;
+  --border-dark: #cbd5e1;
+
+  --success: #15803d;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+
+  --warning: #b45309;
+  --warning-dark: #9a3412;
+  --warning-bg: #fff7ed;
+  --warning-border: #fed7aa;
+
+  --danger: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+
+  --sidebar-width: 235px;
+  --header-height: 62px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --shadow-sm:
+    0 4px 16px rgba(15, 23, 42, 0.04);
+
+  --shadow-md:
+    0 10px 28px rgba(15, 23, 42, 0.07);
+
+  --shadow-lg:
+    0 18px 45px rgba(15, 23, 42, 0.10);
+}
+
+
+/* ============================================================
+   02. RESET
+============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: var(--background);
+  color: var(--text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 14px;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea {
+  color: var(--text);
+}
+
+
+/* ============================================================
+   03. APP SHELL
+============================================================ */
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.app-workspace {
+  min-height: 100vh;
+  margin-left: var(--sidebar-width);
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--background);
+}
+
+.app-main-content {
+  flex: 1;
+  min-width: 0;
+
+  background: var(--background);
+}
+
+
+/* ============================================================
+   04. SIDEBAR
+============================================================ */
+
+.sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: var(--sidebar-width);
+
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--sidebar) 0%,
+      var(--sidebar-dark) 100%
+    );
+
+  border-right:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    4px 0 18px rgba(15, 23, 42, 0.05);
+}
+
+
+/* SIDEBAR SCROLLBAR */
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 99px;
+}
+
+
+/* SIDEBAR BRAND */
+
+.sidebar-brand {
+  min-height: 76px;
+
+  padding: 14px 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.10);
+}
+
+.sidebar-logo {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f8c419;
+
+  color: var(--sidebar-dark);
+
+  font-size: 16px;
+  font-weight: 900;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-brand-name {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.sidebar-brand-sub {
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.70);
+
+  font-size: 11px;
+}
+
+
+/* HOSPITAL */
+
+.sidebar-hospital {
+  margin: 12px 10px 7px;
+
+  padding: 11px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.11);
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-hospital strong {
+  font-size: 11px;
+}
+
+.sidebar-hospital span {
+  color: rgba(255, 255, 255, 0.74);
+
+  font-size: 10px;
+}
+
+.sidebar-hospital small {
+  margin-top: 2px;
+
+  color: #fde68a;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+/* SIDEBAR NAVIGATION */
+
+.sidebar-navigation {
+  flex: 1;
+
+  padding:
+    4px 8px 90px;
+}
+
+.sidebar-group {
+  margin-top: 17px;
+}
+
+.sidebar-group-title {
+  padding:
+    0 9px 6px;
+
+  color:
+    rgba(255, 255, 255, 0.48);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.sidebar-item {
+  min-height: 37px;
+
+  margin-bottom: 2px;
+
+  padding:
+    7px 9px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  border-radius: 8px;
+
+  color:
+    rgba(255, 255, 255, 0.86);
+
+  font-size: 10.5px;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.sidebar-item:hover {
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  transform: translateX(1px);
+}
+
+.sidebar-item.active {
+  background:
+    rgba(255, 255, 255, 0.17);
+
+  color: #ffffff;
+
+  font-weight: 700;
+}
+
+.sidebar-item-icon {
+  width: 20px;
+
+  flex: 0 0 20px;
+
+  text-align: center;
+
+  font-size: 9px;
+
+  opacity: 0.95;
+}
+
+
+/* SIDEBAR FOOTER */
+
+.sidebar-bottom {
+  position: sticky;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  margin-top: auto;
+
+  padding:
+    11px 15px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  background:
+    rgba(6, 48, 70, 0.92);
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 8.5px;
+}
+
+.sidebar-bottom span {
+  color:
+    rgba(255, 255, 255, 0.55);
+}
+
+
+/* ============================================================
+   05. GLOBAL HEADER
+============================================================ */
+
+.global-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 500;
+
+  min-height: var(--header-height);
+
+  padding:
+    0 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  border-bottom:
+    1px solid var(--border);
+
+  backdrop-filter: blur(12px);
+}
+
+.global-header-left {
+  min-width: 190px;
+}
+
+.header-app-name {
+  color: var(--navy);
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.header-location {
+  margin-top: 2px;
+
+  color: var(--text-light);
+
+  font-size: 9px;
+}
+
+.global-header-search {
+  width: min(650px, 72%);
+
+  height: 39px;
+
+  margin-right: auto;
+
+  padding:
+    0 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+}
+
+.global-header-search:focus-within {
+  border-color: #9fd9d6;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.06);
+}
+
+.global-header-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: var(--text);
+
+  font-size: 11px;
+}
+
+.global-header-search input::placeholder {
+  color: var(--text-light);
+}
+
+.search-icon {
+  color: var(--text-muted);
+}
+
+.search-shortcut {
+  padding:
+    3px 6px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: var(--text-light);
+
+  font-size: 8px;
+}
+
+.global-header-right {
+  margin-left: auto;
+}
+
+.header-icon-button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: var(--navy);
+
+  font-weight: 700;
+}
+
+.header-icon-button:hover {
+  background: var(--surface-soft);
+}
+
+
+/* ============================================================
+   06. GLOBAL FOOTER
+============================================================ */
+
+.global-footer {
+  padding:
+    19px 28px;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 25px;
+
+  background: #ffffff;
+
+  border-top:
+    1px solid var(--border);
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+}
+
+.global-footer strong {
+  color: var(--navy);
+}
+
+.footer-note {
+  max-width: 720px;
+
+  margin-top: 4px;
+
+  line-height: 1.5;
+}
+
+.footer-developer {
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   07. DASHBOARD
+============================================================ */
+
+.dashboard-page {
+  min-height: 100vh;
+
+  background: var(--background);
+}
+
+
+/* DASHBOARD HERO */
+
+.dashboard-hero {
+  padding:
+    40px 34px 34px;
+
+  background: #ffffff;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.dashboard-eyebrow {
+  display: block;
+
+  margin-bottom: 11px;
+
+  color: var(--primary-dark);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.dashboard-hero h1 {
+  max-width: 900px;
+
+  margin: 0;
+
+  color: var(--navy-dark);
+
+  font-size:
+    clamp(30px, 3.4vw, 42px);
+
+  line-height: 1.08;
+
+  letter-spacing: -1px;
+}
+
+.dashboard-hero h1 span {
+  color: var(--primary);
+}
+
+.dashboard-hero p {
+  max-width: 760px;
+
+  margin:
+    12px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+.dashboard-search {
+  width:
+    min(720px, 100%);
+
+  height: 46px;
+
+  margin-top: 22px;
+
+  padding:
+    0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border-dark);
+
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-search:focus-within {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.06);
+}
+
+.dashboard-search input {
+  flex: 1;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  font-size: 12px;
+}
+
+.dashboard-search input::placeholder {
+  color: var(--text-light);
+}
+
+.dashboard-hero small {
+  display: block;
+
+  margin-top: 15px;
+
+  color: var(--text-light);
+
+  font-size: 9px;
+}
+
+
+/* DASHBOARD SECTION */
+
+.dashboard-section {
+  padding:
+    30px 34px;
+}
+
+.dashboard-section.soft {
+  background: var(--surface-muted);
+
+  border-top:
+    1px solid var(--border);
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.dashboard-section-heading {
+  margin-bottom: 17px;
+}
+
+.dashboard-section-heading > span {
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.dashboard-section-heading h2 {
+  margin:
+    4px 0 0;
+
+  color: var(--text);
+
+  font-size: 19px;
+}
+
+
+/* DASHBOARD TOOL GRID */
+
+.dashboard-tools {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 11px;
+}
+
+.dashboard-tool-card {
+  min-height: 90px;
+
+  padding: 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.dashboard-tool-card:hover {
+  border-color: #9fd9d6;
+
+  box-shadow: var(--shadow-md);
+
+  transform:
+    translateY(-1px);
+}
+
+.dashboard-tool-icon {
+  width: 39px;
+  height: 39px;
+
+  flex: 0 0 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.dashboard-tool-card > div:nth-child(2) {
+  flex: 1;
+}
+
+.dashboard-tool-card strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 12px;
+}
+
+.dashboard-tool-card span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+}
+
+.dashboard-tool-card > b {
+  color: var(--primary);
+
+  font-size: 14px;
+}
+
+
+/* QUICK ACCESS */
+
+.quick-tools {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.quick-tool {
+  min-height: 43px;
+
+  padding:
+    11px 13px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  color: var(--text);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.quick-tool:hover {
+  border-color: #9fd9d6;
+}
+
+.quick-tool span {
+  color: var(--primary);
+}
+
+
+/* ============================================================
+   08. CLINICAL PAGE BASE
+============================================================ */
+
+.clinical-page {
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  padding: 28px 30px 36px;
+}
+
+.clinical-page-header {
+  margin-bottom: 22px;
+}
+
+.section-kicker {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.35px;
+}
+
+.clinical-page-header h1 {
+  margin:
+    4px 0 7px;
+
+  color: var(--navy-dark);
+
+  font-size: 27px;
+
+  line-height: 1.2;
+}
+
+.clinical-page-header p {
+  max-width: 820px;
+
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+
+  line-height: 1.65;
+}
+
+
+/* GENERIC CLINICAL CARD */
+
+.clinical-card {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 14px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.clinical-card > h2 {
+  margin:
+    0 0 12px;
+
+  color: var(--text);
+
+  font-size: 15px;
+}
+
+.clinical-card > p {
+  color: var(--text-muted);
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+/* CLINICAL CARD HEADING */
+
+.clinical-card-heading {
+  min-height: 35px;
+
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 14px;
+}
+
+.clinical-card-heading > div {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.clinical-card-heading h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 14px;
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+
+/* BUTTON */
+
+.secondary-button {
+  min-height: 32px;
+
+  padding:
+    0 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.secondary-button:hover {
+  background: var(--surface-soft);
+
+  color: var(--text);
+}
+
+
+/* ============================================================
+   09. CLINICAL FORM SYSTEM
+============================================================ */
+
+.clinical-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.clinical-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.clinical-field-wide {
+  grid-column: 1 / -1;
+}
+
+.clinical-field > span {
+  color: var(--text-secondary);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.clinical-field input,
+.clinical-field select,
+.clinical-field textarea {
+  width: 100%;
+
+  min-height: 40px;
+
+  padding:
+    0 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border-dark);
+
+  border-radius: 8px;
+
+  outline: 0;
+
+  color: var(--text);
+
+  font-size: 10.5px;
+}
+
+.clinical-field textarea {
+  min-height: 90px;
+
+  padding: 10px;
+
+  resize: vertical;
+}
+
+.clinical-field input:focus,
+.clinical-field select:focus,
+.clinical-field textarea:focus {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.06);
+}
+
+.clinical-field input::placeholder,
+.clinical-field textarea::placeholder {
+  color: var(--text-light);
+}
+
+
+/* INPUT UNIT */
+
+.input-unit {
+  position: relative;
+}
+
+.input-unit input {
+  padding-right: 65px;
+}
+
+.input-unit > span {
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color: var(--text-light);
+
+  font-size: 8px;
+}
+
+
+/* CREATININE ROW */
+
+.creatinine-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    105px;
+
+  gap: 7px;
+}
+
+
+/* ============================================================
+   10. CLINICAL EMPTY / RESULT / WARNING
+============================================================ */
+
+.clinical-empty {
+  min-height: 280px;
+
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border-radius: 11px;
+
+  background: var(--surface-soft);
+}
+
+.clinical-empty-icon {
+  width: 50px;
+  height: 50px;
+
+  margin-bottom: 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.clinical-empty strong {
+  color: var(--text);
+
+  font-size: 11px;
+}
+
+.clinical-empty p {
+  max-width: 300px;
+
+  margin:
+    6px 0 0;
+
+  color: var(--text-light);
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+
+/* CLINICAL SECTION BOX */
+
+.clinical-section-box {
+  margin-top: 13px;
+
+  padding: 14px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+}
+
+.clinical-section-box h3 {
+  margin:
+    0 0 9px;
+
+  color: var(--text);
+
+  font-size: 10.5px;
+}
+
+.interpretation-row {
+  padding:
+    6px 0;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  border-top:
+    1px solid #edf1f5;
+
+  font-size: 9px;
+}
+
+.interpretation-row span {
+  color: var(--text-muted);
+}
+
+.interpretation-row strong {
+  color: var(--text-secondary);
+}
+
+
+/* WARNING */
+
+.clinical-warning {
+  margin-top: 13px;
+
+  padding: 13px;
+
+  background: var(--warning-bg);
+
+  border:
+    1px solid var(--warning-border);
+
+  border-radius: 10px;
+}
+
+.clinical-warning strong {
+  color: var(--warning-dark);
+
+  font-size: 10px;
+}
+
+.clinical-warning p,
+.clinical-warning div {
+  margin:
+    5px 0 0;
+
+  color: #7c2d12;
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+
+/* SUCCESS */
+
+.clinical-success {
+  margin-top: 13px;
+
+  padding: 13px;
+
+  background: var(--success-bg);
+
+  border:
+    1px solid var(--success-border);
+
+  border-radius: 10px;
+}
+
+.clinical-success strong {
+  color: var(--success);
+
+  font-size: 10px;
+}
+
+
+/* DANGER */
+
+.clinical-danger {
+  margin-top: 13px;
+
+  padding: 13px;
+
+  background: var(--danger-bg);
+
+  border:
+    1px solid var(--danger-border);
+
+  border-radius: 10px;
+}
+
+.clinical-danger strong {
+  color: var(--danger);
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   11. RENAL MODULE
+============================================================ */
+
+.renal-workspace {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 17px;
+
+  align-items: start;
+}
+
+
+/* WEIGHT METHOD */
+
+.weight-method-box {
+  margin-top: 18px;
+
+  padding: 14px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+}
+
+.field-title {
+  color: var(--text-secondary);
+
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.weight-method-box > p {
+  margin:
+    4px 0 11px;
+
+  color: var(--text-muted);
+
+  font-size: 8.5px;
+
+  line-height: 1.5;
+}
+
+.weight-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 7px;
+}
+
+.weight-option {
+  padding:
+    9px 7px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 8px;
+
+  color: var(--text-secondary);
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.weight-option small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-light);
+
+  font-size: 7.5px;
+  font-weight: 500;
+}
+
+.weight-option.active {
+  background: var(--primary-soft);
+
+  border-color: var(--primary);
+
+  color: var(--primary-dark);
+}
+
+
+/* RENAL METRICS */
+
+.renal-result-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 7px;
+}
+
+.metric-card {
+  min-height: 98px;
+
+  padding: 11px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+}
+
+.metric-card > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  color: var(--navy);
+
+  font-size: 20px;
+}
+
+.metric-card small {
+  margin-left: 2px;
+
+  color: var(--text-light);
+
+  font-size: 7px;
+}
+
+.metric-card em {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 7.5px;
+
+  font-style: normal;
+}
+
+
+/* PRIMARY RENAL RESULT */
+
+.renal-primary-results {
+  margin-top: 11px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.renal-primary-card {
+  padding: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0fbfa,
+      #edf9f8
+    );
+
+  border:
+    1px solid #b7e3e1;
+
+  border-radius: 11px;
+}
+
+.renal-primary-card > span {
+  display: block;
+
+  color: var(--primary-dark);
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.renal-primary-card strong {
+  display: inline-block;
+
+  margin-top: 7px;
+
+  color: var(--primary-dark);
+
+  font-size: 28px;
+}
+
+.renal-primary-card small {
+  margin-left: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.renal-primary-card > div {
+  margin-top: 6px;
+
+  color: var(--text-secondary);
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   12. REFERENCES
+============================================================ */
+
+.reference-card {
+  margin-top: 17px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 14px;
+}
+
+.reference-card h2 {
+  margin:
+    4px 0 12px;
+
+  color: var(--text);
+
+  font-size: 14px;
+}
+
+.reference-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.reference-grid > div {
+  padding: 12px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+}
+
+.reference-grid strong {
+  color: var(--text);
+
+  font-size: 9.5px;
+}
+
+.reference-grid p {
+  margin:
+    4px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+
+  line-height: 1.55;
+}
+
+
+/* ============================================================
+   13. MODULE GRID
+============================================================ */
+
+.module-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.module-card {
+  min-height: 150px;
+
+  padding: 17px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.module-card:hover {
+  border-color: #9fd9d6;
+
+  box-shadow: var(--shadow-md);
+
+  transform:
+    translateY(-1px);
+}
+
+.module-card-top {
+  margin-bottom: 11px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.module-code {
+  min-width: 36px;
+  height: 27px;
+
+  padding:
+    0 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.module-card-top > span {
+  color: var(--text-light);
+
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.module-badge {
+  display: inline-flex;
+
+  padding:
+    4px 7px;
+
+  border-radius: 999px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.module-card h3 {
+  margin:
+    0 0 6px;
+
+  color: var(--text);
+
+  font-size: 13px;
+}
+
+.module-card p {
+  flex: 1;
+
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 9.5px;
+
+  line-height: 1.55;
+}
+
+.module-open {
+  display: inline-block;
+
+  margin-top: 11px;
+
+  color: var(--primary-dark);
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   14. AMS - ANTIBIOTIC STEWARDSHIP
+============================================================ */
+
+.ams-overview {
+  margin-bottom: 22px;
+
+  padding: 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  gap: 26px;
+
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0fafa,
+      #f8fbfc
+    );
+
+  border:
+    1px solid #cce9e7;
+
+  border-radius: 13px;
+}
+
+.ams-overview-text {
+  max-width: 680px;
+}
+
+.ams-label {
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.ams-overview h2 {
+  margin:
+    5px 0;
+
+  color: var(--text);
+
+  font-size: 16px;
+}
+
+.ams-overview p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 9.5px;
+
+  line-height: 1.55;
+}
+
+.ams-flow {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.ams-flow span {
+  padding:
+    6px 8px;
+
+  white-space: nowrap;
+
+  background: #ffffff;
+
+  border:
+    1px solid #b7e3e1;
+
+  border-radius: 7px;
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.ams-flow b {
+  color: var(--text-light);
+
+  font-size: 9px;
+}
+
+
+/* CLINICAL SECTION */
+
+.clinical-section {
+  margin-top: 20px;
+}
+
+.clinical-section-title {
+  margin-bottom: 13px;
+}
+
+.clinical-section-title h2 {
+  margin:
+    3px 0 0;
+
+  color: var(--text);
+
+  font-size: 16px;
+}
+
+
+/* AMS WORKSPACE */
+
+.ams-workspace {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 17px;
+
+  align-items: start;
+}
+
+
+/* AMS CHECKBOX */
+
+.ams-checkbox-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.ams-checkbox-grid label,
+.ams-checklist label {
+  min-height: 36px;
+
+  padding:
+    8px 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 7px;
+
+  color: var(--text-secondary);
+
+  font-size: 9px;
+}
+
+.ams-checkbox-grid label:hover,
+.ams-checklist label:hover {
+  border-color: #b7e3e1;
+}
+
+.ams-checkbox-grid input,
+.ams-checklist input {
+  accent-color: var(--primary);
+}
+
+.ams-checklist {
+  display: grid;
+
+  gap: 7px;
+}
+
+
+/* ============================================================
+   15. ORGANISM SEARCH
+============================================================ */
+
+.organism-search {
+  height: 42px;
+
+  padding:
+    0 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border-dark);
+
+  border-radius: 8px;
+}
+
+.organism-search:focus-within {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.06);
+}
+
+.organism-search input {
+  flex: 1;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  font-size: 10px;
+}
+
+.organism-filter-tabs {
+  margin-top: 11px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.organism-filter-tabs button {
+  padding:
+    6px 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 999px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.organism-filter-tabs button:hover {
+  border-color: #b7e3e1;
+}
+
+.organism-filter-tabs button.active {
+  background: var(--primary-soft);
+
+  border-color: var(--primary);
+
+  color: var(--primary-dark);
+
+  font-weight: 700;
+}
+
+.organism-list {
+  margin-top: 13px;
+
+  border-top:
+    1px solid var(--border);
+}
+
+.organism-row {
+  min-height: 58px;
+
+  padding:
+    9px 3px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 14px;
+
+  border-bottom:
+    1px solid #edf1f5;
+}
+
+.organism-row strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 10px;
+
+  font-style: italic;
+}
+
+.organism-row span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.organism-row button {
+  padding:
+    6px 9px;
+
+  background: var(--primary-soft-2);
+
+  border:
+    1px solid #b7e3e1;
+
+  border-radius: 7px;
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   16. DRUG INFORMATION PAGE
+============================================================ */
+
+.drug-page-header {
+  margin-bottom: 20px;
+}
+
+.drug-page-header h1 {
+  margin:
+    4px 0 6px;
+
+  color: var(--navy-dark);
+
+  font-size: 26px;
+}
+
+.drug-page-header p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 10.5px;
+}
+
+
+/* DRUG SEARCH PANEL */
+
+.drug-search-panel {
+  padding: 16px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.drug-search-box {
+  height: 43px;
+
+  padding:
+    0 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border:
+    1px solid var(--border-dark);
+
+  border-radius: 9px;
+}
+
+.drug-search-box:focus-within {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.06);
+}
+
+.drug-search-box input {
+  flex: 1;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  font-size: 10.5px;
+}
+
+.drug-search-box input::placeholder {
+  color: var(--text-light);
+}
+
+.drug-filters {
+  margin-top: 11px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.drug-filters button {
+  padding:
+    6px 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 999px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.drug-filters button:hover {
+  border-color: #b7e3e1;
+}
+
+.drug-filters button.active {
+  background: var(--primary-soft);
+
+  border-color: var(--primary);
+
+  color: var(--primary-dark);
+
+  font-weight: 700;
+}
+
+
+/* DRUG RESULTS */
+
+.drug-results {
+  margin-top: 16px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.drug-results-heading {
+  margin-bottom: 11px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.drug-results-heading h2 {
+  margin:
+    3px 0 0;
+
+  color: var(--text);
+
+  font-size: 14px;
+}
+
+.drug-results-heading > span {
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.drug-list {
+  border-top:
+    1px solid var(--border);
+}
+
+.drug-row {
+  min-height: 68px;
+
+  padding:
+    10px 3px;
+
+  display: grid;
+
+  grid-template-columns:
+    40px
+    minmax(140px, 1.3fr)
+    minmax(130px, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 12px;
+
+  border-bottom:
+    1px solid #edf1f5;
+}
+
+.drug-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.drug-main strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 10.5px;
+}
+
+.drug-main span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.drug-route span {
+  display: block;
+
+  color: var(--text-light);
+
+  font-size: 7px;
+}
+
+.drug-route strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-secondary);
+
+  font-size: 8.5px;
+}
+
+.drug-open-button {
+  min-height: 31px;
+
+  padding:
+    0 10px;
+
+  background: var(--primary-soft-2);
+
+  border:
+    1px solid #b7e3e1;
+
+  border-radius: 7px;
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.drug-open-button:hover {
+  background: var(--primary-soft);
+}
+
+
+/* ============================================================
+   17. GENERIC RESULT GRID
+============================================================ */
+
+.result-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.result-box {
+  padding: 14px;
+
+  background: var(--surface-soft);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+}
+
+.result-box span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+.result-box strong {
+  color: var(--navy);
+
+  font-size: 21px;
+}
+
+.result-box small {
+  margin-left: 3px;
+
+  color: var(--text-light);
+
+  font-size: 7px;
+}
+
+.result-box.primary {
+  background: var(--primary-soft);
+
+  border-color: #b7e3e1;
+}
+
+.result-box.primary strong {
+  color: var(--primary-dark);
+}
+
+
+/* ============================================================
+   18. GENERIC PANELS / LISTS
+============================================================ */
+
+.clinical-panel {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 13px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.panel-header h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 15px;
+}
+
+.panel-header > a {
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.clinical-list {
+  margin-top: 14px;
+}
+
+.clinical-list-item {
+  padding:
+    11px 0;
+
+  border-top:
+    1px solid #edf1f5;
+}
+
+.clinical-list-item strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 9.5px;
+}
+
+.clinical-list-item span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   19. HOME / LEGACY SUPPORT
+   Giữ để các component cũ chưa chuyển hoàn toàn không vỡ layout
+============================================================ */
+
+.home-page {
+  width: 100%;
+
+  background: var(--background);
+}
+
+.home-section {
+  padding:
+    30px 34px;
+}
+
+.home-section-soft {
+  background: var(--surface-muted);
+
+  border-top:
+    1px solid var(--border);
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.section-heading {
+  margin-bottom: 18px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 20px;
+}
+
+.section-heading p {
+  margin:
+    6px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+.decision-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.decision-card {
+  min-height: 130px;
+
+  padding: 17px;
+
+  display: flex;
+
+  gap: 13px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.decision-card:hover {
+  border-color: #9fd9d6;
+
+  box-shadow: var(--shadow-md);
+}
+
+.decision-icon {
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.decision-card h3 {
+  margin:
+    2px 0 6px;
+
+  color: var(--text);
+
+  font-size: 12px;
+}
+
+.decision-card p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+.card-link {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  color: var(--primary-dark);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.frequent-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.frequent-card {
+  padding: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+}
+
+.frequent-card-icon {
+  width: 33px;
+  height: 33px;
+
+  flex: 0 0 33px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary);
+
+  font-weight: 800;
+}
+
+.frequent-card strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 9.5px;
+}
+
+.frequent-card span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--text-muted);
+
+  font-size: 7.5px;
+}
+
+.home-two-columns {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* ============================================================
+   20. RESPONSIVE - LARGE TABLET
+============================================================ */
+
+@media (max-width: 1150px) {
+
+  .dashboard-tools,
+  .module-grid,
+  .decision-grid,
+  .frequent-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .quick-tools {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .renal-result-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .ams-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .ams-flow {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+/* ============================================================
+   21. RESPONSIVE - TABLET
+============================================================ */
+
+@media (max-width: 900px) {
+
+  :root {
+    --sidebar-width: 210px;
+  }
+
+  .renal-workspace,
+  .ams-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .global-header {
+    padding:
+      0 18px;
+  }
+
+  .global-header-left {
+    display: none;
+  }
+
+  .global-header-search {
+    width: min(700px, 90%);
+  }
+
+}
+
+
+/* ============================================================
+   22. RESPONSIVE - MOBILE
+============================================================ */
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    display: none;
+  }
+
+  .app-workspace {
+    margin-left: 0;
+  }
+
+  .global-header {
+    padding:
+      0 14px;
+  }
+
+  .global-header-search {
+    width: 100%;
+  }
+
+  .search-shortcut {
+    display: none;
+  }
+
+  .clinical-page {
+    padding:
+      20px 16px 28px;
+  }
+
+  .dashboard-hero {
+    padding:
+      28px 18px;
+  }
+
+  .dashboard-section {
+    padding:
+      24px 18px;
+  }
+
+  .dashboard-tools,
+  .quick-tools,
+  .module-grid,
+  .decision-grid,
+  .frequent-grid,
+  .clinical-form-grid,
+  .renal-primary-results,
+  .reference-grid,
+  .result-grid,
+  .home-two-columns,
+  .ams-checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .renal-result-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .weight-options {
+    grid-template-columns: 1fr;
+  }
+
+  .creatinine-row {
+    grid-template-columns: 1fr;
+  }
+
+  .clinical-field-wide {
+    grid-column: auto;
+  }
+
+  .drug-row {
+    grid-template-columns:
+      38px
+      minmax(0, 1fr);
+  }
+
+  .drug-route,
+  .drug-open-button {
+    grid-column: 2;
+  }
+
+  .organism-row {
+    align-items: flex-start;
+  }
+
+  .global-footer {
+    flex-direction: column;
+
+    padding:
+      18px;
+  }
+
+  .footer-developer {
+    white-space: normal;
+  }
+
+}
+
+
+/* ============================================================
+   23. VERY SMALL MOBILE
+============================================================ */
+
+@media (max-width: 430px) {
+
+  .renal-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 29px;
+  }
+
+  .clinical-page-header h1 {
+    font-size: 23px;
+  }
+
+}
+/* ============================================================
+   BV199 HOME DASHBOARD - CLEAN UI
+============================================================ */
+
+.dashboard-page {
+  min-height: 100vh;
+  background: #f6f8fa;
+}
+
+
+/* HERO */
+
+.dashboard-hero-clean {
+  padding: 44px 38px 38px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfdfd 100%
+    );
+
+  border-bottom:
+    1px solid #e2e8f0;
+}
+
+.dashboard-hero-inner {
+  max-width: 920px;
+}
+
+.dashboard-eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding:
+    6px 10px;
+
+  margin-bottom: 16px;
+
+  border:
+    1px solid #b7e3e1;
+
+  border-radius: 999px;
+
+  background: #f0fafa;
+
+  color: #087a78;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+.dashboard-hero-clean h1 {
+  margin: 0;
+
+  max-width: 900px;
+
+  color: #102033;
+
+  font-size:
+    clamp(34px, 4vw, 48px);
+
+  line-height: 1.08;
+
+  letter-spacing: -1.3px;
+
+  font-weight: 800;
+}
+
+.dashboard-hero-clean h1 span {
+  color: #0f9f9a;
+}
+
+.dashboard-hero-clean p {
+  max-width: 800px;
+
+  margin:
+    15px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+.dashboard-main-search {
+  width:
+    min(760px, 100%);
+
+  height: 50px;
+
+  margin-top: 24px;
+
+  padding:
+    0 15px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 6px 20px rgba(15, 23, 42, 0.05);
+}
+
+.dashboard-main-search:focus-within {
+  border-color: #0f9f9a;
+
+  box-shadow:
+    0 0 0 3px rgba(15, 159, 154, 0.07);
+}
+
+.dashboard-main-search > span {
+  color: #64748b;
+
+  font-size: 16px;
+}
+
+.dashboard-main-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #172033;
+
+  font-size: 12px;
+}
+
+.dashboard-main-search input::placeholder {
+  color: #94a3b8;
+}
+
+.dashboard-hospital {
+  margin-top: 14px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   CONTENT SECTION
+============================================================ */
+
+.dashboard-content {
+  padding:
+    34px 38px;
+}
+
+.dashboard-content-soft {
+  background: #f1f5f9;
+
+  border-top:
+    1px solid #e2e8f0;
+
+  border-bottom:
+    1px solid #e2e8f0;
+}
+
+.dashboard-section-heading {
+  margin-bottom: 20px;
+}
+
+.dashboard-section-heading > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #087a78;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.dashboard-section-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 22px;
+
+  font-weight: 750;
+}
+
+.dashboard-section-heading p {
+  margin:
+    6px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   MAIN MODULE CARDS
+============================================================ */
+
+.clinical-module-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.clinical-module-card {
+  min-height: 130px;
+
+  padding: 18px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.clinical-module-card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    #9fd9d6;
+
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.clinical-module-icon {
+  width: 46px;
+  height: 46px;
+
+  flex:
+    0 0 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eaf8f7,
+      #dff4f2
+    );
+
+  color: #087a78;
+
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+.clinical-module-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.clinical-module-content strong {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #172033;
+
+  font-size: 13px;
+
+  font-weight: 750;
+}
+
+.clinical-module-content p {
+  margin:
+    6px 0 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+.clinical-module-arrow {
+  margin-top: 3px;
+
+  color: #0f9f9a;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   QUICK TOOLS
+============================================================ */
+
+.quick-clinical-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.quick-clinical-card {
+  min-height: 66px;
+
+  padding:
+    13px 15px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 11px;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.quick-clinical-card:hover {
+  border-color: #9fd9d6;
+
+  box-shadow:
+    0 7px 18px rgba(15, 23, 42, 0.04);
+}
+
+.quick-clinical-card strong {
+  display: block;
+
+  color: #172033;
+
+  font-size: 10.5px;
+}
+
+.quick-clinical-card span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 8.5px;
+}
+
+.quick-clinical-card b {
+  color: #0f9f9a;
+
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   HOME RESPONSIVE
+============================================================ */
+
+@media (max-width: 1150px) {
+
+  .clinical-module-grid,
+  .quick-clinical-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .dashboard-hero-clean {
+    padding:
+      28px 18px;
+  }
+
+  .dashboard-content {
+    padding:
+      25px 18px;
+  }
+
+  .clinical-module-grid,
+  .quick-clinical-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-hero-clean h1 {
+    font-size: 30px;
+  }
+
+}
+/* ============================================================
+   BV199 TYPOGRAPHY REFINEMENT
+============================================================ */
+
+body {
+  font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  color: #172033;
+
+  font-weight: 400;
+
+  letter-spacing: -0.01em;
+}
+
+
+/* ============================================================
+   HERO TYPOGRAPHY
+============================================================ */
+
+.dashboard-hero-inner {
+  max-width: 1120px;
+}
+
+
+.dashboard-eyebrow {
+  padding: 6px 11px;
+
+  margin-bottom: 17px;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+
+  text-transform: uppercase;
+
+  color: #087a78;
+
+  background: #f0fafa;
+
+  border:
+    1px solid #b7e3e1;
+}
+
+
+.dashboard-hero-clean h1 {
+  max-width: 1100px;
+
+  margin: 0;
+
+  color: #102033;
+
+  font-size:
+    clamp(38px, 4vw, 52px);
+
+  font-weight: 800;
+
+  line-height: 1.06;
+
+  letter-spacing: -1.8px;
+}
+
+
+.dashboard-hero-clean h1 span {
+  color: #0f9f9a;
+}
+
+
+.dashboard-hero-clean p {
+  max-width: 900px;
+
+  margin-top: 16px;
+
+  color: #526277;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+
+  font-weight: 400;
+}
+
+
+/* ============================================================
+   META INFORMATION
+============================================================ */
+
+.dashboard-meta {
+  margin-top: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+
+.dashboard-hospital {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+.dashboard-developer {
+  position: relative;
+
+  padding-left: 18px;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+
+.dashboard-developer::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 50%;
+
+  width: 4px;
+  height: 4px;
+
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+
+  background: #0f9f9a;
+}
+
+
+.dashboard-developer strong {
+  color: #087a78;
+
+  font-weight: 800;
+}
+
+
+/* ============================================================
+   SECTION HEADING
+============================================================ */
+
+.dashboard-section-heading > span {
+  color: #087a78;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+}
+
+
+.dashboard-section-heading h2 {
+  margin-top: 5px;
+
+  color: #172033;
+
+  font-size: 23px;
+
+  font-weight: 750;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.5px;
+}
+
+
+.dashboard-section-heading p {
+  margin-top: 6px;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* ============================================================
+   MODULE CARD TYPOGRAPHY
+============================================================ */
+
+.clinical-module-content strong {
+  color: #172033;
+
+  font-size: 13px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.15px;
+}
+
+
+.clinical-module-content p {
+  margin-top: 6px;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.55;
+}
+
+
+.clinical-module-icon {
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+
+/* ============================================================
+   SIDEBAR TYPOGRAPHY
+============================================================ */
+
+.sidebar-brand-name {
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.25px;
+}
+
+
+.sidebar-brand-sub {
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+.sidebar-group-title {
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.1px;
+}
+
+
+.sidebar-item {
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+.sidebar-item.active {
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.header-app-name {
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
+}
+
+
+.header-location {
+  font-size: 8px;
+
+  color: #94a3b8;
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .dashboard-hero-clean h1 {
+    font-size:
+      clamp(32px, 6vw, 42px);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .dashboard-meta {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 6px;
+  }
+
+
+  .dashboard-developer {
+    padding-left: 0;
+  }
+
+
+  .dashboard-developer::before {
+    display: none;
+  }
+
+}
+/* ============================================================
+   BV199 SIDEBAR LOGO
+============================================================ */
+
+.sidebar-brand-mark {
+  width: 56px;
+  height: 56px;
+
+  flex: 0 0 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.sidebar-brand-logo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+/* ============================================================
+   BV199 SIDEBAR
+============================================================ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  z-index: 1000;
+
+  width: 244px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    180deg,
+    #0b6b90 0%,
+    #075575 100%
+  );
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 4px 0 18px rgba(15, 23, 42, 0.07);
+}
+
+.sidebar-brand {
+  min-height: 84px;
+
+  padding: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand-mark {
+  width: 56px;
+  height: 56px;
+
+  flex: 0 0 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+.sidebar-brand-logo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+}
+
+.sidebar-brand-text {
+  min-width: 0;
+}
+
+.sidebar-brand-name {
+  color: #ffffff;
+
+  font-size: 12.5px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+.sidebar-brand-sub {
+  margin-top: 4px;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 9px;
+
+  line-height: 1.3;
+}
+
+.sidebar-navigation {
+  flex: 1;
+
+  min-height: 0;
+
+  padding: 12px 8px 20px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-navigation::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-navigation::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+
+  border-radius: 999px;
+}
+
+.sidebar-section-label {
+  padding: 7px 10px 6px;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.1px;
+}
+
+.sidebar-home {
+  min-height: 40px;
+
+  margin-bottom: 8px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  border-radius: 9px;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: 10.5px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-home:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+}
+
+.sidebar-home.active {
+  background: rgba(255, 255, 255, 0.17);
+
+  color: #ffffff;
+}
+
+.sidebar-home-icon {
+  width: 22px;
+
+  text-align: center;
+}
+
+.sidebar-menu-group {
+  margin-bottom: 4px;
+}
+
+.sidebar-group-button {
+  width: 100%;
+
+  min-height: 37px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.58);
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-group-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-group-button.active {
+  color: #ffffff;
+}
+
+.sidebar-chevron {
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 16px;
+
+  line-height: 1;
+
+  transform: rotate(0deg);
+
+  transition: transform 0.2s ease;
+}
+
+.sidebar-chevron.open {
+  transform: rotate(90deg);
+}
+
+.sidebar-group-items {
+  max-height: 0;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  transition: max-height 0.25s ease, opacity 0.18s ease;
+}
+
+.sidebar-group-items.open {
+  max-height: 520px;
+
+  padding: 2px 0 6px;
+
+  opacity: 1;
+}
+
+.sidebar-menu-item {
+  min-height: 38px;
+
+  margin: 2px 0;
+
+  padding: 6px 9px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  border-radius: 8px;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 9.5px;
+
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.sidebar-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  transform: translateX(1px);
+}
+
+.sidebar-menu-item.active {
+  background: rgba(255, 255, 255, 0.17);
+
+  color: #ffffff;
+
+  font-weight: 700;
+}
+
+.sidebar-item-code {
+  width: 28px;
+  height: 25px;
+
+  flex: 0 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.09);
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.2px;
+}
+
+.sidebar-menu-item.active .sidebar-item-code {
+  background: rgba(255, 255, 255, 0.18);
+
+  color: #ffffff;
+}
+
+.sidebar-item-label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.sidebar-account {
+  min-height: 68px;
+
+  padding: 10px 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  background: rgba(4, 45, 64, 0.88);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-account-avatar {
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #075575;
+
+  font-size: 9px;
+
+  font-weight: 900;
+}
+
+.sidebar-account-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.sidebar-account-info strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.sidebar-account-info span {
+  display: block;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 7.5px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.sidebar-account-button {
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 15px;
+
+  text-decoration: none;
+}
+
+.sidebar-account-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+}
+
+.app-workspace {
+  margin-left: 244px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 218px;
+  }
+
+  .app-workspace {
+    margin-left: 218px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    display: none;
+  }
+
+  .app-workspace {
+    margin-left: 0;
+  }
+}
+/* ============================================================
+   BV199 CLINICAL PHARMACY
+   HOME + HEADER + FOOTER FINAL
+============================================================ */
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.global-header {
+  min-height: 64px;
+
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e6ebf0;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 900;
+}
+
+
+.global-header-search {
+  width: min(680px, 100%);
+
+  height: 40px;
+
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  background: #f8fafc;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 10px;
+}
+
+
+.global-header-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #172033;
+
+  font-size: 13px;
+}
+
+
+.global-header-search input::placeholder {
+  color: #94a3b8;
+}
+
+
+.global-search-icon {
+  color: #64748b;
+
+  font-size: 15px;
+}
+
+
+.global-search-shortcut {
+  padding: 3px 6px;
+
+  color: #94a3b8;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+}
+
+
+.global-header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+.header-action-button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #153f59;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+.header-action-button:hover {
+  background: #f8fafc;
+}
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+.dashboard-page {
+  min-height: 100%;
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.dashboard-hero-clean {
+  padding: 44px 34px 34px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7fbfc 0%,
+      #f6f8fa 100%
+    );
+
+  border-bottom: 1px solid #e6ebf0;
+}
+
+
+.dashboard-hero-inner {
+  max-width: 940px;
+}
+
+
+.dashboard-eyebrow {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #087f7c;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+
+.dashboard-hero-clean h1 {
+  margin: 0;
+
+  color: #142033;
+
+  font-size: clamp(30px, 3vw, 44px);
+
+  font-weight: 730;
+
+  letter-spacing: -1.5px;
+
+  line-height: 1.08;
+}
+
+
+.dashboard-hero-clean h1 span {
+  color: #0f8f8b;
+}
+
+
+.dashboard-hero-description {
+  max-width: 720px;
+
+  margin: 14px 0 0;
+
+  color: #526174;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   HERO SEARCH
+============================================================ */
+
+.dashboard-main-search {
+  width: min(720px, 100%);
+
+  min-height: 50px;
+
+  margin-top: 24px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #cfdbe5;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+
+.dashboard-main-search:focus-within {
+  border-color: #27aaa5;
+
+  box-shadow:
+    0 0 0 3px rgba(15, 159, 154, 0.09);
+}
+
+
+.dashboard-main-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #172033;
+
+  font-size: 13px;
+}
+
+
+.dashboard-main-search input::placeholder {
+  color: #94a3b8;
+}
+
+
+.dashboard-search-icon {
+  color: #0f8f8b;
+
+  font-size: 17px;
+}
+
+
+.dashboard-search-shortcut {
+  padding: 4px 7px;
+
+  color: #94a3b8;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 6px;
+
+  font-size: 9px;
+}
+
+
+/* ============================================================
+   META
+============================================================ */
+
+.dashboard-meta {
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 7px 18px;
+}
+
+
+.dashboard-hospital {
+  color: #475569;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+.dashboard-developer {
+  color: #7a8797;
+
+  font-size: 10.5px;
+}
+
+
+.dashboard-developer strong {
+  color: #334155;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   CONTENT
+============================================================ */
+
+.dashboard-content {
+  padding: 34px;
+
+  background: #ffffff;
+}
+
+
+.dashboard-content-soft {
+  background: #f7f9fb;
+
+  border-top: 1px solid #e8edf2;
+}
+
+
+.dashboard-section-heading {
+  margin-bottom: 20px;
+}
+
+
+.dashboard-section-heading > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #0f8f8b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+
+.dashboard-section-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.45px;
+}
+
+
+/* ============================================================
+   MODULE GRID
+============================================================ */
+
+.clinical-module-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+.clinical-module-card {
+  min-height: 112px;
+
+  padding: 17px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  position: relative;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e8ef;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.025);
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.clinical-module-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #afdcd9;
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.07);
+}
+
+
+.clinical-module-icon {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.2px;
+}
+
+
+.clinical-module-content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.clinical-module-content strong {
+  display: block;
+
+  color: #172033;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+
+.clinical-module-content p {
+  margin: 6px 0 0;
+
+  color: #778497;
+
+  font-size: 10.5px;
+
+  line-height: 1.5;
+}
+
+
+.clinical-module-arrow {
+  color: #91a0af;
+
+  font-size: 17px;
+}
+
+
+/* ============================================================
+   QUICK TOOLS
+============================================================ */
+
+.quick-tool-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+.quick-tool-card {
+  min-height: 72px;
+
+  padding: 14px 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  text-decoration: none;
+
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.quick-tool-card:hover {
+  border-color: #b3dddb;
+
+  transform: translateY(-1px);
+}
+
+
+.quick-tool-card strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+.quick-tool-card span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7a8797;
+
+  font-size: 9.5px;
+}
+
+
+.quick-tool-card .quick-tool-arrow {
+  margin: 0;
+
+  color: #0f8f8b;
+
+  font-size: 16px;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.global-footer {
+  min-height: 62px;
+
+  padding: 11px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e5eaf0;
+}
+
+
+.global-footer-left strong {
+  display: block;
+
+  color: #17384c;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+.global-footer-left span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #7d8998;
+
+  font-size: 8.5px;
+}
+
+
+.global-footer-right {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  color: #7d8998;
+
+  font-size: 9px;
+
+  white-space: nowrap;
+}
+
+
+.global-footer-right strong {
+  color: #17384c;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 1100px) {
+
+  .clinical-module-grid,
+  .quick-tool-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 760px) {
+
+  .dashboard-hero-clean,
+  .dashboard-content {
+    padding:
+      26px 18px;
+  }
+
+  .clinical-module-grid,
+  .quick-tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .global-header {
+    padding:
+      0 14px;
+  }
+
+  .global-footer {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+}
+/* ============================================================
+   BV199 HOME FINAL
+============================================================ */
+
+.dashboard-page {
+  min-height: 100%;
+}
+
+
+/* HERO */
+
+.dashboard-hero-clean {
+  padding: 34px 34px 30px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7fbfc 0%,
+      #f6f8fa 100%
+    );
+
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.dashboard-hero-inner {
+  max-width: 960px;
+}
+
+.dashboard-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 11px;
+
+  color: #087f7c;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+.dashboard-hero-clean h1 {
+  margin: 0;
+
+  color: #152033;
+
+  font-size: clamp(32px, 3.1vw, 46px);
+
+  font-weight: 740;
+
+  line-height: 1.06;
+
+  letter-spacing: -1.6px;
+}
+
+.dashboard-hero-clean h1 span {
+  color: #0e9691;
+}
+
+.dashboard-hero-description {
+  max-width: 720px;
+
+  margin: 14px 0 0;
+
+  color: #536174;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* META */
+
+.dashboard-meta {
+  margin-top: 20px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 7px 12px;
+}
+
+.dashboard-hospital {
+  color: #435268;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.dashboard-meta-divider {
+  color: #0f9f9a;
+
+  font-size: 12px;
+}
+
+.dashboard-developer {
+  color: #7a8797;
+
+  font-size: 10.5px;
+}
+
+.dashboard-developer strong {
+  color: #324155;
+
+  font-weight: 700;
+}
+
+
+/* CONTENT */
+
+.dashboard-content {
+  padding: 32px 34px 34px;
+
+  background: #ffffff;
+}
+
+.dashboard-content-soft {
+  background: #f7f9fb;
+
+  border-top: 1px solid #e7edf2;
+}
+
+.dashboard-section-heading {
+  margin-bottom: 20px;
+}
+
+.dashboard-section-heading > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #0f8f8b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.dashboard-section-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.45px;
+}
+
+.dashboard-section-heading p {
+  margin: 7px 0 0;
+
+  color: #7a8797;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* MODULE GRID */
+
+.clinical-module-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.clinical-module-card {
+  min-height: 112px;
+
+  padding: 17px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #e0e8ef;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.025);
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.clinical-module-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #b0ddda;
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.07);
+}
+
+.clinical-module-icon {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.2px;
+}
+
+.clinical-module-content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.clinical-module-content strong {
+  display: block;
+
+  color: #172033;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.clinical-module-content p {
+  margin: 6px 0 0;
+
+  color: #7a8797;
+
+  font-size: 10.5px;
+
+  line-height: 1.5;
+}
+
+.clinical-module-arrow {
+  color: #8f9dac;
+
+  font-size: 17px;
+}
+
+
+/* QUICK TOOLS */
+
+.quick-tool-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.quick-tool-card {
+  min-height: 72px;
+
+  padding: 14px 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  text-decoration: none;
+
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.quick-tool-card:hover {
+  border-color: #b4dedb;
+
+  transform: translateY(-1px);
+}
+
+.quick-tool-card strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.quick-tool-card span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7a8797;
+
+  font-size: 9.5px;
+}
+
+.quick-tool-card .quick-tool-arrow {
+  margin: 0;
+
+  color: #0f8f8b;
+
+  font-size: 16px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+
+  .clinical-module-grid,
+  .quick-tool-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 760px) {
+
+  .dashboard-hero-clean,
+  .dashboard-content {
+    padding:
+      26px 18px;
+  }
+
+  .clinical-module-grid,
+  .quick-tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-meta-divider {
+    display: none;
+  }
+
+}
+/* ============================================================
+   LASA
+============================================================ */
+
+.clinical-search-box input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #172033;
+
+  outline: none;
+}
+
+.clinical-search-box input:focus {
+  border-color: #0f9f9a;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 159, 154, 0.08);
+}
+
+.clinical-filter-row {
+  margin-top: 12px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.clinical-filter {
+  padding: 7px 10px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  font-size: 9px;
+}
+
+.clinical-filter.active {
+  border-color: #0f9f9a;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-weight: 700;
+}
+
+.lasa-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.lasa-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+}
+
+.lasa-card-top {
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.lasa-badge {
+  padding: 5px 8px;
+
+  border-radius: 999px;
+
+  background: #fff7ed;
+
+  color: #c2410c;
+
+  font-size: 7px;
+
+  font-weight: 800;
+}
+
+.lasa-pair {
+  margin-top: 14px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.lasa-drug {
+  padding: 14px;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
+}
+
+.lasa-drug span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #94a3b8;
+
+  font-size: 7px;
+}
+
+.lasa-drug strong {
+  color: #172033;
+
+  font-size: 12px;
+}
+
+.lasa-arrow {
+  color: #0f8f8b;
+
+  font-weight: 800;
+}
+
+.lasa-detail {
+  margin-top: 14px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #edf2f7;
+}
+
+.lasa-detail h3 {
+  margin: 0 0 7px;
+
+  color: #172033;
+
+  font-size: 10px;
+}
+
+.lasa-detail ul {
+  margin: 0;
+
+  padding-left: 17px;
+}
+
+.lasa-detail li {
+  margin-bottom: 4px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+.lasa-prevention {
+  background: #f5fbfb;
+
+  padding: 10px;
+
+  border: 0;
+
+  border-radius: 8px;
+}
+
+@media (max-width: 800px) {
+  .lasa-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ============================================================
+   BV199 ANTIBIOGRAM
+============================================================ */
+
+.clinical-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.clinical-filter-grid label {
+  display: grid;
+  gap: 6px;
+}
+
+.clinical-filter-grid label > span {
+  color: #475569;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.clinical-filter-grid select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #fff;
+  color: #172033;
+}
+
+.clinical-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.clinical-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clinical-table th {
+  padding: 10px;
+
+  background: #f8fafc;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  color: #475569;
+
+  font-size: 9px;
+
+  text-align: left;
+}
+
+.clinical-table td {
+  padding: 10px;
+
+  border-bottom: 1px solid #edf2f7;
+
+  color: #475569;
+
+  font-size: 9px;
+}
+
+.antibiogram-table {
+  min-width: 1800px;
+}
+
+.antibiogram-cell {
+  text-align: center;
+  font-weight: 700;
+}
+
+.antibiogram-cell.high {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.antibiogram-cell.medium {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.antibiogram-cell.low {
+  background: #fff1f2;
+  color: #b91c1c;
+}
+
+.antibiogram-cell.intrinsic {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.antibiogram-cell.empty {
+  color: #94a3b8;
+}
+
+.antibiogram-legend {
+  margin-top: 12px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  color: #64748b;
+  font-size: 8px;
+}
+
+@media (max-width: 760px) {
+  .clinical-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
