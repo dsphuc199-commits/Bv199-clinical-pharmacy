@@ -985,7 +985,7 @@ export default function ClinicalScoresPage() {
                         checked={pediatric}
                         onChange={(e) => setPediatric(e.target.checked)}
                       />
-                      Người bệnh dưới 18 tuổi, eGFR &lt;35 mL/phút/1,73 m²
+                     Người bệnh dưới 18 tuổi, eGFR {'<'} 35 mL/phút/1,73 m²
                     </label>
                   </div>
                 ) : (
