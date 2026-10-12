@@ -1,0 +1,950 @@
+/* ============================================================
+   BV199 CLINICAL PHARMACY
+   PK/PD LEARNING MODULE
+============================================================ */
+
+.pkpd-home-page,
+.pkpd-learning-page {
+  min-height: 100%;
+  background: #f6f8fa;
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.pkpd-home-hero,
+.pkpd-learning-hero {
+  padding: 34px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f5fbfb 0%,
+      #ffffff 100%
+    );
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pkpd-home-eyebrow,
+.pkpd-learning-eyebrow {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #0f8f8b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.pkpd-home-hero h1,
+.pkpd-learning-hero h1 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 32px;
+
+  font-weight: 750;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.8px;
+}
+
+.pkpd-home-hero p,
+.pkpd-learning-hero p {
+  max-width: 760px;
+
+  margin: 10px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   KEYWORDS
+============================================================ */
+
+.pkpd-keyword-list {
+  margin-top: 18px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.pkpd-keyword-list span {
+  padding: 5px 8px;
+
+  background: #eaf8f7;
+
+  border: 1px solid #cfe9e7;
+
+  border-radius: 999px;
+
+  color: #087f7c;
+
+  font-size: 8px;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   HOME CONTENT
+============================================================ */
+
+.pkpd-home-section {
+  padding: 30px 34px;
+
+  background: #ffffff;
+}
+
+.pkpd-section-heading {
+  margin-bottom: 18px;
+}
+
+.pkpd-section-heading > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #0f8f8b;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.pkpd-section-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.pkpd-section-heading p {
+  margin: 6px 0 0;
+
+  color: #7a8797;
+
+  font-size: 11px;
+
+  line-height: 1.55;
+}
+
+.pkpd-section-heading-space {
+  margin-top: 28px;
+}
+
+
+/* ============================================================
+   MODULE GRID
+============================================================ */
+
+.pkpd-module-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.pkpd-module-card {
+  min-height: 150px;
+
+  padding: 18px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.025);
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.pkpd-module-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #aadbd8;
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.pkpd-module-icon {
+  width: 50px;
+
+  height: 50px;
+
+  flex: 0 0 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+.pkpd-module-card-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.pkpd-module-category {
+  color: #0f8f8b;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+.pkpd-module-card h3 {
+  margin: 6px 0;
+
+  color: #172033;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.pkpd-module-card p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10.5px;
+
+  line-height: 1.55;
+}
+
+.pkpd-module-keywords {
+  margin-top: 10px;
+
+  display: flex;
+
+  gap: 5px;
+
+  flex-wrap: wrap;
+}
+
+.pkpd-module-keywords span {
+  padding: 3px 6px;
+
+  border-radius: 5px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  font-size: 7px;
+}
+
+.pkpd-module-arrow {
+  color: #94a3b8;
+
+  font-size: 18px;
+}
+
+
+/* ============================================================
+   TABS
+============================================================ */
+
+.pkpd-tabs {
+  position: sticky;
+
+  top: 64px;
+
+  z-index: 50;
+
+  padding: 0 34px;
+
+  display: flex;
+
+  gap: 4px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pkpd-tabs button {
+  padding: 14px 14px 12px;
+
+  border: 0;
+
+  border-bottom: 2px solid transparent;
+
+  background: transparent;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  font-weight: 650;
+}
+
+.pkpd-tabs button:hover {
+  color: #0f8f8b;
+}
+
+.pkpd-tabs button.active {
+  color: #087f7c;
+
+  border-bottom-color: #0f9f9a;
+}
+
+
+/* ============================================================
+   TAB CONTENT
+============================================================ */
+
+.pkpd-tab-content {
+  padding: 30px 34px;
+
+  background: #ffffff;
+}
+
+
+/* ============================================================
+   OBJECTIVES
+============================================================ */
+
+.pkpd-objective-list {
+  display: grid;
+
+  gap: 8px;
+}
+
+.pkpd-objective-item {
+  padding: 12px 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.pkpd-objective-item > span {
+  width: 26px;
+
+  height: 26px;
+
+  flex: 0 0 26px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 8px;
+
+  font-weight: 800;
+}
+
+.pkpd-objective-item p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 10.5px;
+
+  line-height: 1.55;
+}
+
+
+/* ============================================================
+   FORMULAS
+============================================================ */
+
+.pkpd-formula-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.pkpd-formula-card {
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+}
+
+.pkpd-formula-card > span {
+  color: #0f8f8b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+.pkpd-formula-card strong {
+  display: block;
+
+  margin: 8px 0;
+
+  color: #172033;
+
+  font-size: 13px;
+}
+
+.pkpd-formula-card p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.55;
+}
+
+
+/* ============================================================
+   ORIGINAL LECTURE
+============================================================ */
+
+.pkpd-verbatim-warning {
+  margin-bottom: 16px;
+
+  padding: 12px 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  background: #eef9f8;
+
+  border: 1px solid #cfe9e7;
+
+  border-radius: 10px;
+}
+
+.pkpd-verbatim-warning strong {
+  color: #087f7c;
+
+  font-size: 10px;
+}
+
+.pkpd-verbatim-warning span {
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+.pkpd-lecture-list {
+  display: grid;
+
+  gap: 12px;
+}
+
+.pkpd-lecture-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+}
+
+.pkpd-lecture-meta {
+  margin-bottom: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.pkpd-lecture-meta span {
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+.pkpd-lecture-meta small {
+  padding: 3px 6px;
+
+  border-radius: 5px;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 7px;
+
+  font-weight: 800;
+}
+
+.pkpd-lecture-card h2 {
+  margin: 0 0 12px;
+
+  color: #172033;
+
+  font-size: 15px;
+
+  line-height: 1.45;
+}
+
+.pkpd-verbatim-lines {
+  display: grid;
+
+  gap: 6px;
+}
+
+.pkpd-verbatim-lines p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 10.5px;
+
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   EVIDENCE
+============================================================ */
+
+.pkpd-evidence-list {
+  display: grid;
+
+  gap: 12px;
+}
+
+.pkpd-evidence-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+}
+
+.pkpd-evidence-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.pkpd-evidence-top span {
+  padding: 4px 7px;
+
+  border-radius: 6px;
+
+  background: #eaf8f7;
+
+  color: #087f7c;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+.pkpd-evidence-top small {
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+.pkpd-evidence-card h3 {
+  margin: 12px 0 7px;
+
+  color: #172033;
+
+  font-size: 14px;
+}
+
+.pkpd-evidence-card p {
+  margin: 0;
+
+  color: #526174;
+
+  font-size: 10.5px;
+
+  line-height: 1.65;
+}
+
+.pkpd-evidence-sources {
+  margin-top: 12px;
+
+  display: flex;
+
+  gap: 5px;
+
+  flex-wrap: wrap;
+}
+
+.pkpd-evidence-sources span {
+  padding: 4px 7px;
+
+  border-radius: 5px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  font-size: 7.5px;
+}
+
+
+/* ============================================================
+   LEARNING / APPLICATION
+============================================================ */
+
+.pkpd-learning-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.pkpd-learning-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+}
+
+.pkpd-learning-card h3 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 14px;
+}
+
+.pkpd-learning-card > p {
+  margin: 8px 0 0;
+
+  color: #64748b;
+
+  font-size: 10.5px;
+
+  line-height: 1.65;
+}
+
+.pkpd-clinical-meaning,
+.pkpd-remember {
+  margin-top: 12px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+}
+
+.pkpd-clinical-meaning {
+  background: #f8fafc;
+}
+
+.pkpd-remember {
+  background: #eef9f8;
+}
+
+.pkpd-clinical-meaning strong,
+.pkpd-remember strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #087f7c;
+
+  font-size: 8px;
+}
+
+.pkpd-clinical-meaning span,
+.pkpd-remember span {
+  color: #526174;
+
+  font-size: 9.5px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   QUIZ
+============================================================ */
+
+.pkpd-quiz-list {
+  display: grid;
+
+  gap: 10px;
+}
+
+.pkpd-quiz-card {
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.pkpd-quiz-card summary {
+  cursor: pointer;
+
+  color: #172033;
+
+  font-size: 10.5px;
+
+  font-weight: 700;
+
+  line-height: 1.5;
+}
+
+.pkpd-quiz-options {
+  margin-top: 12px;
+
+  display: grid;
+
+  gap: 5px;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+.pkpd-quiz-answer {
+  margin-top: 12px;
+
+  padding: 10px;
+
+  background: #eef9f8;
+
+  border-radius: 8px;
+}
+
+.pkpd-quiz-answer strong {
+  color: #087f7c;
+
+  font-size: 9px;
+}
+
+.pkpd-quiz-answer p {
+  margin: 5px 0 0;
+
+  color: #526174;
+
+  font-size: 9.5px;
+
+  line-height: 1.55;
+}
+
+
+/* ============================================================
+   REFERENCES
+============================================================ */
+
+.pkpd-reference-section {
+  padding: 28px 34px 34px;
+
+  background: #f7f9fb;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+.pkpd-reference-list {
+  display: grid;
+
+  gap: 8px;
+}
+
+.pkpd-reference-item {
+  padding: 12px 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+}
+
+.pkpd-reference-item strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 9.5px;
+
+  line-height: 1.5;
+}
+
+.pkpd-reference-item span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 8px;
+}
+
+.pkpd-reference-item small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 7.5px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
+  .pkpd-module-grid,
+  .pkpd-learning-grid,
+  .pkpd-formula-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .pkpd-home-hero,
+  .pkpd-learning-hero,
+  .pkpd-home-section,
+  .pkpd-tab-content,
+  .pkpd-reference-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .pkpd-tabs {
+    padding: 0 10px;
+
+    overflow-x: auto;
+  }
+
+  .pkpd-tabs button {
+    white-space: nowrap;
+  }
+}
+/* ============================================================
+   PKPD BACK NAVIGATION
+============================================================ */
+
+.pkpd-detail-shell {
+  min-height: 100%;
+}
+
+.pkpd-back-row {
+  padding: 14px 34px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pkpd-back-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #0f8f8b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.pkpd-back-link:hover {
+  text-decoration: underline;
+}

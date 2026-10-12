@@ -1,0 +1,797 @@
+[
+  {
+    "id": "gas",
+    "name": "Viêm họng do liên cầu nhóm A",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cap",
+    "name": "Viêm phổi cộng đồng",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "sepsis",
+    "name": "Nhiễm khuẩn huyết, hồi sức",
+    "specialty": "Hồi sức – Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "candidemia",
+    "name": "Candida huyết không giảm bạch cầu",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "dfi",
+    "name": "Nhiễm khuẩn bàn chân đái tháo đường",
+    "specialty": "Nội tiết – Bàn chân ĐTĐ"
+  },
+  {
+    "id": "hap",
+    "name": "Viêm phổi bệnh viện",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "meningitis",
+    "name": "Viêm màng não do vi khuẩn",
+    "specialty": "Thần kinh"
+  },
+  {
+    "id": "pyelo",
+    "name": "Viêm thận – bể thận",
+    "specialty": "Tiết niệu"
+  },
+  {
+    "id": "abdomen",
+    "name": "Nhiễm khuẩn ổ bụng",
+    "specialty": "Ổ bụng – Gan mật"
+  },
+  {
+    "id": "ssti",
+    "name": "Viêm mô tế bào",
+    "specialty": "Da – Mô mềm"
+  },
+  {
+    "id": "endocarditis",
+    "name": "Viêm nội tâm mạc nhiễm khuẩn",
+    "specialty": "Tim mạch"
+  },
+  {
+    "id": "osteomyelitis",
+    "name": "Viêm xương tủy",
+    "specialty": "Cơ xương khớp"
+  },
+  {
+    "id": "pelvic",
+    "name": "Viêm vùng chậu",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "pediatric-cap",
+    "name": "Viêm phổi trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "keratitis",
+    "name": "Viêm giác mạc nhiễm khuẩn",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "dental",
+    "name": "Áp xe răng",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "neutropenia",
+    "name": "Sốt giảm bạch cầu trung tính",
+    "specialty": "Huyết học – Ung bướu"
+  },
+  {
+    "id": "aspergillus",
+    "name": "Aspergillosis xâm lấn",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "crab",
+    "name": "Nhiễm CRAB",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "clabsi",
+    "name": "Nhiễm khuẩn huyết liên quan catheter",
+    "specialty": "Thiết bị – Nhiễm khuẩn bệnh viện"
+  },
+  {
+    "id": "cat_uti",
+    "name": "Nhiễm khuẩn tiết niệu phức tạp / ESBL",
+    "specialty": "Kháng sinh"
+  },
+  {
+    "id": "cat_cand",
+    "name": "Nhiễm Candida huyết (candidemia)",
+    "specialty": "Kháng nấm"
+  },
+  {
+    "id": "cat_pending2",
+    "name": "Viêm phổi liên quan thở máy",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending3",
+    "name": "Đợt cấp COPD do vi khuẩn",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending4",
+    "name": "Viêm xoang cấp do vi khuẩn",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending5",
+    "name": "Viêm họng liên cầu",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending6",
+    "name": "Áp xe phổi",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending7",
+    "name": "Giãn phế quản bội nhiễm",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "cat_pending8",
+    "name": "Sepsis chưa rõ nguồn",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cat_pending9",
+    "name": "Sốc nhiễm khuẩn",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cat_pending10",
+    "name": "Nhiễm khuẩn huyết do S. aureus",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cat_pending11",
+    "name": "Nhiễm khuẩn huyết do Gram âm",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cat_pending12",
+    "name": "Nhiễm khuẩn liên quan catheter",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cat_pending13",
+    "name": "Viêm bàng quang không biến chứng",
+    "specialty": "Tiết niệu – sinh dục"
+  },
+  {
+    "id": "cat_pending14",
+    "name": "Viêm thận bể thận",
+    "specialty": "Tiết niệu – sinh dục"
+  },
+  {
+    "id": "cat_pending15",
+    "name": "Viêm tuyến tiền liệt cấp",
+    "specialty": "Tiết niệu – sinh dục"
+  },
+  {
+    "id": "cat_pending16",
+    "name": "Nhiễm khuẩn tiết niệu liên quan sonde",
+    "specialty": "Tiết niệu – sinh dục"
+  },
+  {
+    "id": "cat_pending17",
+    "name": "Viêm ruột thừa phức tạp",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending18",
+    "name": "Viêm phúc mạc thứ phát",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending19",
+    "name": "Áp xe ổ bụng",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending20",
+    "name": "Viêm túi mật cấp",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending21",
+    "name": "Viêm đường mật cấp",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending22",
+    "name": "Nhiễm C. difficile",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending23",
+    "name": "Nhiễm khuẩn đường ruột xâm lấn",
+    "specialty": "Ổ bụng – tiêu hóa"
+  },
+  {
+    "id": "cat_pending24",
+    "name": "Viêm mô tế bào không mủ",
+    "specialty": "Da – mô mềm"
+  },
+  {
+    "id": "cat_pending25",
+    "name": "Viêm mô tế bào có mủ / áp xe",
+    "specialty": "Da – mô mềm"
+  },
+  {
+    "id": "cat_pending26",
+    "name": "Nhiễm khuẩn da mô mềm hoại tử",
+    "specialty": "Da – mô mềm"
+  },
+  {
+    "id": "cat_pending28",
+    "name": "Nhiễm khuẩn vết mổ",
+    "specialty": "Da – mô mềm"
+  },
+  {
+    "id": "cat_pending30",
+    "name": "Viêm khớp nhiễm khuẩn",
+    "specialty": "Cơ xương khớp"
+  },
+  {
+    "id": "cat_pending31",
+    "name": "Nhiễm khuẩn khớp nhân tạo",
+    "specialty": "Cơ xương khớp"
+  },
+  {
+    "id": "cat_pending32",
+    "name": "Nhiễm khuẩn cột sống",
+    "specialty": "Cơ xương khớp"
+  },
+  {
+    "id": "cat_pending33",
+    "name": "Viêm màng não vi khuẩn",
+    "specialty": "Thần kinh"
+  },
+  {
+    "id": "cat_pending34",
+    "name": "Áp xe não",
+    "specialty": "Thần kinh"
+  },
+  {
+    "id": "cat_pending35",
+    "name": "Nhiễm khuẩn dẫn lưu não thất",
+    "specialty": "Thần kinh"
+  },
+  {
+    "id": "cat_pending37",
+    "name": "Nhiễm khuẩn thiết bị tim mạch",
+    "specialty": "Tim mạch"
+  },
+  {
+    "id": "cat_pending38",
+    "name": "MRSA",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending39",
+    "name": "VRE",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending40",
+    "name": "Enterobacterales sinh ESBL",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending41",
+    "name": "Enterobacterales kháng carbapenem CRE",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending42",
+    "name": "Acinetobacter baumannii kháng carbapenem",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending43",
+    "name": "Pseudomonas aeruginosa DTR",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending44",
+    "name": "Stenotrophomonas maltophilia",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "cat_pending45",
+    "name": "Candida ổ bụng",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_pending46",
+    "name": "Candida tiết niệu",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_pending47",
+    "name": "Aspergillus phổi xâm lấn",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_pending48",
+    "name": "Cryptococcus viêm màng não",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_pending49",
+    "name": "Mucormycosis",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_pending50",
+    "name": "Pneumocystis jirovecii pneumonia",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "cat_v8_2",
+    "name": "Viêm amidan cấp do vi khuẩn",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_3",
+    "name": "Áp xe quanh amidan",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_4",
+    "name": "Áp xe sau họng",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_5",
+    "name": "Viêm xoang cấp do vi khuẩn ở người lớn",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_6",
+    "name": "Viêm xoang mạn đợt cấp nghi nhiễm khuẩn",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_7",
+    "name": "Viêm tai giữa cấp",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_8",
+    "name": "Viêm tai ngoài cấp",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_9",
+    "name": "Viêm tai ngoài ác tính",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_10",
+    "name": "Viêm xương chũm",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_11",
+    "name": "Viêm thanh thiệt cấp",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_12",
+    "name": "Viêm tuyến nước bọt cấp sinh mủ",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_13",
+    "name": "Nhiễm khuẩn khoang cổ sâu",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_14",
+    "name": "Viêm tai giữa mạn chảy mủ",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cat_v8_15",
+    "name": "Nhiễm khuẩn bàn chân đái tháo đường không biến chứng",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_16",
+    "name": "Nhiễm khuẩn bàn chân đái tháo đường mức độ trung bình/nặng",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_17",
+    "name": "Viêm xương tủy liên quan bàn chân đái tháo đường",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_18",
+    "name": "Nhiễm khuẩn ở người bệnh đái tháo đường có DKA/HHS",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_19",
+    "name": "Nhiễm nấm Candida âm hộ–âm đạo ở người bệnh đái tháo đường",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_20",
+    "name": "Nhiễm khuẩn tiết niệu ở người bệnh đái tháo đường",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_21",
+    "name": "Viêm tuyến giáp cấp sinh mủ",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_22",
+    "name": "Nhiễm nấm xâm lấn ở người bệnh suy giảm miễn dịch do bệnh nội tiết",
+    "specialty": "Nội tiết – chuyển hóa"
+  },
+  {
+    "id": "cat_v8_23",
+    "name": "Áp xe quanh chóp răng",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_24",
+    "name": "Nhiễm khuẩn răng lan tỏa",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_25",
+    "name": "Viêm mô tế bào vùng hàm mặt",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_26",
+    "name": "Viêm quanh thân răng",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_27",
+    "name": "Viêm xương hàm",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_28",
+    "name": "Nhiễm khuẩn vùng sàn miệng (Ludwig)",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_29",
+    "name": "Viêm xoang do răng",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "cat_v8_30",
+    "name": "Viêm kết mạc do vi khuẩn",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_31",
+    "name": "Viêm giác mạc do vi khuẩn",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_32",
+    "name": "Viêm nội nhãn sau phẫu thuật",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_33",
+    "name": "Viêm mô tế bào trước vách hốc mắt",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_34",
+    "name": "Viêm mô tế bào hốc mắt",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_35",
+    "name": "Viêm túi lệ cấp",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_36",
+    "name": "Nhiễm nấm giác mạc",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "cat_v8_38",
+    "name": "Viêm nội mạc tử cung hậu sản",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_39",
+    "name": "Nhiễm khuẩn hậu sản",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_40",
+    "name": "Viêm màng ối",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_41",
+    "name": "Áp xe phần phụ",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_42",
+    "name": "Viêm âm đạo do vi khuẩn",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_43",
+    "name": "Nhiễm Candida âm hộ–âm đạo",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_44",
+    "name": "Nhiễm khuẩn tiết niệu thai kỳ",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_45",
+    "name": "Viêm tuyến Bartholin",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "cat_v8_46",
+    "name": "Viêm tai giữa cấp ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_47",
+    "name": "Viêm xoang cấp ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_48",
+    "name": "Viêm phổi cộng đồng ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_49",
+    "name": "Viêm phổi sơ sinh",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_50",
+    "name": "Nhiễm khuẩn huyết sơ sinh",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_51",
+    "name": "Viêm màng não ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_52",
+    "name": "Nhiễm khuẩn tiết niệu ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_53",
+    "name": "Viêm xương tủy ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_54",
+    "name": "Viêm mô tế bào ở trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "cat_v8_55",
+    "name": "Nhiễm khuẩn huyết liên quan catheter trung tâm",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_56",
+    "name": "Nhiễm khuẩn tiết niệu liên quan ống thông",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_57",
+    "name": "Nhiễm khuẩn vị trí mở khí quản",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_58",
+    "name": "Nhiễm khuẩn liên quan ECMO",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_59",
+    "name": "Nhiễm khuẩn thiết bị cấy ghép",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_61",
+    "name": "Nhiễm khuẩn sau ghép tạng",
+    "specialty": "Hồi sức – liên quan thiết bị"
+  },
+  {
+    "id": "cat_v8_62",
+    "name": "Sốt giảm bạch cầu trung tính nguy cơ thấp",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_63",
+    "name": "Sốt giảm bạch cầu trung tính nguy cơ cao",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_64",
+    "name": "Nhiễm nấm xâm lấn ở bệnh nhân huyết học",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_65",
+    "name": "Dự phòng Pneumocystis ở người suy giảm miễn dịch",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_66",
+    "name": "Nhiễm trùng cơ hội ở người HIV",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_67",
+    "name": "Nhiễm khuẩn trên người dùng corticosteroid kéo dài",
+    "specialty": "Miễn dịch – huyết học"
+  },
+  {
+    "id": "cat_v8_68",
+    "name": "Candidemia có giảm bạch cầu trung tính",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_69",
+    "name": "Candida nội tâm mạc",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_70",
+    "name": "Candida viêm nội nhãn",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_71",
+    "name": "Candida viêm xương khớp",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_72",
+    "name": "Candida đường tiết niệu có triệu chứng",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_73",
+    "name": "Aspergillosis xoang xâm lấn",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_74",
+    "name": "Aspergillosis phổi mạn tính",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_75",
+    "name": "Cryptococcus ngoài thần kinh trung ương",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_76",
+    "name": "Nhiễm nấm Histoplasma",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_77",
+    "name": "Nhiễm nấm Talaromyces",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_78",
+    "name": "Nhiễm nấm Fusarium",
+    "specialty": "Nhiễm nấm chuyên sâu"
+  },
+  {
+    "id": "cat_v8_79",
+    "name": "Uốn ván",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_80",
+    "name": "Bạch hầu",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_81",
+    "name": "Ho gà",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_82",
+    "name": "Thương hàn",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_83",
+    "name": "Nhiễm Leptospira",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_84",
+    "name": "Nhiễm Rickettsia",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_85",
+    "name": "Sốt mò",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_86",
+    "name": "Nhiễm khuẩn sau vết cắn động vật",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_87",
+    "name": "Nhiễm khuẩn sau phơi nhiễm nước biển",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_88",
+    "name": "Viêm màng não do lao",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_89",
+    "name": "Lao phổi",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_90",
+    "name": "Nhiễm khuẩn cơ hội do Nocardia",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "cat_v8_91",
+    "name": "Nhiễm trùng đường mật ở người ghép gan",
+    "specialty": "Bệnh truyền nhiễm và khác"
+  },
+  {
+    "id": "sepsis_icu_community",
+    "name": "Nhiễm khuẩn huyết tại ICU – nhánh cộng đồng",
+    "specialty": "Hồi sức tích cực"
+  },
+  {
+    "id": "sepsis_non_icu_community",
+    "name": "Nhiễm khuẩn huyết ngoài ICU – nhánh cộng đồng",
+    "specialty": "Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "cap_icu_umc",
+    "name": "Viêm phổi cộng đồng tại ICU – UMC 2023",
+    "specialty": "Hô hấp"
+  }
+]

@@ -1,0 +1,41 @@
+'use client';
+import {useMemo,useState} from 'react';
+import styles from './decision.module.css';
+
+import {topics, type Reg, type Topic} from "./treatment-data";
+const refs={vn:'https://kcb.vn/van-ban/tai-lieu-huong-dan-su-dung-khang-sinh.html',local:'/antibiotics/empiric/sources'};
+const norm=(s:string)=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+export default function Decision(){
+const [specialty,setSpecialty]=useState('Tất cả chuyên khoa');const [diseaseQuery,setDiseaseQuery]=useState('');const [topic,setTopic]=useState('cap');const [query,setQuery]=useState('');const [scope,setScope]=useState<'Tất cả'|'Quốc tế'|'Việt Nam'>('Tất cả');const [expanded,setExpanded]=useState<string[]>([]);const [safe,setSafe]=useState(false);
+const active=topics.find(t=>t.id===topic)!;
+const specialties=Array.from(new Set(topics.map(t=>t.kind))).sort((a,b)=>a.localeCompare(b,'vi'));
+const visibleTopics=topics.filter(t=>(specialty==='Tất cả chuyên khoa'||t.kind===specialty)&&norm(t.title).includes(norm(diseaseQuery)));
+const shown=useMemo(()=>active.regimens.filter(r=>(scope==='Tất cả'||r.origin===scope)&&norm([r.condition,r.agent,r.category,r.source].join(' ')).includes(norm(query))),[active,scope,query]);
+const toggle=(id:string)=>setExpanded(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]);
+return <main className={styles.page}>
+<div className={styles.bread}><a href='/antibiotics/empiric/sources'>Thư viện nguồn gốc</a><span>›</span> Hỗ trợ lựa chọn điều trị</div>
+<header className={styles.head}><div><div className={styles.eyebrow}>BV199 · KHÁNG SINH & KHÁNG NẤM</div><h1>Lựa chọn điều trị theo bệnh cảnh</h1><p>Chọn hội chứng → phân tầng → xem ưu tiên, thay thế và điều kiện đổi thuốc → đối chiếu guideline.</p></div><a href='/antibiotics/empiric/sources' className={styles.sourceBtn}>Thư viện tài liệu ↗</a></header>
+<div className={styles.warning}>Danh mục đa chuyên khoa; bổ sung phác đồ CDC và NICE đã đối chiếu, nhưng đa số mặt bệnh vẫn chờ thẩm định. Chỉ một số phác đồ quốc tế được nhập cho <b>người lớn</b>, chưa phê duyệt thành phác đồ BV199. Phác đồ quốc tế không đương nhiên là lựa chọn tối ưu tại BV199; cần đối chiếu antibiogram, thuốc sẵn có, đặc điểm bệnh nhân và bác sĩ điều trị.</div>
+<div className={styles.layout}><section className={styles.menu}><h2>1. Danh mục mặt bệnh ({topics.length})</h2>
+<input aria-label='Tìm mặt bệnh' placeholder='Tìm tên bệnh...' value={diseaseQuery} onChange={e=>setDiseaseQuery(e.target.value)} style={{width:'100%',padding:10,border:'1px solid #cbd5e1',borderRadius:9,marginBottom:8}}/>
+<select aria-label='Lọc chuyên khoa' value={specialty} onChange={e=>setSpecialty(e.target.value)} style={{width:'100%',padding:10,border:'1px solid #cbd5e1',borderRadius:9,marginBottom:12}}>
+<option>Tất cả chuyên khoa</option>{specialties.map(g=><option key={g}>{g}</option>)}
+</select>
+<div style={{fontSize:12,marginBottom:10,color:'#64748b'}}>Đang hiển thị {visibleTopics.length} mặt bệnh</div>
+{visibleTopics.map(t=><button key={t.id} className={topic===t.id?styles.menuActive:styles.menuItem} onClick={()=>{setTopic(t.id);setQuery('');setExpanded([])}}><span>{t.title}</span><small>{t.regimens.length ? `${t.regimens.length} lựa chọn` : "Chờ thẩm định"} · {t.kind}</small></button>)}<div className={styles.menuNote}>Danh mục bao phủ nhiều nhóm mặt bệnh. Chỉ những bệnh có regimen đã xác minh mới hiển thị thuốc–liều. Không coi tên bệnh là phác đồ.</div></section>
+<section className={styles.content}><div className={styles.sectionHead}><div><div className={styles.eyebrow}>2. ĐÁNH GIÁ TRƯỚC ĐIỀU TRỊ</div><h2>{active.title}</h2><p>{active.context}</p></div></div><div className={styles.checks}>{active.checks.map(x=><label key={x}><input type='checkbox' onChange={()=>{}} />{x}</label>)}</div><label className={styles.safety}><input type='checkbox' checked={safe} onChange={e=>setSafe(e.target.checked)}/> Tôi hiểu các liều tham khảo chưa được cá thể hóa theo bệnh nhân và phải kiểm tra guideline trước khi sử dụng</label>
+<div className={styles.toolbar}><div><h2>3. Phác đồ & phương án thay thế</h2><p>Tên tài liệu và năm được hiển thị; số trang không hiển thị.</p></div><div className={styles.filters}><select value={scope} onChange={e=>setScope(e.target.value as any)} aria-label='Nguồn hướng dẫn'><option>Tất cả</option><option>Quốc tế</option><option>Việt Nam</option></select><input value={query} onChange={e=>setQuery(e.target.value)} placeholder='Tìm thuốc / lựa chọn...' aria-label='Tìm thuốc'/></div></div>
+{scope==='Việt Nam'&&<div className={styles.warning}>Hiện chưa có regimen Việt Nam được xác minh cấu trúc thuốc–liều cho trang này. Không hiển thị phác đồ suy đoán. <a href={refs.local}>Mở dữ liệu gốc UMC / Bạch Mai / Xanh Pôn</a>.</div>}
+<div className={styles.cards}>{shown.map(r=><article className={styles.card} key={r.id}><div className={styles.cardHeader}><div className={styles.meta}><span className={r.category==='Ưu tiên'?styles.preferred:styles.alternative}>{r.category}</span><span>{r.origin}</span><span>{r.year}</span></div><h3>{r.condition}</h3><p>{r.label}</p></div><div className={styles.drugName}>{r.agent}</div><div className={styles.detailGrid}><div><small>Liều và tần suất</small><strong>{r.dose}</strong></div><div><small>Đường dùng</small><strong>{r.route}</strong></div><div><small>Thời gian / theo dõi</small><strong>{r.duration}</strong></div></div><div className={styles.sourceLine}><span>Nguồn: <b>{r.source} ({r.year})</b></span><a href={r.url} target='_blank' rel='noopener noreferrer'>Mở guideline gốc ↗</a></div><button className={styles.expand} onClick={()=>toggle(r.id)}>{expanded.includes(r.id)?'Ẩn điều kiện và cảnh báo −':'Xem khi nào dùng / khi nào tránh / khi nào đổi thuốc +'}</button>{expanded.includes(r.id)&&<div className={styles.criteria}><p><b>Chỉ lựa chọn khi:</b> {r.criteria}</p><p><b>Không phù hợp / cần kiểm tra:</b> {r.avoid}</p><p><b>Đánh giá lại / đổi thuốc:</b> {r.review}</p></div>}</article>)}{shown.length===0&&<div className={styles.empty}>CHƯA CÓ PHÁC ĐỒ THUỐC–LIỀU ĐÃ XÁC MINH CHO MẶT BỆNH NÀY. Cần nhập và thẩm định trước khi dùng; không tự suy diễn từ PDF hoặc từ bệnh khác.</div>}</div>
+<div className={styles.locals}><h2>4. Đối chiếu tài liệu Việt Nam</h2><p>Danh mục nguồn trong nước cần ánh xạ từng regimen và xác minh trước khi dùng. Việc có tên tài liệu không có nghĩa đã trích xuất đầy đủ phác đồ.</p><a href={refs.vn} target='_blank' rel='noopener noreferrer'>Bộ Y tế – Hướng dẫn sử dụng kháng sinh (708/QĐ-BYT, 2015) ↗</a><a href={refs.local}>UMC 2023 · Bạch Mai 2023 · Xanh Pôn 2025 (kho dữ liệu nội bộ) ↗</a></div>
+</section><section className={styles.locals} style={{marginTop:18}}><h2>5. Hướng dẫn quốc tế chính thức để tiếp tục chuẩn hóa</h2><p>Liên kết tham khảo; không có nghĩa mọi regimen trong các tài liệu này đã được nhập hoặc phê duyệt.</p>
+<a href="https://www.cdc.gov/group-a-strep/hcp/clinical-guidance/strep-throat.html" target="_blank" rel="noopener noreferrer">CDC – GAS pharyngitis ↗</a>
+<a href="https://www.nice.org.uk/guidance/ng250/chapter/recommendations" target="_blank" rel="noopener noreferrer">NICE NG250 – Pneumonia ↗</a>
+<a href="https://www.cdc.gov/std/treatment-guidelines/candidiasis.htm" target="_blank" rel="noopener noreferrer">CDC – Vulvovaginal candidiasis ↗</a>
+<a href="https://www.idsociety.org/practice-guideline/diabetic-foot-infections/" target="_blank" rel="noopener noreferrer">IWGDF/IDSA – Diabetic foot infections ↗</a>
+<a href="https://www.idsociety.org/practice-guideline/amr-guidance/" target="_blank" rel="noopener noreferrer">IDSA – AMR guidance ↗</a>
+<a href="https://www.idsociety.org/practice-guideline/candidiasis/" target="_blank" rel="noopener noreferrer">IDSA – Candidiasis ↗</a>
+<a href="https://uroweb.org/guidelines/urological-infections" target="_blank" rel="noopener noreferrer">EAU – Urological infections ↗</a>
+<a href="https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-adults/" target="_blank" rel="noopener noreferrer">ATS/IDSA – CAP ↗</a>
+</section></div><footer className={styles.footer}>Bản V11 · Bản hỗ trợ đối chiếu y văn, không tự sinh y lệnh. Trang PDF được giữ trong dữ liệu gốc để kiểm định; không trình bày số trang trên giao diện lâm sàng.</footer></main>
+}

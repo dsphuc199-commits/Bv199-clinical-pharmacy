@@ -1,0 +1,1166 @@
+import type {
+  ClinicalSyndrome,
+} from "./types";
+
+/* =========================================================
+   BV199 CLINICAL PHARMACY
+   TAI MŨI HỌNG - ENT / OTOLARYNGOLOGY
+
+   Nguyên tắc:
+   - Không dùng kháng sinh cho hội chứng virus đơn thuần.
+   - Xác định dấu biến chứng ổ mắt, nội sọ, đường thở.
+   - Áp xe / deep neck infection cần source control.
+   - Liều cuối cùng phải kiểm tra renal dosing / allergy /
+     pregnancy / interaction / PK-PD nếu có chỉ định.
+========================================================= */
+
+export const entSyndromes: ClinicalSyndrome[] = [
+
+  /* =======================================================
+     01. VIÊM MŨI XOANG CẤP DO VIRUS
+  ======================================================= */
+
+  {
+    id:
+      "acute-viral-rhinosinusitis",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm mũi xoang cấp do virus",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+    ],
+
+    severity: [
+      "Nhẹ",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Virus đường hô hấp",
+    ],
+
+    assessment: [
+      "Đánh giá thời gian triệu chứng.",
+      "Nếu triệu chứng ≤ khoảng 10 ngày và không xấu đi rõ, ưu tiên nguyên nhân virus.",
+      "Đánh giá đau mặt, nghẹt mũi, chảy mũi.",
+      "Tìm dấu biến chứng ổ mắt hoặc nội sọ.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị",
+
+        drugs: [
+          "Không dùng kháng sinh thường quy.",
+          "Điều trị triệu chứng phù hợp.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "aao-hns-sinusitis-2025",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo diễn biến triệu chứng.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại nếu triệu chứng kéo dài, nặng lên rõ hoặc xuất hiện biến chứng.",
+    ],
+
+    deEscalation: [
+      "Không khởi trị kháng sinh nếu chưa có bằng chứng phù hợp với viêm xoang do vi khuẩn.",
+    ],
+
+    renalAdjustment:
+      false,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "aao-hns-sinusitis-2025",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     02. VIÊM MŨI XOANG CẤP DO VI KHUẨN
+  ======================================================= */
+
+  {
+    id:
+      "acute-bacterial-rhinosinusitis",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm mũi xoang cấp do vi khuẩn",
+
+    aliases: [
+      "ABRS",
+      "Acute bacterial rhinosinusitis",
+    ],
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+      "Nội trú nếu biến chứng",
+    ],
+
+    severity: [
+      "Theo phân tầng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus pneumoniae",
+      "Haemophilus influenzae",
+      "Moraxella catarrhalis",
+    ],
+
+    assessment: [
+      "Triệu chứng kéo dài khoảng ≥10 ngày không cải thiện.",
+      "Hoặc diễn tiến xấu rõ sau giai đoạn ban đầu nhẹ hơn.",
+      "Đánh giá sốt, đau mặt khu trú, dịch mũi mủ.",
+      "Đánh giá dị ứng beta-lactam.",
+      "Đánh giá kháng sinh sử dụng gần đây.",
+      "Tìm biến chứng ổ mắt.",
+      "Tìm biến chứng nội sọ.",
+    ],
+
+    sourceControl: [
+      "Đánh giá dẫn lưu xoang / can thiệp TMH nếu có biến chứng hoặc không đáp ứng.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị ưu tiên",
+
+        drugs: [
+          "Amoxicillin/clavulanate thường là lựa chọn ưu tiên khi quyết định dùng kháng sinh.",
+          "Không sử dụng kháng sinh cho mọi trường hợp viêm xoang cấp.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "aao-hns-sinusitis-2025",
+          },
+
+          {
+            sourceId:
+              "idsa-rhinosinusitis",
+          },
+        ],
+      },
+    ],
+
+    alternatives: [
+      {
+        title:
+          "Dị ứng beta-lactam",
+
+        drugs: [
+          "Chọn thuốc thay thế theo loại phản ứng dị ứng, mức độ bệnh và guideline.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "aao-hns-sinusitis-2025",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Ưu tiên liệu trình ngắn phù hợp ở người lớn đáp ứng tốt.",
+      "Cá thể hóa nếu biến chứng hoặc suy giảm miễn dịch.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại nếu không cải thiện hoặc xấu đi.",
+      "Tìm chẩn đoán khác hoặc vi khuẩn kháng thuốc.",
+    ],
+
+    deEscalation: [
+      "Không kéo dài kháng sinh nếu diễn biến phù hợp nhiễm virus.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "aao-hns-sinusitis-2025",
+      },
+
+      {
+        sourceId:
+          "idsa-rhinosinusitis",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     03. VIÊM XOANG MẠN / ĐỢT CẤP
+  ======================================================= */
+
+  {
+    id:
+      "chronic-rhinosinusitis-exacerbation",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm mũi xoang mạn - đợt cấp nghi nhiễm khuẩn",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Theo phân tầng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Phụ thuộc tiền sử điều trị và can thiệp xoang",
+      "Staphylococcus aureus",
+      "Gram âm ở người bệnh có can thiệp / kháng sinh nhiều lần",
+    ],
+
+    assessment: [
+      "Xác nhận chẩn đoán viêm xoang mạn.",
+      "Đánh giá polyp.",
+      "Đánh giá phẫu thuật xoang trước đó.",
+      "Kháng sinh đã sử dụng.",
+      "Nuôi cấy định hướng nếu bệnh dai dẳng hoặc tái phát nhiều.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Nguyên tắc",
+
+        drugs: [
+          "Không dùng kháng sinh kéo dài thường quy chỉ vì có viêm xoang mạn.",
+          "Kháng sinh chỉ khi có bằng chứng đợt cấp nhiễm khuẩn phù hợp.",
+          "Ưu tiên điều trị dựa vào cấy trong bệnh tái phát / khó trị.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "aao-hns-sinusitis-2025",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo tình trạng đợt cấp và đáp ứng.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại chẩn đoán, nội soi / CT khi phù hợp.",
+    ],
+
+    deEscalation: [
+      "Ngừng hoặc thu hẹp kháng sinh khi không còn bằng chứng nhiễm khuẩn.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "aao-hns-sinusitis-2025",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     04. VIÊM HỌNG / AMIDAN CẤP
+  ======================================================= */
+
+  {
+    id:
+      "acute-pharyngotonsillitis",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm họng / viêm amidan cấp",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+    ],
+
+    severity: [
+      "Theo phân tầng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Phần lớn do virus",
+      "Streptococcus pyogenes",
+    ],
+
+    assessment: [
+      "Đánh giá dấu hiệu nhiễm virus.",
+      "Sử dụng clinical score phù hợp để xác định người bệnh cần xét nghiệm GAS.",
+      "RADT / xét nghiệm GAS khi có chỉ định.",
+      "Đánh giá dị ứng penicillin.",
+      "Tìm dấu áp xe quanh amidan.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Nếu không có bằng chứng GAS",
+
+        drugs: [
+          "Không dùng kháng sinh thường quy.",
+          "Điều trị triệu chứng.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "idsa-gas-2025",
+          },
+        ],
+      },
+
+      {
+        title:
+          "Nếu xác định GAS",
+
+        drugs: [
+          "Penicillin hoặc amoxicillin là lựa chọn chuẩn nếu không dị ứng.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "idsa-gas-2025",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo kháng sinh lựa chọn và guideline GAS.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại nếu đau tăng, nuốt khó nhiều, khít hàm, lệch lưỡi gà hoặc khó thở.",
+    ],
+
+    deEscalation: [
+      "Không tiếp tục kháng sinh nếu đánh giá cho thấy nguyên nhân virus.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "idsa-gas-2025",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     05. VIÊM HỌNG DO GAS
+  ======================================================= */
+
+  {
+    id:
+      "gas-pharyngitis",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm họng do Streptococcus nhóm A",
+
+    aliases: [
+      "GAS pharyngitis",
+    ],
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+    ],
+
+    severity: [
+      "Theo phân tầng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus pyogenes",
+    ],
+
+    assessment: [
+      "Clinical scoring system.",
+      "RADT / xét nghiệm vi sinh khi chỉ định.",
+      "Đánh giá dị ứng penicillin.",
+      "Phân biệt người mang GAS với nhiễm trùng thật.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Lựa chọn ưu tiên",
+
+        drugs: [
+          "Penicillin.",
+          "Hoặc amoxicillin.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "idsa-gas-2025",
+          },
+        ],
+      },
+    ],
+
+    alternatives: [
+      {
+        title:
+          "Dị ứng penicillin",
+
+        drugs: [
+          "Lựa chọn thay thế phụ thuộc loại phản ứng dị ứng và kháng macrolide tại địa phương.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "idsa-gas-2025",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo kháng sinh được lựa chọn.",
+    ],
+
+    reassessment: [
+      "Đánh giá biến chứng mủ nếu triệu chứng xấu.",
+    ],
+
+    deEscalation: [
+      "Không điều trị người mang GAS không phù hợp lâm sàng.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "idsa-gas-2025",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     06. ÁP XE QUANH AMIDAN
+  ======================================================= */
+
+  {
+    id:
+      "peritonsillar-abscess",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Áp xe quanh amidan",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Cấp cứu",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Nặng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus pyogenes",
+      "Streptococcus anginosus group",
+      "Staphylococcus aureus",
+      "Vi khuẩn kỵ khí khoang miệng",
+    ],
+
+    assessment: [
+      "Đau họng thường lệch một bên.",
+      "Khít hàm.",
+      "Giọng ngậm hột thị.",
+      "Lệch lưỡi gà.",
+      "Đánh giá đường thở.",
+      "Đánh giá lan khoang cổ sâu.",
+    ],
+
+    sourceControl: [
+      "Chọc hút hoặc rạch dẫn lưu khi có chỉ định.",
+      "Hội chẩn Tai Mũi Họng.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị kinh nghiệm",
+
+        drugs: [
+          "Phủ Streptococcus và vi khuẩn kỵ khí vùng hầu họng.",
+          "Beta-lactam/beta-lactamase inhibitor là lựa chọn thường dùng.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-deep-neck",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo source control và đáp ứng.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại đường thở và khả năng lan rộng.",
+    ],
+
+    deEscalation: [
+      "Điều chỉnh theo cấy nếu có bệnh phẩm.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-deep-neck",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     07. NHIỄM KHUẨN CỔ SÂU
+  ======================================================= */
+
+  {
+    id:
+      "deep-neck-space-infection",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Nhiễm khuẩn khoang cổ sâu",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Cấp cứu",
+      "Nội trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Nặng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus spp.",
+      "Staphylococcus aureus",
+      "Gram âm tùy nguồn",
+      "Vi khuẩn kỵ khí khoang miệng",
+    ],
+
+    assessment: [
+      "Đánh giá đường thở ngay.",
+      "CT cổ có cản quang khi phù hợp.",
+      "Tìm nguồn răng, amidan, tuyến nước bọt.",
+      "Đánh giá mediastinitis.",
+      "Lấy mủ để cấy khi dẫn lưu.",
+    ],
+
+    sourceControl: [
+      "Bảo vệ đường thở khi cần.",
+      "Dẫn lưu ổ áp xe.",
+      "Loại bỏ nguồn nhiễm.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị kinh nghiệm",
+
+        drugs: [
+          "Phủ Streptococcus + Staphylococcus + kỵ khí khoang miệng.",
+          "Mở rộng Gram âm/MRSA khi có yếu tố nguy cơ.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-deep-neck",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo vị trí, source control và biến chứng.",
+    ],
+
+    reassessment: [
+      "Theo dõi sát đường thở và lan xuống trung thất.",
+    ],
+
+    deEscalation: [
+      "Thu hẹp theo cấy mủ / máu.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-deep-neck",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     08. VIÊM NẮP THANH QUẢN
+  ======================================================= */
+
+  {
+    id:
+      "epiglottitis-adult",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm nắp thanh quản ở người lớn",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Cấp cứu",
+      "ICU",
+    ],
+
+    severity: [
+      "Nặng",
+      "Nguy cơ tắc đường thở",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Haemophilus influenzae",
+      "Streptococcus pneumoniae",
+      "Streptococcus pyogenes",
+      "Staphylococcus aureus",
+    ],
+
+    assessment: [
+      "Ưu tiên đánh giá và bảo vệ đường thở.",
+      "Hội chẩn Tai Mũi Họng / Gây mê hồi sức.",
+      "Không thực hiện thao tác gây kích thích đường thở không cần thiết.",
+      "Cấy máu khi phù hợp.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Kháng sinh kinh nghiệm",
+
+        drugs: [
+          "Cephalosporin thế hệ 3.",
+          "Cân nhắc phủ MRSA nếu có yếu tố nguy cơ.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-deep-neck",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo đáp ứng và tác nhân.",
+    ],
+
+    reassessment: [
+      "Theo dõi đường thở liên tục trong giai đoạn nguy cơ.",
+    ],
+
+    deEscalation: [
+      "Điều chỉnh theo cấy và đáp ứng.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-deep-neck",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     09. VIÊM TAI NGOÀI CẤP
+  ======================================================= */
+
+  {
+    id:
+      "acute-otitis-externa",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm tai ngoài cấp",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Nhẹ / trung bình",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Pseudomonas aeruginosa",
+      "Staphylococcus aureus",
+    ],
+
+    assessment: [
+      "Đánh giá ống tai.",
+      "Đánh giá màng nhĩ.",
+      "Đái tháo đường / suy giảm miễn dịch.",
+      "Đánh giá lan ngoài ống tai.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị",
+
+        drugs: [
+          "Điều trị tại chỗ là nền tảng khi nhiễm khuẩn còn khu trú.",
+          "Không dùng kháng sinh toàn thân thường quy cho viêm tai ngoài không biến chứng.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "aao-hns-otitis-externa",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo đáp ứng tại chỗ.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại nếu không cải thiện trong thời gian phù hợp.",
+      "Tìm viêm tai ngoài ác tính ở người nguy cơ.",
+    ],
+
+    deEscalation: [
+      "Không mở rộng kháng sinh toàn thân nếu không có chỉ định.",
+    ],
+
+    renalAdjustment:
+      false,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "aao-hns-otitis-externa",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     10. VIÊM TAI NGOÀI ÁC TÍNH
+  ======================================================= */
+
+  {
+    id:
+      "necrotizing-otitis-externa",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm tai ngoài ác tính / viêm tai ngoài hoại tử",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Nội trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Nặng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Pseudomonas aeruginosa",
+      "Staphylococcus aureus",
+      "Nấm ở một số người bệnh",
+    ],
+
+    assessment: [
+      "Đái tháo đường.",
+      "Suy giảm miễn dịch.",
+      "Đau tai nhiều / đau về đêm.",
+      "Mô hạt ống tai.",
+      "CT/MRI khi phù hợp.",
+      "Cấy bệnh phẩm trước điều trị khi có thể.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị",
+
+        drugs: [
+          "Kháng sinh toàn thân có hoạt tính với Pseudomonas.",
+          "Chọn điều trị đích theo cấy và AST.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-deep-neck",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Thường cần điều trị kéo dài; dựa trên lâm sàng, viêm và hình ảnh.",
+    ],
+
+    reassessment: [
+      "Theo dõi đau, dấu thần kinh sọ và đáp ứng viêm.",
+    ],
+
+    deEscalation: [
+      "Điều chỉnh theo cấy và AST.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-deep-neck",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     11. VIÊM TAI GIỮA CẤP
+  ======================================================= */
+
+  {
+    id:
+      "acute-otitis-media-adult",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm tai giữa cấp ở người lớn",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Ngoại trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Theo phân tầng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus pneumoniae",
+      "Haemophilus influenzae",
+      "Moraxella catarrhalis",
+    ],
+
+    assessment: [
+      "Soi tai.",
+      "Xác định dịch tai giữa / màng nhĩ phồng.",
+      "Đánh giá thủng màng nhĩ.",
+      "Đánh giá viêm xương chũm.",
+      "Đánh giá kháng sinh gần đây.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị",
+
+        drugs: [
+          "Amoxicillin thường là lựa chọn đầu khi cần kháng sinh.",
+          "Amoxicillin/clavulanate khi có yếu tố gợi ý vi khuẩn sinh beta-lactamase hoặc thất bại phù hợp.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-otitis",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo mức độ, đáp ứng và guideline địa phương.",
+    ],
+
+    reassessment: [
+      "Đánh giá lại khi không cải thiện hoặc xuất hiện đau vùng chũm.",
+    ],
+
+    deEscalation: [
+      "Tránh kéo dài kháng sinh không cần thiết.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-otitis",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+
+  /* =======================================================
+     12. VIÊM XƯƠNG CHŨM
+  ======================================================= */
+
+  {
+    id:
+      "mastoiditis",
+
+    category:
+      "Tai Mũi Họng",
+
+    title:
+      "Viêm xương chũm",
+
+    population:
+      "Người lớn",
+
+    setting: [
+      "Nội trú",
+      "Tai Mũi Họng",
+    ],
+
+    severity: [
+      "Nặng",
+    ],
+
+    verification:
+      "VERIFIED_SUMMARY",
+
+    commonPathogens: [
+      "Streptococcus pneumoniae",
+      "Streptococcus pyogenes",
+      "Staphylococcus aureus",
+      "Pseudomonas aeruginosa ở bệnh tai mạn / can thiệp",
+    ],
+
+    assessment: [
+      "Khám TMH.",
+      "CT xương thái dương khi phù hợp.",
+      "Tìm áp xe dưới màng xương.",
+      "Tìm biến chứng nội sọ.",
+      "Cấy dịch tai / bệnh phẩm phẫu thuật khi có.",
+    ],
+
+    sourceControl: [
+      "Hội chẩn Tai Mũi Họng.",
+      "Dẫn lưu / mastoidectomy khi có chỉ định.",
+    ],
+
+    firstLine: [
+      {
+        title:
+          "Điều trị kinh nghiệm",
+
+        drugs: [
+          "Cephalosporin thế hệ 3 hoặc beta-lactam phù hợp.",
+          "Thêm phủ MRSA/Pseudomonas theo yếu tố nguy cơ.",
+        ],
+
+        sources: [
+          {
+            sourceId:
+              "ent-otitis",
+          },
+        ],
+      },
+    ],
+
+    duration: [
+      "Theo biến chứng, source control và đáp ứng.",
+    ],
+
+    reassessment: [
+      "Theo dõi biến chứng nội sọ và thần kinh.",
+    ],
+
+    deEscalation: [
+      "Điều trị đích theo cấy.",
+    ],
+
+    renalAdjustment:
+      true,
+
+    sourceRefs: [
+      {
+        sourceId:
+          "ent-otitis",
+      },
+    ],
+
+    requiresBV199Validation:
+      true,
+  },
+];

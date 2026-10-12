@@ -1,0 +1,421 @@
+import type {
+  GuidelineSource,
+} from "./types";
+
+export const guidelineSources: GuidelineSource[] = [
+  {
+    id: "bach-mai-2023",
+
+    name:
+      "Bệnh viện Bạch Mai 2023",
+
+    title:
+      "Hướng dẫn sử dụng kháng sinh trong lâm sàng tại Bệnh viện Bạch Mai",
+
+    year: 2023,
+
+    kind:
+      "hospital",
+
+    note:
+      "Tài liệu người dùng cung cấp. PDF scan; cần đối chiếu nguyên trang trước khi nhập liều chi tiết.",
+  },
+
+  {
+    id:
+      "xanh-pon-2025",
+
+    name:
+      "Bệnh viện Đa khoa Xanh Pôn 2025",
+
+    title:
+      "Hướng dẫn sử dụng kháng sinh",
+
+    year:
+      2025,
+
+    kind:
+      "hospital",
+
+    note:
+      "Tài liệu người dùng cung cấp. PDF scan; có phần người lớn, trẻ em, TDM, dự phòng và điều chỉnh liều.",
+  },
+
+  {
+    id:
+      "umd-2023",
+
+    name:
+      "BV Đại học Y Dược TP.HCM 2023",
+
+    title:
+      "Hướng dẫn sử dụng kháng sinh năm 2023",
+
+    year:
+      2023,
+
+    kind:
+      "hospital",
+
+    note:
+      "Ban hành kèm QĐ 2626/QĐ-BVĐHYD ngày 14/08/2023.",
+  },
+
+  {
+    id:
+      "moh-708-2015",
+
+    name:
+      "Bộ Y tế - QĐ 708/QĐ-BYT",
+
+    title:
+      "Hướng dẫn sử dụng kháng sinh",
+
+    year:
+      2015,
+
+    kind:
+      "national",
+
+    url:
+      "https://kcb.vn/van-ban/tai-lieu-huong-dan-su-dung-khang-sinh.html",
+  },
+
+  {
+    id:
+      "moh-5631-2020",
+
+    name:
+      "Bộ Y tế - QĐ 5631/QĐ-BYT",
+
+    title:
+      "Hướng dẫn thực hiện quản lý sử dụng kháng sinh trong bệnh viện",
+
+    year:
+      2020,
+
+    kind:
+      "national",
+  },
+
+  {
+    id:
+      "ssc-2026",
+
+    name:
+      "Surviving Sepsis Campaign 2026",
+
+    title:
+      "International Guidelines for Management of Sepsis and Septic Shock",
+
+    year:
+      2026,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.sccm.org/survivingsepsiscampaign/guidelines-and-resources/surviving-sepsis-campaign-adult-guidelines",
+  },
+
+  {
+    id:
+      "idsa-amr-2026",
+
+    name:
+      "IDSA AMR Guidance 2026",
+
+    title:
+      "Treatment of Antimicrobial Resistant Gram-Negative Infections",
+
+    year:
+      2026,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/amr-guidance",
+  },
+
+  {
+    id:
+      "idsa-cuti-2025",
+
+    name:
+      "IDSA cUTI 2025",
+
+    title:
+      "Complicated Urinary Tract Infections",
+
+    year:
+      2025,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/complicated-urinary-tract-infections/",
+  },
+
+  {
+    id:
+      "eau-uti-2026",
+
+    name:
+      "EAU Urological Infections 2026",
+
+    title:
+      "EAU Guidelines on Urological Infections",
+
+    year:
+      2026,
+
+    kind:
+      "international",
+
+    url:
+      "https://uroweb.org/guidelines/urological-infections",
+  },
+
+  {
+    id:
+      "idsa-sab-2026",
+
+    name:
+      "IDSA/ESCMID SAB 2026",
+
+    title:
+      "Staphylococcus aureus Bacteremia Consensus Statements",
+
+    year:
+      2026,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/staphylococcus-aureus-bacteremia/",
+  },
+
+  {
+    id:
+      "esc-ie-2023",
+
+    name:
+      "ESC Endocarditis 2023",
+
+    title:
+      "ESC Guidelines for the Management of Endocarditis",
+
+    year:
+      2023,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/endocarditis/",
+  },
+
+  {
+    id:
+      "idsa-iai-2024",
+
+    name:
+      "IDSA cIAI 2024",
+
+    title:
+      "Complicated Intra-abdominal Infections",
+
+    year:
+      2024,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/intra-abdominal-infections/",
+  },
+
+  {
+    id:
+      "iwgdf-idsa-dfi-2023",
+
+    name:
+      "IWGDF/IDSA DFI 2023",
+
+    title:
+      "Diabetes-Related Foot Infections",
+
+    year:
+      2023,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/diabetic-foot-infections/",
+  },
+
+  {
+    id:
+      "ats-idsa-cap",
+
+    name:
+      "ATS/IDSA CAP",
+
+    title:
+      "Community-Acquired Pneumonia in Adults",
+
+    year:
+      2019,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-adults/",
+  },
+
+  {
+    id:
+      "ats-idsa-hap-vap",
+
+    name:
+      "ATS/IDSA HAP/VAP",
+
+    title:
+      "Hospital-Acquired and Ventilator-Associated Pneumonia",
+
+    year:
+      2016,
+
+    kind:
+      "international",
+
+    url:
+      "https://www.idsociety.org/practice-guideline/hap_vap/",
+  },
+];
+
+export const sourceMap =
+  Object.fromEntries(
+    guidelineSources.map(
+      (
+        source
+      ) => [
+        source.id,
+        source,
+      ]
+    )
+  );
+  {
+  id: "aao-hns-sinusitis-2025",
+
+  name:
+    "AAO-HNS Adult Sinusitis 2025",
+
+  title:
+    "Clinical Practice Guideline: Adult Sinusitis Update",
+
+  year:
+    2025,
+
+  kind:
+    "international",
+
+  url:
+    "https://www.entnet.org/quality-practice/quality-products/clinical-practice-guidelines/cpg-adult-sinusitis/",
+},
+
+{
+  id:
+    "idsa-rhinosinusitis",
+
+  name:
+    "IDSA Rhinosinusitis",
+
+  title:
+    "Acute Bacterial Rhinosinusitis in Children and Adults",
+
+  year:
+    2012,
+
+  kind:
+    "international",
+
+  url:
+    "https://www.idsociety.org/practice-guideline/rhinosinusitis/",
+},
+
+{
+  id:
+    "idsa-gas-2025",
+
+  name:
+    "IDSA GAS Pharyngitis 2025",
+
+  title:
+    "Group A Streptococcal Pharyngitis Guideline Update",
+
+  year:
+    2025,
+
+  kind:
+    "international",
+
+  url:
+    "https://www.idsociety.org/practice-guideline/streptococcal-pharyngitis2/",
+},
+
+{
+  id:
+    "aao-hns-otitis-externa",
+
+  name:
+    "AAO-HNS Acute Otitis Externa",
+
+  title:
+    "Clinical Practice Guideline: Acute Otitis Externa",
+
+  year:
+    2014,
+
+  kind:
+    "international",
+},
+
+{
+  id:
+    "ent-otitis",
+
+  name:
+    "ENT Otitis Guidance",
+
+  title:
+    "Otitis media / mastoiditis antimicrobial guidance",
+
+  year:
+    2026,
+
+  kind:
+    "international",
+},
+
+{
+  id:
+    "ent-deep-neck",
+
+  name:
+    "ENT Deep Neck Infection Guidance",
+
+  title:
+    "Deep neck infection / peritonsillar abscess clinical guidance",
+
+  year:
+    2026,
+
+  kind:
+    "international",
+},

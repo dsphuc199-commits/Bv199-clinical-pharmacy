@@ -1,0 +1,102 @@
+[
+  {
+    "id": "gas",
+    "name": "Viêm họng do liên cầu nhóm A",
+    "specialty": "Tai Mũi Họng"
+  },
+  {
+    "id": "cap",
+    "name": "Viêm phổi cộng đồng",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "sepsis",
+    "name": "Nhiễm khuẩn huyết, hồi sức",
+    "specialty": "Hồi sức – Nhiễm khuẩn huyết"
+  },
+  {
+    "id": "candidemia",
+    "name": "Candida huyết không giảm bạch cầu",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "dfi",
+    "name": "Nhiễm khuẩn bàn chân đái tháo đường",
+    "specialty": "Nội tiết – Bàn chân ĐTĐ"
+  },
+  {
+    "id": "hap",
+    "name": "Viêm phổi bệnh viện",
+    "specialty": "Hô hấp"
+  },
+  {
+    "id": "meningitis",
+    "name": "Viêm màng não do vi khuẩn",
+    "specialty": "Thần kinh"
+  },
+  {
+    "id": "pyelo",
+    "name": "Viêm thận – bể thận",
+    "specialty": "Tiết niệu"
+  },
+  {
+    "id": "abdomen",
+    "name": "Nhiễm khuẩn ổ bụng",
+    "specialty": "Ổ bụng – Gan mật"
+  },
+  {
+    "id": "ssti",
+    "name": "Viêm mô tế bào",
+    "specialty": "Da – Mô mềm"
+  },
+  {
+    "id": "endocarditis",
+    "name": "Viêm nội tâm mạc nhiễm khuẩn",
+    "specialty": "Tim mạch"
+  },
+  {
+    "id": "osteomyelitis",
+    "name": "Viêm xương tủy",
+    "specialty": "Cơ xương khớp"
+  },
+  {
+    "id": "pelvic",
+    "name": "Viêm vùng chậu",
+    "specialty": "Sản phụ khoa"
+  },
+  {
+    "id": "pediatric-cap",
+    "name": "Viêm phổi trẻ em",
+    "specialty": "Nhi khoa"
+  },
+  {
+    "id": "keratitis",
+    "name": "Viêm giác mạc nhiễm khuẩn",
+    "specialty": "Mắt"
+  },
+  {
+    "id": "dental",
+    "name": "Áp xe răng",
+    "specialty": "Răng Hàm Mặt"
+  },
+  {
+    "id": "neutropenia",
+    "name": "Sốt giảm bạch cầu trung tính",
+    "specialty": "Huyết học – Ung bướu"
+  },
+  {
+    "id": "aspergillus",
+    "name": "Aspergillosis xâm lấn",
+    "specialty": "Nhiễm nấm"
+  },
+  {
+    "id": "crab",
+    "name": "Nhiễm CRAB",
+    "specialty": "Vi khuẩn đa kháng"
+  },
+  {
+    "id": "clabsi",
+    "name": "Nhiễm khuẩn huyết liên quan catheter",
+    "specialty": "Thiết bị – Nhiễm khuẩn bệnh viện"
+  }
+]

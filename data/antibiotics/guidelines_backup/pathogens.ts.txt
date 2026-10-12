@@ -1,0 +1,61 @@
+export const FULL_PATHOGEN_INDEX = [
+  // Gram âm
+  "Escherichia coli",
+  "Klebsiella pneumoniae",
+  "Klebsiella oxytoca",
+  "Proteus mirabilis",
+  "Enterobacter cloacae complex",
+  "Klebsiella aerogenes",
+  "Citrobacter freundii",
+  "Serratia marcescens",
+  "Morganella morganii",
+  "Providencia spp.",
+  "Pseudomonas aeruginosa",
+  "Acinetobacter baumannii",
+  "Stenotrophomonas maltophilia",
+  "Haemophilus influenzae",
+  "Moraxella catarrhalis",
+  "Neisseria meningitidis",
+  "Neisseria gonorrhoeae",
+
+  // Kiểu kháng
+  "ESBL-E",
+  "AmpC-E",
+  "CRE",
+  "KPC-producing CRE",
+  "NDM / MBL-producing CRE",
+  "OXA-48-like CRE",
+  "DTR Pseudomonas aeruginosa",
+  "CRAB",
+
+  // Gram dương
+  "MSSA",
+  "MRSA",
+  "Coagulase-negative staphylococci",
+  "Streptococcus pneumoniae",
+  "Streptococcus pyogenes",
+  "Streptococcus agalactiae",
+  "Viridans streptococci",
+  "Enterococcus faecalis",
+  "Enterococcus faecium",
+  "VRE",
+
+  // Kỵ khí
+  "Bacteroides fragilis group",
+  "Clostridium spp.",
+  "Clostridioides difficile",
+  "Fusobacterium spp.",
+  "Peptostreptococcus spp.",
+
+  // Không điển hình
+  "Legionella spp.",
+  "Mycoplasma pneumoniae",
+  "Chlamydia pneumoniae",
+
+  // Nấm
+  "Candida albicans",
+  "Candida glabrata",
+  "Candida auris",
+  "Aspergillus spp.",
+  "Cryptococcus spp.",
+] as const;

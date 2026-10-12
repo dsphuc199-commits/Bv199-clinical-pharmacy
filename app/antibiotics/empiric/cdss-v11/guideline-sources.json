@@ -1,0 +1,82 @@
+[
+  {
+    "id": "vn-byt-708",
+    "title": "Bộ Y tế – Hướng dẫn sử dụng kháng sinh",
+    "year": 2015,
+    "country": "VN",
+    "url": "https://kcb.vn/van-ban/tai-lieu-huong-dan-su-dung-khang-sinh.html",
+    "status": "catalogued_not_mapped"
+  },
+  {
+    "id": "vn-umc",
+    "title": "Bệnh viện Đại học Y Dược TP.HCM – Hướng dẫn sử dụng kháng sinh",
+    "year": 2023,
+    "country": "VN",
+    "url": null,
+    "status": "source_not_accessible_in_session"
+  },
+  {
+    "id": "vn-bm",
+    "title": "Bệnh viện Bạch Mai – Hướng dẫn sử dụng kháng sinh",
+    "year": 2023,
+    "country": "VN",
+    "url": null,
+    "status": "source_not_accessible_in_session"
+  },
+  {
+    "id": "vn-xp",
+    "title": "Bệnh viện Xanh Pôn – Hướng dẫn sử dụng kháng sinh",
+    "year": 2025,
+    "country": "VN",
+    "url": null,
+    "status": "source_not_accessible_in_session"
+  },
+  {
+    "id": "cdc-gas",
+    "title": "CDC – Clinical Guidance for Group A Streptococcal Pharyngitis",
+    "year": 2025,
+    "country": "INT",
+    "url": "https://www.cdc.gov/group-a-strep/hcp/clinical-guidance/strep-throat.html",
+    "status": "web_checked"
+  },
+  {
+    "id": "nice-cap",
+    "title": "NICE NG250 – Pneumonia: diagnosis and management",
+    "year": 2025,
+    "country": "INT",
+    "url": "https://www.nice.org.uk/guidance/ng250/chapter/recommendations",
+    "status": "web_checked"
+  },
+  {
+    "id": "idsa-cand",
+    "title": "IDSA – Management of Candidiasis",
+    "year": 2016,
+    "country": "INT",
+    "url": "https://www.idsociety.org/practice-guideline/candidiasis/",
+    "status": "web_checked"
+  },
+  {
+    "id": "idsa-amr",
+    "title": "IDSA – Antimicrobial-Resistant Gram-Negative Infections",
+    "year": 2024,
+    "country": "INT",
+    "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+    "status": "web_checked"
+  },
+  {
+    "id": "idsa-cuti",
+    "title": "IDSA – Complicated UTI",
+    "year": 2025,
+    "country": "INT",
+    "url": "https://www.idsociety.org/practice-guideline/complicated-urinary-tract-infections/",
+    "status": "index_only"
+  },
+  {
+    "id": "iwgdf",
+    "title": "IWGDF/IDSA – Diabetic Foot Infections",
+    "year": 2023,
+    "country": "INT",
+    "url": "https://www.idsociety.org/practice-guideline/diabetic-foot-infections/",
+    "status": "index_only"
+  }
+]

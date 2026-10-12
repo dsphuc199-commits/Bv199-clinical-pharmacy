@@ -1,215 +1,331 @@
-﻿"use client";
+"use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import drugData from "../../data/drug-products.json";
+import drugData from "@/data/drug-products.json";
 
-type DrugProduct = {
+type Drug = {
   id: string;
-  drugCode: string;
-  brandName: string;
-  ingredientName: string;
-  ingredientId: string;
-  strength: string;
-  route: string;
-  dosageForm: string;
-  packageSize: string;
-  registrationNumber: string;
-  manufacturer: string;
-  country: string;
-  unit: string;
-  sourceSheet: string;
+  drugCode?: string;
+  brandName?: string;
+  ingredientName?: string;
+  ingredientId?: string;
+  strength?: string;
+  route?: string;
+  dosageForm?: string;
+  packageSize?: string;
+  registrationNumber?: string;
+  manufacturer?: string;
+  country?: string;
+  unit?: string;
+  sourceSheet?: string;
 };
 
-export default function DrugsPage() {
-  const drugs = drugData as DrugProduct[];
+const drugs = drugData as Drug[];
 
-  const [search, setSearch] = useState("");
-  const [route, setRoute] = useState("Tất cả");
+function normalizeText(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d");
+}
+
+export default function DrugsPage() {
+  const [keyword, setKeyword] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState("");
 
   const routes = useMemo(() => {
-    const values = drugs
-      .map((drug) => drug.route)
-      .filter((value) => value && value.trim() !== "");
+    return Array.from(
+      new Set(
+        drugs
+          .map((drug) => drug.route)
+          .filter(
+            (route): route is string =>
+              Boolean(route)
+          )
+      )
+    ).sort((a, b) => a.localeCompare(b, "vi"));
+  }, []);
 
-    return ["Tất cả", ...Array.from(new Set(values)).sort()];
-  }, [drugs]);
-
-  const filteredDrugs = useMemo(() => {
-    const keyword = search.trim().toLowerCase();
+  const results = useMemo(() => {
+    const q = normalizeText(keyword.trim());
 
     return drugs.filter((drug) => {
-      const matchRoute =
-        route === "Tất cả" || drug.route === route;
+      if (
+        selectedRoute &&
+        drug.route !== selectedRoute
+      ) {
+        return false;
+      }
 
-      const matchSearch =
-        keyword === "" ||
-        drug.brandName?.toLowerCase().includes(keyword) ||
-        drug.ingredientName?.toLowerCase().includes(keyword) ||
-        drug.drugCode?.toLowerCase().includes(keyword) ||
-        drug.strength?.toLowerCase().includes(keyword) ||
-        drug.manufacturer?.toLowerCase().includes(keyword) ||
-        drug.registrationNumber?.toLowerCase().includes(keyword);
+      if (!q) return true;
 
-      return matchRoute && matchSearch;
+      const text = normalizeText(
+        [
+          drug.drugCode,
+          drug.brandName,
+          drug.ingredientName,
+          drug.ingredientId,
+          drug.strength,
+          drug.route,
+          drug.dosageForm,
+          drug.packageSize,
+          drug.registrationNumber,
+          drug.manufacturer,
+          drug.country,
+        ]
+          .filter(Boolean)
+          .join(" ")
+      );
+
+      return text.includes(q);
     });
-  }, [drugs, search, route]);
+  }, [keyword, selectedRoute]);
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-6">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-700">
-            Bệnh viện 199 - Bộ Công an
-          </p>
+    <main className="min-h-screen bg-slate-50 p-6">
+      <div className="mx-auto max-w-7xl">
 
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900">
             Danh mục thuốc Bệnh viện 199
           </h1>
 
           <p className="mt-2 text-slate-600">
-            Tra cứu thuốc theo tên thuốc, hoạt chất, mã thuốc,
-            hàm lượng, số đăng ký hoặc nhà sản xuất.
+            Tra cứu theo tên thuốc, hoạt chất,
+            hàm lượng, đường dùng, số đăng ký
+            hoặc nhà sản xuất.
           </p>
         </div>
 
-        <div className="mb-6 grid gap-4 rounded-2xl bg-white p-5 shadow-sm md:grid-cols-3">
-          <div className="md:col-span-2">
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Tìm kiếm thuốc
-            </label>
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Ví dụ: Meropenem, Atropin, paracetamol..."
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none focus:border-blue-500"
-            />
-          </div>
+          <div className="grid gap-4 md:grid-cols-3">
 
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Đường dùng
-            </label>
+            <div className="md:col-span-2">
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Tìm thuốc
+              </label>
 
-            <select
-              value={route}
-              onChange={(e) => setRoute(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-blue-500"
-            >
-              {routes.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+              <input
+                type="text"
+                value={keyword}
+                onChange={(e) =>
+                  setKeyword(e.target.value)
+                }
+                placeholder="Ví dụ: meropenem, ceftriaxone..."
+                className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Đường dùng
+              </label>
+
+              <select
+                value={selectedRoute}
+                onChange={(e) =>
+                  setSelectedRoute(e.target.value)
+                }
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"
+              >
+                <option value="">
+                  Tất cả
                 </option>
-              ))}
-            </select>
-          </div>
-        </div>
 
-        <div className="mb-4 flex flex-wrap gap-3">
-          <div className="rounded-xl bg-blue-50 px-4 py-3">
-            <span className="text-sm text-slate-600">
-              Tổng số thuốc
-            </span>
-            <div className="text-2xl font-bold text-blue-700">
-              {drugs.length.toLocaleString("vi-VN")}
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-emerald-50 px-4 py-3">
-            <span className="text-sm text-slate-600">
-              Kết quả tìm thấy
-            </span>
-            <div className="text-2xl font-bold text-emerald-700">
-              {filteredDrugs.length.toLocaleString("vi-VN")}
-            </div>
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm">
-              <thead className="bg-slate-100 text-slate-700">
-                <tr>
-                  <th className="px-4 py-3">STT</th>
-                  <th className="px-4 py-3">Tên thuốc</th>
-                  <th className="px-4 py-3">Hoạt chất</th>
-                  <th className="px-4 py-3">Hàm lượng</th>
-                  <th className="px-4 py-3">Đường dùng</th>
-                  <th className="px-4 py-3">Dạng bào chế</th>
-                  <th className="px-4 py-3">Nhà sản xuất</th>
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-slate-100">
-                {filteredDrugs.slice(0, 100).map((drug, index) => (
-                  <tr
-                    key={drug.id}
-                    className="hover:bg-blue-50"
+                {routes.map((route) => (
+                  <option
+                    key={route}
+                    value={route}
                   >
-                    <td className="px-4 py-4 text-slate-500">
-                      {index + 1}
-                    </td>
-
-                    <td className="px-4 py-4">
-    <Link
-  href={`/drugs/${encodeURIComponent(drug.id)}`}
-  className="font-semibold text-blue-700 hover:underline"
->
-  {drug.brandName || "Chưa có dữ liệu"}
-</Link>
-                      <div className="mt-1 text-xs text-slate-500">
-                        Mã: {drug.drugCode || "—"}
-                      </div>
-                    </td>
-
-                    <td className="max-w-md px-4 py-4 text-slate-700">
-                      {drug.ingredientName || "—"}
-                    </td>
-
-                    <td className="px-4 py-4 text-slate-700">
-                      {drug.strength || "—"}
-                    </td>
-
-                    <td className="px-4 py-4 text-slate-700">
-                      {drug.route || "—"}
-                    </td>
-
-                    <td className="px-4 py-4 text-slate-700">
-                      {drug.dosageForm || "—"}
-                    </td>
-
-                    <td className="px-4 py-4 text-slate-700">
-                      {drug.manufacturer || "—"}
-                    </td>
-                  </tr>
+                    {route}
+                  </option>
                 ))}
-              </tbody>
-            </table>
+              </select>
+            </div>
           </div>
 
-          {filteredDrugs.length === 0 && (
-            <div className="p-10 text-center text-slate-500">
-              Không tìm thấy thuốc phù hợp.
-            </div>
-          )}
+        </section>
 
-          {filteredDrugs.length > 100 && (
-            <div className="border-t border-slate-200 bg-amber-50 px-5 py-4 text-sm text-amber-900">
-              Tìm thấy {filteredDrugs.length.toLocaleString("vi-VN")} thuốc.
-              Hiện đang hiển thị 100 kết quả đầu tiên. Hãy nhập từ khóa
-              để thu hẹp kết quả.
-            </div>
-          )}
+        <div className="my-6 flex items-center justify-between">
+
+          <p className="text-sm text-slate-600">
+            Tổng danh mục:{" "}
+            <strong>{drugs.length}</strong>
+            {" • "}
+            Kết quả:{" "}
+            <strong>{results.length}</strong>
+          </p>
+
+          <button
+            type="button"
+            onClick={() => {
+              setKeyword("");
+              setSelectedRoute("");
+            }}
+            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
+          >
+            Xóa bộ lọc
+          </button>
+
         </div>
 
-        <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700">
-          <strong>Lưu ý:</strong> Danh mục này phục vụ tra cứu thuốc tại
-          Bệnh viện 199. Thông tin liều dùng, hiệu chỉnh liều, tương tác
-          thuốc và cảnh báo lâm sàng sẽ được xây dựng và thẩm định riêng.
+        <div className="space-y-4">
+
+          {results
+            .slice(0, 100)
+            .map((drug, index) => (
+
+              <article
+                key={drug.id || index}
+                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+
+                <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900">
+                      {drug.brandName ||
+                        "Chưa có tên thuốc"}
+                    </h2>
+
+                    {drug.ingredientName && (
+                      <p className="mt-1 font-semibold text-blue-700">
+                        {drug.ingredientName}
+                      </p>
+                    )}
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {drug.strength && (
+                        <Badge>
+                          {drug.strength}
+                        </Badge>
+                      )}
+
+                      {drug.route && (
+                        <Badge>
+                          {drug.route}
+                        </Badge>
+                      )}
+
+                      {drug.dosageForm && (
+                        <Badge>
+                          {drug.dosageForm}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className="mt-5 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+
+                  <Info
+                    title="Mã thuốc"
+                    value={drug.drugCode}
+                  />
+
+                  <Info
+                    title="Hoạt chất"
+                    value={drug.ingredientName}
+                  />
+
+                  <Info
+                    title="Hàm lượng"
+                    value={drug.strength}
+                  />
+
+                  <Info
+                    title="Đường dùng"
+                    value={drug.route}
+                  />
+
+                  <Info
+                    title="Dạng bào chế"
+                    value={drug.dosageForm}
+                  />
+
+                  <Info
+                    title="Quy cách"
+                    value={drug.packageSize}
+                  />
+
+                  <Info
+                    title="SĐK / GPNK"
+                    value={drug.registrationNumber}
+                  />
+
+                  <Info
+                    title="Nhà sản xuất"
+                    value={drug.manufacturer}
+                  />
+
+                  <Info
+                    title="Xuất xứ"
+                    value={drug.country}
+                  />
+
+                  <Info
+                    title="Đơn vị"
+                    value={drug.unit}
+                  />
+
+                  <Info
+                    title="Nguồn dữ liệu"
+                    value={drug.sourceSheet}
+                  />
+
+                </div>
+
+              </article>
+
+            ))}
         </div>
+
+        {results.length > 100 && (
+          <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            Có {results.length} kết quả.
+            Hệ thống đang hiển thị 100 thuốc đầu tiên.
+            Hãy nhập tên thuốc hoặc hoạt chất để thu hẹp.
+          </div>
+        )}
+
       </div>
     </main>
+  );
+}
+
+function Badge({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+      {children}
+    </span>
+  );
+}
+
+function Info({
+  title,
+  value,
+}: {
+  title: string;
+  value?: string;
+}) {
+  if (!value) return null;
+
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {title}
+      </p>
+
+      <p className="mt-1 text-sm leading-6 text-slate-700">
+        {value}
+      </p>
+    </div>
   );
 }

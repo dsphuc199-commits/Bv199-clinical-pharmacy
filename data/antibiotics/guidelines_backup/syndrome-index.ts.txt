@@ -1,0 +1,157 @@
+export const FULL_ADULT_SYNDROME_INDEX = [
+  // ======================================================
+  // 01. NHIỄM KHUẨN HUYẾT
+  // ======================================================
+
+  "Sepsis - nguồn cộng đồng",
+  "Sepsis - nguồn bệnh viện / nguy cơ MDR",
+  "Sốc nhiễm khuẩn",
+  "Nhiễm khuẩn huyết chưa rõ ổ",
+  "Nhiễm khuẩn liên quan catheter",
+  "Staphylococcus aureus bacteremia",
+
+  // ======================================================
+  // 02. HÔ HẤP
+  // ======================================================
+
+  "Viêm phổi cộng đồng - ngoại trú",
+  "Viêm phổi cộng đồng - nội trú",
+  "Viêm phổi cộng đồng nặng - ICU",
+  "Viêm phổi bệnh viện - HAP",
+  "Viêm phổi liên quan thở máy - VAP",
+  "Viêm phổi hít",
+  "Đợt cấp COPD nghi nhiễm khuẩn",
+  "Giãn phế quản bội nhiễm",
+  "Viêm phế quản cấp",
+  "Áp xe phổi",
+  "Cúm - đánh giá bội nhiễm vi khuẩn",
+  "Ho gà",
+
+  // ======================================================
+  // 03. THẦN KINH
+  // ======================================================
+
+  "Viêm màng não mủ người lớn",
+  "Viêm màng não liên quan chăm sóc y tế",
+  "Viêm não thất liên quan dẫn lưu",
+  "Áp xe não",
+  "Tụ mủ dưới màng cứng",
+  "Viêm não Herpes simplex",
+
+  // ======================================================
+  // 04. TIẾT NIỆU - SINH DỤC
+  // ======================================================
+
+  "Viêm bàng quang cấp",
+  "Viêm thận - bể thận cấp",
+  "Nhiễm khuẩn niệu phức tạp",
+  "Urosepsis",
+  "CAUTI",
+  "Khuẩn niệu không triệu chứng",
+  "Viêm tuyến tiền liệt cấp",
+  "Áp xe tuyến tiền liệt",
+  "Áp xe thận",
+  "Áp xe quanh thận",
+  "Viêm niệu đạo",
+  "Viêm mào tinh hoàn",
+  "Viêm tinh hoàn",
+
+  // ======================================================
+  // 05. SẢN - PHỤ KHOA
+  // ======================================================
+
+  "Viêm âm đạo",
+  "Viêm phần phụ / PID",
+  "Nhiễm khuẩn hậu sản",
+  "Nhiễm khuẩn sản khoa",
+
+  // ======================================================
+  // 06. TIÊU HÓA - Ổ BỤNG - HỆ MẬT
+  // ======================================================
+
+  "cIAI - cộng đồng",
+  "cIAI - bệnh viện",
+  "Viêm phúc mạc",
+  "Áp xe ổ bụng",
+  "Viêm ruột thừa cấp",
+  "Viêm túi thừa",
+  "Viêm đường mật cấp",
+  "Viêm túi mật cấp",
+  "Áp xe gan",
+  "Hoại tử tụy nhiễm khuẩn",
+  "Tiêu chảy cấp nghi nhiễm khuẩn",
+  "Nhiễm Clostridioides difficile",
+  "Nhiễm Helicobacter pylori",
+
+  // ======================================================
+  // 07. DA - MÔ MỀM
+  // ======================================================
+
+  "Cellulitis",
+  "Erysipelas",
+  "Áp xe da",
+  "Chốc",
+  "Viêm nang lông",
+  "Viêm cân mạc hoại tử",
+  "Nhiễm khuẩn vết mổ",
+  "Nhiễm khuẩn bàn chân đái tháo đường",
+  "Vết cắn người",
+  "Vết cắn động vật",
+
+  // ======================================================
+  // 08. XƯƠNG - KHỚP
+  // ======================================================
+
+  "Viêm xương tủy cấp",
+  "Viêm xương tủy mạn",
+  "Viêm đốt sống nhiễm khuẩn",
+  "Viêm khớp nhiễm khuẩn",
+  "Nhiễm khuẩn khớp nhân tạo",
+  "Viêm bao hoạt dịch nhiễm khuẩn",
+  "Viêm xương ức",
+  "Viêm xương nền sọ",
+
+  // ======================================================
+  // 09. TIM MẠCH
+  // ======================================================
+
+  "Viêm nội tâm mạc - van tự nhiên",
+  "Viêm nội tâm mạc - van nhân tạo sớm",
+  "Viêm nội tâm mạc - van nhân tạo muộn",
+  "Nhiễm khuẩn thiết bị nội tim",
+
+  // ======================================================
+  // 10. SUY GIẢM MIỄN DỊCH
+  // ======================================================
+
+  "Sốt giảm bạch cầu hạt",
+  "Nhiễm khuẩn ở bệnh nhân ung thư",
+  "Nhiễm khuẩn ở người dùng corticosteroid kéo dài",
+  "Nhiễm khuẩn sau ghép tạng",
+
+  // ======================================================
+  // 11. NẤM XÂM LẤN
+  // ======================================================
+
+  "Candidemia",
+  "Candida xâm lấn",
+  "Aspergillosis xâm lấn",
+  "Cryptococcosis",
+
+  // ======================================================
+  // 12. HIV / NHIỄM TRÙNG CƠ HỘI
+  // ======================================================
+
+  "Pneumocystis jirovecii pneumonia",
+  "Toxoplasmosis não",
+  "Cryptococcal meningitis",
+  "CMV disease",
+  "Talaromycosis",
+  "Histoplasmosis",
+  "Mycobacterium avium complex",
+  "Cryptosporidiosis",
+  "Cystoisosporiasis",
+] as const;
+
+export type AdultSyndromeName =
+  (typeof FULL_ADULT_SYNDROME_INDEX)[number];

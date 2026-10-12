@@ -1,0 +1,112 @@
+[
+  {
+    "id": "umc23",
+    "name": "BV Đại học Y Dược TP.HCM – Hướng dẫn sử dụng kháng sinh",
+    "year": 2023,
+    "origin": "VN",
+    "status": "selected_pages_checked",
+    "url": "",
+    "file": "hdsd kháng sinh(7).pdf",
+    "note": "Lưu hành nội bộ; rà soát việc được phép chia sẻ nội dung"
+  },
+  {
+    "id": "bachmai23",
+    "name": "BV Bạch Mai – Hướng dẫn sử dụng kháng sinh trong lâm sàng",
+    "year": 2023,
+    "origin": "VN",
+    "status": "index_only",
+    "url": "",
+    "file": "HDSD kháng sinh Bạch Mai 2023(6).pdf",
+    "note": "PDF scan; chưa xác minh liều cho các bệnh cảnh trong gói"
+  },
+  {
+    "id": "xanhpon25",
+    "name": "BV Đa khoa Xanh Pôn – Hướng dẫn sử dụng kháng sinh",
+    "year": 2025,
+    "origin": "VN",
+    "status": "selected_pages_checked",
+    "url": "",
+    "file": "HDSD Kháng sinh XANH PÔN 2025(6).pdf",
+    "note": "PDF scan; đối chiếu trực quan một số trang, chưa nhập toàn bộ"
+  },
+  {
+    "id": "cdcgas",
+    "name": "CDC – Clinical Guidance for Group A Streptococcal Pharyngitis",
+    "year": 2025,
+    "origin": "INT",
+    "status": "checked",
+    "url": "https://www.cdc.gov/group-a-strep/hcp/clinical-guidance/strep-throat.html"
+  },
+  {
+    "id": "nice250",
+    "name": "NICE NG250 – Pneumonia: diagnosis and management",
+    "year": 2025,
+    "origin": "INT",
+    "status": "checked",
+    "url": "https://www.nice.org.uk/guidance/ng250/chapter/recommendations"
+  },
+  {
+    "id": "idsacandida",
+    "name": "IDSA – Management of Candidiasis",
+    "year": 2016,
+    "origin": "INT",
+    "status": "checked",
+    "url": "https://www.idsociety.org/practice-guideline/candidiasis/"
+  },
+  {
+    "id": "iwgdf23",
+    "name": "IWGDF/IDSA – Diabetes-related Foot Infections",
+    "year": 2023,
+    "origin": "INT",
+    "status": "checked",
+    "url": "https://www.idsociety.org/practice-guideline/diabetic-foot-infections/"
+  },
+  {
+    "id": "idsaamr",
+    "name": "IDSA – AMR Guidance",
+    "year": 2024,
+    "origin": "INT",
+    "status": "index_only",
+    "url": "https://www.idsociety.org/practice-guideline/amr-guidance/"
+  },
+  {
+    "id": "eau",
+    "name": "EAU – Urological Infections",
+    "year": 2026,
+    "origin": "INT",
+    "status": "index_only",
+    "url": "https://uroweb.org/guidelines/urological-infections"
+  },
+  {
+    "id": "who",
+    "name": "WHO – AWaRe Antibiotic Book",
+    "year": 2022,
+    "origin": "INT",
+    "status": "index_only",
+    "url": "https://www.who.int/publications/i/item/9789240062382"
+  },
+  {
+    "id": "idsa_cuti25",
+    "name": "IDSA Complicated UTI Guideline",
+    "year": 2025,
+    "origin": "INT",
+    "status": "reference_only_not_regimen_abstracted",
+    "url": "https://www.idsociety.org/practice-guideline/complicated-urinary-tract-infections/"
+  },
+  {
+    "id": "idsa_amr24",
+    "name": "IDSA AMR Gram-negative Guidance",
+    "year": 2024,
+    "origin": "INT",
+    "status": "reference_only_not_regimen_abstracted",
+    "url": "https://www.idsociety.org/practice-guideline/amr-guidance/"
+  },
+  {
+    "id": "atscap19",
+    "name": "ATS/IDSA Community-Acquired Pneumonia",
+    "year": 2019,
+    "origin": "INT",
+    "status": "reference_only_not_regimen_abstracted",
+    "url": "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-adults/"
+  }
+]

@@ -1,0 +1,315 @@
+[
+  {
+    "id": "gas-pv",
+    "diseaseId": "gas",
+    "scenario": "GAS xác định, người lớn",
+    "role": "preferred",
+    "label": "Penicillin V",
+    "drugs": [
+      {
+        "name": "Penicillin V",
+        "dose": "500 mg",
+        "route": "PO",
+        "interval": "Mỗi 12 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "cdcgas",
+    "sourceLocator": "Recommended antibiotics",
+    "criteria": "Xác nhận GAS; không dị ứng penicillin",
+    "duration": "10 ngày",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "gas-amox",
+    "diseaseId": "gas",
+    "scenario": "GAS xác định",
+    "role": "preferred",
+    "label": "Amoxicillin",
+    "drugs": [
+      {
+        "name": "Amoxicillin",
+        "dose": "50 mg/kg (tối đa 1000 mg)",
+        "route": "PO",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "cdcgas",
+    "sourceLocator": "Recommended antibiotics",
+    "criteria": "Xác nhận GAS; không dị ứng penicillin",
+    "duration": "10 ngày",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "gas-ceph",
+    "diseaseId": "gas",
+    "scenario": "Dị ứng penicillin không tức thì",
+    "role": "alternative",
+    "label": "Cephalexin",
+    "drugs": [
+      {
+        "name": "Cephalexin",
+        "dose": "20 mg/kg/lần (tối đa 500 mg/lần)",
+        "route": "PO",
+        "interval": "Mỗi 12 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "cdcgas",
+    "sourceLocator": "Penicillin allergy",
+    "criteria": "Tránh nếu có quá mẫn tức thì với penicillin",
+    "duration": "10 ngày",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cap-low",
+    "diseaseId": "cap",
+    "scenario": "Người lớn – CAP mức độ nhẹ",
+    "role": "preferred",
+    "label": "Amoxicillin",
+    "drugs": [
+      {
+        "name": "Amoxicillin",
+        "dose": "500 mg",
+        "route": "PO",
+        "interval": "Mỗi 8 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "nice250",
+    "sourceLocator": "Table 1 adults CAP",
+    "criteria": "Mức độ nhẹ; không thuộc tình huống cần mở rộng phổ",
+    "duration": "5 ngày; đánh giá ổn định lâm sàng",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cap-alt",
+    "diseaseId": "cap",
+    "scenario": "Người lớn – CAP mức độ nhẹ",
+    "role": "alternative",
+    "label": "Doxycycline",
+    "drugs": [
+      {
+        "name": "Doxycycline",
+        "dose": "200 mg ngày 1; 100 mg ngày 2–5",
+        "route": "PO",
+        "interval": "Mỗi 24 giờ từ ngày 2",
+        "infusion": null
+      }
+    ],
+    "sourceId": "nice250",
+    "sourceLocator": "Table 1 adults CAP",
+    "criteria": "Dị ứng penicillin hoặc amoxicillin không phù hợp; đánh giá thai kỳ",
+    "duration": "5 ngày",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cap-vn",
+    "diseaseId": "cap",
+    "scenario": "CAP tại khoa hồi sức; cộng đồng, theo phân tầng UMC 2023",
+    "role": "source_option",
+    "label": "Ceftriaxon + azithromycin",
+    "drugs": [
+      {
+        "name": "Ceftriaxon",
+        "dose": "2 g",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      },
+      {
+        "name": "Azithromycin",
+        "dose": "500 mg",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "umc23",
+    "sourceLocator": "PDF 19 / trang in 9",
+    "criteria": "Bệnh nhân ICU thuộc nhánh nhiễm khuẩn cộng đồng; cần kiểm tra nguy cơ MRSA và MDR",
+    "duration": "Chưa cố định trong bảng này",
+    "notes": "Bảng nguồn có các thuốc thay thế khác; không trộn nhánh bệnh viện và cộng đồng.",
+    "origin": "VN",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cap-vn-alt",
+    "diseaseId": "cap",
+    "scenario": "CAP tại khoa hồi sức; cộng đồng, theo phân tầng UMC 2023",
+    "role": "source_option",
+    "label": "Ceftriaxon + clarithromycin",
+    "drugs": [
+      {
+        "name": "Ceftriaxon",
+        "dose": "2 g",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      },
+      {
+        "name": "Clarithromycin",
+        "dose": "500 mg",
+        "route": "IV",
+        "interval": "Mỗi 12 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "umc23",
+    "sourceLocator": "PDF 19 / trang in 9",
+    "criteria": "Bệnh nhân ICU thuộc nhánh nhiễm khuẩn cộng đồng",
+    "duration": "Chưa cố định trong bảng này",
+    "notes": "Cần kiểm tra tương tác/QTc.",
+    "origin": "VN",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "sepsis-vn",
+    "diseaseId": "sepsis",
+    "scenario": "ICU, cộng đồng, phân tầng UMC 2023",
+    "role": "source_option",
+    "label": "Piperacillin/tazobactam – một lựa chọn nền",
+    "drugs": [
+      {
+        "name": "Piperacillin/tazobactam",
+        "dose": "4,5 g liều tải IV trong 30 phút, sau đó 4,5 g",
+        "route": "IV",
+        "interval": "Mỗi 6 giờ; truyền duy trì 4 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "umc23",
+    "sourceLocator": "PDF 12 / trang in 2",
+    "criteria": "Nhiễm khuẩn cộng đồng tại ICU theo phân tầng trong tài liệu; xem nhánh phối hợp và MRSA riêng",
+    "duration": "Theo nguồn nhiễm và đáp ứng",
+    "notes": "Đây là thuốc nền, KHÔNG phải toàn bộ phác đồ khi có chỉ định phối hợp.",
+    "origin": "VN",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "sepsis-vn-alt",
+    "diseaseId": "sepsis",
+    "scenario": "ICU, cộng đồng, phân tầng UMC 2023",
+    "role": "source_option",
+    "label": "Cefepim – một lựa chọn nền",
+    "drugs": [
+      {
+        "name": "Cefepim",
+        "dose": "2 g liều tải IV trong 30 phút, sau đó 2 g",
+        "route": "IV",
+        "interval": "Mỗi 8 giờ; truyền duy trì 3–4 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "umc23",
+    "sourceLocator": "PDF 12 / trang in 2",
+    "criteria": "Nhiễm khuẩn cộng đồng ICU; kiểm tra tác nhân, yếu tố kháng thuốc",
+    "duration": "Theo nguồn nhiễm và đáp ứng",
+    "notes": "Không suy diễn rằng cefepim đơn trị đủ cho mọi nguồn nhiễm.",
+    "origin": "VN",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cand-mica",
+    "diseaseId": "candidemia",
+    "scenario": "Người lớn không giảm bạch cầu",
+    "role": "preferred",
+    "label": "Micafungin",
+    "drugs": [
+      {
+        "name": "Micafungin",
+        "dose": "100 mg",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "idsacandida",
+    "sourceLocator": "Section I, recommendation 1",
+    "criteria": "Candidemia không giảm bạch cầu",
+    "duration": "Ít nhất 14 ngày sau cấy máu sạch Candida và hết triệu chứng nếu không có biến chứng",
+    "notes": "Cấy máu theo dõi; đánh giá catheter và ổ nhiễm",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cand-caspo",
+    "diseaseId": "candidemia",
+    "scenario": "Người lớn không giảm bạch cầu",
+    "role": "preferred",
+    "label": "Caspofungin",
+    "drugs": [
+      {
+        "name": "Caspofungin",
+        "dose": "70 mg liều tải ngày đầu, sau đó 50 mg",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "idsacandida",
+    "sourceLocator": "Section I, recommendation 1",
+    "criteria": "Candidemia không giảm bạch cầu",
+    "duration": "Theo tiêu chuẩn clearance",
+    "notes": "Hiệu chỉnh trong các tình huống đặc biệt theo HDSD",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cand-anid",
+    "diseaseId": "candidemia",
+    "scenario": "Người lớn không giảm bạch cầu",
+    "role": "preferred",
+    "label": "Anidulafungin",
+    "drugs": [
+      {
+        "name": "Anidulafungin",
+        "dose": "200 mg liều tải ngày đầu, sau đó 100 mg",
+        "route": "IV",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "idsacandida",
+    "sourceLocator": "Section I, recommendation 1",
+    "criteria": "Candidemia không giảm bạch cầu",
+    "duration": "Theo tiêu chuẩn clearance",
+    "notes": "",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  },
+  {
+    "id": "cand-flu",
+    "diseaseId": "candidemia",
+    "scenario": "Người lớn không giảm bạch cầu; lựa chọn có điều kiện",
+    "role": "alternative",
+    "label": "Fluconazole",
+    "drugs": [
+      {
+        "name": "Fluconazole",
+        "dose": "800 mg tải, sau đó 400 mg",
+        "route": "IV/PO",
+        "interval": "Mỗi 24 giờ",
+        "infusion": null
+      }
+    ],
+    "sourceId": "idsacandida",
+    "sourceLocator": "Section I, recommendation 2",
+    "criteria": "Không nguy kịch, khả năng kháng fluconazole thấp; xét độ nhạy",
+    "duration": "Theo tiêu chuẩn clearance",
+    "notes": "Step-down khi ổn định, chủng nhạy và cấy máu lặp lại âm tính",
+    "origin": "INT",
+    "verification": "source_checked_not_hospital_approved"
+  }
+]

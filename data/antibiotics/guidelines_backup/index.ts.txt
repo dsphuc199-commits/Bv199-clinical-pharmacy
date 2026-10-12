@@ -1,0 +1,162 @@
+export * from "./types";
+export * from "./sources";
+
+export * from "./bloodstream";
+export * from "./respiratory";
+export * from "./ent";
+export * from "./cns";
+export * from "./urinary";
+export * from "./obgyn";
+export * from "./abdominal";
+export * from "./skin-soft-tissue";
+export * from "./bone-joint";
+export * from "./cardiovascular";
+export * from "./immunocompromised";
+export * from "./fungal";
+export * from "./hiv-oi";
+export * from "./pathogens";
+
+import {
+  bloodstreamSyndromes,
+} from "./bloodstream";
+
+import {
+  respiratorySyndromes,
+} from "./respiratory";
+
+import {
+  entSyndromes,
+} from "./ent";
+
+import {
+  cnsSyndromes,
+} from "./cns";
+
+import {
+  urinarySyndromes,
+} from "./urinary";
+
+import {
+  obgynSyndromes,
+} from "./obgyn";
+
+import {
+  abdominalSyndromes,
+} from "./abdominal";
+
+import {
+  skinSoftTissueSyndromes,
+} from "./skin-soft-tissue";
+
+import {
+  boneJointSyndromes,
+} from "./bone-joint";
+
+import {
+  cardiovascularSyndromes,
+} from "./cardiovascular";
+
+import {
+  immunocompromisedSyndromes,
+} from "./immunocompromised";
+
+import {
+  fungalSyndromes,
+} from "./fungal";
+
+import {
+  hivOiSyndromes,
+} from "./hiv-oi";
+
+import {
+  pathogenGuidance,
+} from "./pathogens";
+
+export const allSyndromes = [
+  ...bloodstreamSyndromes,
+
+  ...respiratorySyndromes,
+
+  /* =========================
+     TAI MŨI HỌNG
+  ========================= */
+
+  ...entSyndromes,
+
+  ...cnsSyndromes,
+
+  ...urinarySyndromes,
+
+  ...obgynSyndromes,
+
+  ...abdominalSyndromes,
+
+  ...skinSoftTissueSyndromes,
+
+  ...boneJointSyndromes,
+
+  ...cardiovascularSyndromes,
+
+  ...immunocompromisedSyndromes,
+
+  ...fungalSyndromes,
+
+  ...hivOiSyndromes,
+];
+
+export const syndromeCategories = [
+  "Tất cả",
+
+  ...Array.from(
+    new Set(
+      allSyndromes.map(
+        (
+          item
+        ) =>
+          item.category
+      )
+    )
+  ),
+];
+
+export const categoryCounts =
+  Object.fromEntries(
+    syndromeCategories
+      .filter(
+        (
+          item
+        ) =>
+          item !==
+          "Tất cả"
+      )
+      .map(
+        (
+          category
+        ) => [
+          category,
+
+          allSyndromes.filter(
+            (
+              item
+            ) =>
+              item.category ===
+              category
+          ).length,
+        ]
+      )
+  );
+
+export const pathogenGroups = [
+  "Tất cả",
+
+  ...Array.from(
+    new Set(
+      pathogenGuidance.map(
+        (
+          item
+        ) =>
+          item.group
+      )
+    )
+  ),
+];
