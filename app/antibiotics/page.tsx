@@ -1,4 +1,7 @@
+import { Stethoscope, Microscope, SlidersHorizontal, ShieldCheck, Activity, ArrowLeftRight, ChartNoAxesColumn } from "lucide-react";
 import Link from "next/link";
+
+const moduleIcons = { empiric: Stethoscope, organism: Microscope, dosing: SlidersHorizontal, allergy: Activity, prophylaxis: ShieldCheck, "iv-to-po": ArrowLeftRight, antibiogram: ChartNoAxesColumn };
 
 const modules = [
   {
@@ -60,7 +63,7 @@ const modules = [
 
 export default function AntibioticsPage() {
   return (
-    <main className="min-h-screen bg-slate-50 p-6">
+    <main className="bv199-ams-home min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-700">
@@ -81,7 +84,7 @@ export default function AntibioticsPage() {
             <Link
               key={module.id}
               href={module.href}
-              className="group flex min-h-[150px] flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+              className="bv199-ams-card group flex min-h-[150px] flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
             >
               <div>
                 <h2 className="text-base font-semibold text-slate-900">

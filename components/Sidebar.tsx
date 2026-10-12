@@ -426,10 +426,11 @@ export default function Sidebar() {
 
       {/* CSS CHỈ DÀNH CHO MÀN HÌNH NHỎ */}
       <style jsx global>{`
-        .bv-fixed-mobile-trigger,
-        .bv-fixed-overlay {
-          display: none;
-        }
+        
+.bv-fixed-mobile-trigger,
+.bv-fixed-overlay {
+  display: none !important;
+}
 
         @media (max-width: 800px) {
           .bv-fixed-sidebar {
@@ -445,8 +446,8 @@ export default function Sidebar() {
             transform: translateX(0);
           }
 
-          .bv-fixed-mobile-trigger {
-            display: grid;
+          .bv-fixed-mobile-trigger {     
+display: none !important;
             place-items: center;
             position: fixed;
             left: 10px;

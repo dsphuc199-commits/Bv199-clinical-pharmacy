@@ -5556,3 +5556,81 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   BV199 MOBILE UI - PHASE 1
+   Chi ap dung cho giao dien mobile
+   ========================================== */
+
+/* Desktop: an thanh dieu huong mobile */
+@media (min-width: 801px) {
+  .bv-mobile-bottom-nav,
+  .bv-mobile-more-overlay {
+    display: none !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  .bv199-root-shell,
+  .bv199-workspace,
+  .bv199-main-scroll,
+  .bv199-page-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .bv199-main-scroll {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding-bottom:
+      calc(76px + env(safe-area-inset-bottom))
+      !important;
+    scroll-padding-bottom: 80px;
+  }
+
+  .bv199-page-content {
+    flex-shrink: 0;
+  }
+
+  /* Footer thuoc luong cuon, khong noi */
+  .bv199-footer-region {
+    position: relative !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    z-index: auto !important;
+  }
+
+  .bv199-footer-region .global-footer {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 16px 22px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .bv199-footer-region .global-footer * {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  /* Thanh dieu huong mobile */
+  .bv-mobile-bottom-nav {
+    display: grid !important;
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+    box-sizing: border-box;
+    width: 100%;
+  }
+}

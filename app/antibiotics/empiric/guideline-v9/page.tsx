@@ -252,6 +252,7 @@ const PRIORITY_SPECIALTIES = [
 export default function GuidelinePage() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("v8-1");
+  const [mobileListMode, setMobileListMode] = useState<"specialty" | "disease">("specialty");
   const [specialtyFilter, setSpecialtyFilter] =
     useState("Tất cả");
 
@@ -704,6 +705,10 @@ export default function GuidelinePage() {
         {showCatalog && (
           <aside className="bv199-panel bv199-catalog">
             <h2>Danh mục theo chuyên khoa</h2>
+            <div className="bv199-mobile-mode-tabs" role="group" aria-label="Kiểu danh mục">
+              <button type="button" className={mobileListMode === "specialty" ? "active" : ""} onClick={() => setMobileListMode("specialty")}>Theo chuyên khoa</button>
+              <button type="button" className={mobileListMode === "disease" ? "active" : ""} onClick={() => setMobileListMode("disease")}>Theo mặt bệnh</button>
+            </div>
 
             <input
               type="search"
@@ -765,7 +770,7 @@ export default function GuidelinePage() {
               </div>
             </div>
 
-            <div className="bv199-group-list">
+            <div className={mobileListMode === "disease" ? "bv199-group-list bv199-mobile-hide-groups" : "bv199-group-list"}>
               {groups.map((group) => {
                 const expanded =
                   query.trim().length > 0 ||
@@ -824,6 +829,11 @@ export default function GuidelinePage() {
                 </div>
               )}
             </div>
+            {mobileListMode === "disease" && <div className="bv199-mobile-flat-diseases">
+              {filtered.map((disease) => <button type="button" key={disease.id} className={selected.id === disease.id ? "active" : ""} onClick={() => chooseDisease(disease)}>
+                <strong>{disease.title}</strong><span>{disease.specialty}</span>
+              </button>)}
+            </div>}
           </aside>
         )}
 

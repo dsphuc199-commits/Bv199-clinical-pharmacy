@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ChevronRight, Search } from "lucide-react";
 import drugData from "@/data/drug-products.json";
 
 type Drug = {
@@ -33,6 +34,7 @@ function normalizeText(value: string) {
 export default function DrugsPage() {
   const [keyword, setKeyword] = useState("");
   const [selectedRoute, setSelectedRoute] = useState("");
+  const [expandedDrug, setExpandedDrug] = useState<string | null>(null);
 
   const routes = useMemo(() => {
     return Array.from(
@@ -83,10 +85,10 @@ export default function DrugsPage() {
   }, [keyword, selectedRoute]);
 
   return (
-    <main className="min-h-screen bg-slate-50 p-6">
+    <main className="bv199-drugs-page min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-7xl">
 
-        <div className="mb-8">
+        <div className="bv199-drugs-heading mb-8">
           <h1 className="text-3xl font-bold text-slate-900">
             Danh mục thuốc Bệnh viện 199
           </h1>
@@ -98,7 +100,7 @@ export default function DrugsPage() {
           </p>
         </div>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="bv199-drug-search-panel rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
           <div className="grid gap-4 md:grid-cols-3">
 
@@ -171,7 +173,34 @@ export default function DrugsPage() {
 
         </div>
 
-        <div className="space-y-4">
+        <div className="bv199-compact-drug-list">
+          {results.slice(0, 100).map((drug, index) => {
+            const key = drug.id || String(index);
+            const expanded = expandedDrug === key;
+            return <article className="bv199-compact-drug" key={key}>
+              <button type="button" className="bv199-compact-drug-summary" onClick={() => setExpandedDrug(expanded ? null : key)} aria-expanded={expanded}>
+                <span className="bv199-compact-drug-text"><strong>{drug.brandName || "Chưa có tên thuốc"}</strong>
+                  <small>{drug.ingredientName || "Chưa có dữ liệu hoạt chất"}</small></span>
+                <ChevronRight size={19} className={expanded ? "bv199-rotate" : ""} />
+              </button>
+              <div className="bv199-compact-tags">
+                {drug.strength && <span>{drug.strength}</span>}
+                {drug.route && <span>{drug.route}</span>}
+                {drug.dosageForm && <span>{drug.dosageForm}</span>}
+              </div>
+              {expanded && <div className="bv199-compact-details">
+                <Info title="Mã thuốc" value={drug.drugCode}/><Info title="Hoạt chất" value={drug.ingredientName}/>
+                <Info title="Hàm lượng" value={drug.strength}/><Info title="Đường dùng" value={drug.route}/>
+                <Info title="Dạng bào chế" value={drug.dosageForm}/><Info title="Quy cách" value={drug.packageSize}/>
+                <Info title="SĐK / GPNK" value={drug.registrationNumber}/><Info title="Nhà sản xuất" value={drug.manufacturer}/>
+                <Info title="Xuất xứ" value={drug.country}/><Info title="Đơn vị" value={drug.unit}/>
+                <Info title="Nguồn dữ liệu" value={drug.sourceSheet}/>
+              </div>}
+            </article>;
+          })}
+        </div>
+
+        <div className="bv199-original-drug-list space-y-4">
 
           {results
             .slice(0, 100)

@@ -3,11 +3,15 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import "./globals.css";
+import "./mobile.css";
 
 import Sidebar from "@/components/Sidebar";
+import MobileTopBar from "@/components/MobileTopBar";
 import GlobalHeader from "@/components/GlobalHeader";
 import GlobalFooter from "@/components/GlobalFooter";
 import ScrollManager from "@/components/ScrollManager";
+import MobileNavigation from "@/components/MobileNavigation";
+
 
 /*
 ====================================================
@@ -54,6 +58,9 @@ export default function RootLayout({
         }}
       >
         <ScrollManager />
+        
+<MobileNavigation />
+
 
         {/* BỐ CỤC CHÍNH */}
         <div
@@ -89,6 +96,8 @@ export default function RootLayout({
               padding: 0,
             }}
           >
+            <MobileTopBar />
+
             {/* HEADER CHUNG */}
             <div
               className="bv199-header-region"
