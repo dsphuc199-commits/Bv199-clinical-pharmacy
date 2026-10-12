@@ -12,7 +12,13 @@
  .bv-mobile-bottom-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;background:#fff!important;box-shadow:0 -3px 16px rgba(15,55,65,.09)!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom))!important}
  .bv-mobile-nav-item{font-size:10px!important;gap:5px!important}.bv-mobile-nav-icon{display:flex!important;align-items:center;justify-content:center}
  .bv199-ams-home{padding:18px 14px 28px!important;background:#f5f9fb!important}.bv199-ams-home header{margin-bottom:18px!important}.bv199-ams-home header h1{font-size:25px!important;line-height:1.18!important}.bv199-ams-home header p{font-size:13px!important}
- .bv199-ams-home section{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .bv199-ams-home .bv199-ams-desktop{display:none!important}
+ .bv199-ams-home .bv199-ams-clinical-mobile{display:block!important;width:100%!important;min-width:0!important}
+ .bv199-ams-home .bv199-ams-clinical-group{display:block!important;width:100%!important;min-width:0!important;margin:0 0 20px!important}
+ .bv199-ams-home .bv199-ams-group-title{display:block!important;width:100%!important;margin-bottom:10px!important}
+ .bv199-ams-home .bv199-ams-clinical-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;width:100%!important;min-width:0!important}
+ .bv199-ams-home .bv199-ams-clinical-card{display:flex!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+ .bv199-ams-home .bv199-ams-clinical-copy{min-width:0!important;overflow-wrap:anywhere}
  .bv199-ams-card{min-height:170px!important;padding:13px!important;border-radius:15px!important;gap:7px!important;box-shadow:0 3px 14px rgba(20,62,80,.05)}.bv199-ams-card-icon{display:grid;place-items:center;width:40px;height:40px;margin-bottom:10px;background:#e4f5f7;color:#05758c;border-radius:12px}.bv199-ams-card h2{font-size:13px!important;line-height:1.35!important}.bv199-ams-card p{font-size:11px!important;line-height:1.5!important}.bv199-ams-card div:last-child{font-size:11px!important;margin-top:12px!important}
  .bv199-drugs-page{padding:16px 14px 28px!important;background:#f5f9fb!important}.bv199-drugs-heading{margin-bottom:16px!important}.bv199-drugs-heading h1{font-size:24px!important;line-height:1.22!important}.bv199-drugs-heading p{font-size:12px!important;line-height:1.55!important}
  .bv199-drug-search-panel{padding:12px!important;border-radius:15px!important}.bv199-drug-search-panel label{font-size:12px!important}.bv199-drug-search-panel input,.bv199-drug-search-panel select{font-size:14px!important;min-height:44px!important}
