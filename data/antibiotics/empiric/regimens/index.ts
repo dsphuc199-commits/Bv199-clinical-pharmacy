@@ -17,9 +17,10 @@ import { RESPIRATORY_ICU } from "./respiratory-icu";
 import { SKIN } from "./skin";
 import { TUBERCULOSIS } from "./tuberculosis";
 import { UROLOGY } from "./urology";
-import type { Regimen } from "./types";
+import { DOCS } from "./sources";
+import type { DocId, Regimen } from "./types";
 
-export { DOCS } from "./sources";
+export { DOCS };
 export type { Regimen, RegimenRole, DocId, DocInfo } from "./types";
 export { ROLE_TEXT } from "./types";
 
@@ -68,23 +69,6 @@ export const ALL_REGIMENS: Regimen[] = RAW_REGIMENS.map((regimen) => ({
   ),
 })).filter((regimen) => regimen.diseaseIds.length > 0);
 
-const BY_DISEASE = new Map<string, Regimen[]>();
-for (const reg of ALL_REGIMENS) {
-  for (const id of reg.diseaseIds) {
-    const list = BY_DISEASE.get(id);
-    if (list) list.push(reg);
-    else BY_DISEASE.set(id, [reg]);
-  }
-}
-
-export function getRegimensForDisease(diseaseId: string): Regimen[] {
-  return BY_DISEASE.get(diseaseId) ?? [];
-}
-
-export function diseaseIdsWithRegimens(): string[] {
-  return Array.from(BY_DISEASE.keys());
-}
-
 /*
   "Cu the" = phuong an co it nhat mot thuoc kem lieu so (mg, g, don vi, mg/kg, ...),
   moi thuoc con lai deu co lieu so hoac tham chieu "nhu tren" trong cung phuong an.
@@ -106,6 +90,67 @@ export function isConcreteRegimen(regimen: Regimen): boolean {
       NUMERIC_DOSE.test(drug.dose) ||
       (REFERS_ABOVE.test(drug.dose) && !/không nêu/i.test(drug.dose))
   );
+}
+
+/*
+  QUY TAC "VAN BAN MOI NHAT THAY THE VAN BAN CU" (cung mot mat benh):
+  neu mat benh co phuong an cu the tu nhieu van ban BYT, chi giu van ban co ngay ban
+  hanh MOI NHAT; phuong an tu van ban cu hon bi an (khong dung lam phac do hien hanh).
+  Ngay ban hanh lay tu DOCS (dd/mm/yyyy; neu chi co nam thi tinh 01/01 cua nam do).
+  Ngoai le KEEP_ALL_SOURCES: van ban moi khong bao phu het tinh huong cua van ban cu
+  (bo sung nhau, khong mau thuan) -> giu ca hai, moi phuong an van ghi ro nguon + ngay.
+  - v8-97: QĐ 708 (2015) chi co viem bang quang thai ky; QĐ 315 bo sung viem than - be than cap.
+*/
+export const KEEP_ALL_SOURCES: string[] = ["v8-97"];
+
+function docTime(doc: DocId): number {
+  const raw = DOCS[doc]?.date ?? "";
+  const full = raw.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  if (full) return Date.UTC(+full[3], +full[2] - 1, +full[1]);
+  const year = raw.match(/(19|20)\d{2}/);
+  return year ? Date.UTC(+year[0], 0, 1) : 0;
+}
+
+export type SupersededNote = {
+  diseaseId: string;
+  kept: DocId;
+  dropped: DocId[];
+};
+
+export const SUPERSEDED_LOG: SupersededNote[] = [];
+
+const BY_DISEASE = new Map<string, Regimen[]>();
+for (const reg of ALL_REGIMENS) {
+  for (const id of reg.diseaseIds) {
+    const list = BY_DISEASE.get(id);
+    if (list) list.push(reg);
+    else BY_DISEASE.set(id, [reg]);
+  }
+}
+
+for (const [id, list] of BY_DISEASE) {
+  if (KEEP_ALL_SOURCES.includes(id)) continue;
+  const docs = Array.from(
+    new Set(list.filter(isConcreteRegimen).map((r) => r.source.doc))
+  );
+  if (docs.length < 2) continue;
+  const newest = docs.reduce((a, b) => (docTime(b) > docTime(a) ? b : a));
+  const dropped = Array.from(
+    new Set(list.map((r) => r.source.doc).filter((doc) => doc !== newest))
+  );
+  BY_DISEASE.set(
+    id,
+    list.filter((r) => r.source.doc === newest)
+  );
+  SUPERSEDED_LOG.push({ diseaseId: id, kept: newest, dropped });
+}
+
+export function getRegimensForDisease(diseaseId: string): Regimen[] {
+  return BY_DISEASE.get(diseaseId) ?? [];
+}
+
+export function diseaseIdsWithRegimens(): string[] {
+  return Array.from(BY_DISEASE.keys());
 }
 
 export function getConcreteRegimensForDisease(diseaseId: string): Regimen[] {
