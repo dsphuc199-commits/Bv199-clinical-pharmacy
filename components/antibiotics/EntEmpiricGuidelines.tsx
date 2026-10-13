@@ -13,11 +13,17 @@ import { useState } from "react";
   16 ten benh trong danh muc BV199.
   14 nhom benh doc lap, 2 cap ten trung.
 
-  Nguon:
-  - BYT 5643/QD-BYT (2015): nen tang VN
-  - CDC: Group A Streptococcal Pharyngitis
-  - AAO-HNSF: Adult Sinusitis Update 2025
-  - NICE NG91: Acute Otitis Media
+  Nguon (doi chieu 13/10/2026):
+  - BYT 5643/QD-BYT 31/12/2015 (HD chan doan va dieu tri mot so benh
+    ve tai mui hong): da xac nhan ton tai; CHUA doc duoc noi dung tung
+    bai nen cac nhanh dung nguon nay chua co lieu. Tinh trang hieu luc
+    chua xac minh duoc (trang tra cuu can dang nhap).
+  - CDC: Group A Streptococcal Pharyngitis (xem lai 05/08/2025, cap nhat
+    18/11/2025): lieu da doi chieu voi trang goc.
+  - NICE NG91 Acute Otitis Media (2018, sua 2022): lieu amoxicillin va
+    co-amoxiclav, tieu chi ke don ngay/du phong da doi chieu.
+  - AAO-HNSF Adult Sinusitis Update (cong bo 07/2025): chi xac nhan duoc
+    huong "theo doi truoc"; thoi gian va lieu chua doi chieu van ban goc.
 
   Nhung nhanh khong du thong tin ve lieu, duong dung,
   thoi gian hoac phoi hop duoc danh dau can tham dinh.
@@ -49,10 +55,10 @@ type EntDisease = {
 };
 
 const SOURCES = {
-  byt: "Bộ Y tế, QĐ 5643/QĐ-BYT (2015)",
-  sinus: "AAO-HNSF, Adult Sinusitis Guideline Update (2025)",
-  strep: "CDC, Clinical Guidance for Group A Streptococcal Pharyngitis",
-  ear: "NICE NG91, Acute Otitis Media",
+  byt: "Bộ Y tế, QĐ 5643/QĐ-BYT ngày 31/12/2015, Hướng dẫn chẩn đoán và điều trị một số bệnh về tai mũi họng (chưa xác minh hiệu lực hiện hành)",
+  sinus: "AAO-HNSF, Adult Sinusitis Guideline Update (công bố 07/2025)",
+  strep: "CDC, Clinical Guidance for Group A Streptococcal Pharyngitis (cập nhật 18/11/2025)",
+  ear: "NICE NG91, Acute Otitis Media (2018, sửa đổi 2022)",
   review:
     "Định hướng chuyên môn, cần đối chiếu hướng dẫn chuyên sâu cập nhật và thẩm định BV199",
 };
@@ -105,6 +111,8 @@ const ENT_DISEASES: EntDisease[] = [
               "Amoxicillin uống; xác minh liều theo mức độ bệnh, chức năng thận và chế phẩm.",
             ],
             duration: "Thường 5–7 ngày ở người lớn.",
+            note:
+              "Thời gian và liều chưa được đối chiếu trực tiếp với văn bản AAO-HNSF 2025; cần kiểm tra bản gốc.",
             source: SOURCES.sinus,
           },
           {
@@ -115,6 +123,8 @@ const ENT_DISEASES: EntDisease[] = [
               "Amoxicillin/acid clavulanic uống; lựa chọn đúng hàm lượng và chế độ liều.",
             ],
             duration: "Thường 5–7 ngày ở người lớn.",
+            note:
+              "Thời gian và liều chưa được đối chiếu trực tiếp với văn bản AAO-HNSF 2025; cần kiểm tra bản gốc.",
             source: SOURCES.sinus,
           },
           {
@@ -190,7 +200,7 @@ const ENT_DISEASES: EntDisease[] = [
             title: "Penicillin V đơn trị",
             indication: "Lựa chọn đầu tay khác.",
             drugs: [
-              "Người lớn: penicillin V 500 mg uống mỗi 12 giờ.",
+              "Thanh thiếu niên/người lớn: penicillin V 500 mg uống mỗi 12 giờ HOẶC 250 mg uống mỗi 6 giờ.",
               "Trẻ em: 250 mg uống mỗi 12 giờ hoặc mỗi 8 giờ.",
             ],
             duration: "10 ngày.",
@@ -256,9 +266,31 @@ const ENT_DISEASES: EntDisease[] = [
             source: SOURCES.strep,
             verified: true,
           },
+          {
+            title: "Cefadroxil – không dị ứng tức thì",
+            indication:
+              "Chỉ khi không có phản ứng quá mẫn penicillin kiểu tức thì.",
+            drugs: [
+              "Cefadroxil 30 mg/kg uống mỗi 24 giờ, tối đa 1 g/ngày.",
+            ],
+            duration: "10 ngày.",
+            source: SOURCES.strep,
+            verified: true,
+          },
+          {
+            title: "Clarithromycin – có điều kiện",
+            indication:
+              "Khi lựa chọn macrolid phù hợp với nguy cơ đề kháng.",
+            drugs: [
+              "Clarithromycin 7,5 mg/kg/lần uống mỗi 12 giờ, tối đa 250 mg/lần.",
+            ],
+            duration: "10 ngày.",
+            source: SOURCES.strep,
+            verified: true,
+          },
         ],
         warnings: [
-          "Tránh cephalexin nếu có dị ứng penicillin kiểu tức thì.",
+          "Tránh cephalexin và cefadroxil nếu có dị ứng penicillin kiểu tức thì.",
           "Đề kháng macrolid và clindamycin thay đổi theo địa phương.",
         ],
       },
@@ -468,7 +500,10 @@ const ENT_DISEASES: EntDisease[] = [
             drugs: [
               "Paracetamol hoặc ibuprofen khi phù hợp.",
               "Hẹn đánh giá lại và hướng dẫn dấu hiệu trở nặng.",
+              "Đơn kháng sinh dự phòng (back-up): dùng nếu không cải thiện sau 3 ngày hoặc nặng lên nhanh.",
             ],
+            note:
+              "NICE NG91: kê kháng sinh ngay khi có chảy tai; cân nhắc ở trẻ < 2 tuổi viêm cả hai tai; kê ngay cho trẻ toàn thân rất không khỏe, có dấu hiệu bệnh nặng hơn hoặc nguy cơ biến chứng cao.",
             source: SOURCES.ear,
             verified: true,
           },
@@ -505,6 +540,23 @@ const ENT_DISEASES: EntDisease[] = [
             drugs: [
               "Amoxicillin/clavulanat uống, liều theo tuổi, cân nặng và chế phẩm.",
             ],
+            duration: "5–7 ngày.",
+            note:
+              "NICE: dùng 3 lần/ngày nếu triệu chứng nặng lên sau ít nhất 2–3 ngày với thuốc đầu tay.",
+            source: SOURCES.ear,
+            verified: true,
+          },
+          {
+            title: "Clarithromycin – dị ứng hoặc không dung nạp penicillin",
+            indication:
+              "Trẻ em dị ứng/không dung nạp penicillin (không dùng khi mang thai).",
+            drugs: [
+              "Clarithromycin uống 2 lần/ngày; 12–17 tuổi: 250–500 mg/lần.",
+              "1 tháng–11 tuổi: liều theo nhóm cân nặng trong bảng NICE NG91; cần tra bảng gốc.",
+            ],
+            duration: "5–7 ngày.",
+            note:
+              "Liều trẻ nhỏ chưa nhập đầy đủ vì cần bảng cân nặng của NICE.",
             source: SOURCES.ear,
           },
         ],
@@ -807,10 +859,14 @@ export function isEntDisease(name: string) {
 
 export default function EntEmpiricGuidelines({
   diseaseName,
+  initialScenarioId,
 }: {
   diseaseName: string;
+  initialScenarioId?: string;
 }) {
-  const [scenarioId, setScenarioId] = useState("");
+  const [scenarioId, setScenarioId] = useState(
+    initialScenarioId ?? ""
+  );
   const [openedPlan, setOpenedPlan] = useState("");
 
   const disease = DISEASE_MAP.get(normalize(diseaseName));

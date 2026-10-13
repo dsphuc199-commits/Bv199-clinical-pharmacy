@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, type CSSProperties } from "react";
@@ -6,11 +5,19 @@ import { useState, type CSSProperties } from "react";
 /*
  BV199 - VIEM PHOI CONG DONG NGUOI LON
  File: components/antibiotics/CapByt2026.tsx
- Nguon: QD 2147/QD-BYT, 15/07/2026
- Muc 5.3, Bang 5.1 va Phu luc 1
 
- Du lieu tham khao, cho tham dinh BV199.
- Khong tu dong ke don.
+ Nguon: Quyet dinh 2147/QD-BYT ngay 15/07/2026
+ "Huong dan chan doan va dieu tri viem phoi mac phai cong dong o nguoi lon"
+ - Dieu 3: co hieu luc ke tu ngay ky, thay the QD 4815/QD-BYT ngay 20/11/2020.
+ - Muc 5.3.1, 5.3.2.1, 5.3.2.2, Bang 5.1: dieu tri ban dau theo kinh nghiem.
+ - Phu luc 1: lieu thuong dung va hieu chinh lieu theo Clcr.
+ - Bang 4.4, Muc 4.5: chuyen IV-PO. Muc 5.2 va 5.6.2: thoi gian dieu tri.
+
+ Cach ghi so trang: so trang in (tr.) va so trang PDF. PDF = so trang in + 10.
+
+ Da doi chieu voi ban PDF do nguoi dung cung cap (kiem tra 13/10/2026).
+ Chua doi chieu voi cong thong tin chinh thuc cua Bo Y te.
+ Du lieu tham khao, cho tham dinh BV199. Khong tu dong ke don.
 */
 
 type Drug = {
@@ -37,382 +44,502 @@ type Scenario = {
   alerts: string[];
 };
 
+const SRC_531 = "BYT 2026 – Mục 5.3.1, tr. 37–38 (PDF tr. 47–48)";
+const SRC_5321 = "BYT 2026 – Mục 5.3.2.1, tr. 38 (PDF tr. 48); Bảng 5.1, tr. 39 (PDF tr. 49)";
+const SRC_5322 = "BYT 2026 – Mục 5.3.2.2, tr. 38–39 (PDF tr. 48–49); Bảng 5.1, tr. 39 (PDF tr. 49)";
+const SRC_DOSE = "Phụ lục 1, tr. 60–63 (PDF tr. 70–73)";
+
+/*
+  Lieu thuong dung lay NGUYEN tu Phu luc 1 (cot "Lieu thuong dung").
+  Day la lieu cho Clcr > 50-90 ml/phut; hieu chinh theo Clcr xem Phu luc 1.
+*/
+const D = {
+  amoxOral: {
+    name: "Amoxicillin",
+    dose: "1 g mỗi 8 giờ",
+    route: "Uống",
+  },
+  amoxClavOral: {
+    name: "Amoxicillin/acid clavulanic",
+    dose:
+      "875/125 mg mỗi 8–12 giờ (Bảng 4.4); Phụ lục 1: 875 mg mỗi 12 giờ (tính theo amoxicillin), hiệu chỉnh theo Clcr",
+    route: "Uống",
+  },
+  amoxClavIv: {
+    name: "Amoxicillin/acid clavulanic",
+    dose:
+      "1 g mỗi 8 giờ (tính theo amoxicillin; Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  ampSulbactam: {
+    name: "Ampicillin/sulbactam",
+    dose:
+      "1,5–3 g mỗi 6 giờ (Phụ lục 1; Clcr 10–30: mỗi 8–12 giờ), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  doxy: {
+    name: "Doxycyclin",
+    dose: "100 mg mỗi 12 giờ",
+    route: "Uống",
+  },
+  azithroOral: {
+    name: "Azithromycin",
+    dose:
+      "500 mg ngày đầu, sau đó 250 mg mỗi ngày; hoặc 500 mg/ngày trong 3 ngày (Mục 5.3.1)",
+    route: "Uống",
+  },
+  azithroAny: {
+    name: "Azithromycin",
+    dose:
+      "250–500 mg mỗi 24 giờ (Phụ lục 1); không cần hiệu chỉnh theo chức năng thận",
+    route: "Uống hoặc tĩnh mạch",
+  },
+  clarithro: {
+    name: "Clarithromycin",
+    dose:
+      "500 mg mỗi 12 giờ; hoặc dạng phóng thích chậm 1 g mỗi 24 giờ (Mục 5.3.1)",
+    route: "Uống",
+  },
+  cefpodoxime: {
+    name: "Cefpodoxim",
+    dose: "200 mg mỗi 12 giờ (Phụ lục 1)",
+    route: "Uống",
+  },
+  cefdinir: {
+    name: "Cefdinir",
+    dose: "300 mg mỗi 12 giờ (Phụ lục 1)",
+    route: "Uống",
+  },
+  cefditoren: {
+    name: "Cefditoren",
+    dose: "400 mg mỗi 12 giờ (Phụ lục 1)",
+    route: "Uống",
+  },
+  ceftriaxone: {
+    name: "Ceftriaxon",
+    dose: "1–2 g mỗi 24 giờ; không cần hiệu chỉnh theo Clcr (Phụ lục 1)",
+    route: "Tĩnh mạch",
+  },
+  cefotaxime: {
+    name: "Cefotaxim",
+    dose: "1–2 g mỗi 8 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  ceftazidime: {
+    name: "Ceftazidim",
+    dose: "2 g mỗi 8 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  cefepime: {
+    name: "Cefepim",
+    dose: "2 g mỗi 8 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  ceftaroline: {
+    name: "Ceftarolin",
+    dose: "600 mg mỗi 12 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  pipTazo: {
+    name: "Piperacillin/tazobactam",
+    dose: "4,5 g mỗi 6 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  ertapenem: {
+    name: "Ertapenem",
+    dose: "1 g mỗi 24 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+  levo: {
+    name: "Levofloxacin",
+    dose:
+      "750 mg mỗi 24 giờ hoặc 500 mg mỗi 12 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Uống hoặc tĩnh mạch",
+    caution:
+      "Đánh giá nguy cơ ADR, QT, bệnh nền, tương tác và các hạn chế sử dụng fluoroquinolon.",
+  },
+  moxi: {
+    name: "Moxifloxacin",
+    dose: "400 mg mỗi 24 giờ (Phụ lục 1); không cần hiệu chỉnh theo Clcr",
+    route: "Uống hoặc tĩnh mạch",
+    caution:
+      "Đánh giá nguy cơ ADR, QT, bệnh nền và tương tác.",
+  },
+  vanco: {
+    name: "Vancomycin",
+    dose:
+      "15–30 mg/kg mỗi 12 giờ, không quá 2 g/lần; cân nhắc liều nạp 25–30 mg/kg ở người bệnh nặng (Phụ lục 1)",
+    route: "Tĩnh mạch",
+    caution:
+      "Theo dõi chức năng thận; cân nhắc hiệu chỉnh liều theo nồng độ thuốc trong máu nếu có điều kiện.",
+  },
+  teico: {
+    name: "Teicoplanin",
+    dose:
+      "Liều tải 12 mg/kg mỗi 12 giờ × 3 liều; duy trì 12 mg/kg mỗi 24 giờ (Phụ lục 1)",
+    route: "Tĩnh mạch",
+  },
+  linezolid: {
+    name: "Linezolid",
+    dose: "600 mg mỗi 12 giờ (Phụ lục 1)",
+    route: "Uống hoặc tĩnh mạch",
+    caution: "Kiểm tra tiểu cầu và tương tác serotonergic.",
+  },
+  aminoglycoside: {
+    name: "Aminoglycosid (amikacin, gentamicin hoặc tobramycin – chọn một)",
+    dose:
+      "Amikacin 15–20 mg/kg mỗi 24 giờ; gentamicin hoặc tobramycin 5–7 mg/kg mỗi 24 giờ (Phụ lục 1); hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+    caution:
+      "Theo dõi chức năng thận thường xuyên; cân nhắc định lượng nồng độ thuốc.",
+  },
+  cipro: {
+    name: "Ciprofloxacin",
+    dose: "400 mg mỗi 8–12 giờ (Phụ lục 1), hiệu chỉnh theo Clcr",
+    route: "Tĩnh mạch",
+  },
+};
+
 const SCENARIOS: Scenario[] = [
   {
     id: "low",
     name: "Ngoại trú – nguy cơ thấp",
     description:
-      "CAP người lớn đủ điều kiện điều trị ngoại trú, không có bệnh đồng mắc hoặc yếu tố nguy cơ kháng thuốc đáng kể.",
+      "VPMPCĐ nhẹ điều trị ngoại trú, người bệnh < 65 tuổi, không bệnh đi kèm, không dùng kháng sinh trong 3 tháng trước và không có yếu tố nguy cơ mầm bệnh kháng thuốc.",
     regimens: [
       {
         id: "cap-amox",
         name: "Amoxicillin đơn trị",
-        drugs: [
-          {
-            name: "Amoxicillin",
-            dose: "1 g mỗi 8 giờ",
-            route: "Uống",
-          },
-        ],
+        drugs: [D.amoxOral],
         indication:
-          "Khi phù hợp với CAP nguy cơ thấp, không dị ứng penicillin.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Hướng đến S. pneumoniae. Một trong các lựa chọn của Mục 5.3.1 cho nhóm nguy cơ thấp.",
+        source: SRC_531,
       },
       {
         id: "cap-doxy",
         name: "Doxycyclin đơn trị",
-        drugs: [
-          {
-            name: "Doxycyclin",
-            dose: "100 mg mỗi 12 giờ",
-            route: "Uống",
-          },
-        ],
+        drugs: [D.doxy],
         indication:
-          "Lựa chọn khác khi phù hợp với người bệnh và căn nguyên nghi ngờ.",
+          "Một trong các lựa chọn của Mục 5.3.1 cho nhóm nguy cơ thấp.",
         caution:
           "Đánh giá thai kỳ, chống chỉ định và tương tác thuốc.",
-        source: "BYT 2026 – Mục 5.3.1",
+        source: SRC_531,
       },
       {
         id: "cap-azithro",
         name: "Azithromycin đơn trị – có điều kiện",
-        drugs: [
-          {
-            name: "Azithromycin",
-            dose:
-              "500 mg ngày đầu, sau đó 250 mg/ngày; hoặc 500 mg/ngày trong 3 ngày theo chế độ được chọn",
-            route: "Uống",
-          },
-        ],
+        drugs: [D.azithroOral],
         indication:
-          "Chỉ khi phù hợp với căn nguyên nghi ngờ và mức đề kháng macrolid.",
+          "Khi chưa loại trừ M. pneumoniae (macrolid thế hệ mới).",
         caution:
-          "Không sử dụng macrolid đơn trị thường quy khi đề kháng phế cầu cao hoặc thiếu dữ liệu phù hợp. Kiểm tra QT và tương tác.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Nguồn không khuyến cáo macrolid đơn trị thường quy tại khu vực có tỷ lệ S. pneumoniae kháng macrolid cao hoặc khi không có dữ liệu kháng thuốc địa phương.",
+        source: SRC_531,
       },
       {
         id: "cap-clarithro",
         name: "Clarithromycin đơn trị – có điều kiện",
-        drugs: [
-          {
-            name: "Clarithromycin",
-            dose: "500 mg mỗi 12 giờ",
-            route: "Uống, dạng thông thường",
-          },
-        ],
+        drugs: [D.clarithro],
         indication:
-          "Áp dụng điều kiện lựa chọn macrolid tương tự azithromycin.",
+          "Cùng điều kiện lựa chọn macrolid như azithromycin.",
         caution:
-          "Kiểm tra tương tác CYP3A4, QT và dạng bào chế.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Cùng cảnh báo về đề kháng macrolid. Kiểm tra tương tác CYP3A4 và QT.",
+        source: SRC_531,
+      },
+      {
+        id: "cap-amoxclav-hi",
+        name: "Amoxicillin/acid clavulanic – khi nhiều khả năng H. influenzae",
+        drugs: [D.amoxClavOral],
+        indication:
+          "Nguồn nêu nên dùng beta-lactam + chất ức chế beta-lactamase đường uống nếu nhiều khả năng H. influenzae, vì gần 50% H. influenzae tiết beta-lactamase tại Việt Nam.",
+        source: `${SRC_531}; Bảng 4.4, tr. 34 (PDF tr. 44)`,
+      },
+      {
+        id: "cap-quinolone-allergy",
+        name: "Quinolon hô hấp – dị ứng beta-lactam hoặc macrolid",
+        drugs: [D.levo, D.moxi],
+        indication:
+          "Nguồn hạn chế quinolon hô hấp ở nhóm này, ngoại trừ người bệnh dị ứng với beta-lactam hay macrolid (Bảng 5.1: nếu dị ứng beta-lactam). Chọn một thuốc, không dùng cả hai.",
+        caution:
+          "Levofloxacin và moxifloxacin là hai phương án thay thế nhau.",
+        source: `${SRC_531}; Bảng 5.1`,
       },
     ],
     alerts: [
       "Không dùng đồng thời các thuốc đơn trị chỉ vì chúng cùng xuất hiện trong danh sách.",
-      "Cần phân biệt CAP do vi khuẩn với các nguyên nhân khác và đánh giá chỉ định kháng sinh.",
+      "Nghi S. pneumoniae kháng thuốc: Bảng 5.1 nêu amoxicillin liều cao hoặc quinolon hô hấp; nguồn không ghi mg cụ thể cho 'liều cao', cần xác minh.",
+      "Bổ sung oseltamivir khi xét nghiệm cúm dương tính, không phụ thuộc thời gian bệnh.",
+      "Nên nhập viện nếu toàn trạng suy kiệt, X-quang tổn thương > 1 thùy, hoại tử, tràn dịch màng phổi hoặc tiến triển trong 48–72 giờ, dù PSI/CURB-65 chưa đủ tiêu chuẩn.",
     ],
   },
   {
     id: "risk",
     name: "Ngoại trú – có bệnh đồng mắc/nguy cơ",
     description:
-      "Có bệnh đồng mắc hoặc yếu tố nguy cơ kháng thuốc, nhưng vẫn đủ điều kiện điều trị ngoại trú.",
+      "Người bệnh > 65 tuổi, có bệnh đồng mắc (tim, phổi, gan, thận mạn, đái tháo đường, nghiện rượu, ung thư), suy giảm miễn dịch, đã dùng kháng sinh 3 tháng trước hoặc nguy cơ S. pneumoniae kháng thuốc.",
     regimens: [
       {
         id: "risk-amox-azi",
-        name: "Amoxicillin/clavulanat + azithromycin",
-        drugs: [
-          {
-            name: "Amoxicillin/acid clavulanic",
-            dose:
-              "Chọn hàm lượng và liều theo Phụ lục 1, chế phẩm và chức năng thận",
-            route: "Uống",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "500 mg ngày đầu, sau đó 250 mg/ngày; hoặc chế độ thay thế theo nguồn",
-            route: "Uống",
-          },
-        ],
+        name: "Amoxicillin/acid clavulanic + azithromycin",
+        drugs: [D.amoxClavOral, D.azithroOral],
         indication:
-          "Phác đồ beta-lactam kết hợp macrolid cho bệnh cảnh phù hợp.",
+          "Beta-lactam/ức chế beta-lactamase kết hợp macrolid thế hệ mới.",
         caution:
-          "Đây là hai thuốc dùng phối hợp. Không bổ sung thêm clarithromycin.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Hai thuốc dùng phối hợp. Không bổ sung thêm clarithromycin.",
+        source: SRC_531,
       },
       {
         id: "risk-amox-doxy",
-        name: "Amoxicillin/clavulanat + doxycyclin",
-        drugs: [
-          {
-            name: "Amoxicillin/acid clavulanic",
-            dose:
-              "Theo Phụ lục 1, hàm lượng chế phẩm và chức năng thận",
-            route: "Uống",
-          },
-          {
-            name: "Doxycyclin",
-            dose: "100 mg mỗi 12 giờ",
-            route: "Uống",
-          },
-        ],
+        name: "Amoxicillin/acid clavulanic + doxycyclin",
+        drugs: [D.amoxClavOral, D.doxy],
         indication:
-          "Phác đồ phối hợp khi cần bao phủ căn nguyên phù hợp và macrolid không thích hợp.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Beta-lactam/ức chế beta-lactamase kết hợp doxycyclin (nguồn ghi 'macrolid thế hệ mới/doxycyclin').",
+        source: SRC_531,
       },
       {
         id: "risk-cefp-azi",
         name: "Cefpodoxim + azithromycin",
+        drugs: [D.cefpodoxime, D.azithroOral],
+        indication:
+          "Cephalosporin phổ rộng đường uống kết hợp macrolid thế hệ mới.",
+        source: `${SRC_531}; ${SRC_DOSE}`,
+      },
+      {
+        id: "risk-cef-other",
+        name: "Cefdinir hoặc cefditoren + macrolid/doxycyclin",
         drugs: [
           {
-            name: "Cefpodoxim",
-            dose: "200 mg mỗi 12 giờ",
+            name: "Cefdinir HOẶC cefditoren (chọn một)",
+            dose: `${D.cefdinir.dose}; ${D.cefditoren.dose}`,
             route: "Uống",
           },
           {
-            name: "Azithromycin",
-            dose:
-              "500 mg ngày đầu, sau đó 250 mg/ngày; hoặc chế độ khác theo nguồn",
+            name: "Azithromycin HOẶC doxycyclin (chọn một)",
+            dose: `${D.azithroOral.dose}; ${D.doxy.dose}`,
             route: "Uống",
           },
         ],
         indication:
-          "Một phương án cụ thể hóa lựa chọn cephalosporin đường uống phối hợp macrolid.",
-        source: "BYT 2026 – Mục 5.3.1; Phụ lục 1",
+          "Cephalosporin phổ rộng khác được nguồn nêu cùng cefpodoxim.",
+        source: `${SRC_531}; ${SRC_DOSE}`,
       },
       {
         id: "risk-levo",
         name: "Levofloxacin đơn trị – có điều kiện",
-        drugs: [
-          {
-            name: "Levofloxacin",
-            dose:
-              "Xác minh chế độ liều CAP theo Phụ lục 1 trước sử dụng; cần hiệu chỉnh khi suy thận",
-            route: "Uống hoặc IV tùy bệnh cảnh",
-          },
-        ],
+        drugs: [D.levo],
         indication:
-          "Lựa chọn fluoroquinolon hô hấp khi có căn cứ sử dụng đơn trị.",
-        caution:
-          "Đánh giá nguy cơ ADR, QT, bệnh nền, tương tác và các hạn chế sử dụng fluoroquinolon.",
-        source: "BYT 2026 – Mục 5.3.1",
+          "Quinolon hô hấp đơn trị, một lựa chọn của Mục 5.3.1 cho nhóm này.",
+        source: `${SRC_531}; ${SRC_DOSE}`,
       },
       {
         id: "risk-moxi",
         name: "Moxifloxacin đơn trị – có điều kiện",
-        drugs: [
-          {
-            name: "Moxifloxacin",
-            dose:
-              "Xác minh chế độ liều CAP theo Phụ lục 1 và thông tin sản phẩm trước sử dụng",
-            route: "Uống hoặc IV tùy bệnh cảnh",
-          },
-        ],
+        drugs: [D.moxi],
         indication:
-          "Phương án khác thuộc nhóm fluoroquinolon hô hấp.",
+          "Quinolon hô hấp đơn trị, phương án thay thế levofloxacin.",
         caution:
           "Không xem levofloxacin và moxifloxacin là hai thành phần phối hợp.",
-        source: "BYT 2026 – Mục 5.3.1",
+        source: `${SRC_531}; ${SRC_DOSE}`,
       },
     ],
     alerts: [
-      "Không ghép hai beta-lactam hoặc hai macrolid với nhau từ các phương án khác nhau.",
-      "Đánh giá nhập viện nếu có suy hô hấp, tổn thương rộng hoặc tiến triển nhanh.",
+      "Không ghép hai beta-lactam hoặc hai macrolid từ các phương án khác nhau.",
+      "Cần lưu ý PRSP, H. influenzae, M. catarrhalis (thường sinh beta-lactamase), S. aureus, vi khuẩn Gram âm đường ruột và vi khuẩn không điển hình.",
+      "Bổ sung oseltamivir khi xét nghiệm cúm dương tính.",
+      "Nhập viện nếu toàn trạng suy kiệt hoặc tổn thương X-quang nặng/tiến triển.",
     ],
   },
   {
     id: "ward",
     name: "Nội trú – không ICU",
     description:
-      "CAP cần nhập viện, chưa có chỉ định ICU; đánh giá riêng nguy cơ MRSA và Pseudomonas.",
+      "VPMPCĐ trung bình – nặng nằm tại khoa nội/hô hấp/truyền nhiễm. Đánh giá riêng nguy cơ P. aeruginosa và S. aureus.",
     regimens: [
       {
         id: "ward-ctx-azi",
         name: "Ceftriaxon + azithromycin",
-        drugs: [
-          {
-            name: "Ceftriaxon",
-            dose: "1–2 g mỗi 24 giờ theo bệnh cảnh",
-            route: "IV",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "Cần xác minh chế độ liều và đường dùng theo Bảng 4.4/Phụ lục 1",
-            route: "Uống hoặc IV",
-          },
-        ],
+        drugs: [D.ceftriaxone, D.azithroAny],
         indication:
-          "Phác đồ beta-lactam kết hợp macrolid khi phù hợp với CAP nhập viện.",
-        source: "BYT 2026 – Mục 5.3.2; Phụ lục 1",
+          "Cephalosporin kết hợp macrolid, một lựa chọn của Mục 5.3.2.1.",
+        source: `${SRC_5321}; ${SRC_DOSE}`,
       },
       {
         id: "ward-ctax-azi",
         name: "Cefotaxim + azithromycin",
-        drugs: [
-          {
-            name: "Cefotaxim",
-            dose: "1–2 g mỗi 8 giờ",
-            route: "IV",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "Đối chiếu đường dùng và liều trong bảng gốc",
-            route: "Uống hoặc IV",
-          },
-        ],
+        drugs: [D.cefotaxime, D.azithroAny],
         indication:
-          "Phương án thay ceftriaxon bằng cefotaxim, không phải dùng cả hai.",
-        source: "BYT 2026 – Mục 5.3.2; Phụ lục 1",
+          "Phương án thay ceftriaxon bằng cefotaxim, không dùng cả hai.",
+        source: `${SRC_5321}; ${SRC_DOSE}`,
       },
       {
         id: "ward-amp-azi",
         name: "Ampicillin/sulbactam + azithromycin",
+        drugs: [D.ampSulbactam, D.azithroAny],
+        indication:
+          "Beta-lactam/ức chế beta-lactamase kết hợp macrolid.",
+        caution:
+          "Mục 5.3.2.1 ghi 'ampicillin, amoxicillin/sulbactam'; Phụ lục 1 và Bảng 4.4 có ampicillin/sulbactam. Cần đối chiếu chế phẩm sẵn có tại BV199.",
+        source: `${SRC_5321}; ${SRC_DOSE}`,
+      },
+      {
+        id: "ward-amoxclav-azi",
+        name: "Amoxicillin/acid clavulanic tĩnh mạch + azithromycin",
+        drugs: [D.amoxClavIv, D.azithroAny],
+        indication:
+          "Beta-lactam/ức chế beta-lactamase kết hợp macrolid.",
+        source: `${SRC_5321}; ${SRC_DOSE}`,
+      },
+      {
+        id: "ward-ertapenem",
+        name: "Ertapenem + macrolid hoặc quinolon",
         drugs: [
+          D.ertapenem,
           {
-            name: "Ampicillin/sulbactam",
+            name: "Macrolid HOẶC quinolon hô hấp (chọn một)",
             dose:
-              "Đối chiếu liều cụ thể trong Phụ lục 1, chức năng thận và chế phẩm",
-            route: "IV",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "Đối chiếu chế độ liều theo đường dùng",
-            route: "Uống hoặc IV",
+              "Azithromycin 250–500 mg mỗi 24 giờ; hoặc levofloxacin 750 mg mỗi 24 giờ hay 500 mg mỗi 12 giờ; hoặc moxifloxacin 400 mg mỗi 24 giờ (Phụ lục 1)",
+            route: "Tĩnh mạch",
           },
         ],
         indication:
-          "Phương án phối hợp beta-lactam/ức chế beta-lactamase với macrolid.",
-        source: "BYT 2026 – Mục 5.3.2",
+          "Bảng 5.1 liệt kê ertapenem + macrolid/quinolon truyền tĩnh mạch cho nhóm nội trú không ICU.",
+        source: `Bảng 5.1, tr. 39 (PDF tr. 49); ${SRC_DOSE}`,
+      },
+      {
+        id: "ward-ceftaroline",
+        name: "Ceftarolin ± macrolid – nghi PRSP hoặc MRSA",
+        drugs: [D.ceftaroline],
+        indication:
+          "Mục 5.3.2.1 nêu ceftarolin khi nghi PRSP hoặc MRSA, ± macrolid.",
+        source: `${SRC_5321}; ${SRC_DOSE}`,
+      },
+      {
+        id: "ward-pseudo",
+        name: "Beta-lactam chống Pseudomonas + macrolid hoặc quinolon",
+        drugs: [
+          {
+            name: "Piperacillin/tazobactam HOẶC ceftazidim HOẶC cefepim (chọn một)",
+            dose: `${D.pipTazo.dose}; ${D.ceftazidime.dose}; ${D.cefepime.dose}`,
+            route: "Tĩnh mạch",
+          },
+          {
+            name: "Macrolid HOẶC quinolon (chọn một)",
+            dose:
+              "Azithromycin 250–500 mg mỗi 24 giờ; hoặc levofloxacin 750 mg mỗi 24 giờ hay 500 mg mỗi 12 giờ (Phụ lục 1)",
+            route: "Tĩnh mạch",
+          },
+        ],
+        indication:
+          "Chỉ khi có yếu tố nguy cơ nhiễm P. aeruginosa hoặc Gram âm đường ruột; điều trị nên bao phủ luôn tác nhân không điển hình.",
+        source: SRC_5321,
       },
       {
         id: "ward-levo",
-        name: "Levofloxacin đơn trị – có điều kiện",
-        drugs: [
-          {
-            name: "Levofloxacin",
-            dose:
-              "Xác minh chế độ liều CAP trong Phụ lục 1; hiệu chỉnh theo CrCl",
-            route: "IV hoặc uống",
-          },
-        ],
+        name: "Quinolon hô hấp đơn trị – có điều kiện",
+        drugs: [D.levo, D.moxi],
         indication:
-          "Chỉ sử dụng đơn trị nếu phù hợp với mức độ bệnh, không áp dụng cho CAP nặng.",
-        source: "BYT 2026 – Mục 5.3.2",
+          "Levofloxacin hoặc moxifloxacin đơn trị cho VPMPCĐ trung bình nội trú. Chọn một thuốc.",
+        caution:
+          "Nguồn: trường hợp người bệnh nặng, quinolon hô hấp không dùng đơn trị mà kết hợp beta-lactam.",
+        source: SRC_5321,
       },
     ],
     alerts: [
-      "Lựa chọn ceftriaxon, cefotaxim hoặc ampicillin/sulbactam là các phác đồ thay thế nhau.",
-      "Không sử dụng fluoroquinolon hô hấp đơn trị cho CAP nặng.",
-      "Không mở rộng phổ Pseudomonas nếu không có yếu tố nguy cơ cần bao phủ.",
+      "Ceftriaxon, cefotaxim, ampicillin/sulbactam, amoxicillin/acid clavulanic là các phương án thay thế nhau, không dùng đồng thời.",
+      "Ưu tiên truyền tĩnh mạch kháng sinh; tránh tiêm tĩnh mạch nhanh để giảm nguy cơ tai biến.",
+      "Người bệnh nặng cần nhuộm Gram và cấy đờm trước kháng sinh, cân nhắc multiplex PCR, PCT (khi nhập viện, sau 48–72 giờ, sau 5–7 ngày) hoặc CRP.",
+      "Kháng virus (oseltamivir) nếu test nhanh dương tính. Xét nghiệm chẩn đoán lao khi nghi ngờ.",
     ],
   },
   {
     id: "icu",
     name: "CAP nặng – ICU",
     description:
-      "CAP nặng, suy hô hấp, sốc nhiễm khuẩn hoặc cần điều trị hồi sức tích cực.",
+      "VPMPCĐ nặng, suy hô hấp cần thở máy, sốc nhiễm khuẩn hoặc nguy cơ tử vong cao; cần lưu ý S. aureus và P. aeruginosa.",
     regimens: [
       {
         id: "icu-ctx-azi",
         name: "Ceftriaxon + azithromycin",
-        drugs: [
-          {
-            name: "Ceftriaxon",
-            dose: "1–2 g mỗi 24 giờ; chọn liều theo bệnh cảnh",
-            route: "IV",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "Xác minh chế độ liều CAP nặng theo bảng gốc",
-            route: "IV hoặc uống khi thích hợp",
-          },
-        ],
+        drugs: [D.ceftriaxone, D.azithroAny],
         indication:
-          "Ví dụ phác đồ nền beta-lactam + macrolid khi không có chỉ định bao phủ Pseudomonas.",
-        source: "BYT 2026 – Mục 5.3.2.2; Bảng 5.1",
+          "Beta-lactam phổ rộng kết hợp macrolid (Mục 5.3.2.2 ưu tiên kết hợp này), khi không có chỉ định bao phủ Pseudomonas.",
+        source: `${SRC_5322}; ${SRC_DOSE}`,
       },
       {
         id: "icu-ctx-levo",
         name: "Ceftriaxon + levofloxacin",
-        drugs: [
-          {
-            name: "Ceftriaxon",
-            dose: "1–2 g mỗi 24 giờ",
-            route: "IV",
-          },
-          {
-            name: "Levofloxacin",
-            dose:
-              "Xác minh liều theo Phụ lục 1, chức năng thận và mức độ nặng",
-            route: "IV",
-          },
-        ],
+        drugs: [D.ceftriaxone, D.levo],
         indication:
-          "Phương án beta-lactam + fluoroquinolon hô hấp khi phù hợp.",
-        source: "BYT 2026 – Bảng 5.1",
+          "Beta-lactam phổ rộng kết hợp quinolon truyền tĩnh mạch (Bảng 5.1).",
+        source: `Bảng 5.1, tr. 39 (PDF tr. 49); ${SRC_DOSE}`,
       },
       {
-        id: "icu-pseudo",
-        name: "Cefepim + levofloxacin – nguy cơ Pseudomonas",
+        id: "icu-pseudo-quinolone",
+        name: "Beta-lactam chống Pseudomonas + ciprofloxacin hoặc levofloxacin",
         drugs: [
           {
-            name: "Cefepim",
+            name:
+              "Một beta-lactam chống Pseudomonas: piperacillin/tazobactam, ceftazidim, cefepim, imipenem, meropenem hoặc doripenem",
             dose:
-              "Xác minh liều, chế độ truyền và CrCl theo bệnh cảnh nặng",
-            route: "IV",
+              "Piperacillin/tazobactam 4,5 g mỗi 6 giờ; ceftazidim 2 g mỗi 8 giờ; cefepim 2 g mỗi 8 giờ; imipenem 500 mg mỗi 6 giờ; meropenem 1 g mỗi 8 giờ (Phụ lục 1). Doripenem: nguồn không ghi liều trong Phụ lục 1.",
+            route: "Tĩnh mạch",
           },
+          { ...D.cipro, name: "Ciprofloxacin HOẶC levofloxacin (chọn một)", dose: `${D.cipro.dose}; ${D.levo.dose}` },
+        ],
+        indication:
+          "Chỉ khi có nguy cơ nhiễm Pseudomonas. Ví dụ cụ thể: cefepim + levofloxacin.",
+        caution:
+          "Không xem ceftriaxon là thuốc chống Pseudomonas. Đối chiếu antibiogram và kết quả vi sinh.",
+        source: `Bảng 5.1, tr. 39 (PDF tr. 49); ${SRC_DOSE}`,
+      },
+      {
+        id: "icu-pseudo-aminoglycoside",
+        name: "Beta-lactam chống Pseudomonas + aminoglycosid + azithromycin/clarithromycin",
+        drugs: [
           {
-            name: "Levofloxacin",
+            name: "Một beta-lactam chống Pseudomonas (như phương án trên)",
             dose:
-              "Theo liều áp dụng cho nguy cơ Pseudomonas và chức năng thận",
-            route: "IV",
+              "Piperacillin/tazobactam 4,5 g mỗi 6 giờ; ceftazidim 2 g mỗi 8 giờ; cefepim 2 g mỗi 8 giờ; imipenem 500 mg mỗi 6 giờ; meropenem 1 g mỗi 8 giờ (Phụ lục 1)",
+            route: "Tĩnh mạch",
+          },
+          D.aminoglycoside,
+          {
+            name: "Azithromycin HOẶC clarithromycin (chọn một)",
+            dose:
+              "Azithromycin 250–500 mg mỗi 24 giờ; clarithromycin 500 mg mỗi 12 giờ (Phụ lục 1)",
+            route: "Tĩnh mạch",
           },
         ],
         indication:
-          "Chỉ khi có nguy cơ Pseudomonas và cần phác đồ phối hợp phù hợp.",
+          "Nhánh thay thế khi nghi P. aeruginosa (Bảng 5.1): beta-lactam + một aminoglycosid và azithromycin/clarithromycin.",
         caution:
-          "Không xem ceftriaxon là thuốc chống Pseudomonas. Cần đối chiếu antibiogram và kết quả vi sinh.",
-        source: "BYT 2026 – Bảng 5.1",
+          "Phác đồ ba thuốc. Đánh giá độc tính thận và tai, cân nhắc xuống thang sớm theo vi sinh.",
+        source: `Bảng 5.1, tr. 39 (PDF tr. 49); ${SRC_DOSE}`,
       },
       {
         id: "icu-mrsa",
-        name: "Ceftriaxon + azithromycin + vancomycin",
+        name: "Ceftriaxon + azithromycin + thuốc chống MRSA",
         drugs: [
+          D.ceftriaxone,
+          D.azithroAny,
           {
-            name: "Ceftriaxon",
-            dose: "1–2 g mỗi 24 giờ",
-            route: "IV",
-          },
-          {
-            name: "Azithromycin",
-            dose:
-              "Xác minh chế độ liều CAP nặng theo nguồn",
-            route: "IV hoặc uống khi phù hợp",
-          },
-          {
-            name: "Vancomycin",
-            dose:
-              "Cá thể hóa theo cân nặng, chức năng thận và theo dõi AUC khi áp dụng",
-            route: "IV",
+            name: "Vancomycin HOẶC teicoplanin HOẶC linezolid (chọn một)",
+            dose: `${D.vanco.dose}; ${D.teico.dose}; ${D.linezolid.dose}`,
+            route: "Tĩnh mạch (linezolid: uống hoặc tĩnh mạch)",
+            caution: D.vanco.caution,
           },
         ],
         indication:
-          "Ví dụ phác đồ nền CAP nặng có bổ sung thuốc chống MRSA khi có chỉ định.",
+          "Phác đồ nền CAP nặng có bổ sung thuốc chống MRSA khi nghi CA-MRSA hoặc chưa loại trừ S. aureus.",
         caution:
-          "Vancomycin là thuốc bổ sung khi nghi MRSA, không được thêm thường quy cho mọi CAP nặng.",
-        source: "BYT 2026 – Bảng 5.1",
+          "Thuốc chống MRSA là thuốc bổ sung, không thêm thường quy cho mọi CAP nặng.",
+        source: `${SRC_5322}; ${SRC_DOSE}`,
       },
     ],
     alerts: [
-      "Phác đồ chống MRSA và chống Pseudomonas là hai quyết định độc lập.",
-      "Nếu đồng thời có nguy cơ MRSA và Pseudomonas, cần đánh giá lại toàn bộ phác đồ nền.",
-      "Đánh giá chức năng thận, MIC/AST, PK/PD, ARC, RRT và tình trạng sốc.",
+      "Chống MRSA và chống Pseudomonas là hai quyết định độc lập. Nếu đồng thời có cả hai nguy cơ, đánh giá lại toàn bộ phác đồ nền.",
+      "Nguồn (Mục 5.3.2.2) cũng nêu carbapenem thế hệ 1 (không bao phủ Pseudomonas) hoặc thế hệ 2 kết hợp fluoroquinolon hoặc macrolid ± thuốc bao phủ S. aureus.",
+      "Corticoid khi viêm phổi nặng (sớm trong 24 giờ đầu) hoặc sốc: hydrocortison 200 mg/ngày hoặc methylprednisolon 0,5 mg/kg mỗi 12 giờ, đánh giá sau 4 ngày, tổng 8–14 ngày; xét nghiệm cúm và Covid trước khi quyết định.",
+      "Đánh giá chức năng thận, MIC/AST, PK/PD, ARC, RRT và tình trạng sốc. Liều ở Phụ lục 1 cần hiệu chỉnh theo Clcr.",
     ],
   },
 ];
@@ -425,8 +552,14 @@ const panel: CSSProperties = {
   minWidth: 0,
 };
 
-export default function CapByt2026() {
-  const [scenarioId, setScenarioId] = useState("ward");
+export default function CapByt2026({
+  initialScenarioId,
+}: {
+  initialScenarioId?: string;
+}) {
+  const [scenarioId, setScenarioId] = useState(
+    initialScenarioId ?? "ward"
+  );
   const [opened, setOpened] = useState<string | null>(null);
 
   const scenario =
@@ -451,8 +584,10 @@ export default function CapByt2026() {
         <div style={{
           fontSize: 12,
           color: "#61798b",
+          lineHeight: 1.7,
         }}>
-          Quyết định 2147/QĐ-BYT, ngày 15/7/2026
+          Quyết định 2147/QĐ-BYT, ngày 15/7/2026. Có hiệu lực từ ngày ký
+          và thay thế Quyết định 4815/QĐ-BYT ngày 20/11/2020 (Điều 3).
         </div>
       </section>
 
@@ -665,9 +800,10 @@ export default function CapByt2026() {
           marginBottom: 0,
         }}>
           Các phác đồ là phương án khác nhau,
-          không phải thứ tự ưu tiên. Các tổ hợp
-          cụ thể cần được đối chiếu bảng gốc và
-          đánh giá chuyên môn trước khi sử dụng.
+          không phải thứ tự ưu tiên. Liều ghi theo cột
+          "Liều thường dùng" của Phụ lục 1 (Clcr &gt; 50–90 ml/phút);
+          cần hiệu chỉnh theo chức năng thận và đánh giá chuyên môn
+          trước khi sử dụng.
         </p>
       </section>
 
@@ -690,19 +826,24 @@ export default function CapByt2026() {
             ))}
 
             <li>
-              Đánh giá đáp ứng sau 48–72 giờ;
-              xuống thang khi có kết quả vi sinh.
+              Đánh giá điều trị sau 48–72 giờ; nếu không cải
+              thiện hoặc xấu hơn cần thay đổi phác đồ
+              (Mục 5.2).
             </li>
 
             <li>
-              Kiểm tra thời gian điều trị theo
-              tình trạng ổn định lâm sàng,
-              căn nguyên và biến chứng.
+              Thời gian điều trị: thường 3–5 ngày sau khi hết sốt
+              với S. pneumoniae; trung bình 7–10 ngày đối với
+              VPMPCĐ không biến chứng (Mục 5.2). Nếu đáp ứng lâm
+              sàng tốt trong 2–3 ngày đầu, thường 5–7 ngày; kéo dài
+              hơn khi đáp ứng chậm, S. aureus, Gram âm, biến chứng
+              hoặc suy giảm miễn dịch (Mục 5.6.2).
             </li>
 
             <li>
-              Cân nhắc chuyển IV–PO khi đáp ứng
-              điều kiện ổn định và dùng được đường uống.
+              Chuyển sang đường uống khi cải thiện ho, khó thở,
+              hết sốt 2 lần cách nhau 8 giờ và uống được
+              (Mục 5.2; Mục 4.5, Bảng 4.4).
             </li>
           </ul>
         </details>
@@ -729,22 +870,26 @@ export default function CapByt2026() {
             </b>
 
             <div>
-              Điều trị kinh nghiệm: Mục 5.3,
-              Bảng 5.1.
+              Điều trị kinh nghiệm: Mục 5.3 (tr. 36–39), Bảng 5.1
+              (tr. 39). PDF tr. 46–49.
             </div>
 
             <div>
-              Liều và chức năng thận: Phụ lục 1.
+              Liều và chức năng thận: Phụ lục 1 (tr. 60–63).
+              PDF tr. 70–73.
             </div>
 
             <div>
-              Chuyển IV–PO: Mục 4.5, Bảng 4.4.
+              Chuyển IV–PO: Mục 4.5, Bảng 4.4 (tr. 34). PDF tr. 44.
             </div>
 
             <p style={{ color: "#8b611c" }}>
-              Đây là dữ liệu hỗ trợ tra cứu,
-              chưa phải phác đồ BV199 được phê duyệt.
-              Chưa mã hóa toàn bộ nội dung tài liệu.
+              Đã đối chiếu với bản PDF do người dùng cung cấp
+              (13/10/2026); chưa đối chiếu cổng thông tin chính thức
+              của Bộ Y tế. Đây là dữ liệu hỗ trợ tra cứu, chưa phải
+              phác đồ BV199 được phê duyệt. Chưa mã hóa toàn bộ
+              nội dung tài liệu (ví dụ điều trị theo căn nguyên,
+              Mục 5.4).
             </p>
           </div>
         </details>
