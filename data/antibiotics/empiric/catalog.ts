@@ -1,8 +1,8 @@
 /*
   FILE: data/antibiotics/empiric/catalog.ts
 
-  Danh muc mat benh CHI GOM cac mat benh co phac do khang sinh kinh nghiem
-  (co ten thuoc/nhom thuoc) trong cac van ban BYT da doc. Cac mat benh khong
+  Danh muc mat benh CHI GOM cac mat benh co lua chon khang sinh CU THE
+  (ten thuoc + lieu) trong van ban BYT, hoac co module rieng co lieu. Cac mat benh khong
   co trong phac do BYT da duoc xoa (xem bao cao kiem toan).
 
   - ID giu nguyen dang v8-N (de khong mat lien ket status/groups/phac do);
@@ -29,7 +29,6 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-12", title: "Sốc nhiễm khuẩn", specialty: "Hồi sức tích cực" },
   { id: "v8-13", title: "Nhiễm khuẩn huyết do S. aureus", specialty: "Hồi sức tích cực" },
   { id: "v8-14", title: "Nhiễm khuẩn huyết do Gram âm", specialty: "Hồi sức tích cực" },
-  { id: "v8-15", title: "Nhiễm khuẩn liên quan catheter", specialty: "Hồi sức tích cực" },
   { id: "v8-16", title: "Viêm bàng quang không biến chứng", specialty: "Tiết niệu" },
   { id: "v8-17", title: "Viêm thận bể thận", specialty: "Tiết niệu" },
   { id: "v8-21", title: "Viêm phúc mạc thứ phát", specialty: "Tiêu hóa – Gan mật" },
@@ -51,37 +50,29 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-52", title: "Mucormycosis", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-53", title: "Pneumocystis jirovecii pneumonia", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-54", title: "Viêm họng do liên cầu nhóm A", specialty: "Tai Mũi Họng" },
-  { id: "v8-55", title: "Viêm amidan cấp do vi khuẩn", specialty: "Tai Mũi Họng" },
   { id: "v8-56", title: "Áp xe quanh amidan", specialty: "Tai Mũi Họng" },
   { id: "v8-57", title: "Áp xe sau họng", specialty: "Tai Mũi Họng" },
   { id: "v8-58", title: "Viêm xoang cấp do vi khuẩn ở người lớn", specialty: "Tai Mũi Họng" },
   { id: "v8-60", title: "Viêm tai giữa cấp", specialty: "Tai Mũi Họng" },
-  { id: "v8-63", title: "Viêm xương chũm", specialty: "Tai Mũi Họng" },
-  { id: "v8-64", title: "Viêm thanh thiệt cấp", specialty: "Tai Mũi Họng" },
   { id: "v8-66", title: "Nhiễm khuẩn khoang cổ sâu", specialty: "Tai Mũi Họng" },
-  { id: "v8-67", title: "Viêm tai giữa mạn chảy mủ", specialty: "Tai Mũi Họng" },
   { id: "v8-83", title: "Viêm kết mạc do vi khuẩn", specialty: "Mắt" },
   { id: "v8-84", title: "Viêm giác mạc do vi khuẩn", specialty: "Mắt" },
   { id: "v8-85", title: "Viêm nội nhãn sau phẫu thuật", specialty: "Mắt" },
   { id: "v8-87", title: "Viêm mô tế bào hốc mắt", specialty: "Mắt" },
   { id: "v8-88", title: "Viêm túi lệ cấp", specialty: "Mắt" },
-  { id: "v8-89", title: "Nhiễm nấm giác mạc", specialty: "Mắt", stream: "antifungal" },
   { id: "v8-92", title: "Nhiễm khuẩn hậu sản", specialty: "Sản phụ khoa" },
   { id: "v8-95", title: "Viêm âm đạo do vi khuẩn", specialty: "Sản phụ khoa" },
   { id: "v8-96", title: "Nhiễm Candida âm hộ–âm đạo", specialty: "Sản phụ khoa", stream: "antifungal" },
   { id: "v8-97", title: "Nhiễm khuẩn tiết niệu thai kỳ", specialty: "Sản phụ khoa" },
   { id: "v8-99", title: "Viêm tai giữa cấp ở trẻ em", specialty: "Tai Mũi Họng" },
-  { id: "v8-100", title: "Viêm xoang cấp ở trẻ em", specialty: "Tai Mũi Họng" },
   { id: "v8-101", title: "Viêm phổi cộng đồng ở trẻ em", specialty: "Hô hấp" },
   { id: "v8-102", title: "Viêm phổi sơ sinh", specialty: "Nhi khoa – Sơ sinh" },
   { id: "v8-103", title: "Nhiễm khuẩn huyết sơ sinh", specialty: "Nhi khoa – Sơ sinh" },
   { id: "v8-104", title: "Viêm màng não ở trẻ em", specialty: "Thần kinh" },
   { id: "v8-107", title: "Viêm mô tế bào ở trẻ em", specialty: "Da – mô mềm" },
-  { id: "v8-108", title: "Nhiễm khuẩn huyết liên quan catheter trung tâm", specialty: "Hồi sức tích cực" },
   { id: "v8-113", title: "Sốt giảm bạch cầu trung tính", specialty: "Hồi sức tích cực" },
   { id: "v8-116", title: "Sốt giảm bạch cầu trung tính nguy cơ cao", specialty: "Huyết học" },
   { id: "v8-117", title: "Nhiễm nấm xâm lấn ở bệnh nhân huyết học", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
-  { id: "v8-118", title: "Dự phòng Pneumocystis ở người suy giảm miễn dịch", specialty: "Nhiễm nấm xâm lấn", stream: "prophylaxis" },
   { id: "v8-121", title: "Candidemia có giảm bạch cầu trung tính", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-122", title: "Candida nội tâm mạc", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-124", title: "Candida viêm xương khớp", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
@@ -89,7 +80,6 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-128", title: "Cryptococcus ngoài thần kinh trung ương", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-129", title: "Nhiễm nấm Histoplasma", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-130", title: "Nhiễm nấm Talaromyces", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
-  { id: "v8-131", title: "Nhiễm nấm Fusarium", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-135", title: "Thương hàn", specialty: "Truyền nhiễm" },
   { id: "v8-141", title: "Viêm màng não do lao", specialty: "Lao", stream: "tuberculosis" },
   { id: "v8-142", title: "Lao phổi", specialty: "Lao", stream: "tuberculosis" },
@@ -103,7 +93,7 @@ export const DISEASES: Disease[] = [...RAW_DISEASES].sort(
     collator.compare(a.title, b.title)
 );
 
-export const EXPECTED_CATALOG_COUNT = 78;
+export const EXPECTED_CATALOG_COUNT = 68;
 
 if (
   process.env.NODE_ENV !== "production" &&

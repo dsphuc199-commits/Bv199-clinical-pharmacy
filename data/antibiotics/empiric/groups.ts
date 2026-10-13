@@ -32,13 +32,6 @@ export const CANONICAL_GROUPS: CanonicalGroup[] = [
     note: "v8-99 là viêm tai giữa cấp ở trẻ em.",
   },
   {
-    code: "CAN-CATHETER-BSI",
-    name: "Nhiễm khuẩn huyết liên quan catheter",
-    type: "duplicate-candidate",
-    ids: ["v8-15", "v8-108"],
-    note: "Ứng viên trùng; v8-108 chỉ rõ catheter trung tâm.",
-  },
-  {
     code: "CAN-CANDIDEMIA",
     name: "Nhiễm Candida huyết",
     type: "related",
@@ -51,13 +44,6 @@ export const CANONICAL_GROUPS: CanonicalGroup[] = [
     type: "related",
     ids: ["v8-113", "v8-116"],
     note: "Chung họ bệnh; v8-116 là nhóm nguy cơ cao (Huyết học).",
-  },
-  {
-    code: "CAN-PJP",
-    name: "Pneumocystis jirovecii",
-    type: "related",
-    ids: ["v8-53", "v8-118"],
-    note: "v8-53 là điều trị; v8-118 là dự phòng. Hai luồng riêng.",
   },
   {
     code: "CAN-CRYPTOCOCCUS",

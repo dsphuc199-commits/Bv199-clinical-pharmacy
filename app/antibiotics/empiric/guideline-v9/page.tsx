@@ -190,6 +190,15 @@ export default function GuidelinePage() {
     setPickedScenario(null);
     setSelectedId(disease.id);
     setAbrsSetting("outpatient");
+
+    /* Man hinh hep: cuon ve dau phan chi tiet de thay ngay mat benh moi. */
+    if (typeof window !== "undefined" && window.innerWidth < 900) {
+      window.setTimeout(() => {
+        document
+          .querySelector(".bv199-disease-heading")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 0);
+    }
   }
 
   function selectById(id: string) {
@@ -728,7 +737,11 @@ export default function GuidelinePage() {
           </div>
 
           {/* PHAC DO THEO VAN BAN BO Y TE */}
-          <BytRegimenView key={selected.id} diseaseId={selected.id} />
+          <BytRegimenView
+            key={selected.id}
+            diseaseId={selected.id}
+            diseaseTitle={selected.title}
+          />
 
           {/* VIEM XOANG CAP - UPTODATE 2026 */}
           {isAbrs ? (
@@ -893,6 +906,26 @@ export default function GuidelinePage() {
               )}
             </>
           ) : (
+            hasBytRegimen ? (
+              <details className="bv199-panel">
+                <summary>
+                  Hồ sơ mặt bệnh, trạng thái dữ liệu và liên kết mặt bệnh gần giống
+                </summary>
+              <DiseaseProfile
+                key={selected.id}
+                disease={selected}
+                stream={stream}
+                population={getPopulationHint(selected)}
+                status={statusEntry.status}
+                sourceLabel={statusEntry.sourceLabel}
+                statusNote={statusEntry.note}
+                groups={linkedGroups}
+                hasModule={false}
+                onSelectDisease={selectById}
+                titleOf={titleOf}
+              />
+              </details>
+            ) : (
             <DiseaseProfile
               key={selected.id}
               disease={selected}
@@ -906,6 +939,7 @@ export default function GuidelinePage() {
               onSelectDisease={selectById}
               titleOf={titleOf}
             />
+            )
           )}
 
           {/* NGUON QUOC TE KHAC */}

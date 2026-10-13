@@ -17,7 +17,7 @@ const CAND_ID = "Chỉ định điều trị đặc hiệu khi chẩn đoán ch�
 
 export const ANTIFUNGAL: Regimen[] = [
   /* ---------------- Candida máu không giảm bạch cầu ---------------- */
-  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-first", ["v8-3"],
+  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-first", ["v8-3", "v8-48"],
     "Candida máu đơn độc – không giảm bạch cầu hạt, không ghép tế bào gốc", "first",
     [
       d("Caspofungin", "liều nạp 70 mg, sau đó 50 mg/ngày"),
@@ -25,11 +25,11 @@ export const ANTIFUNGAL: Regimen[] = [
       d("HOẶC Anidulafungin*", "liều nạp 200 mg, sau đó 100 mg/ngày"),
     ],
     { duration: "2 tuần sau khi cấy máu âm tính và cải thiện triệu chứng (không có xâm lấn mô sâu)", notes: [CAND_ID, STAR, "Khám mắt trong tuần đầu; rút catheter TM trung tâm sớm nếu nghi liên quan catheter."] }),
-  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-alt", ["v8-3"],
+  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-alt", ["v8-3", "v8-48"],
     "Candida máu đơn độc – không giảm bạch cầu hạt, không ghép tế bào gốc", "alternative",
     [d("Fluconazol", "liều nạp 800 mg (12 mg/kg), sau đó 400 mg (6 mg/kg)/ngày, uống hoặc truyền TM (TM nếu không dùng được đường uống)")],
     { duration: "2 tuần sau khi cấy máu âm tính và cải thiện triệu chứng", notes: ["Thay thế echinocandin khi bệnh nhân không nặng và Candida không kháng fluconazol.", CAND_ID] }),
-  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-other", ["v8-3"],
+  r("4.1.1a Candida máu – không giảm BC hạt/không ghép TBG", "tr. 49", "r-fung-candidemia-other", ["v8-3", "v8-48"],
     "Candida máu đơn độc – không giảm bạch cầu hạt, không ghép tế bào gốc", "alternative",
     [d("Dẫn xuất lipid của Amphotericin B", "3–5 mg/kg/ngày")],
     { notes: ["Khi không dung nạp hoặc kháng với các thuốc chống nấm khác.", CAND_ID] }),
@@ -77,7 +77,7 @@ export const ANTIFUNGAL: Regimen[] = [
       d("HOẶC Voriconazol", "400 mg (6 mg/kg) hai lần/ngày cho 2 liều, sau đó 200 mg (3 mg/kg) hai lần/ngày"),
     ],
     { notes: ["Nếu không cải thiện sau 3–5 ngày: cân nhắc Amphotericin B liposomal* 3–5 mg/kg/ngày.", "Nghi nhiễm nấm sợi: không dùng fluconazol (không có tác dụng trên nấm sợi).", STAR] }),
-  r("4.1.1b Điều trị kinh nghiệm – không có bệnh máu ác tính", "tr. 51–52", "r-fung-emp-nonheme-first", ["v8-3"],
+  r("4.1.1b Điều trị kinh nghiệm – không có bệnh máu ác tính", "tr. 51–52", "r-fung-emp-nonheme-first", ["v8-3", "v8-48"],
     "Nghi nhiễm Candida xâm lấn, không có bệnh máu ác tính (Candida Score ≥ 3 và/hoặc yếu tố Ostrosky-Zeichner)", "first",
     [
       d("Caspofungin", "liều nạp 70 mg, sau đó 50 mg/ngày"),
@@ -85,16 +85,16 @@ export const ANTIFUNGAL: Regimen[] = [
       d("HOẶC Anidulafungin*", "liều nạp 200 mg, sau đó 100 mg/ngày"),
     ],
     { duration: "Giống điều trị đặc hiệu", notes: ["Chỉ định khi ≥ 1 bệnh phẩm không vô trùng cấy ra Candida, kèm yếu tố lâm sàng gợi ý.", STAR] }),
-  r("4.1.1b Điều trị kinh nghiệm – không có bệnh máu ác tính", "tr. 52", "r-fung-emp-nonheme-alt", ["v8-3"],
+  r("4.1.1b Điều trị kinh nghiệm – không có bệnh máu ác tính", "tr. 52", "r-fung-emp-nonheme-alt", ["v8-3", "v8-48"],
     "Nghi nhiễm Candida xâm lấn, không có bệnh máu ác tính", "alternative",
     [d("Fluconazol", "liều nạp 800 mg (12 mg/kg), sau đó 400 mg (6 mg/kg)/ngày")],
     { notes: ["Nếu chưa dùng azol trước đó và không có chủng Candida cư trú kháng azol.", "Lựa chọn khác: dẫn xuất lipid của amphotericin B 3–5 mg/kg/ngày khi không dung nạp các thuốc khác."] }),
 
-  /* ---------------- Candida ổ bụng ---------------- */
-  r("4.1.2b Candida trong ổ bụng", "tr. 53–54", "r-fung-intraabd", ["v8-48"],
-    "Nhiễm Candida trong ổ bụng", "first",
-    [d("Như điều trị Candida máu (echinocandin ưu tiên) hoặc như điều trị kinh nghiệm ở bệnh nhân ICU không giảm bạch cầu", "xem liều ở phác đồ Candida máu/điều trị kinh nghiệm (cùng tài liệu)")],
-    { duration: "Dựa vào kiểm soát nguồn nhiễm và đáp ứng lâm sàng", notes: ["Kiểm soát nguồn nhiễm kết hợp dẫn lưu và/hoặc làm sạch ổ bụng.", "Điều trị kinh nghiệm cho bệnh nhân nguy cơ Candida có bằng chứng nhiễm trùng ổ bụng (phẫu thuật ổ bụng gần đây, rò hậu môn, viêm tụy hoại tử)."] }),
+  /* Candida ổ bụng (v8-48): QĐ 3429 tr. 53–54 ghi "điều trị thuốc chống nấm tương tự điều trị
+     nhiễm nấm Candida máu hoặc điều trị theo kinh nghiệm ở bệnh nhân ICU không giảm bạch cầu"
+     -> dùng chung các phác đồ Candida máu/kinh nghiệm ở trên (diseaseIds có v8-48).
+     Kiểm soát nguồn nhiễm (dẫn lưu/làm sạch ổ bụng) là bắt buộc; thời gian điều trị dựa vào
+     kiểm soát nguồn và đáp ứng lâm sàng. */
 
   /* ---------------- Candida nội tâm mạc ---------------- */
   r("4.1.2c Bảng 4.3 Candida nội tâm mạc (van tự nhiên)", "tr. 54", "r-fung-ie-initial", ["v8-122"],
