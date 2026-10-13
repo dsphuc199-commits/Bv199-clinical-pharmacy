@@ -10,6 +10,7 @@ import EntEmpiricGuidelines, {
 } from "../../../../components/antibiotics/EntEmpiricGuidelines";
 import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
+import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import type { ModuleKey } from "../../../../lib/antibiotics/select-regimens";
 import DiseaseProfile, {
@@ -22,7 +23,9 @@ import {
   normalize,
 } from "../../../../data/antibiotics/empiric/catalog";
 import { getGroupsForDisease } from "../../../../data/antibiotics/empiric/groups";
+import { getRegimensForDisease } from "../../../../data/antibiotics/empiric/regimens";
 import {
+  BYT_REGIMEN_STATUS,
   DEFAULT_STATUS,
   DISEASE_STATUS,
   ENT_MODULE_STATUS,
@@ -41,11 +44,12 @@ import type { Disease } from "../../../../data/antibiotics/empiric/types";
   2. Tim kiem, loc va thu gon danh muc
   3. CAP - BYT 2026
   4. HAP/VAP - Khuyen cao Viet Nam 2023
-  5. Tai Mui Hong - 16 ten mat benh
+  5. Tai Mui Hong
   6. Viem xoang cap ngoai tru - UpToDate 2026
   7. Phan biet ngoai tru va noi tru
   8. Giu nguyen cac module khac
-  9. Danh muc 144 ID tach sang data/antibiotics/empiric/catalog.ts
+  11. Phac do BYT chi tiet (BytRegimenView) tu data/antibiotics/empiric/regimens
+  9. Danh muc (chi mat benh co phac do BYT) o data/antibiotics/empiric/catalog.ts
   10. Ho so mat benh A-F + trang thai du lieu 0-5 (DiseaseProfile)
 
   Chu y:
@@ -86,16 +90,7 @@ function isAdultABRS(disease: Disease): boolean {
   );
 }
 
-const PRIORITY_SPECIALTIES = [
-  "Hô hấp",
-  "Tai Mũi Họng",
-  "Hồi sức tích cực",
-  "Nội tiết",
-  "Tiết niệu",
-  "Ngoại tổng hợp",
-  "Ngoại chấn thương",
-  "Tim mạch",
-];
+const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
 
 export default function GuidelinePage() {
   const [query, setQuery] = useState("");
@@ -119,20 +114,7 @@ export default function GuidelinePage() {
       new Set(DISEASES.map((disease) => disease.specialty))
     );
 
-    return names.sort((a, b) => {
-      const rankA = PRIORITY_SPECIALTIES.findIndex((item) =>
-        a.startsWith(item)
-      );
-
-      const rankB = PRIORITY_SPECIALTIES.findIndex((item) =>
-        b.startsWith(item)
-      );
-
-      const aIndex = rankA < 0 ? 99 : rankA;
-      const bIndex = rankB < 0 ? 99 : rankB;
-
-      return aIndex - bIndex || a.localeCompare(b, "vi");
-    });
+    return names.sort((a, b) => VI_COLLATOR.compare(a, b));
   }, []);
 
   const filtered = useMemo(() => {
@@ -181,9 +163,15 @@ export default function GuidelinePage() {
     isHAP(selected) ||
     isVAP(selected);
 
+  const hasBytRegimen = getRegimensForDisease(selected.id).length > 0;
+
   const statusEntry =
     DISEASE_STATUS[selected.id] ??
-    (isEnt ? ENT_MODULE_STATUS : DEFAULT_STATUS);
+    (isEnt
+      ? ENT_MODULE_STATUS
+      : hasBytRegimen
+        ? BYT_REGIMEN_STATUS
+        : DEFAULT_STATUS);
 
   const stream = getStream(selected);
   const linkedGroups = getGroupsForDisease(selected.id);
@@ -555,9 +543,9 @@ export default function GuidelinePage() {
         <h1>Điều trị kháng sinh kinh nghiệm</h1>
 
         <p className="bv199-empiric-subtitle">
-          Chọn mặt bệnh theo chuyên khoa,
-          phân tầng điều trị và đối chiếu hướng dẫn
-          Việt Nam – quốc tế.
+          Chỉ gồm các mặt bệnh có phác đồ kháng sinh trong
+          hướng dẫn của Bộ Y tế. Chuyên khoa và mặt bệnh
+          xếp theo thứ tự A–Z.
         </p>
       </header>
 
@@ -738,6 +726,9 @@ export default function GuidelinePage() {
               <StatusBadge status={statusEntry.status} />
             </div>
           </div>
+
+          {/* PHAC DO THEO VAN BAN BO Y TE */}
+          <BytRegimenView key={selected.id} diseaseId={selected.id} />
 
           {/* VIEM XOANG CAP - UPTODATE 2026 */}
           {isAbrs ? (

@@ -49,6 +49,18 @@ export const ENT_MODULE_STATUS: DiseaseStatusEntry = {
     "Module EntEmpiricGuidelines. Liều viêm họng liên cầu (CDC cập nhật 18/11/2025) và viêm tai giữa cấp trẻ em (NICE NG91) đã đối chiếu 13/10/2026. QĐ 5643/QĐ-BYT (31/12/2015) tồn tại nhưng chưa đọc được nội dung và chưa xác minh hiệu lực; nhiều nhánh vẫn cần thẩm định, chưa có liều.",
 };
 
+/*
+  Mat benh co phac do BYT trong thu vien regimens/ (khong thuoc module rieng).
+  Muc 2: nguon BYT da doc tu ban PDF nguoi dung cung cap, CHUA xac minh hieu luc tren
+  cong chinh thuc va CHUA tham dinh BV199. Khong duoc tu nang len 5.
+*/
+export const BYT_REGIMEN_STATUS: DiseaseStatusEntry = {
+  status: 2,
+  sourceLabel: "BYT",
+  note:
+    "Phác đồ trích từ văn bản BYT (bản PDF do người dùng cung cấp), có ghi quyết định, mục/bảng và trang. Chưa xác minh hiệu lực trên cổng chính thức; chưa có thẩm định BV199. Các nhánh gắn cờ cần đối chiếu bản gốc.",
+};
+
 export const DEFAULT_STATUS: DiseaseStatusEntry = {
   status: 0,
   sourceLabel: "CHUA_XAC_DINH",

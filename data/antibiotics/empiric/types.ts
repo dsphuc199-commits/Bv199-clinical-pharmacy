@@ -7,6 +7,8 @@ export type Disease = {
   id: string;
   title: string;
   specialty: string;
+  /** Luong dieu tri khai bao ro rang; mac dinh suy ra (empiric). */
+  stream?: Stream;
 };
 
 /*
