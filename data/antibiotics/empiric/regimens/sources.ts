@@ -95,10 +95,11 @@ export const DOCS: Record<DocId, DocInfo> = {
   byt162: {
     id: "byt162",
     title: "Hướng dẫn chẩn đoán, điều trị và dự phòng bệnh lao",
-    number: "162/QĐ-BYT (theo tên tệp do người dùng cung cấp)",
-    date: "2024 (bản PDF để trống số và ngày ban hành)",
+    number: "162/QĐ-BYT",
+    date: "19/01/2024",
     issuer: "Bộ Y tế",
-    validity: `${UNVERIFIED} Bản PDF cung cấp ghi "Số: /QĐ-BYT, ngày tháng năm 2024" (dự thảo/chưa điền): cần đối chiếu số hiệu và ngày ban hành chính thức.`,
+    validity:
+      "Số hiệu và ngày ký (19/01/2024, thay thế QĐ 1314/QĐ-BYT ngày 24/03/2020) xác nhận ngày 25/10/2026 qua bản sao văn bản (hoatieu.vn, duytan.edu.vn) – chưa tìm thấy bản trên kcb.vn. Nội dung phác đồ trong ứng dụng đọc từ bản PDF do người dùng cung cấp (bản này để trống số/ngày), chưa đối chiếu với bản ký chính thức.",
   },
   byt5165: {
     id: "byt5165",
@@ -116,12 +117,40 @@ export const DOCS: Record<DocId, DocInfo> = {
     issuer: "Bộ Y tế",
     validity: `${UNVERIFIED} Tài liệu quản lý; không có phác đồ theo mặt bệnh.`,
   },
+  byt1530: {
+    id: "byt1530",
+    title: "Hướng dẫn chẩn đoán và điều trị Loét bàn chân do đái tháo đường",
+    number: "1530/QĐ-BYT",
+    date: "24/03/2023",
+    issuer: "Bộ Y tế",
+    validity:
+      "Bản PDF đăng trên kcb.vn (Cục Quản lý Khám, chữa bệnh), đọc ngày 25/10/2026; chữ ký số ngày 24/03/2023. Điều 2: áp dụng tại các cơ sở khám bệnh, chữa bệnh trong cả nước. Phụ lục 02 (tr. 32–33) chỉ nêu nhóm thuốc/tên thuốc, không nêu liều.",
+  },
+  byt2767: {
+    id: "byt2767",
+    title: "Hướng dẫn chẩn đoán và điều trị bệnh phổi tắc nghẽn mạn tính",
+    number: "2767/QĐ-BYT",
+    date: "04/07/2023",
+    issuer: "Bộ Y tế",
+    validity:
+      "Bản PDF ký số đăng trên kcb.vn (Cục Quản lý Khám, chữa bệnh), đọc ngày 25/10/2026. Điều 3: hiệu lực từ ngày ký, thay thế QĐ 3874/QĐ-BYT (26/06/2018). Số trang in = số trang PDF – 1.",
+  },
+  byt5642: {
+    id: "byt5642",
+    title: "Hướng dẫn chẩn đoán và điều trị một số bệnh truyền nhiễm",
+    number: "5642/QĐ-BYT",
+    date: "31/12/2015",
+    issuer: "Bộ Y tế",
+    validity:
+      "Bản PDF (NXB Y học 2016) đăng trên kcb.vn, đọc ngày 25/10/2026. Số trang in trùng số trang PDF.",
+  },
   byt2147: {
     id: "byt2147",
     title: "Hướng dẫn chẩn đoán và điều trị viêm phổi mắc phải cộng đồng ở người lớn",
     number: "2147/QĐ-BYT",
     date: "15/07/2026",
     issuer: "Bộ Y tế",
-    validity: `${UNVERIFIED} Theo nội dung bản PDF, thay thế QĐ 4815/QĐ-BYT (20/11/2020).`,
+    validity:
+      "Đã xác minh trên kcb.vn (Cục Quản lý Khám, chữa bệnh – Bộ Y tế) ngày 25/10/2026: có hiệu lực từ 15/7/2026, thay thế QĐ 4815/QĐ-BYT (20/11/2020). Nội dung module được đối chiếu với bản PDF do người dùng cung cấp; chưa đối chiếu từng trang với bản PDF đăng trên kcb.vn.",
   },
 };

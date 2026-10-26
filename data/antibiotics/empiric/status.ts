@@ -13,7 +13,7 @@ export const DISEASE_STATUS: Record<string, DiseaseStatusEntry> = {
     status: 2,
     sourceLabel: "BYT",
     note:
-      "Module CapByt2026 đã đối chiếu với bản PDF do người dùng cung cấp (QĐ 2147/QĐ-BYT 15/7/2026, thay QĐ 4815/QĐ-BYT 20/11/2020) ngày 13/10/2026. Chưa kiểm tra cổng chính thức của BYT; chưa có thẩm định BV199.",
+      "Module CapByt2026 đã đối chiếu với bản PDF do người dùng cung cấp (QĐ 2147/QĐ-BYT 15/7/2026, thay QĐ 4815/QĐ-BYT 20/11/2020) ngày 13/10/2026. Hiệu lực QĐ 2147 đã xác minh trên kcb.vn ngày 25/10/2026; chưa đối chiếu từng trang với bản PDF chính thức. Phương án CAP nặng của QĐ 1493/2015 đã ẩn. Chưa có thẩm định BV199.",
   },
   "v8-4": {
     status: 2,
@@ -26,6 +26,12 @@ export const DISEASE_STATUS: Record<string, DiseaseStatusEntry> = {
     sourceLabel: "HOI_CHUYEN_NGANH_VN",
     note:
       "Module HapVap2023 (Bảng 3.2, tr. 60–62) đã đối chiếu với bản PDF do người dùng cung cấp ngày 13/10/2026. Chưa kiểm tra nguồn chính thức; chưa có thẩm định BV199.",
+  },
+  "v8-46": {
+    status: 2,
+    sourceLabel: "QUOC_TE",
+    note:
+      "Phác đồ BYT (QĐ 708, Bảng II.10) chỉ dành cho P. aeruginosa còn nhạy thuốc. Nội dung DTR lấy từ IDSA AMR Guidance 2026 (Section 4, Table 1 v5.0), đọc trên idsociety.org ngày 25/10/2026. Chưa đối chiếu danh mục thuốc BV199; chưa có thẩm định BV199.",
   },
   "v8-7": {
     status: 2,

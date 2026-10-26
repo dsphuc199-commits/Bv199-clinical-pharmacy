@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:empiric": "node tests/empiric/run-all.cjs",
+    "audit:empiric": "node tests/empiric/audit-report.cjs"
   },
   "dependencies": {
     "lucide-react": "^1.55.0",

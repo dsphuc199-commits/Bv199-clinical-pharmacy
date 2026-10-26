@@ -1,8 +1,17 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
+import BackBar from "@/components/antibiotics/links/BackBar";
+import { AbxLinkProvider } from "@/components/antibiotics/links/AbxLinkContext";
+import DrugActionLinks from "@/components/antibiotics/links/DrugActionLinks";
+import {
+  antibiogramHref,
+  antibiogramOrganismFor,
+} from "@/lib/antibiotics/drug-links";
 import {
   Microscope,
   Search,
@@ -317,13 +326,52 @@ function hasSpecialCondition(row: OrganismRow) {
    COMPONENT CHÍNH
 ===================================================== */
 
+/*
+  Tham so URL: q (tu khoa), row (ma dong tac nhan), from, fromLabel.
+  useSearchParams can Suspense khi build tinh (Next 16).
+*/
 export default function OrganismPage() {
-  const [search, setSearch] = useState("");
+  return (
+    <Suspense fallback={<main className="org3-page" />}>
+      <OrganismFromUrl />
+    </Suspense>
+  );
+}
+
+function OrganismFromUrl() {
+  const params = useSearchParams();
+  return (
+    <OrganismContent
+      key={params.toString()}
+      initialQuery={params.get("q") ?? ""}
+      initialRow={params.get("row")}
+      from={params.get("from")}
+      fromLabel={params.get("fromLabel")}
+    />
+  );
+}
+
+function OrganismContent({
+  initialQuery,
+  initialRow,
+  from,
+  fromLabel,
+}: {
+  initialQuery: string;
+  initialRow: string | null;
+  from: string | null;
+  fromLabel: string | null;
+}) {
+  const [search, setSearch] = useState(initialQuery);
   const [groupFilter, setGroupFilter] =
     useState("all");
 
   const [selectedId, setSelectedId] =
-    useState<string | null>(null);
+    useState<string | null>(() =>
+      initialRow && ROWS.some((row) => row.id === initialRow)
+        ? initialRow
+        : null
+    );
 
   const [expandedGroups, setExpandedGroups] =
     useState<string[]>(GROUP_ORDER);
@@ -373,6 +421,15 @@ export default function OrganismPage() {
       ? selected
       : null;
 
+  const selectedOrganism = selectedVisible
+    ? antibiogramOrganismFor(selectedVisible.agent)
+    : undefined;
+
+  /* Duong quay lai dung dong tac nhan dang xem. */
+  const selectedHref = selectedVisible
+    ? `/antibiotics/organism?row=${encodeURIComponent(selectedVisible.id)}`
+    : "/antibiotics/organism";
+
   function toggleGroup(name: string) {
     setExpandedGroups((previous) =>
       previous.includes(name)
@@ -389,8 +446,29 @@ export default function OrganismPage() {
   }
 
   return (
+    <AbxLinkProvider
+      value={{
+        from: selectedHref,
+        fromLabel: selectedVisible ? selectedVisible.agent : "Theo tác nhân",
+        context: selectedVisible
+          ? `Theo tác nhân: ${selectedVisible.agent}`
+          : undefined,
+      }}
+    >
     <main className="org3-page">
       <div className="org3-container">
+
+        <BackBar
+          from={from}
+          fromLabel={fromLabel}
+          fallbackHref="/antibiotics"
+          fallbackLabel="Kháng sinh & AMS"
+          links={[
+            { href: "/antibiotics/empiric/guideline-v9", label: "Kinh nghiệm" },
+            { href: "/antibiotics/antibiogram", label: "Antibiogram BV199" },
+            { href: "/antibiotics/dosing", label: "Hiệu chỉnh liều" },
+          ]}
+        />
 
         {/* BREADCRUMB */}
         <nav className="org3-breadcrumb">
@@ -624,6 +702,12 @@ export default function OrganismPage() {
                     <p>
                       {selectedVisible.first}
                     </p>
+
+                    <DrugActionLinks
+                      compact
+                      texts={[selectedVisible.first]}
+                      scenario="First choice (CMDT 2026)"
+                    />
                   </article>
 
                   <article className="org3-treatment">
@@ -637,8 +721,26 @@ export default function OrganismPage() {
                     <p>
                       {selectedVisible.alternative}
                     </p>
+
+                    <DrugActionLinks
+                      compact
+                      texts={[selectedVisible.alternative]}
+                      scenario="Alternatives (CMDT 2026)"
+                    />
                   </article>
                 </div>
+
+                {selectedOrganism && (
+                  <Link
+                    className="org3-ab-link"
+                    href={antibiogramHref(
+                      { organismId: selectedOrganism.id },
+                      { from: selectedHref, fromLabel: selectedVisible.agent }
+                    )}
+                  >
+                    Antibiogram BV199 · {selectedOrganism.label} →
+                  </Link>
+                )}
 
                 {hasSpecialCondition(
                   selectedVisible
@@ -1149,6 +1251,25 @@ export default function OrganismPage() {
           overflow-wrap: anywhere;
         }
 
+        .org3-ab-link {
+          display: inline-flex;
+          align-items: center;
+          min-height: 40px;
+          margin-top: 12px;
+          padding: 8px 14px;
+          border: 1px solid #99d6d0;
+          border-radius: 10px;
+          background: #ecf8f6;
+          color: #08706f;
+          font-size: 13px;
+          font-weight: 700;
+          text-decoration: none;
+        }
+
+        .org3-ab-link:hover {
+          background: #dcf2ef;
+        }
+
         /* CLINICAL NOTICE */
         .org3-alert {
           display: flex;
@@ -1373,5 +1494,6 @@ export default function OrganismPage() {
         }
       `}</style>
     </main>
+    </AbxLinkProvider>
   );
 }

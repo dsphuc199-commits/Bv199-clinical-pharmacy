@@ -2,6 +2,16 @@
 
 import { useState, type CSSProperties } from "react";
 
+import DrugActionLinks from "./links/DrugActionLinks";
+import DoseTable from "./treatment/DoseTable";
+import { structureForOption } from "../../lib/antibiotics/regimen-structure";
+
+/* Master Task 6: bang lieu co cau truc cho phac do module (id rieng, khong trung phac do BYT). */
+function ModuleDoseTable({ id, drugs }: { id: string; drugs: { name: string; dose: string; route?: string }[] }) {
+  const s = structureForOption(`module-${id}`, drugs);
+  return <DoseTable groups={s.groups} status={s.status} />;
+}
+
 /*
  BV199 - HAP / VAP
  File: components/antibiotics/HapVap2023.tsx
@@ -590,6 +600,11 @@ const box: CSSProperties = {
   minWidth: 0,
 };
 
+/* Du lieu dung chung cho bo may lua chon khang sinh (lib/antibiotics/selection-engine.ts). */
+export const HAPVAP_SCENARIOS: Record<Kind, Scenario[]> = { hap: HAP, vap: VAP };
+export const HAPVAP_RISK = RISK;
+export type { Drug as HapVapDrug, Regimen as HapVapRegimen, Scenario as HapVapScenario };
+
 export default function HapVap2023({
   kind,
   initialScenarioId,
@@ -785,7 +800,15 @@ export default function HapVap2023({
                       {open ? "−" : "+"}
                     </span>
                   </span>
+                  {(regimen.notes.length > 0 || regimen.drugs.some((drug) => drug.caution)) && (
+                    <span style={{ display: "block", marginTop: 2, fontSize: 12, fontWeight: 700, color: "#9a3412" }}>Có điểm cần kiểm tra – mở để xem</span>
+                  )}
                 </button>
+
+                {/* Master Task 6: bang lieu co cau truc luon hien (khong can mo) */}
+                <div style={{ padding: "0 13px 10px" }}>
+                  <ModuleDoseTable id={regimen.id} drugs={regimen.drugs} />
+                </div>
 
                 {open && (
                   <div style={{
@@ -814,13 +837,11 @@ export default function HapVap2023({
                             {drug.name}
                           </b>
 
-                          <div>
-                            <b>Liều:</b> {drug.dose}
-                          </div>
-
-                          <div>
-                            <b>Đường dùng:</b> {drug.route}
-                          </div>
+                          <DrugActionLinks
+                            compact
+                            texts={[`${drug.name}: ${drug.dose} ${drug.route}`]}
+                            scenario={regimen.name}
+                          />
 
                           {drug.caution && (
                             <div>
@@ -898,6 +919,12 @@ export default function HapVap2023({
                       </li>
                     ))}
                   </ul>
+
+                  <DrugActionLinks
+                    compact
+                    texts={group.drugs.map((drug) => `${drug.name}: ${drug.dose} ${drug.route}`)}
+                    scenario={group.title}
+                  />
                 </div>
               ))}
             </div>
@@ -980,7 +1007,7 @@ export default function HapVap2023({
             </li>
             <li>
               Quyết định ngừng dựa vào đáp ứng lâm sàng và procalcitonin:
-              ngưỡng 0,25–0,5 (đơn vị theo bản gốc là "ng/lít", cần đối chiếu)
+              ngưỡng 0,25–0,5 (đơn vị theo bản gốc là &quot;ng/lít&quot;, cần đối chiếu)
               hoặc giảm ít nhất 80% so với đỉnh (tr. 78).
             </li>
             <li>

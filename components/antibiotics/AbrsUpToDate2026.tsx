@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 
+import DrugActionLinks from "./links/DrugActionLinks";
+
 /*
   BV199 - KHOA DUOC
   VIEM MUI XOANG CAP DO VI KHUAN - NGUOI LON
@@ -257,6 +259,12 @@ function RegimenCards({
                     {medicine}
                   </div>
                 ))}
+
+                <DrugActionLinks
+                  compact
+                  texts={plan.medicines}
+                  scenario={plan.title}
+                />
 
                 <p>
                   <b>Điều kiện:</b> {plan.condition}

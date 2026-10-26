@@ -1,0 +1,26 @@
+{
+  "note": "Thay doi trang thai bang chung CO CHU DICH sau anh chup byt-regimens-baseline.json. Moi thay doi phai co ly do va buoc thuc hien. Thay doi khong ghi o day lam test FAIL.",
+  "changes": [
+    {
+      "id": "v8-142",
+      "from": "NEEDS_REVIEW",
+      "to": "VERIFIED_SOURCE",
+      "step": "Master Task 5 – Final (26/10/2026)",
+      "reason": "2 phuong an lao tre em (A2, A2a) thieu lieu giai doan duy tri: bo sung tu Phu luc 6 Bang 1 (tr. 179) CUNG van ban QĐ 162, doc truc tiep ban PDF ky so (bvdkbaclieu.gov.vn). Khong con ly do can tham dinh."
+    },
+    {
+      "id": "v8-9",
+      "from": "VERIFIED_SOURCE",
+      "to": "NEEDS_REVIEW",
+      "step": "Master Task 5 – Final (26/10/2026)",
+      "reason": "Kiem tra thieu lieu chat hon (doseEvidenceOf): phuong an r-lungabs-amip ghi 'Ket hop khang sinh khac: khong neu cu the' – truoc day khong bi tinh la thieu lieu."
+    },
+    {
+      "id": "v8-103",
+      "from": "VERIFIED_SOURCE",
+      "to": "NEEDS_REVIEW",
+      "step": "Master Task 5 – Final (26/10/2026)",
+      "reason": "Kiem tra thieu lieu chat hon: r-neo-late-gramneg ghi 'Ket hop imipenem: lieu khong neu trong van ban' (QĐ 315)."
+    }
+  ]
+}

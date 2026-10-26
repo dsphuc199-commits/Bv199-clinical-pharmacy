@@ -1,0 +1,4718 @@
+{
+ "generatedOn": "2026-10-25",
+ "method": "Tìm từng liều (số + đơn vị) của phương án trong văn bản trang của bản PDF chính thức, cửa sổ trang trích dẫn ± 1. Không kiểm tra tên thuốc và cách dùng dạng chữ. Liều dẫn Dược thư (DTQG) không có bản chính thức → unverifiable.",
+ "sources": {
+  "byt708": "https://kcb.vn/upload/2005611/20210723/Hướng-dẫn-sử-dụng-kháng-sinh-Cập-nhật-lần-cuối-khi-in-09.01.2015.pdf",
+  "byt2147": "https://kcb.vn/upload/2005611/20260723/Huong_dan_CD_v__DT_VPMPCD_singed_5fa4c.pdf",
+  "byt2767": "https://kcb.vn/upload/2005611/20231028/2767__QD__HD_chan_doan_va_dieu_tri_COPD_2023final_signed_e5721.pdf",
+  "byt5642": "https://kcb.vn/upload/2005611/20210723//Truyen-nhiem-1.pdf",
+  "byt5643": "https://kcb.vn/upload/2005611/20210723//HD%C4%90T-TMH.pdf",
+  "byt1530": "https://kcb.vn/upload/2005611/20230421/QD_2023_1530_Quyet_dinh_ban_hanh_tai_lieu_chuyen_mon__Huong_dan_chan_doan_va_dieu_tri_Loet_ban_chan_do_dai_thao_duong__25013.pdf",
+  "vnrs2023": "https://hoihohapvietnam.org/upload/attach/VNRS-20231130151558.pdf"
+ },
+ "copies": {
+  "byt315": {
+   "kind": "government-copy",
+   "url": "https://elib.bvdktuthainguyen.gov.vn/uploads/d0/6c/d06c3841337245a338276a861dfcb18c_1605357395.pdf"
+  },
+  "byt162": {
+   "kind": "government-copy",
+   "url": "https://bvdkbaclieu.gov.vn/upload/1000079/20240524/291_Quyet_dinh-162-QD-BYT_3d3c0ac03e.pdf"
+  },
+  "byt4416": {
+   "kind": "government-copy",
+   "url": "https://benhviennhi.gialai.gov.vn/Upload/FileUpload/6383762003562310864494%20[G%E1%BB%ACI%20K%C3%88M]%20HD%20ch%20n%20%20o%C3%A1n%20v%C3%A0%20%20i%20u%20tr%20%20b%20nh%20da%20li%20u%204416.signed.pdf"
+  },
+  "byt3429": {
+   "kind": "government-copy",
+   "url": "https://syt.gialai.gov.vn/index.php/vi/download/Thu-vien-Huong-dan-chan-doan-dieu-tri-Quy-trinh-ky-thuat-va-cac-Tai-lieu-chuyen-mon-kham-chua-benh/Quyet-dinh-so-3429-QD-BYT-14-07-2021-cua-Bo-Y-te-V-v-ban-hanh-tai-lieu-chuyen-mon-Huong-dan-chan-doan-va-dieu-tri-nhiem-nam-xam-lan.html"
+  }
+ },
+ "autoOffset": {
+  "byt315": 0,
+  "byt3429": 2,
+  "byt4416": 0
+ },
+ "summary": {
+  "match": 285,
+  "no-dose": 44,
+  "partial": 6,
+  "no-official-text": 7,
+  "mismatch": 7
+ },
+ "results": [
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3",
+    "v8-48"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3",
+    "v8-48"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-other",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3",
+    "v8-48"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-stepdown",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-neut-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-121",
+    "v8-117"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-neut-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-121",
+    "v8-117"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-candidemia-neut-other",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-121",
+    "v8-117"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-emp-heme-prior",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-117"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-emp-heme-naive",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-117"
+   ],
+   "tokens": 9,
+   "found": 9,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-emp-nonheme-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3",
+    "v8-48"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-emp-nonheme-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-3",
+    "v8-48"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ie-initial",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-122"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ie-maint",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-122"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-osteo",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-124"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-50",
+    "v8-117"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-50",
+    "v8-117"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-neut",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-50",
+    "v8-117"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-hsct",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-50",
+    "v8-117"
+   ],
+   "tokens": 16,
+   "found": 16,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-emp",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-50",
+    "v8-117"
+   ],
+   "tokens": 11,
+   "found": 11,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-ipa-prophylaxis",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-117"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-asp-sinus",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-126"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-hiv-induct",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-51"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-hiv-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-51"
+   ],
+   "tokens": 9,
+   "found": 9,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-hiv-consol",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-51"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-nohiv-severe",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-51"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-nohiv-mild",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-128"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-crypto-hiv-extra",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-128"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-pcp-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-53"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-pcp-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-53"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-pcp-steroid",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-53"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-tm-first",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-130"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-tm-alt",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-130"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-histo",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-129"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fung-mucor",
+   "doc": "byt3429",
+   "diseaseIds": [
+    "v8-52"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-native-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-native-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-native-peds",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-prosth-early",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-prosth-early-peds",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ie-prosth-late",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-39"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-out-low",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-out-risk",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-out-pseudo",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-in-low",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-in-pseudo",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd23-in-mdr-pseudo",
+   "doc": "byt2767",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-a",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 12,
+   "found": 12,
+   "missing": [],
+   "unverifiable": 6,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-a-mssa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 3,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-a-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-a-anaer",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-neutro",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 12,
+   "found": 12,
+   "missing": [],
+   "unverifiable": 2,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-b",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 11,
+   "found": 11,
+   "missing": [],
+   "unverifiable": 4,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-b-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-b-mdr",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-c-biliary",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 14,
+   "found": 14,
+   "missing": [],
+   "unverifiable": 2,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-c-gi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 15,
+   "found": 15,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-c-device",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-c-female",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sepsis-c-skin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-11",
+    "v8-12"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 3,
+   "status": "partial"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-mssa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-13"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-mssa-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-13"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-13"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-mrsa-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-13"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-enterobact",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-14"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-esbl",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-14",
+    "v8-43"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bsi-pseudo",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-14",
+    "v8-46"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-mono-caz",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-mono-cef",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-mono-pip",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-mono-imi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-mono-mero",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-add-aminoglyc",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-add-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-add-gp",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-fn-add-colistin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-113",
+    "v8-116"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mild-simple",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mild-allergy",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mild-recent-abx",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mild-mrsa",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-simple",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-recent-abx",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-pseudo",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-ischemic",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-mrsa",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dfi-mod-esbl",
+   "doc": "byt1530",
+   "diseaseIds": [
+    "v9-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-pharyngitis",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-8",
+    "v8-54"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-deepneck-ctx",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-66",
+    "v8-56",
+    "v8-57"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-sinus-moderate",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-7",
+    "v8-58"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-sinus-allergy-adult",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-7",
+    "v8-58"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-sinus-recent-adult",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-7",
+    "v8-58"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-sinus-recent-adult-allergy",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-7",
+    "v8-58"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-aom-child",
+   "doc": "byt5643",
+   "diseaseIds": [
+    "v8-99",
+    "v8-60"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-1-bli",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-1-pip",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-1-aminoglyc",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-1-ceph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-1-azt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-anaer",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-2-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bil-2-carba",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-24"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peri-sec-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-21"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peri-sec-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-21"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-diar-invasive-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-26"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-diar-invasive-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-26"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-diar-shigella",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-26"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cdiff-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-25"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cdiff-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-25"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid-ctx",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-neo-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-neo-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-1to3m-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-1to3m-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-3m18y-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-3m18y-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-18to50-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-18to50-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-over50-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-over50-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-immuno-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-immuno-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-trauma-first",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vmn42-trauma-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid42-fq",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid42-c3",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid42-azi",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-typhoid42-carrier",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-135"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-shigella42-fq",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-26"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-shigella42-alt",
+   "doc": "byt5642",
+   "diseaseIds": [
+    "v8-26"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-empiric-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-empiric-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-mssa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-strep",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-hflu",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-sa-pseudo",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-gc-sens",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-gc-resist",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-gc-chlamydia",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-33"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-mssa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-allergy",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-pseudo",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-poly",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-os-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-32"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-18-50-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-18-50-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-50-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-50-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-immuno-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-immuno-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-36"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-postsurg-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-38"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-postsurg-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-38"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-neo-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-neo-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-1-3m-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-1-3m-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-3m-18y-first",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-men-3m-18y-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-104"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-pp-triple",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-92"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-pp-allergy-clinda",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-92"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-pp-allergy-linco",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-92"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-metro-oral",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-metro-gel",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-clinda-gel",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-preg-oral",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-preg-gel",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bv-315",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-95"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-preg-cystitis",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-97"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-preg-pyelo",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-97"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-early",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-103"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-resist",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-103"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-late-staph",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-103"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-late-gramneg",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-103"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vag-candida",
+   "doc": "byt315",
+   "diseaseIds": [
+    "v8-96"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-topical",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-topical-40",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-systemic-ceph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-systemic-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-gc-ctx",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-conj-gc-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-83"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ker-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-84"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ker-grampos",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-84"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ker-oral",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-84"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-40-systemic",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-40-intravitreal",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 7,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-708-vanco",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 7,
+   "found": 7,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-708-ctz",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-708-amk",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-endo-708-cipro",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-85"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-orb-ceph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-87"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-orb-ctx-cloxa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-87"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-orb-step-down",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-87"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-orb-allergy",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-87"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-orb-40",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-87"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 1,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-topical",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-oral-cefuroxim",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-oral-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-40-cefuroxim",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 2,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-40-cipro",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 1,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-dac-40-topical",
+   "doc": "byt40",
+   "diseaseIds": [
+    "v8-88"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-mild-bli",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-mild-cefur",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-mild-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-mod",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-mod-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-sev-cef",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-sev-cef-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-copd-sev-imi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-pen",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-pen-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-bli",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-anaer",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-hosp",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-staph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-bronch-macrolide",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-10"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-pen",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-bl",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-anaer",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-staph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-lungabs-amip",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-9"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-hap-early",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-hap-early-alt",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-hap-late-mild",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-hap-late-icu",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 10,
+   "found": 10,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vap-nomdr",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 9,
+   "found": 9,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vap-mdr",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 21,
+   "found": 21,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vap-mrsa",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 7,
+   "found": 7,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vap-fungal",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 9,
+   "found": 9,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-vap-colistin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-over5",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-atypical",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-2m5y-mild-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-2m5y-mild-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-2m5y-severe",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-2m5y-vsevere",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-peds-staph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-101"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-pneu-1",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-102"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-neo-pneu-2",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-102"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-copd-community",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-copd-hospital",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-6"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-nonpseudo-1",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 8,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-nonpseudo-2",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 1,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-pseudo-1",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-pseudo-2",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 1,
+   "status": "no-official-text"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-mrsa",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-cap-aspiration",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-hap-nomdr",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-4",
+    "v8-5"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-icu-hap-mdr",
+   "doc": "byt1493",
+   "diseaseIds": [
+    "v8-4",
+    "v8-5"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cell-pen",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-27",
+    "v8-107"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cell-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-27",
+    "v8-107"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cell-ctx",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-27",
+    "v8-107"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cell-roxi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-27",
+    "v8-107"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-clox",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-roxi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-azi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-pristi",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-furuncle-fusidic",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-clox",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 1,
+   "missing": [
+    "250-500mg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-amoxclav",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-roxi",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-azi",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 3,
+   "found": 2,
+   "missing": [
+    "250mg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-clinda",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 3,
+   "found": 2,
+   "missing": [
+    "10-20mg/kg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-mrsa-vanco",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-mrsa-tmp",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-abscess-4416-mrsa-linezolid",
+   "doc": "byt4416",
+   "diseaseIds": [
+    "v8-28"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-a1",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-142"
+   ],
+   "tokens": 5,
+   "found": 0,
+   "missing": [
+    "5mg/kg",
+    "300mg",
+    "10mg/kg",
+    "25mg/kg",
+    "15mg/kg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-a2",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-142"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-a1a",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-142"
+   ],
+   "tokens": 9,
+   "found": 0,
+   "missing": [
+    "300mg",
+    "1200mg",
+    "400mg",
+    "1500-1600mg",
+    "500mg",
+    "2000mg",
+    "300mg",
+    "1200mg",
+    "400mg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-a2a",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-142"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-b1",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-141"
+   ],
+   "tokens": 5,
+   "found": 0,
+   "missing": [
+    "5mg/kg",
+    "300mg",
+    "10mg/kg",
+    "25mg/kg",
+    "15mg/kg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-b2",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-141"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-tb-b2a",
+   "doc": "byt162",
+   "diseaseIds": [
+    "v8-141"
+   ],
+   "tokens": 4,
+   "found": 0,
+   "missing": [
+    "15-20mg/kg",
+    "22,5-30mg/kg",
+    "35-45mg/kg",
+    "17,5-22,5mg/kg"
+   ],
+   "unverifiable": 0,
+   "status": "mismatch"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-oral-bl",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-oral-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-iv-bl",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-iv-ceph",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-iv-carba",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-iv-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-aminoglyc",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-gramneg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-grampos",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-py-preg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-17"
+   ],
+   "tokens": 0,
+   "found": 0,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "no-dose"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-tmp",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-cephalexin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-nitro",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-preg-cephalexin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16",
+    "v8-97"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-preg-nitro",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16",
+    "v8-97"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-preg-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16",
+    "v8-97"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-male-tmp",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-male-cephalexin",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-cy-male-amoxclav",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-16"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-stone-complic-bl",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-2"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-stone-complic-fq",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-2"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-amox",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-doxy",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-azithro",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-clarithro",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-amoxclav-hi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "cap-quinolone-allergy",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-amox-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-amox-doxy",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-cefp-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-cef-other",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-levo",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "risk-moxi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-ctx-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-ctax-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-amp-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-amoxclav-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-ertapenem",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-ceftaroline",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-pseudo",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 6,
+   "found": 6,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "ward-levo",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "icu-ctx-azi",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "icu-ctx-levo",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "icu-pseudo-quinolone",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "icu-pseudo-aminoglycoside",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 9,
+   "found": 9,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-cap",
+   "id": "icu-mrsa",
+   "doc": "byt2147",
+   "diseaseIds": [
+    "v8-1"
+   ],
+   "tokens": 8,
+   "found": 8,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-pip",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-cef",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-levo",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-imi",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-mero",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-cef-levo",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-pip-cipro",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-mero-amik",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-cef-vanco",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-pip-line",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-pip-teico",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-hap",
+   "id": "hap-mdr-mrsa-ex",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-4"
+   ],
+   "tokens": 7,
+   "found": 7,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-pip",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-cef",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-caz",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-imi",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-mero",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 1,
+   "found": 1,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-cef-levo",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-pip-cipro",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-mero-amik",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-cef-vanco",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 3,
+   "found": 3,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 1,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-pip-line",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-pip-teico",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 5,
+   "found": 5,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 0,
+   "status": "match"
+  },
+  {
+   "kind": "module-vap",
+   "id": "vap-three",
+   "doc": "vnrs2023",
+   "diseaseIds": [
+    "v8-5"
+   ],
+   "tokens": 4,
+   "found": 4,
+   "missing": [],
+   "unverifiable": 0,
+   "elsewhere": 1,
+   "status": "match"
+  }
+ ]
+}

@@ -2,6 +2,16 @@
 
 import { useState, type CSSProperties } from "react";
 
+import DrugActionLinks from "./links/DrugActionLinks";
+import DoseTable from "./treatment/DoseTable";
+import { structureForOption } from "../../lib/antibiotics/regimen-structure";
+
+/* Master Task 6: bang lieu co cau truc cho phac do module (id rieng, khong trung phac do BYT). */
+function ModuleDoseTable({ id, drugs }: { id: string; drugs: { name: string; dose: string; route?: string }[] }) {
+  const s = structureForOption(`module-${id}`, drugs);
+  return <DoseTable groups={s.groups} status={s.status} />;
+}
+
 /*
  BV199 - VIEM PHOI CONG DONG NGUOI LON
  File: components/antibiotics/CapByt2026.tsx
@@ -552,6 +562,10 @@ const panel: CSSProperties = {
   minWidth: 0,
 };
 
+/* Du lieu dung chung cho bo may lua chon khang sinh (lib/antibiotics/selection-engine.ts). */
+export const CAP_SCENARIOS = SCENARIOS;
+export type { Drug as CapDrug, Regimen as CapRegimen, Scenario as CapScenario };
+
 export default function CapByt2026({
   initialScenarioId,
 }: {
@@ -717,7 +731,15 @@ export default function CapByt2026({
                       {open ? "−" : "+"}
                     </span>
                   </span>
+                  {(r.caution || r.drugs.some((d) => d.caution)) && (
+                    <span style={{ display: "block", marginTop: 2, fontSize: 12, fontWeight: 700, color: "#9a3412" }}>Có lưu ý – mở để xem</span>
+                  )}
                 </button>
+
+                {/* Master Task 6: bang lieu co cau truc luon hien (khong can mo) */}
+                <div style={{ padding: "0 13px 10px" }}>
+                  <ModuleDoseTable id={r.id} drugs={r.drugs} />
+                </div>
 
                 {open && (
                   <div style={{
@@ -746,15 +768,11 @@ export default function CapByt2026({
                             {d.name}
                           </b>
 
-                          <div>
-                            <b>Liều:</b> {d.dose}
-                          </div>
-
-                          {d.route && (
-                            <div>
-                              <b>Đường dùng:</b> {d.route}
-                            </div>
-                          )}
+                          <DrugActionLinks
+                            compact
+                            texts={[`${d.name}: ${d.dose} ${d.route ?? ""}`]}
+                            scenario={r.name}
+                          />
 
                           {d.caution && (
                             <div>
@@ -801,7 +819,7 @@ export default function CapByt2026({
         }}>
           Các phác đồ là phương án khác nhau,
           không phải thứ tự ưu tiên. Liều ghi theo cột
-          "Liều thường dùng" của Phụ lục 1 (Clcr &gt; 50–90 ml/phút);
+          &quot;Liều thường dùng&quot; của Phụ lục 1 (Clcr &gt; 50–90 ml/phút);
           cần hiệu chỉnh theo chức năng thận và đánh giá chuyên môn
           trước khi sử dụng.
         </p>
