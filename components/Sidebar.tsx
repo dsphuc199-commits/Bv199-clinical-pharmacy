@@ -57,6 +57,7 @@ const GROUPS: Group[] = [
     items: [
       { label: "Tổng quan AMS", href: "/antibiotics", code: "KS" },
       { label: "Điều trị kinh nghiệm", href: "/antibiotics/empiric", code: "KN" },
+      { label: "Chọn KS theo người bệnh", href: "/antibiotics/empiric/select", code: "CK" },
       { label: "Lựa chọn theo tác nhân", href: "/antibiotics/organism", code: "TN" },
       { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
       { label: "Hiệu chỉnh liều KS", href: "/antibiotics/dosing", code: "LD" },
@@ -116,9 +117,16 @@ function currentGroup(path: string) {
   return "clinical";
 }
 
+/* Trang con co muc menu rieng: khong to sang muc cha. */
+const NESTED_LINKS = ["/antibiotics/empiric/select"];
+
 function activeLink(path: string, href: string) {
   if (href === "/") return path === "/";
   if (path === href) return true;
+  const nested = NESTED_LINKS.find(
+    (child) => child !== href && child.startsWith(href + "/") && (path === child || path.startsWith(child + "/"))
+  );
+  if (nested) return false;
   return path.startsWith(href + "/");
 }
 

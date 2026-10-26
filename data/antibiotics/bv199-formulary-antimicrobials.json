@@ -1,0 +1,4130 @@
+{
+ "source": "data/drug-products.json (nhập từ danh-muc-thuoc-bv199.xlsx)",
+ "note": "Chỉ mục sinh tự động bằng scripts/build-formulary-antimicrobials.mjs. Không sửa tay.",
+ "totalProducts": 2249,
+ "count": 458,
+ "items": [
+  {
+   "id": "2250340003737-02",
+   "brandName": "Lanam DT 400mg/57mg",
+   "ingredientName": "Acid Clavulanic (dưới dạng Kali Clavulanat - Avicel (1:1)) ; Amoxicilin (dưới dạng Amoxicilin trihydrat compacted)",
+   "strength": "57mg + 400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330003662-04",
+   "brandName": "Iba-Mentin 1000mg/62,5mg",
+   "ingredientName": "Acid Clavulanic (dưới dạng Kali clavulanat + cellulose vi tinh thể tỷ lệ 1:1) 62,5mg; Amoxicilin (dưới dạng Amoxicilin trihydrat) 1000mg",
+   "strength": "1000mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320003771-04",
+   "brandName": "Auzion 1000",
+   "ingredientName": "Acid Clavulanic (dưới dạng kali clavulanat/avicel) + Amoxicilin (dưới dạng amoxicilin trihydrat compacted)",
+   "strength": "125mg+ 875mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340009807-01",
+   "brandName": "Tardyferon B9",
+   "ingredientName": "Acid folic (dạng khan) + Sắt (dưới dạng sắt (II) sulfat được làm khô)",
+   "strength": "0,35mg + 50mg (154,53mg)",
+   "route": "Uống",
+   "dosageForm": "Viên nén giải phóng kéo dài",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350009774-04",
+   "brandName": "VUPU",
+   "ingredientName": "Acid folic 0,4mg; Sắt (II) sulfat khan (tương đương 65mg sắt) 200mg",
+   "strength": "0,4mg; 200mg (65mg sắt)",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350013542-01",
+   "brandName": "Fucidin",
+   "ingredientName": "Acid Fusidic",
+   "strength": "2% (w/w)",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "1577",
+   "brandName": "Fucidin",
+   "ingredientName": "Acid Fusidic",
+   "strength": "2% (w/w)",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250340013552-04",
+   "brandName": "Pesancidin",
+   "ingredientName": "Acid Fusidic",
+   "strength": "2%/15g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310013575-05",
+   "brandName": "Pesancort",
+   "ingredientName": "Acid fusidic + Betamethason valerat",
+   "strength": "(20mg/g + 1mg/g)x 15g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300013585-04",
+   "brandName": "Pusadin plus",
+   "ingredientName": "Acid fusidic + Betamethason valerat",
+   "strength": "100mg +5mg",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300005467-04",
+   "brandName": "Vinphacine 250",
+   "ingredientName": "Amikacin (dưới dạng Amikacin sulfat)",
+   "strength": "250mg/2ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320005515-04",
+   "brandName": "A.T Amikacin 500 mg/100 ml",
+   "ingredientName": "Amikacin (dưới dạng Amikacin sulfate)",
+   "strength": "500mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310003392-04",
+   "brandName": "Amoxicilin 250mg",
+   "ingredientName": "Amoxicilin",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380003414-04",
+   "brandName": "Amoxicilin 250mg/ 5ml",
+   "ingredientName": "Amoxicilin",
+   "strength": "250mg/ 5ml, 60ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320003436-04",
+   "brandName": "Bronchokod",
+   "ingredientName": "Amoxicilin",
+   "strength": "875mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300003456-04",
+   "brandName": "Fabamox 1000 DT.",
+   "ingredientName": "Amoxicilin",
+   "strength": "1000mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310003422-03",
+   "brandName": "Fabamox 1g",
+   "ingredientName": "Amoxicilin",
+   "strength": "1000mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340003409-03",
+   "brandName": "Fabamox 250mg",
+   "ingredientName": "Amoxicilin",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300003494-01",
+   "brandName": "Praverix 500mg",
+   "ingredientName": "Amoxicilin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380003544-02",
+   "brandName": "Claminat 1,2g",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin natri) ; Acid clavulanic (dưới dạng Kali clavulanat)",
+   "strength": "1g + 0,2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003567-02",
+   "brandName": "Claminat 600",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin natri) ; Acid clavulanic (dưới dạng Kali clavulanat)",
+   "strength": "500mg + 100mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300003814-04",
+   "brandName": "Midozam 1,5g",
+   "ingredientName": "Amoxicilin (dưới dạng amoxicilin natri) + Sulbactam (dưới dạng sulbactam natri)",
+   "strength": "1g + 0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340003447-02",
+   "brandName": "Amoxicillin 1000 mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat compacted)",
+   "strength": "1000mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003758-02",
+   "brandName": "Biocemet DT 500mg/62,5mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat compacted) ; Acid Clavulanic (dưới dạng Kali clavulanat - Avicel (1:1))",
+   "strength": "500mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003615-02",
+   "brandName": "Imefed 500/125mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat compacted) + Acid clavulanic (dưới dạng Kali clavulanat-Avicel (1:1))",
+   "strength": "500mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01cr02-02-01-n2",
+   "brandName": "Cepmox-Clav 875 mg/125 mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat compacted); Acid Clavulanic (dưới dạng kali Clavulanat - Avicel (1:1))",
+   "strength": "875mg ; 125mg",
+   "route": "uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250340003607-02",
+   "brandName": "Lanam SC 400mg/57mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat powder) ;Acid clavulanic (dưới dạng Kali clavulanat - syloid (1:1))",
+   "strength": "400mg + 57mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003574-02",
+   "brandName": "Lanam SC 200mg/28,5mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat powder) + Acid clavulanic (dưới dạng Clavulanat kali : syloid 1:1)",
+   "strength": "200mg + 28,5mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "Gói 1 đợt 3"
+  },
+  {
+   "id": "2250370003783-02",
+   "brandName": "Imefed SC 250mg/62,5mg",
+   "ingredientName": "Amoxicilin (dưới dạng amoxicilin trihydrat powder); Acid clavulanic (dưới dạng clavulanat kali : syloid 1:1)",
+   "strength": "250mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380003766-04",
+   "brandName": "Vigentin 500/62,5 DT.",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat) + Acid clavulanic (dưới dạng Clavulanat kali kết hợp với cellulose vi tinh thể theo tỷ lệ 1:1)",
+   "strength": "500mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320003740-04",
+   "brandName": "Vigentin 500/125 DT.",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat) + Acid clavulanic (dưới dạng Kali clavulanat + cellulose vi tinh thể tỉ lệ 1:1)",
+   "strength": "500mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01cr02-01-01-n2",
+   "brandName": "Koact 625",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat); Acid clavulanic (dưới dạng Clavulanat kali)",
+   "strength": "500mg; 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250340003706-02",
+   "brandName": "Biocemet tab 500mg/62,5mg",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrat); Acid Clavulanic (dưới dạng kali Clavulanat - Avicel (1:1))",
+   "strength": "500mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003526-01",
+   "brandName": "Moxilen forte 250mg/5ml",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicilin trihydrate) 250mg/5ml",
+   "strength": "250mg/5ml x 60ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003585-03",
+   "brandName": "Klamentin 250/31.25",
+   "ingredientName": "Amoxicilin (dưới dạng Amoxicillin trihydrat) + Acid clavulanic (dưới dạng Clavulanat kali)",
+   "strength": "250mg + 31,25mg",
+   "route": "Uống",
+   "dosageForm": "thuốc cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003724-04",
+   "brandName": "Augxicine 1g",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "875mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320003597-04",
+   "brandName": "Augxicine 250mg/31,25mg",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "250mg + 31,25mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340003638-04",
+   "brandName": "Augxicine 500mg/62,5mg",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "500mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300003692-04",
+   "brandName": "Augxicine 625",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "500mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340003539-01",
+   "brandName": "Axuka",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "1g + 0,2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003796-02",
+   "brandName": "Biocemet SC 500mg/62,5mg",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "500mg + 62,5mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300003623-03",
+   "brandName": "Vigentin 500mg/62,5mg",
+   "ingredientName": "Amoxicilin + acid clavulanic",
+   "strength": "500mg + 62,5 mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320003672-04",
+   "brandName": "Midantin 250/31,25",
+   "ingredientName": "Amoxicilin + Acid clavulanic",
+   "strength": "250mg + 31,25mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén dài bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003802-02",
+   "brandName": "Bactamox 1,5g",
+   "ingredientName": "Amoxicilin + sulbactam",
+   "strength": "1g + 0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003472-01",
+   "brandName": "Praverix 250mg",
+   "ingredientName": "Amoxicillin (dạng Amoxicillin trihydrat)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310003644-01",
+   "brandName": "Amoxicillin/ Acid clavulanic Sandoz GmbH",
+   "ingredientName": "Amoxicillin (dưới dạng Amoxicilin trihydrate) 875mg; Acid clavulanic (dưới dạng Clavulanate potassium) 125mg",
+   "strength": "875mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01cr02-02-01-n1",
+   "brandName": "Curam 1000mg",
+   "ingredientName": "Amoxicillin (dưới dạng amoxicillin trihydrat 1005mg) 875mg; Acid clavulanic (dưới dạng kali clavulanat 149mg) 125mg",
+   "strength": "875mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250350003482-04",
+   "brandName": "Amoxicilin 250mg",
+   "ingredientName": "Amoxicillin (dưới dạng amoxicillin trihydrat)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01cr02-01-01-n1",
+   "brandName": "Curam 625mg",
+   "ingredientName": "Amoxicillin (dưới dạng Amoxicillin trihydrat) 500mg; Acid clavulanic (dưới dạng Kali clavulanat) 125mg",
+   "strength": "500mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "416",
+   "brandName": "Augmentin 250mg/31,25mg",
+   "ingredientName": "Amoxicillin (dưới dạng Amoxicillin trihydrate); Acid Clavulanic (dưới dạng Kali clavulanate)",
+   "strength": "250mg + 31,25mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250350003840-01",
+   "brandName": "Ampicillin/Sulbactam 1,5 g",
+   "ingredientName": "Ampicilin + sulbactam",
+   "strength": "1g + 0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm hoặc tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330003853-02",
+   "brandName": "Nerusyn 1,5g",
+   "ingredientName": "Ampicilin + sulbactam",
+   "strength": "1g + 0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340003898-02",
+   "brandName": "Nerusyn 750",
+   "ingredientName": "Ampicilin + sulbactam",
+   "strength": "500mg + 250mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003875-02",
+   "brandName": "NERUSYN 3G",
+   "ingredientName": "Ampicilin; Sulbactam",
+   "strength": "2g; 1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380003827-04",
+   "brandName": "Ampicillin 1g",
+   "ingredientName": "Ampicillin (dùng dạng Ampicillin natri)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360003885-04",
+   "brandName": "Bipisyn 3g",
+   "ingredientName": "Ampicillin (dưới dạng Ampicillin natri) + Sulbactam (dưới dạng Sulbactam natri)",
+   "strength": "2g + 1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003830-04",
+   "brandName": "Bipisyn 750",
+   "ingredientName": "Ampicillin (dưới dạng Ampicillin natri) + Sulbactam (dưới dạng Sulbactam natri)",
+   "strength": "500mg + 250mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380007238-01",
+   "brandName": "Eraxis",
+   "ingredientName": "Anidulafungin",
+   "strength": "100mg",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Bột đông khô pha dung dịch truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300012670-03",
+   "brandName": "Duoridin",
+   "ingredientName": "Aspirin + Clopidogrel (dưới dạng clopidogrel bisulfat)",
+   "strength": "100mg + 75mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330000012-04",
+   "brandName": "Atropin sulfat",
+   "ingredientName": "Atropin sulfat",
+   "strength": "0,25mg/1ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380018531-04",
+   "brandName": "Uni-Atropin",
+   "ingredientName": "Atropin sulfat",
+   "strength": "10mg/ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300005993-03",
+   "brandName": "AGITRO 500",
+   "ingredientName": "Azithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320006000-04",
+   "brandName": "AGITRO 500",
+   "ingredientName": "Azithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350005981-01",
+   "brandName": "Ambig",
+   "ingredientName": "Azithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320005973-03",
+   "brandName": "Azicine 250mg",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrat)",
+   "strength": "250mg",
+   "route": "uống",
+   "dosageForm": "thuốc cốm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005918-04",
+   "brandName": "Biazix",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrat)",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380005906-01",
+   "brandName": "Vizimtex",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrat)",
+   "strength": "500mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "bột pha tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005921-03",
+   "brandName": "Zaromax 100",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrat)",
+   "strength": "100 mg",
+   "route": "Uống",
+   "dosageForm": "thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360005933-03",
+   "brandName": "Zaromax 200",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrat)",
+   "strength": "200 mg",
+   "route": "Uống",
+   "dosageForm": "thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006018-02",
+   "brandName": "Azicine",
+   "ingredientName": "Azithromycin (dưới dạng azithromycin dihydrate)",
+   "strength": "250mg",
+   "route": "uống",
+   "dosageForm": "viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005950-03",
+   "brandName": "Azikid",
+   "ingredientName": "Azithromycin (dưới dạng Azithromycin dihydrate)",
+   "strength": "200mg/5ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380003902-04",
+   "brandName": "Benzathin benzylpenicilin 1.200.000 IU",
+   "ingredientName": "Benzathin benzylpenicilin",
+   "strength": "1.200.000 IU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310003910-04",
+   "brandName": "Benzylpenicillin 1.000.000 IU",
+   "ingredientName": "Benzylpenicilin natri",
+   "strength": "1.000.000 IU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310007802-04",
+   "brandName": "Bleomycin Bidiphar",
+   "ingredientName": "Bleomycin (dưới dạng Bleomycin sulfat)",
+   "strength": "15U",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310007826-05",
+   "brandName": "Busulfan Injection",
+   "ingredientName": "Busulfan",
+   "strength": "60mg/10ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch đậm đặc để pha tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340007247-02",
+   "brandName": "Capozide 50",
+   "ingredientName": "Caspofungin*",
+   "strength": "50mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Bột đông khô pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320007250-02",
+   "brandName": "Capozide 70",
+   "ingredientName": "Caspofungin*",
+   "strength": "70mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Bột đông khô pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "466",
+   "brandName": "Ceclor",
+   "ingredientName": "Cefaclor",
+   "strength": "125mg/ 5ml,60ml",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250300003944-04",
+   "brandName": "Cefaclor 125mg",
+   "ingredientName": "Cefaclor",
+   "strength": "125mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350003925-02",
+   "brandName": "Imeclor 125",
+   "ingredientName": "Cefaclor",
+   "strength": "125mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003950-04",
+   "brandName": "Mebifaclor",
+   "ingredientName": "Cefaclor",
+   "strength": "125mg/5ml",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003974-05",
+   "brandName": "Mebifaclor",
+   "ingredientName": "Cefaclor",
+   "strength": "125mg/5ml",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004025-04",
+   "brandName": "Midaclo 500",
+   "ingredientName": "Cefaclor",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340003997-03",
+   "brandName": "Pyfaclor 250mg",
+   "ingredientName": "Cefaclor (dưới dạng cefaclor monohydrat)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320003962-01",
+   "brandName": "Ceclor",
+   "ingredientName": "Cefaclor (dưới dạng cefaclor monohydrate)",
+   "strength": "125mg/ 5ml,60ml",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "468",
+   "brandName": "Ceclor",
+   "ingredientName": "Cefaclor (dưới dạng cefaclor monohydrate)",
+   "strength": "375mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim giải phóng chậm",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250300004019-02",
+   "brandName": "Cefaclor Stada 500mg capsules",
+   "ingredientName": "Cefaclor (dưới dạng cefaclor monohydrate)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003984-03",
+   "brandName": "Metiny",
+   "ingredientName": "Cefaclor (dưới dạng Cefaclor monohydrate)",
+   "strength": "375mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim giải phóng chậm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004045-04",
+   "brandName": "Cefadroxil 1000mg",
+   "ingredientName": "Cefadroxil",
+   "strength": "1000mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004033-02",
+   "brandName": "Droxikid",
+   "ingredientName": "Cefadroxil",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004064-03",
+   "brandName": "Fabadroxil 500",
+   "ingredientName": "Cefadroxil",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320004051-04",
+   "brandName": "Cefadroxil 500 mg",
+   "ingredientName": "Cefadroxil (dưới dạng Cefadroxil monohydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360004097-03",
+   "brandName": "Firstlexin",
+   "ingredientName": "Cefalexin",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004124-03",
+   "brandName": "Firstlexin 500",
+   "ingredientName": "Cefalexin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004119-04",
+   "brandName": "SM.Cephalexin 500",
+   "ingredientName": "Cefalexin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01db01-01-01-n1",
+   "brandName": "Cefanew",
+   "ingredientName": "Cefalexin (dưới dạng Cefalexin monohydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250300004149-02",
+   "brandName": "Tenafathin 1000",
+   "ingredientName": "Cefalothin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380004169-02",
+   "brandName": "Tenafathin 500",
+   "ingredientName": "Cefalothin",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004179-02",
+   "brandName": "Cefamandol 1g",
+   "ingredientName": "Cefamandol (dưới dạng Cefamandol nafat)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360004189-02",
+   "brandName": "Tenadol 2000",
+   "ingredientName": "Cefamandol (dưới dạng Cefamandol nafat)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004191-04",
+   "brandName": "Vicimadol 2g",
+   "ingredientName": "Cefamandol (dưới dạng hỗn hợp Cefamandol nafat và natri carbonat với tỷ lệ 1:0,063)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004205-02",
+   "brandName": "Cefazolin 2g",
+   "ingredientName": "Cefazolin (dưới dạng cefazolin natri vô khuẩn)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01db04-01-01-n1",
+   "brandName": "Biofazolin",
+   "ingredientName": "Cefazolin (dưới dạng cefazolin sodium)",
+   "strength": "1g",
+   "route": "Tiêm/ Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01db04-01-01-n2",
+   "brandName": "Cefazolin 1g",
+   "ingredientName": "Cefazoline",
+   "strength": "1000mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250330004270-02",
+   "brandName": "Imenir 125 mg",
+   "ingredientName": "Cefdinir",
+   "strength": "125mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350004243-02",
+   "brandName": "Imenir 300",
+   "ingredientName": "Cefdinir",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004267-04",
+   "brandName": "Midanat 100",
+   "ingredientName": "Cefdinir",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004252-03",
+   "brandName": "Osvimec 300",
+   "ingredientName": "Cefdinir",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320004228-04",
+   "brandName": "Tinaziwel",
+   "ingredientName": "Cefdinir",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004238-04",
+   "brandName": "Trikadinir 250 DT",
+   "ingredientName": "Cefdinir",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01de01-02-06-n2",
+   "brandName": "Maxapin 1g",
+   "ingredientName": "Cefepime",
+   "strength": "1000mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250380004282-01",
+   "brandName": "Antipec 2g",
+   "ingredientName": "Cefepime (dưới dạng hỗn hợp vô khuẩn cefepime dihydrochloride monohydrate và L-arginine)",
+   "strength": "2g",
+   "route": "Tiêm/Truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004294-03",
+   "brandName": "Cefixime 100mg",
+   "ingredientName": "Cefixim",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004304-04",
+   "brandName": "Cefixime 100mg",
+   "ingredientName": "Cefixim",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320004327-03",
+   "brandName": "Cefixime 50mg",
+   "ingredientName": "Cefixim",
+   "strength": "50mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm pha hỗn dịch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340004406-03",
+   "brandName": "Gogo 200",
+   "ingredientName": "Cefixim",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004393-02",
+   "brandName": "Imexime 100",
+   "ingredientName": "Cefixim (dưới dạng cefixim trihydrat)",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "Gói 1 đợt 3"
+  },
+  {
+   "id": "2250310004368-02",
+   "brandName": "Imexime 200",
+   "ingredientName": "Cefixim (dưới dạng cefixim trihydrat)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300004316-03",
+   "brandName": "Bactirid 100mg/5ml dry suspension",
+   "ingredientName": "Cefixim (dưới dạng Cefixim trihydrat)",
+   "strength": "100mg/5ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360004332-01",
+   "brandName": "IMERIXX 200",
+   "ingredientName": "Cefixim (dưới dạng Cefixim trihydrat)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004344-03",
+   "brandName": "Uphaxime 200mg",
+   "ingredientName": "Cefixim (dưới dạng Cefixim trihydrat)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004379-03",
+   "brandName": "Uphaxime 200mg",
+   "ingredientName": "Cefixim (dưới dạng Cefixim trihydrat)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350004380-04",
+   "brandName": "Uphaxime 200mg",
+   "ingredientName": "Cefixim (dưới dạng Cefixim trihydrat)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004355-03",
+   "brandName": "Arme-xime 400",
+   "ingredientName": "Cefixime (dưới dạng Cefixime trihydrat)",
+   "strength": "400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310004450-02",
+   "brandName": "Cefopefast 2000",
+   "ingredientName": "Cefoperazon",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004430-02",
+   "brandName": "Cefoperazone 1g",
+   "ingredientName": "Cefoperazon",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004420-01",
+   "brandName": "Fordamet 1g",
+   "ingredientName": "Cefoperazon",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360004448-04",
+   "brandName": "Viciperazol",
+   "ingredientName": "Cefoperazon",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004461-04",
+   "brandName": "Bifopezon 2g",
+   "ingredientName": "Cefoperazon (dưới dạng Cefoperazon natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004539-02",
+   "brandName": "Cefopefast-S 1000",
+   "ingredientName": "Cefoperazon (dưới dạng Cefoperazon natri) + Sulbactam (dưới dạng Sulbactam sodium)",
+   "strength": "500mg + 500mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004476-02",
+   "brandName": "Bacsulfo 0,25g/0,25g",
+   "ingredientName": "Cefoperazon (dưới dạng hỗn hợp bột vô khuẩn cefoperazon natri và sulbactam natri tỷ lệ (1:1)); Sulbactam (dưới dạng hỗn hợp bột vô khuẩn cefoperazon natri và sulbactam natri tỷ lệ (1:1))",
+   "strength": "0,25g; 0,25g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004513-02",
+   "brandName": "Bacsulfo 1g/1g",
+   "ingredientName": "Cefoperazon + sulbactam",
+   "strength": "1g + 1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "Gói 1 đợt 3"
+  },
+  {
+   "id": "2250300004507-01",
+   "brandName": "Buflan 2g",
+   "ingredientName": "Cefoperazon + sulbactam",
+   "strength": "1g + 1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360004493-04",
+   "brandName": "Vibatazol 1g/0,5g",
+   "ingredientName": "Cefoperazon + sulbactam",
+   "strength": "1g + 0,5g",
+   "route": "Tiêm bắp/Tiêm truyền tĩnh mạch",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360004523-04",
+   "brandName": "Trafucef-S 2g",
+   "ingredientName": "Cefoperazon + Sulbactam (dưới dạng hỗn hợp bột vô khuẩn Cefoperazone sodium và Sulbactam sodium tỉ lệ 1:1)",
+   "strength": "1g + 1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01dd01-01-06-n2",
+   "brandName": "Cefotaxime 2000",
+   "ingredientName": "Cefotaxim (dưới dạng cefotaxim natri)",
+   "strength": "2000mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250310004566-04",
+   "brandName": "Cefovidi",
+   "ingredientName": "Cefotaxim (dưới dạng cefotaxim natri)",
+   "strength": "1g",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Thuốc tiêm bột",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004577-04",
+   "brandName": "Cefotaxim",
+   "ingredientName": "Cefotaxim (dưới dạng Cefotaxim natri)",
+   "strength": "2g",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01dd01-02-06-n2",
+   "brandName": "Cefotaxime 1000",
+   "ingredientName": "Cefotaxim (dưới dạng Cefotaxim natri)",
+   "strength": "1000mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "j01dd01-01-06-n1",
+   "brandName": "Tenamyd- cefotaxime 2000",
+   "ingredientName": "Cefotaxim (dưới dạng Cefotaxim natri)",
+   "strength": "2000mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "j01dd01-02-06-n1",
+   "brandName": "Tenamyd-Cefotaxime 1000",
+   "ingredientName": "Cefotaxim (dưới dạng Cefotaxim natri)",
+   "strength": "1000mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250350004595-02",
+   "brandName": "Cefotiam 1 g",
+   "ingredientName": "Cefotiam",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004604-02",
+   "brandName": "Cefotiam 2g",
+   "ingredientName": "Cefotiam",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004612-04",
+   "brandName": "Cefotiam 2g",
+   "ingredientName": "Cefotiam (dưới dạng cefotiam hydroclorid trộn natri carbonat)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004580-02",
+   "brandName": "Cefotiam 0,5g",
+   "ingredientName": "Cefotiam (dưới dạng hỗn hợp cefotiam hydroclorid và natri carbonat)",
+   "strength": "0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004659-02",
+   "brandName": "Tenafotin 2000",
+   "ingredientName": "Cefoxitin",
+   "strength": "2g",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004638-01",
+   "brandName": "Cefoxitin Panpharma 2g",
+   "ingredientName": "Cefoxitin (dưới dạng Cefoxitin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300004675-01",
+   "brandName": "Cefoxitine Gerda 1g",
+   "ingredientName": "Cefoxitin (dưới dạng Cefoxitin natri)",
+   "strength": "1g",
+   "route": "Tiêm/Truyền",
+   "dosageForm": "Bột pha dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310004641-05",
+   "brandName": "Fisulty 2g",
+   "ingredientName": "Cefoxitin (dưới dạng Cefoxitin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310004627-04",
+   "brandName": "Cefoxitin 1g",
+   "ingredientName": "Cefoxitin (dưới dạng cefoxitin sodium)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004669-04",
+   "brandName": "Cefoxitin 2g",
+   "ingredientName": "Cefoxitin (dưới dạng cefoxitin sodium) 2g",
+   "strength": "2g",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004680-02",
+   "brandName": "Foximcz-1000",
+   "ingredientName": "Cefoxitin natri vô khuẩn tương đương với cefoxitin 1g",
+   "strength": "1g",
+   "route": "Tiêm/Truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370004698-02",
+   "brandName": "Zinhepa Inj.",
+   "ingredientName": "Cefpirome (dưới dạng Cefpirome sulfate)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300004712-04",
+   "brandName": "Cefodomid 100mg/5ml",
+   "ingredientName": "Cefpodoxim",
+   "strength": "100mg/ 5ml, 60ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004768-02",
+   "brandName": "Fiximcz-200",
+   "ingredientName": "Cefpodoxim",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330004744-02",
+   "brandName": "Auropodox 100",
+   "ingredientName": "Cefpodoxim (dưới dạng Cefpodoxim proxetil)",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004736-01",
+   "brandName": "Cepoxitil 100",
+   "ingredientName": "Cefpodoxim (dưới dạng Cefpodoxim proxetil)",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004757-01",
+   "brandName": "Cepoxitil 200",
+   "ingredientName": "Cefpodoxim (dưới dạng Cefpodoxim proxetil)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320004792-02",
+   "brandName": "Imedoxim 200",
+   "ingredientName": "Cefpodoxim (dưới dạng Cefpodoxim proxetil)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004703-03",
+   "brandName": "Cebest",
+   "ingredientName": "Cefpodoxime (dưới dạng Cefpodoxime proxetil)",
+   "strength": "100mg/3g",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004779-03",
+   "brandName": "Cebest",
+   "ingredientName": "Cefpodoxime (dưới dạng Cefpodoxime proxetil)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004720-03",
+   "brandName": "Cebest",
+   "ingredientName": "Cefpodoxime (dưới dạng Cefpodoxime proxetil)",
+   "strength": "50mg/1,5g",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330004782-04",
+   "brandName": "Dipesalox 200mg",
+   "ingredientName": "Cefpodoxime (dưới dạng Cefpodoxime proxetil)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén phân tán",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004811-02",
+   "brandName": "Doncef",
+   "ingredientName": "Cefradin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004804-04",
+   "brandName": "Faszeen",
+   "ingredientName": "Cefradin",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01dd02-02-06-n2",
+   "brandName": "Ceftazidime 1000",
+   "ingredientName": "Ceftazidim",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250360004837-04",
+   "brandName": "Ceftazidime 2g",
+   "ingredientName": "Ceftazidim",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004842-04",
+   "brandName": "Cetachit 1g",
+   "ingredientName": "Ceftazidim",
+   "strength": "1g",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01dd02-01-06-n2",
+   "brandName": "Ceftazidime 2000",
+   "ingredientName": "Ceftazidim (dưới dạng Ceftazidim pentahydrat)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01dd02-02-06-n1",
+   "brandName": "Tenamyd-Ceftazidime 1000",
+   "ingredientName": "Ceftazidim (dưới dạng Ceftazidim pentahydrat)",
+   "strength": "1000mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01dd02-01-06-n1",
+   "brandName": "Tenamyd-Ceftazidime 2000",
+   "ingredientName": "Ceftazidim (dưới dạng Ceftazidim pentahydrat)",
+   "strength": "2000mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250350004854-01",
+   "brandName": "Zavicefta",
+   "ingredientName": "Ceftazidime (dưới dạng ceftazidim pentahydrate) ; Avibactam (dưới dạng avibactam sodium)",
+   "strength": "2g; 0,5g",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha dung dịch đậm đặc để pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004864-04",
+   "brandName": "Egobuten 90",
+   "ingredientName": "Ceftibuten",
+   "strength": "90mg/gói 2,5g",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320004877-02",
+   "brandName": "Ceftizoxim 1g",
+   "ingredientName": "Ceftizoxim",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380004909-04",
+   "brandName": "Ceftizoxime 2g",
+   "ingredientName": "Ceftizoxim",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380004893-02",
+   "brandName": "Ceftizoxim 2 g",
+   "ingredientName": "Ceftizoxim (dưới dạng ceftizoxim natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310004887-04",
+   "brandName": "Midazoxim 1g",
+   "ingredientName": "Ceftizoxim (dưới dạng Ceftizoxim natri)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004915-01",
+   "brandName": "Zerbaxa",
+   "ingredientName": "Ceftolozane (dưới dạng Ceftolozane Sulfate); Tazobactam (dưới dạng Tazobactam Natri)",
+   "strength": "1000mg; 500mg",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha dung dịch đậm đặc để pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350004946-02",
+   "brandName": "Ceftriaxone 2000",
+   "ingredientName": "Ceftriaxon",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004926-04",
+   "brandName": "Ceftriaxone 1g",
+   "ingredientName": "Ceftriaxon (dưới dạng Ceftriaxon natri)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300004958-04",
+   "brandName": "Viciaxon 2g",
+   "ingredientName": "Ceftriaxon (dưới dạng Ceftriaxon natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01dd04-01-06-n2",
+   "brandName": "Ceftriaxone 1000",
+   "ingredientName": "Ceftriaxon (dưới dạng Ceftriaxon Natri)",
+   "strength": "1000mg",
+   "route": "Tiêm /truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "j01dd04-01-06-n1",
+   "brandName": "Medivernol 1g",
+   "ingredientName": "Ceftriaxone (dưới dạng ceftriaxone sodium)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250310004931-01",
+   "brandName": "Tenamyd-ceftriaxone 2000",
+   "ingredientName": "Ceftriaxone (dưới dạng Ceftriaxone sodium)",
+   "strength": "2000 mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340004970-03",
+   "brandName": "Cefurovid 125",
+   "ingredientName": "Cefuroxim",
+   "strength": "125mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360004981-03",
+   "brandName": "Cefuroxime 125mg/5ml",
+   "ingredientName": "Cefuroxim",
+   "strength": "125mg/ 5ml, 40g/ 60ml",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005044-02",
+   "brandName": "Cefuroxime 500 mg",
+   "ingredientName": "Cefuroxim (dưới dạng cefuroxim axetil)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310005013-03",
+   "brandName": "Cezirnate 250mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330005024-04",
+   "brandName": "Cezirnate 250mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330005055-03",
+   "brandName": "Cezirnate 500mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370005060-04",
+   "brandName": "Cezirnate 500mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360005001-01",
+   "brandName": "Medaxetine 250mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005037-01",
+   "brandName": "Medaxetine 500mg",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim axetil)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360004967-04",
+   "brandName": "Bifumax 750",
+   "ingredientName": "Cefuroxim (dưới dạng Cefuroxim natri)",
+   "strength": "750mg",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340004994-03",
+   "brandName": "MULPAX S-250",
+   "ingredientName": "Cefuroxim khan (dưới dạng Cefuroxim axetil: 300,72mg )",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "576",
+   "brandName": "Zinacef",
+   "ingredientName": "Cefuroxim natri",
+   "strength": "750mg",
+   "route": "Tiêm tĩnh mạch, tiêm bắp (IV, IM)",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "j01dc02-04-06-n2",
+   "brandName": "Oramycin 1.5g",
+   "ingredientName": "Cefuroxime (dưới dạng Cefuroxime Sodium)",
+   "strength": "1500mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "j01dc02-03-06-n1",
+   "brandName": "Oramycin 750mg",
+   "ingredientName": "Cefuroxime (dưới dạng Cefuroxime Sodium)",
+   "strength": "750mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "j01dc02-03-06-n2",
+   "brandName": "Oramycin 750mg",
+   "ingredientName": "Cefuroxime (dưới dạng Cefuroxime Sodium)",
+   "strength": "750mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "j01dc02-04-06-n1",
+   "brandName": "Tenamyd-Cefuroxime 1500",
+   "ingredientName": "Cefuroxime (dưới dạng Cefuroxime Sodium)",
+   "strength": "1500mg",
+   "route": "Tiêm /truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "581",
+   "brandName": "Zinnat Suspension",
+   "ingredientName": "Cefuroxime axetil",
+   "strength": "125mg/5ml, 50ml",
+   "route": "Uống",
+   "dosageForm": "Cốm pha huyền dịch uống",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250300004071-01",
+   "brandName": "IMEVIX",
+   "ingredientName": "Cephalexin (dưới dạng Cephalexin monohydrat powder)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320004082-04",
+   "brandName": "Cephalexin 250mg",
+   "ingredientName": "Cephalexin (dưới dạng Cephalexin monohydrat)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370004131-04",
+   "brandName": "Cephalexin 500 mg",
+   "ingredientName": "Cephalexin (dưới dạng Cephalexin monohydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01db01-01-01-n2",
+   "brandName": "Cephalexin PMP 500",
+   "ingredientName": "Cephalexin (dưới dạng Cephalexin monohydrate)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250340004154-02",
+   "brandName": "Thinmcz-2000",
+   "ingredientName": "Cephalothin natri tương đương với cephalothin 2000 mg (Dưới dạng hỗn hợp vô khuẩn cephalothin natri và natri bicarbonat)",
+   "strength": "Cephalothin natri tương đương với cephalothin 2000 mg (Dưới dạng hỗn hợp vô khuẩn cephalothin natri và natri bicarbonat)",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006204-04",
+   "brandName": "Ciprofloxacin 0,3%",
+   "ingredientName": "Ciprofloxacin (dùng dạng ciprofloxacin hydroclorid)",
+   "strength": "15mg/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006210-01",
+   "brandName": "Cetraxal",
+   "ingredientName": "Ciprofloxacin (dưới dạng ciprofloxacin HCl)",
+   "strength": "0,2%; 0,25ml",
+   "route": "Nhỏ tai",
+   "dosageForm": "Dung dịch nhỏ tai",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006233-04",
+   "brandName": "Ciprofloxacin 200mg/100ml",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin HCl)",
+   "strength": "200mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350006278-03",
+   "brandName": "Ciprofloxacin",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrochlorid)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310006287-01",
+   "brandName": "Cipro-Denk 750",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrochloride.1H2O 873mg)",
+   "strength": "750mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320006222-01",
+   "brandName": "Ciprofloxacin Polpharma",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrochloride)",
+   "strength": "200mg/100ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380006248-02",
+   "brandName": "Ciprofloxacin Polpharma",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrochloride)",
+   "strength": "200mg/100ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340006196-01",
+   "brandName": "Nafloxin Eye Drops Solution 0.3% w/v",
+   "ingredientName": "Ciprofloxacin (dưới dạng ciprofloxacin hydroclorid monohydrat)",
+   "strength": "0,3%",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01ma02-01-01-n2",
+   "brandName": "Ciprofloxacin EG 500 mg",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydroclorid)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250350006254-01",
+   "brandName": "Ciprofloxacin Polpharma",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrocloride)",
+   "strength": "400mg/200ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380006262-02",
+   "brandName": "Ciprofloxacin Polpharma",
+   "ingredientName": "Ciprofloxacin (dưới dạng Ciprofloxacin hydrocloride)",
+   "strength": "400mg/200ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01ma02-01-01-n1",
+   "brandName": "Tamisynt 500mg",
+   "ingredientName": "Ciprofloxacin hydrochloride (tương đương ciprofloxacin 500mg) 583mg",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250330006052-03",
+   "brandName": "AGICLARI 500",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320006062-04",
+   "brandName": "AGICLARI 500",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "j01fa09-01-01-n2",
+   "brandName": "Clabact 500",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "uống",
+   "dosageForm": "viên nén bao phim",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "j01fa09-01-01-n1",
+   "brandName": "Crutit",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250310006034-05",
+   "brandName": "Klacid",
+   "ingredientName": "Clarithromycin",
+   "strength": "125mg/5ml/ Hộp 60ml",
+   "route": "Uống",
+   "dosageForm": "Cốm pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "709",
+   "brandName": "Klacid Forte",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "710",
+   "brandName": "Klacid MR",
+   "ingredientName": "Clarithromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén giải phóng biến đổi",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250380006040-01",
+   "brandName": "Remeclar 250",
+   "ingredientName": "Clarithromycin",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005820-01",
+   "brandName": "Clindamycin- Hameln 150mg/ml",
+   "ingredientName": "Clindamycin",
+   "strength": "600mg",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005870-04",
+   "brandName": "Hyuga 150mg",
+   "ingredientName": "Clindamycin ( dưới dạng Clindamycin hydroclorid)",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005844-04",
+   "brandName": "Clindamycin A.T inj",
+   "ingredientName": "Clindamycin ( dưới dạng Clindamycin phosphat)",
+   "strength": "600mg/4ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360005896-04",
+   "brandName": "Hyuga 300 mg",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin HCl)",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320005881-01",
+   "brandName": "Dalacin C",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin Hydrochloride)",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "685",
+   "brandName": "Dalacin C",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin Hydrochloride)",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250370005817-04",
+   "brandName": "Clindacine 300",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin phosphat)",
+   "strength": "300mg/2ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320005799-01",
+   "brandName": "Clindamycin-Hameln 150mg/ml",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin phosphat)",
+   "strength": "300mg/ 2ml",
+   "route": "Tiêm bắp hoặc truyền tĩnh mạch sau khi pha loãng",
+   "dosageForm": "Dung dịch tiêm bắp, tĩnh mạch sau khi pha loãng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310005853-04",
+   "brandName": "Clyodas",
+   "ingredientName": "Clindamycin (dưới dạng Clindamycin phosphat)",
+   "strength": "600mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350012712-04",
+   "brandName": "Tunadimet",
+   "ingredientName": "Clopidogrel (dưới dạng Clopidogrel bisulfat)",
+   "strength": "75mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350012682-04",
+   "brandName": "Kaclocide plus",
+   "ingredientName": "Clopidogrel (dưới dạng Clopidogrel bisulfate 97,86mg); Aspirin",
+   "strength": "75mg; 100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320005096-04",
+   "brandName": "Cloxacilin 1g",
+   "ingredientName": "Cloxacilin",
+   "strength": "1g",
+   "route": "Tiêm Bắp, tiêm tĩnh mạch, tiêm truyền, tiêm trong khớp, tiêm trong màng phổi",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005083-02",
+   "brandName": "Cloxacillin 1g",
+   "ingredientName": "Cloxacilin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005078-01",
+   "brandName": "Syntarpen",
+   "ingredientName": "Cloxacilin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005106-04",
+   "brandName": "Cloxacilin 2g",
+   "ingredientName": "Cloxacilin (dưới dạng Cloxacilin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300006761-04",
+   "brandName": "Clolirex 1MIU",
+   "ingredientName": "Colistimethat natri (tương đương 33,33mg Colistin)",
+   "strength": "1MIU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột đông khô pha tiêm, phun khí dung",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380006804-04",
+   "brandName": "Bidicolis 4,5MIU",
+   "ingredientName": "Colistimethat natri (tương đương Colistin base 150mg)",
+   "strength": "4,5MIU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310006737-04",
+   "brandName": "Bidicolis 2 MIU",
+   "ingredientName": "Colistimethat natri (tương đương Colistin base 66,67mg)",
+   "strength": "2MIU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310006751-02",
+   "brandName": "Colistin 1 MIU",
+   "ingredientName": "Colistimethat natri (tương đương với Colistin base 33,33mg)",
+   "strength": "1.000.000 IU",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370006777-02",
+   "brandName": "Colistin 2 MIU",
+   "ingredientName": "Colistimethat natri (tương đương với Colistin base 66,67mg)",
+   "strength": "2.000.000IU",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380006705-04",
+   "brandName": "Colistimed",
+   "ingredientName": "Colistin (dưới dạng colistimethat natri)",
+   "strength": "500000IU",
+   "route": "Tiêm",
+   "dosageForm": "thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310006799-01",
+   "brandName": "Colistimethate",
+   "ingredientName": "Colistin (dưới dạng Colistimethat natri)",
+   "strength": "4,5 MIU (150mg)",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370006814-02",
+   "brandName": "Comopas",
+   "ingredientName": "Colistin (Natri colistimethat tương đương 150mg colistin hoạt tính)",
+   "strength": "150mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300007980-05",
+   "brandName": "Cosmegen Lyovac",
+   "ingredientName": "Dactinomycin",
+   "strength": "500mcg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005598-01",
+   "brandName": "Maxitrol",
+   "ingredientName": "Dexamethason + Neomycin sulfat + Polymyxin B sulfat",
+   "strength": "(1mg + 3500IU + 6000IU)/gram",
+   "route": "Tra mắt",
+   "dosageForm": "Thuốc mỡ tra mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370005572-01",
+   "brandName": "Maxitrol",
+   "ingredientName": "Dexamethason + Neomycin sulfat + Polymyxin B sulfat",
+   "strength": "(1mg + 3500IU + 6000IU)/ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Hỗn dịch nhỏ mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360005117-04",
+   "brandName": "Doripenem 0,25g",
+   "ingredientName": "Doripenem",
+   "strength": "0,25g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005120-04",
+   "brandName": "Butapenem 500",
+   "ingredientName": "Doripenem (dưới dạng Doripenem monohydrat)",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005130-05",
+   "brandName": "Vicidori 500mg",
+   "ingredientName": "Doripenem (dưới dạng Doripenem monohydrat)",
+   "strength": "500mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "Gói 1 đợt 3"
+  },
+  {
+   "id": "2250340006660-01",
+   "brandName": "Basicillin 100mg",
+   "ingredientName": "Doxycyclin",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300006655-04",
+   "brandName": "Idaroxy",
+   "ingredientName": "Doxycyclin (dưới dạng Doxycyclin hyclat)",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360014089-04",
+   "brandName": "Gynocare",
+   "ingredientName": "Đồng sulfat",
+   "strength": "0,1g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Dung dịch dùng ngoài",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370005145-01",
+   "brandName": "Ertalgold",
+   "ingredientName": "Ertapenem ( dưới dạng Ertapenem natri )",
+   "strength": "1g",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Bột pha dung dịch đậm đặc pha dịch truyền tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005150-04",
+   "brandName": "Ertapenem VCP",
+   "ingredientName": "Ertapenem (dưới dạng Ertapenem natri phối hợp với Natri bicarbonat và Natri hydroxid theo tỷ lệ 809,6:135,4:55)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006094-04",
+   "brandName": "AGI-ERY 500",
+   "ingredientName": "Erythromycin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén dài bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006075-04",
+   "brandName": "ECINGEL",
+   "ingredientName": "Erythromycin",
+   "strength": "4%/10g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Gel bôi da",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006183-01",
+   "brandName": "Erylik",
+   "ingredientName": "Erythromycin + Tretinoin",
+   "strength": "4% + 0,025%",
+   "route": "Bôi ngoài da",
+   "dosageForm": "Gel bôi ngoài da",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350007664-04",
+   "brandName": "Ethambutol 400mg",
+   "ingredientName": "Ethambutol hydroclorid",
+   "strength": "400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360007302-04",
+   "brandName": "Blizadon 200",
+   "ingredientName": "Fluconazol",
+   "strength": "200mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch thuốc tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360007326-04",
+   "brandName": "Blizadon 400",
+   "ingredientName": "Fluconazol",
+   "strength": "400mg/200ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Thuốc tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330007332-02",
+   "brandName": "Fluconazol 150",
+   "ingredientName": "Fluconazol",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350007350-02",
+   "brandName": "Fluconazol 150",
+   "ingredientName": "Fluconazol",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350007398-01",
+   "brandName": "Fluebac",
+   "ingredientName": "Fluconazol",
+   "strength": "50mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340007315-01",
+   "brandName": "Klevaflu Sol.Inf 2mg/1ml",
+   "ingredientName": "Fluconazol",
+   "strength": "Mỗi 1ml dung dịch chứa: Fluconazol 2mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350007381-01",
+   "brandName": "Mycazole",
+   "ingredientName": "Fluconazol",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380007375-04",
+   "brandName": "Zolmed 150",
+   "ingredientName": "Fluconazol",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320007298-04",
+   "brandName": "A.T Fluconazole 2 mg/ml",
+   "ingredientName": "Fluconazole",
+   "strength": "2mg/ml x 50ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380007344-01",
+   "brandName": "Diflazon 150mg",
+   "ingredientName": "Fluconazole",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310007369-03",
+   "brandName": "Pyme Fucan",
+   "ingredientName": "Fluconazole",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310006843-01",
+   "brandName": "Solufos",
+   "ingredientName": "Fosfomycin (dưới dạng Fosfomycin calcium 703 mg)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006838-04",
+   "brandName": "Fosfomed 2g",
+   "ingredientName": "Fosfomycin (dưới dạng Fosfomycin Natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006827-04",
+   "brandName": "Fosmitic",
+   "ingredientName": "Fosfomycin natri",
+   "strength": "30mg/1ml",
+   "route": "Nhỏ tai",
+   "dosageForm": "Dung dịch nhỏ tai",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320013565-04",
+   "brandName": "Bifudin",
+   "ingredientName": "Fusidic acid",
+   "strength": "20mg/1g; 5g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330013593-01",
+   "brandName": "Fucicort",
+   "ingredientName": "Fusidic acid + Betamethason (dưới dạng valerat)",
+   "strength": "2% (w/w) + 0,1% (w/w)",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360005537-04",
+   "brandName": "GENTAMICIN KABI 40MG/ML",
+   "ingredientName": "Gentamicin (dưới dạng gentamicin sulfat)",
+   "strength": "40mg/1ml",
+   "route": "Tiêm truyền tĩnh mạch - Tiêm bắp",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005547-04",
+   "brandName": "Gentamicin 80mg",
+   "ingredientName": "Gentamicin (dưới dạng Gentamicin sulfat)",
+   "strength": "80mg/2ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380001717-04",
+   "brandName": "Mongor",
+   "ingredientName": "Glucosamin sulfat",
+   "strength": "1000mg",
+   "route": "Uống",
+   "dosageForm": "viên nén sủi bọt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330001729-01",
+   "brandName": "FLEXSA 1500",
+   "ingredientName": "Glucosamine Sulfate",
+   "strength": "1500mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370021824-01",
+   "brandName": "Kabiven Peripheral",
+   "ingredientName": "Glucose khan (dưới dạng Glucose monohydrat), Dầu đậu nành tinh chế , Alanin , Arginin, Acid aspartic, Acid glutamic, Glycin, Histidin, Isoleucin, Leucin, Lysin (dưới dạng Lysin hydroclorid), Methionin, Phenylalanin, Prolin, Serin, Threonin, Tryptophan, Tyrosin 0,07, Valin, Calci clorid (dưới dạng Calci clorid dihydrat), Natri glycerophosphat (dưới dạng natri glycerophosphat hydrat), Magnesi sulfat (dưới dạng Magnesi sulfat heptahydrat), Kali clorid, Natri acetat (dưới dạng Natri acetat trihydrat)",
+   "strength": "Glucose khan (dưới dạng Glucose monohydrat) 97 gam, Dầu đậu nành tinh chế 51 gam, Alanin 4,8 gam, Arginin 3,4 gam, Acid aspartic 1,0 gam, Acid glutamic 1,7 gam, Glycin 2,4 gam, Histidin 2,0 gam, Isoleucin 1,7 gam, Leucin 2,4 gam, Lysin (dưới dạng Lysin hydroclorid) 2,7 gam, Methionin 1,7 gam, Phenylalanin 2,4 gam, Prolin 2,0 gam, Serin 1,4 gam, Threonin 1,7 gam, Tryptophan 0,57 gam, Tyrosin 0,07 gam, Valin 2,2 gam, Calci clorid (dưới dạng Calci clorid dihydrat) 0,22 gam, Natri glycerophosphat (dưới dạng natri glycerophosphat hydrat) 1,5 gam, Magnesi sulfat (dưới dạng Magnesi sulfat heptahydrat) 0,48 gam, Kali clorid 1,8 gam, Natri acetat (dưới dạng Natri acetat trihydrat) 1,5 gam",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Nhũ tương tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370007408-04",
+   "brandName": "GIFULDIN 500",
+   "ingredientName": "Griseofulvin",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005168-04",
+   "brandName": "Vicimlastatin",
+   "ingredientName": "Hỗn hợp Imipenem monohydrat, Cilastatin natri và natri bicarbonat theo tỷ lệ 1:1:0,04 tương đương với: Imipenem + Cilastatin 750mg + 750mg",
+   "strength": "750mg + 750mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01de01-02-06-n1",
+   "brandName": "Antipec 1g",
+   "ingredientName": "Hỗn hợp vô khuẩn cefepime dihydrochloride monohydrate và L-arginine (trong đó chứa cefepime 1g (dưới dạng cefepime dihydrochloride monohydrate)) 1915,71mg",
+   "strength": "1g",
+   "route": "Tiêm/ truyền",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250350007640-02",
+   "brandName": "HCQ",
+   "ingredientName": "Hydroxychloroquine sulfate",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005175-04",
+   "brandName": "Bidinam",
+   "ingredientName": "Imipenem (dưới dạng imipenem monohyrat) + Cilastatin (dưới dạng cilastatin natri)",
+   "strength": "500mg + 500mg",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01dh51-01-06-n2",
+   "brandName": "BACQURE 500MG",
+   "ingredientName": "Imipenem 500mg, Cilastatin (dưới dạng cilastatin natri) 500mg",
+   "strength": "500mg + 500mg",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250330007417-01",
+   "brandName": "Itraconazole 100 mg hard capsules",
+   "ingredientName": "Itraconazol",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370007439-04",
+   "brandName": "Trifungi",
+   "ingredientName": "Itraconazol",
+   "strength": "100mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300007423-02",
+   "brandName": "Itranstad",
+   "ingredientName": "Itraconazole (dưới dạng itraconazole pellets 22%)",
+   "strength": "100mg",
+   "route": "uống",
+   "dosageForm": "viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320007441-04",
+   "brandName": "Ketoconazol",
+   "ingredientName": "Ketoconazol",
+   "strength": "2%/10g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310007468-04",
+   "brandName": "KETOVAZOL 2%",
+   "ingredientName": "Ketoconazol",
+   "strength": "2%/5g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006334-01",
+   "brandName": "Goldvoxin",
+   "ingredientName": "Levofloxacin",
+   "strength": "250mg/ 50ml",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Dung dịch truyền tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006350-02",
+   "brandName": "Levofloxacin 750mg/150ml",
+   "ingredientName": "Levofloxacin",
+   "strength": "750mg/150ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300006365-04",
+   "brandName": "Levofloxacin 750mg/150ml",
+   "ingredientName": "Levofloxacin",
+   "strength": "750mg/150ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370006302-02",
+   "brandName": "Philevomels eye drops",
+   "ingredientName": "Levofloxacin",
+   "strength": "0,5%/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370006395-03",
+   "brandName": "LEVODHG 250",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat 256,23mg)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006371-04",
+   "brandName": "Vinlevo Plus",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat 512,45mg)",
+   "strength": "500mg/20ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch đậm đặc để pha tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01ma12-01-01-n2",
+   "brandName": "Ozanier 500mg",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat 512mg)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01ma12-01-06-n2",
+   "brandName": "Goldquino 5 Mg/ml Injection",
+   "ingredientName": "Levofloxacin (dưới dạng levofloxacin hemihydrat)",
+   "strength": "500mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "j01ma12-01-06-n1",
+   "brandName": "Levofloxacin/cooper solution for infusion 500mg/100ml",
+   "ingredientName": "Levofloxacin (dưới dạng levofloxacin hemihydrat)",
+   "strength": "500mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "PL QĐ 52"
+  },
+  {
+   "id": "2250330006342-04",
+   "brandName": "Bivelox I.V 5mg/ml",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "5mg/1ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320006314-04",
+   "brandName": "Eyexacin",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "25mg/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Thuốc nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330006403-03",
+   "brandName": "Kaflovo",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006419-04",
+   "brandName": "Levofloxacin 500mg",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01ma12-01-01-n1",
+   "brandName": "Medoxasol 500mg",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL 87"
+  },
+  {
+   "id": "2250330006380-01",
+   "brandName": "Nirdicin 250mg",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat)",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330006298-01",
+   "brandName": "Letdion",
+   "ingredientName": "Levofloxacin (dưới dạng Levofloxacin hemihydrat) 0,5% (w/v)",
+   "strength": "0,5%/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "739",
+   "brandName": "Cravit",
+   "ingredientName": "Levofloxacin hydrat",
+   "strength": "25mg/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250320006888-05",
+   "brandName": "Ashzolid (Linezolid Injection-300ml)",
+   "ingredientName": "Linezolid",
+   "strength": "600mg/300ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006879-04",
+   "brandName": "Line-BFS 600mg",
+   "ingredientName": "Linezolid",
+   "strength": "600mg/ 10ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch đậm đặc pha truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006853-01",
+   "brandName": "Linezolid",
+   "ingredientName": "Linezolid",
+   "strength": "2mg/ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370006869-02",
+   "brandName": "Linezolid",
+   "ingredientName": "Linezolid",
+   "strength": "2mg/ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006891-02",
+   "brandName": "SaViLifen 600",
+   "ingredientName": "Linezolid*",
+   "strength": "600mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340015785-04",
+   "brandName": "Coliet",
+   "ingredientName": "Macrogol + natri sulfat + natri bicarbonat + natri clorid + kali clorid",
+   "strength": "64g + 5,7g + 1,68g + 1,46g + 0,75g",
+   "route": "Uống",
+   "dosageForm": "Bột pha dung dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360015772-01",
+   "brandName": "Fortrans",
+   "ingredientName": "Macrogol 4000: 64 g; Anhydrous sodium sulfate: 5,7 g; Sodium bicarbonate: 1,68 g; Sodium chloride: 1,46 g; Potassium chloride: 0,75 g.",
+   "strength": "64g + 5,7g + 1,68g + 1,46g + 0,75g",
+   "route": "Uống",
+   "dosageForm": "Bột pha dung dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370022043-04",
+   "brandName": "Magnesi-BFS 15%",
+   "ingredientName": "Magnesi sulfat heptahydrat",
+   "strength": "750mg/5ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "Gói 1 đợt 3"
+  },
+  {
+   "id": "j01dh02-02-06-n1",
+   "brandName": "Merovia",
+   "ingredientName": "Meropenem",
+   "strength": "1000mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01dh02-02-06-n2",
+   "brandName": "Merovia",
+   "ingredientName": "Meropenem",
+   "strength": "1000mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250360005193-04",
+   "brandName": "Mizapenem 0,5g",
+   "ingredientName": "Meropenem (dạng meropenem trihydrat)",
+   "strength": "0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01dh02-01-06-n1",
+   "brandName": "Meropenem/ Anfarm",
+   "ingredientName": "Meropenem (dưới dạng Meropenem trihydrat)",
+   "strength": "500mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "bột pha tiêm truyền",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "j01dh02-01-06-n2",
+   "brandName": "Meropenem/ Anfarm",
+   "ingredientName": "Meropenem (dưới dạng Meropenem trihydrat)",
+   "strength": "500mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "bột pha tiêm truyền",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250320005188-04",
+   "brandName": "Meropenem 1g",
+   "ingredientName": "Meropenem*",
+   "strength": "1000mg",
+   "route": "Tiêm, Tiêm truyền",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370005695-04",
+   "brandName": "Gelacmeigel",
+   "ingredientName": "Metronidazol",
+   "strength": "150mg/15g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Gel bôi da",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005721-02",
+   "brandName": "Metronidazol 250",
+   "ingredientName": "Metronidazol",
+   "strength": "250mg",
+   "route": "Uống",
+   "dosageForm": "viên nén",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005734-04",
+   "brandName": "Metronidazol DWP 375mg",
+   "ingredientName": "Metronidazol",
+   "strength": "375mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005719-04",
+   "brandName": "Metronidazole 0,5g/100ml",
+   "ingredientName": "Metronidazol",
+   "strength": "500mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340005755-04",
+   "brandName": "AGIMYCOB",
+   "ingredientName": "Metronidazol + neomycin + nystatin",
+   "strength": "500mg + 65.000IU + 100.000IU",
+   "route": "Đặt âm đạo",
+   "dosageForm": "Viên nén đặt phụ khoa",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320005768-05",
+   "brandName": "AGIMYCOB",
+   "ingredientName": "Metronidazol + neomycin + nystatin",
+   "strength": "500mg + 65.000IU + 100.000IU",
+   "route": "Đặt âm đạo",
+   "dosageForm": "Viên nén đặt phụ khoa",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330005703-01",
+   "brandName": "Trichopol",
+   "ingredientName": "Metronidazole",
+   "strength": "500mg/100ml",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005747-01",
+   "brandName": "Neo-Tergynan",
+   "ingredientName": "Metronidazole + Neomycin sulfate + Nystatin",
+   "strength": "500mg + 65000 IU + 100000 IU",
+   "route": "Đặt âm đạo",
+   "dosageForm": "Viên nén đặt âm đạo",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350007503-04",
+   "brandName": "Myconazol 2% cream",
+   "ingredientName": "Miconazol",
+   "strength": "Miconazol nitrat 2%/15g hoặc tương đương",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330007516-05",
+   "brandName": "Quanazol",
+   "ingredientName": "Miconazol",
+   "strength": "Miconazol nitrat 2%/15g hoặc tương đương",
+   "route": "Dùng ngoài",
+   "dosageForm": "Thuốc kem bôi da",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330007486-04",
+   "brandName": "Micospray",
+   "ingredientName": "Miconazol nitrat",
+   "strength": "20mg/ml",
+   "route": "Dùng ngoài",
+   "dosageForm": "Nhũ tương dùng ngoài",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380007528-04",
+   "brandName": "Vadikiddy",
+   "ingredientName": "Miconazole",
+   "strength": "2%",
+   "route": "Dùng ngoài",
+   "dosageForm": "Gel rơ miệng họng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350000863-04",
+   "brandName": "Morphin 30mg",
+   "ingredientName": "Morphin sulfat",
+   "strength": "30mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300000875-04",
+   "brandName": "Morphin 30mg",
+   "ingredientName": "Morphin sulfat",
+   "strength": "30mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330000234-04",
+   "brandName": "Osaphine",
+   "ingredientName": "Morphin sulfat",
+   "strength": "10mg/ml, 1ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006457-04",
+   "brandName": "Biviflox",
+   "ingredientName": "Moxifloxacin",
+   "strength": "400mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340006462-01",
+   "brandName": "Ratida 400mg film-coated tablets",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydrochlorid)",
+   "strength": "400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006449-01",
+   "brandName": "Tamvelier (cơ sở xuất xưởng: Pharmathen SA, địa chỉ: Dervenakion 6, Pallini Attiki, 15351, Hy Lạp)",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydrochlorid)",
+   "strength": "Mỗi 1ml dung dịch chứa: Moxifloxacin (dưới dạng Moxifloxacin hydrochlorid) 5mg",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2918",
+   "brandName": "Vigamox",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydrochlorid)",
+   "strength": "5mg/1ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "j01ma14-01-06-n1",
+   "brandName": "Mikrobiel 400mg/250ml",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin Hydrochlorid)",
+   "strength": "400mg",
+   "route": "tiêm/ truyền",
+   "dosageForm": "Dung dịch tiêm truyền tĩnh mạch",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "757",
+   "brandName": "Avelox",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydrochloride)",
+   "strength": "400mg/250ml",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Dung dịch truyền tĩnh mạch",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250300006433-04",
+   "brandName": "Moxifloxacin Danapha",
+   "ingredientName": "Moxifloxacin (dưới dạng moxifloxacin hydroclorid 27,25mg)",
+   "strength": "25mg/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310006485-04",
+   "brandName": "Biphamox",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydroclorid)",
+   "strength": "400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "j01ma14-01-06-n2",
+   "brandName": "Moxifloxacin IMP 400 mg/ 250 mL",
+   "ingredientName": "Moxifloxacin (dưới dạng Moxifloxacin hydroclorid)",
+   "strength": "400mg/ 250ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL 97"
+  },
+  {
+   "id": "2250340006424-04",
+   "brandName": "Moxieye",
+   "ingredientName": "Moxifloxacin (Dưới dạng Moxifloxacin hydroclorid)",
+   "strength": "5mg/ml; Ống 0,4ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310005587-04",
+   "brandName": "Mepoly",
+   "ingredientName": "Mỗi 10ml chứa: Dexamethason (dưới dạng dexamethason natri phosphat); Neomycin (dưới dạng neomycin sulfat); Polymyxin B sulfat",
+   "strength": "(10mg; 35mg; 100.000IU)/10ml",
+   "route": "Nhỏ mắt, mũi, tai",
+   "dosageForm": "Dung dịch nhỏ mắt, mũi, tai",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005561-04",
+   "brandName": "Scofi",
+   "ingredientName": "Mỗi 1ml chứa: Dexamethason; Neomycin sulfat; Polymyxin B sulfat",
+   "strength": "(1mg; 3.500IU; 6.000IU)/1ml, Lọ 10ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Hỗn dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006473-02",
+   "brandName": "Moxifloxacin (as hydrochloride) 400mg",
+   "ingredientName": "Mỗi 1ml dung dịch chứa: Moxifloxacin (dưới dạng Moxifloxacin hydrochlorid)",
+   "strength": "400mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370005961-03",
+   "brandName": "Ziusa",
+   "ingredientName": "Mỗi 5ml hỗn dịch sau pha chứa Azithromycin (dưới dạng Azithromycin TM granules 7,5% w/w)",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360003656-04",
+   "brandName": "Zorolab 1000",
+   "ingredientName": "Mỗi gói 2g chứa: Amoxicilin (dưới dạng Amoxicilin trihydrat) 875mg; Acid clavulanic (dưới dạng Clavulanat kali) 125mg",
+   "strength": "875mg + 125mg",
+   "route": "Uống",
+   "dosageForm": "Bột pha hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370003936-03",
+   "brandName": "Pyfaclor Kid",
+   "ingredientName": "Mỗi gói 2g chứa: Cefaclor (dưới dạng Cefaclor monohydrat)",
+   "strength": "125mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330006748-04",
+   "brandName": "Colisodi 3,0 MIU",
+   "ingredientName": "Mỗi lọ thuốc tiêm đông khô chứa Colistimethate natri 3.000.000 IU (tương đương Colistin base 100 mg)",
+   "strength": "3.000.000 IU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320006789-04",
+   "brandName": "Colisodi 3,0 MIU",
+   "ingredientName": "Mỗi lọ thuốc tiêm đông khô chứa Colistimethate natri 3.000.000 IU (tương đương Colistin base 100 mg)",
+   "strength": "3.000.000 IU",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300005481-02",
+   "brandName": "Amikaver",
+   "ingredientName": "Mỗi ống 2ml chứa: amikacin (tương đương 0,75g amikacin sulfat) 0,5g",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310005839-02",
+   "brandName": "Fullgram Injection 600mg/4ml",
+   "ingredientName": "Mỗi ống 4ml chứa: Clindamycin (dưới dạng Clindamycin phosphat) 600mg",
+   "strength": "600mg",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300000363-04",
+   "brandName": "NEOSTIGMIN KABI",
+   "ingredientName": "Neostigmin methylsulfat",
+   "strength": "0,5mg/ml",
+   "route": "Tiêm bắp- tiêm tĩnh mạch- tiêm dưới da",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350000344-04",
+   "brandName": "BFS-Neostigmine 0.25",
+   "ingredientName": "Neostigmin metylsulfat",
+   "strength": "0,25 mg/ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005603-04",
+   "brandName": "Nelcin 200",
+   "ingredientName": "Netilmicin (dưới dạng netilmicin sulfat)",
+   "strength": "200mg/2ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380007559-04",
+   "brandName": "Binystar",
+   "ingredientName": "Nystatin",
+   "strength": "25.000UI",
+   "route": "Rơ miệng",
+   "dosageForm": "Thuốc cốm rơ miệng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330007561-04",
+   "brandName": "NYSTATAB",
+   "ingredientName": "Nystatin",
+   "strength": "500.000UI",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300007621-01",
+   "brandName": "Polygynax",
+   "ingredientName": "Nystatin + neomycin + polymyxin B",
+   "strength": "100.000 IU + 35.000IU + 35.000IU",
+   "route": "Đặt âm đạo",
+   "dosageForm": "Viên nang mềm đặt âm đạo",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250380006576-04",
+   "brandName": "AGOFLOX",
+   "ingredientName": "Ofloxacin",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250300006525-01",
+   "brandName": "Ofloquino 2mg/ml",
+   "ingredientName": "Ofloxacin",
+   "strength": "2mg/ml x 100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "766",
+   "brandName": "Oflovid",
+   "ingredientName": "Ofloxacin",
+   "strength": "15mg/5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "770",
+   "brandName": "Oflovid ophthalmic ointment",
+   "ingredientName": "Ofloxacin",
+   "strength": "0,3%",
+   "route": "Tra mắt",
+   "dosageForm": "Thuốc mỡ tra mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250360006497-04",
+   "brandName": "Ofloxacin 0,3%",
+   "ingredientName": "Ofloxacin",
+   "strength": "15mg/ 5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300006501-05",
+   "brandName": "Ofloxacin 0,3%",
+   "ingredientName": "Ofloxacin",
+   "strength": "15mg/ 5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006565-02",
+   "brandName": "Ofloxacin 200mg",
+   "ingredientName": "Ofloxacin",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320006536-02",
+   "brandName": "Ofloxacin 200mg/40mL",
+   "ingredientName": "Ofloxacin",
+   "strength": "200mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350006513-04",
+   "brandName": "Ofloxacin 200mg/40ml",
+   "ingredientName": "Ofloxacin",
+   "strength": "200mg/40ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360005216-02",
+   "brandName": "Oxacillin 1g",
+   "ingredientName": "Oxacilin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005252-02",
+   "brandName": "Oxacillin IMP 500mg",
+   "ingredientName": "Oxacilin (dưới dạng Oxacilin natri monohydrat compacted)",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360005230-04",
+   "brandName": "Oxacilin 2g",
+   "ingredientName": "Oxacilin (dưới dạng Oxacilin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005242-02",
+   "brandName": "Oxacillin 0,5g",
+   "ingredientName": "Oxacilin (dưới dạng Oxacilin natri)",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005204-01",
+   "brandName": "Omeusa",
+   "ingredientName": "Oxacillin (dưới dạng Oxacillin natri monohydrat)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005229-04",
+   "brandName": "Oxacillin 1g",
+   "ingredientName": "Oxacillin (dưới dạng Oxacillin natri)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005276-04",
+   "brandName": "Piperacilin 1g",
+   "ingredientName": "Piperacilin (dưới dạng piperacilin natri)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360005292-04",
+   "brandName": "Piperacilin 2g",
+   "ingredientName": "Piperacilin (dưới dạng piperacilin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370005282-02",
+   "brandName": "Piperacillin 2g",
+   "ingredientName": "Piperacilin (dưới dạng Piperacilin natri)",
+   "strength": "2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005303-02",
+   "brandName": "Piperacillin 4g",
+   "ingredientName": "Piperacilin (dưới dạng Piperacilin natri)",
+   "strength": "4g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005338-04",
+   "brandName": "Pipebamid 2,25",
+   "ingredientName": "Piperacilin (dưới dạng piperacilin natri) + Tazobactam (dưới dạng tazobactam natri)",
+   "strength": "2g + 0,25g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250310005327-02",
+   "brandName": "Piperacillin/Tazobactam Kabi 2g/0,25g",
+   "ingredientName": "Piperacilin (dưới dạng Piperacilin natri); Tazobactam (dưới dạng Tazobactam natri)",
+   "strength": "2g + 0,25g",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005369-01",
+   "brandName": "Piperacillin/Tazobactam Kabi 2g/0,25g",
+   "ingredientName": "Piperacilin (dưới dạng Piperacilin natri); Tazobactam (dưới dạng Tazobactam natri)",
+   "strength": "2g + 0,25g",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Bột pha dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005351-04",
+   "brandName": "Tazopelin 4,5g",
+   "ingredientName": "Piperacilin (dưới dạng piperacillin natri) + Tazobactam (dưới dạng Tazobactam natri)",
+   "strength": "4g + 0,5g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005341-04",
+   "brandName": "Tazopelin 3,375g",
+   "ingredientName": "Piperacillin (dưới dạng piperacillin natri) + Tazobactam (dưới dạng Tazobactam natri)",
+   "strength": "3g + 0,375g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330005314-02",
+   "brandName": "Pidisai Inj. 1g",
+   "ingredientName": "Piperacillin (dưới dạng Piperacillin sodium)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310002791-05",
+   "brandName": "Pamintu 10mg/ml",
+   "ingredientName": "Protamine sulfate",
+   "strength": "10mg/ml; 5ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch thuốc tiêm tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310007673-04",
+   "brandName": "AGIFAMCIN 300",
+   "ingredientName": "Rifampicin",
+   "strength": "300mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330019113-01",
+   "brandName": "Otofa",
+   "ingredientName": "Rifamycin natri",
+   "strength": "0,26g (200.000 IU)/10ml",
+   "route": "Nhỏ tai",
+   "dosageForm": "Dung dịch nhỏ tai",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320006109-04",
+   "brandName": "AGIROXI 150",
+   "ingredientName": "Roxithromycin",
+   "strength": "150mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350020878-04",
+   "brandName": "Atisalbu",
+   "ingredientName": "Salbutamol (dưới dạng salbutamol sulfat)",
+   "strength": "0,4 mg/ml (0,04% kl/tt); 5ml",
+   "route": "Uống",
+   "dosageForm": "Dung dịch uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250320020853-04",
+   "brandName": "Salbutamol Kabi 0,5mg/1ml",
+   "ingredientName": "Salbutamol (dưới dạng salbutamol sulfat)",
+   "strength": "0,5 mg/ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250370020841-01",
+   "brandName": "Salbutamol Renaudin 0,5mg/1ml",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfat)",
+   "strength": "0,5mg/ 1ml",
+   "route": "Tiêm",
+   "dosageForm": "dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360020905-04",
+   "brandName": "Salbuvin",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfat)",
+   "strength": "2mg/5ml",
+   "route": "Uống",
+   "dosageForm": "Sirô",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370020810-04",
+   "brandName": "Zensalbu nebules 2.5",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfat)",
+   "strength": "2,5mg/2,5ml",
+   "route": "Hít qua máy khí dung",
+   "dosageForm": "Dung dịch dùng cho khí dung",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310020832-04",
+   "brandName": "Zensalbu nebules 5.0",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfat)",
+   "strength": "5mg/2,5ml",
+   "route": "Hít qua máy khí dung",
+   "dosageForm": "Dung dịch dùng cho khí dung",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310020917-04",
+   "brandName": "Vinsalpium",
+   "ingredientName": "Salbutamol (dưới dạng salbutamol sulfat); Ipratropium bromid (Ipratropium bromid monohydrat)",
+   "strength": "(2,5mg+0,5mg)/2,5ml",
+   "route": "Khí dung",
+   "dosageForm": "Dung dịch khí dung",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340020864-01",
+   "brandName": "Salbutamol Renaudin 5mg/5ml (0,1%)",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfate)",
+   "strength": "5mg/ 5ml",
+   "route": "Tiêm",
+   "dosageForm": "dung dịch tiêm tĩnh mạch",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2446",
+   "brandName": "Ventolin Inhaler",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol sulfate)",
+   "strength": "100mcg/liều xịt",
+   "route": "Xịt theo đường miệng",
+   "dosageForm": "Hỗn dịch xịt qua bình định liều điều áp",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250320020808-01",
+   "brandName": "Buto-Asma",
+   "ingredientName": "Salbutamol (dưới dạng Salbutamol Sulfate)",
+   "strength": "100mcg/liều",
+   "route": "Đường hô hấp",
+   "dosageForm": "Khí dung đã chia liều",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370009792-04",
+   "brandName": "Bidiferon",
+   "ingredientName": "Sắt (dưới dạng sắt II sulfat khô); Acid Folic",
+   "strength": "50mg; 0,35mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300009816-04",
+   "brandName": "Enpovid Fe - Folic",
+   "ingredientName": "Sắt sulfat + acid folic",
+   "strength": "60mg Fe + 0,25mg",
+   "route": "Uống",
+   "dosageForm": "viên nang cứng",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320009780-04",
+   "brandName": "Uniferon B9",
+   "ingredientName": "Sắt sulfat + acid folic",
+   "strength": "50mg Fe + 250mcg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao đường",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006131-03",
+   "brandName": "Infecin 3 M.I.U",
+   "ingredientName": "Spiramycin",
+   "strength": "3MIU",
+   "route": "Uống",
+   "dosageForm": "viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006117-04",
+   "brandName": "ROVAGI 0,75",
+   "ingredientName": "Spiramycin",
+   "strength": "0,75MIU",
+   "route": "Uống",
+   "dosageForm": "Thuốc cốm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330006120-04",
+   "brandName": "ROVAGI 1,5",
+   "ingredientName": "Spiramycin",
+   "strength": "1,5MIU",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006142-01",
+   "brandName": "Rodogyl",
+   "ingredientName": "Spiramycin + metronidazol",
+   "strength": "0,75MIU + 125mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006158-02",
+   "brandName": "ZidocinDHG",
+   "ingredientName": "Spiramycin + Metronidazol",
+   "strength": "750.000 IU + 125mg",
+   "route": "Uống",
+   "dosageForm": "viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006589-05",
+   "brandName": "Sufadiazin Bạc",
+   "ingredientName": "Sulfadiazin bạc",
+   "strength": "1%/20g",
+   "route": "Dùng ngoài",
+   "dosageForm": "Kem bôi da",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250380006590-04",
+   "brandName": "SUPERTRIM",
+   "ingredientName": "Sulfamethoxazol + trimethoprim",
+   "strength": "400mg + 80mg",
+   "route": "Uống",
+   "dosageForm": "Thuốc bột uống",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250330006625-04",
+   "brandName": "Vicometrim 960",
+   "ingredientName": "Sulfamethoxazol + trimethoprim",
+   "strength": "800mg + 160mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006605-04",
+   "brandName": "Bixazol",
+   "ingredientName": "Sulfamethoxazol + Trimethoprim",
+   "strength": "(200mg + 40mg)/10ml",
+   "route": "Uống",
+   "dosageForm": "Hỗn dịch uống",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006616-04",
+   "brandName": "Cotrimoxazol 480mg",
+   "ingredientName": "Sulfamethoxazol + Trimethoprim",
+   "strength": "400mg + 80mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350005387-02",
+   "brandName": "Sulcilat 750mg",
+   "ingredientName": "Sultamicillin (dưới dạng Sultamicillin tosilat dihydrat)",
+   "strength": "750mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350006902-01",
+   "brandName": "Fyranco",
+   "ingredientName": "Teicoplanin",
+   "strength": "200mg",
+   "route": "Tiêm tĩnh mạch hoặc tiêm truyền tĩnh mạch",
+   "dosageForm": "Thuốc bột đông khô và dung môi để pha tiêm hoặc tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006912-02",
+   "brandName": "Teicoplanin IMP 200 mg",
+   "ingredientName": "Teicoplanin",
+   "strength": "200mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006929-02",
+   "brandName": "Teikopol 400mg Powder and Solvent for Solution for I.M./I.V. Injection",
+   "ingredientName": "Teicoplanin*",
+   "strength": "400mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô và dung môi pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340020987-04",
+   "brandName": "Arimenus 5mg",
+   "ingredientName": "Terbutalin sulfat",
+   "strength": "5mg/10ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330020966-04",
+   "brandName": "Vinterlin",
+   "ingredientName": "Terbutalin sulfat",
+   "strength": "0,5mg/1ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330020973-04",
+   "brandName": "Vinterlin 1mg",
+   "ingredientName": "Terbutalin sulfat",
+   "strength": "1mg/ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006684-04",
+   "brandName": "Tetracyclin 1%",
+   "ingredientName": "Tetracyclin hydroclorid",
+   "strength": "1%/5g",
+   "route": "Tra mắt",
+   "dosageForm": "Mỡ tra mắt",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360006695-04",
+   "brandName": "Tetracyclin 500mg",
+   "ingredientName": "Tetracyclin hydroclorid",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nang cứng",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250360005407-04",
+   "brandName": "Viticalat 1,6g",
+   "ingredientName": "Ticarcilin + Acid clavuclanic (dưới dạng hỗn hợp bột Ticarcilin dinatri và Clavulanat natri)",
+   "strength": "1,5g + 0,1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340005427-02",
+   "brandName": "Ticarlinat 3,2g",
+   "ingredientName": "Ticarcilin + Acid clavulanat (dưới dạng hỗn hợp bột Ticarcilin dinatri và Clavulanat kali)",
+   "strength": "3g + 0,2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320005393-02",
+   "brandName": "Ticarlinat 1,6 g",
+   "ingredientName": "Ticarcilin + Acid clavulanic (dưới dạng hỗn hợp bột Ticarcilin dinatri và Clavulanat kali)",
+   "strength": "1,5g + 0,1g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360005438-04",
+   "brandName": "Bidicarlin 3,2g",
+   "ingredientName": "Ticarcillin (dưới dạng Ticarcillin dinatri) + Acid clavulanic (dưới dạng Clavulanat kali)",
+   "strength": "3g + 0,2g",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005417-04",
+   "brandName": "Vicefmix",
+   "ingredientName": "Ticarcillin + acid clavulanic",
+   "strength": "3g + 0,1g",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Thuốc bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006678-04",
+   "brandName": "Tigemy 50",
+   "ingredientName": "Tigecyclin",
+   "strength": "50mg",
+   "route": "Tiêm truyền tĩnh mạch",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "786",
+   "brandName": "Tygacil",
+   "ingredientName": "Tigecyclin",
+   "strength": "50mg",
+   "route": "Truyền tĩnh mạch",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250370005787-04",
+   "brandName": "Tinidazol",
+   "ingredientName": "Tinidazol",
+   "strength": "500mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250350005776-04",
+   "brandName": "Tinidazol",
+   "ingredientName": "Tinidazol",
+   "strength": "500mg/100ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250340005656-04",
+   "brandName": "A.T Tobramycine inj",
+   "ingredientName": "Tobramycin",
+   "strength": "80mg/2ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250300005627-01",
+   "brandName": "Eyetobrin 0,3%",
+   "ingredientName": "Tobramycin",
+   "strength": "3mg/ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320005669-04",
+   "brandName": "Sibalyn 80mg/50ml",
+   "ingredientName": "Tobramycin",
+   "strength": "80mg",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "651",
+   "brandName": "Tobrex",
+   "ingredientName": "Tobramycin",
+   "strength": "3mg/ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Dung dịch nhỏ mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250350005639-04",
+   "brandName": "Tobramycin 0,3%",
+   "ingredientName": "Tobramycin (dạng Tobramycin sulfat)",
+   "strength": "15mg/ 5ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Thuốc nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320005645-01",
+   "brandName": "Medphatobra 40",
+   "ingredientName": "Tobramycin (dưới dạng Tobramycin sulfat)",
+   "strength": "40mg/ml",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250310005679-01",
+   "brandName": "Tobradex",
+   "ingredientName": "Tobramycin + Dexamethasone",
+   "strength": "(3mg + 1mg)/1ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Hỗn dịch nhỏ mắt",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "659",
+   "brandName": "Tobradex",
+   "ingredientName": "Tobramycin + Dexamethasone",
+   "strength": "(3mg + 1mg)/1ml",
+   "route": "Nhỏ mắt",
+   "dosageForm": "Hỗn dịch nhỏ mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "660",
+   "brandName": "Tobradex",
+   "ingredientName": "Tobramycin + Dexamethasone",
+   "strength": "(3mg + 1mg)/gram",
+   "route": "Tra mắt",
+   "dosageForm": "Mỡ tra mắt",
+   "sourceSheet": "PL gói 2"
+  },
+  {
+   "id": "2250300021795-02",
+   "brandName": "MG-TAN inj",
+   "ingredientName": "Trong 100ml dung dịch chứa: Dịch A: Glucose 11% (dưới dạng Glucose monohydrat 7,44g) 61,5ml; Dịch B: Amino acid 11,3% (bao gồm L-alanine 0,33g; L-arginine 0,24g; L-aspartic acid 0,071g; L-glutamic acid 0,12g; Glycine 0,16g; L-histidine 0,14g; L-isoleucine 0,12g; L-leucine 0,16g; L-lysine HCl 0,24g; L-methionine 0,12g; L-phenylalanine 0,16g; L-proline 0,14g; L-serine 0,094g; L-threonine 0,12g; L-tryptophan 0,04g; L-tyrosine 0,005g; L-valine 0,15g; Calcium chloride 0,02g; Sodium glycerophosphate 0,10g; Magnesium sulfate 0,07g; Potassium chloride 0,12g; Sodium acetate 0,17g) 20,8ml; Dịch C: Lipid emulsion 20% (Purified soybean oil 3,54g) 17,7ml",
+   "strength": "Trong 100ml dung dịch chứa: Dịch A: Glucose 11% (dưới dạng Glucose monohydrat 7,44g) 61,5ml; Dịch B: Amino acid 11,3% (bao gồm L-alanine 0,33g; L-arginine 0,24g; L-aspartic acid 0,071g; L-glutamic acid 0,12g; Glycine 0,16g; L-histidine 0,14g; L-isoleucine 0,12g; L-leucine 0,16g; L-lysine HCl 0,24g; L-methionine 0,12g; L-phenylalanine 0,16g; L-proline 0,14g; L-serine 0,094g; L-threonine 0,12g; L-tryptophan 0,04g; L-tyrosine 0,005g; L-valine 0,15g; Calcium chloride 0,02g; Sodium glycerophosphate 0,10g; Magnesium sulfate 0,07g; Potassium chloride 0,12g; Sodium acetate 0,17g) 20,8ml; Dịch C: Lipid emulsion 20% (Purified soybean oil 3,54g) 17,7ml",
+   "route": "Tiêm truyền",
+   "dosageForm": "Dung dịch tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250320021836-01",
+   "brandName": "Smofkabiven peripheral",
+   "ingredientName": "Túi 3 ngăn chứa: dung dịch glucose (Glucose (dạng Glucose monohydrat)) + dung dịch acid amin có điện giải (Alanin ; Arginin ; Calci clorid (dạng Calci clorid dihydrat); Glycin ; Histidin; Isoleucin ; Leucin; Lysin (dạng Lysin acetat); Magnesi sulfat (dạng Magnesi sulfat heptahydrat); Methionin; Phenylalanin; Kali clorid; Prolin; Serin; Natri acetat (dạng Natri acetat trihydrat); Natri glycerophosphat; Taurin; Threonin; Tryptophan; Tyrosin; Valin; Kẽm sulfat (dạng Kẽm sulfat heptahydrat)) + nhũ tương mỡ (Dầu đậu tương tinh chế; Triglycerid mạch trung bình; Dầu ô-liu tinh chế; Dầu cá giàu acid béo omega-3).",
+   "strength": "Túi 3 ngăn 1206ml chứa: 656ml dung dịch glucose 13% (Glucose 85 gam (dạng Glucose monohydrat)) + 380ml dung dịch acid amin có điện giải (Alanin 5,3 gam; Arginin 4,6 gam; Calci clorid 0,21 gam (dạng Calci clorid dihydrat); Glycin 4,2 gam; Histidin 1,1 gam; Isoleucin 1,9 gam; Leucin 2,8 gam; Lysin 2,5 gam (dạng Lysin acetat); Magnesi sulfat 0,46 gam (dạng Magnesi sulfat heptahydrat); Methionin 1,6 gam; Phenylalanin 1,9 gam; Kali clorid 1,7 gam; Prolin 4,2 gam; Serin 2,5 gam; Natri acetat 1,3 gam (dạng Natri acetat trihydrat); Natri glycerophosphat 1,6 gam; Taurin 0,38 gam; Threonin 1,7 gam; Tryptophan 0,76 gam; Tyrosin 0,15 gam; Valin 2,4 gam; Kẽm sulfat 0,005 gam (dạng Kẽm sulfat heptahydrat)) + 170ml nhũ tương mỡ 20% (Dầu đậu tương tinh chế 10,2 gam; Triglycerid mạch trung bình 10,2 gam; Dầu ô-liu tinh chế 8,5 gam; Dầu cá giàu acid béo omega-3 5,1 gam).",
+   "route": "Tiêm truyền tĩnh mạch (IV)",
+   "dosageForm": "Nhũ tương tiêm truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006985-02",
+   "brandName": "Vecmid 1gm",
+   "ingredientName": "Vancomycin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006943-01",
+   "brandName": "Voxin",
+   "ingredientName": "Vancomycin",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô để pha dung dịch truyền",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250340006967-01",
+   "brandName": "Voxin",
+   "ingredientName": "Vancomycin",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250370006975-04",
+   "brandName": "Vancomycin",
+   "ingredientName": "Vancomycin (dưới dạng vancomycin hydroclorid)",
+   "strength": "500mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm bột đông khô",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006954-04",
+   "brandName": "Vancomycin 1g",
+   "ingredientName": "Vancomycin (dưới dạng vancomycin hydroclorid)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250360006930-04",
+   "brandName": "Vancomycin 1g",
+   "ingredientName": "Vancomycin (dưới dạng vancomycin hydroclorid)",
+   "strength": "1g",
+   "route": "Tiêm",
+   "dosageForm": "Bột đông khô pha tiêm",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350008692-02",
+   "brandName": "Vincran",
+   "ingredientName": "Vincristin sulfat",
+   "strength": "1mg",
+   "route": "Tiêm",
+   "dosageForm": "Dung dịch tiêm",
+   "sourceSheet": "PL Gói 1"
+  },
+  {
+   "id": "2250330007578-05",
+   "brandName": "Vinfend Inj",
+   "ingredientName": "Voriconazol",
+   "strength": "200mg",
+   "route": "Tiêm",
+   "dosageForm": "Thuốc tiêm đông khô",
+   "sourceSheet": "gói 1 đợt 2"
+  },
+  {
+   "id": "2250350007589-04",
+   "brandName": "Galfend",
+   "ingredientName": "Voriconazole",
+   "strength": "200mg",
+   "route": "Uống",
+   "dosageForm": "Viên nén bao phim",
+   "sourceSheet": "gói 1 đợt 2"
+  }
+ ]
+}

@@ -16,7 +16,7 @@ import type { Disease, Stream } from "./types";
 
 const RAW_DISEASES: Disease[] = [
   { id: "v8-1", title: "Viêm phổi cộng đồng", specialty: "Hô hấp" },
-  { id: "v8-2", title: "Nhiễm khuẩn tiết niệu phức tạp / ESBL", specialty: "Tiết niệu" },
+  { id: "v8-2", title: "Nhiễm khuẩn tiết niệu phức tạp", specialty: "Tiết niệu" },
   { id: "v8-3", title: "Nhiễm Candida huyết (candidemia)", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-4", title: "Viêm phổi bệnh viện", specialty: "Hô hấp" },
   { id: "v8-5", title: "Viêm phổi liên quan thở máy", specialty: "Hô hấp" },
@@ -43,7 +43,7 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-38", title: "Nhiễm khuẩn dẫn lưu não thất", specialty: "Thần kinh" },
   { id: "v8-39", title: "Viêm nội tâm mạc nhiễm khuẩn", specialty: "Tim mạch" },
   { id: "v8-43", title: "Enterobacterales sinh ESBL", specialty: "Hồi sức tích cực", stream: "pathogen" },
-  { id: "v8-46", title: "Pseudomonas aeruginosa DTR", specialty: "Hồi sức tích cực", stream: "pathogen" },
+  { id: "v8-46", title: "Pseudomonas aeruginosa (nhạy thuốc và DTR)", specialty: "Hồi sức tích cực", stream: "pathogen" },
   { id: "v8-48", title: "Candida ổ bụng", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-50", title: "Aspergillus phổi xâm lấn", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-51", title: "Cryptococcus viêm màng não", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
@@ -83,6 +83,11 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-135", title: "Thương hàn", specialty: "Truyền nhiễm" },
   { id: "v8-141", title: "Viêm màng não do lao", specialty: "Lao", stream: "tuberculosis" },
   { id: "v8-142", title: "Lao phổi", specialty: "Lao", stream: "tuberculosis" },
+  /*
+    Bo sung 25/10/2026 (Buoc 4A, uu tien): QĐ 1530/QĐ-BYT 2023 chi neu nhom thuoc,
+    khong neu lieu -> ngoai le co chu dich cua quy tac "chi giu benh co lieu".
+  */
+  { id: "v9-1", title: "Nhiễm trùng bàn chân đái tháo đường", specialty: "Nội tiết – Đái tháo đường" },
 ];
 
 const collator = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
@@ -93,7 +98,7 @@ export const DISEASES: Disease[] = [...RAW_DISEASES].sort(
     collator.compare(a.title, b.title)
 );
 
-export const EXPECTED_CATALOG_COUNT = 68;
+export const EXPECTED_CATALOG_COUNT = 69;
 
 if (
   process.env.NODE_ENV !== "production" &&

@@ -24,7 +24,10 @@ export type DocId =
   | "byt162"
   | "byt5165"
   | "byt5631"
-  | "byt2147";
+  | "byt2147"
+  | "byt1530"
+  | "byt2767"
+  | "byt5642";
 
 export type RegimenRole =
   | "first" // uu tien / dau tay

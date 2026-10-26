@@ -7,13 +7,29 @@
 
 import { d, maker } from "./helpers";
 import type { Regimen } from "./types";
+import {
+  FLAG_ERTA,
+  SEPSIS_DOSES,
+  VAP_COLISTIN_RULES,
+  VAP_DOSE_NOTE,
+  VAP_DOSES as V,
+} from "./byt708-doses";
 
 const r = maker("byt708");
+
+const VAP_DURATION =
+  "Thời gian ngắn (khoảng 7–10 ngày) với tụ cầu, H. influenzae; dài (ít nhất 14–21 ngày) khi tổn thương nhiều thùy, suy dinh dưỡng, tổn thương ổ/khoang, hoại tử Gram-âm, P. aeruginosa hoặc Acinetobacter";
 
 const COPD = "Đợt cấp BPTNMT: Chương 1, bài Đợt cấp BPTNMT, mục 3a";
 const COPD_P = "tr. 72";
 const COPD_NOTE =
   "Chỉ định kháng sinh: typ I (đủ 3 triệu chứng Anthonisen), typ II (2/3 triệu chứng) hoặc cần thông khí nhân tạo. Thời gian 5–10 ngày. Cần cân nhắc điều chỉnh liều theo chức năng thận.";
+
+/* Lieu dung nguyen van QĐ 708 tr. 72 (da doi chieu ban kcb.vn 25/10/2026); khac Bang II.9 cung van ban. */
+const FLAG_COPD_CTX =
+  "CẦN DƯỢC SĨ XÁC NHẬN: liều \"cefotaxim 1 g x 3 lần/ngày hoặc ceftriaxon 1 g x 3 lần/ngày\" đúng nguyên văn QĐ 708 tr. 72 (đã đối chiếu bản trên kcb.vn). Tuy nhiên, Bảng II.9 (tr. 105) của cùng văn bản ghi ceftriaxon 1–2 g x 1 lần/ngày, tối đa 4 g chia 2 lần/ngày. Bảng II.9 và Bảng II.11 không có cách dùng ceftriaxon 3 lần/ngày.";
+const FLAG_COPD_IMI =
+  "CẦN DƯỢC SĨ XÁC NHẬN: liều \"imipenem 50 mg/kg/ngày\" đúng nguyên văn QĐ 708 tr. 72. Bảng II.9 (tr. 105) của cùng văn bản ghi imipenem 0,5–1 g mỗi 6 giờ, tối đa 4 g/ngày (liều cố định, không tính theo cân nặng).";
 
 const BRONCH = "Giãn phế quản, mục 4.3";
 
@@ -33,13 +49,13 @@ export const RESPIRATORY: Regimen[] = [
       d("Cefotaxim hoặc ceftriaxon", "1 g x 3 lần/ngày"),
       d("Phối hợp amikacin", "15 mg/kg/ngày"),
     ],
-    { duration: "5–10 ngày", notes: [COPD_NOTE] }),
+    { duration: "5–10 ngày", notes: [COPD_NOTE, FLAG_COPD_CTX] }),
   r(COPD, COPD_P, "r-copd-mod-fq", ["v8-6"], "Đợt cấp mức độ trung bình", "alternative",
     [
       d("Cefotaxim hoặc ceftriaxon", "1 g x 3 lần/ngày"),
       d("Phối hợp fluoroquinolon", "ciprofloxacin 1 g/ngày uống; levofloxacin 500 mg/ngày uống hoặc truyền TM"),
     ],
-    { duration: "5–10 ngày", notes: [COPD_NOTE] }),
+    { duration: "5–10 ngày", notes: [COPD_NOTE, FLAG_COPD_CTX] }),
   r(COPD, COPD_P, "r-copd-sev-cef", ["v8-6"], "Đợt cấp mức độ nặng và nguy kịch", "severe",
     [
       d("Ceftazidim (cephalosporin thế hệ 3)", "3 g/ngày"),
@@ -57,7 +73,7 @@ export const RESPIRATORY: Regimen[] = [
       d("Imipenem", "50 mg/kg/ngày"),
       d("Kết hợp amikacin hoặc fluoroquinolon", "amikacin 15 mg/kg/ngày; ciprofloxacin 800 mg/ngày TM chia 2 lần; levofloxacin 750 mg/ngày TM"),
     ],
-    { duration: "5–10 ngày", notes: [COPD_NOTE] }),
+    { duration: "5–10 ngày", notes: [COPD_NOTE, FLAG_COPD_IMI] }),
 
   // ===== v8-10 Giãn phế quản bội nhiễm =====
   r(BRONCH, "tr. 68–70", "r-bronch-pen", ["v8-10"], "Đợt cấp có bội nhiễm: phối hợp beta-lactam + aminoglycosid", "first",
@@ -161,14 +177,26 @@ export const RESPIRATORY: Regimen[] = [
 
   // ===== v8-5 Viêm phổi liên quan thở máy (BYT 708) =====
   r("Viêm phổi liên quan thở máy, mục 4.3a", "tr. 103", "r-vap-nomdr", ["v8-5"], "Không có nguy cơ nhiễm vi khuẩn đa kháng", "first",
-    [d("Chọn một", "ceftriaxon; quinolon (levofloxacin, moxifloxacin, ciprofloxacin); ampicilin-sulbactam; ertapenem")],
-    { duration: "Thời gian ngắn (khoảng 7–10 ngày) với tụ cầu, H. influenzae; dài (ít nhất 14–21 ngày) khi tổn thương nhiều thùy, suy dinh dưỡng, tổn thương ổ/khoang, hoại tử Gram-âm, P. aeruginosa hoặc Acinetobacter", notes: ["Không nêu liều riêng cho từng thuốc ở mục này; xem Bảng II.9 (tr. 105–106) cho liều thông dụng."] }),
+    [d("Chọn một", [V.ceftriaxon, V.levo, V.moxi, V.cipro, V.ampsul, V.ertapenem].join("; "))],
+    { duration: VAP_DURATION, notes: ["Mục 4.3a không nêu liều; liều theo Bảng II.9 (tr. 105–106). Ertapenem không có trong Bảng II.9, liều lấy từ Bảng II.11 của cùng văn bản.", VAP_DOSE_NOTE, FLAG_ERTA] }),
   r("Viêm phổi liên quan thở máy, mục 4.3b", "tr. 104", "r-vap-mdr", ["v8-5"], "Có nguy cơ nhiễm vi sinh vật đa kháng", "severe",
     [
-      d("Nhóm A (một trong)", "cefepim hoặc ceftazidim; imipenem hoặc meropenem; piperacillin-tazobactam"),
-      d("Kết hợp nhóm B (một trong)", "ciprofloxacin hoặc levofloxacin; hoặc amikacin, gentamycin, tobramycin"),
+      d("Nhóm A (một trong)", [V.cefepim, V.ceftazidim, V.imipenem, V.meropenem, V.piptazo].join("; ")),
+      d("Kết hợp nhóm B (một trong)", [V.cipro, V.levo, V.amikacin, V.gentamycin, V.tobramycin].join("; ")),
     ],
-    { duration: "Như trên; đánh giá lại sau 48–72 giờ và tại ngày 3, 5, 7", notes: ["Cân nhắc thêm nhóm C nếu nghi MRSA: linezolid, vancomycin hoặc teicoplanin.", "Cân nhắc nhóm D nếu nghi nấm (kháng sinh phổ rộng > 7 ngày hoặc suy giảm miễn dịch): fluconazol, itraconazol, amphotericin B, caspofungin.", "Nghi vi khuẩn sinh ESBL: carbapenem kết hợp fluoroquinolon.", "VAP muộn có hoặc nghi Gram-âm đa kháng: colistin kết hợp carbapenem, fluoroquinolon, rifampicin… (không dùng colistin đơn độc; có liều nạp)."] }),
+    { duration: "Như trên; đánh giá lại sau 48–72 giờ và tại ngày 3, 5, 7", notes: [VAP_DOSE_NOTE, "Cân nhắc thêm nhóm C (nghi MRSA) hoặc nhóm D (nghi nấm): xem các phương án riêng bên dưới.", "Nghi vi khuẩn sinh ESBL: carbapenem kết hợp fluoroquinolon.", "VAP muộn có hoặc nghi Gram-âm đa kháng: colistin kết hợp carbapenem, fluoroquinolon, rifampicin… (không dùng colistin đơn độc; có liều nạp)."] }),
+  r("Viêm phổi liên quan thở máy, mục 4.3b – Nhóm C", "tr. 104", "r-vap-mrsa", ["v8-5"], "Có nguy cơ đa kháng – nghi tụ cầu kháng methicilin (thêm nhóm C)", "pathogen",
+    [d("Thêm một trong (nhóm C)", [V.linezolid, V.vancomycin, V.teicoplanin].join("; "))],
+    { notes: ["Thêm vào phối hợp nhóm A + nhóm B.", VAP_DOSE_NOTE] }),
+  r("Viêm phổi liên quan thở máy, mục 4.3b – Nhóm D", "tr. 104", "r-vap-fungal", ["v8-5"], "Có nguy cơ đa kháng – nghi nhiễm nấm (thêm nhóm D)", "adjunct",
+    [d("Thêm một trong (nhóm D)", [V.fluconazol, V.itraconazol, V.amphoB, V.caspofungin].join("; "))],
+    { notes: ["Chỉ định theo văn bản: dùng kháng sinh phổ rộng > 7 ngày hoặc cơ địa suy giảm miễn dịch. Điều chỉnh liều theo kết quả vi sinh và đáp ứng lâm sàng.", VAP_DOSE_NOTE] }),
+  r("Viêm phổi liên quan thở máy, mục 4.3b – Bảng II.9 (Thuốc khác)", "tr. 104–106", "r-vap-colistin", ["v8-5"], "VPLQTM muộn đã khẳng định hoặc có nguy cơ Gram âm đa kháng", "pathogen",
+    [
+      d("Colistin", `Bảng II.9 không ghi số liều. Liều tham chiếu: ${SEPSIS_DOSES.colistin}`),
+      d("Phối hợp (không dùng colistin đơn độc)", "carbapenem, fluoroquinolon: liều như trên (nhóm A, B); rifampicin: CHƯA XÁC MINH – văn bản không ghi liều"),
+    ],
+    { notes: [VAP_COLISTIN_RULES] }),
 
   // ===== Nhi: viêm phổi cộng đồng trẻ em =====
   r("Viêm phổi cộng đồng trẻ em, mục 5.3c", "tr. 90", "r-peds-over5", ["v8-101"], "Trẻ trên 5 tuổi (S. pneumoniae, H. influenzae)", "first",

@@ -5,9 +5,12 @@
 
 import { ANTIFUNGAL } from "./antifungal";
 import { CARDIOLOGY } from "./cardiology";
+import { COPD_2767 } from "./copd-2767";
 import { CRITICAL_CARE } from "./critical-care";
+import { ENDOCRINE } from "./endocrine";
 import { ENT } from "./ent";
 import { GASTRO } from "./gastro";
+import { INFECTIOUS_5642 } from "./infectious-5642";
 import { MUSCULOSKELETAL } from "./musculoskeletal";
 import { NEURO } from "./neuro";
 import { OBSTETRICS } from "./obstetrics";
@@ -19,6 +22,8 @@ import { TUBERCULOSIS } from "./tuberculosis";
 import { UROLOGY } from "./urology";
 import { DOCS } from "./sources";
 import type { DocId, Regimen } from "./types";
+import { doseConflictNotes } from "../dose-conflicts";
+import { NEONATAL_DEXA_PREFIX, NEONATAL_MENINGITIS_REGIMENS } from "../safety-alerts";
 
 export { DOCS };
 export type { Regimen, RegimenRole, DocId, DocInfo } from "./types";
@@ -27,9 +32,12 @@ export { ROLE_TEXT } from "./types";
 const RAW_REGIMENS: Regimen[] = [
   ...ANTIFUNGAL,
   ...CARDIOLOGY,
+  ...COPD_2767,
   ...CRITICAL_CARE,
+  ...ENDOCRINE,
   ...ENT,
   ...GASTRO,
+  ...INFECTIOUS_5642,
   ...MUSCULOSKELETAL,
   ...NEURO,
   ...OBSTETRICS,
@@ -62,7 +70,19 @@ export const REMOVED_DISEASE_IDS: string[] = [
   "v8-131",
 ];
 
-export const ALL_REGIMENS: Regimen[] = RAW_REGIMENS.map((regimen) => ({
+/* Buoc 4D.1: gan ghi chu doi chieu lieu BYT – quoc te vao muc "Luu y" (khong doi lieu).
+   Buoc 4D.2: phac do so sinh – ghi chu dexamethason (ghi chung cua BYT) giu nguyen van
+   nhung gan nhan "khong ap dung mac dinh cho tre so sinh". */
+function withDoseConflictNotes(regimen: Regimen): Regimen {
+  const extra = doseConflictNotes(regimen.id);
+  const neonatal = NEONATAL_MENINGITIS_REGIMENS.includes(regimen.id);
+  const base = (regimen.notes ?? []).map((note) =>
+    neonatal && /dexamethason/i.test(note) ? NEONATAL_DEXA_PREFIX + note : note
+  );
+  return extra.length > 0 || neonatal ? { ...regimen, notes: [...base, ...extra] } : regimen;
+}
+
+export const ALL_REGIMENS: Regimen[] = RAW_REGIMENS.map((regimen) => withDoseConflictNotes({
   ...regimen,
   diseaseIds: regimen.diseaseIds.filter(
     (id) => !REMOVED_DISEASE_IDS.includes(id)
@@ -101,7 +121,12 @@ export function isConcreteRegimen(regimen: Regimen): boolean {
   (bo sung nhau, khong mau thuan) -> giu ca hai, moi phuong an van ghi ro nguon + ngay.
   - v8-97: QĐ 708 (2015) chi co viem bang quang thai ky; QĐ 315 bo sung viem than - be than cap.
 */
-export const KEEP_ALL_SOURCES: string[] = ["v8-97"];
+/*
+  - v8-36, v8-104 (viem mang nao): QĐ 5642 (31/12/2015) moi hon nhung bang lieu tinh theo kg,
+    khong tach nguoi lon; QĐ 708 co lieu nguoi lon co dinh -> giu ca hai, can tham dinh.
+  - v8-26: QĐ 5642 chi co ly truc khuan (Shigella); QĐ 708 bao phu tieu chay do vi khuan noi chung.
+*/
+export const KEEP_ALL_SOURCES: string[] = ["v8-97", "v8-36", "v8-104", "v8-26"];
 
 function docTime(doc: DocId): number {
   const raw = DOCS[doc]?.date ?? "";
@@ -143,6 +168,60 @@ for (const [id, list] of BY_DISEASE) {
     list.filter((r) => r.source.doc === newest)
   );
   SUPERSEDED_LOG.push({ diseaseId: id, kept: newest, dropped });
+}
+
+/*
+  VAN BAN BYT MOI HON NAM TRONG MODULE RIENG (khong nam trong RAW_REGIMENS):
+  quy tac tren chi so sanh cac van ban trong thu vien regimens/, nen phai khai bao
+  ro tung phuong an cu da duoc van ban moi bao phu. Chi bo dung ID liet ke;
+  tinh huong van ban moi chua co thi GIU (khong suy dien).
+  - v8-1: QĐ 2147/QĐ-BYT (15/07/2026, thay QĐ 4815/2020; xac minh tren kcb.vn
+    25/10/2026) la huong dan BYT rieng cho viem phoi mac phai cong dong o nguoi lon,
+    gom ca CAP nang/ICU, nguy co Pseudomonas va MRSA (module CapByt2026, Muc 5.3.2.2).
+    Giu "r-icu-cap-aspiration": module chua co muc rieng cho viem phoi do hit.
+*/
+export type ModuleSupersede = {
+  diseaseId: string;
+  kept: DocId;
+  dropped: DocId;
+  regimenIds: string[];
+  reason: string;
+};
+
+export const MODULE_SUPERSEDES: ModuleSupersede[] = [
+  {
+    diseaseId: "v8-1",
+    kept: "byt2147",
+    dropped: "byt1493",
+    regimenIds: [
+      "r-icu-cap-nonpseudo-1",
+      "r-icu-cap-nonpseudo-2",
+      "r-icu-cap-pseudo-1",
+      "r-icu-cap-pseudo-2",
+      "r-icu-cap-mrsa",
+    ],
+    reason:
+      "QĐ 2147/QĐ-BYT (15/07/2026) là hướng dẫn BYT riêng cho viêm phổi mắc phải cộng đồng ở người lớn, bao gồm CAP nặng/ICU, nguy cơ Pseudomonas và MRSA; phác đồ hiện hành hiển thị trong module CAP bên dưới. Các phương án CAP nặng của QĐ 1493/QĐ-BYT (2015) đã được ẩn. Hiệu lực QĐ 2147 đã xác minh trên kcb.vn (Cục Quản lý Khám, chữa bệnh) ngày 25/10/2026.",
+  },
+];
+
+for (const rule of MODULE_SUPERSEDES) {
+  const list = BY_DISEASE.get(rule.diseaseId);
+  if (!list) continue;
+  const remaining = list.filter(
+    (r) => !(r.source.doc === rule.dropped && rule.regimenIds.includes(r.id))
+  );
+  if (remaining.length === list.length) continue;
+  BY_DISEASE.set(rule.diseaseId, remaining);
+  SUPERSEDED_LOG.push({
+    diseaseId: rule.diseaseId,
+    kept: rule.kept,
+    dropped: [rule.dropped],
+  });
+}
+
+export function getModuleSupersedes(diseaseId: string): ModuleSupersede[] {
+  return MODULE_SUPERSEDES.filter((rule) => rule.diseaseId === diseaseId);
 }
 
 export function getRegimensForDisease(diseaseId: string): Regimen[] {

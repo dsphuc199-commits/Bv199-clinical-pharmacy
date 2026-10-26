@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 
+import DrugActionLinks from "./links/DrugActionLinks";
+
 /*
   BV199 - KHOA DUOC
   DIEU TRI KHANG SINH KINH NGHIEM - TAI MUI HONG
@@ -1146,6 +1148,12 @@ export default function EntEmpiricGuidelines({
                         {drug}
                       </div>
                     ))}
+
+                    <DrugActionLinks
+                      compact
+                      texts={plan.drugs}
+                      scenario={plan.title}
+                    />
                   </div>
 
                   {plan.duration && (

@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
+import BackBar from "@/components/antibiotics/links/BackBar";
 
 import rawData from "@/data/antibiotics/antibiogram-bv199.json";
 
@@ -67,7 +70,42 @@ const database = rawData as RawDatabase;
    MAIN PAGE
 ========================================================= */
 
+/*
+  Tham so URL: antibiotic (ma khang sinh), organism (ma vi khuan), from, fromLabel.
+  useSearchParams can Suspense khi build tinh (Next 16).
+*/
 export default function AntibiogramPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-slate-50 p-6" />}>
+      <AntibiogramFromUrl />
+    </Suspense>
+  );
+}
+
+function AntibiogramFromUrl() {
+  const params = useSearchParams();
+  return (
+    <AntibiogramContent
+      key={params.toString()}
+      initialAntibioticId={params.get("antibiotic") ?? ""}
+      initialOrganismId={params.get("organism") ?? ""}
+      from={params.get("from")}
+      fromLabel={params.get("fromLabel")}
+    />
+  );
+}
+
+function AntibiogramContent({
+  initialAntibioticId,
+  initialOrganismId,
+  from,
+  fromLabel,
+}: {
+  initialAntibioticId: string;
+  initialOrganismId: string;
+  from: string | null;
+  fromLabel: string | null;
+}) {
   const [sourceMode, setSourceMode] =
     useState<SourceMode>("raw");
 
@@ -87,29 +125,18 @@ export default function AntibiogramPage() {
       <div className="mx-auto max-w-7xl">
 
         {/* NAVIGATION */}
-
-        <div className="mb-5 flex flex-wrap gap-2">
-          <Link
-            href="/antibiotics"
-            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            ← Kháng sinh & AMS
-          </Link>
-
-          <Link
-            href="/antibiotics/organism"
-            className="rounded-lg border border-teal-200 bg-teal-50 px-4 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-100"
-          >
-            KS theo vi khuẩn →
-          </Link>
-
-          <Link
-            href="/pkpd"
-            className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100"
-          >
-            PK/PD →
-          </Link>
-        </div>
+        <BackBar
+          from={from}
+          fromLabel={fromLabel}
+          fallbackHref="/antibiotics"
+          fallbackLabel="Kháng sinh & AMS"
+          links={[
+            { href: "/antibiotics/empiric/guideline-v9", label: "Kinh nghiệm" },
+            { href: "/antibiotics/organism", label: "KS theo vi khuẩn" },
+            { href: "/antibiotics/dosing", label: "Hiệu chỉnh liều" },
+            { href: "/pkpd", label: "PK/PD" },
+          ]}
+        />
 
         {/* HEADER */}
 
@@ -230,7 +257,10 @@ export default function AntibiogramPage() {
         {/* CONTENT */}
 
         {sourceMode === "raw" ? (
-          <RawSource />
+          <RawSource
+            initialAntibioticId={initialAntibioticId}
+            initialOrganismId={initialOrganismId}
+          />
         ) : (
           <ReportSource />
         )}
@@ -243,12 +273,44 @@ export default function AntibiogramPage() {
    SOURCE 1 — RAW EXCEL
 ========================================================= */
 
-function RawSource() {
+function RawSource({
+  initialAntibioticId = "",
+  initialOrganismId = "",
+}: {
+  initialAntibioticId?: string;
+  initialOrganismId?: string;
+}) {
   const metadata = database.metadata;
   const records = database.records;
 
+  /* Danh sach khang sinh co trong du lieu goc (de loc va kiem tra tham so URL). */
+  const antibioticOptions = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const item of records) {
+      map.set(item.antibioticId, item.antibioticName);
+    }
+    return Array.from(map, ([value, label]) => ({ value, label })).sort(
+      (a, b) => a.label.localeCompare(b.label, "vi")
+    );
+  }, [records]);
+
   const [organismId, setOrganismId] =
-    useState("");
+    useState(() =>
+      metadata.organisms.some(
+        (item) => item.id === initialOrganismId
+      )
+        ? initialOrganismId
+        : ""
+    );
+
+  const [antibioticId, setAntibioticId] =
+    useState(() =>
+      antibioticOptions.some(
+        (item) => item.value === initialAntibioticId
+      )
+        ? initialAntibioticId
+        : ""
+    );
 
   const [department, setDepartment] =
     useState("Toàn viện");
@@ -294,6 +356,14 @@ function RawSource() {
         }
 
         if (
+          antibioticId &&
+          item.antibioticId !==
+            antibioticId
+        ) {
+          return false;
+        }
+
+        if (
           minN > 0 &&
           item.n < minN
         ) {
@@ -321,6 +391,7 @@ function RawSource() {
     [
       records,
       organismId,
+      antibioticId,
       department,
       specimen,
       minimumN,
@@ -373,6 +444,7 @@ function RawSource() {
 
   function clearFilters() {
     setOrganismId("");
+    setAntibioticId("");
     setDepartment("Toàn viện");
     setSpecimen("Tất cả");
     setMinimumN("0");
@@ -446,7 +518,7 @@ function RawSource() {
           </button>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
 
           <SelectBox
             label="Vi khuẩn"
@@ -515,6 +587,16 @@ function RawSource() {
                     label: item,
                   })
                 ),
+            ]}
+          />
+
+          <SelectBox
+            label="Kháng sinh"
+            value={antibioticId}
+            onChange={setAntibioticId}
+            options={[
+              { value: "", label: "Tất cả" },
+              ...antibioticOptions,
             ]}
           />
 

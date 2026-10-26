@@ -7,9 +7,18 @@
   Khong tu tao lieu: thuoc chua co du lieu -> bao "chua co du lieu".
 */
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
+import BackBar from "@/components/antibiotics/links/BackBar";
+import {
+  antibiogramHref,
+  antibiogramIdFor,
+  safeInternalPath,
+} from "@/lib/antibiotics/drug-links";
+
+import { renalDosingGaps } from "@/data/renal-dosing-gaps";
 import {
   renalDosingDatabase,
   type RenalDoseProfile,
@@ -94,12 +103,65 @@ const DRUG_GROUPS: DrugGroup[] = (() => {
 
 /* ---------- trang ---------- */
 
+/*
+  Tham so URL (tu module Kinh nghiem / Theo tac nhan):
+    drug       ingredientId trong data/renal-dosing.ts
+    indication indicationId (chi dinh) neu da khop nguyen van
+    why        ly do chon san chi dinh
+    regimen    doan phac do goc (hien de doi chieu, khong dung de tinh lieu)
+    context    mat benh · tinh huong
+    from, fromLabel  duong quay lai
+  useSearchParams can Suspense khi build tinh (Next 16).
+*/
 export default function AntibioticDosingPage() {
-  const [search, setSearch] = useState("");
-  const [drugId, setDrugId] = useState("");
-  const [profileId, setProfileId] = useState("");
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-slate-50 p-4 md:p-6" />}>
+      <DosingFromUrl />
+    </Suspense>
+  );
+}
 
-  const [crclInput, setCrclInput] = useState("");
+function DosingFromUrl() {
+  const params = useSearchParams();
+  /* Doi URL (bam lien ket khac) -> khoi tao lai trang thai theo tham so moi. */
+  return <DosingContent key={params.toString()} params={params} />;
+}
+
+type UrlParams = { get(name: string): string | null };
+
+function initialSelection(params: UrlParams) {
+  const drug = params.get("drug") ?? "";
+  const group = DRUG_GROUPS.find((item) => item.ingredientId === drug);
+  if (!group) return { drugId: "", profileId: "", picked: false };
+
+  const indication = params.get("indication");
+  const profile = indication
+    ? group.profiles.find((item) => item.indicationId === indication)
+    : undefined;
+
+  return { drugId: group.ingredientId, profileId: profile?.id ?? "", picked: !!profile };
+}
+
+function DosingContent({ params }: { params: UrlParams }) {
+  const [initial] = useState(() => initialSelection(params));
+  const requestedDrug = params.get("drug");
+  const regimenText = params.get("regimen");
+  const contextText = params.get("context");
+  const pickReason = params.get("why");
+  const from = safeInternalPath(params.get("from"));
+  const fromLabel = params.get("fromLabel");
+
+  const [search, setSearch] = useState("");
+  const [drugId, setDrugId] = useState(initial.drugId);
+  const [profileId, setProfileId] = useState(initial.profileId);
+  const [profileTouched, setProfileTouched] = useState(false);
+
+  const [crclInput, setCrclInput] = useState(() => {
+    /* ?crcl= tu Bo loc lam sang (module Kinh nghiem). */
+    const raw = params.get("crcl");
+    const value = Number(raw);
+    return raw && Number.isFinite(value) && value >= 0 ? String(value) : "";
+  });
 
   const [showCalc, setShowCalc] = useState(false);
   const [age, setAge] = useState("");
@@ -137,8 +199,22 @@ export default function AntibioticDosingPage() {
 
     if (!(a > 0 && w > 0 && h > 0 && s > 0)) return null;
 
+    /* Buoc 4D.3 – cong chan an toan (khong doi cong thuc):
+       - Cockcroft-Gault chi dung cho nguoi lon (trang da ghi "chi dung cho nguoi lon").
+       - Ham calculateCrClCG tra 0 khi tuoi >= 140; IBW = 0 khi chieu cao rat thap ->
+         khong duoc hien thi CrCl = 0 nhu ket qua hop le. */
+    if (a < 18) {
+      return { blocked: "Người bệnh dưới 18 tuổi: Cockcroft-Gault không áp dụng – không tính. Bảng liều theo CrCl của module là liều người lớn." } as const;
+    }
+    if (a >= 140) {
+      return { blocked: "Tuổi ngoài miền xác định của công thức Cockcroft-Gault – không tính." } as const;
+    }
+
     const scrMgDl = convertCreatinineToMgDl(s, scrUnit);
     const ibw = calculateIBW(sex, h);
+    if (!(ibw > 0)) {
+      return { blocked: "Chiều cao quá thấp để tính cân nặng lý tưởng (IBW) – không tính. Nhập CrCl trực tiếp theo đánh giá lâm sàng." } as const;
+    }
     const adjbw = calculateAdjBW(w, ibw);
 
     /* Can nang dung: thuc te neu <= IBW; hieu chinh neu > 120% IBW; nguoc lai IBW */
@@ -153,16 +229,25 @@ export default function AntibioticDosingPage() {
       method = "cân nặng lý tưởng (IBW)";
     }
 
+    const crcl = calculateCrClCG(a, used, scrMgDl, sex);
+    if (!(crcl > 0) || !Number.isFinite(crcl)) {
+      return { blocked: "Không tính được CrCl hợp lệ từ dữ liệu đã nhập – kiểm tra lại." } as const;
+    }
+
     return {
-      crcl: calculateCrClCG(a, used, scrMgDl, sex),
+      blocked: undefined,
+      crcl,
       method,
       used,
       ibw,
+      shortHeight: h < 152.4,
     };
   }, [age, weight, height, scr, scrUnit, sex]);
 
   const crclValue = useMemo(() => {
-    if (showCalc && calc) return calc.crcl;
+    /* Che do tinh CrCl: chi dung ket qua tinh hop le; KHONG lay lai so CrCl nhap truoc do
+       (hoac tu URL) khi du lieu tinh con thieu/khong hop le. */
+    if (showCalc) return calc && !calc.blocked ? calc.crcl : null;
 
     const n = Number(crclInput);
 
@@ -170,6 +255,18 @@ export default function AntibioticDosingPage() {
       ? n
       : null;
   }, [showCalc, calc, crclInput]);
+
+  /* Don vi xuat hien trong chuyen luan (chi canh bao, khong quy doi). */
+  const unitMix = (() => {
+    if (!profile) return "";
+    const text = JSON.stringify(profile);
+    const found = [
+      /triệu đvqt|MIU|đơn vị quốc tế/.test(text) ? "MIU" : "",
+      /CBA/.test(text) ? "mg CBA" : "",
+      /CMS/.test(text) ? "mg CMS" : "",
+    ].filter(Boolean);
+    return found.length > 1 ? found.join(", ") : "";
+  })();
 
   const range =
     profile && crclValue !== null
@@ -179,11 +276,69 @@ export default function AntibioticDosingPage() {
   function chooseDrug(id: string) {
     setDrugId(id);
     setProfileId("");
+    setProfileTouched(true);
   }
+
+  /* Duong dan trang hien tai, de Antibiogram quay lai dung thuoc dang xem. */
+  const selfParams = new URLSearchParams();
+  if (drugId) selfParams.set("drug", drugId);
+  if (profile) selfParams.set("indication", profile.indicationId);
+  if (from) selfParams.set("from", from);
+  if (fromLabel) selfParams.set("fromLabel", fromLabel);
+  const selfQuery = selfParams.toString();
+  const selfHref = `/antibiotics/dosing${selfQuery ? `?${selfQuery}` : ""}`;
+
+  const abId = group ? antibiogramIdFor(group.ingredientId) : undefined;
+  const showRegimen =
+    !!regimenText && !profileTouched && drugId === initial.drugId;
 
   return (
     <main className="min-h-screen bg-slate-50 p-4 md:p-6">
       <div className="mx-auto max-w-5xl">
+        <BackBar
+          from={from}
+          fromLabel={fromLabel}
+          fallbackHref="/antibiotics"
+          fallbackLabel="Kháng sinh & AMS"
+          links={[
+            { href: "/antibiotics/empiric/guideline-v9", label: "Kinh nghiệm" },
+            { href: "/antibiotics/organism", label: "Theo tác nhân" },
+            {
+              href: antibiogramHref(
+                { antibioticId: abId },
+                { from: selfHref, fromLabel: `Hiệu chỉnh liều${group ? ` – ${group.ingredientName}` : ""}` }
+              ),
+              label: abId && group ? `Antibiogram · ${group.ingredientName}` : "Antibiogram BV199",
+            },
+          ]}
+        />
+
+        {requestedDrug && !initial.drugId && (
+          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            Chưa có dữ liệu hiệu chỉnh liều cho hoạt chất được chọn. Không tự
+            suy ra liều; tra nguồn gốc hoặc hỏi dược sĩ lâm sàng.
+          </div>
+        )}
+
+        {(contextText || showRegimen) && (
+          <section className="mb-4 rounded-xl border border-teal-200 bg-teal-50 p-3 text-sm leading-6 text-slate-800">
+            <p className="text-xs font-bold uppercase tracking-wide text-teal-800">
+              Từ phác đồ
+            </p>
+            {contextText && <p className="mt-1 font-semibold">{contextText}</p>}
+            {showRegimen && (
+              <p className="mt-1 break-words">
+                <span className="text-slate-500">Liều trong phác đồ (nguyên văn): </span>
+                {regimenText}
+              </p>
+            )}
+            <p className="mt-1 text-xs text-slate-600">
+              Bảng dưới là liều theo chức năng thận từ nguồn của module Hiệu
+              chỉnh liều; đối chiếu với liều trong phác đồ trước khi áp dụng.
+            </p>
+          </section>
+        )}
+
         <header className="mb-6">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-700">
             Kháng sinh &amp; AMS
@@ -221,23 +376,32 @@ export default function AntibioticDosingPage() {
                 className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm"
               />
 
-              <div className="mt-3 flex flex-wrap gap-2">
-                {matches.map((item) => (
-                  <button
-                    key={item.ingredientId}
-                    type="button"
-                    onClick={() => chooseDrug(item.ingredientId)}
-                    className={
-                      "rounded-full border px-3 py-1.5 text-sm " +
-                      (item.ingredientId === drugId
-                        ? "border-teal-700 bg-teal-700 text-white"
-                        : "border-slate-300 bg-white text-slate-700 hover:border-teal-600")
-                    }
-                  >
-                    {item.ingredientName}
-                  </button>
-                ))}
-              </div>
+              {matches.length > 0 && (
+                <select
+                  size={Math.min(8, Math.max(matches.length, 2))}
+                  value={drugId}
+                  onChange={(e) => chooseDrug(e.target.value)}
+                  aria-label="Danh sách kháng sinh"
+                  className="mt-3 w-full rounded-xl border border-slate-300 bg-white p-1 text-sm"
+                >
+                  {matches.map((item) => (
+                    <option
+                      key={item.ingredientId}
+                      value={item.ingredientId}
+                      className="rounded-md px-3 py-1.5"
+                    >
+                      {item.ingredientName}
+                      {item.profiles.length > 1
+                        ? ` (${item.profiles.length} chỉ định)`
+                        : ""}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              <p className="mt-2 text-xs text-slate-500">
+                {matches.length}/{DRUG_GROUPS.length} hoạt chất
+              </p>
 
               {matches.length === 0 && (
                 <p className="mt-3 rounded-lg bg-slate-100 p-3 text-sm text-slate-600">
@@ -255,7 +419,10 @@ export default function AntibioticDosingPage() {
 
                   <select
                     value={profile?.id ?? ""}
-                    onChange={(e) => setProfileId(e.target.value)}
+                    onChange={(e) => {
+                      setProfileId(e.target.value);
+                      setProfileTouched(true);
+                    }}
                     className="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm"
                   >
                     {group.profiles.map((item) => (
@@ -265,6 +432,16 @@ export default function AntibioticDosingPage() {
                       </option>
                     ))}
                   </select>
+
+                  {!profileTouched &&
+                    drugId === initial.drugId &&
+                    (initial.picked || !!requestedDrug) && (
+                    <p className="mt-2 rounded-lg bg-slate-100 p-2 text-xs leading-5 text-slate-700">
+                      {initial.picked
+                        ? `Đã chọn sẵn chỉ định vì ${pickReason ?? "khớp phác đồ"}. Kiểm tra lại trước khi dùng.`
+                        : "Phác đồ không đủ thông tin để chọn chỉ định: chọn chỉ định phù hợp ở trên."}
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -366,12 +543,19 @@ export default function AntibioticDosingPage() {
                   </label>
 
                   <div className="col-span-2 rounded-lg bg-slate-100 p-3 text-xs leading-6 text-slate-700">
-                    {calc ? (
+                    {calc?.blocked ? (
+                      <span className="font-semibold text-red-700">{calc.blocked}</span>
+                    ) : calc ? (
                       <>
                         CrCl ≈ <strong>{roundNumber(calc.crcl, 1)} mL/phút</strong>{" "}
                         (Cockcroft-Gault, dùng {calc.method}{" "}
                         {roundNumber(calc.used, 1)} kg; IBW{" "}
                         {roundNumber(calc.ibw, 1)} kg).
+                        {calc.shortHeight && (
+                          <span className="block font-semibold text-amber-800">
+                            Chiều cao &lt; 152,4 cm: công thức Devine (IBW) có hạn chế – đối chiếu lâm sàng.
+                          </span>
+                        )}
                       </>
                     ) : (
                       "Nhập đủ tuổi, cân nặng, chiều cao, creatinin để tính."
@@ -407,6 +591,16 @@ export default function AntibioticDosingPage() {
               {profile.indicationLabel}
             </p>
 
+            {/* Buoc 4D.3: canh bao don vi khi cung mot chuyen luan dung nhieu don vi (vd. colistin) */}
+            {unitMix && (
+              <div role="alert" className="mt-3 rounded-lg border border-red-300 border-l-4 border-l-red-700 bg-red-50 p-3 text-sm leading-6 text-red-900">
+                <strong>Kiểm tra đơn vị trước khi kê:</strong> chuyên luận này dùng nhiều đơn vị ({unitMix}).
+                Bảng liều theo CrCl ghi theo triệu đơn vị quốc tế (MIU); công thức Garonzik và ghi chú lọc máu ghi theo
+                mg CBA (colistin base activity); mg CMS là colistimethat natri. Không cộng gộp, không tự quy đổi – ứng dụng
+                không tính liều theo đơn vị.
+              </div>
+            )}
+
             {/* Ket qua theo CrCl */}
             <div className="mt-4">
               {crclValue === null && (
@@ -431,7 +625,7 @@ export default function AntibioticDosingPage() {
                 </div>
               )}
 
-              {crclValue !== null && !range && (
+              {crclValue !== null && !range && profile.ranges.length > 0 && (
                 <p className="rounded-lg bg-red-50 p-3 text-sm text-red-800">
                   Nguồn dữ liệu không có mức liều cho CrCl này. Không tự suy
                   ra liều; tham khảo trực tiếp nguồn hoặc dược sĩ lâm sàng.
@@ -470,6 +664,7 @@ export default function AntibioticDosingPage() {
             </dl>
 
             {/* Bang day du cac muc CrCl */}
+            {profile.ranges.length > 0 && (
             <div className="mt-5 overflow-x-auto">
               <table className="w-full min-w-[420px] border-collapse text-sm">
                 <thead>
@@ -508,6 +703,7 @@ export default function AntibioticDosingPage() {
                 </tbody>
               </table>
             </div>
+            )}
 
             {/* Thong tin them */}
             <div className="mt-5 grid gap-3 text-sm">
@@ -535,6 +731,24 @@ export default function AntibioticDosingPage() {
                     ))}
                   </ul>
                 </details>
+              )}
+
+              {profile.rangeNote && (
+                <p className="rounded-lg bg-slate-50 p-3 text-slate-700">
+                  <strong>Cách phân mức: </strong>
+                  {profile.rangeNote}
+                </p>
+              )}
+
+              {profile.renalNarrative && profile.renalNarrative.length > 0 && (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-slate-800">
+                  <strong>Hiệu chỉnh liều theo Dược thư (dạng mô tả): </strong>
+                  <ul className="mt-1 list-disc space-y-1 pl-5">
+                    {profile.renalNarrative.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </div>
               )}
 
               {profile.dialysisNote && (
@@ -584,8 +798,8 @@ export default function AntibioticDosingPage() {
               <p>
                 <strong>Trạng thái: </strong>
                 {profile.verification === "da-doi-chieu-nguon"
-                  ? "Đã đối chiếu với trang nguồn; chưa được BV199 phê duyệt."
-                  : "Chưa được dược sĩ lâm sàng BV199 xác nhận."}
+                  ? "Bảng liều đã đối chiếu với ảnh trang nguồn; chưa được BV199 phê duyệt."
+                  : "Trích từ văn bản nguồn, chưa đối chiếu ảnh trang; chưa được dược sĩ lâm sàng BV199 xác nhận."}
               </p>
             </div>
           </section>
@@ -596,6 +810,21 @@ export default function AntibioticDosingPage() {
             Chọn một kháng sinh ở trên để xem liều hiệu chỉnh.
           </p>
         )}
+
+        <details className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-800">
+          <summary className="cursor-pointer font-semibold">
+            Thuốc có trong danh mục nhưng Dược thư 2023 không có chuyên luận (
+            {renalDosingGaps.length})
+          </summary>
+          <ul className="mt-3 space-y-2">
+            {renalDosingGaps.map((gap) => (
+              <li key={gap.name}>
+                <strong>{gap.name}: </strong>
+                {gap.reason} {gap.suggestion}
+              </li>
+            ))}
+          </ul>
+        </details>
       </div>
     </main>
   );
