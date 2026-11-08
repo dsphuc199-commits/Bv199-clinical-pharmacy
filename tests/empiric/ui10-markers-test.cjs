@@ -1,0 +1,27 @@
+const load=require('./tsrun.cjs'),React=require('react'),{renderToStaticMarkup:render}=require('react-dom/server');
+const Table=load('components/antibiotics/treatment/DoseTable.tsx').default;
+const Notes=load('components/antibiotics/treatment/ClinicalNotes.tsx').default;
+const Copd=load('components/antibiotics/CopdAntibioticDecision.tsx');
+const D=load('data/antibiotics/copd-2131.ts');
+let pass=0,fail=0;function check(name,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${name}`);}
+const drug={name:'A',dose:'100',doseUnit:'mg',route:'Uống',interval:'Mỗi 12 giờ',raw:'100 mg uống mỗi 12 giờ',population:'adult',doseBasis:'per-dose',ingredientIds:[],flags:[],complete:true};
+const group={rule:'all',optional:false,ambiguous:false,options:[drug],raw:[{name:'A',dose:drug.raw}]};
+const single=render(React.createElement(Table,{groups:[group],status:'STRUCTURED'}));
+const headers=single.match(/<thead>([\s\S]*?)<\/thead>/)[1];
+check('Single-drug table has exactly two headers and no empty relation column',(headers.match(/<th(?:\s|>)/g)||[]).length===2&&!single.includes('<td class="tx-marker"')&&single.includes('tx-table-no-relation'));
+const combo=render(React.createElement(Table,{groups:[{...group,options:[drug,{...drug,name:'B'}]}],status:'STRUCTURED'}));
+const alternate=render(React.createElement(Table,{groups:[{...group,rule:'one-of',options:[drug,{...drug,name:'B'}]}],status:'STRUCTURED'}));
+check('Actual combinations keep plus and alternatives keep OR without leading dashes',combo.includes('>+</td>')&&!combo.includes('>Hoặc</td>')&&alternate.includes('>Hoặc</td>')&&!alternate.includes('>+</td>')&&!combo.includes('>−</td>')&&!alternate.includes('>−</td>'));
+const byPopulation=render(React.createElement(Table,{groups:[{...group,rule:'by-population',options:[drug,{...drug,name:'A',population:'child',populationLabel:'Trẻ em'}]}],status:'STRUCTURED'}));
+check('Population-specific rows do not acquire a fictitious alternative or combination marker',!byPopulation.includes('<td class="tx-marker"')&&!byPopulation.includes('>+</td>')&&!byPopulation.includes('>Hoặc</td>'));
+const notes=render(React.createElement(Notes,{items:['Theo dõi: Nếu A VÀ (B HOẶC C), đánh giá sau 48–72 giờ; Không tự đổi liều.','Không phối hợp X; chỉ cân nhắc Y khi đã có kết quả vi sinh.']}));
+check('Explicit heading forms nested subpoints without losing condition or interval',notes.includes('<strong>Theo dõi:</strong><ul><li>Nếu A VÀ (B HOẶC C), đánh giá sau 48–72 giờ;</li><li>Không tự đổi liều.</li></ul>'));
+check('Unstructured note stays together instead of inventing a clinical hierarchy',notes.includes('<li>Không phối hợp X; chỉ cân nhắc Y khi đã có kết quả vi sinh.</li>'));
+const conditional='HAP nặng hoặc có nguy cơ đa kháng: phối hợp hai kháng sinh; các trường hợp còn lại có thể đơn trị.';
+const scope=render(React.createElement(Notes,{items:[conditional]}));
+check('A clinical condition and its contrasting exception cannot become one misleading parent group',scope.includes(`<li>${conditional}</li>`)&&!scope.includes('<strong>HAP nặng'));
+check('Notes use distinct main and subpoint symbols, never a combination plus',notes.includes('content:"–"')&&notes.includes('content:"•"')&&!notes.includes('content:"+"'));
+const mono=render(React.createElement(Copd.CopdRegimenCard,{regimen:D.COPD_REGIMENS.find(r=>r.id==='azi3'),index:0}));
+const copdCombo=render(React.createElement(Copd.CopdRegimenCard,{regimen:D.COPD_REGIMENS.find(r=>r.id==='mdr-mero-amikacin'),index:0}));
+check('COPD removes empty table columns but preserves true combination linkage',!mono.includes('<td class="tx-marker"')&&!mono.includes('>−</td>')&&copdCombo.includes('aria-label="Phối hợp với">+ Phối hợp</div>')&&copdCombo.includes('Meropenem')&&copdCombo.includes('Amikacin'));
+console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

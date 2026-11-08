@@ -12,6 +12,7 @@ export function d(name: string, dose: string): DrugItem {
 type Opts = {
   duration?: string;
   notes?: string[];
+  condition?: string;
 };
 
 export function makeRegimen(
@@ -54,6 +55,7 @@ export function maker(doc: DocId) {
     diseaseIds,
     scenario,
     role,
+    ...(opts.condition ? { condition: opts.condition } : {}),
     drugs,
     duration: opts.duration,
     notes: opts.notes,

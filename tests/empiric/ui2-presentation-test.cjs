@@ -1,0 +1,26 @@
+const load=require('./tsrun.cjs');
+const React=require('react');
+const {renderToStaticMarkup:render}=require('react-dom/server');
+const Table=load('components/antibiotics/treatment/DoseTable.tsx').default;
+const Review=load('components/antibiotics/empiric/InternationalDoseReview.tsx').default;
+const {INTERNATIONAL_DOSE_REVIEWS}=load('data/antibiotics/empiric/international-dose-review.ts');
+const {AbxLinkProvider}=load('components/antibiotics/links/AbxLinkContext.tsx');
+const Links=load('components/antibiotics/links/DrugActionLinks.tsx').default;
+let pass=0,fail=0;function check(n,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${n}`);}
+const g={rule:'all',optional:false,ambiguous:false,raw:[{name:'Thuốc tham khảo',dose:'100 mg'}],options:[{name:'Thuốc tham khảo',dose:'100',doseUnit:'mg',population:'adult',doseBasis:'per-dose',ingredientIds:[],flags:[],raw:'100 mg',complete:false}]};
+const h=render(React.createElement(Table,{groups:[g],status:'PARTIAL'}));
+check('Unknown route is explicit rather than a dash or an invented route',h.includes('data-route="">Chưa xác minh đường dùng')&&!h.includes('>—<')&&!h.includes('>Tĩnh mạch<'));
+check('Technical empty-cell explanation removed',!h.includes('ô “—”')&&!h.includes('là nguồn không nêu'));
+const raw=render(React.createElement(Table,{groups:[g],status:'NEEDS_STRUCTURED_REVIEW'}));
+check('Technical review code not exposed in visible output',!raw.includes('NEEDS_STRUCTURED_REVIEW')&&!raw.includes('hiển thị nguyên văn')&&raw.includes('Chưa xác minh đầy đủ liều và cách dùng')&&raw.includes('Cần thẩm định'));
+check('Source content remains accessible',raw.includes('Thuốc tham khảo')&&raw.includes('100 mg'));
+const noLinks=render(React.createElement(AbxLinkProvider,{value:{hideDrugNavigation:true}},React.createElement(Links,{texts:['vancomycin 1 g']})));
+check('Empiric context suppresses both dosing and antibiogram links',!noLinks.includes('/antibiotics/dosing')&&!noLinks.includes('/antibiotics/antibiogram'));
+const purulent=render(React.createElement(Review,{diseaseId:'v8-28'}));
+check('Purulent infection has source-separated adult dose comparisons',purulent.includes('Doxycyclin')&&purulent.includes('100 mg')&&purulent.includes('IDSA')&&purulent.includes('ACE Singapore'));
+check('New doses stay unapproved and are not treatment-engine regimens',INTERNATIONAL_DOSE_REVIEWS.every(r=>r.approval==='NOT_APPROVED'&&!load('data/antibiotics/empiric/regimens/index.ts').ALL_REGIMENS.some(g=>g.id===r.id)));
+check('Purulent and nonpurulent scopes remain separate',!purulent.includes('Ceftriaxon')&&render(React.createElement(Review,{diseaseId:'v8-27'})).includes('Ceftriaxon'));
+check('No reference doses are copied to an unrelated syndrome',render(React.createElement(Review,{diseaseId:'v8-11'}))==='');
+check('Reviewed dose rows specify routes and intervals',INTERNATIONAL_DOSE_REVIEWS.every(r=>r.rows.every(o=>o.route&&o.interval&&o.dose)));
+check('Linezolid dose is scoped to complicated skin infection',INTERNATIONAL_DOSE_REVIEWS.flatMap(r=>r.rows).filter(o=>o.drug==='Linezolid').every(o=>o.condition?.includes('có biến chứng')));
+console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

@@ -242,7 +242,7 @@ function GuidelineRow({
               item.reviewStatus === "approved" &&
               item.approvalReference
                 ? "Đã có hồ sơ phê duyệt BV199"
-                : "Dữ liệu tham khảo – chưa phê duyệt BV199"}
+                : null}
             </div>
           </div>
         ))

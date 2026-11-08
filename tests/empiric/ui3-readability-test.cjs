@@ -1,0 +1,25 @@
+const load=require('./tsrun.cjs');
+const React=require('react');
+const {renderToStaticMarkup:render}=require('react-dom/server');
+const R=load('data/antibiotics/empiric/regimens/index.ts');
+const V=load('components/antibiotics/empiric/BytRegimenView.tsx');
+const Comparison=load('components/antibiotics/empiric/DoseConflictComparison.tsx').default;
+const {DOSE_CONFLICTS}=load('data/antibiotics/empiric/dose-conflicts.ts');
+let pass=0,fail=0;function check(n,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${n}`);}
+const h=render(React.createElement(V.default,{diseaseId:'v8-33'}));
+check('Redundant daily total is omitted from septic arthritis treatment cells',!h.includes('class="tx-sub">= 8 g/ngày'));
+const original=R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-1');
+const Panel=load('components/antibiotics/treatment/TreatmentPanel.tsx').default;
+const selected=render(React.createElement(Panel,{sections:V.sectionsFor([original]).sections,sources:[]}));
+check('Original dose and interval are preserved after selecting their source group',original.drugs[0].dose==='2 g TM mỗi 6 giờ (8 g/ngày)'&&selected.includes('mỗi 6 giờ')&&!selected.includes('class="tx-sub">= 8 g/ngày'));
+const mssa=R.ALL_REGIMENS.find(r=>r.id==='r-sa-mssa');
+const names=V.therapyNames(mssa).toLowerCase();
+check('Referenced MSSA choices name the actual drugs',names.includes('oxac')&&names.includes('nafc')&&names.includes('clindamycin'));
+const missing=R.getRegimensForDisease('v8-33').filter(r=>load('lib/antibiotics/regimen-structure.ts').structureOf(r).status==='NO_DOSE');
+const listed=render(React.createElement(Panel,{sections:V.sectionsFor(missing).sections,sources:[]}));
+check('Named source-only choices are scoped to the selected group and marked missing-dose',missing.length>0&&missing.every(r=>h.includes(r.scenario))&&listed.includes('Hoạt chất được nguồn liệt kê')&&!h.includes('data-regimen='));
+const c=DOSE_CONFLICTS.find(c=>c.id==='septic-arthritis');
+const compare=render(React.createElement(Comparison,{conflicts:[c]}));
+check('Domestic international caution and decision sections remain distinct',compare.includes('Hướng dẫn Bộ Y tế')&&compare.includes('Hướng dẫn quốc tế')&&compare.includes('Điểm cần lưu ý')&&compare.includes('Nội dung cần quyết định'));
+check('Source locator and all source entries remain accessible',c.byt.concat(c.intl).every(r=>compare.includes(r.locator))&&compare.includes('<li>')&&compare.includes('Mở tài liệu'));
+console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

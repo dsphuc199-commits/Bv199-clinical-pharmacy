@@ -17,7 +17,6 @@ import {
   isOtherBetaLactam,
   isPenicillinClass,
   parseCrcl,
-  renalDoseFor,
 } from "@/lib/antibiotics/clinical-filters";
 import {
   antibiogramHref,
@@ -35,6 +34,7 @@ type Props = {
   /* Tinh huong / ten phac do, ghi vao ngu canh gui sang trang dich. */
   scenario?: string;
   compact?: boolean;
+  navigation?: boolean;
 };
 
 function routesOf(ingredientId: string): string {
@@ -42,12 +42,14 @@ function routesOf(ingredientId: string): string {
   return Array.from(routes).join(", ");
 }
 
-export default function DrugActionLinks({ texts, scenario, compact }: Props) {
+export default function DrugActionLinks({ texts, scenario, compact, navigation = true }: Props) {
   const ctx = useAbxLinkContext();
   const filters = useClinicalFilters();
   const drugs = findDrugs(texts);
 
   if (drugs.length === 0) return null;
+  const allergyWarning = filters?.penicillinAllergy && drugs.some((d) => isPenicillinClass(d.ingredientId) || isOtherBetaLactam(d.ingredientId));
+  if ((!navigation || ctx.hideDrugNavigation) && !allergyWarning) return null;
 
   const crcl = filters ? parseCrcl(filters.crcl) : null;
   const linkCtx = {
@@ -58,12 +60,12 @@ export default function DrugActionLinks({ texts, scenario, compact }: Props) {
 
   return (
     <div className={"bv199-drug-links mt-2 " + (compact ? "text-[11px]" : "text-xs")}>
-      <div
-        className="flex flex-wrap items-center gap-1.5"
+      {navigation && !ctx.hideDrugNavigation && <div
+        className={compact ? "flex flex-wrap items-center gap-x-3 gap-y-1" : "flex flex-wrap items-center gap-1.5"}
         aria-label="Chuyển sang module liên quan"
       >
         <span className="mr-0.5 font-semibold text-slate-500">
-          Hiệu chỉnh liều · Kháng sinh đồ BV199:
+          Hiệu chỉnh liều · Kháng sinh đồ:
         </span>
         {drugs.map((drug) => {
           const abId = antibiogramIdFor(drug.ingredientId);
@@ -75,7 +77,9 @@ export default function DrugActionLinks({ texts, scenario, compact }: Props) {
             <span
               key={drug.ingredientId}
               className={
-                "inline-flex overflow-hidden rounded-full border bg-white " +
+                compact
+                  ? "inline-flex items-center gap-1 " + (pen ? "rounded border border-red-400 px-1" : "")
+                  : "inline-flex overflow-hidden rounded-full border bg-white " +
                 (pen
                   ? "border-red-400"
                   : outOfFormulary
@@ -86,7 +90,9 @@ export default function DrugActionLinks({ texts, scenario, compact }: Props) {
               <Link
                 href={dosingHref(drug, linkCtx)}
                 className={
-                  "inline-flex min-h-8 items-center gap-1 px-2.5 font-semibold hover:bg-teal-50 " +
+                  (compact
+                    ? "inline-flex items-center gap-1 font-semibold underline-offset-2 hover:underline "
+                    : "inline-flex min-h-8 items-center gap-1 px-2.5 font-semibold hover:bg-teal-50 ") +
                   (pen ? "text-red-700" : outOfFormulary ? "text-slate-500" : "text-teal-800")
                 }
                 title={
@@ -106,43 +112,27 @@ export default function DrugActionLinks({ texts, scenario, compact }: Props) {
               {abId && (
                 <Link
                   href={antibiogramHref({ antibioticId: abId }, ctx)}
-                  className="inline-flex min-h-8 items-center border-l border-teal-200 bg-teal-50 px-2 font-semibold text-teal-700 hover:bg-teal-100"
+                  className={
+                    compact
+                      ? "font-normal text-slate-500 underline-offset-2 hover:underline"
+                      : "inline-flex min-h-8 items-center border-l border-teal-200 bg-teal-50 px-2 font-semibold text-teal-700 hover:bg-teal-100"
+                  }
                   title={`Antibiogram BV199: ${drug.name}`}
                   aria-label={`Antibiogram BV199 cho ${drug.name}`}
                 >
-                  Kháng sinh đồ
+                  {compact ? "(kháng sinh đồ)" : "Kháng sinh đồ"}
                 </Link>
               )}
             </span>
           );
         })}
-      </div>
-
-      {crcl !== null && (
-        <ul className="mt-1.5 grid gap-0.5 rounded-lg bg-slate-50 p-2 leading-5 text-slate-700">
-          {drugs.map((drug) => {
-            const r = renalDoseFor(drug, crcl, ctx.diseaseId);
-            return (
-              <li key={drug.ingredientId}>
-                <strong>{drug.name}</strong> – CrCl {crcl}:{" "}
-                {r.kind === "dose"
-                  ? `${r.dose} · ${r.interval} (${r.label}; ${r.indication})`
-                  : r.kind === "multi"
-                    ? "nhiều chỉ định, bấm tên thuốc để chọn chỉ định"
-                    : r.kind === "narrative"
-                      ? "nguồn mô tả dạng văn bản, bấm tên thuốc để xem"
-                      : "không có mức liều cho CrCl này trong dữ liệu – không tự suy ra"}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      </div>}
 
       {filters?.penicillinAllergy &&
         drugs.some((d) => isPenicillinClass(d.ingredientId) || isOtherBetaLactam(d.ingredientId)) && (
           <p className="mt-1 text-[11px] text-red-700">
-            Dị ứng penicillin: thuốc viền đỏ thuộc nhóm penicillin; nhãn β-lactam cần
-            đánh giá phản ứng chéo theo{" "}
+            Dị ứng penicillin: phác đồ có thuốc nhóm beta-lactam. Cần đánh giá loại
+            phản ứng và nguy cơ phản ứng chéo theo{" "}
             <Link href="/antibiotics/allergy" className="font-semibold underline">
               module Dị ứng kháng sinh
             </Link>

@@ -13,6 +13,8 @@ let pass = 0, fail = 0;
 const check = (n, ok, d) => { ok ? pass++ : fail++; console.log(`${ok ? "PASS" : "FAIL"}  ${n}${!ok && d !== undefined ? "  — " + JSON.stringify(d).slice(0, 400) : ""}`); };
 const byId = new Map(R.ALL_REGIMENS.map((r) => [r.id, r]));
 const opts = (res) => (res.status === "ready" ? res.groups.flatMap((g) => g.options) : []);
+// COPD migrated to a source-only QD2131 module; legacy dose selection is disabled.
+const referenceOnly = new Set(["v8-6"]);
 
 /* ---------- 1. Lop lieu bo sung ---------- */
 const sups = D.DOSE_SUPPLEMENTS;
@@ -85,7 +87,8 @@ for (const d of C.DISEASES) {
   }
 }
 check(`Engine chạy 69 bệnh × 2 đối tượng × 3 chế độ nhập (${paths} tình huống) không lỗi`, errors.length === 0, errors);
-const withRegimens = C.DISEASES.filter((d) => R.getRegimensForDisease(d.id).length > 0 || ["v8-1", "v8-4", "v8-5"].includes(d.id));
+const withRegimens = C.DISEASES.filter((d) => !referenceOnly.has(d.id) && (R.getRegimensForDisease(d.id).length > 0 || ["v8-1", "v8-4", "v8-5"].includes(d.id)));
+check("Source-only COPD cannot enter the legacy automatic pool", [...referenceOnly].every(id => SE.evaluate(id, {}).status === "no-match" && SE.questionsFor(id, {}).length === 0));
 check(`Mọi bệnh có phác đồ đều ra ít nhất một kết quả (${readyByDisease.size}/${withRegimens.length})`, withRegimens.every((d) => readyByDisease.has(d.id)), withRegimens.filter((d) => !readyByDisease.has(d.id)).map((d) => d.id));
 check("Không phương án bị khóa an toàn nào xuất hiện trong nhóm đề xuất (mọi bệnh, mọi tình huống)", blockedShown.length === 0, blockedShown);
 check("Mọi phương án đề xuất có phân loại ELIGIBLE/CONDITIONAL và có nguồn", badElig.length === 0 && noSource.length === 0, { badElig, noSource });
@@ -101,9 +104,10 @@ for (const id of lockedIds) {
   for (const did of r.diseaseIds) for (const population of ["adult", "child"]) {
     const res = SE.evaluate(did, { population, pregnant: "no", penicillinAllergy: "no", renal: "normal", severity: "unknown", mdr: "unknown", micro: "none", scenario: r.scenario });
     if (res.status === "ready" && res.excluded.some((e) => e.eligibility === "SAFETY_BLOCKED" && e.title === r.scenario)) lockedSeen.add(id);
+    if (referenceOnly.has(did) && res.status === "no-match" && res.message.includes("2131/") && A.autoRecommendBlocks(id).length > 0) lockedSeen.add(id);
   }
 }
-check(`12 phương án khóa vẫn khóa và hiện ở mục "Không đề xuất" với SAFETY_BLOCKED (${lockedSeen.size}/${lockedIds.length})`, lockedIds.length === 12 && lockedSeen.size === lockedIds.length, lockedIds.filter((id) => !lockedSeen.has(id)));
+check(`12 locked regimens remain blocked, including source-only COPD (${lockedSeen.size}/${lockedIds.length})`, lockedIds.length === 12 && lockedSeen.size === lockedIds.length, lockedIds.filter((id) => !lockedSeen.has(id)));
 
 // Lieu bo sung hien thi kem nguon; quoc te -> dieu kien tham dinh
 const bv = SE.evaluate("v8-95", { population: "adult", pregnant: "no", renal: "normal", micro: "none", scenario: byId.get("r-bv-metro-gel").scenario });
@@ -113,7 +117,7 @@ check("Gel metronidazol: liều CDC hiển thị là 'bổ sung quốc tế' kè
 /* ---------- 3. Bien theo tung benh ---------- */
 const keys = (id, inp) => SE.questionsFor(id, inp).map((q) => q.key);
 check("Lao phổi: không hỏi dị ứng penicillin (phác đồ không có beta-lactam)", !keys("v8-142", { population: "adult" }).includes("penicillinAllergy"));
-const noRenal = C.DISEASES.filter((d) => !keys(d.id, { population: "adult" }).includes("renal") && !keys(d.id, { population: "child" }).includes("renal")).map((d) => d.id);
+const noRenal = C.DISEASES.filter((d) => !referenceOnly.has(d.id) && !keys(d.id, { population: "adult" }).includes("renal") && !keys(d.id, { population: "child" }).includes("renal")).map((d) => d.id);
 check(`Chỉ bỏ câu hỏi chức năng thận khi mọi phương án là thuốc tại chỗ (${noRenal.length} bệnh)`, noRenal.every((id) => !SE.relevanceOf(id).renal), noRenal);
 check("Viêm kết mạc có phác đồ toàn thân (lậu cầu) → vẫn hỏi chức năng thận", keys("v8-83", { population: "adult" }).includes("renal"));
 check("CAP: vẫn hỏi dị ứng và chức năng thận", ["penicillinAllergy", "renal"].every((k) => keys("v8-1", { population: "adult" }).includes(k)));

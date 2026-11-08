@@ -3,7 +3,8 @@
 
 import { useState } from "react";
 
-import DrugActionLinks from "./links/DrugActionLinks";
+import TreatmentPanel from "./treatment/TreatmentPanel";
+import { structureOptionLines } from "@/lib/antibiotics/regimen-structure";
 
 /*
   BV199 - KHOA DUOC
@@ -212,80 +213,8 @@ const RISKS = [
   "Nhiễm khuẩn nặng hoặc nguy cơ biến chứng sinh mủ.",
 ];
 
-function RegimenCards({
-  title,
-  plans,
-}: {
-  title: string;
-  plans: Regimen[];
-}) {
-  const [openId, setOpenId] = useState("");
-
-  return (
-    <section className="abrs-card">
-      <h3>{title}</h3>
-
-      <p className="abrs-muted">
-        Mỗi thẻ là một lựa chọn riêng biệt.
-        Dấu + trong tên phác đồ có nghĩa là phối hợp.
-      </p>
-
-      {plans.map((plan) => {
-        const open = plan.id === openId;
-
-        return (
-          <div className="abrs-regimen" key={plan.id}>
-            <button
-              type="button"
-              className="abrs-regimen-button"
-              aria-expanded={open}
-              onClick={() =>
-                setOpenId(open ? "" : plan.id)
-              }
-            >
-              <strong>{plan.title}</strong>
-              <span>{open ? "−" : "+"}</span>
-            </button>
-
-            {open && (
-              <div className="abrs-regimen-body">
-                <strong>Thuốc và liều</strong>
-
-                {plan.medicines.map((medicine, i) => (
-                  <div
-                    key={i}
-                    className="abrs-medicine"
-                  >
-                    {medicine}
-                  </div>
-                ))}
-
-                <DrugActionLinks
-                  compact
-                  texts={plan.medicines}
-                  scenario={plan.title}
-                />
-
-                <p>
-                  <b>Điều kiện:</b> {plan.condition}
-                </p>
-
-                {plan.caution && (
-                  <div className="abrs-warning">
-                    <b>Lưu ý:</b> {plan.caution}
-                  </div>
-                )}
-
-                <p className="abrs-muted">
-                  Nguồn: {SOURCE}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </section>
-  );
+function RegimenCards({ title, plans }: { title:string; plans:Regimen[] }) {
+  return <TreatmentPanel sections={[{key:"equal",title,itemLabel:"Phác đồ",cards:plans.map(plan=>{ const structured=structureOptionLines(plan.medicines); return {id:plan.id,condition:plan.condition,groups:structured.groups,status:structured.status,extra:plan.caution?<p>{plan.caution}</p>:undefined,sources:[SOURCE]}; })}]} sources={[SOURCE]} />;
 }
 
 function ChoiceButtons({

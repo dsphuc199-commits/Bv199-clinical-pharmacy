@@ -1,0 +1,74 @@
+.profile {
+  color: #172033;
+  background: #fff;
+  padding: clamp(12px, 2vw, 24px);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.reviewNote {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid #166534;
+  background: #f0fdf4;
+  color: #153f59;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.profile :global(.dp-block) {
+  border-color: #e2e8f0;
+  border-radius: 6px;
+}
+
+.profile :global(.dp-block summary) {
+  color: #153f59;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.profile :global(.dp-body) {
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.profile :global(.dp-cell) {
+  background: #f8fafc;
+  font-size: 13px;
+}
+
+.profile :global(.dp-cell b) {
+  color: #153f59;
+  font-size: 12px;
+}
+
+.profile :global(.dp-code) {
+  background: #153f59;
+}
+
+.profile :global(.dp-link) {
+  color: #166534;
+  font-size: 14px;
+  padding-block: 8px;
+}
+
+.profile :global(summary):focus-visible,
+.profile :global(button):focus-visible,
+.profile :global(a):focus-visible {
+  outline: 3px solid #c2410c;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .profile :global(.dp-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .profile :global(.dp-badge) {
+    border-radius: 6px;
+    max-width: 100%;
+    white-space: normal;
+  }
+}

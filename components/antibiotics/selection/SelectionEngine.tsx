@@ -17,7 +17,6 @@ import DrugActionLinks from "@/components/antibiotics/links/DrugActionLinks";
 import DoseTable from "@/components/antibiotics/treatment/DoseTable";
 import { structureForOption } from "@/lib/antibiotics/regimen-structure";
 import { DISEASES } from "@/data/antibiotics/empiric/catalog";
-import { APPROVAL_TEXT } from "@/data/antibiotics/empiric/approvals";
 import { icdOf } from "@/data/antibiotics/empiric/icd10";
 import { DEFAULT_FILTERS } from "@/lib/antibiotics/clinical-filters";
 import { empiricHref, findDrugs } from "@/lib/antibiotics/drug-links";
@@ -34,11 +33,12 @@ import {
   type QuestionKey,
 } from "@/lib/antibiotics/selection-engine";
 
-const GROUP_TITLE: Record<string, string> = {
-  main: "Lựa chọn ưu tiên",
-  alternative: "Lựa chọn thay thế",
-  special: "Trường hợp đặc biệt",
-};
+/* Ten muc theo phan cap CUA NGUON (engine): co phan cap -> "Lua chon uu tien"; ngang hang -> "Cac lua chon duoc khuyen cao". */
+function groupTitle(g: { kind: string; label: string; options: unknown[] }): string {
+  if (g.kind === "main") return g.label.startsWith("Ưu tiên") ? "Lựa chọn ưu tiên" : g.options.length > 1 ? "Các lựa chọn được khuyến cáo" : "Phác đồ khuyến cáo";
+  if (g.kind === "alternative") return /dị ứng/i.test(g.label) ? "Lựa chọn khi dị ứng" : "Lựa chọn thay thế";
+  return "Trường hợp đặc biệt";
+}
 
 const ELIG_TEXT: Record<Eligibility, string> = {
   ELIGIBLE: "Đủ điều kiện",
@@ -389,9 +389,6 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
                   <span className={`se-cert ${result.certainty === "complete" ? "ok" : "lim"}`}>
                     {result.certainty === "complete" ? "Đủ dữ liệu" : "Có giới hạn"}
                   </span>
-                  {result.clinicalUse !== "approved" && (
-                    <span className="se-approval" title={APPROVAL_TEXT.NOT_APPROVED}>Chưa phê duyệt HĐT&ĐT – không tự động áp dụng</span>
-                  )}
                   {result.eligibilityCount && (
                     <span className="se-count">
                       {result.eligibilityCount.ELIGIBLE} đủ điều kiện · {result.eligibilityCount.CONDITIONAL} có điều kiện
@@ -413,7 +410,7 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
 
                 {result.groups.map((g) => (
                   <div key={g.kind} className={`se-group ${GROUP_TONE[g.kind]}`}>
-                    <h3>{GROUP_TITLE[g.kind] ?? g.label}</h3>
+                    <h3>{groupTitle(g)}</h3>
                     {g.options.map((o) => (
                       <OptionCard key={o.id} option={o} population={input.population} sourceHref={`${empiricHref(diseaseId)}&tab=sources`} />
                     ))}

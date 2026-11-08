@@ -1,0 +1,21 @@
+const load = require('./tsrun.cjs');
+const React = require('react');
+const { renderToStaticMarkup: render } = require('react-dom/server');
+const fs = require('fs');
+const path = require('path');
+const Copd = load('components/antibiotics/CopdByt2026.tsx').default;
+const Byt = load('components/antibiotics/empiric/BytRegimenView.tsx').default;
+const { CompareTab } = load('components/antibiotics/empiric/GuidelineTabs.tsx');
+const { evaluate, questionsFor } = load('lib/antibiotics/selection-engine.ts');
+let pass = 0, fail = 0;
+function check(name, ok) { if (ok) pass++; else fail++; console.log((ok ? 'PASS' : 'FAIL') + ' ' + name); }
+const h = render(React.createElement(Copd));
+check('Common BYT entry point renders the current COPD decision interface', render(React.createElement(Byt, { diseaseId: 'v8-6' })) === h);
+const page = fs.readFileSync(path.resolve(__dirname, '../../app/antibiotics/empiric/guideline-v9/page.tsx'), 'utf8');
+check('Main page retains the existing COPD deep link and module mount', page.includes('selected.id === "v8-6" && <CopdByt2026 />') && page.includes('searchParams.get("disease")'));
+const result = evaluate('v8-6', { population: 'adult', renal: 'normal', penicillinAllergy: 'no', pregnant: 'no', micro: 'none' });
+check('Selection engine does not recommend legacy COPD regimens', result.status === 'no-match' && result.message.includes('2131/'));
+check('Legacy scenario questions remain disabled', questionsFor('v8-6', {}).length === 0);
+check('Old COPD comparison is not shown as the current guidance comparison', !render(React.createElement(CompareTab, { diseaseId: 'v8-6' })).includes('data-regimen='));
+check('Source download is present in the project', fs.existsSync(path.resolve(__dirname, '../../public/references/qd2131-2026-copd.docx')));
+console.log(pass + ' passed, ' + fail + ' failed'); process.exitCode = fail ? 1 : 0;

@@ -9,6 +9,7 @@
 */
 
 import type { ReactNode } from "react";
+import styles from "./DiseaseProfile.module.css";
 
 import {
   DATA_STATUS_LABEL,
@@ -102,7 +103,7 @@ export default function DiseaseProfile({
   titleOf,
 }: Props) {
   return (
-    <section className="bv199-panel dp-root">
+    <section className={`bv199-panel dp-root ${styles.profile}`} aria-label={`Hồ sơ kiểm định: ${disease.title}`}>
       <style>{`
         .dp-root { display: grid; gap: 10px; }
         .dp-badge {
@@ -168,6 +169,11 @@ export default function DiseaseProfile({
       <div className="bv199-label">
         HƯỚNG DẪN ĐIỀU TRỊ · HỒ SƠ MẶT BỆNH
       </div>
+
+      <p className={styles.reviewNote}>
+        Trạng thái dữ liệu không đồng nghĩa phê duyệt sử dụng lâm sàng.
+        Các mục chưa có chứng cứ được giữ ở trạng thái cần thẩm định.
+      </p>
 
       <div>
         <StatusBadge status={status} />

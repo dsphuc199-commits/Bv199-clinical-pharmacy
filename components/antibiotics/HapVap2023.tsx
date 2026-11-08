@@ -1,16 +1,11 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useState } from "react";
 
 import DrugActionLinks from "./links/DrugActionLinks";
-import DoseTable from "./treatment/DoseTable";
+import { getModuleRationale } from "../../data/antibiotics/empiric/rationale-modules";
+import TreatmentPanel, { type TxCard, type TxSection } from "./treatment/TreatmentPanel";
 import { structureForOption } from "../../lib/antibiotics/regimen-structure";
-
-/* Master Task 6: bang lieu co cau truc cho phac do module (id rieng, khong trung phac do BYT). */
-function ModuleDoseTable({ id, drugs }: { id: string; drugs: { name: string; dose: string; route?: string }[] }) {
-  const s = structureForOption(`module-${id}`, drugs);
-  return <DoseTable groups={s.groups} status={s.status} />;
-}
 
 /*
  BV199 - HAP / VAP
@@ -592,18 +587,23 @@ const RISK: Record<Kind, string[]> = {
   ],
 };
 
-const box: CSSProperties = {
-  border: "1px solid #dce6ed",
-  borderRadius: 12,
-  background: "#fff",
-  padding: 15,
-  minWidth: 0,
-};
-
 /* Du lieu dung chung cho bo may lua chon khang sinh (lib/antibiotics/selection-engine.ts). */
 export const HAPVAP_SCENARIOS: Record<Kind, Scenario[]> = { hap: HAP, vap: VAP };
 export const HAPVAP_RISK = RISK;
 export type { Drug as HapVapDrug, Regimen as HapVapRegimen, Scenario as HapVapScenario };
+
+function hvCard(r: Regimen): TxCard {
+  const s = structureForOption(`module-${r.id}`, r.drugs);
+  return {
+    id: r.id,
+    condition: r.indication,
+    groups: s.groups,
+    status: s.status,
+    linkTexts: r.drugs.map((d) => `${d.name}: ${d.dose} ${d.route}`),
+    linkScenario: r.name,
+    sources: [r.source],
+  };
+}
 
 export default function HapVap2023({
   kind,
@@ -613,455 +613,83 @@ export default function HapVap2023({
   initialScenarioId?: string;
 }) {
   const scenarios = kind === "hap" ? HAP : VAP;
+  const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "");
+  const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
 
-  const [scenarioId, setScenarioId] = useState(
-    initialScenarioId ?? ""
+  /* Nguon: cac the la VI DU to hop theo quy tac bang (ngang hang, khong thu tu uu tien). */
+  const sections: TxSection[] = scenario.regimens.length
+    ? [{ key: "equal", title: scenario.regimens.length > 1 ? "Các lựa chọn được khuyến cáo" : "Phác đồ khuyến cáo", itemLabel: "Lựa chọn", cards: scenario.regimens.map(hvCard), startAt: 1 }]
+    : [];
+
+  const notes = [
+    "Mỗi lựa chọn là một tổ hợp ví dụ theo quy tắc của bảng nguồn – không phải thứ tự ưu tiên.",
+    "Phần lớn tác nhân VPBV/VPLQTM ở Việt Nam là P. aeruginosa và vi khuẩn Gram âm khác – chọn kháng sinh có tác dụng trên P. aeruginosa và Gram âm.",
+    kind === "hap"
+      ? "HAP nặng hoặc có nguy cơ đa kháng: phối hợp hai kháng sinh; các trường hợp còn lại có thể đơn trị bằng một kháng sinh có tác dụng trên P. aeruginosa (tr. 57)."
+      : "VPLQTM có yếu tố nguy cơ đa kháng, đơn vị có > 10% kháng với thuốc đơn trị hoặc chưa biết tỷ lệ nhạy cảm: phối hợp hai kháng sinh thuộc hai nhóm khác nhau (tr. 63).",
+    "Không dùng aminoglycosid hoặc colistin đơn độc.",
+    `Đơn vị có tỷ lệ Acinetobacter baumannii kháng carbapenem${kind === "hap" ? "" : " (đa kháng)"} > 25%, bệnh nặng và không đáp ứng sau 48–72 giờ: có thể xem xét colistin.`,
+    "Thuốc chống MRSA chỉ bổ sung khi bệnh nặng/có yếu tố nguy cơ hoặc đơn vị có MRSA > 10% hay không có dữ liệu; piperacillin/tazobactam, cefepim, levofloxacin, imipenem, meropenem cũng có hiệu quả trên MSSA.",
+    "Điều chỉnh liều theo chức năng thận: liều trong bảng dành cho người bệnh không suy thận; hiệu chỉnh theo mức lọc cầu thận hoặc khi CRRT, IHD, PEX, ECMO (tr. 57, 63).",
+    ...scenario.regimens.flatMap((r) => [...r.notes, ...r.drugs.map((d) => d.caution)].filter((x): x is string => !!x)),
+  ];
+  const monitoring = [
+    "Đánh giá đáp ứng sau 48–72 giờ; xuống thang hoặc điều chỉnh theo cấy, kháng sinh đồ và diễn biến lâm sàng (tr. 51).",
+    "Thời gian điều trị thông thường 7 ngày nếu không phải vi khuẩn đa kháng và đáp ứng tốt; có thể kéo dài theo vi khuẩn và cơ địa (tr. 51, 78).",
+    "Ngừng kháng sinh dựa vào đáp ứng lâm sàng và procalcitonin: ngưỡng 0,25–0,5 (đơn vị theo bản gốc ghi “ng/lít”, cần đối chiếu) hoặc giảm ≥ 80% so với đỉnh (tr. 78).",
+    "Không đáp ứng sau một thời gian điều trị: hội chẩn dược lâm sàng, vi sinh, tìm căn nguyên khác (tr. 78).",
+  ];
+
+  const footer = (
+    <div style={{ display: "grid", gap: 6, marginTop: 10, fontSize: 13 }}>
+      <details>
+        <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 12.5, color: "#087f89" }}>Yếu tố nguy cơ đa kháng và MRSA</summary>
+        <ul style={{ margin: "6px 0", paddingLeft: 18, lineHeight: 1.6 }}>
+          {RISK[kind].map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </details>
+      {scenario.pool && (
+        <details>
+          <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 12.5, color: "#087f89" }}>Danh sách thuốc theo nhóm của bảng nguồn</summary>
+          {scenario.pool.map((group) => (
+            <div key={group.title} style={{ margin: "6px 0" }}>
+              <b>{group.title}</b>
+              <ul style={{ paddingLeft: 18, margin: "4px 0", lineHeight: 1.6 }}>
+                {group.drugs.map((drug) => (
+                  <li key={`${group.title}-${drug.name}`}>
+                    <b>{drug.name}:</b> {drug.dose}
+                    {drug.caution ? ` — ${drug.caution}` : ""}
+                  </li>
+                ))}
+              </ul>
+              <DrugActionLinks compact texts={group.drugs.map((drug) => `${drug.name}: ${drug.dose} ${drug.route}`)} scenario={group.title} />
+            </div>
+          ))}
+        </details>
+      )}
+    </div>
   );
-  const [openedId, setOpenedId] =
-    useState<string | null>(null);
-
-  const scenario =
-    scenarios.find((s) => s.id === scenarioId) ??
-    scenarios[0];
-
-  function selectScenario(id: string) {
-    setScenarioId(id);
-    setOpenedId(null);
-  }
 
   return (
-    <div style={{ display: "grid", gap: 12, minWidth: 0 }}>
-      <section style={box}>
-        <div style={{
-          color: "#087e87",
-          fontSize: 11,
-          fontWeight: 700,
-        }}>
-          KHUYẾN CÁO CHUYÊN NGÀNH VIỆT NAM · 2023
-        </div>
-
-        <h3 style={{ fontSize: 19, margin: "8px 0" }}>
-          {kind === "hap"
-            ? "Viêm phổi bệnh viện (HAP)"
-            : "Viêm phổi liên quan thở máy (VAP)"}
-        </h3>
-
-        <p style={{
-          fontSize: 12,
-          lineHeight: 1.7,
-          color: "#627b8a",
-          marginBottom: 0,
-        }}>
-          Hội Hô hấp Việt Nam và Hội Hồi sức cấp cứu
-          và Chống độc Việt Nam, cập nhật 2023.
-          Đây là hướng dẫn hội chuyên ngành,
-          không phải quyết định của Bộ Y tế
-          hay phê duyệt của BV199.
-        </p>
-      </section>
-
-      <section style={box}>
-        <h3 style={{ fontSize: 16, margin: "0 0 12px" }}>
-          Chọn tình huống điều trị
-        </h3>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: 8,
-        }}>
-          {scenarios.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => selectScenario(item.id)}
-              aria-pressed={scenario.id === item.id}
-              style={{
-                textAlign: "left",
-                cursor: "pointer",
-                borderRadius: 9,
-                padding: 11,
-                border:
-                  scenario.id === item.id
-                    ? "1px solid #079b9b"
-                    : "1px solid #dce6ed",
-                background:
-                  scenario.id === item.id
-                    ? "#e5f7f4"
-                    : "#fff",
-                color: "#17364b",
-                fontWeight:
-                  scenario.id === item.id ? 700 : 400,
-              }}
-            >
-              {item.title}
-            </button>
-          ))}
-        </div>
-
-        <p style={{
-          fontSize: 12,
-          lineHeight: 1.8,
-          color: "#647b8a",
-          marginBottom: 0,
-        }}>
-          {scenario.description}
-        </p>
-      </section>
-
-      <section style={box}>
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: 10,
-          alignItems: "center",
-          flexWrap: "wrap",
-          marginBottom: 12,
-        }}>
-          <h3 style={{ fontSize: 19, margin: 0 }}>
-            Lựa chọn kháng sinh
-          </h3>
-
-          <span style={{
-            color: "#087e87",
-            fontSize: 12,
-          }}>
-            {scenario.regimens.length} thẻ tham khảo
-          </span>
-        </div>
-
-        <div style={{
-          background: "#f1f8fa",
-          borderRadius: 9,
-          padding: 12,
-          fontSize: 12,
-          lineHeight: 1.8,
-          marginBottom: 13,
-        }}>
-          {kind === "hap"
-            ? "HAP: Bảng 3.1 có ba cột theo mức độ nặng, nguy cơ đa kháng và nguy cơ MRSA. Lưu ý doses ở bảng dành cho người bệnh không suy thận."
-            : "VAP: nhóm A là thuốc chống MRSA; nhóm B là beta-lactam kháng Pseudomonas; nhóm C là thuốc Gram âm không phải beta-lactam. Doses ở bảng dành cho người bệnh không suy thận."}
-
-          <div style={{ marginTop: 5 }}>
-            Mỗi thẻ là một ví dụ tổ hợp khác nhau theo quy tắc của bảng,
-            không phải thuốc cần dùng cùng lúc và không phải thứ tự ưu tiên.
-          </div>
-        </div>
-
-        <div style={{ display: "grid", gap: 8 }}>
-          {scenario.regimens.map((regimen) => {
-            const open = openedId === regimen.id;
-
-            return (
-              <article
-                key={regimen.id}
-                style={{
-                  border: open
-                    ? "1px solid #079b9b"
-                    : "1px solid #dce6ed",
-                  borderRadius: 10,
-                  overflow: "hidden",
-                }}
-              >
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  onClick={() =>
-                    setOpenedId(
-                      open ? null : regimen.id
-                    )
-                  }
-                  style={{
-                    border: 0,
-                    width: "100%",
-                    background:
-                      open ? "#e8f7f4" : "#fff",
-                    color: "#17364b",
-                    padding: 13,
-                    cursor: "pointer",
-                    textAlign: "left",
-                  }}
-                >
-                  <span style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: 10,
-                  }}>
-                    <strong style={{ fontSize: 14 }}>
-                      {regimen.name}
-                    </strong>
-
-                    <span style={{
-                      color: "#087e87",
-                      fontSize: 20,
-                    }}>
-                      {open ? "−" : "+"}
-                    </span>
-                  </span>
-                  {(regimen.notes.length > 0 || regimen.drugs.some((drug) => drug.caution)) && (
-                    <span style={{ display: "block", marginTop: 2, fontSize: 12, fontWeight: 700, color: "#9a3412" }}>Có điểm cần kiểm tra – mở để xem</span>
-                  )}
-                </button>
-
-                {/* Master Task 6: bang lieu co cau truc luon hien (khong can mo) */}
-                <div style={{ padding: "0 13px 10px" }}>
-                  <ModuleDoseTable id={regimen.id} drugs={regimen.drugs} />
-                </div>
-
-                {open && (
-                  <div style={{
-                    padding: 13,
-                    borderTop: "1px solid #dce6ed",
-                    fontSize: 13,
-                    lineHeight: 1.85,
-                  }}>
-                    <div style={{
-                      display: "grid",
-                      gap: 8,
-                    }}>
-                      {regimen.drugs.map((drug, index) => (
-                        <div
-                          key={`${regimen.id}-${index}`}
-                          style={{
-                            background: "#f4f9fb",
-                            borderRadius: 9,
-                            padding: 11,
-                          }}
-                        >
-                          <b>
-                            {regimen.drugs.length > 1
-                              ? `Thuốc ${index + 1}: `
-                              : "Thuốc: "}
-                            {drug.name}
-                          </b>
-
-                          <DrugActionLinks
-                            compact
-                            texts={[`${drug.name}: ${drug.dose} ${drug.route}`]}
-                            scenario={regimen.name}
-                          />
-
-                          {drug.caution && (
-                            <div>
-                              <b>Lưu ý:</b>{" "}
-                              {drug.caution}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-
-                    <p>
-                      <b>Điều kiện áp dụng:</b>{" "}
-                      {regimen.indication}
-                    </p>
-
-                    <div style={{
-                      background: "#fff7e8",
-                      borderRadius: 9,
-                      padding: 11,
-                    }}>
-                      <b>Điểm cần kiểm tra</b>
-
-                      <ul style={{
-                        marginBottom: 0,
-                        paddingLeft: 20,
-                      }}>
-                        {regimen.notes.map((note) => (
-                          <li key={note}>{note}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div style={{
-                      marginTop: 11,
-                      fontSize: 12,
-                      color: "#657b8d",
-                    }}>
-                      Nguồn: {regimen.source}
-                    </div>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      {scenario.pool && (
-        <section style={box}>
-          <details>
-            <summary style={{
-              cursor: "pointer",
-              fontWeight: 700,
-              fontSize: 13,
-            }}>
-              Toàn bộ thuốc được liệt kê trong cột/nhóm này
-            </summary>
-
-            <div style={{ fontSize: 13, lineHeight: 1.85 }}>
-              <p style={{ color: "#647b8a", fontSize: 12 }}>
-                Dùng để tự xây dựng tổ hợp theo quy tắc của bảng;
-                không phải mọi tổ hợp đều đã được đánh giá.
-              </p>
-
-              {scenario.pool.map((group) => (
-                <div key={group.title} style={{ marginBottom: 10 }}>
-                  <b>{group.title}</b>
-
-                  <ul style={{ paddingLeft: 20, margin: "6px 0" }}>
-                    {group.drugs.map((drug) => (
-                      <li key={`${group.title}-${drug.name}`}>
-                        <b>{drug.name}:</b> {drug.dose}
-                        {drug.caution ? ` — ${drug.caution}` : ""}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <DrugActionLinks
-                    compact
-                    texts={group.drugs.map((drug) => `${drug.name}: ${drug.dose} ${drug.route}`)}
-                    scenario={group.title}
-                  />
-                </div>
-              ))}
-            </div>
-          </details>
-        </section>
-      )}
-
-      <section style={box}>
-        <details>
-          <summary style={{
-            cursor: "pointer",
-            fontWeight: 700,
-            fontSize: 13,
-          }}>
-            Kiểm tra nguy cơ đa kháng và MRSA
-          </summary>
-
-          <ul style={{
-            fontSize: 13,
-            lineHeight: 1.9,
-          }}>
-            {RISK[kind].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-
-          <p style={{ fontSize: 12, color: "#647b8a" }}>
-            {kind === "hap"
-              ? "Nguồn: HAP 2023, tr. 52."
-              : "Nguồn: VAP 2023, tr. 58–59."}
-          </p>
-        </details>
-      </section>
-
-      <section style={box}>
-        <details>
-          <summary style={{
-            cursor: "pointer",
-            fontWeight: 700,
-            fontSize: 13,
-          }}>
-            Nguyên tắc chọn thuốc, theo dõi và thời gian điều trị
-          </summary>
-
-          <ul style={{
-            fontSize: 13,
-            lineHeight: 1.9,
-          }}>
-            <li>
-              Phần lớn tác nhân VPBV/VPLQTM ở Việt Nam là P. aeruginosa
-              và vi khuẩn Gram âm khác, nên chọn kháng sinh có tác dụng
-              trên P. aeruginosa và Gram âm.
-            </li>
-            <li>
-              {kind === "hap"
-                ? "HAP nặng hoặc có nguy cơ đa kháng cần phối hợp hai kháng sinh; các trường hợp còn lại có thể đơn trị bằng một kháng sinh có tác dụng trên P. aeruginosa (tr. 57)."
-                : "VPLQTM có yếu tố nguy cơ đa kháng, hoặc đơn vị có > 10% kháng với thuốc đơn trị, hoặc chưa biết tỷ lệ nhạy cảm: phối hợp hai kháng sinh thuộc hai nhóm khác nhau (tr. 63)."}
-            </li>
-            <li>
-              Không dùng aminoglycosid hoặc colistin đơn độc.
-            </li>
-            <li>
-              Đơn vị có tỷ lệ Acinetobacter baumannii kháng carbapenem
-              {kind === "hap" ? " > 25%" : " (đa kháng) > 25%"},
-              bệnh nặng và không đáp ứng sau 48–72 giờ: có thể xem xét colistin.
-            </li>
-            <li>
-              Thuốc chống MRSA chỉ bổ sung khi bệnh nặng/có yếu tố nguy cơ hoặc đơn vị có
-              MRSA &gt; 10% hay không có dữ liệu. Nếu không, các thuốc Gram âm như
-              piperacillin/tazobactam, cefepim, levofloxacin, imipenem, meropenem
-              cũng có hiệu quả trên MSSA.
-            </li>
-            <li>
-              Đánh giá đáp ứng sau 48–72 giờ; xuống thang hoặc điều chỉnh
-              theo cấy, kháng sinh đồ và diễn biến lâm sàng (tr. 51).
-            </li>
-            <li>
-              Thời gian thông thường 7 ngày nếu không phải vi khuẩn đa kháng
-              và đáp ứng tốt; có thể kéo dài theo vi khuẩn và cơ địa (tr. 51, 78).
-            </li>
-            <li>
-              Quyết định ngừng dựa vào đáp ứng lâm sàng và procalcitonin:
-              ngưỡng 0,25–0,5 (đơn vị theo bản gốc là &quot;ng/lít&quot;, cần đối chiếu)
-              hoặc giảm ít nhất 80% so với đỉnh (tr. 78).
-            </li>
-            <li>
-              Liều trong bảng dành cho người bệnh không suy thận; cần hiệu chỉnh
-              theo mức lọc cầu thận hoặc khi có CRRT, IHD, PEX, ECMO (tr. 57, 63).
-            </li>
-            <li>
-              Không đáp ứng sau một thời gian điều trị: hội chẩn dược lâm sàng,
-              vi sinh, tìm căn nguyên khác (tr. 78).
-            </li>
-          </ul>
-        </details>
-      </section>
-
-      <section style={box}>
-        <details>
-          <summary style={{
-            cursor: "pointer",
-            fontWeight: 700,
-            fontSize: 13,
-          }}>
-            Nguồn tài liệu và tình trạng thẩm định
-          </summary>
-
-          <div style={{
-            fontSize: 13,
-            lineHeight: 1.85,
-            marginTop: 10,
-          }}>
-            <b>
-              Khuyến cáo chẩn đoán và điều trị
-              viêm phổi bệnh viện và viêm phổi
-              liên quan đến thở máy – cập nhật 2023.
-              Hội Hô hấp Việt Nam, Hội Hồi sức cấp cứu và Chống độc Việt Nam.
-            </b>
-
-            <div>HAP: Bảng 3.1, tr. 53–56; chú thích tr. 56–57.</div>
-            <div>VAP: Bảng 3.2, tr. 60–62; chú thích tr. 62–63.</div>
-            <div>Theo dõi và thời gian dùng kháng sinh: Mục 4, tr. 78.</div>
-
-            <p>
-              Các thẻ là ví dụ tổ hợp xây dựng theo quy tắc của bảng.
-              Không mặc định là phác đồ ưu tiên tại BV199.
-            </p>
-
-            <p style={{ color: "#8b611c" }}>
-              Đã đối chiếu với bản PDF do người dùng cung cấp (13/10/2026);
-              chưa kiểm tra bản mới hơn hoặc văn bản thay thế.
-              Liều phải được hiệu chỉnh và thẩm định trước áp dụng.
-              Điều trị theo kết quả vi sinh (Mục 3) chưa được mã hóa.
-            </p>
-          </div>
-        </details>
-      </section>
-    </div>
+    <TreatmentPanel
+      scenarios={scenarios.map(s=>({value:s.id,label:s.title,criteria:[s.title],definitionNotes:RISK[kind],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>r.source))]}))}
+      scenario={scenario.id}
+      initialChoice={initialScenarioId}
+      onScenario={setScenarioId}
+      scenarioHint={scenario.description}
+      sourceTag="Hội Hô hấp VN & Hội HSCC-CĐ VN · 2023"
+      rationale={getModuleRationale(kind, scenario.id)}
+      sections={sections}
+      notes={Array.from(new Set(notes))}
+      monitoring={monitoring}
+      sources={[
+        kind === "hap"
+          ? "Khuyến cáo VPBV/VPLQTM 2023 (Hội Hô hấp VN, Hội HSCC-CĐ VN) – Bảng 3.1, tr. 53–57; Mục 4, tr. 78"
+          : "Khuyến cáo VPBV/VPLQTM 2023 (Hội Hô hấp VN, Hội HSCC-CĐ VN) – Bảng 3.2, tr. 60–63; Mục 4, tr. 78",
+      ]}
+      footer={footer}
+    />
   );
 }

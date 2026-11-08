@@ -54,13 +54,12 @@ r = E.evaluate("v8-13", { ...base, penicillinAllergy: "yes", scenario: "Staphylo
 check("MSSA + dị ứng: loại oxacilin (bắt buộc), giữ vancomycin",
   r.status === "ready" && r.excluded.some((e) => /Oxacilin/.test(e.title)) && allOpts(r).some((o) => o.drugs.some((d) => /Vancomycin/.test(d.name))));
 
-// ---------- COPD theo QĐ 2767 (2023) ----------
+// ---------- COPD: guidance migrated to QĐ 2131 (2026), no legacy auto-selection ----------
 r = E.evaluate("v8-6", { ...base });
-check("COPD (QĐ 2767) thiếu nguy cơ → need-input", r.status === "need-input" && r.missing.some((m) => m.startsWith("Nguy cơ kháng thuốc")));
-const copdQ = E.questionsFor("v8-6", { ...base, mdr: "no" }).find((q) => q.key === "scenario");
-check("COPD không nguy cơ: không còn tình huống Pseudomonas", !!copdQ && copdQ.options.every((o) => /không có nguy cơ|không có yếu tố nguy cơ/.test(o.value)), copdQ && copdQ.options.map(o=>o.value.slice(0,40)).join(" | "));
-r = E.evaluate("v8-6", { ...base, mdr: "no", scenario: copdQ && copdQ.options.find((o) => o.value.startsWith("Nội trú"))?.value });
-check("COPD nội trú không nguy cơ Pseudomonas → ready, nguồn QĐ 2767, 7–10 ngày", r.status === "ready" && r.sourceSummary.includes("2767") && allOpts(r).some((o) => o.duration.includes("7–10")));
+check("COPD redirects to QĐ 2131 guidance rather than legacy selection", r.status === "no-match" && r.message.includes("2131/QĐ-BYT"));
+check("COPD does not show legacy scenario questions", E.questionsFor("v8-6", { ...base, mdr: "no" }).length === 0);
+r = E.evaluate("v8-6", { ...base, mdr: "no", scenario: "Nội trú – có chỉ định kháng sinh, không có nguy cơ nhiễm Pseudomonas" });
+check("Stale COPD scenario input cannot reactivate QĐ 2767 doses", r.status === "no-match" && allOpts(r).length === 0);
 
 // ---------- Doi tuong / thai ky ----------
 r = E.evaluate("v8-101", { ...base });

@@ -11,18 +11,19 @@ import { createContext, useContext, type ReactNode } from "react";
 
 import type { LinkContext } from "@/lib/antibiotics/drug-links";
 
-const Ctx = createContext<LinkContext>({});
+export type AbxPresentationContext = LinkContext & { hideDrugNavigation?: boolean };
+const Ctx = createContext<AbxPresentationContext>({});
 
 export function AbxLinkProvider({
   value,
   children,
 }: {
-  value: LinkContext;
+  value: AbxPresentationContext;
   children: ReactNode;
 }) {
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
-export function useAbxLinkContext(): LinkContext {
+export function useAbxLinkContext(): AbxPresentationContext {
   return useContext(Ctx);
 }

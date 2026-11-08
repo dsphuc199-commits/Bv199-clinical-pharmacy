@@ -13,12 +13,15 @@
 */
 
 import {
-  STRUCTURE_STATUS_TEXT,
   optionsFor,
   type DrugGroup,
   type StructureStatus,
   type StructuredDrug,
 } from "@/lib/antibiotics/regimen-structure";
+import { Fragment } from "react";
+import RegimenDrugTools from "./RegimenDrugTools";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 
 type Props = {
   groups: DrugGroup[];
@@ -29,13 +32,21 @@ type Props = {
   population?: "adult" | "child";
   /* Cac dong la lua chon doc lap (khuyen cao quoc te): khong noi bang "+ phoi hop". */
   independent?: boolean;
+  hideDailyDose?: boolean;
+  durationColumn?: boolean;
+  hideRegimenDuration?: boolean;
+  sourceDoseAbsent?: boolean;
 };
 
-const DASH = "—";
+const MISSING_DOSE = "Cần xác minh liều";
 
 function doseText(o: StructuredDrug): string {
-  if (!o.dose) return DASH;
-  return `${o.dose} ${o.doseUnit ?? ""}`.trim();
+  if (!o.dose) return MISSING_DOSE;
+  // Preserve explicit daily context when the legacy parser omitted it from the
+  // structured unit. Do not convert a daily total into a per-administration dose.
+  const primaryDose = o.raw.split(/[;(\n]/u)[0];
+  if (/\/\s*(?:ngày|day|24\s*h)/iu.test(primaryDose) && !/\/\s*(?:ngày|day|24\s*h)/iu.test(o.doseUnit ?? "")) return clinicalText(o.raw);
+  return clinicalText(`${o.dose} ${o.doseUnit ?? ""}`.trim());
 }
 
 function ruleText(g: DrugGroup, n: number): string | undefined {
@@ -45,11 +56,12 @@ function ruleText(g: DrugGroup, n: number): string | undefined {
   return undefined;
 }
 
-function Row({ o, showCourse }: { o: StructuredDrug; showCourse: boolean }) {
+function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean }) {
   const critical = o.flags.filter((f) => f.startsWith("KIỂM TRA"));
   return (
     <tr className={critical.length ? "tx-row tx-row-warn" : "tx-row"}>
-      <td data-label="Thuốc" className="tx-drug">
+      {showRelation && <td className="tx-marker" data-label="Quan hệ lựa chọn">{marker}</td>}
+      <td data-label="Hoạt chất" className="tx-drug">
         <strong>{o.name}</strong>
         {o.populationLabel && <span className="tx-pop">{o.populationLabel}</span>}
         {o.context && <span className="tx-ctx">{o.context}</span>}
@@ -57,30 +69,26 @@ function Row({ o, showCourse }: { o: StructuredDrug; showCourse: boolean }) {
           <span key={f} className="tx-crit" role="alert">{f}</span>
         ))}
       </td>
-      <td data-label="Liều/lần">
+      <td data-label="Cách dùng">
         <div>
-          {doseText(o)}
-          {o.dailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
+          <span data-dose="">{doseText(o)}</span><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route || "Chưa xác minh đường dùng")}</span><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval || "Chưa xác minh khoảng cách liều")}</span>
+          {o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
           {o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
-        </div>
-      </td>
-      <td data-label="Đường dùng">
-        <div>
-          {o.route ?? DASH}
           {o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
         </div>
       </td>
-      <td data-label="Khoảng cách"><div>{o.interval ?? DASH}</div></td>
-      {showCourse && <td data-label="Thời gian"><div>{o.course ?? DASH}</div></td>}
+      {showCourse && <td data-label="Thời gian"><div>{clinicalText(o.course || duration || "Chưa xác minh thời gian điều trị")}</div></td>}
     </tr>
   );
 }
 
-export default function DoseTable({ groups, status, duration, population, independent }: Props) {
+export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, sourceDoseAbsent }: Props) {
   if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE") {
     return (
       <div className="tx">
-        <span className={`tx-status tx-status-${status}`}>{STRUCTURE_STATUS_TEXT[status]}</span>
+        <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng."}</p>
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong><RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/></li>)}</ul>
+        <details className="tx-src"><summary>Nguồn và đối chiếu</summary>
         <ul className="tx-raw">
           {groups.flatMap((g) => g.raw).map((r, i) => (
             <li key={`${r.name}-${i}`}>
@@ -89,7 +97,8 @@ export default function DoseTable({ groups, status, duration, population, indepe
             </li>
           ))}
         </ul>
-        {duration && <p className="tx-dur"><span>Thời gian</span> {duration}</p>}
+        </details>
+        {duration && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
         <TxStyle />
       </div>
     );
@@ -100,8 +109,11 @@ export default function DoseTable({ groups, status, duration, population, indepe
     <div className="tx">
       {groups.map((g, i) => {
         const opts = optionsFor(g, population);
-        const showCourse = opts.some((o) => !!o.course);
+        const courses = [...new Set(opts.map(o=>o.course).filter(Boolean))];
+        const showCourse = !!durationColumn || courses.length > 1 || (courses.length > 0 && opts.some(o=>!o.course));
+        const sharedCourse = courses.length === 1 && opts.every(o=>!!o.course) ? courses[0] : undefined;
         const rule = ruleText(g, opts.length);
+        const showRelation=opts.length>1&&(g.rule==='one-of'||g.rule==='all');
         return (
           <div key={i} className="tx-group">
             {i > 0 && !independent && (
@@ -117,30 +129,31 @@ export default function DoseTable({ groups, status, duration, population, indepe
                 {i === 0 && g.condition && <span className="tx-cond">{g.condition}</span>}
               </div>
             )}
-            <table className="tx-table">
+            <table className={`tx-table${showRelation?'':' tx-table-no-relation'}`}>
               <thead>
                 <tr>
-                  <th>Thuốc</th>
-                  <th>Liều/lần</th>
-                  <th>Đường dùng</th>
-                  <th>Khoảng cách</th>
+                  {showRelation && <th className="tx-marker"><span className="tx-sr">Quan hệ lựa chọn</span></th>}
+                  <th>Hoạt chất</th>
+                  <th>Cách dùng</th>
                   {showCourse && <th>Thời gian</th>}
                 </tr>
               </thead>
               <tbody>
-                {opts.map((o, j) => (
-                  <Row key={`${o.name}-${j}`} o={o} showCourse={showCourse} />
-                ))}
+                {opts.map((o, j) => <Fragment key={`${o.name}-${j}`}>
+                  <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
+                  <tr className="tx-tools-row"><td colSpan={2+Number(showRelation)+Number(showCourse)}><RegimenDrugTools name={o.name} texts={[o.raw]} /></td></tr>
+                </Fragment>)}
               </tbody>
             </table>
+            {sharedCourse && !duration && !showCourse && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(sharedCourse)}</p>}
           </div>
         );
       })}
-      {duration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
-      {(status === "PARTIAL" || notes.length > 0) && (
+      {duration && !durationColumn && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
+      {(status === "PARTIAL" || notes.length > 0 || groups.some(g=>g.raw.some(r=>clinicalText(r.dose)!==r.dose))) && (
         <details className="tx-src">
           <summary>
-            Nguyên văn nguồn{status === "PARTIAL" ? " · ô “—” là nguồn không nêu" : ""}
+            Nguồn và đối chiếu
           </summary>
           <ul>
             {groups.flatMap((g) => g.raw).map((r, i) => (
@@ -175,7 +188,13 @@ export function TxStyle() {
       .tx-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
       .tx-table th { text-align: left; font-size: 11px; font-weight: 700; color: #4b6576; border-bottom: 1px solid #dce6ed; padding: 4px 6px; }
       .tx-table td { vertical-align: top; padding: 6px; border-bottom: 1px solid #edf2f6; overflow-wrap: anywhere; }
-      .tx-table th:first-child, .tx-table td:first-child { width: 30%; }
+      .tx-table th.tx-marker, .tx-table td.tx-marker { width: 44px; text-align:center; font-weight:700; color:#087f89; }
+      .tx-table-no-relation th:first-child, .tx-table:not(.tx-table-no-relation) th:nth-child(2), .tx-table td.tx-drug { width: 32%; }
+      .tx-tools-row td { padding-left:44px; }
+      .tx-table-no-relation .tx-tools-row td { padding-left:0; }
+      .tx-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+      .tx-table th { overflow-wrap: anywhere; }
+      .tx-src summary:focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .tx-drug strong { display: block; }
       .tx-pop, .tx-ctx, .tx-sub { display: block; font-size: 11px; color: #5b7384; }
       .tx-pop { color: #075985; font-weight: 700; }
@@ -190,14 +209,24 @@ export function TxStyle() {
       .tx-status { justify-self: start; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 8px; background: #fff7ed; color: #9a3412; border: 1px dashed #c2410c; }
       .tx-raw { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 13px; }
       .tx-raw li { display: grid; gap: 2px; padding: 6px 8px; background: #f7fafc; border-radius: 8px; overflow-wrap: anywhere; }
+      .tx-listed { list-style:none; padding:0; margin:8px 0; }.tx-listed > li { padding:10px 0; border-bottom:1px solid #e1e9ee; }
+      .tx-table th { background:#f3f6f8; padding:9px 8px; color:#132b43; font-size:13px; }.tx-table td { padding:10px 8px; }.tx-rule { border-radius:3px; background:transparent; padding:0; font-weight:600; }
       @media (max-width: 640px) {
-        .tx-table, .tx-table tbody, .tx-table tr, .tx-table td { display: block; width: 100% !important; }
+        /* Mobile: ten thuoc mot dong; Lieu dung | Duong dung | Khoang cach lieu thanh 3 cot – van tach truong */
+        .tx-table, .tx-table tbody { display: block; width: 100% !important; }
         .tx-table thead { display: none; }
-        .tx-table tr { border: 1px solid #dce6ed; border-radius: 10px; padding: 6px 8px; margin-bottom: 6px; background: #fff; }
-        .tx-table td { border: 0; padding: 2px 0; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 6px; }
-        .tx-table td::before { content: attr(data-label); font-size: 11px; font-weight: 700; color: #5b7384; }
-        .tx-table td.tx-drug { display: block; }
+        .tx-table tr { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 8px 4px; border: 0; border-bottom: 1px solid #edf2f6; padding: 10px 0; margin: 0; }
+        .tx-table tr:last-child { border-bottom: 0; }
+        .tx-table td { display: block; width: auto !important; border: 0; padding: 0; }
+        .tx-table td::before { content: attr(data-label); display: block; font-size: 10.5px; font-weight: 700; color: #6b8293; }
+        .tx-table tr > td { grid-column:2; }.tx-table td.tx-marker { grid-column:1; grid-row:1 / span 5; }
+        .tx-table td.tx-marker::before { content:none; }
+        .tx-table tr.tx-tools-row { display:block; padding-left:36px; }
+        .tx-table td.tx-drug { grid-column: 2; }
         .tx-table td.tx-drug::before { content: none; }
+        .tx-table-no-relation tr { grid-template-columns:minmax(0,1fr); }
+        .tx-table-no-relation tr > td,.tx-table-no-relation td.tx-drug { grid-column:1; }
+        .tx-table-no-relation tr.tx-tools-row { padding-left:0; }
       }
     `}</style>
   );

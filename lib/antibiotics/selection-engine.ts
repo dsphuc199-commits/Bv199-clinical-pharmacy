@@ -374,6 +374,7 @@ function genericCandidates(diseaseId: string, input: PatientInput) {
 }
 
 export function questionsFor(diseaseId: string, input: PatientInput): Question[] {
+  if (diseaseId === "v8-6") return [];
   const kind = kindOf(diseaseId);
   const disease = DISEASES.find((d) => d.id === diseaseId);
   if (!disease) return [];
@@ -865,6 +866,10 @@ function evaluateRaw(diseaseId: string, input: PatientInput): Result {
     ha xuong "limited", kem gioi han neu ro ly do.
 */
 export function evaluate(diseaseId: string, input: PatientInput): Result {
+  // QĐ 2131 replaces QĐ 2767. Do not recommend the legacy COPD dose pool.
+  if (diseaseId === "v8-6") {
+    return { status: "no-match", message: "Tra cứu đợt cấp COPD tại Hướng dẫn Việt Nam theo QĐ 2131/QĐ-BYT ngày 14/7/2026. Bộ chọn không sử dụng phác đồ COPD 2023 để đề xuất thuốc." };
+  }
   const result = evaluateRaw(diseaseId, input);
   if (result.status !== "ready") return result;
   const approval = approvalFor(diseaseId).status;

@@ -1,0 +1,21 @@
+const load=require('./tsrun.cjs');
+const React=require('react');
+const {renderToStaticMarkup:render}=require('react-dom/server');
+const {capitalizeBullet,bulletPoints}=load('lib/antibiotics/presentation-text.ts');
+const {INTERNATIONAL_DOSE_REVIEWS:reviews}=load('data/antibiotics/empiric/international-dose-review.ts');
+const Review=load('components/antibiotics/empiric/InternationalDoseReview.tsx').default;
+let pass=0,fail=0;function check(n,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${n}`);}
+check('Vietnamese bullet starts with a capital',capitalizeBullet('  điều trị theo kết quả cấy')==='Điều trị theo kết quả cấy');
+check('Dose units after an initial number stay unchanged',capitalizeBullet('2 g mỗi 8 giờ')==='2 g mỗi 8 giờ');
+check('Organism species is not uppercased',capitalizeBullet('S. aureus nhạy methicilin')==='S. aureus nhạy methicilin');
+check('Enumerated points retain their order and become separate bullets',JSON.stringify(bulletPoints('uống theo chỉ định; theo dõi đáp ứng'))===JSON.stringify(['Uống theo chỉ định;','Theo dõi đáp ứng']));
+const p=reviews.find(r=>r.id==='arthritis-pids-idsa-child-table5');
+const a=reviews.find(r=>r.id==='arthritis-seimc-adult-gramnegative');
+check('Pediatric table has seven selected rows and excludes neonates',p.population==='child'&&p.rows.length===7&&p.condition.includes('Không áp dụng cho sơ sinh'));
+check('Daily mg per kg values are not converted to per-dose values',p.rows.every(r=>r.dose.includes('mg/kg/ngày'))&&p.rows.find(r=>r.drug==='Cefazolin').dose==='100–150 mg/kg/ngày');
+check('Unverified corrected levofloxacin dose is not imported',!p.rows.some(r=>/levofloxacin/i.test(r.drug)));
+check('Adult Gram-negative branch stays separate and is not a complete empiric regimen',a.population==='adult'&&a.rows.length===2&&a.condition.includes('không phải phác đồ đơn trị mặc định'));
+const h=render(React.createElement(Review,{diseaseId:'v8-33'}));
+check('Both populations are labelled and remain unapproved in data',h.includes('Liều tham khảo trẻ em')&&h.includes('Liều tham khảo người lớn')&&p.approval==='NOT_APPROVED'&&a.approval==='NOT_APPROVED');
+check('Lists retain semantic bullets',h.includes('<ul>')&&h.includes('<li>')&&p.approval==='NOT_APPROVED'&&a.approval==='NOT_APPROVED');
+console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

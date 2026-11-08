@@ -356,9 +356,7 @@ function DosingContent({ params }: { params: UrlParams }) {
         </header>
 
         <div className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs leading-6 text-amber-900">
-          Nội dung tham khảo, chưa thay thế đánh giá của bác sĩ và dược sĩ
-          lâm sàng. Dữ liệu chưa được Hội đồng thuốc và điều trị BV199 phê
-          duyệt. Hiện có {DRUG_GROUPS.length} hoạt chất.
+          {DRUG_GROUPS.length} hoạt chất.
         </div>
 
         <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:p-6">

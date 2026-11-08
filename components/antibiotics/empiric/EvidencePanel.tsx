@@ -39,18 +39,19 @@ export function EvidenceBadge({ status }: { status: EvidenceStatus }) {
 /* Phe duyet HĐT&ĐT – tach rieng voi trang thai nguon (Buoc 4D.2). */
 export function ApprovalBadge({ status }: { status: ApprovalStatus }) {
   const approved = status === "APPROVED_FOR_CLINICAL_USE";
+  if (!approved) return null;
   return (
     <span className={`ev199-badge ${approved ? "ev199-approved" : "ev199-notapproved"}`} title={APPROVAL_TEXT[status]}>
-      {approved ? "APPROVED_FOR_CLINICAL_USE" : "CHƯA PHÊ DUYỆT HĐT&ĐT"}
+      APPROVED_FOR_CLINICAL_USE
       <EvStyle />
     </span>
   );
 }
 
 const ROLE_TEXT = {
-  latest: "Mới nhất – đang áp dụng",
-  "older-applied": "Cũ hơn – vẫn áp dụng cho phần chưa bị thay thế",
-  superseded: "SUPERSEDED – phần nội dung đã bị thay thế",
+  latest: "Bản mới nhất trong dữ liệu đang hiển thị; xem phạm vi xác minh bên dưới",
+  "older-applied": "Nguồn nền trong dữ liệu; cần kiểm tra phạm vi còn áp dụng",
+  superseded: "Nội dung được lưu lịch sử theo mapping hiện có",
 } as const;
 
 export function EvidencePanel({ diseaseId }: { diseaseId: string }) {
@@ -67,10 +68,12 @@ export function EvidencePanel({ diseaseId }: { diseaseId: string }) {
           <ApprovalBadge status={e.approval.status} />
         </span>
       </div>
-      <p className={e.approval.status === "APPROVED_FOR_CLINICAL_USE" ? "ev199-note" : "ev199-approval"}>
-        {e.approval.text}
-        {e.approval.decision ? ` – Quyết định ${e.approval.decision}` : ""}
-      </p>
+      {e.approval.status === "APPROVED_FOR_CLINICAL_USE" && (
+        <p className="ev199-note">
+          {e.approval.text}
+          {e.approval.decision ? ` ? Quy?t ??nh ${e.approval.decision}` : ""}
+        </p>
+      )}
       <p className="ev199-note">
         VERIFIED_SOURCE chỉ có nghĩa nguồn đã được xác minh; không thay thế phê duyệt của Hội đồng
         Thuốc và Điều trị BV199 (APPROVED_FOR_CLINICAL_USE).

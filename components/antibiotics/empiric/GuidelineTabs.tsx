@@ -18,9 +18,9 @@ import {
   type IntlRec,
   type IntlRegimen,
 } from "@/data/antibiotics/empiric/international";
-import { findDrugs } from "@/lib/antibiotics/drug-links";
 import { structureOptionLines } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
+import ClinicalNotes from "../treatment/ClinicalNotes";
 import {
   DOCS,
   MODULE_SUPERSEDES,
@@ -30,15 +30,20 @@ import {
   type DocId,
 } from "@/data/antibiotics/empiric/regimens";
 import { FORMULARY_SOURCE } from "@/lib/antibiotics/formulary";
+import { SOURCE_ROLE_TEXT, sourceRole, confirmedLifecycle } from "@/lib/antibiotics/source-governance";
 
 import DrugActionLinks from "../links/DrugActionLinks";
 import { EvidencePanel } from "./EvidencePanel";
+import InternationalDoseReview from "./InternationalDoseReview";
+import LungAbscessInternational from "./LungAbscessInternational";
+import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
+import { capitalizeBullet } from "@/lib/antibiotics/presentation-text";
 
 export type TabKey = "vn" | "intl" | "compare" | "sources";
 
 /* Master Task 6: chi 3 tab; "Nguon, phien ban" chuyen vao accordion duoi ket qua (?tab=sources mo accordion). */
 export const TAB_LABELS: Record<Exclude<TabKey, "sources">, { short: string; long: string }> = {
-  vn: { short: "Bộ Y tế", long: "Bộ Y tế" },
+  vn: { short: "Việt Nam", long: "Hướng dẫn Việt Nam" },
   intl: { short: "Quốc tế", long: "Quốc tế" },
   compare: { short: "Đối chiếu", long: "Đối chiếu" },
 };
@@ -102,26 +107,19 @@ const KIND_TEXT: Record<NonNullable<IntlRegimen["kind"]>, string> = {
 function RecItem({ rec }: { rec: IntlRec }) {
   return (
     <li>
-      {rec.text}
-      <span className="gt199-loc">
+      {capitalizeBullet(rec.text)}
+      <details className="gt199-loc"><summary>Xem chứng cứ</summary>
         {rec.grade ? `${rec.grade} · ` : ""}
         {rec.locator}
-      </span>
+      </details>
     </li>
-  );
-}
-
-function Banner({ children }: { children: ReactNode }) {
-  return (
-    <div className="gt199-banner" role="note">
-      {children}
-    </div>
   );
 }
 
 /* ---------------- Tab 2 ---------------- */
 
 export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; moduleContent?: ReactNode }) {
+  if (diseaseId === "v8-9") return <LungAbscessInternational />;
   const entry = getIntlEntry(diseaseId);
 
   if (!entry) {
@@ -140,11 +138,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   return (
     <section className="bv199-panel gt199">
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
-      <Banner>
-        Hướng dẫn quốc tế – <strong>chưa phải phác đồ BV199 phê duyệt</strong>. Dịch từ bản
-        gốc, giữ nguyên thuốc và liều; mỗi mục ghi nguồn và vị trí.
-      </Banner>
-      <p className="gt199-scope"><strong>Phạm vi:</strong> {entry.scope}</p>
+      <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn: hướng dẫn PIDS/IDSA cho trẻ từ 1 tháng đến 17 tuổi; đối chiếu riêng nhánh Gram âm ở người lớn từ GEIO–SEIMC/SEIP/SECOT. Chưa bao phủ đầy đủ mọi bệnh cảnh." : entry.scope}</p>
+      <InternationalDoseReview diseaseId={diseaseId} />
 
       {entry.guidelineIds.map((gid) => {
         const g = INTL_GUIDELINES[gid];
@@ -160,25 +155,25 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
         return (
           <article key={gid} className="gt199-guide">
             <h3>
-              {g.org} – {g.title}
-              <span className={`gt199-status gt199-status-${g.status}`}>{STATUS_TEXT[g.status]}</span>
+              {g.org} · {g.published}
             </h3>
-            <p className="gt199-cite">
-              {g.citation} · Công bố: {g.published}
+            <details className="gt199-cite"><summary>Nguồn và đối chiếu</summary>
+              <p>{g.title}</p>
+              {g.citation} · Công bố: {g.published} · {STATUS_TEXT[g.status]}
               {g.url && (
                 <>
                   {" · "}
                   <a href={g.url} target="_blank" rel="noopener noreferrer">Mở nguồn</a>
                 </>
               )}
-            </p>
+            </details>
 
             {recs.length > 0 && (
-              <ul className="gt199-recs">
+              <details className="gt199-more"><summary>Nguyên tắc điều trị và điều kiện áp dụng ({recs.length})</summary><ul className="gt199-recs">
                 {recsShown.map((rec) => (
                   <RecItem key={rec.text} rec={rec} />
                 ))}
-              </ul>
+              </ul></details>
             )}
             {recsMore.length > 0 && (
               <details className="gt199-more">
@@ -197,42 +192,26 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
                   {/* Master Task 6: dong co lieu tach duoc -> bang; dong mo ta / chua chac cau truc -> nguyen van */}
                   {reg.options.map((option) => {
                     const s = structureOptionLines([option]);
-                    return s.status === "STRUCTURED" || s.status === "PARTIAL" ? (
-                      <DoseTable key={option} groups={s.groups} status={s.status} independent />
-                    ) : (
-                      <ul key={option}>
-                        <li>{option}</li>
-                      </ul>
-                    );
+                    return <DoseTable key={option} groups={s.groups} status={s.status} />;
                   })}
-                  {reg.note && <p className="gt199-note">{reg.note}</p>}
-                  <span className="gt199-loc">{reg.locator}</span>
-                  {findDrugs(reg.options).length > 0 && (
-                    <details className="gt199-links">
-                      <summary>Hiệu chỉnh liều · Kháng sinh đồ ({findDrugs(reg.options).length} thuốc)</summary>
-                      <DrugActionLinks compact texts={reg.options} scenario={`${g.org}: ${reg.scenario}`} />
-                    </details>
-                  )}
+                  {reg.note && <ClinicalNotes items={[reg.note]}/>}
+                  <details className="gt199-loc"><summary>Nguồn và đối chiếu</summary>{reg.locator}</details>
+                  <DrugActionLinks compact navigation={false} texts={reg.options} scenario={`${g.org}: ${reg.scenario}`} />
                 </>
               );
               const kindLabel = reg.kind && (
                 <span className={`gt199-kind gt199-kind-${reg.kind}`}>{KIND_TEXT[reg.kind]}</span>
               );
               /* Buoc 4D.4: lieu thu nghiem khong phai khuyen cao -> thu gon, nhan van hien. */
-              return reg.kind === "trial-dosing" ? (
-                <details key={reg.scenario} className="gt199-reg">
+              return (
+                <details key={reg.scenario} name={`international-${diseaseId}-${gid}`} className="gt199-reg">
                   <summary>
+                    <span className="gt199-kind">Phác đồ</span>
                     {kindLabel}
                     <strong>{reg.scenario}</strong>
                   </summary>
                   {body}
                 </details>
-              ) : (
-                <div key={reg.scenario} className="gt199-reg">
-                  {kindLabel}
-                  <strong>{reg.scenario}</strong>
-                  {body}
-                </div>
               );
             })}
           </article>
@@ -242,14 +221,14 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       {moduleContent}
 
       {entry.gaps && entry.gaps.length > 0 && (
-        <div className="bv199-warning">
-          <strong>Chưa xác minh / chưa trích xuất:</strong>
+        <details className="bv199-warning gt199-gaps">
+          <summary><strong>Còn {entry.gaps.length} nội dung quốc tế chưa xác minh hoặc chưa trích xuất</strong> – xem chi tiết</summary>
           <ul style={{ margin: "4px 0 0", paddingLeft: 18 }}>
             {entry.gaps.map((gap) => (
-              <li key={gap}>{gap}</li>
+              <li key={gap}>{capitalizeBullet(diseaseId === "v8-33" && gap.startsWith("PIDS/IDSA 2023: Bảng 5") ? "Đã bổ sung các hàng liều nhi khoa tham khảo; còn cần thẩm định trần liều, hiệu chỉnh và toàn văn bản đính chính." : diseaseId === "v8-33" && gap.startsWith("Người lớn:") ? "Người lớn: đã bổ sung nhánh Gram âm có liều đối chiếu; các nhánh còn lại chưa được xác minh đầy đủ." : diseaseId === "v8-28" && gap === "Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất." ? "Đã bổ sung đối chiếu một phần liều người lớn; còn thiếu thẩm định liều trẻ em, cá thể hóa và các lựa chọn khác." : gap)}</li>
             ))}
           </ul>
-        </div>
+        </details>
       )}
       <GtStyle />
     </section>
@@ -259,6 +238,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 /* ---------------- Tab 3 ---------------- */
 
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
+  if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p>Phần Việt Nam đã cập nhật theo QĐ 2131/QĐ-BYT ngày 14/7/2026. Đối chiếu trước đây dựa trên QĐ 2767/2023 không được hiển thị như đối chiếu của hướng dẫn mới.</p></section>;
   const c = getComparison(diseaseId);
   if (!c) {
     return (
@@ -278,7 +258,7 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
       <h4>{title}</h4>
       <ul>
         {items.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item}>{capitalizeBullet(item)}</li>
         ))}
       </ul>
     </div>
@@ -287,11 +267,6 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
   return (
     <section className="bv199-panel gt199">
       <div className="bv199-label">SO SÁNH HAI NGUỒN</div>
-      <p className="gt199-scope">
-        <strong>Việt Nam:</strong> {c.vn}
-        <br />
-        <strong>Quốc tế:</strong> {c.intl}
-      </p>
       <div className="gt199-cmp-grid">
         {block("Điểm giống", c.similar, "same")}
         {block("Điểm khác", c.different, "diff")}
@@ -301,6 +276,12 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
         So sánh chỉ dựa trên nội dung đang hiển thị ở Tab 1 và Tab 2; không tạo phác đồ
         mới từ hai nguồn.
       </p>
+      {/* Quy tac chung: vi tri nguon (muc, bang, trang) gom vao "Nguon va can cu", mac dinh dong. */}
+      <details className="gt199-cite">
+        <summary>Nguồn và căn cứ</summary>
+        <p><strong>Việt Nam:</strong> {c.vn}</p>
+        <p><strong>Quốc tế:</strong> {c.intl}</p>
+      </details>
       <GtStyle />
     </section>
   );
@@ -310,7 +291,6 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
 
 export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: ReactNode }) {
   const docs = vnDocsFor(diseaseId);
-  const newest = docs[0];
   const superseded = SUPERSEDED_LOG.filter((s) => s.diseaseId === diseaseId);
   const moduleRules = MODULE_SUPERSEDES.filter((s) => s.diseaseId === diseaseId);
   const entry = getIntlEntry(diseaseId);
@@ -336,17 +316,16 @@ export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: Re
         <ul className="gt199-src">
           {docs.map((doc) => {
             const info = DOCS[doc];
+            const lifecycle = confirmedLifecycle(doc);
             const dropped = moduleRules.some((m) => m.dropped === doc) || superseded.some((s) => s.dropped.includes(doc));
-            const role =
-              doc === newest
-                ? "Mới nhất cho mặt bệnh này"
-                : dropped
-                  ? "Văn bản cũ – chỉ còn dùng cho phần chưa bị thay thế"
-                  : "Văn bản cũ hơn – vẫn áp dụng (chưa có văn bản mới thay thế phần này)";
+            const role = dropped
+              ? "Có quy tắc ẩn phần trùng trong dữ liệu; cần phân biệt với quyết định thay thế chính thức"
+              : "Cần thẩm định phạm vi áp dụng; không suy từ năm xuất bản";
             return (
               <li key={doc}>
                 <strong>QĐ {info.number}</strong> ({info.date}) – {info.title}
-                <span className="gt199-role">{role}</span>
+                <span className="gt199-role">{lifecycle ? SOURCE_ROLE_TEXT[lifecycle.role] : SOURCE_ROLE_TEXT.REVIEW_REQUIRED} · {role}</span>
+                {lifecycle && <span className="gt199-loc">{lifecycle.scope} · kiểm tra {lifecycle.checkedOn} · <a href={lifecycle.url} target="_blank" rel="noopener noreferrer">Nguồn chính thức</a></span>}
                 <span className="gt199-loc">{info.validity}</span>
               </li>
             );
@@ -356,7 +335,7 @@ export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: Re
 
       {(superseded.length > 0 || moduleRules.length > 0) && (
         <>
-          <h4>Văn bản cũ đã bị thay thế</h4>
+          <h4>Lịch sử: nội dung đã được thay thế</h4>
           <ul className="gt199-src">
             {moduleRules.map((m) => (
               <li key={`m-${m.dropped}`}>{m.reason}</li>
@@ -370,6 +349,14 @@ export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: Re
               ))}
           </ul>
         </>
+      )}
+
+      {diseaseId === "v8-1" && (
+        <details className="gt199-more">
+          <summary>Lịch sử hướng dẫn · QĐ4815/2020</summary>
+          <p>QĐ2147/QĐ-BYT thay thế QĐ4815/2020 từ15/7/2026 trong phạm vi CAP người lớn. Không đưa bản2020 vào khu vực nguồn hiện hành.</p>
+          <a href={confirmedLifecycle("byt4815-2020")?.url} target="_blank" rel="noopener noreferrer">Thông báo thay thế chính thức</a>
+        </details>
       )}
 
       {moduleLabels.length > 0 && (
@@ -393,7 +380,8 @@ export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: Re
             return (
               <li key={gid}>
                 <strong>{g.org}</strong> – {g.title}. {g.citation}. Công bố {g.published}.
-                <span className="gt199-role">{STATUS_TEXT[g.status]} · kiểm tra {g.checkedOn}</span>
+                <span className="gt199-role">{SOURCE_ROLE_TEXT[confirmedLifecycle(gid)?.role ?? sourceRole({originalRead:g.status !== "identified",publicationConfirmed:g.status !== "identified",scopeConfirmed:false})]} · {STATUS_TEXT[g.status]} · kiểm tra {confirmedLifecycle(gid)?.checkedOn ?? g.checkedOn}</span>
+                {confirmedLifecycle(gid) && <span className="gt199-loc">{confirmedLifecycle(gid)?.scope}</span>}
                 <span className="gt199-loc">{g.checkNote}</span>
               </li>
             );
@@ -419,6 +407,10 @@ export function SourcesTab({ diseaseId, extra }: { diseaseId: string; extra?: Re
       </ul>
 
       {extra}
+      {INTERNATIONAL_DOSE_REVIEWS.some(r => r.diseaseIds.includes(diseaseId)) && <details className="gt199-more">
+        <summary>Nguồn bổ sung cho bảng liều tham khảo</summary>
+        <ul className="gt199-src">{INTERNATIONAL_DOSE_REVIEWS.filter(r=>r.diseaseIds.includes(diseaseId)).map(r=><li key={r.id}><strong>{r.source} · {r.published}</strong><p>{r.locator}</p><a href={r.url} target="_blank" rel="noopener noreferrer">Mở tài liệu</a></li>)}</ul>
+      </details>}
       <GtStyle />
     </section>
   );
@@ -452,6 +444,10 @@ function GtStyle() {
       .gt199-more > summary, .gt199-links > summary { cursor: pointer; color: #087f89; font-weight: 700; font-size: 12px; }
       .gt199-links { margin-top: 6px; }
       .gt199-gap { color: #92400e; }
+      .gt199-gaps > summary, .gt199-cite > summary { cursor: pointer; }
+      .gt199-cite > summary { font-weight: 700; color: #1e3a5f; font-size: 12px; }
+      details.gt199-cite[open] { padding: 8px 10px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; }
+      .gt199 :is(summary):focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .gt199-cmp-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
       .gt199-cmp { border-radius: 10px; padding: 10px 12px; border: 1px solid #dbe6ed; }
       .gt199-cmp h4 { margin: 0 0 6px; }

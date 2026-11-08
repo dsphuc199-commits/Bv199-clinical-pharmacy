@@ -1,0 +1,97 @@
+// Run separately from unit tests; requires the local dev server and Playwright.
+const path = require('path');
+const fs = require('fs');
+const assert = require('assert/strict');
+const runtime = process.env.PLAYWRIGHT_MODULE || path.join(process.env.USERPROFILE, '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const { chromium } = require(runtime);
+const baseUrl = process.env.COPD_TEST_URL || 'http://localhost:3000/antibiotics/empiric/guideline-v9?disease=v8-6';
+const output = path.resolve(__dirname, '../../audit-69-2026/codex-review/UI7_COPD');
+fs.mkdirSync(output, { recursive: true });
+(async () => {
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
+  let pass = 0;
+  const check = (name, ok) => { assert.ok(ok, name); pass++; console.log(`PASS ${name}`); };
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    const errors = []; page.on('pageerror', error => errors.push(error.message));
+    await page.goto(baseUrl, { waitUntil: 'networkidle' });
+    const root = page.locator('.copd26');
+    const out = root.getByRole('button', { name: 'Điều trị ngoại trú', exact: true });
+    const inpatient = root.getByRole('button', { name: 'Điều trị nội trú', exact: true });
+    const choose = async text => root.locator('.c26-group-picker button').filter({ hasText: text }).first().click();
+    check('Correct COPD route and heading', page.url().includes('disease=v8-6') && await root.getByRole('heading', { name: 'Kháng sinh điều trị đợt cấp COPD', exact: true }).count() === 1);
+    check('Both treatment branches initially closed', await out.getAttribute('aria-expanded') === 'false' && await inpatient.getAttribute('aria-expanded') === 'false' && await root.locator('article').count() === 0);
+    const outArrow = await out.locator('span').last().boundingBox();
+    const inArrow = await inpatient.locator('span').last().boundingBox();
+    check('Both disclosure arrows share the same right-hand column', Math.abs(outArrow.x - inArrow.x) < 1 && Math.abs(outArrow.width - inArrow.width) < 1);
+    await out.focus(); await out.press('Tab');
+    check('Tab order reaches the other branch button', await inpatient.evaluate(el => el === document.activeElement));
+    await root.scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(output, 'desktop-initial.png') });
+    await root.locator('.c26-symptoms summary').click();
+    await root.getByLabel('Đờm mủ', { exact: true }).check();
+    check('Purulence alone does not activate symptom indication in UI', (await root.getByRole('status').innerText()).startsWith('Chưa đạt'));
+    await root.getByLabel('Tăng khó thở', { exact: true }).check();
+    check('Purulence plus dyspnea activates criterion in UI', (await root.getByRole('status').innerText()).startsWith('Đạt tiêu chí'));
+    await out.click();
+    check('Mouse opens outpatient only', await out.getAttribute('aria-expanded') === 'true' && await inpatient.getAttribute('aria-expanded') === 'false');
+    check('Ventilation checkbox is absent in outpatient', await root.getByLabel('Cần thông khí cơ học xâm nhập hoặc không xâm nhập', { exact: true }).count() === 0);
+    await choose('Không có yếu tố nguy cơ kết cục xấu');
+    check('Low-risk outpatient shows seven separate monotherapies', await root.locator('article').count() === 7 && await root.locator('.c26-marker[aria-label="Phối hợp với"]').count() === 0);
+    check('Alternative markers appear once between cards', await root.locator('.c26-or').count() === 6);
+    const first = root.locator('article').first();
+    await first.locator('.c26-tools > details').first().locator('summary').first().click();
+    check('Renal reference opens at prescription', await first.locator('.c26-renal').isVisible());
+    await first.locator('.c26-tools > details').nth(1).locator('summary').first().focus();
+    await first.locator('.c26-tools > details').nth(1).locator('summary').first().press('Enter');
+    check('Keyboard opens interaction reference at prescription', await first.getByText('Domperidon:', { exact: false }).isVisible());
+    await choose('Có nguy cơ kết cục xấu, không có nguy cơ nhiễm');
+    check('Outcome-risk group has explicit amoxicillin doses and fluoroquinolone alternatives', await root.locator('article').count() === 5 && (await root.locator('.c26-regimens').innerText()).includes('Tính theo amoxicillin'));
+    await choose('thường trú hoặc đã phân lập');
+    check('Colonized outpatient branch offers ciprofloxacin only', await root.locator('article').count() === 1 && (await root.locator('article').innerText()).includes('Ciprofloxacin'));
+    await choose('Có các yếu tố nguy cơ');
+    check('Other-risk outpatient branch offers three separate regimens', await root.locator('article').count() === 3 && await root.locator('.c26-or').count() === 2);
+    await inpatient.focus(); await inpatient.press('Enter');
+    check('Keyboard switches to inpatient and collapses outpatient', await inpatient.getAttribute('aria-expanded') === 'true' && await out.getAttribute('aria-expanded') === 'false');
+    const vent = root.getByLabel('Cần thông khí cơ học xâm nhập hoặc không xâm nhập', { exact: true });
+    await vent.check();
+    check('Ventilation indication is confined to inpatient', await vent.isVisible() && await root.getByText('Có chỉ định kháng sinh liên quan đến thông khí cơ học trong nhánh nội trú.', { exact: true }).isVisible());
+    await choose('Không có nguy cơ nhiễm P. aeruginosa');
+    check('Inpatient no-Pseudomonas branch has four alternatives', await root.locator('article').count() === 4);
+    await choose('chưa xác định đa kháng');
+    check('Pseudomonas branch has six alternatives with review flags', await root.locator('article').count() === 6 && await root.locator('.c26-card > .c26-review').count() === 6);
+    await choose('Nghi ngờ hoặc xác định');
+    check('MDR branch requires an explicit base antibiotic selection', await root.locator('article').count() === 0);
+    const base = root.locator('.c26-base-picker select');
+    for (const id of ['cipro-iv','ceftaz','cefep','piptazo','imi','mero']) {
+      await base.selectOption(id);
+      check(`MDR ${id}: three conditional combinations with one plus each`, await root.locator('article').count() === 3 && await root.locator('.c26-marker[aria-label="Phối hợp với"]').count() === 3 && await root.locator('.c26-or').count() === 2);
+    }
+    check('Colistin card retains unresolved-dose review', (await root.locator('article').last().innerText()).includes('Chưa xác lập liều kê đơn'));
+    const colistin = root.locator('article').last();
+    const renalColistin = colistin.locator('.c26-drug-block').last().locator('.c26-tools > details').first();
+    await renalColistin.locator('summary').first().click();
+    await renalColistin.locator('.c26-source > summary').click();
+    check('Colistin retains both original source formats behind the review disclosure', await renalColistin.getByText('4 MUI', { exact: true }).isVisible() && (await renalColistin.innerText()).includes('5 mg/kg'));
+    await root.scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(output, 'desktop-mdr.png') });
+    await inpatient.focus(); await inpatient.press('Space');
+    check('Space closes the active branch', await inpatient.getAttribute('aria-expanded') === 'false');
+    const source = await page.request.get(new URL('/references/qd2131-2026-copd.docx', baseUrl).toString());
+    check('Source download resolves to DOCX', source.status() === 200 && (await source.body()).subarray(0,2).toString() === 'PK');
+    for (const width of [320,375,768]) {
+      await page.setViewportSize({ width, height: 900 });
+      await out.click(); await choose('Không có yếu tố nguy cơ kết cục xấu');
+      check(`No horizontal overflow at ${width}px`, await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+      check(`Drug fields remain labeled at ${width}px`, await root.locator('.c26-field').first().isVisible());
+      const columns = await root.locator('.c26-dose-grid').first().evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+      check(`Responsive prescription grid at ${width}px`, width <= 640 ? columns === 2 : columns === 5);
+      const firstCard = root.locator('article').first();
+      await firstCard.scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(output, `outpatient-${width}.png`) });
+      await inpatient.click(); await choose('Nghi ngờ hoặc xác định'); await base.selectOption('mero');
+      check(`MDR cards do not overflow at ${width}px`, await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+      await inpatient.click();
+    }
+    check('No browser runtime errors', errors.length === 0);
+    fs.writeFileSync(path.join(output, 'browser-results.json'), JSON.stringify({ url: baseUrl, passed: pass, failed: 0, errors, widths: [320,375,768,1440] }, null, 2));
+    console.log(`${pass} passed, 0 failed`);
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

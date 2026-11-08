@@ -15,29 +15,25 @@ import {
 } from "../../../../lib/antibiotics/drug-links";
 
 import CapByt2026 from "../../../../components/antibiotics/CapByt2026";
+import CopdByt2026 from "../../../../components/antibiotics/CopdByt2026";
 import HapVap2023 from "../../../../components/antibiotics/HapVap2023";
 import EntEmpiricGuidelines, {
   isEntDisease,
 } from "../../../../components/antibiotics/EntEmpiricGuidelines";
+import SettingTabs from "@/components/antibiotics/treatment/SettingTabs";
 import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
 import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
-import { ApprovalBadge, EvidenceBadge } from "../../../../components/antibiotics/empiric/EvidencePanel";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
 import DtrPseudomonasIdsa2026 from "../../../../components/antibiotics/empiric/DtrPseudomonasIdsa2026";
 import type { ModuleKey } from "../../../../lib/antibiotics/select-regimens";
-import DiseaseProfile from "../../../../components/antibiotics/empiric/DiseaseProfile";
 import {
   DISEASES,
-  getPopulationHint,
-  getStream,
   normalize,
 } from "../../../../data/antibiotics/empiric/catalog";
-import { getGroupsForDisease } from "../../../../data/antibiotics/empiric/groups";
 import {
   getConcreteRegimensForDisease,
-  getRegimensForDisease,
 } from "../../../../data/antibiotics/empiric/regimens";
 import {
   ClinicalFilterPanel,
@@ -46,7 +42,6 @@ import {
 import {
   CompareTab,
   IntlTab,
-  SourcesTab,
   TAB_LABELS,
   type TabKey,
 } from "../../../../components/antibiotics/empiric/GuidelineTabs";
@@ -54,12 +49,6 @@ import {
   DEFAULT_FILTERS,
   type ClinicalFilterState,
 } from "../../../../lib/antibiotics/clinical-filters";
-import {
-  BYT_REGIMEN_STATUS,
-  DEFAULT_STATUS,
-  DISEASE_STATUS,
-  ENT_MODULE_STATUS,
-} from "../../../../data/antibiotics/empiric/status";
 import type { Disease } from "../../../../data/antibiotics/empiric/types";
 
 /*
@@ -80,7 +69,6 @@ import type { Disease } from "../../../../data/antibiotics/empiric/types";
   8. Giu nguyen cac module khac
   11. Phac do BYT chi tiet (BytRegimenView) tu data/antibiotics/empiric/regimens
   9. Danh muc (chi mat benh co phac do BYT) o data/antibiotics/empiric/catalog.ts
-  10. Ho so mat benh A-F + trang thai du lieu 0-5 (DiseaseProfile)
 
   Chu y:
   Khong mac dinh phac do trong app da duoc
@@ -122,6 +110,8 @@ function isAdultABRS(disease: Disease): boolean {
 
 const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
 
+/* Nhan ngan muc do bang chung (chi tiet: muc Nguon / trang Bang chung). */
+
 /* useSearchParams can Suspense khi build tinh (Next 16). */
 export default function GuidelinePage() {
   return (
@@ -142,11 +132,11 @@ function GuidelineContent() {
       : "v8-1";
   });
   const [pickedScenario, setPickedScenario] = useState<string | null>(null);
-  const [mobileListMode, setMobileListMode] = useState<"specialty" | "disease">("specialty");
-  const [specialtyFilter, setSpecialtyFilter] =
-    useState("Tất cả");
+  /* Danh muc khong loc theo chuyen khoa nua (toi gian) – giu bien de logic loc giu nguyen. */
+  const specialtyFilter = "Tất cả";
 
   const [showCatalog, setShowCatalog] = useState(true);
+  const [mobileCatalogOpen, setMobileCatalogOpen] = useState(false);
   /* Man hinh hep + da chon benh qua URL: CSS dua phac do len truoc danh muc (xem .bv199-url-selected). */
   const [urlSelected] = useState(() => !!searchParams.get("disease"));
 
@@ -157,12 +147,9 @@ function GuidelineContent() {
     return fromUrl && fromUrl in TAB_LABELS ? (fromUrl as TabKey) : "vn";
   });
   /* ?tab=sources (lien ket cu) -> mo accordion Nguon. */
-  const [sourcesOpen] = useState(() => searchParams.get("tab") === "sources");
   const [filters, setFilters] = useState<ClinicalFilterState>(DEFAULT_FILTERS);
 
-  const [openedGroups, setOpenedGroups] = useState<string[]>([
-    "Hô hấp",
-  ]);
+  const [openedGroups, setOpenedGroups] = useState<string[]>(()=>[...new Set(["Hô hấp",DISEASES.find(d=>d.id===searchParams.get('disease'))?.specialty??DISEASES[0].specialty])]);
 
   const [abrsSetting, setAbrsSetting] =
     useState<"outpatient" | "inpatient">("outpatient");
@@ -214,25 +201,6 @@ function GuidelineContent() {
 
   const isAbrs = isAdultABRS(selected);
 
-  const hasModule =
-    isAbrs ||
-    isEnt ||
-    isAdultCAP(selected) ||
-    isHAP(selected) ||
-    isVAP(selected);
-
-  const hasBytRegimen = getRegimensForDisease(selected.id).length > 0;
-
-  const statusEntry =
-    DISEASE_STATUS[selected.id] ??
-    (isEnt
-      ? ENT_MODULE_STATUS
-      : hasBytRegimen
-        ? BYT_REGIMEN_STATUS
-        : DEFAULT_STATUS);
-
-  const stream = getStream(selected);
-  const linkedGroups = getGroupsForDisease(selected.id);
 
   const moduleKey: ModuleKey | null = isEnt
     ? "ent"
@@ -245,6 +213,7 @@ function GuidelineContent() {
           : null;
 
   function chooseDisease(disease: Disease) {
+    setMobileCatalogOpen(false);
     setPickedScenario(null);
     setSelectedId(disease.id);
     setAbrsSetting("outpatient");
@@ -264,22 +233,11 @@ function GuidelineContent() {
     }
   }
 
-  function selectById(id: string) {
-    const target = DISEASES.find((disease) => disease.id === id);
 
-    if (!target) return;
 
-    chooseDisease(target);
-
-    setOpenedGroups((current) =>
-      current.includes(target.specialty)
-        ? current
-        : [...current, target.specialty]
-    );
-  }
-
-  function titleOf(id: string): string {
-    return DISEASES.find((disease) => disease.id === id)?.title ?? id;
+  function changeSource(next:TabKey) {
+    if(next===tab)return;
+    setTab(next);setPickedScenario(null);setAbrsSetting('outpatient');
   }
 
   function toggleGroup(name: string) {
@@ -290,65 +248,14 @@ function GuidelineContent() {
     );
   }
 
-  function changeSpecialty(name: string) {
-    setSpecialtyFilter(name);
-
-    setOpenedGroups(
-      name === "Tất cả" ? ["Hô hấp"] : [name]
-    );
-  }
 
   /* Noi dung module ABRS (UpToDate) – hien o Tab Quoc te. */
-  const abrsContent = (
-            <>
-              <section className="bv199-panel">
-                <div className="bv199-label">
-                  PHÂN LOẠI NƠI ĐIỀU TRỊ
-                </div>
-
-                <div className="bv199-setting">
-                  <button
-                    type="button"
-                    className={
-                      abrsSetting === "outpatient"
-                        ? "bv199-setting-button active"
-                        : "bv199-setting-button"
-                    }
-                    aria-pressed={
-                      abrsSetting === "outpatient"
-                    }
-                    onClick={() =>
-                      setAbrsSetting("outpatient")
-                    }
-                  >
-                    Ngoại trú – Không biến chứng
-                  </button>
-
-                  <button
-                    type="button"
-                    className={
-                      abrsSetting === "inpatient"
-                        ? "bv199-setting-button active"
-                        : "bv199-setting-button"
-                    }
-                    aria-pressed={
-                      abrsSetting === "inpatient"
-                    }
-                    onClick={() =>
-                      setAbrsSetting("inpatient")
-                    }
-                  >
-                    Nội trú – Nặng hoặc biến chứng
-                  </button>
-                </div>
-              </section>
-
-              {abrsSetting === "outpatient" ? (
-                <AbrsUpToDate2026
+  const abrsContent = (<SettingTabs items={[{value:"outpatient",label:"Ngoại trú"},{value:"inpatient",label:"Nội trú"}]} value={abrsSetting} onChange={next=>setAbrsSetting(next as "outpatient"|"inpatient")} >{abrsSetting === "outpatient" ? <>
+<AbrsUpToDate2026
                   key={`${selected.id}-outpatient`}
                 />
-              ) : (
-                <section className="bv199-panel">
+</> : <>
+<section className="bv199-panel">
                   <div className="bv199-label">
                     NỘI TRÚ – CẦN HƯỚNG DẪN RIÊNG
                   </div>
@@ -430,9 +337,7 @@ function GuidelineContent() {
                     đưa vào hỗ trợ kê đơn.
                   </div>
                 </section>
-              )}
-            </>
-  );
+</>}</SettingTabs>);
 
   /* Benh khong co phuong an BYT co lieu (vd. QĐ 1530) -> hien du phuong an, kem co "khong neu lieu". */
   const vnShowAll = !isAdultCAP(selected) && getConcreteRegimensForDisease(selected.id).length === 0;
@@ -448,6 +353,7 @@ function GuidelineContent() {
         fromLabel: selected.title,
         diseaseId: selected.id,
         context: selected.title,
+        hideDrugNavigation: true,
       }}
     >
     <ClinicalFilterProvider value={filters}>
@@ -743,9 +649,26 @@ function GuidelineContent() {
           background: #dff2f1;
         }
 
+        .bv199-crumb { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 0 0 10px; }
+        .bv199-crumb h1 { margin: 0; font-size: 12px; font-weight: 600; color: #5b7384; letter-spacing: .01em; }
+        .bv199-crumb .bv199-toggle { font-size: 12px; padding: 4px 10px; }
+        .bv199-dh-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+        .bv199-disease-heading h2 { margin: 0 0 2px; font-size: 22px; font-weight: 800; color: #12324a; }
+        .bv199-tools { margin-top: 8px; font-size: 12.5px; }
+        .bv199-tools > summary { cursor: pointer; color: #087f89; font-weight: 700; }
+        .bv199-tools .cf199 { margin-top: 6px; }
+        .bv199-statusline { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; font-size: 12px; }
+        .bv199-notapproved { font-weight: 800; color: #9a3412; background: #fff7ed; border: 1px solid #fdba74; border-radius: 999px; padding: 2px 9px; }
+        .bv199-approved { font-weight: 800; color: #166534; background: #f0fdf4; border: 1px solid #86efac; border-radius: 999px; padding: 2px 9px; }
+        .bv199-ev { color: #4b6576; }
+        .bv199-ev-NEEDS_REVIEW, .bv199-ev-MISSING_EVIDENCE { color: #92400e; font-weight: 700; }
+        .bv199-quicklinks { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: 12.5px; }
+        .bv199-quicklinks a { color: #076c75; font-weight: 700; text-decoration: none; }
+        .bv199-quicklinks a:hover { text-decoration: underline; }
+
         .bv199-tabs {
           display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 4px;
           padding: 4px;
           border-radius: 12px;
@@ -859,52 +782,110 @@ function GuidelineContent() {
             grid-template-columns: 1fr;
           }
         }
+
+        /* ===== CDSS dot 2: toi gian – it khung, it vien; desktop dung toan chieu rong ===== */
+        .bv199-empiric { max-width: 1680px; }
+        .bv199-layout { grid-template-columns: 250px minmax(0, 1fr); gap: 22px; }
+        .bv199-layout.collapsed { grid-template-columns: minmax(0, 1fr); }
+        .bv199-catalog { padding: 0 14px 0 0; background: transparent; border: 0; border-right: 1px solid #e3ebf1; border-radius: 0; }
+        .bv199-catalog h2 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #4b6576; margin: 0 0 8px; }
+        .bv199-search { padding: 7px 10px; font-size: 13px; }
+        .bv199-group-list { gap: 0; margin-top: 8px; max-height: calc(100vh - 170px); padding-right: 0; }
+        .bv199-group { border: 0; border-radius: 0; overflow: visible; }
+        .bv199-group-header { background: transparent; padding: 9px 2px 5px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #4b6576; }
+        .bv199-disease-list { padding: 0 0 4px; gap: 0; }
+        .bv199-disease { padding: 6px 10px; border: 0; border-left: 3px solid transparent; border-radius: 0; font-size: 13px; line-height: 1.4; }
+        .bv199-disease.selected { border-left-color: #0b6b8a; background: #eaf5f8; color: #0b4f66; }
+        .bv199-treatment { gap: 12px; }
+        .bv199-disease-heading { background: transparent; border: 0; padding: 0; }
+        .bv199-disease-heading h2 { font-size: 24px; }
+        .bv199-tabs { display: flex; gap: 22px; padding: 0; background: transparent; border-radius: 0; border-bottom: 1px solid #dce6ed; position: static; }
+        .bv199-tabs button { min-height: 36px; border-radius: 0; padding: 6px 2px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+        .bv199-tabs button.active { background: transparent; box-shadow: none; color: #0b6b8a; border-bottom-color: #0b6b8a; }
+        .bv199-sources-acc { background: transparent; border: 0; padding: 0; font-size: 12.5px; }
+        .bv199-sources-acc > summary { color: #4b6576; font-weight: 700; }
+        @media (max-width: 1100px) {
+          .bv199-layout { grid-template-columns: 220px minmax(0, 1fr); }
+        }
+
+        /* ===== CDSS dot 3: bam theo mau – nen xam nhat, khung trang rieng, bo chuyen nguon nho ===== */
+        .bv199-empiric { background: #f4f7f9; border-radius: 0; }
+        .bv199-catalog { background: #fff; border: 1px solid #dfe8ee; border-radius: 10px; padding: 12px; }
+        .bv199-catalog h2 { text-transform: none; letter-spacing: 0; font-size: 14px; color: #12324a; }
+        .bv199-group-header { text-transform: none; letter-spacing: 0; font-size: 12.5px; font-weight: 700; color: #12324a; padding: 10px 2px 4px; }
+        .bv199-count { font-size: 11px; color: #6b8293; }
+        .bv199-crumb-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .bv199-crumb-actions .bv199-toggle, .bv199-tools > summary { white-space: nowrap; }
+        .bv199-crumb h1 { min-width: 0; }
+        .bv199-tools { position: relative; margin: 0; }
+        .bv199-tools > summary { list-style: none; font-size: 12px; padding: 4px 10px; border: 1px solid #cedde5; border-radius: 8px; background: #fff; }
+        .bv199-tools > summary::-webkit-details-marker { display: none; }
+        .bv199-tools-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; width: min(420px, 90vw); background: #fff; border: 1px solid #dfe8ee; border-radius: 10px; padding: 12px; box-shadow: 0 8px 24px rgba(15, 50, 70, .14); }
+        .bv199-tools-pop .bv199-quicklinks { margin: 0 0 8px; }
+        .bv199-disease-heading { padding: 2px 0 0; }
+        .bv199-tabs { display: inline-flex; gap: 0; margin-top: 10px; border: 1px solid #cedde5; border-radius: 8px; overflow: hidden; background: #fff; border-bottom: 1px solid #cedde5; }
+        .bv199-tabs button { min-height: 30px; padding: 4px 14px; border: 0; border-right: 1px solid #e3ebf1; margin: 0; font-size: 12.5px; color: #33505f; }
+        .bv199-tabs button:last-child { border-right: 0; }
+        .bv199-tabs button.active { background: #0b6b8a; color: #fff; border-bottom: 0; }
+        .bv199-sources-acc { padding: 0 2px; }
+        @media (max-width: 760px) {
+          .bv199-layout, .bv199-layout.collapsed { grid-template-columns: minmax(0, 1fr); }
+          .bv199-catalog { border-right: 0; border-top: 1px solid #e3ebf1; padding: 12px 0 0; }
+          .bv199-group-list { max-height: none; }
+          .bv199-disease-heading h2 { font-size: 20px; }
+          .bv199-tabs { gap: 16px; }
+        }
+        /* UI9: preserve BV199 navigation, one white clinical content column. */
+        .bv199-empiric { background:#fff; font-family:"Segoe UI",Arial,sans-serif; }.bv199-treatment { display:block; min-width:0; }.bv199-disease-heading h2 { color:#10243e; font-size:26px; }
+        .bv199-catalog { border-radius:6px; border-color:#e0e8ed; }.bv199-disease.selected { background:#ddf3ef; border-left-color:#009b91; }
+        .bv199-tab-short { display:none; }.bv199-tab-long { display:inline; }.bv199-tabs { gap:0; }
+        .bv199-catalog-mobile { display:none; }
+        #bv199-tabpanel > .bv199-panel { border:0; border-radius:0; background:white; padding:0; }
+        #bv199-tabpanel .gt199,#bv199-tabpanel .la-intl { border:0; border-radius:0; box-shadow:none; }
+        #bv199-tabpanel .gt199-guide,#bv199-tabpanel .gt199-reg,#bv199-tabpanel .abrs-card { border:0; border-bottom:1px solid #dfe8ee; border-radius:0; padding:14px 0; background:white; }
+        #bv199-tabpanel .gt199-cmp-grid { grid-template-columns:minmax(0,1fr); }
+        #bv199-tabpanel .gt199-cmp { border-radius:0; border:0; border-bottom:1px solid #dfe8ee; padding:12px 0; }
+        #bv199-tabpanel .dtr-guidance>div:not(.bv199-warning) { border:0!important; border-bottom:1px solid #dfe8ee!important; border-radius:0!important; padding:12px 0!important; }
+        @media(max-width:760px) {
+          .bv199-catalog-desktop { display:none; }.bv199-catalog-mobile { display:inline-block; }
+          .bv199-layout .bv199-catalog { display:none; }.bv199-layout.bv199-mobile-catalog-open .bv199-catalog { display:block; order:-1; }
+          .bv199-disease-heading h2 { font-size:22px; }.bv199-tabs { width:100%; gap:0; }.bv199-tabs button { flex:1; padding:7px 5px; font-size:11.5px; }
+          .bv199-tab-short { display:none; }.bv199-tab-long { display:inline; }
+        }
       `}</style>
 
-      <header className="bv199-empiric-heading">
-        <div className="bv199-empiric-kicker">
-          KHOA DƯỢC · BỆNH VIỆN 199
-        </div>
-
-        <h1>Điều trị kháng sinh kinh nghiệm</h1>
-
-        <p className="bv199-empiric-subtitle">
-          Phác đồ Bộ Y tế, đối chiếu khuyến cáo quốc tế.{" "}
-          <Link href="/antibiotics/empiric/select">Chọn kháng sinh theo người bệnh →</Link>
-        </p>
-      </header>
-
-      <div className="bv199-toolbar">
-        <div className="bv199-status">
-          {DISEASES.length} mặt bệnh
-        </div>
-
-        <button
-          type="button"
-          className="bv199-toggle"
-          onClick={() =>
-            setShowCatalog((current) => !current)
-          }
-        >
-          {showCatalog
-            ? "◀ Thu gọn danh mục"
-            : "▶ Hiện danh mục"}
+      <div className="bv199-crumb">
+        <h1>Kháng sinh &amp; AMS / Điều trị kinh nghiệm</h1>
+        <div className="bv199-crumb-actions">
+        {/* Chuc nang phu: menu thu gon tren dong duong dan */}
+        <details className="bv199-tools">
+          <summary>Công cụ</summary>
+          <div className="bv199-tools-pop">
+            <nav className="bv199-quicklinks" aria-label="Module liên quan">
+              <Link href={`/antibiotics/empiric/select?disease=${encodeURIComponent(selected.id)}`}>Chọn theo người bệnh</Link>
+              <Link href={organismHref(organismLink?.organismQuery, { from: backPath, fromLabel: selected.title })}>Theo tác nhân</Link>
+              <Link href={antibiogramHref({ organismId: organismLink?.antibiogramId }, { from: backPath, fromLabel: selected.title })}>Kháng sinh đồ BV199</Link>
+              <Link href={`/antibiotics/dosing?from=${encodeURIComponent(backPath)}&fromLabel=${encodeURIComponent(selected.title)}`}>Điều chỉnh liều theo chức năng thận</Link>
+            </nav>
+            <ClinicalFilterPanel value={filters} onChange={setFilters} />
+          </div>
+        </details>
+        <button type="button" className="bv199-toggle bv199-catalog-desktop" aria-expanded={showCatalog} aria-controls="bv199-catalog" onClick={() => setShowCatalog((current) => !current)}>
+          {showCatalog ? "Ẩn danh mục" : "Hiện danh mục"}
         </button>
+        <button type="button" className="bv199-toggle bv199-catalog-mobile" aria-expanded={mobileCatalogOpen} aria-controls="bv199-catalog" onClick={()=>{setShowCatalog(true);setMobileCatalogOpen(open=>!open);}}>Danh mục bệnh</button>
+        </div>
       </div>
 
       <div
         className={
           (showCatalog ? "bv199-layout" : "bv199-layout collapsed") +
-          (urlSelected ? " bv199-url-selected" : "")
+          (urlSelected ? " bv199-url-selected" : "") + (mobileCatalogOpen ? " bv199-mobile-catalog-open" : "")
         }
       >
         {showCatalog && (
-          <aside className="bv199-panel bv199-catalog">
-            <h2>Danh mục theo chuyên khoa</h2>
-            <div className="bv199-mobile-mode-tabs" role="group" aria-label="Kiểu danh mục">
-              <button type="button" className={mobileListMode === "specialty" ? "active" : ""} onClick={() => setMobileListMode("specialty")}>Theo chuyên khoa</button>
-              <button type="button" className={mobileListMode === "disease" ? "active" : ""} onClick={() => setMobileListMode("disease")}>Theo mặt bệnh</button>
-            </div>
+          <aside id="bv199-catalog" className="bv199-panel bv199-catalog">
+            <h2>Danh mục bệnh lý</h2>
 
             <input
               type="search"
@@ -917,56 +898,7 @@ function GuidelineContent() {
               }
             />
 
-            <select
-              className="bv199-select"
-              value={specialtyFilter}
-              aria-label="Lọc chuyên khoa"
-              onChange={(event) =>
-                changeSpecialty(event.target.value)
-              }
-            >
-              <option value="Tất cả">
-                Tất cả chuyên khoa
-              </option>
-
-              {specialties.map((name) => (
-                <option key={name} value={name}>
-                  {name}
-                </option>
-              ))}
-            </select>
-
-            <div className="bv199-catalog-tools">
-              <span>
-                {filtered.length} / {DISEASES.length} mục
-              </span>
-
-              <div>
-                <button
-                  type="button"
-                  className="bv199-link-button"
-                  onClick={() =>
-                    setOpenedGroups(
-                      groups.map((group) => group.specialty)
-                    )
-                  }
-                >
-                  Mở tất cả
-                </button>
-
-                {" · "}
-
-                <button
-                  type="button"
-                  className="bv199-link-button"
-                  onClick={() => setOpenedGroups([])}
-                >
-                  Thu gọn
-                </button>
-              </div>
-            </div>
-
-            <div className={mobileListMode === "disease" ? "bv199-group-list bv199-mobile-hide-groups" : "bv199-group-list"}>
+            <div className="bv199-group-list">
               {groups.map((group) => {
                 const expanded =
                   query.trim().length > 0 ||
@@ -991,7 +923,7 @@ function GuidelineContent() {
                       </span>
 
                       <span className="bv199-count">
-                        {group.diseases.length}
+                        {String(group.diseases.length).padStart(2, "0")}
                       </span>
                     </button>
 
@@ -1025,117 +957,67 @@ function GuidelineContent() {
                 </div>
               )}
             </div>
-            {mobileListMode === "disease" && <div className="bv199-mobile-flat-diseases">
-              {filtered.map((disease) => <button type="button" key={disease.id} className={selected.id === disease.id ? "active" : ""} onClick={() => chooseDisease(disease)}>
-                <strong>{disease.title}</strong><span>{disease.specialty}</span>
-              </button>)}
-            </div>}
           </aside>
         )}
 
         <section className="bv199-treatment">
           <div className="bv199-panel bv199-disease-heading">
-            <div className="bv199-label">
-              MẶT BỆNH ĐANG CHỌN
-            </div>
-
-            <h2>{selected.title}</h2>
-
-            <div className="bv199-muted">
-              {selected.specialty}
-              {icdOf(selected.id).length ? " · ICD-10 " + icdOf(selected.id).join(", ") : ""}
-            </div>
-
-            <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-              {/* Trang thai du lieu cu (StatusBadge) chuyen vao tab Nguon – tranh lap voi trang thai bang chung */}
-              {evidence && <EvidenceBadge status={evidence.status} />}
-              {evidence && <ApprovalBadge status={evidence.approval.status} />}
-              <Link href="/antibiotics/empiric/evidence" style={{ fontSize: 12 }}>Báo cáo bằng chứng</Link>
-            </div>
-
-            {/* Lien ket module: ten thuoc trong tung phac do co nut rieng */}
-            <nav className="bv199-module-links" aria-label="Module liên quan">
-              <Link href={`/antibiotics/empiric/select?disease=${encodeURIComponent(selected.id)}`}>
-                Chọn kháng sinh theo người bệnh
-              </Link>
-              <Link
-                href={organismHref(organismLink?.organismQuery, {
-                  from: backPath,
-                  fromLabel: selected.title,
-                })}
-              >
-                Theo tác nhân
-                {organismLink ? ` · ${organismLink.label}` : ""}
-              </Link>
-              <Link
-                href={antibiogramHref(
-                  { organismId: organismLink?.antibiogramId },
-                  { from: backPath, fromLabel: selected.title }
+            <div className="bv199-dh-row">
+              <div>
+                <h2>{selected.id === "v8-6" ? "Kháng sinh điều trị đợt cấp COPD" : selected.title}</h2>
+                <div className="bv199-muted">
+                  {selected.specialty}
+                  {icdOf(selected.id).length ? " · ICD-10: " + icdOf(selected.id).join(", ") : ""}
+                </div>
+              </div>
+              {/* Trang thai phe duyet: MOT vi tri duy nhat cho ca trang */}
+              {evidence?.approval.status === "APPROVED_FOR_CLINICAL_USE" && (
+                  <span className="bv199-approved">Đã phê duyệt HĐT&amp;ĐT</span>
                 )}
-              >
-                Antibiogram BV199
-                {organismLink ? ` · ${organismLink.label}` : ""}
-              </Link>
-              <Link
-                href={`/antibiotics/dosing?from=${encodeURIComponent(backPath)}&fromLabel=${encodeURIComponent(selected.title)}`}
-              >
-                Hiệu chỉnh liều
-              </Link>
-            </nav>
+            </div>
+            {/* Nguon hien thi: Bo Y te | Quoc te | Doi chieu (bo chuyen nho, khong chiem mot hang rieng) */}
+            <div className="bv199-tabs" role="tablist" aria-label="Nguồn hướng dẫn">
+              {(Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  role="tab"
+                  id={`bv199-tab-${key}`}
+                  aria-selected={tab === key}
+                  aria-controls="bv199-tabpanel"
+                  className={tab === key ? "active" : ""}
+                  tabIndex={tab === key ? 0 : -1}
+                  onClick={() => changeSource(key)}
+                  onKeyDown={event=>{const keys:TabKey[]=['vn','intl','compare'];const index=keys.indexOf(key);const next=event.key==='ArrowRight'?(index+1)%keys.length:event.key==='ArrowLeft'?(index-1+keys.length)%keys.length:event.key==='Home'?0:event.key==='End'?keys.length-1:undefined;if(next!==undefined){event.preventDefault();changeSource(keys[next]);document.getElementById(`bv199-tab-${keys[next]}`)?.focus();}}}
+                  title={TAB_LABELS[key].long}
+                >
+                  <span className="bv199-tab-short">{TAB_LABELS[key].short}</span>
+                  <span className="bv199-tab-long">{TAB_LABELS[key].long}</span>
+                </button>
+              ))}
+            </div>
+
+
           </div>
 
-          {/* BO LOC LAM SANG + 4 TAB (Buoc 4A – Guideline Version Engine) */}
-          <ClinicalFilterPanel value={filters} onChange={setFilters} />
 
-          <div className="bv199-tabs" role="tablist" aria-label="Nguồn hướng dẫn">
-            {(Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]).map((key) => (
-              <button
-                key={key}
-                type="button"
-                role="tab"
-                id={`bv199-tab-${key}`}
-                aria-selected={tab === key}
-                aria-controls="bv199-tabpanel"
-                className={tab === key ? "active" : ""}
-                onClick={() => setTab(key)}
-                title={TAB_LABELS[key].long}
-              >
-                <span className="bv199-tab-short">{TAB_LABELS[key].short}</span>
-                <span className="bv199-tab-long">{TAB_LABELS[key].long}</span>
-              </button>
-            ))}
-          </div>
-
-          <div id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
+          <div key={`${selected.id}-${tab}`} id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
           {tab === "vn" && (
             <>
-              {/* PHAC DO THEO VAN BAN BO Y TE */}
-              <BytRegimenView
-                key={selected.id}
-                diseaseId={selected.id}
-                diseaseTitle={selected.title}
-                showAllByDefault={vnShowAll}
-                moduleNote={
-                  moduleKey === "cap"
-                    ? "Phác đồ có liều: QĐ 2147/QĐ-BYT (2026) – xem bên dưới. Phương án viêm phổi hít (QĐ 1493, hồi sức) không nêu liều."
-                    : undefined
-                }
-              />
+              {/* PHAC DO THEO VAN BAN BO Y TE.
+                  CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
+              {selected.id === "v8-6" && <CopdByt2026 />}
+              {selected.id !== "v8-6" && moduleKey !== "cap" && moduleKey !== "hap" && moduleKey !== "vap" && (
+                <BytRegimenView
+                  key={selected.id}
+                  diseaseId={selected.id}
+                  diseaseTitle={selected.title}
+                  showAllByDefault={vnShowAll}
+                />
+              )}
 
               {(moduleKey === "cap" || moduleKey === "hap" || moduleKey === "vap") && (
                 <>
-                  {moduleKey !== "cap" && (
-                    <div className="bv199-subhead">
-                      Khuyến cáo Hội Hô hấp VN &amp; Hội HSCC-CĐ VN (10/2023) – hội chuyên
-                      ngành, không phải văn bản BYT.
-                    </div>
-                  )}
-                  <EmpiricSelector
-                    key={selected.id}
-                    moduleKey={moduleKey}
-                    diseaseTitle={selected.title}
-                    onApply={setPickedScenario}
-                  />
                   {moduleKey === "cap" ? (
                     <CapByt2026
                       key={`${selected.id}-${pickedScenario ?? "none"}`}
@@ -1184,33 +1066,7 @@ function GuidelineContent() {
 
           </div>
 
-          {/* Master Task 6: nguon, phien ban va ho so mat benh – accordion (khong con la tab) */}
-          <details className="bv199-panel bv199-sources-acc" open={sourcesOpen} key={`src-${selected.id}`}>
-            <summary>Nguồn, phiên bản và hồ sơ mặt bệnh</summary>
-            <SourcesTab
-              diseaseId={selected.id}
-              extra={
-                <details style={{ marginTop: 12 }}>
-                  <summary>
-                    Hồ sơ mặt bệnh, trạng thái dữ liệu và liên kết mặt bệnh gần giống
-                  </summary>
-                  <DiseaseProfile
-                    key={selected.id}
-                    disease={selected}
-                    stream={stream}
-                    population={getPopulationHint(selected)}
-                    status={statusEntry.status}
-                    sourceLabel={statusEntry.sourceLabel}
-                    statusNote={statusEntry.note}
-                    groups={linkedGroups}
-                    hasModule={hasModule}
-                    onSelectDisease={selectById}
-                    titleOf={titleOf}
-                  />
-                </details>
-              }
-            />
-          </details>
+
         </section>
       </div>
     </main>

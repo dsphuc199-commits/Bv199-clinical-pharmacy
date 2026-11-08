@@ -10,6 +10,9 @@
 */
 
 import DrugActionLinks from "../links/DrugActionLinks";
+import DoseTable from "../treatment/DoseTable";
+import ClinicalNotes from "../treatment/ClinicalNotes";
+import { structureOptionLines } from "@/lib/antibiotics/regimen-structure";
 
 const IDSA_URL = "https://www.idsociety.org/practice-guideline/amr-guidance/";
 const TABLE1_URL =
@@ -84,14 +87,7 @@ const box = {
 
 export default function DtrPseudomonasIdsa2026() {
   return (
-    <div style={{ display: "grid", gap: 12, fontSize: 13, lineHeight: 1.65 }}>
-      <p className="bv199-muted" style={{ margin: 0 }}>
-        IDSA 2026 Guidance on the Treatment of Antimicrobial-Resistant
-        Gram-Negative Infections, mục 4: P. aeruginosa DTR. Công bố 30/07/2026
-        (thay bản 4.0 ngày 07/08/2024). Đây là nguồn quốc tế, không có trong
-        văn bản BYT và chưa được BV199 thẩm định.
-      </p>
-
+    <div className="dtr-guidance" style={{ display: "grid", gap: 12, fontSize: 13, lineHeight: 1.65 }}>
       <div className="bv199-warning">
         Chỉ áp dụng khi kháng sinh đồ xác nhận chủng là DTR và thuốc được chọn
         còn nhạy. Thuốc mới cần được làm kháng sinh đồ riêng. Kiểm tra thuốc có
@@ -118,7 +114,8 @@ export default function DtrPseudomonasIdsa2026() {
         <ul style={{ margin: "8px 0 0", paddingLeft: 18 }}>
           {DOSES.map((row) => (
             <li key={row.drug} style={{ marginBottom: 6 }}>
-              <strong>{row.drug}:</strong> {row.dose}
+              <strong>{row.drug}</strong>
+              <DoseTable {...structureOptionLines([`${row.drug}: ${row.dose}`])} independent />
             </li>
           ))}
         </ul>
@@ -129,8 +126,8 @@ export default function DtrPseudomonasIdsa2026() {
         />
         <p className="bv199-muted" style={{ margin: "8px 0 0" }}>
           Các thuốc phối hợp mới (ceftolozan-tazobactam, ceftazidim-avibactam,
-          imipenem-relebactam, cefiderocol) chưa có dữ liệu trong module Hiệu
-          chỉnh liều nên không có nút liên kết.
+          imipenem-relebactam, cefiderocol) cần được hiệu chỉnh bằng nguồn đúng
+          chế phẩm. Chưa xác minh đầy đủ chuyên luận hiệu chỉnh liều tại đây.
         </p>
         <p className="bv199-muted" style={{ margin: "8px 0 0" }}>
           Theo IDSA, liều gợi ý của một số thuốc có thể khác liều FDA khuyến
@@ -141,16 +138,11 @@ export default function DtrPseudomonasIdsa2026() {
 
       <div style={box}>
         <strong>Nguyên tắc chính</strong>
-        <ul style={{ margin: "8px 0 0", paddingLeft: 18 }}>
-          {PRINCIPLES.map((text) => (
-            <li key={text} style={{ marginBottom: 6 }}>
-              {text}
-            </li>
-          ))}
-        </ul>
+        <ClinicalNotes items={PRINCIPLES}/>
       </div>
 
-      <div>
+      <details><summary>Nguồn và đối chiếu</summary>
+        <p>IDSA 2026 Guidance on the Treatment of Antimicrobial-Resistant Gram-Negative Infections, mục 4: P. aeruginosa DTR. Công bố 30/07/2026 (thay bản 4.0 ngày 07/08/2024). Đây là nguồn quốc tế, không có trong văn bản BYT và chưa được BV199 thẩm định.</p>
         <a href={IDSA_URL} target="_blank" rel="noopener noreferrer">
           Xem IDSA AMR Guidance 2026
         </a>
@@ -158,7 +150,7 @@ export default function DtrPseudomonasIdsa2026() {
         <a href={TABLE1_URL} target="_blank" rel="noopener noreferrer">
           Table 1 – liều dùng
         </a>
-      </div>
+      </details>
     </div>
   );
 }

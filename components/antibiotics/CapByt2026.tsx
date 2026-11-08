@@ -1,16 +1,10 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useState } from "react";
 
-import DrugActionLinks from "./links/DrugActionLinks";
-import DoseTable from "./treatment/DoseTable";
+import { getModuleRationale } from "../../data/antibiotics/empiric/rationale-modules";
+import TreatmentPanel, { type TxCard, type TxSection } from "./treatment/TreatmentPanel";
 import { structureForOption } from "../../lib/antibiotics/regimen-structure";
-
-/* Master Task 6: bang lieu co cau truc cho phac do module (id rieng, khong trung phac do BYT). */
-function ModuleDoseTable({ id, drugs }: { id: string; drugs: { name: string; dose: string; route?: string }[] }) {
-  const s = structureForOption(`module-${id}`, drugs);
-  return <DoseTable groups={s.groups} status={s.status} />;
-}
 
 /*
  BV199 - VIEM PHOI CONG DONG NGUOI LON
@@ -554,364 +548,68 @@ const SCENARIOS: Scenario[] = [
   },
 ];
 
-const panel: CSSProperties = {
-  border: "1px solid #dce6ed",
-  borderRadius: 12,
-  background: "#fff",
-  padding: 15,
-  minWidth: 0,
-};
-
 /* Du lieu dung chung cho bo may lua chon khang sinh (lib/antibiotics/selection-engine.ts). */
 export const CAP_SCENARIOS = SCENARIOS;
 export type { Drug as CapDrug, Regimen as CapRegimen, Scenario as CapScenario };
+
+/* Phan loai theo nguon: QĐ 2147 neu cac phac do NGANG HANG (khong thu tu uu tien);
+   phac do co dieu kien / di ung ghi trong ten phac do cua nguon. */
+const CONDITIONAL_RE = /có điều kiện|nghi |chống Pseudomonas|chống MRSA|khi nhiều khả năng/i;
+const ALLERGY_RE = /dị ứng/i;
+
+function capCard(r: Regimen): TxCard {
+  const s = structureForOption(`module-${r.id}`, r.drugs);
+  return {
+    id: r.id,
+    condition: r.indication,
+    groups: s.groups,
+    status: s.status,
+    linkTexts: r.drugs.map((d) => `${d.name}: ${d.dose} ${d.route ?? ""}`),
+    linkScenario: r.name,
+    sources: [`QĐ 2147/QĐ-BYT (2026) — ${r.source}`],
+  };
+}
 
 export default function CapByt2026({
   initialScenarioId,
 }: {
   initialScenarioId?: string;
 }) {
-  const [scenarioId, setScenarioId] = useState(
-    initialScenarioId ?? "ward"
-  );
-  const [opened, setOpened] = useState<string | null>(null);
+  const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "ward");
+  const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
 
-  const scenario =
-    SCENARIOS.find((s) => s.id === scenarioId) ??
-    SCENARIOS[0];
+  const allergy = scenario.regimens.filter((r) => ALLERGY_RE.test(r.name));
+  const conditional = scenario.regimens.filter((r) => !ALLERGY_RE.test(r.name) && CONDITIONAL_RE.test(r.name));
+  const main = scenario.regimens.filter((r) => !allergy.includes(r) && !conditional.includes(r));
+  const sections: TxSection[] = [];
+  if (main.length) sections.push({ key: "equal", title: main.length > 1 ? "Các lựa chọn được khuyến cáo" : "Phác đồ khuyến cáo", itemLabel: "Lựa chọn", cards: main.map(capCard), startAt: 1 });
+  if (conditional.length) sections.push({ key: "cond", title: "Lựa chọn có điều kiện", itemLabel: "Lựa chọn", cards: conditional.map(capCard), startAt: main.length + 1 });
+  if (allergy.length) sections.push({ key: "allergy", title: "Lựa chọn khi dị ứng", itemLabel: "Lựa chọn", cards: allergy.map(capCard), startAt: main.length + conditional.length + 1 });
+
+  const notes = [
+    "Liều theo cột “Liều thường dùng” Phụ lục 1 (CrCl > 50–90 mL/phút) – điều chỉnh liều theo chức năng thận.",
+    ...scenario.regimens.flatMap((r) => [r.caution, ...r.drugs.map((d) => d.caution)].filter((x): x is string => !!x)),
+  ];
+  const monitoring = [
+    ...scenario.alerts,
+    "Đánh giá đáp ứng sau 48–72 giờ; không cải thiện hoặc xấu hơn: thay đổi phác đồ (Mục 5.2).",
+    "Thời gian điều trị: 3–5 ngày sau hết sốt với S. pneumoniae; trung bình 7–10 ngày với VPMPCĐ không biến chứng (Mục 5.2); đáp ứng tốt trong 2–3 ngày đầu: thường 5–7 ngày; kéo dài hơn khi đáp ứng chậm, S. aureus, Gram âm, biến chứng hoặc suy giảm miễn dịch (Mục 5.6.2).",
+    "Chuyển đường uống khi cải thiện ho, khó thở, hết sốt 2 lần cách nhau 8 giờ và uống được (Mục 5.2; Mục 4.5, Bảng 4.4).",
+  ];
 
   return (
-    <div style={{ display: "grid", gap: 12, minWidth: 0 }}>
-      <section style={panel}>
-        <div style={{
-          fontSize: 11,
-          fontWeight: 700,
-          color: "#087e87",
-        }}>
-          BỘ Y TẾ VIỆT NAM · 2026
-        </div>
-
-        <h3 style={{ margin: "7px 0", fontSize: 19 }}>
-          Viêm phổi cộng đồng – Người lớn
-        </h3>
-
-        <div style={{
-          fontSize: 12,
-          color: "#61798b",
-          lineHeight: 1.7,
-        }}>
-          Quyết định 2147/QĐ-BYT, ngày 15/7/2026. Có hiệu lực từ ngày ký
-          và thay thế Quyết định 4815/QĐ-BYT ngày 20/11/2020 (Điều 3).
-        </div>
-      </section>
-
-      <section style={panel}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 16 }}>
-          Chọn bệnh cảnh
-        </h3>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(165px, 1fr))",
-          gap: 8,
-        }}>
-          {SCENARIOS.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              onClick={() => {
-                setScenarioId(item.id);
-                setOpened(null);
-              }}
-              aria-pressed={scenarioId === item.id}
-              style={{
-                textAlign: "left",
-                cursor: "pointer",
-                borderRadius: 9,
-                padding: 11,
-                border:
-                  scenarioId === item.id
-                    ? "1px solid #079b9b"
-                    : "1px solid #dce6ed",
-                background:
-                  scenarioId === item.id
-                    ? "#e5f7f4"
-                    : "#fff",
-                fontWeight:
-                  scenarioId === item.id ? 700 : 400,
-                color: "#17364b",
-              }}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <p style={{
-          color: "#63798b",
-          fontSize: 12,
-          lineHeight: 1.7,
-          marginBottom: 0,
-        }}>
-          {scenario.description}
-        </p>
-      </section>
-
-      <section style={panel}>
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 8,
-          flexWrap: "wrap",
-          marginBottom: 11,
-        }}>
-          <h3 style={{ margin: 0, fontSize: 19 }}>
-            Lựa chọn kháng sinh
-          </h3>
-
-          <span style={{
-            fontSize: 12,
-            color: "#087e87",
-          }}>
-            {scenario.regimens.length} phác đồ tham khảo
-          </span>
-        </div>
-
-        <div style={{
-          display: "grid",
-          gap: 8,
-        }}>
-          {scenario.regimens.map((r) => {
-            const open = opened === r.id;
-
-            return (
-              <article
-                key={r.id}
-                style={{
-                  border: open
-                    ? "1px solid #0c9a9b"
-                    : "1px solid #dce6ed",
-                  borderRadius: 10,
-                  overflow: "hidden",
-                }}
-              >
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  onClick={() =>
-                    setOpened(open ? null : r.id)
-                  }
-                  style={{
-                    width: "100%",
-                    border: 0,
-                    cursor: "pointer",
-                    textAlign: "left",
-                    padding: 13,
-                    background:
-                      open ? "#eaf8f5" : "#fff",
-                    color: "#17364b",
-                  }}
-                >
-                  <span style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: 10,
-                  }}>
-                    <strong style={{ fontSize: 14 }}>
-                      {r.name}
-                    </strong>
-
-                    <span style={{
-                      color: "#087e87",
-                      fontSize: 20,
-                    }}>
-                      {open ? "−" : "+"}
-                    </span>
-                  </span>
-                  {(r.caution || r.drugs.some((d) => d.caution)) && (
-                    <span style={{ display: "block", marginTop: 2, fontSize: 12, fontWeight: 700, color: "#9a3412" }}>Có lưu ý – mở để xem</span>
-                  )}
-                </button>
-
-                {/* Master Task 6: bang lieu co cau truc luon hien (khong can mo) */}
-                <div style={{ padding: "0 13px 10px" }}>
-                  <ModuleDoseTable id={r.id} drugs={r.drugs} />
-                </div>
-
-                {open && (
-                  <div style={{
-                    borderTop: "1px solid #dce6ed",
-                    padding: 13,
-                    lineHeight: 1.8,
-                    fontSize: 13,
-                  }}>
-                    <div style={{
-                      display: "grid",
-                      gap: 8,
-                    }}>
-                      {r.drugs.map((d, index) => (
-                        <div
-                          key={`${r.id}-${index}`}
-                          style={{
-                            padding: 11,
-                            borderRadius: 9,
-                            background: "#f5f9fb",
-                          }}
-                        >
-                          <b>
-                            {r.drugs.length > 1
-                              ? `Thuốc ${index + 1}: `
-                              : "Thuốc: "}
-                            {d.name}
-                          </b>
-
-                          <DrugActionLinks
-                            compact
-                            texts={[`${d.name}: ${d.dose} ${d.route ?? ""}`]}
-                            scenario={r.name}
-                          />
-
-                          {d.caution && (
-                            <div>
-                              <b>Lưu ý:</b> {d.caution}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-
-                    <p>
-                      <b>Khi nào lựa chọn:</b>{" "}
-                      {r.indication}
-                    </p>
-
-                    {r.caution && (
-                      <p style={{
-                        padding: 11,
-                        background: "#fff6e8",
-                        borderRadius: 8,
-                      }}>
-                        <b>Cảnh báo:</b> {r.caution}
-                      </p>
-                    )}
-
-                    <div style={{
-                      fontSize: 12,
-                      color: "#62798c",
-                    }}>
-                      Nguồn: {r.source}
-                    </div>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </div>
-
-        <p style={{
-          color: "#647a89",
-          fontSize: 12,
-          lineHeight: 1.8,
-          marginBottom: 0,
-        }}>
-          Các phác đồ là phương án khác nhau,
-          không phải thứ tự ưu tiên. Liều ghi theo cột
-          &quot;Liều thường dùng&quot; của Phụ lục 1 (Clcr &gt; 50–90 ml/phút);
-          cần hiệu chỉnh theo chức năng thận và đánh giá chuyên môn
-          trước khi sử dụng.
-        </p>
-      </section>
-
-      <section style={panel}>
-        <details>
-          <summary style={{
-            cursor: "pointer",
-            fontWeight: 700,
-            fontSize: 13,
-          }}>
-            Điều kiện an toàn và đánh giá lại
-          </summary>
-
-          <ul style={{
-            fontSize: 13,
-            lineHeight: 1.9,
-          }}>
-            {scenario.alerts.map((alert) => (
-              <li key={alert}>{alert}</li>
-            ))}
-
-            <li>
-              Đánh giá điều trị sau 48–72 giờ; nếu không cải
-              thiện hoặc xấu hơn cần thay đổi phác đồ
-              (Mục 5.2).
-            </li>
-
-            <li>
-              Thời gian điều trị: thường 3–5 ngày sau khi hết sốt
-              với S. pneumoniae; trung bình 7–10 ngày đối với
-              VPMPCĐ không biến chứng (Mục 5.2). Nếu đáp ứng lâm
-              sàng tốt trong 2–3 ngày đầu, thường 5–7 ngày; kéo dài
-              hơn khi đáp ứng chậm, S. aureus, Gram âm, biến chứng
-              hoặc suy giảm miễn dịch (Mục 5.6.2).
-            </li>
-
-            <li>
-              Chuyển sang đường uống khi cải thiện ho, khó thở,
-              hết sốt 2 lần cách nhau 8 giờ và uống được
-              (Mục 5.2; Mục 4.5, Bảng 4.4).
-            </li>
-          </ul>
-        </details>
-      </section>
-
-      <section style={panel}>
-        <details>
-          <summary style={{
-            cursor: "pointer",
-            fontWeight: 700,
-            fontSize: 13,
-          }}>
-            Nguồn và trạng thái thẩm định
-          </summary>
-
-          <div style={{
-            fontSize: 13,
-            lineHeight: 1.9,
-            marginTop: 10,
-          }}>
-            <b>
-              Bộ Y tế – Quyết định 2147/QĐ-BYT
-              ngày 15/7/2026.
-            </b>
-
-            <div>
-              Điều trị kinh nghiệm: Mục 5.3 (tr. 36–39), Bảng 5.1
-              (tr. 39). PDF tr. 46–49.
-            </div>
-
-            <div>
-              Liều và chức năng thận: Phụ lục 1 (tr. 60–63).
-              PDF tr. 70–73.
-            </div>
-
-            <div>
-              Chuyển IV–PO: Mục 4.5, Bảng 4.4 (tr. 34). PDF tr. 44.
-            </div>
-
-            <p style={{ color: "#8b611c" }}>
-              Đã đối chiếu với bản PDF do người dùng cung cấp
-              (13/10/2026); chưa đối chiếu cổng thông tin chính thức
-              của Bộ Y tế. Đây là dữ liệu hỗ trợ tra cứu, chưa phải
-              phác đồ BV199 được phê duyệt. Chưa mã hóa toàn bộ
-              nội dung tài liệu (ví dụ điều trị theo căn nguyên,
-              Mục 5.4).
-            </p>
-          </div>
-        </details>
-      </section>
-    </div>
+    <TreatmentPanel
+      scenarios={SCENARIOS.map((s) => ({ value:s.id,label:s.name,setting:s.id === "low" || s.id === "risk" ? "outpatient" as const : "inpatient" as const,criteria:[s.description],reviewNotes:s.id==="low"||s.id==="risk"?["Cần đối chiếu tiêu chí tuổi đúng 65: mô tả nhóm hiện có ghi <65 và >65. Không tự xác định nhóm chỉ từ tuổi."]:[],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>`QĐ 2147/QĐ-BYT (2026) — ${r.source}`))] }))}
+      scenario={scenario.id}
+      initialChoice={initialScenarioId}
+      onScenario={setScenarioId}
+      scenarioHint={scenario.description}
+      sourceTag="Bộ Y tế · QĐ 2147/QĐ-BYT"
+      rationale={getModuleRationale("cap", scenario.id)}
+      sections={sections}
+      notes={Array.from(new Set(notes))}
+      monitoring={monitoring}
+      sources={["QĐ 2147/QĐ-BYT (2026) – Mục 5.3 (tr. 36–39), Bảng 5.1 (tr. 39); liều: Phụ lục 1 (tr. 60–63)"]}
+    />
   );
 }

@@ -118,6 +118,31 @@ for (const e of I.INTL_ENTRIES) for (const reg of e.regimens) for (const line of
 }
 check("Khuyến cáo quốc tế: liều tách được đều là chuỗi con của dòng nguồn", intlBad.length === 0, intlBad.slice(0, 5));
 
+/* ---------- 9. Template CDSS: phan cap theo nguon (khong tu xep hang) ---------- */
+const BV = load("components/antibiotics/empiric/BytRegimenView.tsx");
+const byScenario = new Map();
+for (const r of shown.values()) for (const did of r.diseaseIds) {
+  const k = `${did}|${r.scenario}`;
+  if (!byScenario.has(k)) byScenario.set(k, []);
+  byScenario.get(k).push(r);
+}
+const hierBad = [], equalBad = [], lost = [];
+for (const [k, items] of byScenario) {
+  const { sections } = BV.sectionsFor(items);
+  const titles = sections.map((s) => s.title);
+  const hasPref = items.some((r) => r.role === "first" || r.role === "severe");
+  const hasAlt = items.some((r) => r.role === "alternative");
+  if (hasPref && hasAlt && !(titles.includes("Lựa chọn ưu tiên") && titles.includes("Lựa chọn thay thế"))) hierBad.push(k);
+  if (!(hasPref && hasAlt) && titles.some((t) => /Lựa chọn ưu tiên|Lựa chọn thay thế/.test(t))) equalBad.push(k);
+  const n = sections.reduce((a, s) => a + s.cards.length, 0);
+  if (n !== items.length) lost.push(k);
+}
+check("Nguồn có phân cấp (ưu tiên + thay thế) → hiển thị 'Lựa chọn ưu tiên' / 'Lựa chọn thay thế'", hierBad.length === 0, hierBad.slice(0, 5));
+check("Nguồn không phân cấp → không tự gắn 'ưu tiên/thay thế' (hiển thị 'Lựa chọn 1, 2…')", equalBad.length === 0, equalBad.slice(0, 5));
+check("Template không làm mất phác đồ nào của bệnh cảnh", lost.length === 0, lost.slice(0, 5));
+const eq = BV.sectionsFor(R.getRegimensForDisease("v8-17").filter((r) => r.scenario === byId.get("r-py-iv-ceph").scenario));
+check("Nhãn thẻ không dùng 'Ưu tiên 1/2'", [...byScenario.values()].every((items) => BV.sectionsFor(items).sections.every((s) => s.itemLabel === "Phác đồ" || s.itemLabel === "Lựa chọn")) && eq.sections.length > 0);
+
 const sum = S.structureSummary([...shown.values()]);
 console.log(`\nPhân loại cấu trúc ${shown.size} phương án: ${JSON.stringify(sum)}`);
 console.log(`${pass} passed, ${fail} failed`);

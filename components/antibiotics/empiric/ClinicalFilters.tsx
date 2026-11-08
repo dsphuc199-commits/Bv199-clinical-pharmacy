@@ -76,8 +76,7 @@ export function ClinicalFilterPanel({ value, onChange }: Props) {
   return (
     <details className="cf199">
       <summary>
-        Bộ lọc lâm sàng
-        <span className="cf199-hint"> · mức độ, kháng thuốc, dị ứng, CrCl, danh mục BV199</span>
+        Bộ lọc
         {isFilterActive(value) && <span className="cf199-on">đang lọc</span>}
       </summary>
 
@@ -165,8 +164,7 @@ export function ClinicalFilterPanel({ value, onChange }: Props) {
       <p className="cf199-note">
         Lọc mức độ và nguy cơ theo từ khóa trong tên tình huống của nguồn; tình huống
         không ghi mức độ/nguy cơ vẫn hiển thị. Dị ứng: chỉ đánh dấu, không tự đổi
-        thuốc – xem module Dị ứng kháng sinh. Liều theo CrCl lấy nguyên văn từ module
-        Hiệu chỉnh liều. Bộ lọc áp dụng cho phác đồ dạng bảng; module CAP, HAP/VAP
+        thuốc – xem module Dị ứng kháng sinh. Bộ lọc áp dụng cho phác đồ dạng bảng; module CAP, HAP/VAP
         dùng bộ chọn nhanh riêng.
       </p>
       {isFilterActive(value) && (

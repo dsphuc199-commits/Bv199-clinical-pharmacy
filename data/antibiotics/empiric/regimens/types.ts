@@ -67,6 +67,8 @@ export type Regimen = {
   /** Tình huống áp dụng (theo nguồn). */
   scenario: string;
   role: RegimenRole;
+  /** Điều kiện áp dụng riêng của phương án trong cùng tình huống (vd. tác nhân theo kháng sinh đồ). */
+  condition?: string;
   /** Các thuốc dùng CÙNG NHAU trong phương án này. */
   drugs: DrugItem[];
   duration?: string;
