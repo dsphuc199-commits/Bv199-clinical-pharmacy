@@ -8,13 +8,15 @@ export type LeafletSectionKey =
   | "tuongTac" | "tuongKy" | "tacDungPhu" | "quaLieu" | "duocLuc" | "duocDong" | "dongGoi" | "baoQuan" | "hanDung";
 
 export type Leaflet = {
-  davId: number;
+  davId?: number;
+  productId?: string;
+  notFound?: boolean;
   soDangKy: string | null;
   tenThuoc: string | null;
   failed?: boolean;
   error?: string;
-  source?: { title: string; url: string };
-  method?: "text" | "ocr" | "mixed";
+  source?: { title: string; url: string; site?: string };
+  method?: "text" | "ocr" | "mixed" | "web";
   confidence?: number | null;
   pages?: number;
   totalPages?: number;
@@ -50,6 +52,18 @@ export async function getLeaflet(davId: number | undefined | null): Promise<Leaf
   try {
     const mod = await import(`@/data/leaflets/${davId}.json`);
     return (mod.default ?? mod) as Leaflet;
+  } catch {
+    return null;
+  }
+}
+
+/* Thong tin HDSD tu trang web cong khai (khop so dang ky), dung khi khong co HDSD Cuc QLD. */
+export async function getWebLeaflet(productId: string): Promise<Leaflet | null> {
+  if (!/^[\w.-]+$/.test(productId)) return null;
+  try {
+    const mod = await import(`@/data/web-leaflets/${productId}.json`);
+    const x = (mod.default ?? mod) as Leaflet;
+    return x.notFound ? null : x;
   } catch {
     return null;
   }

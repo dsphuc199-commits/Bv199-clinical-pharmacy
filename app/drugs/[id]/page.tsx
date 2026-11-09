@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import drugData from "@/data/drug-products.json";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
-import { LEAFLET_SECTIONS, getLeaflet } from "@/lib/drugs/leaflets";
+import { LEAFLET_SECTIONS, getLeaflet, getWebLeaflet } from "@/lib/drugs/leaflets";
 
 type DrugProduct = {
   id: string;
@@ -34,7 +34,7 @@ const STATUS_STYLE: Record<RegistryStatus, string> = {
   "chua-dong-bo": "bg-slate-100 text-slate-700 border-slate-300",
 };
 
-const METHOD_LABEL = { text: "đọc trực tiếp từ PDF", ocr: "nhận dạng chữ (OCR) từ bản scan", mixed: "đọc PDF kết hợp OCR" } as const;
+const METHOD_LABEL = { text: "đọc trực tiếp từ PDF", ocr: "nhận dạng chữ (OCR) từ bản scan", mixed: "đọc PDF kết hợp OCR", web: "trang web" } as const;
 
 export default async function DrugDetailPage({ params }: Props) {
   const { id } = await params;
@@ -45,7 +45,11 @@ export default async function DrugDetailPage({ params }: Props) {
   const reg = getRegistry(drug.id);
   const status = registryStatus(drug.id);
   const leaflet = await getLeaflet(reg?.davId);
-  const sections = leaflet?.sections ?? {};
+  const davOk = !!leaflet && !leaflet.failed;
+  // Khong co HDSD Cuc QLD trich duoc -> dung thong tin tu trang web khop so dang ky.
+  const web = davOk ? null : await getWebLeaflet(drug.id);
+  const shown = davOk ? leaflet : web;
+  const sections = shown?.sections ?? {};
   const shownSections = LEAFLET_SECTIONS.filter((s) => sections[s.key]);
 
   return (
@@ -102,7 +106,11 @@ export default async function DrugDetailPage({ params }: Props) {
           )}
 
           <div className="mt-5 flex flex-wrap gap-2">
-            {reg?.hdsd.map((f, i) => <ExtLink key={f.url} href={f.url}>Xem HDSD gốc{reg.hdsd.length > 1 ? ` ${i + 1}` : ""} (PDF)</ExtLink>)}
+            {reg?.hdsd.map((f, i) => (
+              <ExtLink key={f.url} href={f.url} subtle={leaflet?.failed}>
+                {leaflet?.failed ? "HDSD gốc (Cổng Cục QLD đang báo lỗi file)" : `Xem HDSD gốc${reg.hdsd.length > 1 ? ` ${i + 1}` : ""} (PDF)`}
+              </ExtLink>
+            ))}
             {reg?.mauNhan.map((f, i) => <ExtLink key={f.url} href={f.url} subtle>Xem mẫu nhãn{reg.mauNhan.length > 1 ? ` ${i + 1}` : ""}</ExtLink>)}
             <ExtLink href={DAV_LOOKUP_URL} subtle>Tra cứu trên Cổng Cục QLD</ExtLink>
           </div>
@@ -114,27 +122,38 @@ export default async function DrugDetailPage({ params }: Props) {
 
           {!reg?.hdsd.length && (
             <p className="mt-2 text-slate-600">
-              Cục Quản lý Dược chưa công bố Tờ hướng dẫn sử dụng cho số đăng ký này trên Cổng tra cứu. Tham khảo HDSD kèm theo sản phẩm hoặc hồ sơ thầu.
+              Cục Quản lý Dược chưa công bố Tờ hướng dẫn sử dụng cho số đăng ký này trên Cổng tra cứu.
+              {!web && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Tham khảo HDSD kèm theo sản phẩm hoặc hồ sơ thầu."}
             </p>
           )}
 
           {reg && reg.hdsd.length > 0 && leaflet?.failed && (
             <p className="mt-2 text-slate-600">
-              File HDSD trên Cổng Cục Quản lý Dược hiện không mở được (lỗi phía máy chủ của Cổng). Thử lại bằng nút “Xem HDSD gốc” ở trên hoặc dùng HDSD kèm sản phẩm.
+              File HDSD trên Cổng Cục Quản lý Dược hiện không mở được (lỗi phía máy chủ của Cổng).
+              {!web && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Dùng HDSD kèm sản phẩm."}
             </p>
           )}
 
-          {reg && reg.hdsd.length > 0 && !leaflet && <p className="mt-2 text-slate-600">Chưa trích nội dung. Xem bản gốc bằng nút “Xem HDSD gốc” ở trên.</p>}
+          {reg && reg.hdsd.length > 0 && !leaflet && !web && <p className="mt-2 text-slate-600">Chưa trích nội dung. Xem bản gốc bằng nút “Xem HDSD gốc” ở trên.</p>}
 
-          {leaflet && !leaflet.failed && (
+          {shown && (
             <>
-              <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
-                <strong>CẦN THẨM ĐỊNH.</strong> Nội dung được trích tự động ({leaflet.method ? METHOD_LABEL[leaflet.method] : "tự động"}
-                {leaflet.confidence ? `, độ tin cậy nhận dạng ~${leaflet.confidence}%` : ""}) từ{" "}
-                <a className="font-semibold underline" href={leaflet.source?.url} target="_blank" rel="noreferrer">{leaflet.source?.title || "Tờ hướng dẫn sử dụng"}</a>{" "}
-                công bố trên Cổng Cục Quản lý Dược. Có thể sai ký tự, sai số hoặc lệch bảng, đặc biệt ở liều dùng. <strong>Luôn đối chiếu bản gốc trước khi dùng cho quyết định điều trị.</strong>
-                {leaflet.totalPages && leaflet.pages && leaflet.totalPages > leaflet.pages ? ` Chỉ trích ${leaflet.pages}/${leaflet.totalPages} trang đầu.` : ""}
-              </div>
+              {shown === leaflet ? (
+                <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                  <strong>CẦN THẨM ĐỊNH.</strong> Nội dung được trích tự động ({shown.method ? METHOD_LABEL[shown.method] : "tự động"}
+                  {shown.confidence ? `, độ tin cậy nhận dạng ~${shown.confidence}%` : ""}) từ{" "}
+                  <a className="font-semibold underline" href={shown.source?.url} target="_blank" rel="noreferrer">{shown.source?.title || "Tờ hướng dẫn sử dụng"}</a>{" "}
+                  công bố trên Cổng Cục Quản lý Dược. Có thể sai ký tự, sai số hoặc lệch bảng, đặc biệt ở liều dùng. <strong>Luôn đối chiếu bản gốc trước khi dùng cho quyết định điều trị.</strong>
+                  {shown.totalPages && shown.pages && shown.totalPages > shown.pages ? ` Chỉ trích ${shown.pages}/${shown.totalPages} trang đầu.` : ""}
+                </div>
+              ) : (
+                <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                  <strong>CẦN THẨM ĐỊNH – NGUỒN THAM KHẢO, KHÔNG PHẢI VĂN BẢN CHÍNH THỨC.</strong> Nội dung lấy từ trang{" "}
+                  <a className="font-semibold underline" href={shown.source?.url} target="_blank" rel="noreferrer">{shown.source?.site || shown.source?.title}</a>
+                  {shown.soDangKy ? ` (trang ghi số đăng ký ${shown.soDangKy}, khớp danh mục)` : ""}, do đơn vị đó biên soạn, chưa được Cục Quản lý Dược công bố trên Cổng tra cứu.
+                  Có thể đã được biên tập lại so với Tờ HDSD gốc. <strong>Đối chiếu HDSD kèm sản phẩm trước khi dùng cho quyết định điều trị.</strong>
+                </div>
+              )}
 
               <div className="mt-4 space-y-2">
                 {shownSections.map((s) => (
@@ -143,10 +162,10 @@ export default async function DrugDetailPage({ params }: Props) {
                     <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{sections[s.key]}</div>
                   </details>
                 ))}
-                {leaflet.rawText && (
+                {shown.rawText && (
                   <details className="rounded-xl border border-slate-200 bg-slate-50">
                     <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-slate-900">Toàn văn trích được (chưa tách mục)</summary>
-                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{leaflet.rawText}</div>
+                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{shown.rawText}</div>
                   </details>
                 )}
               </div>

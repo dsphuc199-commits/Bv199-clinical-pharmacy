@@ -236,4 +236,5 @@ for (const rec of todo) {
   }
 }
 await Promise.all(workers.map((w) => w.terminate()));
+await import("./build-leaflet-index.mjs"); // cap nhat chi muc cho trang danh sach
 console.log(`Xong: ${done} thanh cong, ${failed} loi`);

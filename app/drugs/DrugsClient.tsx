@@ -4,14 +4,16 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import drugData from "@/data/drug-products.json";
-import type { RegistryStatus } from "@/lib/drugs/registry";
+import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
-type RegistryMap = Record<string, { s: RegistryStatus; h: boolean }>;
+type RegistryMap = Record<string, { s: RegistryStatus; h: LeafletSource }>;
 
 /* Bo loc theo doi chieu Cong Cuc QLD. */
-const STATUS_FILTERS: { value: string; label: string; test: (r?: { s: RegistryStatus; h: boolean }) => boolean }[] = [
+const STATUS_FILTERS: { value: string; label: string; test: (r?: { s: RegistryStatus; h: LeafletSource }) => boolean }[] = [
   { value: "", label: "Tất cả", test: () => true },
-  { value: "hdsd", label: "Có HDSD (Cục QLD)", test: (r) => !!r?.h },
+  { value: "hdsd", label: "Có HDSD (Cục QLD)", test: (r) => r?.h === "dav" },
+  { value: "hdsd-web", label: "Có thông tin HDSD (web)", test: (r) => r?.h === "web" },
+  { value: "chua-hdsd", label: "Chưa có HDSD", test: (r) => !r?.h },
   { value: "canh-bao", label: "SĐK hết hạn / đã rút", test: (r) => r?.s === "het-han" || r?.s === "da-rut" },
   { value: "cho-gia-han", label: "SĐK hết hạn – chờ gia hạn", test: (r) => r?.s === "cho-gia-han" },
   { value: "sap-het-han", label: "SĐK sắp hết hạn (≤ 6 tháng)", test: (r) => r?.s === "sap-het-han" },
@@ -26,12 +28,13 @@ const BADGE: Partial<Record<RegistryStatus, { text: string; style: React.CSSProp
   "khong-tim-thay": { text: "Không tìm thấy SĐK", style: { background: "#eef1f4", color: "#4a5a69" } },
 };
 
-function StatusBadges({ r }: { r?: { s: RegistryStatus; h: boolean } }) {
+function StatusBadges({ r }: { r?: { s: RegistryStatus; h: LeafletSource } }) {
   const b = r && BADGE[r.s];
   const pill: React.CSSProperties = { borderRadius: 999, padding: "4px 10px", fontSize: 12, fontWeight: 700 };
   return <>
     {b && <span style={{ ...pill, ...b.style }}>{b.text}</span>}
-    {r?.h && <span style={{ ...pill, background: "#e3eefb", color: "#0b3a5b" }}>Có HDSD</span>}
+    {r?.h === "dav" && <span style={{ ...pill, background: "#e3eefb", color: "#0b3a5b" }}>Có HDSD</span>}
+    {r?.h === "web" && <span style={{ ...pill, background: "#eef2f7", color: "#3c5266" }}>HDSD (web)</span>}
   </>;
 }
 

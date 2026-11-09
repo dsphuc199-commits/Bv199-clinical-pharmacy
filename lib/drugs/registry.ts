@@ -4,6 +4,11 @@
   Trang thai duoc tinh theo NGAY DONG BO (khong theo ngay xem) de ket qua co dinh va kiem chung duoc.
 */
 import registryData from "@/data/drug-registry.json";
+import leafletIndex from "@/data/leaflet-index.json";
+
+const LEAFLET_OK = new Set<number>(leafletIndex.ok);
+const LEAFLET_FAILED = new Set<number>(leafletIndex.failed);
+const WEB_LEAFLET = new Set<string>(leafletIndex.web ?? []);
 
 export type RegistryFile = { title: string; url: string };
 
@@ -75,11 +80,17 @@ export function registryStatus(productId: string): RegistryStatus {
   return "con-hieu-luc";
 }
 
-/* Ban rut gon cho trang danh sach (client): trang thai + co HDSD hay khong. */
-export function registrySummary(): Record<string, { s: RegistryStatus; h: boolean }> {
-  const out: Record<string, { s: RegistryStatus; h: boolean }> = {};
-  for (const id of Object.keys(registry.items)) {
-    out[id] = { s: registryStatus(id), h: (getRegistry(id)?.hdsd.length ?? 0) > 0 };
+/* Nguon thong tin HDSD cua thuoc: "dav" = To HDSD tren Cong Cuc QLD; "web" = trang web khop SDK. */
+export type LeafletSource = "dav" | "web" | null;
+
+/* Ban rut gon cho trang danh sach (client): trang thai SDK + nguon HDSD. */
+export function registrySummary(): Record<string, { s: RegistryStatus; h: LeafletSource }> {
+  const out: Record<string, { s: RegistryStatus; h: LeafletSource }> = {};
+  for (const id of new Set([...Object.keys(registry.items), ...WEB_LEAFLET])) {
+    const rec = getRegistry(id);
+    // HDSD Cuc QLD: co file va khong bi Cong bao loi (file chua trich van mo duoc bang link goc).
+    const dav = !!rec && rec.hdsd.length > 0 && (LEAFLET_OK.has(rec.davId) || !LEAFLET_FAILED.has(rec.davId));
+    out[id] = { s: registryStatus(id), h: dav ? "dav" : WEB_LEAFLET.has(id) ? "web" : null };
   }
   return out;
 }
