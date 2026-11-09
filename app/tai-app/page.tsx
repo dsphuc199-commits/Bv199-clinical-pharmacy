@@ -38,7 +38,8 @@ export default function InstallAppPage() {
         .ta-box ol, .ta-box ul { margin:0; padding-left:20px; }
         .ta-box li + li { margin-top:4px; }
         .ta-active { border-color:#087f89; background:#effaf9; box-shadow:0 0 0 2px rgba(8,127,137,.15); }
-        .ta-ok { border-color:#86cfb0; background:#effaf4; }
+        .ta-warn { border-color:#f0b429; background:#fff8e6; color:#5c3d00; }
+        .ta-ok {border-color:#86cfb0; background:#effaf4; }
         .ta-install { padding:13px; border:0; border-radius:9px; background:#0b3a5b; color:#fff; font:inherit; font-size:16px; font-weight:800; cursor:pointer; }
         .ta-install:hover { background:#087f89; }
         .ta-note { margin:0; font-size:13px; color:#6b8293; text-align:center; }

@@ -13,12 +13,24 @@ function detectPlatform(): Platform {
   return "other";
 }
 
+/* Trinh duyet nhung trong Zalo/Facebook/... khong cai duoc ung dung. */
+function detectInAppBrowser(): string | null {
+  const ua = navigator.userAgent || "";
+  if (/Zalo/i.test(ua)) return "Zalo";
+  if (/FBAN|FBAV|FB_IAB|Messenger/i.test(ua)) return "Facebook/Messenger";
+  if (/Instagram/i.test(ua)) return "Instagram";
+  if (/\bLine\//i.test(ua)) return "Line";
+  if (/TikTok|musical_ly|BytedanceWebview/i.test(ua)) return "TikTok";
+  return null;
+}
+
 /* Nut cai dat (Android/Chrome) + huong dan theo nen tang; nhan dien khi da cai. */
 export default function InstallPanel() {
   const [platform, setPlatform] = useState<Platform>("other");
   const [installed, setInstalled] = useState(false);
   const [prompt, setPrompt] = useState<InstallEvent | null>(null);
   const [done, setDone] = useState(false);
+  const [inApp, setInApp] = useState<string | null>(null);
 
   useEffect(() => {
     // Doc moi truong trinh duyet sau khi gan (khong co tren may chu).
@@ -28,7 +40,8 @@ export default function InstallPanel() {
     const onInstalled = () => setDone(true);
     window.addEventListener("beforeinstallprompt", onPrompt);
     window.addEventListener("appinstalled", onInstalled);
-    queueMicrotask(() => { setPlatform(p); setInstalled(standalone); });
+    const embedded = detectInAppBrowser();
+    queueMicrotask(() => { setPlatform(p); setInstalled(standalone); setInApp(embedded); });
     return () => { window.removeEventListener("beforeinstallprompt", onPrompt); window.removeEventListener("appinstalled", onInstalled); };
   }, []);
 
@@ -46,7 +59,13 @@ export default function InstallPanel() {
 
   return (
     <>
-      {done && <div className="ta-box ta-ok"><strong>Đã cài xong.</strong> Mở biểu tượng “BV199 Dược” trên màn hình chính và đăng nhập một lần.</div>}
+      {inApp && (
+        <div className="ta-box ta-warn" role="alert">
+          <strong>Bạn đang mở trong {inApp}.</strong> Trình duyệt này không cài được ứng dụng. Bấm menu <strong>•••</strong> (hoặc <strong>⋮</strong>) → chọn{" "}
+          <strong>{platform === "ios" ? "“Mở bằng Safari”" : "“Mở bằng trình duyệt” / Chrome"}</strong>, rồi làm theo hướng dẫn bên dưới.
+        </div>
+      )}
+      {done &&<div className="ta-box ta-ok"><strong>Đã cài xong.</strong> Mở biểu tượng “BV199 Dược” trên màn hình chính và đăng nhập một lần.</div>}
       {prompt && !done && <button type="button" className="ta-install" onClick={install}>Cài đặt ngay</button>}
 
       <section className={`ta-box ${platform === "ios" ? "ta-active" : ""}`}>
