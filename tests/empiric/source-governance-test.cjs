@@ -27,7 +27,8 @@ check('Source location preserved for selected guidance and absent before group s
 const links=renderToStaticMarkup(React.createElement(Links,{texts:['vancomycin 1 g mỗi 12 giờ'],compact:true}));
 check('Dosing navigation retained without inline renal dose list',links.includes('/antibiotics/dosing')&&!links.includes('CrCl ')&&!links.includes('<ul'));
 const allergyHtml=renderToStaticMarkup(React.createElement(ClinicalFilterProvider,{value:{...DEFAULT_FILTERS,penicillinAllergy:true,crcl:'25'}},React.createElement(Panel,{sections:[{key:'x',title:'Điều kiện áp dụng',itemLabel:'Lựa chọn',cards:[{id:'test',groups:[],status:'NO_DOSE',linkTexts:['amoxicillin 1 g'],alerts:[{id:'danger',level:'critical',title:'Cảnh báo thử',text:'Nguy cơ cần đánh giá'}]}]}],sources:[]})));
-check('Allergy warning remains visible without dosing navigation',allergyHtml.includes('Dị ứng penicillin:')&&!allergyHtml.includes('/antibiotics/dosing')&&!allergyHtml.includes('/antibiotics/antibiogram'));
+const allergyCard=allergyHtml.replace(/<p class="tp-module-links">[\s\S]*?<\/p>/,'');
+check('Allergy warning remains visible without dosing navigation inside the card',allergyHtml.includes('Dị ứng penicillin:')&&!allergyCard.includes('/antibiotics/dosing')&&!allergyCard.includes('/antibiotics/antibiogram'));
 check('Critical warning remains visible outside source disclosure',allergyHtml.includes('role="alert"><strong>NGUY CƠ CAO')&&allergyHtml.includes('Nguy cơ cần đánh giá'));
 check('Empiric table does not calculate or display a renal dose',!allergyHtml.includes('– CrCl 25:')&&!allergyHtml.includes('crcl=25'));
 console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

@@ -160,7 +160,7 @@ const MENINGITIS: DiseaseOverviewData = {
 
 /* ---------- Nhiem khuan tiet nieu ---------- */
 const BETA_LACTAM_SAFETY = { text: "Beta-lactam: chống chỉ định khi có tiền sử dị ứng penicilin hoặc thuốc cùng nhóm; giảm liều chế phẩm có acid clavulanic, sulbactam khi mức lọc cầu thận < 30 ml/phút.", ref: "tr. 250" };
-const FQ_SAFETY = { text: "Fluoroquinolon: không dùng cho phụ nữ có thai, cho con bú, trẻ dưới 15 tuổi, người có tiền sử co giật.", ref: "tr. 236–237, 250" };
+const FQ_SAFETY = { text: "Fluoroquinolon – chống chỉ định: phụ nữ có thai, cho con bú, trẻ em dưới 15 tuổi, tiền sử co giật.", ref: "tr. 236–237, 250" };
 const AG_SAFETY = { text: "Aminoglycosid: độc thận và tai – theo dõi chức năng thận, giảm liều khi suy thận.", ref: "tr. 237, 250" };
 const PYELO: DiseaseOverviewData = {
   docLabel: `${Q} – Chương 10, Viêm thận bể thận cấp`,
@@ -684,7 +684,7 @@ const CONJUNCTIVITIS = eye("Viêm kết mạc cấp; Viêm kết mạc do lậu 
   efficacy: [{ text: "Tiết tố, phù mi, tình trạng giác mạc – theo dõi hằng ngày.", ref: "tr. 212" }],
   reassessment: [{ text: "Thuyên giảm: giảm số lần tra mắt.", ref: "tr. 210" }],
   safety: [
-    { text: "Fluoroquinolon toàn thân: chống chỉ định cho trẻ em dưới 16 tuổi.", ref: "tr. 210" },
+    { text: "Fluoroquinolon toàn thân – chống chỉ định: trẻ em dưới 16 tuổi.", ref: "tr. 210" },
     { text: "Thận trọng khi dùng corticoid tra mắt.", ref: "tr. 210" },
   ],
 });

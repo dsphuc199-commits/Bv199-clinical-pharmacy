@@ -7,6 +7,7 @@
  */
 import ClinicalReferenceDose from "../treatment/ClinicalReferenceDose";
 import RegimenDrugTools from "../treatment/RegimenDrugTools";
+import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 
 export default function LungAbscessInternational() {
   return <section className="bv199-panel la-intl" aria-label="Khuyến cáo quốc tế về áp xe phổi người lớn">
@@ -52,7 +53,7 @@ export default function LungAbscessInternational() {
         </li>
       </ul>
       <h4>Clindamycin đơn trị: lựa chọn thay thế có điều kiện</h4>
-      <RegimenDrugTools name="Clindamycin" texts={["Clindamycin 600 mg truyền tĩnh mạch mỗi 8 giờ"]} />
+      {EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name="Clindamycin" texts={["Clindamycin 600 mg truyền tĩnh mạch mỗi 8 giờ"]} />}
       <ul className="la-notes">
         <li><strong>Điều kiện lựa chọn</strong>
           <ul>

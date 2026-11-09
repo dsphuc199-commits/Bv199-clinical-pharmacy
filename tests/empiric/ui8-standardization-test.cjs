@@ -27,7 +27,7 @@ const alternatives=render(React.createElement(Table,{groups:[group],status:'STRU
 const combination=render(React.createElement(Table,{groups:[{...group,rule:'all'}],status:'STRUCTURED'}));
 check('Alternative row uses OR and no combination marker',alternatives.includes('>Hoặc</td>')&&!alternatives.includes('>+</td>'));
 check('Fixed combination row uses plus and no OR marker',combination.includes('>+</td>')&&!combination.includes('>Hoặc</td>'));
-check('Every structured drug has dose and interaction tools',(alternatives.match(/data-drug-tools=/g)||[]).length===2&&alternatives.includes('Hiệu chỉnh liều')&&alternatives.includes('Tương tác thuốc'));
+check('Regimen tables do not embed dose-adjustment/interaction tools (dedicated modules, Master Prompt V4.0)',!/data-drug-tools=/.test(alternatives)&&!alternatives.includes('Hiệu chỉnh liều')&&!alternatives.includes('Tương tác thuốc'));
 const dailyRaw='2,4 g TM/ngày chia 4 lần';
 const daily=render(React.createElement(Table,{groups:[{...group,options:[{...drug('Clindamycin'),dose:'2,4',doseUnit:'g',raw:dailyRaw}]}],status:'STRUCTURED'}));
 check('Explicit daily total stays visible in usage cell despite incomplete legacy parsing',daily.includes(`data-label="Cách dùng"><div><span data-dose="">${dailyRaw}</span>`));

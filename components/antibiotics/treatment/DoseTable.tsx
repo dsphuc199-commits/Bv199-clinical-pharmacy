@@ -87,7 +87,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
     return (
       <div className="tx">
         <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng."}</p>
-        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong><RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/></li>)}</ul>
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         <details className="tx-src"><summary>Nguồn và đối chiếu</summary>
         <ul className="tx-raw">
           {groups.flatMap((g) => g.raw).map((r, i) => (
@@ -141,7 +141,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
               <tbody>
                 {opts.map((o, j) => <Fragment key={`${o.name}-${j}`}>
                   <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
-                  <tr className="tx-tools-row"><td colSpan={2+Number(showRelation)+Number(showCourse)}><RegimenDrugTools name={o.name} texts={[o.raw]} /></td></tr>
+                  {EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <tr className="tx-tools-row"><td colSpan={2+Number(showRelation)+Number(showCourse)}><RegimenDrugTools name={o.name} texts={[o.raw]} /></td></tr>}
                 </Fragment>)}
               </tbody>
             </table>

@@ -323,8 +323,8 @@ const SHUNT: DiseaseRationale = {
 const VTBT = (loc: string) => Q(`Viêm thận bể thận cấp, ${loc}`);
 const FQ_SAFETY: ClinicalCriterion = {
   condition: "Dự kiến dùng fluoroquinolon.",
-  clinicalMeaning: "Không dùng cho phụ nữ có thai, đang cho con bú, trẻ em dưới 15 tuổi; giảm liều khi suy thận, thận trọng khi suy gan; có thể gây nôn, buồn nôn.",
-  treatmentImplication: "Loại fluoroquinolon khỏi lựa chọn ở các đối tượng trên.",
+  clinicalMeaning: "Chống chỉ định: phụ nữ có thai, đang cho con bú, trẻ em dưới 15 tuổi. Thận trọng: suy thận (giảm liều), suy gan; tác dụng không mong muốn trên tiêu hóa (nôn, buồn nôn).",
+  treatmentImplication: "Chọn nhóm kháng sinh khác cho các đối tượng chống chỉ định.",
   sources: [VTBT("mục 4.2a, 4.2b; tr. 236–237")],
 };
 const PYELO: DiseaseRationale = {
@@ -426,7 +426,7 @@ const STONE: DiseaseRationale = {
     ],
     "Sỏi thận tiết niệu có biến chứng nhiễm khuẩn – fluoroquinolon uống": [
       { condition: "Chọn fluoroquinolon đường uống.",
-        clinicalMeaning: "Không dùng cho phụ nữ có thai, trẻ em dưới 15 tuổi; có thể gây nôn, buồn nôn.",
+        clinicalMeaning: "Chống chỉ định: phụ nữ có thai, trẻ em dưới 15 tuổi. Tác dụng không mong muốn: nôn, buồn nôn.",
         treatmentImplication: "Ciprofloxacin, norfloxacin hoặc ofloxacin trong 3–7 ngày, có thể tới 10 ngày; có thể truyền 3 ngày rồi chuyển uống.",
         sources: [SOI("mục 3.2b; tr. 243")] },
     ],
@@ -460,7 +460,7 @@ const CYSTITIS: DiseaseRationale = {
     "Viêm bàng quang cấp thông thường – chỉ khi các kháng sinh khác thất bại": [
       { condition: "Đã thất bại với các kháng sinh khác.",
         clinicalMeaning: "Fluoroquinolon không phải lựa chọn đầu tay.",
-        treatmentImplication: "Norfloxacin 3–5 ngày. Không dùng cho phụ nữ có thai, cho con bú, trẻ dưới 15 tuổi, người có tiền sử co giật.",
+        treatmentImplication: "Norfloxacin 3–5 ngày. Chống chỉ định: phụ nữ có thai, cho con bú, trẻ em dưới 15 tuổi, tiền sử co giật.",
         sources: [VBQ("mục 3.2a, 3.2e; tr. 249–250")] },
     ],
     "Viêm bàng quang cấp ở phụ nữ có thai": CYST_PREG,

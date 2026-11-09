@@ -15,7 +15,13 @@ check('Criteria are available before selection without assigning a group',initia
 const selected=render(React.createElement(Select,{groups,value:'A',onChange:()=>{}}));
 check('Selected criteria identify exactly the chosen group',selected.includes('data-selected-group="A"')&&!selected.includes('data-selected-group="B"')&&selected.includes('Tiêu chí áp dụng'));
 const unknown=render(React.createElement(Select,{groups,value:'B',onChange:()=>{}}));
-check('Unknown criteria do not become a negative risk finding',unknown.includes('Chưa đủ căn cứ xác định nhóm'));
+check('Group without source criteria shows no placeholder and no invented finding',!unknown.includes('Chưa đủ căn cứ xác định nhóm')&&!unknown.includes('data-selected-group="B"')&&unknown.includes('value="B"'));
+const echo=G.patientGroupsFor([{value:'x',label:'Viêm khớp do lậu cầu (N. gonorrhoeae)',criteria:['Viêm khớp do lậu cầu (N. gonorrhoeae)']},{value:'y',label:'Nhóm Y · có phương án bị khóa',criteria:['Nhóm Y']}]);
+check('Criteria that only repeat the group name are removed',echo.every(g=>g.criteria.length===0&&g.criteriaStatus==='label-only'));
+check('Criteria disclosure is hidden when no group has distinguishing criteria',!render(React.createElement(Select,{groups:echo,onChange:()=>{}})).includes('Xem tiêu chí phân nhóm'));
+const Cite=load('lib/antibiotics/source-citation.ts');
+const c708=Cite.citeSources(['QĐ 708/QĐ-BYT (02/03/2015) — Viêm khớp nhiễm khuẩn, mục 4.2.1; tr. 164','QĐ 708 — mục 4.2.2, tr. 165','QĐ 2147/QĐ-BYT (2026) — Mục 5.3']);
+check('Source citation keeps issuer, decision number, title and year only; newest first; deduplicated',c708.length===2&&c708[0].label==='Bộ Y tế. Quyết định 2147/QĐ-BYT – Hướng dẫn chẩn đoán và điều trị viêm phổi mắc phải cộng đồng ở người lớn (2026)'&&c708[1].label==='Bộ Y tế. Quyết định 708/QĐ-BYT – Hướng dẫn sử dụng kháng sinh (2015)'&&!c708.some(c=>/\btr\.\s*\d|mục\s+\d/i.test(c.label)));
 const o={name:'Thuốc A',dose:'100',doseUnit:'mg',route:'Uống',interval:'Mỗi 12 giờ',raw:'100 mg uống mỗi 12 giờ',population:'adult',doseBasis:'per-dose',ingredientIds:[],flags:[],complete:true};
 const group={rule:'one-of',optional:false,ambiguous:false,options:[o,{...o,name:'Thuốc B'}],raw:[{name:'Thuốc A hoặc B',dose:o.raw}]};
 const table=render(React.createElement(Table,{groups:[group],status:'STRUCTURED'}));

@@ -7,8 +7,14 @@ export function settingInSourceLabel(label:string):TreatmentSetting|undefined {
   if (/nội trú/i.test(label)) return "inpatient";
   return undefined;
 }
+const normalizeCriterion=(text:string)=>text.normalize("NFC").replace(/s+/g," ").trim().toLowerCase();
+/** Tieu chi chi lap lai ten nhom (khong them noi ham) bi loai khoi hien thi. */
+export function meaningfulCriteria(label:string,criteria:string[]=[]):string[] {
+  const name=normalizeCriterion(label);
+  return criteria.filter(text=>{const c=normalizeCriterion(text);return c.length>0&&c!==name&&!name.startsWith(c);});
+}
 export function patientGroupsFor(choices:ScenarioChoice[]):PatientGroup[] {
-  return choices.map(choice=>({id:choice.value,name:choice.label,context:choice.setting??settingInSourceLabel(choice.label)??"source-context",criteria:choice.criteria??[],exclusions:choice.exclusions??null,regimenIds:choice.regimenIds??[],sourceLocations:choice.sources??[],reviewNotes:choice.reviewNotes??[],definitions:choice.definitionNotes??[],criteriaStatus:choice.criteria?.length?"documented":"label-only",selection:"manual"}));
+  return choices.map(choice=>({id:choice.value,name:choice.label,context:choice.setting??settingInSourceLabel(choice.label)??"source-context",criteria:meaningfulCriteria(choice.label,choice.criteria),exclusions:choice.exclusions??null,regimenIds:choice.regimenIds??[],sourceLocations:choice.sources??[],reviewNotes:choice.reviewNotes??[],definitions:choice.definitionNotes??[],criteriaStatus:meaningfulCriteria(choice.label,choice.criteria).length?"documented":"label-only",selection:"manual"}));
 }
 /** Missing inputs and overlapping matches must never silently select a group. */
 export function unambiguousGroup(matches:PatientGroup[],complete:boolean):PatientGroup|undefined {

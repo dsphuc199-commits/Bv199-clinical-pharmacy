@@ -17,6 +17,10 @@ export const EMPIRIC_TREATMENT_UI_RULES = {
 
   // Module rieng (hieu chinh lieu, tuong tac, TDM)
   showDoseAdjustmentTables: false,
+  /** Nut "Hiệu chỉnh liều" / "Tương tác thuốc" trong tung the phac do: an (da co module rieng, chi lien ket). */
+  showDrugToolsInRegimen: false,
+  /** Nhan "Khác biệt liều BYT – quốc tế" tren the: an (doi chieu chi tiet da co ben duoi the). */
+  showSourceDifferenceBadge: false,
   showDrugInteractionTables: false,
   showDetailedTDM: false,
   showDetailedPKPDCalculations: false,
@@ -49,6 +53,7 @@ export const EMPIRIC_TREATMENT_UI_RULES = {
 /** Duong dan module chuyen biet (lien ket nho thay cho noi dung trung lap). */
 export const SPECIALIZED_MODULE_LINKS = {
   doseAdjustment: { href: "/antibiotics/dosing", label: "Hiệu chỉnh liều" },
+  interactions: { href: "/tuong-tac-thuoc", label: "Tương tác thuốc" },
 } as const;
 
 /**

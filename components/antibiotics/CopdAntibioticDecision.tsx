@@ -2,18 +2,21 @@
 
 import { useId, useState } from "react";
 import { COPD_COLISTIN_SOURCE, COPD_DRUGS, COPD_GROUPS, COPD_REGIMENS, COPD_REVIEWS, COPD_SOURCES, COPD_SOURCE_URL, hasCopdSymptomIndication, type CopdRegimen, type DrugId, type GroupId, type ReviewId, type Setting, type SourceId } from "@/data/antibiotics/copd-2131";
+import Link from "next/link";
+import { citeSource } from "@/lib/antibiotics/source-citation";
 import { copdStyles } from "./copd-2131-styles";
+import { EMPIRIC_TREATMENT_UI_RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 import SettingTabs from "./treatment/SettingTabs";
 import PatientGroupSelect from "./treatment/PatientGroupSelect";
 import { patientGroupsFor } from "@/lib/antibiotics/patient-groups";
 import { TxStyle } from "./treatment/DoseTable";
 import ClinicalNotes from "./treatment/ClinicalNotes";
 
-function Sources({ ids, reviews = [] }: { ids: SourceId[]; reviews?: ReviewId[] }) {
-  const references = [...new Set([...ids, ...reviews.flatMap(id => COPD_REVIEWS[id].sources)])];
+/* Nguon chi ghi quyet dinh (co quan, so, ten, nam); vi tri muc/bang giu trong du lieu COPD_SOURCES. */
+const COPD_CITATION = citeSource("QĐ 2131/QĐ-BYT").label;
+function Sources({ reviews = [] }: { ids: SourceId[]; reviews?: ReviewId[] }) {
   return <details className="c26-source"><summary>Nguồn và đối chiếu</summary>
-    <p><a href={COPD_SOURCE_URL} download>Quyết định 2131/QĐ-BYT ngày 14/7/2026 — tải tài liệu</a></p>
-    <ul>{references.map(id => <li key={id}>{COPD_SOURCES[id]}</li>)}</ul>
+    <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>
     {reviews.map(id => <p key={id}><strong>Cần thẩm định:</strong> {COPD_REVIEWS[id].detail}</p>)}
     {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — số liệu nguồn để thẩm định, chưa phải liều kê đơn</strong>
       <p>Bảng 3.4: {COPD_COLISTIN_SOURCE.table}</p>
@@ -51,7 +54,7 @@ export function CopdRegimenCard({ regimen, index, hideDuration=false, durationCo
         <td data-label="Cách dùng"><span data-dose="">{dose.dose}</span> · <span data-route="">{dose.route}</span> · <span data-interval="">{dose.interval}</span></td>
         {durationColumn&&<td data-label="Thời gian">{regimen.duration}</td>}
       </tr></tbody></table>
-      {dose.note && <p className="c26-dose-note">{dose.note}</p>}<DrugTools drugId={dose.drugId} />
+      {dose.note && <p className="c26-dose-note">{dose.note}</p>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <DrugTools drugId={dose.drugId} />}
     </div>)}
     {!hideDuration && !durationColumn && <p className="c26-duration"><strong>Thời gian điều trị:</strong> {regimen.duration}.</p>}
     {regimen.reviewIds.length > 0 && <div className="c26-review"><strong>Cần thẩm định</strong><ul>{regimen.reviewIds.map(id => <li key={id}>{COPD_REVIEWS[id].label}</li>)}</ul></div>}
@@ -64,7 +67,7 @@ function FollowUp({ setting }: { setting: Setting }) {
     <li><strong>Trước khi kê đơn</strong><ul>
       <li>Đối chiếu dị ứng, chức năng thận, bệnh đồng mắc, tác nhân trước đó và độ nhạy kháng sinh tại địa phương.</li>
       <li>Nếu đã dùng kháng sinh trong 3 tháng trước, chọn kháng sinh khác nhóm vừa dùng.</li>
-      <li>Tra liều theo chức năng thận và tương tác tại từng phác đồ; các điểm “Cần thẩm định” không được dùng làm gợi ý kê đơn tự động.</li>
+      <li>Hiệu chỉnh liều theo chức năng thận và kiểm tra tương tác: xem module <Link href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link> và <Link href={SPECIALIZED_MODULE_LINKS.interactions.href}>{SPECIALIZED_MODULE_LINKS.interactions.label}</Link>. Các điểm “Cần thẩm định” không được dùng làm gợi ý kê đơn tự động.</li>
     </ul></li>
     <li><strong>Đánh giá đáp ứng {setting === "outpatient" ? "sau 3–5 ngày" : "sau 48–72 giờ"}</strong><ul>
       <li>{setting === "outpatient" ? "Nếu cải thiện: tiếp tục kháng sinh, thời gian điều trị thường 5–7 ngày. Azithromycin dùng liệu trình riêng đã nêu ở phác đồ." : "Theo dõi giảm khó thở và giảm đờm mủ. Nếu cải thiện: tiếp tục kháng sinh, thời gian điều trị thường 7–10 ngày."}</li>

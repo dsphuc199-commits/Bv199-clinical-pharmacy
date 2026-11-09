@@ -27,9 +27,10 @@ import ClinicalScenarioPicker from "./ClinicalScenarioPicker";
 import { useAbxLinkContext } from "../links/AbxLinkContext";
 import { DISEASES, getStream } from "@/data/antibiotics/empiric/catalog";
 import ClinicalSources from "./ClinicalSources";
+import { citeSources } from "@/lib/antibiotics/source-citation";
 import type { ScenarioChoice } from "@/lib/antibiotics/patient-groups";
 import type { Rationale } from "@/data/antibiotics/empiric/rationale";
-import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
+import { EMPIRIC_TREATMENT_UI_RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 
 export type TxAlert = {
   id: string;
@@ -101,7 +102,8 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
       <summary>Vì sao chọn phác đồ này?</summary>
       {rationale.status === "requires_review" && <p className="tp-rationale-review">Chưa soạn giải thích tiêu chí cho nhánh này – cần thẩm định. Điều kiện áp dụng theo nguồn:</p>}
       <dl className="tp-rationale-list">
-        {rationale.items.map((c, i) => (
+        {/* Chi giu tieu chi dan toi lua chon thuoc (co "Anh huong den lua chon") hoac canh bao CAN THAM DINH. */}
+        {rationale.items.filter((c) => rationale.status !== "authored" || !!c.treatmentImplication || /CẦN THẨM ĐỊNH/u.test(`${c.condition} ${c.clinicalMeaning ?? ""}`)).map((c, i) => (
           <div key={i} className="tp-rationale-item">
             <dt>{rationale.status === "authored" && <span className="tp-rationale-k">Tiêu chí</span>}{clinicalText(c.condition)}</dt>
             {c.clinicalMeaning && <dd><span className="tp-rationale-k">Ý nghĩa lâm sàng</span>{c.clinicalMeaning}</dd>}
@@ -241,7 +243,7 @@ export default function TreatmentPanel({
     <div className="tp">
       {/* (2) Benh canh lam sang – mot hang: nhan | danh sach chon */}
       {scenarios && scenarios.length > 1 && <ClinicalScenarioPicker scenarios={scenarios} value={picked} onChange={value=>{setPicked(value);onScenario?.(value);}} />}
-      {scenarios && scenarios.length === 1 && (
+      {scenarios && scenarios.length === 1 && ((scenarios[0].criteria?.length ?? 1) > 0 || !!scenarioHint) && (
         <div className="tp-box tp-scn">
           <strong className="tp-scn-label">Tiêu chí áp dụng</strong>
           {(
@@ -261,6 +263,11 @@ export default function TreatmentPanel({
         {sections.length > 0 ? sections.map((s) => <Section key={s.key} section={s} />) : <p className="tp-empty">{emptyText ?? "Không có phác đồ cho bệnh cảnh này."}</p>}
         {rationale && EMPIRIC_TREATMENT_UI_RULES.explainClinicalRationale && <RationaleAccordion rationale={rationale} />}
         {footer}
+        {!EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && sections.length > 0 && (
+          <p className="tp-module-links">Hiệu chỉnh liều theo chức năng thận, gan và kiểm tra tương tác thuốc: xem module{" "}
+            <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a> và{" "}
+            <a href={SPECIALIZED_MODULE_LINKS.interactions.href}>{SPECIALIZED_MODULE_LINKS.interactions.label}</a>.</p>
+        )}
       </section>
       {comparison}
 
@@ -299,8 +306,7 @@ export default function TreatmentPanel({
           {sources.length > 0 && (
             <details className="tp-sources">
               <summary>Nguồn và đối chiếu</summary>
-              {sourceTag && <p>{sourceTag}</p>}<ul>{sources.map((source) => <li key={source}>{source}</li>)}</ul>
-              {notes.concat(monitoring,detailNotes?.items??[]).some(n=>clinicalText(n)!==n)&&<details><summary>Ghi chú nguyên văn và vị trí nguồn</summary><ul>{notes.concat(monitoring,detailNotes?.items??[]).map((n,i)=><li key={i}>{n}</li>)}</ul></details>}
+              <ul>{citeSources(sources.length ? sources : sourceTag ? [sourceTag] : []).map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
             </details>
           )}
         </section>
@@ -345,7 +351,9 @@ function TpStyle() {
       .tp-flag { font-size: 10.5px; font-weight: 700; border-radius: 999px; padding: 1px 7px; line-height: 1.5; }
       .tp-flag-lock { background: #9f1239; color: #fff; }
       .tp-flag-warn { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-      .tp-flag-info { background: #f1f5f9; color: #475569; }
+      .tp-flag-info { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+      .tp-module-links { margin: 10px 0 0; font-size: 12.5px; color: #4b6576; }
+      .tp-module-links a { color: #087f89; font-weight: 700; text-decoration: underline; }
       .tp-cond { margin: 0; font-size: 13px; font-weight: 600; color: #0b4f6c; }
       .tp-alert { border-radius: 8px; padding: 8px 10px; font-size: 12.5px; }
       .tp-alert p { margin: 4px 0; }

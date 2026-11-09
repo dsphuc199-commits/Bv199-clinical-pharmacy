@@ -40,6 +40,7 @@ import DoseConflictComparison from "./DoseConflictComparison";
 import CopdByt2026 from "../CopdByt2026";
 import { DiseaseMonitoring, DiseaseOverviewSummary, hasDiseaseOverview } from "./DiseaseOverview";
 import { getRationale } from "../../../data/antibiotics/empiric/rationale";
+import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
@@ -138,6 +139,9 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
   );
 }
 
+/* Nhan benh canh co dieu kien lam sang giup chon thuoc (khong chi nhac lai ten benh). */
+const INFORMATIVE_LABEL = /[<>≤≥]|\d|trẻ em|người lớn|sơ sinh|mức độ|nặng|có thai|có |không |kèm|nghi |khi |sau |hít|dị ứng|kháng /iu;
+
 /* Du lieu dieu tri -> the trinh bay (khong doi noi dung chuyen mon). */
 function toCard(regimen: Regimen): TxCard {
   const alerts = safetyAlertsFor(regimen.id);
@@ -146,9 +150,11 @@ function toCard(regimen: Regimen): TxCard {
   if (alerts.some((a) => a.autoRecommend === "block")) {
     flags.push({ text: "Khóa đề xuất tự động", title: "Engine không tự đề xuất phương án này cho đến khi HĐT&ĐT quyết định", tone: "lock" });
   } else if (alerts.some((a) => a.blockFor?.includes("child"))) {
-    flags.push({ text: "Không dùng cho trẻ em", title: "Liều cố định người lớn – bộ chọn không đề xuất cho trẻ em", tone: "lock" });
+    /* Nguon chi ghi lieu co dinh cho nguoi lon (khong phai chong chi dinh o tre em):
+       nhan trung tinh, chi tiet trong canh bao an toan cua the. */
+    flags.push({ text: "Liều người lớn", title: "Nguồn chỉ nêu liều cố định cho người lớn, không có liều trẻ em đã xác minh; trẻ em tính liều theo cân nặng theo hướng dẫn nhi khoa.", tone: "info" });
   }
-  if ((regimen.notes ?? []).some((n) => n.startsWith("ĐỐI CHIẾU LIỀU"))) {
+  if (EMPIRIC_TREATMENT_UI_RULES.showSourceDifferenceBadge && (regimen.notes ?? []).some((n) => n.startsWith("ĐỐI CHIẾU LIỀU"))) {
     flags.push({ text: "Khác biệt liều BYT – quốc tế", title: "Chi tiết trong Lưu ý lâm sàng", tone: "warn" });
   }
   return {
@@ -293,7 +299,9 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault }: Props) {
       <TreatmentPanel
         scenarios={visible.map((s) => {
           const label = diseaseId === "v8-9" && s.name === "Áp xe phổi: phối hợp beta-lactam + aminoglycosid" ? "Áp xe phổi" : s.name;
-          return { value:s.name,label:lockedScenario(s.items)?`${label} · có phương án bị khóa`:label,criteria:[s.name],regimenIds:s.items.map(r=>r.id),sources:[...new Set(s.items.map(r=>`QĐ ${DOCS[r.source.doc].number} — ${r.source.section}, ${r.source.page}`))] };
+          /* Mot benh canh duy nhat: chi giu lam "tieu chi" khi nhan mang dieu kien lam sang (tuoi, doi tuong, muc do, yeu to nguy co...). */
+          const informative = visible.length > 1 || INFORMATIVE_LABEL.test(s.name);
+          return { value:s.name,label:lockedScenario(s.items)?`${label} · có phương án bị khóa`:label,criteria:informative?[s.name]:[],regimenIds:s.items.map(r=>r.id),sources:[...new Set(s.items.map(r=>`QĐ ${DOCS[r.source.doc].number} — ${r.source.section}, ${r.source.page}`))] };
         })}
         scenario={active?.name}
         onScenario={setActiveName}

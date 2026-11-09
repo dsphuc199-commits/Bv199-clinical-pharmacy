@@ -86,6 +86,25 @@ const MR=load('data/antibiotics/empiric/rationale-modules.ts');const CAPM=load('
 for(const s of CAPM.CAP_SCENARIOS){const r=MR.getModuleRationale('cap',s.id);const h=render(React.createElement(CAPM.default,{initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||!/<details class="tp-rationale"(?![^>]*open)/.test(h)||PAGE.test(mainLayer(h)))modBad.push('cap '+s.id);}
 for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k]){const r=MR.getModuleRationale(k,s.id);const h=render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||!/<details class="tp-rationale"(?![^>]*open)/.test(h)||PAGE.test(mainLayer(h)))modBad.push(k+' '+s.id);}
 check('Module CAP/HAP/VAP: mọi kịch bản có "Vì sao chọn phác đồ này?" (đóng, có căn cứ), không số trang inline',modBad.length===0,modBad);
+/* Khong nhung cong cu hieu chinh lieu/tuong tac trong the; nhan tre em trung tinh; khong nhan "Khac biet lieu" */
+const toolHits=[],badgeHits=[];
+for(const d of C.DISEASES){const scen=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!scen.has(r.scenario))scen.set(r.scenario,[]);scen.get(r.scenario).push(r);}
+  for(const [name,list] of scen){const h=render(React.createElement(Panel,{sections:V.sectionsFor(list).sections,sources:[],scenarios:[{value:name,label:name,criteria:[name]}],scenario:name}));
+    if(/data-drug-tools=|<summary>Hiệu chỉnh liều|<summary>Tương tác thuốc/.test(h))toolHits.push(d.id);
+    if(/Không dùng cho trẻ em|Khác biệt liều BYT/.test(h))badgeHits.push(d.id);
+    if(!h.includes('class="tp-module-links"'))toolHits.push(d.id+' (thiếu liên kết module)');}}
+check('Thẻ phác đồ không nhúng "Hiệu chỉnh liều"/"Tương tác thuốc"; có liên kết sang module chuyên biệt',toolHits.length===0,[...new Set(toolHits)].slice(0,5));
+check('Không còn nhãn "Không dùng cho trẻ em" và "Khác biệt liều BYT – quốc tế"',badgeHits.length===0,[...new Set(badgeHits)]);
+const sa=render(React.createElement(Panel,{sections:V.sectionsFor(R.getRegimensForDisease('v8-33').filter(r=>r.id==='r-sa-empiric-1')).sections,sources:[]}));
+check('v8-33: nhãn trung tính "Liều người lớn"',sa.includes('Liều người lớn')&&sa.includes('tp-flag-info'));
+/* Tieu chi khong giup chon thuoc bi an; cach goi chong chi dinh theo van phong duoc lam sang */
+const BV=V.default;const single=(id)=>render(React.createElement(BV,{diseaseId:id,diseaseTitle:C.DISEASES.find(d=>d.id===id).title}));
+check('Bệnh một bệnh cảnh: ẩn "Tiêu chí áp dụng" khi nhãn chỉ nhắc tên bệnh (v8-27, v8-25), giữ khi có điều kiện (v8-54 > 3 tuổi, v8-129 mức độ)',
+  !single('v8-27').includes('<strong class="tp-scn-label"')&&!single('v8-25').includes('<strong class="tp-scn-label"')&&single('v8-54').includes('<strong class="tp-scn-label"')&&single('v8-129').includes('<strong class="tp-scn-label"'));
+const raHidden=render(React.createElement(Panel,{sections:V.sectionsFor(R.getRegimensForDisease('v8-117').slice(0,1)).sections,sources:[],rationale:{status:'authored',items:[{condition:'Mô tả không dẫn tới lựa chọn'},{condition:'Có lựa chọn',treatmentImplication:'Thuốc X'},{condition:'CẦN THẨM ĐỊNH – mâu thuẫn',clinicalMeaning:'Chi tiết'}]}}));
+check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc và mục CẦN THẨM ĐỊNH',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&raHidden.includes('CẦN THẨM ĐỊNH – mâu thuẫn'));
+const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.ts').RATIONALE_708,load('data/antibiotics/empiric/rationale-other.ts').RATIONALE_OTHER,load('data/antibiotics/empiric/overviews.ts').DISEASE_OVERVIEWS]);
+check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
 if(report){
   const bySp=new Map();for(const r of rows){const s=bySp.get(r.specialty)??{n:0,b:0,ok:0};s.n++;s.b+=r.branches;if(r.ok)s.ok++;bySp.set(r.specialty,s);}
   console.log(`\nĐỘ PHỦ: ${rows.length} mặt bệnh · ${bySp.size} chuyên khoa · ${branches} nhánh BYT · ${rows.filter(r=>r.branches===0).length} mặt bệnh không có nhánh BYT (module riêng/quốc tế)`);

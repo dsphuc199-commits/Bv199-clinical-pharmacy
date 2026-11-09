@@ -207,7 +207,7 @@ SAFETY_ALERTS.push({
   id: "septic-arthritis-adult-dose-only",
   level: "high",
   regimenIds: SEPTIC_ARTHRITIS,
-  title: "Liều cố định người lớn – không dùng cho trẻ em",
+  title: "Liều cố định cho người lớn – nguồn không nêu liều trẻ em",
   text: "QĐ 708 (mục 4.2.1, tr. 164–165) ghi liều cố định (ví dụ oxacilin 2 g mỗi 6 giờ, vancomycin 2 g/ngày, levofloxacin 500 mg) và không tách liều trẻ em. Trẻ em: theo PIDS/IDSA 2023 (nguyên tắc chọn thuốc, K. kingae, thời gian); bảng liều trẻ em của PIDS/IDSA chưa xác minh nguyên văn nên ứng dụng không hiển thị. Bộ chọn không đề xuất các phương án này khi người bệnh là trẻ em.",
   sources: ["QĐ 708 tr. 164–165", "PIDS/IDSA 2023"],
   blockFor: ["child"],

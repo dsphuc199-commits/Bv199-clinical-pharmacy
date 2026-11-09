@@ -386,6 +386,7 @@ const CRY = (loc: string) => NAM(`Nhiễm nấm Cryptococcus, ${loc}`);
 const CRYPTO_SAFETY: ClinicalCriterion = {
   condition: "Lưu ý chung với Cryptococcus.",
   clinicalMeaning: "Echinocandin không có tác dụng trên Cryptococcus. Phụ nữ có thai: an toàn nhất là amphotericin B dạng lipid; flucytosin và fluconazol > 400 mg/ngày có thể gây dị tật thai.",
+  treatmentImplication: "Không chọn echinocandin. Phụ nữ có thai: chọn amphotericin B phức hợp lipid hoặc liposomal; tránh flucytosin và fluconazol > 400 mg/ngày.",
   sources: [CRY("mục 4.3.2, lưu ý; tr. 65")],
 };
 const CRYPTO_MEN: DiseaseRationale = {
@@ -538,13 +539,13 @@ const PULM_TB: DiseaseRationale = {
   reassessment: TB_REASSESS,
   branches: {
     "Lao phổi người lớn không có bằng chứng/nghi ngờ kháng thuốc (kể cả HIV và phụ nữ có thai) – phác đồ 6 tháng": [
-      { condition: "Người lớn, kể cả người nhiễm HIV và phụ nữ mang thai.", treatmentImplication: "Phác đồ A1 – 2HRZE/4RHE. Không dùng cho lao hệ thần kinh trung ương, lao xương khớp.", sources: [LAO("phác đồ A1; tr. 43–44")] },
+      { condition: "Người lớn, kể cả người nhiễm HIV và phụ nữ mang thai.", treatmentImplication: "Phác đồ A1 – 2HRZE/4RHE. Không chỉ định cho lao hệ thần kinh trung ương, lao xương khớp.", sources: [LAO("phác đồ A1; tr. 43–44")] },
     ],
     "Lao phổi trẻ em không có bằng chứng/nghi ngờ kháng thuốc – phác đồ 6 tháng": [
-      { condition: "Trẻ em; có thể dùng cho trẻ nhiễm HIV.", treatmentImplication: "Phác đồ A2 – 2HRZE/4RH. Không dùng cho lao hệ thần kinh trung ương, lao xương khớp.", sources: [LAO("phác đồ A2; tr. 44–45")] },
+      { condition: "Trẻ em; có thể dùng cho trẻ nhiễm HIV.", treatmentImplication: "Phác đồ A2 – 2HRZE/4RH. Không chỉ định cho lao hệ thần kinh trung ương, lao xương khớp.", sources: [LAO("phác đồ A2; tr. 44–45")] },
     ],
     "Lao phổi người từ 12 tuổi, ≥ 40 kg – phác đồ 4 tháng": [
-      { condition: "Lao phổi, từ 12 tuổi, cân nặng ≥ 40 kg.", treatmentImplication: "Phác đồ A1a – 2HPMZ/2HPM. Không dùng cho lao ngoài phổi, HIV có CD4 < 100 tế bào/mm³, phụ nữ có thai, cho con bú. Uống rifapentin trong bữa ăn ít béo.", sources: [LAO("phác đồ A1a; tr. 45")] },
+      { condition: "Lao phổi, từ 12 tuổi, cân nặng ≥ 40 kg.", treatmentImplication: "Phác đồ A1a – 2HPMZ/2HPM. Không chỉ định cho lao ngoài phổi, HIV có CD4 < 100 tế bào/mm³, phụ nữ có thai, cho con bú. Uống rifapentin trong bữa ăn ít béo.", sources: [LAO("phác đồ A1a; tr. 45")] },
     ],
     "Lao nhẹ ở trẻ 3 tháng–16 tuổi – phác đồ 4 tháng": [
       { condition: "Trẻ 3 tháng – 16 tuổi thỏa cả 3 tiêu chí: X-quang mức độ nhẹ; Xpert âm tính, vết, rất thấp hoặc thấp (hoặc AFB âm tính); lâm sàng nhẹ, không cần nội trú.", treatmentImplication: "Phác đồ A2a – 2HRZE/2RH; kéo dài thêm 2 tháng hoặc đổi phác đồ nếu không đáp ứng sau 4 tháng.", sources: [LAO("phác đồ A2a; tr. 45–46")] },
@@ -566,7 +567,7 @@ const CNS_TB: DiseaseRationale = {
       { condition: "Trẻ em, lao hệ thần kinh trung ương hoặc lao xương khớp.", treatmentImplication: "Phác đồ B2 – 2HRZE/10RH.", sources: [LAO("phác đồ B2; tr. 46")] },
     ],
     "Lao hệ thần kinh trung ương/màng não người 0–19 tuổi không có bằng chứng kháng thuốc – phác đồ 6 tháng": [
-      { condition: "Người 0–19 tuổi, lao não – màng não, không nhiễm HIV.", treatmentImplication: "Phác đồ B2a – 6HRZEto hằng ngày liên tục 6 tháng. Không dùng cho người nhiễm HIV.", sources: [LAO("phác đồ B2a; tr. 47")] },
+      { condition: "Người 0–19 tuổi, lao não – màng não, không nhiễm HIV.", treatmentImplication: "Phác đồ B2a – 6HRZEto hằng ngày liên tục 6 tháng. Không chỉ định cho người nhiễm HIV.", sources: [LAO("phác đồ B2a; tr. 47")] },
     ],
   },
 };
