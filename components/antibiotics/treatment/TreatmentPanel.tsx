@@ -114,6 +114,20 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
       {rationale.reassessment && rationale.reassessment.length > 0 && <p className="tp-rationale-re"><strong>Đánh giá lại:</strong> {rationale.reassessment.map((r) => clinicalText(r)).join(" ")}</p>}
       {/* Can cu gop mot dong: chi ten van ban (vi tri muc/trang giu trong du lieu). */}
       {(() => { const cites = citeSources(rationale.items.flatMap((c) => c.sources ?? [])); return cites.length > 0 && <p className="tp-rationale-src">Căn cứ: {cites.map((c) => c.label).join("; ")}</p>; })()}
+      {/* CSS di kem khoi de hien thi giong nhau o moi noi dung (khung chung, module COPD). */}
+      <style>{`
+      .tp-rationale { margin-top: 14px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; padding: 10px 14px; }
+      .tp-rationale > summary { font-size: 13px; font-weight: 700; color: #1e3a5f; }
+      .tp-rationale-review { margin: 8px 0 0; font-size: 12.5px; color: #92400e; }
+      .tp-rationale-list { margin: 8px 0 0; display: grid; gap: 10px; }
+      .tp-rationale-item { display: grid; gap: 3px; padding-left: 10px; border-left: 3px solid #2f7d5b; }
+      .tp-rationale-item dt { font-size: 13px; font-weight: 600; color: #12283c; }
+      .tp-rationale-item dd { margin: 0; font-size: 13px; line-height: 1.55; color: #33505f; }
+      .tp-rationale-k { display: inline-block; min-width: 150px; margin-right: 6px; font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #557080; }
+      .tp-rationale-src { font-size: 11.5px !important; color: #6b8293 !important; }
+      .tp-rationale-re { margin: 10px 0 0; font-size: 13px; }
+      @media (max-width: 640px) { .tp-rationale-k { display: block; min-width: 0; } }
+      `}</style>
     </details>
   );
 }
@@ -365,17 +379,6 @@ function TpStyle() {
       .tp-alert-high > summary { cursor: pointer; font-weight: 700; }
       .tp-alert-src { display: block; font-size: 11px; opacity: .85; }
       .tp-empty { font-size: 13px; color: #5b7384; }
-      .tp-rationale { margin-top: 14px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; padding: 10px 14px; }
-      .tp-rationale > summary { font-size: 13px; font-weight: 700; color: #1e3a5f; }
-      .tp-rationale-review { margin: 8px 0 0; font-size: 12.5px; color: #92400e; }
-      .tp-rationale-list { margin: 8px 0 0; display: grid; gap: 10px; }
-      .tp-rationale-item { display: grid; gap: 3px; padding-left: 10px; border-left: 3px solid #2f7d5b; }
-      .tp-rationale-item dt { font-size: 13px; font-weight: 600; color: #12283c; }
-      .tp-rationale-item dd { margin: 0; font-size: 13px; line-height: 1.55; color: #33505f; }
-      .tp-rationale-k { display: inline-block; min-width: 150px; margin-right: 6px; font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #557080; }
-      .tp-rationale-src { font-size: 11.5px !important; color: #6b8293 !important; }
-      .tp-rationale-re { margin: 10px 0 0; font-size: 13px; }
-      @media (max-width: 640px) { .tp-rationale-k { display: block; min-width: 0; } }
       .tp-notes-body { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; }
       .tp-info { width: 22px; height: 22px; border-radius: 6px; background: #e6f1f6; color: #0b6b8a; font: 800 12px/22px Georgia, serif; text-align: center; }
       .tp-notes h3 { margin: 1px 0 4px; font-size: 14px; }

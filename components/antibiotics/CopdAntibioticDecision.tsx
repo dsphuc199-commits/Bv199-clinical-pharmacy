@@ -5,6 +5,8 @@ import { COPD_COLISTIN_SOURCE, COPD_DRUGS, COPD_GROUPS, COPD_REGIMENS, COPD_REVI
 import Link from "next/link";
 import { citeSource } from "@/lib/antibiotics/source-citation";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { getModuleRationale } from "@/data/antibiotics/empiric/rationale-modules";
+import { RationaleAccordion } from "./treatment/TreatmentPanel";
 import { copdStyles } from "./copd-2131-styles";
 import { EMPIRIC_TREATMENT_UI_RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 import SettingTabs from "./treatment/SettingTabs";
@@ -123,6 +125,7 @@ export default function CopdAntibioticDecision() {
           {commonDuration && <p className="c26-duration"><strong>Thời gian điều trị:</strong> {commonDuration}.</p>}
           {groupId === "in-mdr" && !baseId && <p>Chưa chọn thuốc nền. Phối hợp chỉ được cân nhắc khi điều kiện lâm sàng và kháng sinh đồ phù hợp.</p>}
           <Sources ids={group.sourceIds} reviews={group.reviewIds} />
+          {(() => { const ra = getModuleRationale("copd", group.id); return ra ? <RationaleAccordion rationale={ra} /> : null; })()}
         </section>}
         {group && <FollowUp setting={branch} />}
         <Sources cite ids={branch === "outpatient" ? ["text-out", "flow-out", "risk", "renal", "interaction"] : ["text-in", "flow-in", "table-in", "renal", "interaction"]} />

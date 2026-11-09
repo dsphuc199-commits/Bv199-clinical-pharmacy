@@ -14,6 +14,11 @@ export function hasDiseaseOverview(diseaseId: string): boolean {
   return !!getDiseaseOverview(diseaseId);
 }
 
+/* Bo cuc dong deu moi mat benh: muc nao nguon khong neu thi ghi ro, khong an muc, khong tu bo sung noi dung. */
+function List({ points, empty }: { points: Point[]; empty: string }) {
+  return points.length > 0 ? <ul>{points.map((p) => <Item key={p.text} p={p} />)}</ul> : <p className="do-empty">{empty}</p>;
+}
+
 function Item({ p }: { p: Point }) {
   return <li>{p.text}{RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
 }
@@ -31,12 +36,10 @@ export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
           </div>
         ))}
       </div>
-      {o.sourceControl.length > 0 && (
-        <div className="do-control">
-          <h4>Kiểm soát ổ nhiễm và can thiệp</h4>
-          <ul>{o.sourceControl.map((p) => <Item key={p.text} p={p} />)}</ul>
-        </div>
-      )}
+      <div className="do-control">
+        <h4>Kiểm soát ổ nhiễm và can thiệp</h4>
+        <List points={o.sourceControl} empty="Văn bản không nêu biện pháp kiểm soát ổ nhiễm hoặc can thiệp riêng cho bệnh này." />
+      </div>
       <DiseaseOverviewStyle />
     </section>
   );
@@ -49,12 +52,12 @@ export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
     <section className="do do-monitor" aria-label="Theo dõi và an toàn">
       <h3>Theo dõi, đánh giá lại và an toàn</h3>
       <div className="do-mon-grid">
-        <div><h4>Theo dõi hiệu quả</h4><ul>{o.monitoring.efficacy.map((p) => <Item key={p.text} p={p} />)}</ul></div>
-        <div><h4>Đánh giá lại điều trị</h4><ul>{o.monitoring.reassessment.map((p) => <Item key={p.text} p={p} />)}</ul></div>
+        <div><h4>Theo dõi hiệu quả</h4><List points={o.monitoring.efficacy} empty="Văn bản không nêu chỉ số theo dõi riêng." /></div>
+        <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="Văn bản không nêu thời điểm đánh giá lại riêng." /></div>
       </div>
       <details className="do-safety">
         <summary>Cảnh báo an toàn thiết yếu ({o.monitoring.safety.length})</summary>
-        <ul>{o.monitoring.safety.map((p) => <Item key={p.text} p={p} />)}</ul>
+        <List points={o.monitoring.safety} empty="Văn bản không nêu cảnh báo an toàn riêng cho bệnh này." />
         {!RULES.showDoseAdjustmentTables && (
           <p className="do-link">Hiệu chỉnh liều theo chức năng thận, gan: xem module <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a>.</p>
         )}
@@ -87,6 +90,7 @@ function DiseaseOverviewStyle() {
       .do-safety > summary { color:#9b1c1c !important; }
       .do-link { margin:8px 0 0; font-size:12.5px; color:#4b6576; }
       .do-ref { font-size:11.5px; color:#6b8293; }
+      .do-empty { margin:0; font-size:13px; color:#6b8293; font-style:italic; }
       .do-sources { font-size:12.5px; color:#4b6576; }
       .do :is(summary,a):focus-visible { outline:3px solid #087f89; outline-offset:3px; }
       @media (max-width: 1000px) { .do-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }

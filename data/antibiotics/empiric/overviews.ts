@@ -10,6 +10,7 @@
 
 import { OVERVIEWS_708 } from "./overviews-708";
 import { OVERVIEWS_OTHER } from "./overviews-other";
+import { OVERVIEWS_MODULES } from "./overviews-modules";
 
 export type Point = { text: string; ref: string };
 
@@ -113,5 +114,6 @@ export const DISEASE_OVERVIEWS: Record<string, DiseaseOverviewData> = {
 };
 
 export function getDiseaseOverview(diseaseId: string): DiseaseOverviewData | undefined {
-  return DISEASE_OVERVIEWS[diseaseId] ?? OVERVIEWS_708[diseaseId] ?? OVERVIEWS_OTHER[diseaseId];
+  // Module rieng (CAP, HAP, VAP, COPD) uu tien: tong quan cung nguon voi phac do dang hien thi.
+  return OVERVIEWS_MODULES[diseaseId] ?? DISEASE_OVERVIEWS[diseaseId] ?? OVERVIEWS_708[diseaseId] ?? OVERVIEWS_OTHER[diseaseId];
 }

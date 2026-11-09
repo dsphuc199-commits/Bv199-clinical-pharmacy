@@ -206,7 +206,7 @@ export function sectionsFor(items: Regimen[]): { sections: TxSection[]; regimenO
 }
 
 export default function BytRegimenView(props: Props) {
-  if (props.diseaseId === "v8-6") return <CopdByt2026 />;
+  if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 /><DiseaseMonitoring diseaseId="v8-6" /></>;
   /* Template chung: Tong quan (tang 1) – Phac do (tang 2, 3) – Theo doi (tang 4); tu dong khi co du lieu overview. */
   if (hasDiseaseOverview(props.diseaseId)) {
     return (

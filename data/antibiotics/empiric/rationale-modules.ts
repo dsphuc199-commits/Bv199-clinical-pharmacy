@@ -9,6 +9,7 @@
 */
 
 import type { ClinicalCriterion, Rationale } from "./rationale";
+import { COPD_DRUGS, COPD_GROUPS, COPD_REGIMENS } from "../copd-2131";
 
 const CAP = (loc: string) => `QĐ 2147/QĐ-BYT (2026) – Chẩn đoán và điều trị viêm phổi mắc phải cộng đồng ở người lớn, ${loc}`;
 const HV = (loc: string) => `Khuyến cáo VPBV/VPLQTM 2023 (Hội Hô hấp VN, Hội HSCC-CĐ VN), ${loc}`;
@@ -150,7 +151,39 @@ const VAP_RATIONALE: Record<string, Rationale> = {
   ] },
 };
 
-export function getModuleRationale(module: "cap" | "hap" | "vap", scenarioId: string): Rationale | undefined {
+/* COPD (QĐ 2131/2026): tieu chi lay tu COPD_GROUPS; "Ảnh hưởng đến lựa chọn" sinh tu chinh danh sach phac do cua nhom. */
+const COPD = (loc: string) => `QĐ 2131/QĐ-BYT (2026) – Hướng dẫn chẩn đoán và điều trị bệnh phổi tắc nghẽn mạn tính, ${loc}`;
+function copdRationale(groupId: string): Rationale | undefined {
+  const g = COPD_GROUPS.find((x) => x.id === groupId);
+  if (!g) return undefined;
+  const regs = COPD_REGIMENS.filter((r) => r.groupId === g.id);
+  let choices = [...new Set(regs.map((r) => r.drugs.map((d) => COPD_DRUGS[d.drugId].name).join(" + ")))];
+  /* Phoi hop day du "thuoc nen x thuoc phoi hop": rut gon thanh mot cau (khong doi noi dung). */
+  if (regs.length > 3 && regs.every((r) => r.drugs.length === 2)) {
+    const bases = [...new Set(regs.map((r) => COPD_DRUGS[r.drugs[0].drugId].name))];
+    const partners = [...new Set(regs.map((r) => COPD_DRUGS[r.drugs[1].drugId].name))];
+    if (bases.length * partners.length === regs.length) choices = [`một thuốc nền (${bases.join(", ")}) phối hợp một trong ${partners.join(", ")}, khi lâm sàng và kháng sinh đồ phù hợp`];
+  }
+  const out = g.setting === "outpatient";
+  return {
+    status: "authored",
+    items: [
+      { condition: g.criteria.join(" "),
+        treatmentImplication: choices.length ? `Lựa chọn theo nguồn: ${choices.join("; ")}.` : undefined,
+        sources: [COPD(out ? "mục 3.4.3.d, Biểu đồ 3.1" : "mục 3.4.4.d, Biểu đồ 3.2")] },
+      { condition: "Chỉ định kháng sinh: đờm mủ VÀ (tăng khó thở HOẶC tăng lượng đờm)" + (out ? "." : "; hoặc cần thông khí cơ học xâm nhập/không xâm nhập."),
+        treatmentImplication: "Đã dùng kháng sinh trong 3 tháng trước: chọn kháng sinh khác nhóm vừa dùng.",
+        sources: [COPD(out ? "mục 3.4.3.d" : "mục 3.4.4.d")] },
+    ],
+    reassessment: [
+      out ? "Đánh giá đáp ứng sau 3–5 ngày; cải thiện thì tiếp tục, thường 5–7 ngày." : "Đánh giá đáp ứng sau 48–72 giờ; cải thiện thì tiếp tục, thường 7–10 ngày.",
+      "Không cải thiện: nhuộm Gram, cấy đờm; đổi theo kháng sinh đồ, ưu tiên phổ hẹp khi phù hợp.",
+    ],
+  };
+}
+
+export function getModuleRationale(module: "cap" | "hap" | "vap" | "copd", scenarioId: string): Rationale | undefined {
+  if (module === "copd") return copdRationale(scenarioId);
   const table = module === "cap" ? CAP_RATIONALE : module === "hap" ? HAP_RATIONALE : VAP_RATIONALE;
   return table[scenarioId];
 }

@@ -120,6 +120,17 @@ const clinda=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REG
 check('Câu liều đã ghi đường dùng và cách chia thì không gắn lặp lại (clindamycin 2,4 g TM/ngày chia 4 lần)',clinda.includes('2,4 g TM/ngày chia 4 lần')&&!clinda.includes('data-route="">Tĩnh mạch'));
 const cssFiles=['components/antibiotics/treatment/DoseTable.tsx','components/antibiotics/treatment/TreatmentPanel.tsx','components/antibiotics/empiric/GuidelineTabs.tsx','components/antibiotics/empiric/BytRegimenView.tsx'].map(f=>require('fs').readFileSync(require('path').resolve(__dirname,'../..',f),'utf8')).join('\n');
 check('Không dùng overflow-wrap:anywhere (gây tách chữ giữa từ, ví dụ "Hoặ c"); cột "Hoặc" không xuống dòng',!/overflow-?[wW]rap:\s*"?anywhere/.test(cssFiles)&&/td\.tx-marker \{[^}]*white-space: nowrap/.test(cssFiles));
+/* Dong deu toan danh muc: 69/69 co tong quan + kiem soat o nhiem + theo doi; module rieng duoc boc cung bo cuc; COPD co "Vì sao" theo nhom */
+const OVA=load('data/antibiotics/empiric/overviews.ts');
+check('69/69 mặt bệnh có tổng quan và phần theo dõi/an toàn (kể cả CAP, HAP, VAP, COPD)',C.DISEASES.every(d=>!!OVA.getDiseaseOverview(d.id)));
+const DOV=load('components/antibiotics/empiric/DiseaseOverview.tsx');const uniformBad=[];
+for(const d of C.DISEASES){const h=render(React.createElement(DOV.DiseaseOverviewSummary,{diseaseId:d.id}))+render(React.createElement(DOV.DiseaseMonitoring,{diseaseId:d.id}));
+  if(!h.includes('class="do-cards"')||!h.includes('Kiểm soát ổ nhiễm và can thiệp')||!h.includes('Theo dõi hiệu quả')||!h.includes('Đánh giá lại điều trị')||!h.includes('Cảnh báo an toàn thiết yếu'))uniformBad.push(d.id);}
+check('Mọi mặt bệnh hiển thị đủ các mục tổng quan/theo dõi (mục nguồn không nêu ghi rõ, không ẩn)',uniformBad.length===0,uniformBad);
+const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
+check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan + theo dõi như khung chung',/selected\.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" \/><CopdByt2026 \/><DiseaseMonitoring diseaseId="v8-6" \/><\/>/.test(pageSrc)&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.includes('<DiseaseMonitoring diseaseId={selected.id} />'));
+const COPDD=load('data/antibiotics/copd-2131.ts');
+check('COPD: mọi nhóm có "Vì sao chọn phác đồ này?" với lựa chọn lấy từ chính danh sách phác đồ',COPDD.COPD_GROUPS.every(g=>{const r=MR.getModuleRationale('copd',g.id);return r&&r.items[0].treatmentImplication&&r.items.every(c=>c.sources?.length);}));
 if(report){
   const bySp=new Map();for(const r of rows){const s=bySp.get(r.specialty)??{n:0,b:0,ok:0};s.n++;s.b+=r.branches;if(r.ok)s.ok++;bySp.set(r.specialty,s);}
   console.log(`\nĐỘ PHỦ: ${rows.length} mặt bệnh · ${bySp.size} chuyên khoa · ${branches} nhánh BYT · ${rows.filter(r=>r.branches===0).length} mặt bệnh không có nhánh BYT (module riêng/quốc tế)`);

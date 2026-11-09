@@ -24,6 +24,7 @@ import SettingTabs from "@/components/antibiotics/treatment/SettingTabs";
 import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
 import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
+import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
 import DtrPseudomonasIdsa2026 from "../../../../components/antibiotics/empiric/DtrPseudomonasIdsa2026";
@@ -1006,7 +1007,8 @@ function GuidelineContent() {
             <>
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
-              {selected.id === "v8-6" && <CopdByt2026 />}
+              {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
+              {selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 /><DiseaseMonitoring diseaseId="v8-6" /></>}
               {selected.id !== "v8-6" && moduleKey !== "cap" && moduleKey !== "hap" && moduleKey !== "vap" && (
                 <BytRegimenView
                   key={selected.id}
@@ -1018,6 +1020,7 @@ function GuidelineContent() {
 
               {(moduleKey === "cap" || moduleKey === "hap" || moduleKey === "vap") && (
                 <>
+                  <DiseaseOverviewSummary diseaseId={selected.id} />
                   {moduleKey === "cap" ? (
                     <CapByt2026
                       key={`${selected.id}-${pickedScenario ?? "none"}`}
@@ -1030,6 +1033,7 @@ function GuidelineContent() {
                       initialScenarioId={pickedScenario ?? undefined}
                     />
                   )}
+                  <DiseaseMonitoring diseaseId={selected.id} />
                 </>
               )}
             </>
