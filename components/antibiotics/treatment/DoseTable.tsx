@@ -36,6 +36,8 @@ type Props = {
   durationColumn?: boolean;
   hideRegimenDuration?: boolean;
   sourceDoseAbsent?: boolean;
+  /* The chua da co canh bao "Cần thẩm định" cua tinh trang lieu: khong nhac lai trong bang. */
+  hideReviewNote?: boolean;
 };
 
 const MISSING_DOSE = "Cần xác minh liều";
@@ -62,6 +64,17 @@ function routeAlreadyStated(dose: string, route?: string): boolean {
 }
 function intervalAlreadyStated(dose: string, interval?: string): boolean {
   return !!interval && dose.toLowerCase().includes(interval.trim().toLowerCase());
+}
+
+const SOURCE_WORDING_FLAG = /xem nguyên văn|liều như trên/iu;
+/* Chi phan bo sung sau menh de dau (da the hien trong o "Cách dùng"), tranh lap lai. */
+function sourceExtra(o: StructuredDrug): string {
+  const raw = clinicalText(o.raw);
+  const cut = raw.indexOf(";");
+  return cut > 0 && raw.slice(cut + 1).trim() ? `Lưu ý theo văn bản: ${raw.slice(cut + 1).trim()}` : `Theo văn bản: ${raw}`;
+}
+function needsSourceWording(o: StructuredDrug): boolean {
+  return o.flags.some((f) => SOURCE_WORDING_FLAG.test(f));
 }
 
 function ruleText(g: DrugGroup, n: number): string | undefined {
@@ -93,6 +106,9 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
           {o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
           {o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
           {o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
+          {/* Ghi chu can doc cau nguon (giai doan, muc do, phoi hop...): hien cau nguon ngay trong o, thay cho khoi chi tiet rieng. */}
+          {needsSourceWording(o) && <span className="tx-sub tx-source-line">{sourceExtra(o)}</span>}
+          {o.flags.filter((f) => f.startsWith("Ghi chú kèm")).map((f) => <span key={f} className="tx-sub">{clinicalText(f.replace(/^Ghi chú kèm:\s*/u, ""))}</span>)}
         </div>
       </td>
       {showCourse && <td data-label="Thời gian"><div>{clinicalText(o.course || duration || "Chưa xác minh thời gian điều trị")}</div></td>}
@@ -100,11 +116,18 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
   );
 }
 
-export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, sourceDoseAbsent }: Props) {
-  if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE") {
+/* Nhom "chon mot" ma cau nguon co phoi hop nam giua cau (vd. "hoặc ampicilin kết hợp gentamycin",
+   "ABLC + flucytosin"): khong tu tach thanh cac lua chon don le – hien nguyen cau nguon. */
+const MID_COMBINATION = /[\p{L}\d)]\s+(?:kết hợp|phối hợp)\s+\p{L}|[\p{L}\d)*]\s\+\s\p{L}/iu;
+function hidesCombination(groups: DrugGroup[]): boolean {
+  return groups.some((g) => g.rule === "one-of" && g.raw.some((r) => MID_COMBINATION.test(`${r.name} ${r.dose ?? ""}`)));
+}
+
+export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, sourceDoseAbsent, hideReviewNote }: Props) {
+  if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE" || hidesCombination(groups)) {
     return (
       <div className="tx">
-        <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng."}</p>
+        {(!hideReviewNote || status === "STRUCTURED") && <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : status === "NEEDS_STRUCTURED_REVIEW" ? "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng." : "Phác đồ có phối hợp thuốc trong từng lựa chọn – trình bày nguyên văn theo nguồn. Cần thẩm định trước khi áp dụng."}</p>}
         {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
         <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         {duration && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
@@ -113,7 +136,6 @@ export default function DoseTable({ groups, status, duration, population, indepe
     );
   }
 
-  const notes = groups.flatMap((g) => g.options.flatMap((o) => o.flags.filter((f) => !f.startsWith("KIỂM TRA")).map((f) => `${o.name}: ${f}`)));
   return (
     <div className="tx">
       {groups.map((g, i) => {
@@ -159,26 +181,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
         );
       })}
       {duration && !durationColumn && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
-      {/* Chi tiet cach dung chi khi lieu chua tach het hoac co ghi chu lieu; nguon gop o khoi "Nguồn và đối chiếu" cuoi khung. */}
-      {(status === "PARTIAL" || notes.length > 0) && (
-        <details className="tx-src">
-          <summary>Chi tiết cách dùng theo văn bản</summary>
-          {status === "PARTIAL" && (
-            <ul>
-              {groups.flatMap((g) => g.raw).map((r, i) => (
-                <li key={`${r.name}-${i}`}><strong>{r.name}:</strong> {clinicalText(r.dose)}</li>
-              ))}
-            </ul>
-          )}
-          {notes.length > 0 && (
-            <ul className="tx-notes">
-              {Array.from(new Set(notes.map((n) => clinicalText(n)))).map((n) => (
-                <li key={n}>{n}</li>
-              ))}
-            </ul>
-          )}
-        </details>
-      )}
+      {/* Khong lap "Chi tiết cách dùng theo văn bản": cach dung da the hien trong bang; truong chua xac minh hien ngay trong o. */}
       <TxStyle />
     </div>
   );

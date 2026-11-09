@@ -17,5 +17,5 @@ check('Unverified corrected levofloxacin dose is not imported',!p.rows.some(r=>/
 check('Adult Gram-negative branch stays separate and is not a complete empiric regimen',a.population==='adult'&&a.rows.length===2&&a.condition.includes('không phải phác đồ đơn trị mặc định'));
 const h=render(React.createElement(Review,{diseaseId:'v8-33'}));
 check('Both populations are labelled and remain unapproved in data',h.includes('Liều tham khảo trẻ em')&&h.includes('Liều tham khảo người lớn')&&p.approval==='NOT_APPROVED'&&a.approval==='NOT_APPROVED');
-check('Lists retain semantic bullets',h.includes('<ul>')&&h.includes('<li>')&&p.approval==='NOT_APPROVED'&&a.approval==='NOT_APPROVED');
+check('Lists use semantic markup, never fake bullet characters',!h.split('<style').map((x,i)=>i?x.slice(x.indexOf('</style>')+8):x).join('').includes('•')&&(!h.includes('<li')||h.includes('<ul'))&&p.approval==='NOT_APPROVED'&&a.approval==='NOT_APPROVED');
 console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

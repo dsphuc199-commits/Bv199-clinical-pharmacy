@@ -35,10 +35,10 @@ for(const d of C.DISEASES){
     branches++;
     const {sections}=V.sectionsFor(list);
     const html=render(React.createElement(Panel,{sections,sources:list.map(r=>r.source.page),rationale:getRationale(d.id,name),scenarios:[{value:name,label:name,criteria:[name]}],scenario:name}));
-    const text=mainLayer(html);
+    const text=mainLayer(html);const textNoSource=mainLayer(html.split('<span class="tx-sub tx-source-line">').map((x,i)=>i?x.slice(x.indexOf('</span>')+7):x).join(''));
     if(PAGE.test(text)){pageHits.push(`${d.id}: ${text.match(new RegExp(`.{0,40}${PAGE.source}.{0,20}`))?.[0]}`);ok=false;}
     if(/class="tx-sub">= /.test(html)){dailyHits.push(d.id);ok=false;}
-    if(ADJUST.test(text)){adjustHits.push(d.id);ok=false;}
+    if(ADJUST.test(textNoSource)){adjustHits.push(d.id);ok=false;}
     if(!html.includes('tp-rationale'))noRationale.push(`${d.id}: ${name}`);
     if(list.some(r=>!r.source||!r.source.doc||!r.source.page))missingSource.push(d.id);
     /* "Hoac" giua the chi khi cac the khong mang dieu kien khac nhau */
@@ -131,6 +131,13 @@ const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../.
 check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan + theo dõi như khung chung',/selected\.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" \/><CopdByt2026 \/><DiseaseMonitoring diseaseId="v8-6" \/><\/>/.test(pageSrc)&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.includes('<DiseaseMonitoring diseaseId={selected.id} />'));
 const COPDD=load('data/antibiotics/copd-2131.ts');
 check('COPD: mọi nhóm có "Vì sao chọn phác đồ này?" với lựa chọn lấy từ chính danh sách phác đồ',COPDD.COPD_GROUPS.every(g=>{const r=MR.getModuleRationale('copd',g.id);return r&&r.items[0].treatmentImplication&&r.items.every(c=>c.sources?.length);}));
+/* Khong lap "Chi tiết cách dùng theo văn bản"; phoi hop trong mot lua chon khong bi tach thanh lua chon don le */
+let detailHits=0;for(const r of R.ALL_REGIMENS){if(render(React.createElement(Panel,{sections:V.sectionsFor([r]).sections,sources:[]})).includes('Chi tiết cách dùng theo văn bản'))detailHits++;}
+check('Không còn khối "Chi tiết cách dùng theo văn bản" ở mọi phác đồ',detailHits===0,detailHits);
+const neoHtml=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-neo-pneu-1')]).sections,sources:[]}));
+check('Viêm phổi sơ sinh: "benzyl penicilin hoặc ampicilin kết hợp gentamycin" hiển thị đúng nguyên văn, không thành "Chọn 1 trong 3"',neoHtml.includes('ampicilin kết hợp gentamycin')&&!neoHtml.includes('Chọn 1 trong 3'));
+const cryptoHtml=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-fung-crypto-hiv-alt')]).sections,sources:[]}));
+check('Phối hợp "ABLC + flucytosin" giữ nguyên trong một lựa chọn',cryptoHtml.includes('ABLC + flucytosin'));
 if(report){
   const bySp=new Map();for(const r of rows){const s=bySp.get(r.specialty)??{n:0,b:0,ok:0};s.n++;s.b+=r.branches;if(r.ok)s.ok++;bySp.set(r.specialty,s);}
   console.log(`\nĐỘ PHỦ: ${rows.length} mặt bệnh · ${bySp.size} chuyên khoa · ${branches} nhánh BYT · ${rows.filter(r=>r.branches===0).length} mặt bệnh không có nhánh BYT (module riêng/quốc tế)`);

@@ -171,7 +171,7 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
           </div>
         ))}
 
-        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent}/>
+        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent} hideReviewNote/>
         {card.extra}
         {/* Nguon cua the gop vao mot khoi "Nguồn và đối chiếu" cuoi khung phac do. */}
 
