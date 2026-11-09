@@ -30,6 +30,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <input id="login-password" name="password" type="password" autoComplete="current-password" required />
         <button type="submit">Đăng nhập</button>
         <p className="bv199-login-note">Chỉ dành cho nhân viên y tế được cấp tài khoản.</p>
+        <a className="bv199-login-app" href="/tai-app">Cài ứng dụng lên điện thoại (Android, iPhone)</a>
       </form>
       <style>{`
         .bv199-login { position:fixed; inset:0; z-index:5000; display:grid; place-items:center; padding:16px; background:linear-gradient(160deg,#0b3a5b 0%,#087f89 100%); overflow:auto; }
@@ -44,6 +45,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         .bv199-login-card button:hover { background:#087f89; }
         .bv199-login-error { margin:0; padding:9px 12px; border-radius:8px; background:#fdecec; border:1px solid #f3c6c6; color:#9b1c1c; font-size:13px; }
         .bv199-login-note { margin:6px 0 0; text-align:center; font-size:12px; color:#6b8293; }
+        .bv199-login-app { text-align:center; font-size:13px; font-weight:700; color:#087f89; }
       `}</style>
     </div>
   );

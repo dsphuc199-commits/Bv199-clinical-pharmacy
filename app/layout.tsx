@@ -1,5 +1,5 @@
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -11,6 +11,7 @@ import GlobalHeader from "@/components/GlobalHeader";
 import GlobalFooter from "@/components/GlobalFooter";
 import ScrollManager from "@/components/ScrollManager";
 import MobileNavigation from "@/components/MobileNavigation";
+import PwaRegister from "@/components/PwaRegister";
 
 
 /*
@@ -39,6 +40,17 @@ export const metadata: Metadata = {
   },
   description:
     "Hệ thống hỗ trợ quyết định Dược lâm sàng - Khoa Dược - Bệnh viện 199 - Bộ Công an",
+  applicationName: "BV199 Dược",
+  // Ung dung cai dat (PWA): iPhone mo toan man hinh, bieu tuong man hinh chinh
+  appleWebApp: { capable: true, title: "BV199 Dược", statusBarStyle: "default" },
+  icons: {
+    icon: [{ url: "/favicon.ico" }, { url: "/app-icons/icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/app-icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0b3a5b",
 };
 
 export default function RootLayout({
@@ -58,6 +70,7 @@ export default function RootLayout({
         }}
       >
         <ScrollManager />
+        <PwaRegister />
         
 <MobileNavigation />
 

@@ -9,7 +9,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { authConfig, createSession, readSession, SESSION_COOKIE, SESSION_RENEW_AFTER_SECONDS, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
-const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout"];
+/* Cong khai: dang nhap + trang huong dan cai ung dung (PWA) va tep khai bao ung dung. */
+const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/tai-app", "/manifest.webmanifest", "/sw.js"];
 
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
@@ -44,5 +45,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Moi duong dan tru tai nguyen build cua Next, logo dang nhap va favicon.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|bv199-khoa-duoc-logo.png).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|bv199-khoa-duoc-logo.png|app-icons/).*)"],
 };
