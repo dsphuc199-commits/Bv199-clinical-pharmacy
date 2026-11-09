@@ -11,9 +11,9 @@ check('Group records preserve source criteria and linked IDs without inventing e
 check('Missing criteria remain unknown and manual',groups[1].criteriaStatus==='label-only'&&groups[1].selection==='manual'&&groups[1].criteria.length===0);
 check('Incomplete or overlapping matches never identify a group',!G.unambiguousGroup([groups[0]],false)&&!G.unambiguousGroup(groups,true)&&!G.unambiguousGroup([],true));
 const initial=render(React.createElement(Select,{groups,onChange:()=>{}}));
-check('Criteria are available before selection without assigning a group',initial.includes('Chọn nhóm người bệnh')&&initial.includes('Xem tiêu chí phân nhóm')&&initial.includes('Tuổi &lt;65 VÀ')&&!initial.includes('data-selected-group='));
+check('Group picker shows only the selector (no grouping-criteria disclosure) and assigns no group',initial.includes('Chọn nhóm người bệnh')&&!initial.includes('Xem tiêu chí phân nhóm')&&!initial.includes('data-selected-group='));
 const selected=render(React.createElement(Select,{groups,value:'A',onChange:()=>{}}));
-check('Selected criteria identify exactly the chosen group',selected.includes('data-selected-group="A"')&&!selected.includes('data-selected-group="B"')&&selected.includes('Tiêu chí áp dụng'));
+check('Selecting a group shows no criteria block',selected.includes('<option value="A" selected="">')&&!selected.includes('Tiêu chí áp dụng')&&!selected.includes('data-selected-group="B"'));
 const unknown=render(React.createElement(Select,{groups,value:'B',onChange:()=>{}}));
 check('Group without source criteria shows no placeholder and no invented finding',!unknown.includes('Chưa đủ căn cứ xác định nhóm')&&!unknown.includes('data-selected-group="B"')&&unknown.includes('value="B"'));
 const echo=G.patientGroupsFor([{value:'x',label:'Viêm khớp do lậu cầu (N. gonorrhoeae)',criteria:['Viêm khớp do lậu cầu (N. gonorrhoeae)']},{value:'y',label:'Nhóm Y · có phương án bị khóa',criteria:['Nhóm Y']}]);
@@ -39,10 +39,10 @@ check('Unselected group cannot expose old regimen dose duration note or source',
 check('COPD source thresholds and AND/OR criteria remain intact',D.COPD_GROUPS.find(g=>g.id==='out-risk').criteria.join(' ').includes('FEV₁ <50%')&&D.COPD_GROUPS.find(g=>g.id==='out-other').criteria.join(' ').includes('FEV₁ <30%')&&!D.hasCopdSymptomIndication({purulent:true,increasedDyspnea:false,increasedSputum:false})&&D.hasCopdSymptomIndication({purulent:true,increasedDyspnea:true,increasedSputum:false}));
 check('Citation formatting preserves clinical renal thresholds and interval',clinicalText('1,5–3 g mỗi 6 giờ (Phụ lục 1; Clcr 10–30: mỗi 8–12 giờ)')==='1,5–3 g mỗi 6 giờ (Clcr 10–30: mỗi 8–12 giờ)');
 check('Citation prose leaves no dangling phrase',clinicalText('Cephalosporin kết hợp macrolid, một lựa chọn của Mục 5.3.2.1.')==='Cephalosporin kết hợp macrolid.');
-const hap=render(React.createElement(load('components/antibiotics/HapVap2023.tsx').default,{kind:'hap'}));
-check('Risk definitions are accessible before HAP group selection without exposing a regimen',hap.includes('Định nghĩa yếu tố nguy cơ')&&hap.includes('90 ngày')&&hap.includes('10%')&&!hap.includes('data-regimen='));
-const cap=render(React.createElement(load('components/antibiotics/CapByt2026.tsx').default,{}));
-check('CAP boundary gap is flagged before manual group selection',cap.includes('tuổi đúng 65')&&cap.includes('Không tự xác định nhóm chỉ từ tuổi')&&!cap.includes('data-regimen='));
+const hap=render(React.createElement(load('components/antibiotics/HapVap2023.tsx').default,{kind:'hap',initialScenarioId:'hap-mdr'}));
+check('HAP risk definitions stay accessible in the module once a group is chosen',hap.includes('Yếu tố nguy cơ đa kháng và MRSA')&&hap.includes('90 ngày')&&hap.includes('10%'));
+const cap=render(React.createElement(load('components/antibiotics/CapByt2026.tsx').default,{initialScenarioId:'low'}));
+check('CAP age-65 boundary gap remains flagged for the selected group',cap.includes('tuổi đúng 65')&&cap.includes('Không tự xác định nhóm chỉ từ tuổi'));
 const differentCards=render(React.createElement(Panel,{sections:[{key:'equal',title:'Phác đồ',itemLabel:'Phác đồ',cards:[{...card,id:'three',duration:'3 ngày'},{...card,id:'five',duration:'5 ngày'}]}],sources:[]}));
 check('Different complete-regimen courses stay in their own time columns',(differentCards.match(/<th>Thời gian<\/th>/g)||[]).length===2&&/data-regimen="three"[\s\S]*?data-label="Thời gian"><div>3 ngày/.test(differentCards)&&/data-regimen="five"[\s\S]*?data-label="Thời gian"><div>5 ngày/.test(differentCards));
 const sameCards=render(React.createElement(Panel,{sections:[{key:'equal',title:'Phác đồ',itemLabel:'Phác đồ',cards:[{...card,id:'one',duration:'5 ngày'},{...card,id:'two',duration:'5 ngày'}]}],sources:[]}));
