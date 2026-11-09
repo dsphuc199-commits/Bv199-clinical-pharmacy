@@ -115,6 +115,11 @@ for(const s of CAPM.CAP_SCENARIOS)scanAll(`CAP ${s.id}`,render(React.createEleme
 for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k])scanAll(`${k} ${s.id}`,render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id})));
 check('Không hiển thị "Phụ lục" ở bất kỳ mặt bệnh, tab hay module nào (kể cả khối đóng)',appendixHits.length===0,appendixHits.slice(0,5));
 check('Mỗi khung phác đồ chỉ có tối đa một khối "Nguồn và đối chiếu" (đã gộp)',multiSrc.length===0,multiSrc.slice(0,5));
+/* Trinh bay: khong lap duong dung/cach chia da co trong cau lieu goc; khong cat chu giua tu */
+const clinda=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-2')]).sections,sources:[]}));
+check('Câu liều đã ghi đường dùng và cách chia thì không gắn lặp lại (clindamycin 2,4 g TM/ngày chia 4 lần)',clinda.includes('2,4 g TM/ngày chia 4 lần')&&!clinda.includes('data-route="">Tĩnh mạch'));
+const cssFiles=['components/antibiotics/treatment/DoseTable.tsx','components/antibiotics/treatment/TreatmentPanel.tsx','components/antibiotics/empiric/GuidelineTabs.tsx','components/antibiotics/empiric/BytRegimenView.tsx'].map(f=>require('fs').readFileSync(require('path').resolve(__dirname,'../..',f),'utf8')).join('\n');
+check('Không dùng overflow-wrap:anywhere (gây tách chữ giữa từ, ví dụ "Hoặ c"); cột "Hoặc" không xuống dòng',!/overflow-?[wW]rap:\s*"?anywhere/.test(cssFiles)&&/td\.tx-marker \{[^}]*white-space: nowrap/.test(cssFiles));
 if(report){
   const bySp=new Map();for(const r of rows){const s=bySp.get(r.specialty)??{n:0,b:0,ok:0};s.n++;s.b+=r.branches;if(r.ok)s.ok++;bySp.set(r.specialty,s);}
   console.log(`\nĐỘ PHỦ: ${rows.length} mặt bệnh · ${bySp.size} chuyên khoa · ${branches} nhánh BYT · ${rows.filter(r=>r.branches===0).length} mặt bệnh không có nhánh BYT (module riêng/quốc tế)`);

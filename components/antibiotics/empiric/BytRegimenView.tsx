@@ -100,7 +100,7 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
   const sup = doseSupplementFor(regimen.id);
   const missing = doseEvidenceOf(regimen) === "MISSING_DOSE_EVIDENCE";
   if (!sup && !missing) return null;
-  const box = { fontSize: 12.5, lineHeight: 1.5, borderRadius: 8, padding: "6px 10px", background: "#f0f9ff", borderLeft: "3px solid #0e7490", overflowWrap: "anywhere" as const };
+  const box = { fontSize: 12.5, lineHeight: 1.5, borderRadius: 8, padding: "6px 10px", background: "#f0f9ff", borderLeft: "3px solid #0e7490", overflowWrap: "break-word" as const };
   return (
     <div className="byt199-supp" style={box}>
       {missing && <ul style={{ margin: 0, paddingLeft: 18, color: "#7c2d12" }}>

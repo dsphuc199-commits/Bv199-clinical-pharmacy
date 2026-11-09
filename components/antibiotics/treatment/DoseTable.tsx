@@ -49,6 +49,21 @@ function doseText(o: StructuredDrug): string {
   return clinicalText(`${o.dose} ${o.doseUnit ?? ""}`.trim());
 }
 
+/* Cau lieu goc da ghi duong dung / cach chia thi khong gan lai (tranh "TM/ngày chia 4 lần · Tĩnh mạch · chia 4 lần"). */
+const ROUTE_IN_TEXT: Record<string, RegExp> = {
+  "tĩnh mạch": /(?:^|[^\p{L}])(?:TM|tĩnh mạch|truyền)(?:[^\p{L}]|$)/iu,
+  "uống": /(?:^|[^\p{L}])uống(?:[^\p{L}]|$)/iu,
+  "tiêm bắp": /(?:^|[^\p{L}])(?:TB|tiêm bắp)(?:[^\p{L}]|$)/iu,
+};
+function routeAlreadyStated(dose: string, route?: string): boolean {
+  if (!route) return false;
+  const re = ROUTE_IN_TEXT[route.trim().toLowerCase()];
+  return re ? re.test(dose) : dose.toLowerCase().includes(route.trim().toLowerCase());
+}
+function intervalAlreadyStated(dose: string, interval?: string): boolean {
+  return !!interval && dose.toLowerCase().includes(interval.trim().toLowerCase());
+}
+
 function ruleText(g: DrugGroup, n: number): string | undefined {
   if (g.rule === "one-of") return `Chọn 1 trong ${n}`;
   if (g.rule === "by-population") return "Liều theo đối tượng";
@@ -58,6 +73,9 @@ function ruleText(g: DrugGroup, n: number): string | undefined {
 
 function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean }) {
   const critical = o.flags.filter((f) => f.startsWith("KIỂM TRA"));
+  const dose = doseText(o);
+  const showRoute = !routeAlreadyStated(dose, o.route);
+  const showInterval = !intervalAlreadyStated(dose, o.interval);
   return (
     <tr className={critical.length ? "tx-row tx-row-warn" : "tx-row"}>
       {showRelation && <td className="tx-marker" data-label="Quan hệ lựa chọn">{marker}</td>}
@@ -71,7 +89,7 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
       </td>
       <td data-label="Cách dùng">
         <div>
-          <span data-dose="">{doseText(o)}</span><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route || "Chưa xác minh đường dùng")}</span><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval || "Chưa xác minh khoảng cách liều")}</span>
+          <span data-dose="">{dose}</span>{showRoute && <><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route || "Chưa xác minh đường dùng")}</span></>}{showInterval && <><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval || "Chưa xác minh khoảng cách liều")}</span></>}
           {o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
           {o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
           {o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
@@ -179,13 +197,13 @@ export function TxStyle() {
       .tx-join-seq { color: #4b5563; }
       .tx-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
       .tx-table th { text-align: left; font-size: 11px; font-weight: 700; color: #4b6576; border-bottom: 1px solid #dce6ed; padding: 4px 6px; }
-      .tx-table td { vertical-align: top; padding: 6px; border-bottom: 1px solid #edf2f6; overflow-wrap: anywhere; }
-      .tx-table th.tx-marker, .tx-table td.tx-marker { width: 44px; text-align:center; font-weight:700; color:#087f89; }
+      .tx-table td { vertical-align: top; padding: 6px; border-bottom: 1px solid #edf2f6; overflow-wrap: break-word; }
+      .tx-table th.tx-marker, .tx-table td.tx-marker { width: 64px; min-width: 64px; text-align:center; font-weight:700; color:#087f89; white-space: nowrap; word-break: keep-all; hyphens: none; }
       .tx-table-no-relation th:first-child, .tx-table:not(.tx-table-no-relation) th:nth-child(2), .tx-table td.tx-drug { width: 32%; }
       .tx-tools-row td { padding-left:44px; }
       .tx-table-no-relation .tx-tools-row td { padding-left:0; }
       .tx-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
-      .tx-table th { overflow-wrap: anywhere; }
+      .tx-table th { overflow-wrap: break-word; }
       .tx-src summary:focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .tx-drug strong { display: block; }
       .tx-pop, .tx-ctx, .tx-sub { display: block; font-size: 11px; color: #5b7384; }
@@ -200,20 +218,20 @@ export function TxStyle() {
       .tx-notes { color: #7c2d12; }
       .tx-status { justify-self: start; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 8px; background: #fff7ed; color: #9a3412; border: 1px dashed #c2410c; }
       .tx-raw { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 13px; }
-      .tx-raw li { display: grid; gap: 2px; padding: 6px 8px; background: #f7fafc; border-radius: 8px; overflow-wrap: anywhere; }
+      .tx-raw li { display: grid; gap: 2px; padding: 6px 8px; background: #f7fafc; border-radius: 8px; overflow-wrap: break-word; }
       .tx-listed { list-style:none; padding:0; margin:8px 0; }.tx-listed > li { padding:10px 0; border-bottom:1px solid #e1e9ee; }
       .tx-table th { background:#f3f6f8; padding:9px 8px; color:#132b43; font-size:13px; }.tx-table td { padding:10px 8px; }.tx-rule { border-radius:3px; background:transparent; padding:0; font-weight:600; }
       @media (max-width: 640px) {
         /* Mobile: ten thuoc mot dong; Lieu dung | Duong dung | Khoang cach lieu thanh 3 cot – van tach truong */
         .tx-table, .tx-table tbody { display: block; width: 100% !important; }
         .tx-table thead { display: none; }
-        .tx-table tr { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 8px 4px; border: 0; border-bottom: 1px solid #edf2f6; padding: 10px 0; margin: 0; }
+        .tx-table tr { display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 8px 4px; border: 0; border-bottom: 1px solid #edf2f6; padding: 10px 0; margin: 0; }
         .tx-table tr:last-child { border-bottom: 0; }
         .tx-table td { display: block; width: auto !important; border: 0; padding: 0; }
         .tx-table td::before { content: attr(data-label); display: block; font-size: 10.5px; font-weight: 700; color: #6b8293; }
         .tx-table tr > td { grid-column:2; }.tx-table td.tx-marker { grid-column:1; grid-row:1 / span 5; }
         .tx-table td.tx-marker::before { content:none; }
-        .tx-table tr.tx-tools-row { display:block; padding-left:36px; }
+        .tx-table tr.tx-tools-row { display:block; padding-left:56px; }
         .tx-table td.tx-drug { grid-column: 2; }
         .tx-table td.tx-drug::before { content: none; }
         .tx-table-no-relation tr { grid-template-columns:minmax(0,1fr); }

@@ -1136,7 +1136,7 @@ function OrganismContent({
 
         .org3-organism > span {
           min-width: 0;
-          overflow-wrap: anywhere;
+          overflow-wrap: break-word;
         }
 
         .org3-organism i,
@@ -1193,7 +1193,7 @@ function OrganismContent({
           font-size: 22px;
           line-height: 1.4;
           font-weight: 650;
-          overflow-wrap: anywhere;
+          overflow-wrap: break-word;
         }
 
         .org3-table-ref {
@@ -1248,7 +1248,7 @@ function OrganismContent({
           font-size: 14px;
           line-height: 1.9;
           white-space: pre-wrap;
-          overflow-wrap: anywhere;
+          overflow-wrap: break-word;
         }
 
         .org3-ab-link {

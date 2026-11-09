@@ -15,7 +15,7 @@ export default function SettingTabs({ items,value,onChange,children }:{items:{va
       .treatment-context-tabs > button { border:0; border-bottom:3px solid transparent; background:white; color:#344b5d; padding:12px 10px; font:inherit; font-weight:600; cursor:pointer; min-width:0; }
       .treatment-context-tabs > button[aria-selected=true] { color:#007f86; border-bottom-color:#009f98; }
       .treatment-context-tabs > button:focus-visible { outline:3px solid #087f89; outline-offset:2px; }.treatment-context-body { min-width:0; }
-      @media(max-width:640px) { .treatment-context-tabs { gap:8px; }.treatment-context-tabs > button { padding:10px 6px; font-size:13px; overflow-wrap:anywhere; } }
+      @media(max-width:640px) { .treatment-context-tabs { gap:8px; }.treatment-context-tabs > button { padding:10px 6px; font-size:13px; overflow-wrap: break-word; } }
     `}</style>
   </div>;
 }

@@ -55,7 +55,7 @@ export default function RegimenDrugTools({ name, texts = [] }: { name:string; te
       .regimen-drug-tools > details { min-width:0; }.regimen-drug-tools > details[open] { grid-column:1/-1; }
       .regimen-drug-tools summary { cursor:pointer; font-weight:700; color:#087f89; padding:6px 8px; border:1px solid #d5e7ec; background:#f1f8fa; border-radius:6px; }
       .regimen-drug-tools summary:focus-visible { outline:3px solid #087f89; outline-offset:3px; }
-      .regimen-drug-tools p { margin:7px 0; overflow-wrap:anywhere; }.regimen-drug-tools a { text-decoration:underline; color:#087f89; }
+      .regimen-drug-tools p { margin:7px 0; overflow-wrap: break-word; }.regimen-drug-tools a { text-decoration:underline; color:#087f89; }
       .regimen-drug-tools dl > div { display:grid; grid-template-columns:minmax(85px,.6fr) minmax(0,1.4fr); gap:10px; padding:7px 0; border-bottom:1px solid #dce8ed; }
       .regimen-drug-tools dd { margin:0; }.rdt-profile { margin:8px 0; }.rdt-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
       @media(max-width:640px) { .regimen-drug-tools { grid-template-columns:minmax(0,1fr); }.regimen-drug-tools dl > div { grid-template-columns:minmax(0,1fr); gap:2px; } }

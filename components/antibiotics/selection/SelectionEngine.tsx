@@ -504,7 +504,7 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
           .se-cert.ok { background: #dcfce7; color: #166534; }
           .se-approval { display: inline-block; padding: 4px 10px; border: 1px solid #fdba74; border-radius: 99px; background: #fff7ed; color: #9a3412; font-size: 11.5px; font-weight: 700; }
           .se-review { display: inline-block; margin: 6px 0 0; padding: 4px 10px; border-radius: 99px; background: #b91c1c; color: #fff; font-size: 12px; font-weight: 800; }
-          .se-alert { border-radius: 8px; padding: 8px 10px; margin: 6px 0; font-size: 12.5px; line-height: 1.5; overflow-wrap: anywhere; }
+          .se-alert { border-radius: 8px; padding: 8px 10px; margin: 6px 0; font-size: 12.5px; line-height: 1.5; overflow-wrap: break-word; }
           .se-alert p { margin: 4px 0; }
           .se-alert ul { margin: 4px 0; padding-left: 18px; }
           .se-alert-critical { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #b91c1c; color: #7f1d1d; }
@@ -528,8 +528,8 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
           .se-elig-NOT_ELIGIBLE { background: #e5e7eb; color: #374151; }
           .se-elig-SAFETY_BLOCKED { background: #7f1d1d; color: #fff; }
           .se-drugs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-          .se-drugs li { display: grid; grid-template-columns: minmax(110px, 32%) minmax(0, 1fr); gap: 8px; padding: 6px 8px; border-radius: 8px; background: #f5f9fb; font-size: 12.5px; overflow-wrap: anywhere; }
-          .se-nodose { margin: 6px 0; padding: 6px 8px; border-radius: 8px; border: 1px dashed #b45309; background: #fff7ed; color: #7c2d12; font-size: 12px; overflow-wrap: anywhere; }
+          .se-drugs li { display: grid; grid-template-columns: minmax(110px, 32%) minmax(0, 1fr); gap: 8px; padding: 6px 8px; border-radius: 8px; background: #f5f9fb; font-size: 12.5px; overflow-wrap: break-word; }
+          .se-nodose { margin: 6px 0; padding: 6px 8px; border-radius: 8px; border: 1px dashed #b45309; background: #fff7ed; color: #7c2d12; font-size: 12px; overflow-wrap: break-word; }
           .se-supp { margin: 6px 0; padding: 6px 8px; border-radius: 8px; border-left: 3px solid #0e7490; background: #f0f9ff; font-size: 12px; }
           .se-supp-international { border-left-color: #7c3aed; background: #faf5ff; }
           .se-supp-head { font-weight: 700; color: #164e63; margin-bottom: 2px; }
@@ -549,7 +549,7 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
           .se-detail { margin: 6px 0 10px; font-size: 12px; }
           .se-detail summary { cursor: pointer; font-weight: 700; color: #087f89; }
           .se-detail ul { list-style: none; margin: 6px 0; padding: 0; display: grid; gap: 3px; }
-          .se-detail li { display: grid; grid-template-columns: 14px minmax(90px, 40%) minmax(0, 1fr); gap: 6px; overflow-wrap: anywhere; }
+          .se-detail li { display: grid; grid-template-columns: 14px minmax(90px, 40%) minmax(0, 1fr); gap: 6px; overflow-wrap: break-word; }
           .se-f-label { font-weight: 700; color: #17364b; }
           .se-f-val em { color: #647b8c; font-style: normal; }
           .se-f-missing { color: #94a3b8; }
@@ -558,7 +558,7 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
           .se-form { font-size: 12px; }
           .se-in { color: #166534; }
           .se-out { color: #991b1b; }
-          .se-src { font-size: 11px; color: #647b8c; margin-top: 8px; overflow-wrap: anywhere; }
+          .se-src { font-size: 11px; color: #647b8c; margin-top: 8px; overflow-wrap: break-word; }
           .se-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
           .se-links a { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 12px; border: 1px solid #b9dfe0; border-radius: 9px; background: #eef8f8; color: #076c75; font-size: 12px; font-weight: 700; text-decoration: none; }
           @media (max-width: 860px) {

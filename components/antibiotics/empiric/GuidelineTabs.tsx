@@ -428,7 +428,7 @@ function GtStyle() {
       .gt199-banner { margin: 8px 0; padding: 10px 12px; border-radius: 10px; background: #eef4ff; border: 1px solid #c7d7fe; color: #1e3a8a; font-size: 12px; line-height: 1.6; }
       .gt199-scope { font-size: 12px; color: #33505f; line-height: 1.7; margin: 6px 0 10px; }
       .gt199-guide { border: 1px solid #dbe6ed; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-      .gt199-cite { font-size: 11px; color: #647b8c; margin: 0 0 8px; line-height: 1.6; overflow-wrap: anywhere; }
+      .gt199-cite { font-size: 11px; color: #647b8c; margin: 0 0 8px; line-height: 1.6; overflow-wrap: break-word; }
       .gt199-status { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; vertical-align: middle; }
       .gt199-status-extracted { background: #dcfce7; color: #166534; }
       .gt199-status-identified { background: #fef3c7; color: #92400e; }

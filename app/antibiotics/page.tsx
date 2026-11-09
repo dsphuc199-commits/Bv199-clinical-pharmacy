@@ -66,7 +66,7 @@ export default function AntibioticsPage() {
         .bv199-ams-v3-card:hover{border-color:#19a5aa;box-shadow:0 4px 15px rgba(20,96,103,.12);}
         .bv199-ams-v3-card:focus-visible{outline:3px solid #087f8c;outline-offset:2px;}
         .bv199-ams-v3-icon{flex:0 0 45px;width:45px;height:45px;border-radius:13px;background:#e9f6f7;display:grid;place-items:center;color:#087f8c;}
-        .bv199-ams-v3-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;overflow-wrap:anywhere;}
+        .bv199-ams-v3-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;overflow-wrap: break-word;}
         .bv199-ams-v3-copy strong{display:block;font-size:15px;line-height:1.4;font-weight:750;}
         .bv199-ams-v3-desc{display:block;font-size:12.5px;line-height:1.5;color:#5a7385;}
         .bv199-ams-v3-action{display:block;font-size:12.5px;line-height:1.5;font-weight:750;color:#007e87;margin-top:4px;}

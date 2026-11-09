@@ -19,7 +19,7 @@ export function ClinicalNotesStyle() {
   return <style>{`
     .clinical-notes-block { min-width:0; }
     .clinical-notes-block .clinical-notes,.clinical-notes-block .clinical-notes ul { list-style:none; padding-left:0; margin:6px 0; line-height:1.65; }
-    .clinical-notes-block .clinical-notes li { position:relative; padding-left:18px; margin:7px 0; overflow-wrap:anywhere; }
+    .clinical-notes-block .clinical-notes li { position:relative; padding-left:18px; margin:7px 0; overflow-wrap: break-word; }
     .clinical-notes-block .clinical-notes > li::before { content:"–"; position:absolute; left:0; }
     .clinical-notes-block .clinical-notes ul { margin:5px 0 0; }
     .clinical-notes-block .clinical-notes ul > li::before { content:"•"; position:absolute; left:0; }

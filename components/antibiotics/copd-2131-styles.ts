@@ -23,7 +23,7 @@ export const copdStyles = `
 .c26-card header { display:flex; flex-wrap:wrap; gap:8px 16px; justify-content:space-between; padding:10px 14px; background:#eef6f8; }
 .c26-card header>span { font-size:12px; }
 .c26-dose-grid { display:grid; grid-template-columns:44px minmax(0,1.25fr) minmax(0,1.15fr) minmax(0,1fr) minmax(0,1.1fr); gap:10px; padding:12px 14px 6px 0; align-items:start; }
-.c26-dose-grid>div { min-width:0; overflow-wrap:anywhere; }
+.c26-dose-grid>div { min-width:0; overflow-wrap: break-word; }
 .c26-field { display:block; font-size:11px; color:#587183; margin-bottom:3px; }
 .c26-marker { text-align:center; font-weight:800; color:#087f89; padding-top:18px; }
 .c26-or { display:grid; grid-template-columns:44px minmax(0,1fr); margin:8px 0; color:#587183; font-size:12px; }

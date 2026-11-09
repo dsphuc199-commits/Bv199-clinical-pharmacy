@@ -19,7 +19,7 @@ export default function DoseConflictComparison({conflicts}:{conflicts:DoseConfli
       <h5>Nội dung cần quyết định</h5><ClinicalNotes items={[c.decision]}/>
     </article>)}
     <style>{`
-      .dc-root { padding: 14px 18px; border: 1px solid #dfe8ee; border-radius: 10px; color: #17364b; font-size: 13px; line-height: 1.75; overflow-wrap: anywhere; }
+      .dc-root { padding: 14px 18px; border: 1px solid #dfe8ee; border-radius: 10px; color: #17364b; font-size: 13px; line-height: 1.75; overflow-wrap: break-word; }
       .dc-root summary { cursor: pointer; font-weight: 700; color: #0b6b8a; }
       .dc-item + .dc-item { margin-top: 20px; padding-top: 16px; border-top: 1px solid #dfe8ee; }
       .dc-item h4 { margin: 14px 0 10px; font-size: 14px; }
