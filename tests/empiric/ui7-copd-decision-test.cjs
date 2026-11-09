@@ -34,5 +34,7 @@ check('Initial view does not expose ventilation outside inpatient branch', !init
 const mono = render(React.createElement(Component.CopdRegimenCard, { regimen: D.COPD_REGIMENS.find(r => r.id === 'azi3'), index: 0 }));
 const combo = render(React.createElement(Component.CopdRegimenCard, { regimen: D.COPD_REGIMENS.find(r => r.id === 'mdr-mero-amikacin'), index: 0 }));
 check('Plus marker is restricted to actual combination drug rows', !mono.includes('aria-label="Phối hợp với"') && (combo.match(/aria-label="Phối hợp với"/g)||[]).length === 1);
-check('Sources stay inside each regimen; dose-adjustment and interaction tools are not embedded (dedicated modules)', mono.includes('Nguồn và đối chiếu') && mono.includes(D.COPD_SOURCE_URL) && !mono.includes('<summary>Hiệu chỉnh liều') && !mono.includes('<summary>Tương tác thuốc'));
+check('Regimen card has no separate source block and no embedded dose/interaction tools (sources merged once per branch)', !mono.includes('<summary>Nguồn và đối chiếu') && !mono.includes('<summary>Hiệu chỉnh liều') && !mono.includes('<summary>Tương tác thuốc'));
+const branchHtml = initial;
+check('Exactly one "Nguồn và đối chiếu" per COPD branch, citing decision with download link', branchHtml.split('<summary>Nguồn và đối chiếu</summary>').length === 2 && branchHtml.includes(D.COPD_SOURCE_URL) && branchHtml.includes('Quyết định 2131/QĐ-BYT'));
 console.log(`${pass} passed, ${fail} failed`); process.exitCode = fail ? 1 : 0;

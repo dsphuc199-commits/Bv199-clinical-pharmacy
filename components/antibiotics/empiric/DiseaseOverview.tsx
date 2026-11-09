@@ -45,7 +45,6 @@ export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
 export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
   const o = getDiseaseOverview(diseaseId);
   if (!o) return null;
-  const all = [o.cards.flatMap((c) => c.points), o.sourceControl, o.monitoring.efficacy, o.monitoring.reassessment, o.monitoring.safety].flat();
   return (
     <section className="do do-monitor" aria-label="Theo dõi và an toàn">
       <h3>Theo dõi, đánh giá lại và an toàn</h3>
@@ -60,13 +59,7 @@ export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
           <p className="do-link">Hiệu chỉnh liều theo chức năng thận, gan: xem module <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a>.</p>
         )}
       </details>
-      {RULES.showReferenceDrawer && (
-        <details className="do-sources">
-          <summary>Nguồn và căn cứ</summary>
-          <p>{o.docLabel}</p>
-          <ul>{all.map((p, i) => <li key={i}>{p.text} <span className="do-ref">— {p.ref}</span></li>)}</ul>
-        </details>
-      )}
+      {/* Nguon gop vao khoi "Nguồn và đối chiếu" cua khung phac do (ten van ban, nam); vi tri tung y giu trong du lieu. */}
       <DiseaseOverviewStyle />
     </section>
   );

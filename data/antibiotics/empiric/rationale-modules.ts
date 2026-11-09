@@ -21,7 +21,7 @@ const CAP_REASSESS = [
 const CAP_COMMON: ClinicalCriterion = {
   condition: "Phân nhóm điều trị theo nơi điều trị, mức độ nặng, bệnh đồng mắc và yếu tố nguy cơ mầm bệnh kháng thuốc.",
   clinicalMeaning: "Mỗi nhóm có danh sách lựa chọn ngang hàng; các phương án trong cùng nhóm thay thế nhau, không ghép đồng thời.",
-  treatmentImplication: "Bổ sung oseltamivir khi xét nghiệm cúm dương tính. Liều theo cột liều thường dùng của Phụ lục 1; điều chỉnh theo chức năng thận.",
+  treatmentImplication: "Bổ sung oseltamivir khi xét nghiệm cúm dương tính. Liều theo cột liều thường dùng của văn bản; điều chỉnh theo chức năng thận.",
   sources: [CAP("Mục 5.3, Bảng 5.1, Phụ lục 1; tr. 36–39, 60–63")],
 };
 

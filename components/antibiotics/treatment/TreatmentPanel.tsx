@@ -106,13 +106,14 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
         {rationale.items.filter((c) => rationale.status !== "authored" || !!c.treatmentImplication || /CẦN THẨM ĐỊNH/u.test(`${c.condition} ${c.clinicalMeaning ?? ""}`)).map((c, i) => (
           <div key={i} className="tp-rationale-item">
             <dt>{rationale.status === "authored" && <span className="tp-rationale-k">Tiêu chí</span>}{clinicalText(c.condition)}</dt>
-            {c.clinicalMeaning && <dd><span className="tp-rationale-k">Ý nghĩa lâm sàng</span>{c.clinicalMeaning}</dd>}
-            {c.treatmentImplication && <dd><span className="tp-rationale-k">Ảnh hưởng đến lựa chọn</span>{c.treatmentImplication}</dd>}
-            {c.sources && c.sources.length > 0 && <dd className="tp-rationale-src">Căn cứ: {c.sources.join("; ")}</dd>}
+            {c.clinicalMeaning && <dd><span className="tp-rationale-k">Ý nghĩa lâm sàng</span>{clinicalText(c.clinicalMeaning)}</dd>}
+            {c.treatmentImplication && <dd><span className="tp-rationale-k">Ảnh hưởng đến lựa chọn</span>{clinicalText(c.treatmentImplication)}</dd>}
           </div>
         ))}
       </dl>
-      {rationale.reassessment && rationale.reassessment.length > 0 && <p className="tp-rationale-re"><strong>Đánh giá lại:</strong> {rationale.reassessment.join(" ")}</p>}
+      {rationale.reassessment && rationale.reassessment.length > 0 && <p className="tp-rationale-re"><strong>Đánh giá lại:</strong> {rationale.reassessment.map((r) => clinicalText(r)).join(" ")}</p>}
+      {/* Can cu gop mot dong: chi ten van ban (vi tri muc/trang giu trong du lieu). */}
+      {(() => { const cites = citeSources(rationale.items.flatMap((c) => c.sources ?? [])); return cites.length > 0 && <p className="tp-rationale-src">Căn cứ: {cites.map((c) => c.label).join("; ")}</p>; })()}
     </details>
   );
 }
@@ -126,7 +127,6 @@ export function cardLabel(section: TxSection, index: number): string | undefined
 
 /* Mot phac do = mot hang: cot trai nhan ("Phac do 1"/"Lua chon 1") + nhan an toan; cot phai noi dung. */
 function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCard; label?: string; durationColumn?:boolean; hideRegimenDuration?:boolean }) {
-  const context=useAbxLinkContext();
   const critical = (card.alerts ?? []).filter((a) => a.level === "critical");
   const high = (card.alerts ?? []).filter((a) => a.level !== "critical");
   /* Co nhan (Phac do N / Lua chon N) -> cot trai; khong nhan -> nhan an toan thanh mot hang tren noi dung. */
@@ -159,7 +159,7 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
 
         <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent}/>
         {card.extra}
-        {card.sources && card.sources.length > 0 && <ClinicalSources sources={card.sources} diseaseId={context.diseaseId} originalNotes={card.condition?[card.condition]:[]} />}
+        {/* Nguon cua the gop vao mot khoi "Nguồn và đối chiếu" cuoi khung phac do. */}
 
         {high.map((a) => (
           <details key={a.id} className="byt199-alert byt199-alert-high tp-alert tp-alert-high" open={!!a.checklist}>
@@ -239,6 +239,8 @@ export default function TreatmentPanel({
   const shownNotes = notes.slice(0, NOTE_LIMIT);
   const moreNotes = notes.slice(NOTE_LIMIT);
   const hasNotes = notes.length > 0 || monitoring.length > 0 || (detailNotes?.items.length ?? 0) > 0;
+  /* Mot khoi nguon duy nhat cho ca khung: nguon chung + nguon tung the, khong trung lap, moi nhat truoc. */
+  const allCitations = citeSources([...(sources.length ? sources : sourceTag ? [sourceTag] : []), ...sections.flatMap((sec) => sec.cards.flatMap((c) => c.sources ?? []))]);
   return (
     <div className="tp">
       {/* (2) Benh canh lam sang – mot hang: nhan | danh sach chon */}
@@ -272,7 +274,7 @@ export default function TreatmentPanel({
       {comparison}
 
       {/* (4) Luu y lam sang + (5) Nguon tham khao (mot dong, cuoi khung) */}
-      {(hasNotes || sources.length > 0) && (
+      {(hasNotes || allCitations.length > 0) && (
         <section className="tp-box tp-notes">
           {hasNotes && (
             <div className="tp-notes-body">
@@ -303,10 +305,10 @@ export default function TreatmentPanel({
               </div>
             </div>
           )}
-          {sources.length > 0 && (
+          {allCitations.length > 0 && (
             <details className="tp-sources">
               <summary>Nguồn và đối chiếu</summary>
-              <ul>{citeSources(sources.length ? sources : sourceTag ? [sourceTag] : []).map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
+              <ul>{allCitations.map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
             </details>
           )}
         </section>

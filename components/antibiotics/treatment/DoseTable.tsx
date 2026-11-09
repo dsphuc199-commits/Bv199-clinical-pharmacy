@@ -87,17 +87,8 @@ export default function DoseTable({ groups, status, duration, population, indepe
     return (
       <div className="tx">
         <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng."}</p>
-        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
-        <details className="tx-src"><summary>Nguồn và đối chiếu</summary>
-        <ul className="tx-raw">
-          {groups.flatMap((g) => g.raw).map((r, i) => (
-            <li key={`${r.name}-${i}`}>
-              <strong>{r.name}</strong>
-              <span>{r.dose}</span>
-            </li>
-          ))}
-        </ul>
-        </details>
+        {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         {duration && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
         <TxStyle />
       </div>
@@ -150,19 +141,20 @@ export default function DoseTable({ groups, status, duration, population, indepe
         );
       })}
       {duration && !durationColumn && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
-      {(status === "PARTIAL" || notes.length > 0 || groups.some(g=>g.raw.some(r=>clinicalText(r.dose)!==r.dose))) && (
+      {/* Chi tiet cach dung chi khi lieu chua tach het hoac co ghi chu lieu; nguon gop o khoi "Nguồn và đối chiếu" cuoi khung. */}
+      {(status === "PARTIAL" || notes.length > 0) && (
         <details className="tx-src">
-          <summary>
-            Nguồn và đối chiếu
-          </summary>
-          <ul>
-            {groups.flatMap((g) => g.raw).map((r, i) => (
-              <li key={`${r.name}-${i}`}><strong>{r.name}:</strong> {r.dose}</li>
-            ))}
-          </ul>
+          <summary>Chi tiết cách dùng theo văn bản</summary>
+          {status === "PARTIAL" && (
+            <ul>
+              {groups.flatMap((g) => g.raw).map((r, i) => (
+                <li key={`${r.name}-${i}`}><strong>{r.name}:</strong> {clinicalText(r.dose)}</li>
+              ))}
+            </ul>
+          )}
           {notes.length > 0 && (
             <ul className="tx-notes">
-              {Array.from(new Set(notes)).map((n) => (
+              {Array.from(new Set(notes.map((n) => clinicalText(n)))).map((n) => (
                 <li key={n}>{n}</li>
               ))}
             </ul>

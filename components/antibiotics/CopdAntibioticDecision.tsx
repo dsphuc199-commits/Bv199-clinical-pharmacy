@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { COPD_COLISTIN_SOURCE, COPD_DRUGS, COPD_GROUPS, COPD_REGIMENS, COPD_REVIEWS, COPD_SOURCES, COPD_SOURCE_URL, hasCopdSymptomIndication, type CopdRegimen, type DrugId, type GroupId, type ReviewId, type Setting, type SourceId } from "@/data/antibiotics/copd-2131";
 import Link from "next/link";
 import { citeSource } from "@/lib/antibiotics/source-citation";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { copdStyles } from "./copd-2131-styles";
 import { EMPIRIC_TREATMENT_UI_RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 import SettingTabs from "./treatment/SettingTabs";
@@ -14,14 +15,17 @@ import ClinicalNotes from "./treatment/ClinicalNotes";
 
 /* Nguon chi ghi quyet dinh (co quan, so, ten, nam); vi tri muc/bang giu trong du lieu COPD_SOURCES. */
 const COPD_CITATION = citeSource("QĐ 2131/QĐ-BYT").label;
-function Sources({ reviews = [] }: { ids: SourceId[]; reviews?: ReviewId[] }) {
-  return <details className="c26-source"><summary>Nguồn và đối chiếu</summary>
-    <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>
-    {reviews.map(id => <p key={id}><strong>Cần thẩm định:</strong> {COPD_REVIEWS[id].detail}</p>)}
+/* Mot khoi "Nguồn và đối chiếu" duy nhat (cuoi nhanh, `cite`); cac vi tri khac chi hien "Chi tiết cần thẩm định" khi co.
+   Lieu duy tri theo Clcr cua colistin: xem module Hieu chinh lieu (khong lap bang o day). */
+function Sources({ reviews = [], cite = false }: { ids: SourceId[]; reviews?: ReviewId[]; cite?: boolean }) {
+  if (!cite && reviews.length === 0) return null;
+  return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Chi tiết cần thẩm định"}</summary>
+    {cite && <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>}
+    {reviews.map(id => <p key={id}><strong>Cần thẩm định:</strong> {clinicalText(COPD_REVIEWS[id].detail)}</p>)}
     {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — số liệu nguồn để thẩm định, chưa phải liều kê đơn</strong>
-      <p>Bảng 3.4: {COPD_COLISTIN_SOURCE.table}</p>
-      <p>Phụ lục 10 — liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>
-      <p>Phụ lục 10 — liều duy trì theo chức năng thận:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.maintenance.map(([clcr, dose]) => <div key={clcr}><dt>{clcr}</dt><dd>{dose}</dd></div>)}</dl>
+      <p>Theo văn bản: {clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
+      <p>Liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>
+      <p>Liều duy trì theo chức năng thận: xem module <Link href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link>.</p>
       <p>Giữ nguyên ký hiệu MUI của nguồn; không quy đổi giữa mg và MUI khi chưa xác minh chế phẩm và quy ước hoạt lực.</p>
     </div>}
   </details>;
@@ -121,7 +125,7 @@ export default function CopdAntibioticDecision() {
           <Sources ids={group.sourceIds} reviews={group.reviewIds} />
         </section>}
         {group && <FollowUp setting={branch} />}
-        <Sources ids={branch === "outpatient" ? ["text-out", "flow-out", "risk", "renal", "interaction"] : ["text-in", "flow-in", "table-in", "renal", "interaction"]} />
+        <Sources cite ids={branch === "outpatient" ? ["text-out", "flow-out", "risk", "renal", "interaction"] : ["text-in", "flow-in", "table-in", "renal", "interaction"]} />
       </div></div>
     </SettingTabs>
     <TxStyle/><style>{copdStyles}</style>

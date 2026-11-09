@@ -21,6 +21,8 @@ export const EMPIRIC_TREATMENT_UI_RULES = {
   showDrugToolsInRegimen: false,
   /** Nhan "Khác biệt liều BYT – quốc tế" tren the: an (doi chieu chi tiet da co ben duoi the). */
   showSourceDifferenceBadge: false,
+  /** "(Phụ lục n)", "(Bảng x)", "(Mục x)" trong cau hien thi: an (vi tri giu trong du lieu). */
+  showAppendixInline: false,
   showDrugInteractionTables: false,
   showDetailedTDM: false,
   showDetailedPKPDCalculations: false,
@@ -72,6 +74,15 @@ export function stripInlineCitations(text: string): string {
   }
   if (!R.showChapterNumbersInline) {
     t = t.replace(/,?\s*Chương\s+\d+(?=[\s,;.)]|$)/gu, "");
+  }
+  if (!R.showAppendixInline) {
+    t = t
+      // "(Phụ lục 1; Clcr 10–30: …)" -> "(Clcr 10–30: …)": chi bo vi tri, giu noi dung lam sang sau dau ";"
+      .replace(/\(\s*(?:Phụ lục|Bảng|Mục|mục)\s+[^;()]*;\s*/gu, "(")
+      // "(Phụ lục 1)", "(Phụ lục 1, tr. 60–63)", "(Bảng 5.1)", "(Mục 5.2)", "(Mục 4.5, Bảng 4.4)"
+      .replace(/\(\s*(?:Phụ lục|Bảng|Mục|mục)\s+[^();]*\)/gu, "")
+      // "theo Phụ lục 1", ", Phụ lục 10", "Phụ lục 1 –"
+      .replace(/,?\s*(?:theo\s+)?Phụ lục\s+\d+[A-Za-z]?(?:\s*[–-]\s*(?=\S))?/gu, "");
   }
   return t.replace(/\(\s*[,;]?\s*\)/g, "").replace(/[ \t]{2,}/g, " ").replace(/\s+([,;.)])/g, "$1");
 }

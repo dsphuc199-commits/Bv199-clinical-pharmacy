@@ -105,6 +105,16 @@ const raHidden=render(React.createElement(Panel,{sections:V.sectionsFor(R.getReg
 check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc và mục CẦN THẨM ĐỊNH',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&raHidden.includes('CẦN THẨM ĐỊNH – mâu thuẫn'));
 const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.ts').RATIONALE_708,load('data/antibiotics/empiric/rationale-other.ts').RATIONALE_OTHER,load('data/antibiotics/empiric/overviews.ts').DISEASE_OVERVIEWS]);
 check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
+/* Gop nguon: moi khung toi da mot "Nguồn và đối chiếu"; khong hien "Phụ lục" (ke ca khoi dong) – moi mat benh, tab Quoc te, module */
+const appendixHits=[],multiSrc=[];
+const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
+for(const d of C.DISEASES){const sc=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!sc.has(r.scenario))sc.set(r.scenario,[]);sc.get(r.scenario).push(r);}
+  for(const [nm,l] of sc)scanAll(`${d.id} ${nm.slice(0,30)}`,render(React.createElement(Panel,{sections:V.sectionsFor(l).sections,sources:l.map(r=>`QĐ x — ${r.source.section}`),rationale:getRationale(d.id,nm,l),scenarios:[{value:nm,label:nm,criteria:[nm]}],scenario:nm})));
+  scanAll(`${d.id} Quốc tế`,render(React.createElement(GT.IntlTab,{diseaseId:d.id})));scanAll(`${d.id} So sánh`,render(React.createElement(GT.CompareTab,{diseaseId:d.id})));}
+for(const s of CAPM.CAP_SCENARIOS)scanAll(`CAP ${s.id}`,render(React.createElement(CAPM.default,{initialScenarioId:s.id})));
+for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k])scanAll(`${k} ${s.id}`,render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id})));
+check('Không hiển thị "Phụ lục" ở bất kỳ mặt bệnh, tab hay module nào (kể cả khối đóng)',appendixHits.length===0,appendixHits.slice(0,5));
+check('Mỗi khung phác đồ chỉ có tối đa một khối "Nguồn và đối chiếu" (đã gộp)',multiSrc.length===0,multiSrc.slice(0,5));
 if(report){
   const bySp=new Map();for(const r of rows){const s=bySp.get(r.specialty)??{n:0,b:0,ok:0};s.n++;s.b+=r.branches;if(r.ok)s.ok++;bySp.set(r.specialty,s);}
   console.log(`\nĐỘ PHỦ: ${rows.length} mặt bệnh · ${bySp.size} chuyên khoa · ${branches} nhánh BYT · ${rows.filter(r=>r.branches===0).length} mặt bệnh không có nhánh BYT (module riêng/quốc tế)`);

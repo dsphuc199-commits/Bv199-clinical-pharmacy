@@ -37,7 +37,7 @@ import { EvidencePanel } from "./EvidencePanel";
 import InternationalDoseReview from "./InternationalDoseReview";
 import LungAbscessInternational from "./LungAbscessInternational";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
-import { capitalizeBullet } from "@/lib/antibiotics/presentation-text";
+import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
 
 export type TabKey = "vn" | "intl" | "compare" | "sources";
 
@@ -157,16 +157,6 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
             <h3>
               {g.org} · {g.published}
             </h3>
-            <details className="gt199-cite"><summary>Nguồn và đối chiếu</summary>
-              <p>{g.title}</p>
-              {g.citation} · Công bố: {g.published} · {STATUS_TEXT[g.status]}
-              {g.url && (
-                <>
-                  {" · "}
-                  <a href={g.url} target="_blank" rel="noopener noreferrer">Mở nguồn</a>
-                </>
-              )}
-            </details>
 
             {recs.length > 0 && (
               <details className="gt199-more"><summary>Nguyên tắc điều trị và điều kiện áp dụng ({recs.length})</summary><ul className="gt199-recs">
@@ -195,7 +185,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
                     return <DoseTable key={option} groups={s.groups} status={s.status} />;
                   })}
                   {reg.note && <ClinicalNotes items={[reg.note]}/>}
-                  <details className="gt199-loc"><summary>Nguồn và đối chiếu</summary>{reg.locator}</details>
+                  {/* Vi tri (bang/trang) cua tung phac do giu trong du lieu; nguon chung nam o khoi "Nguồn và đối chiếu" cua huong dan. */}
                   <DrugActionLinks compact navigation={false} texts={reg.options} scenario={`${g.org}: ${reg.scenario}`} />
                 </>
               );
@@ -225,11 +215,25 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
           <summary><strong>Còn {entry.gaps.length} nội dung quốc tế chưa xác minh hoặc chưa trích xuất</strong> – xem chi tiết</summary>
           <ul style={{ margin: "4px 0 0", paddingLeft: 18 }}>
             {entry.gaps.map((gap) => (
-              <li key={gap}>{capitalizeBullet(diseaseId === "v8-33" && gap.startsWith("PIDS/IDSA 2023: Bảng 5") ? "Đã bổ sung các hàng liều nhi khoa tham khảo; còn cần thẩm định trần liều, hiệu chỉnh và toàn văn bản đính chính." : diseaseId === "v8-33" && gap.startsWith("Người lớn:") ? "Người lớn: đã bổ sung nhánh Gram âm có liều đối chiếu; các nhánh còn lại chưa được xác minh đầy đủ." : diseaseId === "v8-28" && gap === "Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất." ? "Đã bổ sung đối chiếu một phần liều người lớn; còn thiếu thẩm định liều trẻ em, cá thể hóa và các lựa chọn khác." : gap)}</li>
+              <li key={gap}>{clinicalText(capitalizeBullet(diseaseId === "v8-33" && gap.startsWith("PIDS/IDSA 2023: Bảng 5") ? "Đã bổ sung các hàng liều nhi khoa tham khảo; còn cần thẩm định trần liều, hiệu chỉnh và toàn văn bản đính chính." : diseaseId === "v8-33" && gap.startsWith("Người lớn:") ? "Người lớn: đã bổ sung nhánh Gram âm có liều đối chiếu; các nhánh còn lại chưa được xác minh đầy đủ." : diseaseId === "v8-28" && gap === "Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất." ? "Đã bổ sung đối chiếu một phần liều người lớn; còn thiếu thẩm định liều trẻ em, cá thể hóa và các lựa chọn khác." : gap))}</li>
             ))}
           </ul>
         </details>
       )}
+      {/* Mot khoi nguon duy nhat: to chuc, ten huong dan, nam (moi nhat truoc). */}
+      <details className="gt199-cite">
+        <summary>Nguồn và đối chiếu</summary>
+        <ul>
+          {entry.guidelineIds
+            .map((gid) => INTL_GUIDELINES[gid])
+            .filter((g): g is NonNullable<typeof g> => !!g)
+            .sort((a, b) => (Number(String(b.published).match(/\d{4}/)?.[0]) || 0) - (Number(String(a.published).match(/\d{4}/)?.[0]) || 0))
+            .map((g) => {
+              const label = `${g.org}. ${g.title} (${String(g.published).match(/\d{4}/)?.[0] ?? g.published})`;
+              return <li key={g.title}>{g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer">{label}</a> : label}</li>;
+            })}
+        </ul>
+      </details>
       <GtStyle />
     </section>
   );
@@ -279,8 +283,8 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
       {/* Quy tac chung: vi tri nguon (muc, bang, trang) gom vao "Nguon va can cu", mac dinh dong. */}
       <details className="gt199-cite">
         <summary>Nguồn và căn cứ</summary>
-        <p><strong>Việt Nam:</strong> {c.vn}</p>
-        <p><strong>Quốc tế:</strong> {c.intl}</p>
+        <p><strong>Việt Nam:</strong> {clinicalText(c.vn)}</p>
+        <p><strong>Quốc tế:</strong> {clinicalText(c.intl)}</p>
       </details>
       <GtStyle />
     </section>

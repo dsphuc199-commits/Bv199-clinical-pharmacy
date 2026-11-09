@@ -41,6 +41,7 @@ import CopdByt2026 from "../CopdByt2026";
 import { DiseaseMonitoring, DiseaseOverviewSummary, hasDiseaseOverview } from "./DiseaseOverview";
 import { getRationale } from "../../../data/antibiotics/empiric/rationale";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
 
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
@@ -104,7 +105,7 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
     <div className="byt199-supp" style={box}>
       {missing && <ul style={{ margin: 0, paddingLeft: 18, color: "#7c2d12" }}>
         <li><strong>Thuốc được đề cập:</strong> {therapyNames(regimen)}.</li>
-        <li><strong>Thông tin liều cần làm rõ:</strong> {missingDoseReason(regimen.id)}</li>
+        <li><strong>Thông tin liều cần làm rõ:</strong> {clinicalText(missingDoseReason(regimen.id))}</li>
       </ul>}
       {sup && (
         <details>
@@ -116,13 +117,13 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
           <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
             {sup.items.map((it) => (
               <li key={it.drug}>
-                <strong>{it.drug}:</strong> {it.dose}
+                <strong>{it.drug}:</strong> {clinicalText(it.dose)}
               </li>
             ))}
           </ul>
-          {sup.scope && <p style={{ margin: 0 }}>{sup.scope}</p>}
+          {sup.scope && <p style={{ margin: 0 }}>{clinicalText(sup.scope)}</p>}
           {sup.stillMissing?.map((m) => (
-            <p key={m} style={{ margin: 0, color: "#7c2d12" }}>Còn thiếu: {m}</p>
+            <p key={m} style={{ margin: 0, color: "#7c2d12" }}>Còn thiếu: {clinicalText(m)}</p>
           ))}
           <p style={{ margin: 0, fontSize: 11.5, color: "#4b6576" }}>
             Nguồn:{" "}
@@ -130,8 +131,7 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
               <a href={sup.source.url} target="_blank" rel="noopener noreferrer">{sup.source.title}</a>
             ) : (
               sup.source.title
-            )}{" "}
-            · {sup.source.locator}
+            )}
           </p>
         </details>
       )}
