@@ -4,7 +4,8 @@
   Dang nhap don gian, khong dich vu ngoai:
   - Tai khoan trong bien moi truong AUTH_USERS = "ten1:scrypt.<salt>.<hash>,ten2:..." (chi luu ban bam;
     dung dau "." thay "$" vi trinh nap .env cua Next dien giai "$" thanh bien).
-  - Phien: cookie httpOnly "<payload base64url>.<HMAC-SHA256>" ky bang AUTH_SECRET (>= 32 ky tu), het han 12 gio.
+  - Phien: cookie httpOnly "<payload base64url>.<HMAC-SHA256>" ky bang AUTH_SECRET (>= 32 ky tu), khong het han
+    trong thuc te (400 ngay, tu gia han khi su dung).
   - Chua cau hinh -> khoa toan bo (fail-closed).
   Tao ban bam mat khau: node scripts/auth-hash.cjs "<mat khau>"
 */
@@ -12,7 +13,10 @@
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
 export const SESSION_COOKIE = "bv199_session";
-export const SESSION_TTL_SECONDS = 12 * 60 * 60;
+/* Phien "khong het han": muc toi da trinh duyet cho phep (~400 ngay), tu gia han moi ngay khi dang dung.
+   Ket thuc khi bam "Đăng xuất", xoa tai khoan khoi AUTH_USERS, hoac doi AUTH_SECRET (thu hoi moi phien). */
+export const SESSION_TTL_SECONDS = 400 * 24 * 60 * 60;
+export const SESSION_RENEW_AFTER_SECONDS = 24 * 60 * 60;
 
 const SCRYPT = { N: 16384, r: 8, p: 1, keylen: 32 };
 
@@ -65,7 +69,7 @@ export function createSession(username: string, secret: string, now = Date.now()
   return `${payload}.${sign(payload, secret)}`;
 }
 
-export function readSession(token: string | undefined, config: AuthConfig, now = Date.now()): { user: string } | null {
+export function readSession(token: string | undefined, config: AuthConfig, now = Date.now()): { user: string; exp: number } | null {
   if (!token || !config.configured) return null;
   const dot = token.lastIndexOf(".");
   if (dot <= 0) return null;
@@ -76,7 +80,7 @@ export function readSession(token: string | undefined, config: AuthConfig, now =
   try {
     const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { u?: string; exp?: number };
     if (!data.u || !data.exp || data.exp * 1000 < now || !config.users.has(data.u)) return null;
-    return { user: data.u };
+    return { user: data.u, exp: data.exp };
   } catch {
     return null;
   }

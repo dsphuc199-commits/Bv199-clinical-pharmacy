@@ -7,7 +7,7 @@
 */
 
 import { NextResponse, type NextRequest } from "next/server";
-import { authConfig, readSession, SESSION_COOKIE } from "@/lib/auth/session";
+import { authConfig, createSession, readSession, SESSION_COOKIE, SESSION_RENEW_AFTER_SECONDS, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
 const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout"];
 
@@ -15,8 +15,23 @@ export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   if (PUBLIC_PATHS.includes(pathname)) return NextResponse.next();
 
-  const session = readSession(request.cookies.get(SESSION_COOKIE)?.value, authConfig());
-  if (session) return NextResponse.next();
+  const config = authConfig();
+  const session = readSession(request.cookies.get(SESSION_COOKIE)?.value, config);
+  if (session) {
+    const res = NextResponse.next();
+    // Tu gia han phien (toi da 1 lan/ngay) de dang nhap "khong het han" khi con su dung.
+    const nowSec = Math.floor(Date.now() / 1000);
+    if (session.exp - nowSec < SESSION_TTL_SECONDS - SESSION_RENEW_AFTER_SECONDS) {
+      res.cookies.set(SESSION_COOKIE, createSession(session.user, config.secret), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: SESSION_TTL_SECONDS,
+      });
+    }
+    return res;
+  }
 
   const accept = request.headers.get("accept") ?? "";
   const isPage = request.method === "GET" && accept.includes("text/html");
