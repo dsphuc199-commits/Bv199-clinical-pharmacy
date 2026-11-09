@@ -73,7 +73,8 @@ export default function InstallPanel() {
         <ol>
           <li>Mở trang này bằng <strong>Safari</strong> (không dùng Zalo, Facebook hay Chrome).</li>
           <li>Bấm nút <strong>Chia sẻ</strong> (ô vuông có mũi tên lên) ở thanh dưới.</li>
-          <li>Chọn <strong>“Thêm vào MH chính”</strong> rồi bấm <strong>Thêm</strong>.</li>
+          <li>Chọn <strong>“Thêm vào MH chính”</strong>. Nếu không thấy, bấm <strong>“Xem thêm”</strong> (nút ⌄ ở hàng dưới cùng) hoặc kéo danh sách xuống để tìm.</li>
+          <li>Bật <strong>“Mở dưới dạng ứng dụng web”</strong> (nếu có) rồi bấm <strong>Thêm</strong>.</li>
         </ol>
       </section>
 
