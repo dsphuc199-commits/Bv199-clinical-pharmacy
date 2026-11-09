@@ -68,7 +68,8 @@ export const SECTION_TITLES = {
 /* Chi coi la tieu de khi dong ngan va co dau hieu tieu de (IN HOA, danh so, hoac ket thuc bang ":"),
    tranh nham cau van thuong bat dau bang "Liều dùng ..." la tieu de muc. */
 function headingKey(line) {
-  const t = line.trim();
+  // Tieu de dang "[LIEU DUNG VA CACH DUNG]" -> bo ngoac vuong.
+  const t = line.trim().replace(/^\[\s*([^\]]{3,80})\s*\][\s.\d|IÌ:]*$/u, "$1").replace(/^\[/, "");
   if (t.length < 4 || t.length > 80) return null;
   const letters = t.replace(/[^\p{L}]/gu, "");
   const upper = letters.length > 3 && letters === letters.toUpperCase();
@@ -192,8 +193,13 @@ for (const rec of Object.values(registry)) if (!rec.notFound && rec.hdsd?.length
 let done = 0;
 let failed = 0;
 const ONLY = args.includes("--only") ? Number(args[args.indexOf("--only") + 1]) : null;
+// --resplit: tach lai muc cho moi thuoc da co van ban tho (khong OCR lai).
+const RESPLIT = args.includes("--resplit");
 const todo = [...byDav.values()]
-  .filter((r) => (ONLY ? r.davId === ONLY : FORCE || !existsSync(join(OUT_DIR, `${r.davId}.json`))))
+  .filter((r) =>
+    ONLY ? r.davId === ONLY
+    : RESPLIT ? existsSync(join(CACHE, `${r.davId}-0.txt`))
+    : FORCE || !existsSync(join(OUT_DIR, `${r.davId}.json`)))
   .slice(0, LIMIT);
 console.log(`Can trich: ${todo.length} / ${byDav.size} thuoc co HDSD`);
 

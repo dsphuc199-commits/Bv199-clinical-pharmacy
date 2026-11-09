@@ -57,6 +57,17 @@ export async function getLeaflet(davId: number | undefined | null): Promise<Leaf
   }
 }
 
+import leafletFiles from "@/data/leaflet-files.json";
+
+export type StoredLeafletFile = { path?: string; bytes?: number; pages?: number | null; compressed?: boolean; title?: string; error?: string };
+
+/* Ban sao HDSD (PDF) da luu trong kho rieng cua web app; xem qua /api/hdsd/<davId>/<i>. */
+export function getStoredFiles(davId: number | undefined | null): (StoredLeafletFile & { href: string })[] {
+  if (!davId) return [];
+  const list = (leafletFiles as Record<string, StoredLeafletFile[]>)[String(davId)] ?? [];
+  return list.flatMap((f, i) => (f.path ? [{ ...f, href: `/api/hdsd/${davId}/${i}` }] : []));
+}
+
 /* Thong tin HDSD tu trang web cong khai (khop so dang ky), dung khi khong co HDSD Cuc QLD. */
 export async function getWebLeaflet(productId: string): Promise<Leaflet | null> {
   if (!/^[\w.-]+$/.test(productId)) return null;

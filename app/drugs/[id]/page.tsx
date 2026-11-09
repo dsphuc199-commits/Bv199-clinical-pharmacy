@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import drugData from "@/data/drug-products.json";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
-import { LEAFLET_SECTIONS, getLeaflet, getWebLeaflet } from "@/lib/drugs/leaflets";
+import { LEAFLET_SECTIONS, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
 
 type DrugProduct = {
   id: string;
@@ -46,6 +46,7 @@ export default async function DrugDetailPage({ params }: Props) {
   const status = registryStatus(drug.id);
   const leaflet = await getLeaflet(reg?.davId);
   const davOk = !!leaflet && !leaflet.failed;
+  const stored = getStoredFiles(reg?.davId);
   // Khong co HDSD Cuc QLD trich duoc -> dung thong tin tu trang web khop so dang ky.
   const web = davOk ? null : await getWebLeaflet(drug.id);
   const shown = davOk ? leaflet : web;
@@ -106,14 +107,25 @@ export default async function DrugDetailPage({ params }: Props) {
           )}
 
           <div className="mt-5 flex flex-wrap gap-2">
-            {reg?.hdsd.map((f, i) => (
+            {stored.map((f, i) => (
+              <ExtLink key={f.href} href={f.href}>
+                Xem Tờ HDSD{stored.length > 1 ? ` ${i + 1}` : ""} (PDF{f.pages ? `, ${f.pages} trang` : ""}{f.bytes ? `, ${(f.bytes / 1e6).toFixed(1)} MB` : ""})
+              </ExtLink>
+            ))}
+            {!stored.length && reg?.hdsd.map((f, i) => (
               <ExtLink key={f.url} href={f.url} subtle={leaflet?.failed}>
-                {leaflet?.failed ? "HDSD gốc (Cổng Cục QLD đang báo lỗi file)" : `Xem HDSD gốc${reg.hdsd.length > 1 ? ` ${i + 1}` : ""} (PDF)`}
+                {leaflet?.failed ? "HDSD gốc (Cổng Cục QLD đang báo lỗi file)" : `Xem HDSD gốc${reg.hdsd.length > 1 ? ` ${i + 1}` : ""} trên Cổng Cục QLD`}
               </ExtLink>
             ))}
             {reg?.mauNhan.map((f, i) => <ExtLink key={f.url} href={f.url} subtle>Xem mẫu nhãn{reg.mauNhan.length > 1 ? ` ${i + 1}` : ""}</ExtLink>)}
             <ExtLink href={DAV_LOOKUP_URL} subtle>Tra cứu trên Cổng Cục QLD</ExtLink>
           </div>
+          {stored.length > 0 && (
+            <p className="mt-2 text-xs text-slate-500">
+              Tờ HDSD là bản sao lưu trên hệ thống từ file công bố trên Cổng tra cứu thuốc – Cục Quản lý Dược{stored.some((f) => f.compressed) ? " (bản scan đã nén ảnh để mở nhanh trên điện thoại)" : ""}.{" "}
+              {reg?.hdsd.map((f, i) => <a key={f.url} className="underline" href={f.url} target="_blank" rel="noreferrer">Bản gốc trên Cổng{reg.hdsd.length > 1 ? ` ${i + 1}` : ""}</a>)}
+            </p>
+          )}
         </section>
 
         {/* Noi dung tu To huong dan su dung */}
@@ -142,7 +154,7 @@ export default async function DrugDetailPage({ params }: Props) {
                 <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
                   <strong>CẦN THẨM ĐỊNH.</strong> Nội dung được trích tự động ({shown.method ? METHOD_LABEL[shown.method] : "tự động"}
                   {shown.confidence ? `, độ tin cậy nhận dạng ~${shown.confidence}%` : ""}) từ{" "}
-                  <a className="font-semibold underline" href={shown.source?.url} target="_blank" rel="noreferrer">{shown.source?.title || "Tờ hướng dẫn sử dụng"}</a>{" "}
+                  <a className="font-semibold underline" href={stored[0]?.href ?? shown.source?.url} target="_blank" rel="noreferrer">{shown.source?.title || "Tờ hướng dẫn sử dụng"}</a>{" "}
                   công bố trên Cổng Cục Quản lý Dược. Có thể sai ký tự, sai số hoặc lệch bảng, đặc biệt ở liều dùng. <strong>Luôn đối chiếu bản gốc trước khi dùng cho quyết định điều trị.</strong>
                   {shown.totalPages && shown.pages && shown.totalPages > shown.pages ? ` Chỉ trích ${shown.pages}/${shown.totalPages} trang đầu.` : ""}
                 </div>
