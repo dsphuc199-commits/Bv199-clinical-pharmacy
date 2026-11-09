@@ -65,6 +65,11 @@ export default function MobileNavigation() {
                   <span>›</span>
                 </Link>
               ))}
+              {/* Dang xuat: the <a> thuong (khong prefetch) */}
+              <a href="/api/auth/logout" onClick={() => setOpen(false)}>
+                Đăng xuất
+                <span>›</span>
+              </a>
             </div>
           </div>
         </div>

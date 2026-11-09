@@ -427,6 +427,14 @@ export default function Sidebar() {
             flexShrink: 0,
           }}
         >
+          {/* Dang xuat: the <a> thuong (khong prefetch, tranh vo tinh dang xuat) */}
+          <a
+            href="/api/auth/logout"
+            style={{ display: "inline-block", marginBottom: 8, padding: "5px 10px", borderRadius: 7, border: "1px solid rgba(255,255,255,.35)", color: "inherit", fontSize: 12, fontWeight: 700, textDecoration: "none" }}
+          >
+            Đăng xuất
+          </a>
+          <br />
           <strong>KHOA DƯỢC · BỆNH VIỆN 199</strong>
           <div style={{ opacity: 0.8 }}>BỘ CÔNG AN</div>
         </div>
