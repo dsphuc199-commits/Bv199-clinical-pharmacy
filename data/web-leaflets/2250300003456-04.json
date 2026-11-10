@@ -8,15 +8,14 @@
   "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
  },
  "method": "web",
- "extractedAt": "2026-11-09",
+ "extractedAt": "2026-11-10",
  "reviewed": false,
  "sections": {
-  "thanhPhan": "1 hoạt chất\n\nTên hoạt chất |\nHàm lượng |\n\nAmoxicilin\nChính\n\n|\n\ndưới dạng Amoxcilin trihydrat\n|",
-  "chiDinh": "Amoxicillin được chỉ định cho các nhiễm khuẩn sau đây:\n\r\n- Nhiễm khuẩn đường hô hấp trên.\n\r\n- Nhiễm khuẩn đường hô hấp dưới do liên cầu khuẩn, phế cầu khuẩn, tụ cầu khuẩn không tiết penicilinase và H. influenza.\n\r\n- Nhiễm khuẩn đường tiết niệu không biến chứng.\n\r\n- Bệnh lậu.\n\r\n- Nhiễm khuẩn đường mật.\n\r\n- Nhiễm khuẩn da, cơ do liên cầu khuẩn, tụ cầu khuẩn E.coli nhạy cảm với amoxicillin.\nAmoxicillin được chỉ định cho các nhiễm khuẩn sau đây:\n\r\n- Nhiễm khuẩn đường hô hấp trên.\n\r\n- Nhiễm khuẩn đường hô hấp dưới do liên cầu khuẩn, phế cầu khuẩn, tụ cầu khuẩn không tiết penicilinase và H. influenza.\n\r\n- Nhiễm khuẩn đường tiết niệu không biến chứng.\n\r\n- Bệnh lậu.\n\r\n- Nhiễm khuẩn đường mật.\n\r\n- Nhiễm khuẩn da, cơ do liên cầu khuẩn, tụ cầu khuẩn E.coli nhạy cảm với amoxicillin.",
+  "chiDinh": "Amoxicillin được chỉ định cho các nhiễm khuẩn sau đây:\n- Nhiễm khuẩn đường hô hấp trên.\n- Nhiễm khuẩn đường hô hấp dưới do liên cầu khuẩn, phế cầu khuẩn, tụ cầu khuẩn không tiết penicilinase và H. influenza.\n- Nhiễm khuẩn đường tiết niệu không biến chứng.\n- Bệnh lậu.\n- Nhiễm khuẩn đường mật.\n- Nhiễm khuẩn da, cơ do liên cầu khuẩn, tụ cầu khuẩn E.coli nhạy cảm với amoxicillin.",
   "chongChiDinh": "Không dùng thuốc cho bệnh nhân có tiền sử dị ứng với bất kỳ loại penicillin nào.",
   "lieuDung": "&ETH;ường uống. - Liều thường dùng là 250 - 500 mg, cách 8 giờ một lần. - Trẻ em đến 10 tuổi có thể dùng liều 125 - 250 mg, cách 8 giờ một lần. - Trẻ em dưới 20 kg thường dùng liều 20 - 40 mg/kg thể trọng/ngày. - Liều 3g, nhắc lại sau 8 giờ để điều trị áp-xe quanh răng, hoặc nhắc lại sau 10 - 12 giờ để điều trị nhiễm khuẩn cấp đường tiết niệu không biến chứng. - &ETH;ể dự phòng viêm màng trong tim ở người dễ mắc, cho liều duy nhất 3 g cách 1 giờ trước khi làm thủ thuật như nhổ răng. - Dùng phác đồ liều cao 3 g x 2 lần/ngày cho người bệnh nhiễm khuẩn đường hô hấp nặng hoặc tái phát. - Nếu cần, trẻ em 3 - 10 tuổi bị viêm tai giữa có thể dùng liều 750 mg x 2 lần/ngày trong 2 ngày. &ETH;ối với người suy thận, phải giảm liều theo hệ số thanh thải creatinin: - Cl creatinin < 10 ml/phút: 500 mg/24 giờ. - Cl creatinin > 10 ml/phút: 500 mg/12 giờ.",
   "tacDungPhu": "- Thường gặp: Ngoại ban (3-10%);, thường xuất hiện chậm sau 7 ngày điều trị. - Ít gặp: + Tiêu hoá: Buồn nôn, nôn, ỉa chảy. + Phản ứng quá mẫn: Ban đỏ, ban dát sần và mày đay, đặc biệt là hội chứng Stevens-Johnson. - Hiếm gặp: + Gan: Tăng nhẹ SGOT. + Thần kinh trung ương: Kích động, vật vã, lo lắng, mất ngủ, lú lẫn, thay đổi ứng xử và/hoặc chóng mặt. + Máu: Thiếu máu, giảm tiểu cầu, ban xuất huyết giảm tiểu cầu, tăng bạch cầu ưa eosin, giảm bạch cầu, mất bạch cầu hạt.",
   "tuongTac": "- Sự hấp thu amoxicillin không bị ảnh hưởng bởi thức ăn trong dạ dày, do đó có thể uống trước hay sau bữa ăn. Nifedipin làm tăng hấp thu amoxicillin. - Khi dùng alopurinol cùng với amoxicillin sẽ làm tăng khả năng phát ban của amoxicillin. - Có thể có sự đối kháng giữa chất diệt khuẩn amoxicillin và các chất kìm khuẩn như cloramphenicol, tetracyclin.",
-  "baoQuan": "Bảo quản nơi khô mát (15-30 độ C), tránh ánh sáng.\nBảo quản nơi khô mát (15-30 độ C), tránh ánh sáng."
+  "baoQuan": "Bảo quản nơi khô mát (15-30 độ C), tránh ánh sáng."
  }
 }

@@ -8,12 +8,13 @@
   "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
  },
  "method": "web",
- "extractedAt": "2026-11-09",
+ "extractedAt": "2026-11-10",
  "reviewed": false,
  "sections": {
-  "thanhPhan": "1 hoạt chất\n\nTên hoạt chất |\nHàm lượng |\n\nGlucose\nChính\n\n|\n\nnull\n|",
-  "chiDinh": "- Thiếu hụt carbohydrat.\n\r\n- Hạ đường huyết do suy dinh dưỡng, do ngộ độc rượu, do tăng chuyển hóa khi bị stress hay chấn thương.\n\r\n\n\r\nDƯỢC LỰC HỌC:\n\r\n\n\r\n- Glucose có tác dụng hỗ trợ calo, cứ 100g Glucose cung cấp 400 kilocalo.\n\r\n- Glucose là đường đơn 6 carbon, dùng tiêm tĩnh mạch để điều trị thiếu hụt đường và dịch, dùng cùng với các dung dịch điện giải để phòng và điều trị mất nước do ỉa chảy cấp, điều trị chứng hạ đường huyết, được sử dụng làm chất vận chuyển các thuốc khác. \r\n\n\r\nDƯỢC ĐỘNG HỌC:\n\r\n\n\r\nGlucose chuyển hóa thành carbon dioxyd, nước và đồng thời giải phóng ra năng lượng.",
+  "chiDinh": "- Thiếu hụt carbohydrat.\n- Hạ đường huyết do suy dinh dưỡng, do ngộ độc rượu, do tăng chuyển hóa khi bị stress hay chấn thương.",
   "chongChiDinh": "Người bệnh không dung nạp được glucose, mất nước nhược trương nếu chưa bù đủ các chất điện giải. - Ứ nước, kali huyết hạ, hôn mê tăng thẩm thấu, nhiễm toan. - Người bệnh vô niệu, người bệnh bị chảy máu trong sọ hoặc trong tủy sống. - Mê sảng rượu kèm mất nước, ngộ độc rượu cấp. - Không được dùng dung dịch glucose cho người bệnh sau cơn tai biến mạch máu não vì đường huyết cao ở vùng thiếu máu cục bộ chuyển hóa thành acid lactic làm chết tế bào não.",
-  "lieuDung": "- Tiêm tĩnh mạch chậm từ 5 ml – 20 ml/ lần.\n\r\n- Tiêm truyền tĩnh mạch theo chỉ dẫn của thầy thuốc.\n\r\n\r\n– Liều dùng thay đổi tùy theo nhu cầu của từng người bệnh.\n\r\n– Phải theo dõi chặt chẽ đường huyết của người bệnh.\n\r\n– Liều Glucose tối đa khuyên dùng là 500 – 800mg/kg thể trọng trong một giờ.\nThường gặp: đau tại chỗ tiêm. Kích ứng tĩnh mạch, viêm tắc tĩnh mạch. Ít gặp: rối loạn nước và điện giải (hạ kali huyết, hạ magnesi huyết, hạ phospho huyết);. Hiếm gặp: phù hoặc ngộ độc nước (do truyền kéo dài hoặc truyền nhanh một lượng lớn dung dịch đẳng trương). Mất nước do hậu quả của đường huyết cao (khi truyền kéo dài hoặc quá nhanh các dung dịch ưu trương)."
+  "lieuDung": "- Tiêm tĩnh mạch chậm từ 5 ml – 20 ml/ lần.\n- Tiêm truyền tĩnh mạch theo chỉ dẫn của thầy thuốc.\n– Liều dùng thay đổi tùy theo nhu cầu của từng người bệnh.\n– Phải theo dõi chặt chẽ đường huyết của người bệnh.\n– Liều Glucose tối đa khuyên dùng là 500 – 800mg/kg thể trọng trong một giờ.\nThường gặp: đau tại chỗ tiêm. Kích ứng tĩnh mạch, viêm tắc tĩnh mạch. Ít gặp: rối loạn nước và điện giải (hạ kali huyết, hạ magnesi huyết, hạ phospho huyết);. Hiếm gặp: phù hoặc ngộ độc nước (do truyền kéo dài hoặc truyền nhanh một lượng lớn dung dịch đẳng trương). Mất nước do hậu quả của đường huyết cao (khi truyền kéo dài hoặc quá nhanh các dung dịch ưu trương).",
+  "duocLuc": "- Glucose có tác dụng hỗ trợ calo, cứ 100g Glucose cung cấp 400 kilocalo.\n- Glucose là đường đơn 6 carbon, dùng tiêm tĩnh mạch để điều trị thiếu hụt đường và dịch, dùng cùng với các dung dịch điện giải để phòng và điều trị mất nước do ỉa chảy cấp, điều trị chứng hạ đường huyết, được sử dụng làm chất vận chuyển các thuốc khác.",
+  "duocDong": "Glucose chuyển hóa thành carbon dioxyd, nước và đồng thời giải phóng ra năng lượng."
  }
 }

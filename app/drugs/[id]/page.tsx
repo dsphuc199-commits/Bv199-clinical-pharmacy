@@ -159,11 +159,9 @@ export default async function DrugDetailPage({ params }: Props) {
                   {shown.totalPages && shown.pages && shown.totalPages > shown.pages ? ` Chỉ trích ${shown.pages}/${shown.totalPages} trang đầu.` : ""}
                 </div>
               ) : (
-                <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
-                  <strong>CẦN THẨM ĐỊNH – NGUỒN THAM KHẢO, KHÔNG PHẢI VĂN BẢN CHÍNH THỨC.</strong> Nội dung lấy từ trang{" "}
-                  <a className="font-semibold underline" href={shown.source?.url} target="_blank" rel="noreferrer">{shown.source?.site || shown.source?.title}</a>
-                  {shown.soDangKy ? ` (trang ghi số đăng ký ${shown.soDangKy}, khớp danh mục)` : ""}, do đơn vị đó biên soạn, chưa được Cục Quản lý Dược công bố trên Cổng tra cứu.
-                  Có thể đã được biên tập lại so với Tờ HDSD gốc. <strong>Đối chiếu HDSD kèm sản phẩm trước khi dùng cho quyết định điều trị.</strong>
+                <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
+                  <strong>CẦN THẨM ĐỊNH.</strong> Nguồn tham khảo:{" "}
+                  <a className="font-semibold underline" href={shown.source?.url} target="_blank" rel="noreferrer">{siteDomain(shown.source?.url)}</a>
                 </div>
               )}
 
@@ -171,13 +169,13 @@ export default async function DrugDetailPage({ params }: Props) {
                 {shownSections.map((s) => (
                   <details key={s.key} open={s.open} className="group rounded-xl border border-slate-200 bg-slate-50">
                     <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-slate-900">{s.title}</summary>
-                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{sections[s.key]}</div>
+                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{tidy(sections[s.key])}</div>
                   </details>
                 ))}
                 {shown.rawText && (
                   <details className="rounded-xl border border-slate-200 bg-slate-50">
                     <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-slate-900">Toàn văn trích được (chưa tách mục)</summary>
-                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{shown.rawText}</div>
+                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{tidy(shown.rawText)}</div>
                   </details>
                 )}
               </div>
@@ -194,6 +192,20 @@ export default async function DrugDetailPage({ params }: Props) {
       </div>
     </main>
   );
+}
+
+/* Gop dong trong lien tiep thanh 1 dong de doan van lien mach. */
+function tidy(text?: string): string {
+  return (text ?? "").replace(/[ \t]+\n/g, "\n").replace(/\n{2,}/g, "\n").trim();
+}
+
+/* "https://www.thuocbietduoc.com.vn/..." -> "thuocbietduoc.com.vn" */
+function siteDomain(url?: string): string {
+  try {
+    return url ? new URL(url).hostname.replace(/^www\./, "") : "trang thông tin thuốc";
+  } catch {
+    return "trang thông tin thuốc";
+  }
 }
 
 function Field({ title, value }: { title: string; value?: string | null }) {

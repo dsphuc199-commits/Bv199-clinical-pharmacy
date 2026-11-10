@@ -143,17 +143,41 @@ function splitHtmlSections(html) {
     }
     if (!cur) continue;
     const text = htmlToText(part);
-    if (text.length > 3) out[cur] = out[cur] ? `${out[cur]}\n${text}` : text;
+    if (text.length <= 3) continue;
+    // Trang co the lap lai cung noi dung (vd. "Chi dinh" trong khoi chi tiet va muc "Cong dung"): bo phan trung.
+    const key = (s) => plain(s).replace(/[^a-z0-9]/g, "");
+    if (!out[cur]) out[cur] = text;
+    else if (key(out[cur]).includes(key(text))) continue;
+    else if (key(text).includes(key(out[cur]))) out[cur] = text;
+    else out[cur] = `${out[cur]}\n${text}`;
+  }
+  // Tieu de dang dong chu thuong (vd. "Quá liều", "Bảo quản:") nam trong muc khac -> tach sang dung muc.
+  for (const k of Object.keys(out)) {
+    const keep = [];
+    let target = k;
+    for (const line of out[k].split("\n")) {
+      const t = line.trim().replace(/:$/, "");
+      const hk = t.length <= 40 && !/^[-+•–]/.test(t) ? webHeadingKey(t) : undefined;
+      if (hk && hk !== target && plain(t).split(" ").length <= 6) { target = hk; continue; }
+      if (target === k) keep.push(line);
+      else out[target] = out[target] && out[target] !== "" ? `${out[target]}\n${line}` : line;
+    }
+    out[k] = keep.join("\n");
   }
   for (const k of Object.keys(out)) {
     out[k] = out[k]
       .split("\n")
-      .filter((l) => !/(giá bao nhiêu|mua .* ở đâu|liên hệ|hotline|zalo|đặt hàng|tư vấn mua|©|&copy;|bản quyền|copyright)/i.test(l))
+      .map((l) => l.trim().replace(/\s*\|\s*$/, "").replace(/^\|\s*/, "").replace(/\s*\|\s*/g, " – ").trim())
+      .filter((l) => !/^(null|undefined|-|–)$/i.test(l))
+      // Bo dong trong (trang web dung nhieu <div><br></div> gay gian dong roi rac) va dong quang cao.
+      .filter((l) => l && !/(giá bao nhiêu|mua .* ở đâu|liên hệ|hotline|zalo|đặt hàng|tư vấn mua|©|&copy;|bản quyền|copyright)/i.test(l))
       .join("\n")
       .trim()
       .slice(0, 12000);
     if (out[k].length < 10) delete out[k];
   }
+  // Bang thanh phan dang "1 hoạt chất / Tên hoạt chất / Hàm lượng" mat gia tri khi chuyen van ban -> bo (da co thanh phan tu danh muc/Cuc QLD).
+  if (out.thanhPhan && /^\d+ hoạt chất\b|^Tên hoạt chất/m.test(out.thanhPhan)) delete out.thanhPhan;
   return out;
 }
 
@@ -197,12 +221,19 @@ const SITES = [
 ];
 
 /* Ung vien: slug chua cac tu khoa cua ten thuoc (bo don vi/ham luong de khong bo sot). */
-function candidates(index, brand, strength) {
+function candidates(index, brandRaw, strength) {
+  // Bo phan ghi chu trong ngoac (co so dong goi, dia chi...) khoi ten thuoc.
+  const brand = String(brandRaw || "").replace(/\([^)]*\)?/g, " ").trim();
   const full = slugify(brand);
   const words = full.split("-").filter((w) => w.length > 1 && !/^(mg|ml|g|mcg|iu|vien|ong|lo|chai|tablets?|capsules?|injection)$/.test(w));
   if (!words.length) return [];
-  // Tu dac trung nhat (dai nhat, co chu cai) thay vi tu dau tien (vd. "3B-Betalgine" -> "betalgine").
-  const head = [...words].filter((w) => /[a-z]{3,}/.test(w)).sort((a, b) => b.length - a.length)[0] || words[0];
+  // Tim theo ca tu dau tien va tu dac trung nhat (vd. "3B-Betalgine" -> "3b" va "betalgine").
+  const longest = [...words].filter((w) => /[a-z]{3,}/.test(w)).sort((a, b) => b.length - a.length)[0];
+  const heads = [...new Set([words[0], longest].filter(Boolean))];
+  return [...new Set(heads.flatMap((h) => rank(index, h, words, full, brand, strength)))].slice(0, MAX_CANDIDATES + 2);
+}
+
+function rank(index, head, words, full, brand, strength) {
   const num = (plain(`${brand} ${strength}`).match(/\d+([.,]\d+)?/) || [""])[0].replace(",", ".");
   const scored = [];
   for (const [slug, url] of index) {
