@@ -1,10 +1,19 @@
 {
  "productId": "2250360022961-04",
  "brandName": "3B-Betalgine",
- "notFound": true,
- "tried": [
-  "893110467624",
-  "VD2469416"
- ],
- "extractedAt": "2026-11-09"
+ "soDangKy": "893110467624",
+ "source": {
+  "title": "Betalgine Nadyphar - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-22323/betalgine.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-10",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "1 hoạt chất\n\nTên hoạt chất |\nHàm lượng |\n\nVitamin B1\nChính\n\n|\n\nnull\n|",
+  "chiDinh": "Điều trị thiếu các vitamin B1, B6, B12:\n\r\n\n\r\n- Đau nhức có nguồn gốc do thấp khớp hay thần kinh.\n\r\n\n\r\n- Các tình trạng liên quan đến dinh dưỡng như suy nhược, chán ăn, thiêu máu, thời kỳ dưỡng bệnh.\nĐiều trị thiếu các vitamin B1, B6, B12:\n\r\n\n\r\n- Đau nhức có nguồn gốc do thấp khớp hay thần kinh.\n\r\n\n\r\n- Các tình trạng liên quan đến dinh dưỡng như suy nhược, chán ăn, thiêu máu, thời kỳ dưỡng bệnh.",
+  "chongChiDinh": "- Quá mẫn với một trong các thành phần của thuốc. - U ác tính. - Phụ nữ có thai, cho con bú.",
+  "lieuDung": "Khuyến nghị:\n\r\n\n\r\n- Người lớn: 1 viên/lần x 2 lần/ngày.\n\r\n- Trẻ em trên 12 tuổi: 1 viên x 1 lần/ngày.\n\r\n\n\r\nHoặc dùng theo hướng dẫn của Bác sĩ.\n\r\n\n\r\n\r\nQuá liều\n\r\n\n\r\nBệnh nhân dùng vitamin B6 liều cao 2 - 7 g/ngày (hoặc trên 0,2 g/ngày trong hơn hai tháng) làm tiến triển bệnh thần kinh giác quan với các triệu chứng mất điều hòa và tê cóng chân tay. Các triệu chứng này sẽ hồi phục sau khi ngưng sử dụng thuốc sau 6 tháng.\n- Liên quan đến vitamin B1 (hiếm gặp): ra nhiều mồ hôi, SOC quá mẫn. Tăng huyết áp cấp. Ban da, ngứa, mày đay, khó thở. - Liên quan đến vitamin B6: Liều 200mg/ngày, kéo dài trên 2 tháng có thể gây bệnh thần kinh ngoại vi nặng, tiến triển từ dáng đi không vững và tê cóng bàn chân đến tê cóng và vụng về bàn tay, tình trạng này có thế hồi phục khi ngừng thuốc. Hiếm gặp: Ban da, ngứa, mày đay, đỏ da, buồn nôn, nôn. - Liên quan đến vitamin B12 (hiếm gặp): Phản ứng phản vệ, sốt, đau đầu, hoa mắt, co thắt phế quản, phù mạch miệng - hầu. Phản ứng dạng trứng cá, mày đay, ban đỏ ngứa. Buồn nôn. Loạn nhịp tim thứ phát do hạ kali huyết khi bắt đầu điều trị. Thông báo cho bác sỹ những tác dụng không mong muốn gặp phải khi sử dụng thuốc."
+ }
 }

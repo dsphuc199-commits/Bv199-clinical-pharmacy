@@ -201,7 +201,8 @@ function candidates(index, brand, strength) {
   const full = slugify(brand);
   const words = full.split("-").filter((w) => w.length > 1 && !/^(mg|ml|g|mcg|iu|vien|ong|lo|chai|tablets?|capsules?|injection)$/.test(w));
   if (!words.length) return [];
-  const head = words[0];
+  // Tu dac trung nhat (dai nhat, co chu cai) thay vi tu dau tien (vd. "3B-Betalgine" -> "betalgine").
+  const head = [...words].filter((w) => /[a-z]{3,}/.test(w)).sort((a, b) => b.length - a.length)[0] || words[0];
   const num = (plain(`${brand} ${strength}`).match(/\d+([.,]\d+)?/) || [""])[0].replace(",", ".");
   const scored = [];
   for (const [slug, url] of index) {
@@ -257,8 +258,14 @@ async function work(p) {
       .filter((x) => x.length >= 6),
   );
   let result = null;
+  // Ung vien theo ten biet duoc; them ung vien theo ten hoat chat (trang co the dat ten khac). Van bat buoc trung SDK.
+  const ingredient = String(p.ingredientName || "").split(/[;,(+]/)[0].replace(/\d.*$/, "").trim();
   outer: for (const site of SITES) {
-    for (const url of candidates(indexes[site.id], p.brandName, p.strength)) {
+    const urls = [...new Set([
+      ...candidates(indexes[site.id], p.brandName, p.strength),
+      ...(RETRY && ingredient.length > 3 ? candidates(indexes[site.id], ingredient, p.strength) : []),
+    ])];
+    for (const url of urls) {
       const html = await get(url);
       if (!html) continue;
       const sdk = site.sdk(html);
