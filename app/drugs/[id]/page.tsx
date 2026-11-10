@@ -4,6 +4,9 @@ import drugData from "@/data/drug-products.json";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
 import { LEAFLET_SECTIONS, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
+import { formatLeaflet } from "@/lib/drugs/format-leaflet";
+import LeafletSections from "@/components/drugs/LeafletSections";
+import { ArrowLeft } from "lucide-react";
 
 type DrugProduct = {
   id: string;
@@ -56,8 +59,12 @@ export default async function DrugDetailPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-6xl px-4 py-8">
-        <Link href="/drugs" className="mb-6 inline-block font-semibold text-blue-700 hover:underline">
-          ← Quay lại danh mục thuốc
+        <Link
+          href="/drugs"
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white py-2 pl-3 pr-4 text-sm font-semibold text-[#0b3a5b] shadow-sm transition hover:border-[#087f89] hover:text-[#087f89] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#087f89]"
+        >
+          <ArrowLeft size={17} aria-hidden />
+          Danh mục thuốc
         </Link>
 
         {/* Thong tin trong danh muc benh vien */}
@@ -165,20 +172,12 @@ export default async function DrugDetailPage({ params }: Props) {
                 </div>
               )}
 
-              <div className="mt-4 space-y-2">
-                {shownSections.map((s) => (
-                  <details key={s.key} open={s.open} className="group rounded-xl border border-slate-200 bg-slate-50">
-                    <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-slate-900">{s.title}</summary>
-                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{tidy(sections[s.key])}</div>
-                  </details>
-                ))}
-                {shown.rawText && (
-                  <details className="rounded-xl border border-slate-200 bg-slate-50">
-                    <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-slate-900">Toàn văn trích được (chưa tách mục)</summary>
-                    <div className="whitespace-pre-line border-t border-slate-200 px-4 py-3 text-sm leading-6 text-slate-700">{tidy(shown.rawText)}</div>
-                  </details>
-                )}
-              </div>
+              <LeafletSections
+                sections={[
+                  ...shownSections.map((s) => ({ key: s.key, title: s.title, open: s.open, blocks: formatLeaflet(sections[s.key]) })),
+                  ...(shown.rawText ? [{ key: "rawText", title: "Toàn văn trích được", blocks: formatLeaflet(shown.rawText) }] : []),
+                ]}
+              />
             </>
           )}
 
@@ -192,11 +191,6 @@ export default async function DrugDetailPage({ params }: Props) {
       </div>
     </main>
   );
-}
-
-/* Gop dong trong lien tiep thanh 1 dong de doan van lien mach. */
-function tidy(text?: string): string {
-  return (text ?? "").replace(/[ \t]+\n/g, "\n").replace(/\n{2,}/g, "\n").trim();
 }
 
 /* "https://www.thuocbietduoc.com.vn/..." -> "thuocbietduoc.com.vn" */
