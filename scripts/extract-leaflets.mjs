@@ -44,7 +44,7 @@ const HEADINGS = [
   ["lieuDung", /^(lieu (dung|luong)|cach dung|lieu va cach dung|lieu luong va cach dung|cach dung,? lieu)/],
   ["chongChiDinh", /^chong chi dinh\b/],
   ["canhBao", /^(canh bao|than trong|nhung luu y|luu y (dac biet|khi dung)|canh bao va than trong)/],
-  ["thaiKy", /^(su dung (thuoc )?(cho|o|trong) phu nu|phu nu co thai|thoi ky mang thai|thai ky|kha nang sinh san|mang thai)/],
+  ["thaiKy", /^(su dung (thuoc )?(cho|o|trong|tren) phu nu|phu nu co thai|thoi ky mang thai|thai ky|kha nang sinh san|mang thai)/],
   ["laiXe", /^(anh huong (cua thuoc )?(len|den|toi) kha nang lai xe|lai xe)/],
   ["tuongTac", /^tuong tac\b/],
   ["tuongKy", /^tuong ky\b/],
