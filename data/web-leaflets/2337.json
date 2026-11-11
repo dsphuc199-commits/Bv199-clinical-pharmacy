@@ -1,10 +1,19 @@
 {
  "productId": "2337",
  "brandName": "Zoloft",
- "notFound": true,
- "tried": [
-  "VN2143818",
-  "400110010824"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": "VN-17543-13",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Zoloft 50mg dạng viên nén - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-45595/zoloft.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Bệnh trầm cảm nặng. - Rối loạn xung lực cưỡng bức ám ảnh, rối loạn hoảng sợ.",
+  "lieuDung": "Uống: 50mg/ngày. Chuẩn liều tăng lên từng nấc 50 mg với khoảng cách ít nhất 1 tuần đến tối đa 200 mg/ngày.\nBuồn nôn, tiêu chảy, khô miệng, nhức đầu, mất ngủ, chóng mặt, run rẩy & buồn ngủ.",
+  "tuongTac": "- Không dùng thuốc với rượu.\n- Thuốc ức chế TKTW khác."
+ }
 }

@@ -1,9 +1,18 @@
 {
  "productId": "2250380015639-01",
  "brandName": "Duspatalin retard",
- "notFound": true,
- "tried": [
-  "VN2165219"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": "300100982124",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Duspatalin Retard 200mg Abbott - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-14937/duspatalin-retard.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Hội chứng ruột kích thích & các tình trạng: kích thích đại tràng mãn tính, táo bón do co thắt, viêm niêm mạc đại tràng, viêm đại tràng do co thắt với các triệu chứng đau bụng, căng cơ, tiêu chảy dai dẳng có hoặc kèm táo bón xen kẽ, đầy bụng. Chứng co thắt dạ dày ruột thứ phát do bệnh lý thực thể.",
+  "lieuDung": "Người lớn, người già & trẻ > 10 tuổi: 135mg x 3 lần mỗi ngày, nên uống thuốc 20 phút trước bữa ăn. Có thể giảm dần liều sau khi đạt được đáp ứng mong muốn.\nRất hiếm: các phản ứng dị ứng, như hồng ban, mề đay, phù mạch."
+ }
 }

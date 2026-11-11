@@ -31,9 +31,15 @@ const ingredientKey = (p) => stripPrefix(plain(p.ingredientName)).replace(/\([^)
 /* Thuoc 1 hoat chat (bo phan trong ngoac nhu "dưới dạng ..."); loai phoi hop va duoc lieu dang cao/hon hop. */
 const singleIngredient = (p) => {
   const ing = stripPrefix(plain(p.ingredientName)).replace(/\([^)]*\)?/g, " ");
-  return !/[;,+&/]| va | voi /.test(ing) && !/^(cao|bot|hon hop|duoc lieu)\b|duoc lieu|cao (dac|kho|long)/.test(ing) && ingredientKey(p).length >= 4;
+  return !/[;,+&/]| va | voi /.test(ing) && !/^(cao|bot|hon hop|duoc lieu)\b|duoc lieu|cao (dac|kho|long)/.test(ing) && ingredientKey(p).length >= 3;
 };
-const routeKey = (p) => plain(p.route).replace(/tiem truyen tinh mach|truyen tinh mach|tiem truyen/, "tiem truyen");
+/* Gom duong dung: moi duong tiem/truyen -> "tiem" (cung HDSD hoat chat); uong, nho mat, dung ngoai... giu rieng. */
+const routeKey = (p) => {
+  const r = plain(p.route);
+  if (/tiem|truyen|tinh mach|bap|duoi da/.test(r)) return "tiem";
+  if (/uong|ngam/.test(r)) return "uong";
+  return r;
+};
 const products = JSON.parse(readFileSync(join(ROOT, "data", "drug-products.json"), "utf8"));
 const registry = JSON.parse(readFileSync(join(ROOT, "data", "drug-registry.json"), "utf8")).items;
 const davOk = new Set(index.ok);
@@ -75,7 +81,7 @@ for (const p of unique) {
   const list = groups.get(`${combo ?? ingredientKey(p)}|${routeKey(p)}`);
   if (!list) continue;
   // Nhom phu thuoc nong do (dich truyen, dien giai, insulin, heparin) hoac ham luong dang %: bat buoc cung ham luong.
-  const critical = /natri clorid|kali clorid|glucose|dextrose|magnesi sulfat|calci clorid|calci gluconat|natri bicarbonat|natri hydrocarbonat|ringer|insulin|heparin|kali clorid|albumin|nhu dich|lipid|acid amin|amino|sodium|potassium|manitol|mannitol/.test(ingredientKey(p)) || /%/.test(`${p.strength} ${p.brandName}`) || /truyen/.test(routeKey(p));
+  const critical = /natri clorid|kali clorid|glucose|dextrose|magnesi sulfat|calci clorid|calci gluconat|natri bicarbonat|natri hydrocarbonat|ringer|insulin|heparin|kali clorid|albumin|nhu dich|lipid|acid amin|amino|sodium|potassium|manitol|mannitol/.test(ingredientKey(p)) || /%/.test(`${p.strength} ${p.brandName}`) || /truyen/.test(plain(p.route));
   const sameStrength = (q) => plain(q.strength).replace(/\s+/g, "") === plain(p.strength).replace(/\s+/g, "");
   const pool = critical ? list.filter(({ p: q }) => sameStrength(q)) : list;
   if (!pool.length) continue;

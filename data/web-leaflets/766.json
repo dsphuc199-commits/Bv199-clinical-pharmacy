@@ -1,9 +1,21 @@
 {
  "productId": "766",
  "brandName": "Oflovid",
- "notFound": true,
- "tried": [
-  "VN1934115"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": "VN-5622-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Oflovid dạng dung dịch nhỏ mắt - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-34223/oflovid.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Viêm mi mắt, lẹo mắt, viêm túi lệ, viêm kết mạc, viêm bờ mi, viêm giác mạc, loét giác mạc. - Viêm tai. - triệu chứng nhiễm trùng sau phẫu thuật.\nĐiều trị cho bệnh nhân bị viêm kết mạc, viêm giác mạc, đặc biệt là trường hợp loét giác mạc.\nBệnh nhân bị viêm bờ mi, viêm sụn mí, viêm túi lệ hay bị lẹo có thể sử dụng Thuốc nhỏ mắt Oflovid 0,3% để điều trị bệnh.\nNgoài ra,Thuốc nhỏ mắt Oflovid 0,3% có thể được sử dùng làm kháng sinh phòng ngừa trước và sau khi bệnh nhân phẫu thuật mắt.\nOflovid có nhỏ tai được không? Bệnh nhân bị viêm tai giữa chảy mũ có thể sử dụng thuốc kháng sinh tại chỗ nên có thể sử dụng được Thuốc nhỏ mắt Oflovid 0,3%. Kháng sinh Oflovid 0,3% an toàn để có thể nhỏ tai cho bệnh nhân.",
+  "chongChiDinh": "Quá mẫn với thành phần thuốc. Tiền sử quá mẫn & bị viêm gân do quinolone.\nKhông chỉ định sử dụng Thuốc nhỏ mắt Oflovid 0,3% cho bệnh nhân bị dị ứng với các thành phần có mặt trong công thức bào chế của thuốc.",
+  "lieuDung": "Dung dịch nhỏ: - Nhỏ mắt, tai 1 giọt/lần x 3 lần/ngày. - Dự phòng nhiễm trùng sau phẫu thuật nhỏ 5 lần/ngày trong suốt 2 ngày trước mổ; vào ngày phẫu thuật, nhỏ mắt tùy theo thời gian & loại phẫu thuật; nhỏ 1 giọt ngay sau khi mổ; sau đó, nhỏ mắt mỗi khi thay băng. - Thuốc mỡ tra: Tra một lượng thuốc vừa đủ vào mắt, 3lần/ngày.\nLiều dùng khuyến cáo:\nThông thường, bệnh nhân (bao gồm người lớn và trẻ em) được khuyến cáo liều dùng thuốc nhỏ mắt mỗi ngày khoảng 3 lần, mỗi lần 1 giọt vào hai bên mắt.\nTuy nhiên, tuỳ theo từng loại bệnh lý của bệnh nhân mà có thể thay đổi liều dùng thuốc cho phù hợp.\nTuỳ thuộc vào khả năng đáp ứng thuốc và loại vi khuẩn gây bệnh cho bệnh nhân mà bác sĩ chỉ định liều dùng và thời gian điều trị thuốc.\nCách dùng hiệu quả:\nTrước khi sử dụng thuốc, bệnh nhân nên rửa tay và rửa mắt sạch sẽ.\nBệnh nhân nên nằm hoặc ngồi với tư thế đầu ngẩng lên trước khi nhỏ thuốc vào mắt.\nNhỏ thuốc từng giọt vào mắt, không nên bóp lọ thuốc nhỏ mắt quá mạnh.\nĐợi thuốc thấm vào trong mắt khoảng 30 giây đến 1 phút rồi mới đứng dậy hoặc ngồi dậy.\nBệnh nhân có cảm giác bị kích ứng ở mắt sau khi nhỏ thuốc, mắt bị ngứa.\nHiện tượng viêm bờ mi xuất hiện.\nBệnh nhân cảm thấy đau mắt, mí mắt bị sưng hay bệnh nhân có biểu hiện xung huyết kết mạc,...\nBệnh nhân có thể có hiện tượng khó thở, hạ huyết áp, nổi ban đỏ, mắt phù căng,... Nếu xuất hiện 1 trong những dấu hiệu trên, bệnh nhân không nên tiếp tục sử dụng thuốc và đi khám tới cơ sở y tế gần nhất để xử lý phản ứng dị ứng với thuốc.",
+  "tacDungPhu": "Ngứa mi mắt, sưng mi mắt, viêm bờ mi, xung huyết kết mạc, đau mắt, mi mắt đỏ. Hiếm khi choáng, phản ứng tăng cảm.",
+  "baoQuan": "Nên bảo quản thuốc ở nơi khô ráo và nhiệt độ phòng (nhỏ hơn 30 độ C)."
+ }
 }

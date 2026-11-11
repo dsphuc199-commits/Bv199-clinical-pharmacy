@@ -249,17 +249,42 @@ function rank(index, head, words, full, brand, strength) {
   return scored.sort((a, b) => b.score - a.score).slice(0, MAX_CANDIDATES).map((x) => x.url);
 }
 
+/* Van ban phan cong ty san xuat/dang ky tren trang san pham. */
+function companyText(site, html) {
+  if (site.id === "thuocbietduoc") {
+    const t = htmlToText(html);
+    const i = t.indexOf("Thông tin công ty");
+    if (i < 0) return "";
+    const j = t.indexOf("Tư vấn mua hàng", i);
+    return t.slice(i + 17, j > i ? j : i + 300);
+  }
+  const rows = [...html.matchAll(/<td>\s*(Thương hiệu|Công ty đăng ký|Nhà sản xuất|Công ty sản xuất)\s*<td>([^]*?)<tr/gi)].map((m) => m[2]);
+  return rows.length ? htmlToText(rows.join(" ")) : "";
+}
+
 /* Cung san pham theo ten + nha san xuat: slug trang = ten thuoc (bo phan trong ngoac), va trang co ten nha san xuat. */
 const GENERIC_WORDS = /^(cong|ty|co|phan|tnhh|duoc|pham|trung|uong|tw|ltd|limited|pvt|inc|gmbh|sa|ag|spa|s|a|c|the|and|pharma|pharmaceutical|pharmaceuticals|laboratories|industries|corporation|corp|company|hoa|chi|nhanh|mot|thanh|vien|so|chuc|hang|nha|may|xuat|khau|nhap|viet|nam)$/;
 function sameProductByName(site, url, html, p) {
   const brandSlug = slugify(String(p.brandName || "").replace(/\([^)]*\)?/g, " "));
   const slug = site.slugOf(url).replace(/^thuoc-/, "");
   if (!brandSlug || brandSlug.length < 4) return false;
-  if (slug !== brandSlug && slug !== `${brandSlug}-${slugify(p.strength || "")}`) return false;
+  // Ten biet duoc rieng (khong trung ten hoat chat, vd. "Duphaston") de nhan dien hon ten generic (vd. "Loperamid").
+  const ingredientSlug = slugify(String(p.ingredientName || "").replace(/\([^)]*\)?/g, " ")).split("-")[0];
+  const genericWord = /^(vitamin|calci|canxi|natri|kali|magnesi|glucose|acid|sat|kem|nuoc|dung|dich|thuoc|cao|vien|siro|ong|bot)$/;
+  const proprietary = !brandSlug.split("-").some((w) => genericWord.test(w) || (w.length >= 4 && ingredientSlug.startsWith(w.slice(0, 5))));
+  const nameOk =
+    slug === brandSlug ||
+    slug === `${brandSlug}-${slugify(p.strength || "")}` ||
+    (proprietary && slug.startsWith(`${brandSlug}-`)); // trungtamthuoc: "duphaston-tab10mg"
+  if (!nameOk) return false;
   const words = slugify(p.manufacturer || "").split("-").filter((w) => w.length >= 3 && !GENERIC_WORDS.test(w));
   if (!words.length) return false;
-  const page = slugify(htmlToText(html).slice(0, 20000));
-  return words.filter((w) => page.includes(w)).length >= Math.min(2, words.length);
+  // Chi so trong O THONG TIN CONG TY cua trang (tranh trung chu o menu/bai viet khac).
+  const company = slugify(companyText(site, html));
+  if (!company) return false;
+  const hits = words.filter((w) => company.includes(w)).length;
+  // Biet duoc rieng: trung 1 tu dac trung cua hang la du (vd. Abbott Biologicals ~ Abbott Laboratories); generic: >= 2.
+  return proprietary ? hits >= 1 : hits >= Math.min(2, words.length);
 }
 
 /* ---------- Chay ---------- */

@@ -1,10 +1,26 @@
 {
  "productId": "2250320021638-02",
  "brandName": "Nephgold",
- "notFound": true,
- "tried": [
-  "880110015825",
-  "VN2129918"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": null,
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "[CHÍNH HÃNG] Nephgold 5,4% bổ sung acid amin cho người suy thận",
+  "url": "https://trungtamthuoc.com/thuoc-nephgold-54",
+  "site": "Trung Tâm Thuốc (trungtamthuoc.com)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "Thành phần: Mỗi 250ml Dung dịch Nephgold có chứa:\n- L-Isoleucin 1,4g\n- L-Leucin 2,2g\n- L-Lysin acetat 2,25g (tương đương L'Lysine 1,6g)\n- L-Methionin 2,2g\n- L-Phenylalanin 2,2g\n- L-Threonin 1,0g\n- L-Tryptophan 0,5g\n- L-Valin 1,6g\n- L-Histidin 0,63g.\n- Tá dược: L-Cystein hydroclorid monohydrat, natri hydroxyd, natri bisulfñt, nước pha tiêm vừa đủ.\nDạng bào chế: Dung dịch tiêm truyền.",
+  "chiDinh": "Nephgold chứa hỗn hợp các acid amin thiết yếu cho cơ thể người. Các loại acid amin này đều có tính chất giống như các acid amin có trong thức ăn thông thường nhưng chúng được đưa trực tiếp đến hệ tuần hoàn qua tiêm truyền tĩnh mạch. Việc truyền Nephgold kết hợp với dextrose ưu trương sẽ cung cấp năng lượng giúp cải thiện quá trình tổng hợp protein và cân bằng chuyển hóa nội bào, làm giảm mức độ tăng urê máu, cân bằng Kali, magiê và phospho huyết thanh ở bệnh nhân suy giảm chức năng thận.\nNephgold 5,4% được chỉ định dùng truyền bổ sung chất dinh dưỡng cho các trường hợp sau:\n- Bệnh nhân mắc chứng ure huyết\n- Bệnh nhân suy dinh dưỡng do dinh dưỡng qua Đường tiêu hóa không thực hiện được.",
+  "lieuDung": "- Người lớn: Liều hàng ngày là 250ml đến 500ml\n- Trẻ em, người già, bỏng nặng: chỉnh liều, tốc độ truyền phù hợp với tình trạng cơ thể của từng người.\nThuốc dùng bằng cách tiêm truyền tĩnh mạch với kỹ thuật vô trùng.⇒ Xem thêm thuốc có cùng công dụng tại đây: [CHÍNH HÃNG] Aminosteril 10% 500ml bổ sung các acid amin thiết yếu",
+  "chongChiDinh": "Không sử dụng Nephgold 5,4% trong các trường hợp:\n- Bệnh nhân bị mắt cân bằng acid — base\n- Bệnh nhân bị điện giải nặng không hồi phục được\n- Bệnh nhân bị tăng amoniac máu\n- Bệnh nhân bị giảm thể tích máu tuần hoàn\n- Bệnh nhân có khiếm khuyết bẩm sinh về chuyển hóa acid amin\n- Bệnh nhân mẫn cảm với bất kỳ thành phần nào của thuốc.",
+  "tacDungPhu": "Khi sử dụng thuốc Nephgold 5,4% có thể gặp phải một số tác dụng phụ như:\n- Quá mẫn: Phát ban\n- Hệ tiêu hóa: Buồn nôn, nôn\n- Hệ tuần hoàn: Tức ngực, hồi hộp, nhịp tim nhanh và giảm huyết áp\n- Hệ hô hấp: khó thở, ngưng thở, sốc, co thắt khí quản\n- Bệnh nhân suy gan: mất cân bằng Amino acid trong huyết thanh, toan chuyển hóa, tăng nitơ máu, tăng amoniac máu và hôn mê.\n⇒ Xem thêm thuốc khác tại đây: [CHÍNH HÃNG] Thuốc Nirmin Nephro 7% - Dịch truyền cho người suy thận",
+  "tuongTac": "Tetracyclin khi sử dụng đồng thời với Nephgold 5,4% có thể làm giảm tác dụng trữ protein của dung dịch amino acid, ảnh hưởng đến tác dụng của thuốc.",
+  "canhBao": "- Theo dõi cân bằng dịch, nồng độ điện giải và cân bằng acid-base thường xuyên để đánh giá và bổ sung nếu cần\n- Khi dùng đồng thời với dung dịch chứa nhiều muối acetat có thể gây toan chuyển hóa.\n- Đối với bệnh nhân tiểu đường cần theo dõi Insulin.\n- Tốc độ truyền nên chậm/vừa phải, phù hợp cho từng đối tượng",
+  "thaiKy": "Chưa có báo cáo Nephgold có gây hại cho thai nhi hoặc bài tiết vào sữa mẹ. Tuy nhiên để đảm bảo an toàn chỉ sử dụng trên đối tượng này khi thật sự cần thiết và tuân theo chỉ định của bác sĩ.",
+  "quaLieu": "Nếu gặp tình trạng quá tải khi truyền dịch thì cần báo ngay cho bác sĩ điều trị biết và đưa bệnh nhân tới bệnh viện để có cách xử lý kịp thời.",
+  "baoQuan": "- Bảo quản ở nơi khô ráo thoáng mát, nhiệt độ không quá 30°C, trong bao bì gốc và tránh ánh sáng.\n- Để xa tầm tay trẻ em."
+ }
 }

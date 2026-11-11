@@ -1,10 +1,23 @@
 {
  "productId": "2250330019113-01",
  "brandName": "Otofa",
- "notFound": true,
- "tried": [
-  "VN2222519",
-  "300110040925"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": "VN-6852-08",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thuốc nhỏ tai Otofa 10ml: Tác dụng, liều dùng, cách dùng",
+  "url": "https://trungtamthuoc.com/otofa-10ml",
+  "site": "Trung Tâm Thuốc (trungtamthuoc.com)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "Thành phần: Thuốc Otofa chứa thành phần hoạt chất chính: Rifamycin natri hàm lượng 0,26g (200.000IU)/10ml. Kèm theo đó là các tá dược vừa đủ 1 lọ.Dạng bào chế: Thuốc Otofa được bào chế dưới dạng dung dịch nhỏ tai.",
+  "chiDinh": "Otofa 10ml có thành phần chính là Rifamycin - một kháng sinh được phân lập từ chủng Streptomyces mediterianei. Rifamycin tác động đến chuỗi ARN ngắn được tạo từ các acid amin đang được tổng hợp. Rifamycin có tác dụng tốt ở giai đoạn bắt đầu tổng hợp chuỗi ARN.Thuốc có tác dụng diệt khuẩn trên chủng vi khuẩn gram dương và gram âm nhạy cảm.\nThuốc được dùng để điều trị tình trạng viêm tai giữa cấp tính, xuất hiện mủ ở tai kèm viêm tai mạn tính, thông khí nhĩ hoặc dẫn lưu hốc tai.==>> Xem thêm thuốc có cùng hoạt chất: Thuốc nhỏ tai Ofloxacin: Cách dùng và lưu ý khi sử dụng",
+  "lieuDung": "Người lớn: nhỏ vào tai 5 giọt x 2 lần/ngày.Trẻ em: nhỏ vào tai 3 giọt x 2 lần/ngàySử dụng thuốc từ 7 đến 10 ngày, qua khoảng điều trị cần đến bệnh viện hoặc các cơ sở y tế để khám lại và đánh giá mức độ điều trị.Trước khi nhỏ vào tai cần sử dụng các biện pháp làm ấm thuốc giúp việc sử dụng thuốc được dễ dàng hơn.\nThuốc cần được làm ấm trước khi sử dụng để tăng cảm giác dễ chịu khi nhỏ thuốc vào trong tai. Trước khi nhỏ thuốc cũng cần vệ sinh tai sạch sẽ, dùng bông y tế thấm một ít nước muối sinh lý lau sạch vào bên trong ống tai để loại bỏ bụi bẩn hay chất cặn bã.Đối với trường hợp có rỉ mủ tai, cần vệ sinh nhiều lần cho đến khi hết mủ tai mới được dùng thuốc. Thông thường vệ sinh bằng nước muối sinh lí từ 3-4 lần trước mỗi lần nhỏ thuốc.",
+  "tacDungPhu": "Thuốc ít gây ra tác dụng phụ, có thể gặp là các phản ứng dị ứng của cơ thể: nhức đầu, mẩn ngứa,...Thuốc gây hồng tai khi nhuộm soi.",
+  "tuongTac": "Hiện chưa phát hiện các báo cáo về tương tác của Otofa với các thuốc hay thực phẩm chức năng khác.",
+  "canhBao": "Với các trường hợp nhiễm trùng nặng mắc kèm thủng màng nhĩ, người bệnh không nên ở nhà tự điều trị mà cần phải đến bệnh viện và trực tiếp điều trị tại bệnh viên để được theo dõi sát sao.Lưu ý về liều dùng thuốc, tránh lạm dụng thuốc khi thấy các triệu chứng thuyên giảm.Không được tự ý cắt liều hoặc ngừng sử dụng vì dễ có nguy cơ vi khuẩn kháng thuốc.",
+  "baoQuan": "Thuốc bảo quản ở nhiệt độ không quá 30 độ C.Đóng nắp thuốc sau khi sử dụng xong, bảo quản thật sạch phần đầu nhỏ, tránh nhiễm khuẩn.Không để trẻ sử dụng thuốc tùy ý. Nếu trẻ dùng cần có sự giám sát của người lớn."
+ }
 }

@@ -1,12 +1,28 @@
 {
  "productId": "2250360009221-01",
  "brandName": "Grafalon",
- "notFound": true,
- "tried": [
-  "2509QLDKD",
-  "3532QLDKD",
-  "3838QLDKD",
-  "2368QLDKD"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": null,
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thuốc Grafalon 20 mg điều trị và dự phòng thải ghép cấp tính",
+  "url": "https://trungtamthuoc.com/thuoc-grafalon-20-mg",
+  "site": "Trung Tâm Thuốc (trungtamthuoc.com)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "Thành phần có trong mỗi ml Grafalon 20 mg gồm:\n- Anti-human T-lymphocyte immunoglobulin from rabbit (ATG thỏ): 20mg\n- Tá dược: vừa đủ\nDạng bào chế: Dung dịch tiêm truyền.",
+  "chiDinh": "Thuốc Grafalon 20 mg được dùng phối hợp với các thuốc ức chế miễn dịch nhằm ngăn ngừa hoặc điều trị các phản ứng miễn dịch bất lợi sau ghép, bao gồm dự phòng và điều trị thải ghép cấp tính sau ghép tạng, cũng như dự phòng bệnh mảnh ghép chống lại vật chủ (GVHD) ở người trưởng thành sau ghép tế bào gốc.Grafalon 20 mg điều trị và dự phòng thải ghép\n==>> Xem thêm: Thuốc Lenangio 10 mg dùng điều trị đa u tủy và hội chứng loạn sản tủy sau ghép",
+  "lieuDung": "- Dự phòng thải ghép nội tạng: 2–5 mg/kg/ngày (thường 3–4 mg/kg/ngày), bắt đầu quanh thời điểm ghép, dùng 5–14 ngày.\n- Điều trị thải ghép cấp kháng corticosteroid: 3–5 mg/kg/ngày (thường 3–4 mg/kg/ngày), thời gian 5–14 ngày tùy đáp ứng.\n- Dự phòng GVHD sau ghép tế bào gốc: 20 mg/kg/ngày, dùng 1–3 ngày trước ghép.\nDùng đường tiêm truyền.",
+  "chongChiDinh": "Không dùng cho người dị ứng protein từ thỏ hoặc các thành phần khác của thuốc, người đang mắc nhiễm trùng cấp, mạn tính tiến triển hay nhiễm virus cấp.==>> Xem thêm: Thuốc Mycophenolate Mofetil 250mg dùng dự phòng thải ghép thận phối hợp ciclosporin, corticoid",
+  "tacDungPhu": "Rất thường gặp: tăng huyết áp, phù ngoại vi, tim đập nhanh; thiếu máu, giảm bạch cầu, giảm tiểu cầu; rối loạn tiêu hóa như đau bụng, buồn nôn, táo bón, tiêu chảy; đau đầu, đau cơ, sốt, run, khó thở; tăng nguy cơ nhiễm trùng, đặc biệt nhiễm trùng tiết niệu.Thường gặp: Ngứa, phát ban da; phản ứng kiểu bệnh huyết thanh (đau khớp, nổi mề đay, sưng hạch); nôn, khó nuốt; tăng men gan.Ít gặp: Tổn thương gan hoặc suy gan; hội chứng giải phóng cytokine; sốc phản vệ; suy thận cấp.",
+  "tuongTac": "Với thuốc ức chế miễn dịch: ATG thỏ thường dùng phối hợp với các thuốc ức chế miễn dịch khác. Việc kết hợp này có thể làm tăng mức độ ức chế miễn dịch, do đó cần theo dõi và điều chỉnh để tránh suy giảm miễn dịch quá mức.Tương kỵ khi PHA truyền: Không nên pha chung ATG thỏ với Heparin và hydrocortison trong dung dịch dextrose do nguy cơ tạo kết tủa. Ngoài ra, khi chưa có dữ liệu tương thích, không trộn ATG thỏ với các thuốc khác trong cùng dịch truyền.Vật liệu chứa: ATG thỏ không ghi nhận tương tác với chai thủy tinh hoặc túi nhựa PVC.",
+  "canhBao": "Thuốc chỉ được sử dụng khi có chỉ định từ bác sĩ chuyên khoa và cần được giám sát chặt chẽ trong suốt quá trình truyền cũng như sau khi kết thúc truyền.Phản ứng quá mẫn nghiêm trọng như sốc phản vệ ít khi xảy ra, tuy nhiên nếu xuất hiện cần ngừng thuốc ngay và xử trí y tế kịp thời.Việc điều trị có thể làm tăng nguy cơ nhiễm trùng và một số bệnh lý ác tính, vì vậy người bệnh thường được chỉ định dùng thuốc dự phòng phù hợp.Thuốc có khả năng gây suy giảm tế bào miễn dịch, bao gồm giảm tế bào T, bạch cầu hoặc tiểu cầu, do đó cần theo dõi công thức máu định kỳ.Ở một số trường hợp, cơ thể có thể tạo kháng thể kháng IgG nguồn gốc từ thỏ, tuy nhiên ảnh hưởng lâu dài của hiện tượng này hiện vẫn chưa được xác định rõ.Trong thời gian sử dụng thuốc, bệnh nhân không nên lái xe hoặc vận hành máy móc do nguy cơ xuất hiện các phản ứng bất lợi.",
+  "thaiKy": "Phụ nữ mang thai: Chỉ cân nhắc sử dụng khi thật sự cần thiết. Nam và nữ trong độ tuổi sinh sản nên áp dụng các biện pháp tránh thai trong quá trình điều trị và tối thiểu 3 tháng sau khi ngừng thuốc.Phụ nữ cho con bú: Chưa có dữ liệu xác định thuốc có bài tiết qua sữa mẹ hay không, vì vậy nên tạm ngưng việc cho con bú trong thời gian điều trị.",
+  "quaLieu": "Có thể gây giảm bạch cầu và tiểu cầu, cần theo dõi và xử trí y tế.",
+  "baoQuan": "Bảo quản thuốc ở nơi mát, tránh ánh sáng trực tiếp, nhiệt độ thích hợp theo yêu cầu của nhà sản xuất.\nNếu sản phẩm Grafalon 20 mg hết hàng, quý khách hàng vui lòng tham khảo sản phẩm thay thế sau: Thuốc Thymogam 250mg/5ml Bharat được chỉ định phòng và điều trị thải ghép cấp sau ghép thận, thường phối hợp thuốc ức chế miễn dịch khác.",
+  "duocLuc": "Anti- thymocyte-Globulin thỏ (ATG thỏ) là thuốc ức chế miễn dịch dạng kháng thể đa dòng IgG, tác động chủ yếu bằng cách làm giảm và điều hòa hoạt động của tế bào lympho T thông qua gắn vào nhiều thụ thể bề mặt tế bào T, từ đó gây ức chế miễn dịch nhanh. [1]",
+  "duocDong": "Sau truyền tĩnh mạch, nồng độ IgG thỏ trong huyết thanh tăng dần theo thời gian điều trị và có thể còn phát hiện sau vài tháng. ATG thỏ hoạt động bị đào thải nhanh hơn IgG tổng, không phụ thuộc chặt vào liều. Khoảng 40% bệnh nhân có đáp ứng miễn dịch tạo kháng thể kháng IgG thỏ, làm giảm nhanh nồng độ IgG tổng nhưng không còn IgG có hoạt tính."
+ }
 }
