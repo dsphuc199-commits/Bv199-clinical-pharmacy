@@ -239,9 +239,12 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
   const d = entry.dtqg;
   // Doan chu nhieu so lien tiep = bang bi tron cot khi trich chu -> khong hien chu, xem anh trang goc.
   const numCount = (t: string) => (t.match(/\d+(?:[.,]\d+)?/g) ?? []).length;
-  const isTableLike = (b: { t: string; text: string }) => b.t === "table" || numCount(b.text) >= 8;
-  const prose = d?.blocks.filter((b) => !isTableLike(b)) ?? [];
-  const hasTable = !!d?.blocks.some(isTableLike);
+  // Dau hieu bang bi tron cot: nhieu so, hoac cum "> 10", "0 - 10", "< 30" (muc CrCl) xuat hien trong doan.
+  const isTableLike = (b: { t: string; text: string }) =>
+    b.t === "table" || numCount(b.text) >= 8 || (b.text.match(/(?:[<>≤≥]\s*\d+|\d+\s*-\s*\d+\s+(?!ml|mg|giờ|lần|ngày|%))/g) ?? []).length >= 2;
+  const hasTable = !!d?.blocks.some(isTableLike) && (d?.clips.length ?? 0) > 0;
+  // Co bang: chi hien anh trang goc (chu + bang dung nhu sach), khong hien chu trich de tranh doc nham.
+  const prose = hasTable ? [] : d?.blocks ?? [];
   const [zoom, setZoom] = useState<string | null>(null);
 
   return (
@@ -323,7 +326,7 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
             ));
             return hasTable ? (
               <div className="da-clips">
-                <p className="da-clips-t">Bảng liều theo chức năng thận – ảnh trang gốc Dược thư (bấm để phóng to)</p>
+                <p className="da-clips-t">Nguyên văn hiệu chỉnh liều theo chức năng thận – ảnh trang gốc Dược thư, giữ nguyên bảng liều (bấm để phóng to)</p>
                 {imgs}
               </div>
             ) : (
