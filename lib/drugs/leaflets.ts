@@ -68,6 +68,14 @@ export async function getLeaflet(davId: number | undefined | null): Promise<Leaf
 }
 
 import leafletFiles from "@/data/leaflet-files.json";
+import intlRefs from "@/data/intl-references.json";
+
+export type IntlReference = { agency: string; title: string; url: string };
+
+/* Tai lieu thong tin san pham chinh thuc cua co quan quan ly nuoc ngoai (tieng Anh) cho thuoc nhap khau. */
+export function getIntlReferences(productId: string): IntlReference[] {
+  return (intlRefs.items as Record<string, IntlReference[]>)[productId] ?? [];
+}
 
 export type StoredLeafletFile = { path?: string; bytes?: number; pages?: number | null; compressed?: boolean; title?: string; error?: string };
 

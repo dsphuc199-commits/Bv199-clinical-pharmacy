@@ -14,6 +14,7 @@ const STATUS_FILTERS: { value: string; label: string; test: (r?: { s: RegistrySt
   { value: "hdsd", label: "Có HDSD (Cục QLD)", test: (r) => r?.h === "dav" },
   { value: "hdsd-web", label: "Có thông tin HDSD (web)", test: (r) => r?.h === "web" },
   { value: "hdsd-ref", label: "HDSD tham khảo (cùng hoạt chất)", test: (r) => r?.h === "ref" },
+  { value: "hdsd-intl", label: "Tài liệu quốc tế (tiếng Anh)", test: (r) => r?.h === "intl" },
   { value: "chua-hdsd", label: "Chưa có HDSD", test: (r) => !r?.h },
   { value: "canh-bao", label: "SĐK hết hạn / đã rút", test: (r) => r?.s === "het-han" || r?.s === "da-rut" },
   { value: "cho-gia-han", label: "SĐK hết hạn – chờ gia hạn", test: (r) => r?.s === "cho-gia-han" },
@@ -37,6 +38,7 @@ function StatusBadges({ r }: { r?: { s: RegistryStatus; h: LeafletSource } }) {
     {r?.h === "dav" && <span style={{ ...pill, background: "#e3eefb", color: "#0b3a5b" }}>Có HDSD</span>}
     {r?.h === "web" && <span style={{ ...pill, background: "#eef2f7", color: "#3c5266" }}>HDSD (web)</span>}
     {r?.h === "ref" && <span style={{ ...pill, background: "#f4f0fa", color: "#5a3d7a" }}>HDSD cùng hoạt chất</span>}
+    {r?.h === "intl" && <span style={{ ...pill, background: "#eef6f2", color: "#2f5d47" }}>Tài liệu quốc tế</span>}
   </>;
 }
 

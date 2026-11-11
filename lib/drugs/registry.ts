@@ -5,6 +5,9 @@
 */
 import registryData from "@/data/drug-registry.json";
 import leafletIndex from "@/data/leaflet-index.json";
+import intlRefs from "@/data/intl-references.json";
+
+const INTL = intlRefs.items as Record<string, unknown[]>;
 
 const LEAFLET_OK = new Set<number>(leafletIndex.ok);
 const LEAFLET_FAILED = new Set<number>(leafletIndex.failed);
@@ -88,7 +91,7 @@ export function registryStatus(productId: string): RegistryStatus {
 }
 
 /* Nguon thong tin HDSD cua thuoc: "dav" = To HDSD tren Cong Cuc QLD; "web" = trang web khop SDK. */
-export type LeafletSource = "dav" | "web" | "ref" | null;
+export type LeafletSource = "dav" | "web" | "ref" | "intl" | null;
 
 /* Ban rut gon cho trang danh sach (client): trang thai SDK + nguon HDSD. */
 export function registrySummary(): Record<string, { s: RegistryStatus; h: LeafletSource }> {
@@ -97,7 +100,7 @@ export function registrySummary(): Record<string, { s: RegistryStatus; h: Leafle
     const rec = getRegistry(id);
     // HDSD Cuc QLD: co file va khong bi Cong bao loi (file chua trich van mo duoc bang link goc).
     const dav = !!rec && rec.hdsd.length > 0 && (LEAFLET_OK.has(rec.davId) || !LEAFLET_FAILED.has(rec.davId));
-    out[id] = { s: registryStatus(id), h: dav ? "dav" : WEB_LEAFLET.has(id) ? "web" : SIBLINGS[id] ? "ref" : null };
+    out[id] = { s: registryStatus(id), h: dav ? "dav" : WEB_LEAFLET.has(id) ? "web" : SIBLINGS[id] ? "ref" : INTL[id] ? "intl" : null };
   }
   return out;
 }

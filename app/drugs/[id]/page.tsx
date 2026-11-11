@@ -5,7 +5,7 @@ import { ArrowLeft, FileText, Tag } from "lucide-react";
 import drugData from "@/data/drug-products.json";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getLeafletSibling, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
-import { LEAFLET_GROUPS, LEAFLET_SECTIONS, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
+import { LEAFLET_GROUPS, LEAFLET_SECTIONS, getIntlReferences, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
 import { formatLeaflet } from "@/lib/drugs/format-leaflet";
 import LeafletSections from "@/components/drugs/LeafletSections";
 
@@ -60,6 +60,7 @@ export default async function DrugDetailPage({ params }: Props) {
   const sections = shown?.sections ?? {};
   const shownSections = LEAFLET_SECTIONS.filter((s) => sections[s.key]);
   const sourceLabel = { dav: "HDSD Cục QLD", web: "HDSD tham khảo (web)", ref: "HDSD thuốc cùng hoạt chất" } as const;
+  const intl = getIntlReferences(drug.id);
 
   return (
     <main className="dt">
@@ -78,7 +79,7 @@ export default async function DrugDetailPage({ params }: Props) {
             {drug.dosageForm && <span className="dt-tag">{drug.dosageForm}</span>}
             {drug.route && <span className="dt-tag">{drug.route}</span>}
             <span className={`dt-tag ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</span>
-            <span className={`dt-tag ${kind ? "dt-info" : "dt-mute"}`}>{kind ? sourceLabel[kind] : "Chưa có HDSD"}</span>
+            <span className={`dt-tag ${kind || intl.length ? "dt-info" : "dt-mute"}`}>{kind ? sourceLabel[kind] : intl.length ? "Tài liệu quốc tế (tiếng Anh)" : "Chưa có HDSD"}</span>
           </div>
 
           {(stored.length > 0 || (reg?.mauNhan.length ?? 0) > 0) && (
@@ -144,7 +145,21 @@ export default async function DrugDetailPage({ params }: Props) {
             </Note>
           )}
 
-          {!shown && (
+          {intl.length > 0 && (
+            <div className="dt-intl">
+              <p className="dt-intl-t">Tài liệu thông tin sản phẩm chính thức (nước ngoài, tiếng Anh)</p>
+              <ul>
+                {intl.map((r) => (
+                  <li key={r.url}>
+                    <a href={r.url} target="_blank" rel="noreferrer">{r.title}</a> <span>– {r.agency}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="dt-intl-n">Cùng sản phẩm, cùng nhà sản xuất; do cơ quan quản lý dược nước ngoài ban hành. Chỉ định, liều có thể khác HDSD được phê duyệt tại Việt Nam – <strong>cần thẩm định</strong> trước khi áp dụng.</p>
+            </div>
+          )}
+
+          {!shown && !intl.length && (
             <div className="dt-empty">
               <p><strong>Chưa có Tờ hướng dẫn sử dụng.</strong></p>
               <p>
@@ -243,6 +258,12 @@ export default async function DrugDetailPage({ params }: Props) {
         .dt-dl dd { margin: 3px 0 0; font-size: 14.5px; line-height: 1.55; color: #1f3347; overflow-wrap: anywhere; }
         .dt-note { margin: 0 0 4px; border-radius: 12px; padding: 10px 14px; background: #fff8e6; border: 1px solid #f3dc9a; color: #5c3d00; font-size: 13.5px; line-height: 1.6; }
         .dt-note a { font-weight: 700; text-decoration: underline; }
+        .dt-intl { margin: 0 0 12px; border: 1px solid #cfe0ea; border-radius: 12px; padding: 12px 14px; background: #f5f9fc; font-size: 14px; line-height: 1.6; }
+        .dt-intl-t { margin: 0 0 6px; font-weight: 800; color: #0b3a5b; }
+        .dt-intl ul { margin: 0; padding-left: 18px; list-style: disc; }
+        .dt-intl a { color: #087f89; font-weight: 700; text-decoration: underline; }
+        .dt-intl li span { color: #6b8293; }
+        .dt-intl-n { margin: 8px 0 0; font-size: 12.5px; color: #5b6b7a; }
         .dt-empty { border: 1px dashed #cfdbe4; border-radius: 12px; padding: 16px; color: #4b6576; font-size: 14px; line-height: 1.6; }
         .dt-empty p { margin: 0; }
         .dt-empty p + p { margin-top: 4px; }

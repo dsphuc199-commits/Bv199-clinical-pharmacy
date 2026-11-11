@@ -1,10 +1,22 @@
 {
  "productId": "2250360011002-03",
  "brandName": "Atenolol STADA 50mg",
- "notFound": true,
- "tried": [
-  "VD2323215",
-  "893110174026"
- ],
- "extractedAt": "2026-11-11"
+ "soDangKy": "VN-10349-05",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Atenolol Stada 50mg - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-2566/atenolol-50-stada-50mg.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Tăng huyết áp, đau thắt ngực, loạn nhịp tim, nhồi máu cơ tim cấp.\nVD-23963-15\nVN-7411-08\nVN-2491-06\nVN-9706-10\nVN-6191-08\nVN-5407-01\nVN-6866-08\n10 sản phẩm\nCác sản phẩm liên quan đến Atenolol Stada 50mg\n893110230400\nVD-2868-07\nVD-3194-07\nVD-2166-06\n893110903624\n893110235100\nChọn cách bạn muốn được tư vấn\n0971899466\nNhắn tin qua Messenger\nChưa có bình luận nào\nHãy là người đầu tiên bình luận về nội dung này!\nThuốc Biệt Dược - Hệ thống tra cứu thông tin thuốc hàng đầu Việt Nam. Cung cấp thông tin chính xác, cập nhật về các loại thuốc.\n- Tra cứu thuốc\n- Tin tức\n- Hỏi đáp\n- Danh bạ\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\n85 Vũ Trọng Phụng\nEmail: nvtruong17@gmail.com\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\nGọi\nFacebook",
+  "chongChiDinh": "Block tim độ II & III, chậm nhịp xoang nặng, sốc tim, quá mẫn.",
+  "lieuDung": "- Tăng huyết áp khởi đầu liều đơn 50 mg/ngày, có thể tăng lên 100 mg/ngày. - &ETH;au thắt ngực khởi đầu 50 mg/ngày, có thể tăng lên 100 mg/ngày. - Loạn nhịp tim: uống dự phòng 50 - 100 mg/ngày.",
+  "tacDungPhu": "Chậm nhịp tim, ớn lạnh, hạ huyết áp tư thế, đau nhức chi. Hoa mắt, chóng mặt, mệt mỏi, trầm cảm, rối loạn tiêu hóa, co thắt phế quản",
+  "tuongTac": "Verapamil, diltiazem, reserpine: có thể gây hạ huyết áp, chậm nhịp tim.",
+  "baoQuan": "Thuốc độc bảng B"
+ }
 }

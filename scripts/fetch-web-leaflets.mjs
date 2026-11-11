@@ -272,7 +272,11 @@ function sameProductByName(site, url, html, p) {
   const ingredientSlug = slugify(String(p.ingredientName || "").replace(/\([^)]*\)?/g, " ")).split("-")[0];
   const genericWord = /^(vitamin|calci|canxi|natri|kali|magnesi|glucose|acid|sat|kem|nuoc|dung|dich|thuoc|cao|vien|siro|ong|bot)$/;
   const proprietary = !brandSlug.split("-").some((w) => genericWord.test(w) || (w.length >= 4 && ingredientSlug.startsWith(w.slice(0, 5))));
+  // Tieu de san pham (h1) trung hoan toan ten thuoc (bo dau, ky tu) - vd. "Insunova 30/70 (Biphasic)".
+  const compact = (s) => plain(s).replace(/[^a-z0-9]/g, "");
+  const h1 = decode((html.match(/<h1 title="([^"]+)"/) || html.match(/<h1[^>]*>([^<]+)</) || [])[1] || "");
   const nameOk =
+    (h1 && compact(h1) === compact(p.brandName)) ||
     slug === brandSlug ||
     slug === `${brandSlug}-${slugify(p.strength || "")}` ||
     (proprietary && slug.startsWith(`${brandSlug}-`)); // trungtamthuoc: "duphaston-tab10mg"
