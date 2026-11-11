@@ -15,6 +15,9 @@ const MAX_PARAGRAPH = 320;
 /* Dong quang cao/dieu huong cua trang web (khong phai noi dung HDSD). */
 const PROMO_LINE = /(xem thêm|bạn đọc có thể|tham khảo thêm|mua (thuốc|hàng|ở đâu)|giá bao nhiêu|trung tâm thuốc|central pharmacy|nhà thuốc|liên hệ|hotline|tư vấn miễn phí|đặt hàng|zalo)/i;
 
+/* Dau duyet in chim tren HDSD scan bi OCR doc thanh chu: "Approved 16-Nov-2020 02.54 UTC", "Aerreved 18.", "Nov 2020 02.54 UTC". */
+const STAMP_LINE = /^(?=.{0,60}$)(?:.*\b\d{1,2}[.:]\d{2}\s*UTC\b.*|a[a-z]{3,8}d\s*\d{1,2}[.\-\s]*[a-z]{0,4}[.\-\s]*(?:20\d\d)?\.?|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[.\-\s]*20\d\d.*)$/i;
+
 function normalize(text: string): string {
   return text
     .replace(/\r/g, "")
@@ -25,8 +28,11 @@ function normalize(text: string): string {
     // Cau hoi kieu bai viet: "3B MEDI là thuốc gì?"
     .replace(/^[^.\n?]{0,90}\blà (thuốc )?gì\s*\?\s*/gim, "")
     .split("\n")
-    .filter((l) => !PROMO_LINE.test(l))
+    .filter((l) => !PROMO_LINE.test(l) && !STAMP_LINE.test(l.trim()))
     .join("\n")
+    // Gach dau dong viet lien trong cau: "...thuốc. - U ác tính. - Phụ nữ..." -> moi y 1 dong.
+    .replace(/([.;:!?])\s+[-–•]\s+(?=\p{L})/gu, "$1\n- ")
+    .replace(/\s+[•●▪]\s*(?=\p{L})/gu, "\n- ")
     // Cau bi dinh lien: "...thần kinh.Vitamin B6" -> xuong dong.
     .replace(/([\p{Ll}\d%)\]])\.(?=\p{Lu}\p{Ll})/gu, "$1.\n")
     // Nhan tan suat dinh vao chu truoc: "chóng mặtÍt gặp:" -> xuong dong truoc nhan.

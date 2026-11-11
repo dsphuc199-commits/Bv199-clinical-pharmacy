@@ -173,7 +173,7 @@ export default async function DrugDetailPage({ params }: Props) {
           {shown && (
             <LeafletSections
               sections={[
-                ...shownSections.map((s) => ({ key: s.key, title: s.title, group: LEAFLET_GROUPS[s.group], open: s.open, blocks: formatLeaflet(sections[s.key]) })),
+                ...shownSections.map((s) => ({ key: s.key, title: s.title, group: LEAFLET_GROUPS[s.group], groupKey: s.group, open: s.open, blocks: formatLeaflet(sections[s.key]) })),
                 ...(shown.rawText ? [{ key: "rawText", title: "Toàn văn trích được", group: "Khác", blocks: formatLeaflet(shown.rawText) }] : []),
               ]}
             />
