@@ -54,9 +54,14 @@ export function verifyPassword(password: string, stored: string): boolean {
 
 /** Kiem tra dang nhap; luon chay scrypt ke ca khi sai ten de khong lo ten tai khoan qua thoi gian phan hoi. */
 export function checkCredentials(config: AuthConfig, username: string, password: string): string | null {
-  const name = username.trim().toLowerCase();
+  const name = username.normalize("NFC").trim().toLowerCase();
   const stored = config.users.get(name);
-  const ok = verifyPassword(password, stored ?? "scrypt.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  const hash = stored ?? "scrypt.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+  // Dung sai do ban phim dien thoai: bo khoang trang dau/cuoi; chu dau bi tu dong viet hoa.
+  const pw = password.normalize("NFC").trim();
+  const variants = [pw];
+  if (/^\p{Lu}/u.test(pw)) variants.push(pw.charAt(0).toLowerCase() + pw.slice(1));
+  const ok = variants.some((v) => verifyPassword(v, hash));
   return stored && ok ? name : null;
 }
 

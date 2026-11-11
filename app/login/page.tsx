@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { authConfig, safeNextPath } from "@/lib/auth/session";
+import PasswordField from "./PasswordField";
 
 export const metadata: Metadata = { title: "Đăng nhập" };
 
@@ -25,9 +26,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         {error && <p className="bv199-login-error" role="alert">{error}</p>}
         <input type="hidden" name="next" value={next} />
         <label htmlFor="login-username">Tên đăng nhập</label>
-        <input id="login-username" name="username" type="text" autoComplete="username" autoCapitalize="none" spellCheck={false} required autoFocus />
+        <input id="login-username" name="username" type="text" autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} required autoFocus />
         <label htmlFor="login-password">Mật khẩu</label>
-        <input id="login-password" name="password" type="password" autoComplete="current-password" required />
+        <PasswordField />
         <button type="submit">Đăng nhập</button>
         <p className="bv199-login-note">Chỉ dành cho nhân viên y tế được cấp tài khoản.</p>
         <a className="bv199-login-app" href="/tai-app">Cài ứng dụng lên điện thoại (Android, iPhone)</a>
@@ -40,6 +41,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         .bv199-login-sub { margin:0 0 6px; text-align:center; font-size:13px; color:#4b6576; line-height:1.5; }
         .bv199-login-card label { font-size:13px; font-weight:700; color:#1e3a5f; margin-top:4px; }
         .bv199-login-card input[type=text], .bv199-login-card input[type=password] { width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #a9c8d2; border-radius:8px; font:inherit; font-size:15px; color:#12283c; background:#fff; }
+        .bv199-pw { position: relative; }
+        .bv199-pw input { width:100%; box-sizing:border-box; padding:11px 44px 11px 12px; border:1px solid #a9c8d2; border-radius:8px; font:inherit; font-size:15px; color:#12283c; background:#fff; }
+        .bv199-pw-toggle { position:absolute; right:4px; top:50%; transform:translateY(-50%); margin:0 !important; width:38px; height:38px; display:grid; place-items:center; padding:0 !important; border:0; border-radius:8px; background:transparent !important; color:#4b6576 !important; cursor:pointer; }
+        .bv199-pw-toggle:hover { color:#087f89 !important; }
         .bv199-login-card input:focus-visible, .bv199-login-card button:focus-visible { outline:3px solid #087f89; outline-offset:2px; }
         .bv199-login-card button { margin-top:10px; padding:12px; border:0; border-radius:8px; background:#0b3a5b; color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; }
         .bv199-login-card button:hover { background:#087f89; }
