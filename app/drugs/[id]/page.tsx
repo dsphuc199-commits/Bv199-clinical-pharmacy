@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import drugData from "@/data/drug-products.json";
 import { clinicalMonographs } from "@/data/clinical-monographs";
-import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
+import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getLeafletSibling, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
 import { LEAFLET_SECTIONS, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
 import { formatLeaflet } from "@/lib/drugs/format-leaflet";
 import LeafletSections from "@/components/drugs/LeafletSections";
@@ -52,7 +52,12 @@ export default async function DrugDetailPage({ params }: Props) {
   const stored = getStoredFiles(reg?.davId);
   // Khong co HDSD Cuc QLD trich duoc -> dung thong tin tu trang web khop so dang ky.
   const web = davOk ? null : await getWebLeaflet(drug.id);
-  const shown = davOk ? leaflet : web;
+  // Van chua co: HDSD cua thuoc khac cung hoat chat + duong dung trong danh muc (tham khao, ghi ro).
+  const sibling = davOk || web ? null : getLeafletSibling(drug.id);
+  const ref = sibling
+    ? sibling.src === "dav" ? await getLeaflet(getRegistry(sibling.id)?.davId) : await getWebLeaflet(sibling.id)
+    : null;
+  const shown = davOk ? leaflet : web ?? (ref && !ref.failed ? ref : null);
   const sections = shown?.sections ?? {};
   const shownSections = LEAFLET_SECTIONS.filter((s) => sections[s.key]);
 
@@ -142,14 +147,14 @@ export default async function DrugDetailPage({ params }: Props) {
           {!reg?.hdsd.length && (
             <p className="mt-2 text-slate-600">
               Cục Quản lý Dược chưa công bố Tờ hướng dẫn sử dụng cho số đăng ký này trên Cổng tra cứu.
-              {!web && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Tham khảo HDSD kèm theo sản phẩm hoặc hồ sơ thầu."}
+              {!web && !shown && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Tham khảo HDSD kèm theo sản phẩm hoặc hồ sơ thầu."}
             </p>
           )}
 
           {reg && reg.hdsd.length > 0 && leaflet?.failed && (
             <p className="mt-2 text-slate-600">
               File HDSD trên Cổng Cục Quản lý Dược hiện không mở được (lỗi phía máy chủ của Cổng).
-              {!web && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Dùng HDSD kèm sản phẩm."}
+              {!web && !shown && " Chưa tìm thấy trang thông tin thuốc nào khớp số đăng ký. Dùng HDSD kèm sản phẩm."}
             </p>
           )}
 
@@ -157,7 +162,15 @@ export default async function DrugDetailPage({ params }: Props) {
 
           {shown && (
             <>
-              {shown === leaflet ? (
+              {shown === ref && sibling ? (
+                <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
+                  <strong>CẦN THẨM ĐỊNH – THAM KHẢO THUỐC CÙNG HOẠT CHẤT.</strong> Thuốc này chưa có Tờ HDSD riêng. Nội dung dưới đây là HDSD của{" "}
+                  <Link className="font-semibold underline" href={`/drugs/${encodeURIComponent(sibling.id)}`}>{sibling.brand}</Link>
+                  {[sibling.strength, sibling.form].filter(Boolean).length ? ` (${[sibling.strength, sibling.form].filter(Boolean).join(", ")})` : ""}, cùng hoạt chất và đường dùng.
+                  {" "}<strong>Hàm lượng, dạng bào chế và liều có thể khác.</strong>{" "}
+                  Nguồn: {sibling.src === "dav" ? "Cổng Cục Quản lý Dược" : siteDomain(ref.source?.url)}.
+                </div>
+              ) : shown === leaflet ? (
                 <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
                   <strong>CẦN THẨM ĐỊNH.</strong> Nội dung được trích tự động ({shown.method ? METHOD_LABEL[shown.method] : "tự động"}
                   {shown.confidence ? `, độ tin cậy nhận dạng ~${shown.confidence}%` : ""}) từ{" "}
