@@ -15,10 +15,10 @@ export const homeSections: HomeSection[] = [
       "Các công cụ hỗ trợ bác sĩ và dược sĩ trong thực hành điều trị và tối ưu hóa sử dụng thuốc.",
     tools: [
       {
-        title: "Hiệu chỉnh liều theo chức năng thận",
+        title: "Hiệu chỉnh liều",
         description:
-          "Tính CrCl, đánh giá chức năng thận và hỗ trợ hiệu chỉnh liều thuốc.",
-        href: "/renal-dose",
+          "Theo chức năng thận: kháng sinh cần hội chẩn (QĐ 5631) và các thuốc khác theo Dược thư quốc gia 2023.",
+        href: "/hieu-chinh-lieu",
         status: "active",
       },
       {

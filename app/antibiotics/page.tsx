@@ -12,7 +12,7 @@ import {
 const modules = [
   { id: "empiric", title: "Lựa chọn kháng sinh kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng và yếu tố nguy cơ.", action: "Tra cứu phác đồ", href: "/antibiotics/empiric", icon: Stethoscope, group: "Lựa chọn điều trị" },
   { id: "organism", title: "Kháng sinh theo tác nhân vi sinh", description: "Tham khảo lựa chọn kháng sinh theo vi khuẩn, AST và MIC.", action: "Tra cứu theo tác nhân", href: "/antibiotics/organism", icon: Microscope, group: "Lựa chọn điều trị" },
-  { id: "dosing", title: "Hiệu chỉnh liều kháng sinh", description: "Đánh giá chức năng thận, gan và các yếu tố PK/PD.", action: "Đánh giá và hiệu chỉnh liều", href: "/antibiotics/dosing", icon: SlidersHorizontal, group: "Tối ưu điều trị" },
+  { id: "dosing", title: "Hiệu chỉnh liều", description: "Theo chức năng thận: kháng sinh cần hội chẩn (QĐ 5631) và các thuốc khác theo Dược thư quốc gia 2023.", action: "Đánh giá và hiệu chỉnh liều", href: "/hieu-chinh-lieu", icon: SlidersHorizontal, group: "Tối ưu điều trị" },
   { id: "allergy", title: "Đánh giá dị ứng kháng sinh", description: "Khai thác tiền sử và đánh giá nguy cơ phản ứng chéo.", action: "Đánh giá nguy cơ dị ứng", href: "/antibiotics/allergy", icon: Activity, group: "Tối ưu điều trị" },
   { id: "iv-to-po", title: "Chuyển kháng sinh IV → PO", description: "Đánh giá tiêu chí chuyển đổi từ đường tĩnh mạch sang đường uống.", action: "Đánh giá chuyển đường dùng", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: "Tối ưu điều trị" },
   { id: "prophylaxis", title: "Kháng sinh dự phòng phẫu thuật", description: "Tra cứu khuyến cáo KSDP theo loại phẫu thuật.", action: "Tra cứu KSDP", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: "Dự phòng và giám sát" },

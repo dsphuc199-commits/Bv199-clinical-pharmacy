@@ -45,7 +45,7 @@ const GROUPS: Group[] = [
     title: "Điều trị & Dược lâm sàng",
     items: [
       { label: "Thông tin thuốc", href: "/drugs", code: "DT" },
-      { label: "Hiệu chỉnh liều", href: "/calculators/renal", code: "RL" },
+      { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "RL" },
       { label: "Tương tác thuốc", href: "/tuong-tac-thuoc", code: "TT" },
       { label: "An toàn thuốc", href: "/safety", code: "AT" },
     ],
@@ -60,7 +60,7 @@ const GROUPS: Group[] = [
       { label: "Chọn KS theo người bệnh", href: "/antibiotics/empiric/select", code: "CK" },
       { label: "Lựa chọn theo tác nhân", href: "/antibiotics/organism", code: "TN" },
       { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
-      { label: "Hiệu chỉnh liều KS", href: "/antibiotics/dosing", code: "LD" },
+      { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "LD" },
       { label: "Dị ứng kháng sinh", href: "/antibiotics/allergy", code: "DA" },
       { label: "Dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
       { label: "IV → PO", href: "/antibiotics/iv-to-po", code: "PO" },

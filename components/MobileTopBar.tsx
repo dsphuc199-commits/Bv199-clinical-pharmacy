@@ -9,6 +9,7 @@ export default function MobileTopBar() {
   const path = usePathname() || "/";
   const home = path === "/" || path === "/antibiotics";
   const title = path.startsWith("/drugs") ? "Danh mục thuốc" :
+    path.startsWith("/hieu-chinh-lieu") || path.startsWith("/antibiotics/dosing") ? "Hiệu chỉnh liều" :
     path.startsWith("/antibiotics/empiric") ? "Kháng sinh kinh nghiệm" :
     path.startsWith("/antibiotics") ? "Kháng sinh & AMS" :
     path.startsWith("/calculators") ? "Công cụ lâm sàng" :
