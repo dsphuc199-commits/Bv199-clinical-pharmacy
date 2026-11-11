@@ -1,10 +1,19 @@
 {
  "productId": "2224",
  "brandName": "Flixonase",
- "notFound": true,
- "tried": [
-  "840110178023",
-  "VN2028117"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-10263-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Flixonase 0.05% GSK - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-23248/flixonase.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Dự phòng hen phế quản & điều trị triệu chứng COPD. - Dự phòng và điều trị viêm mũi dị ứng theo mùa và quanh năm, viêm mũi không do dị ứng. - Kiểm soát triệu chứng đau và căng xoang trong viêm xoang.",
+  "chongChiDinh": "Quá mẫn với bất kỳ thành phần nào của thuốc.",
+  "lieuDung": "- Trong hen phế quản người lớn & trẻ > 16 tuổi: hen nhẹ: 100-250 mcg/lần; hen trung bình: 250-500 mcg/lần; hen nặng: 500-1000 mcg/lần; Trẻ > 4 tuôỉ: 50-200 mcg/lần; Trẻ 1-4 tuôỉ: 100 mcg/lần; Thuốc được hít 2 lần/ngày. - Trong COPD người lớn: 500 mcg x 2 lần/ngày.\nNhiễm nấm Candida ở miệng & họng, khản tiếng, co thắt phế quản kịch phát."
+ }
 }

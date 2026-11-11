@@ -1,10 +1,21 @@
 {
  "productId": "2250370006142-01",
  "brandName": "Rodogyl",
- "notFound": true,
- "tried": [
-  "800115002200",
-  "VN2182919"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-3748-07",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Rodogyl 750000IU/125mg Sanofi - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-20238/rodogyl.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "canhBao": "Người bệnh khi sử dụng thuốc cần chú ý một số trường hợp như sau:\nCẩn trọng khi sử dụng thuốc này cho bệnh nhân viêm loét dạ dày, viêm ruột.\nKhông uống thuốc khi nằm.\nThận trọng khi sử dụng thuốc này cho người cao tuổi.\nSử dụng đúng liều theo chỉ định của nhân viên y tế ban đầu, không được tự ý tăng liều hoặc giảm liều để đạt được kết quả tốt nhất.\nĐể xa tầm với trẻ em: cha mẹ cần chú ý để xa tầm tay trẻ em để đảm bảo an toàn cho trẻ.",
+  "tuongTac": "Trong quá trình sử dụng thuốc, có thể xảy ra hiện tượng cạnh tranh hoặc tương tác giữa thuốc Rodogyl với thức ăn hoặc các thuốc, thực phẩm chức năng khác làm ảnh hưởng tới Sinh khả dụng, khả năng hấp thu phân bố, tốc độ chuyển hóa của thuốc như:\nThuốc tránh thai: Postinor, Mifentra,...\nThuốc kháng rượu: Disulfiram,...\nThuốc chống đông máu: Wafarin,...\nThuốc giãn cơ: Vecuronium,...\nThuốc chứa Lithi: Lithium,...\nThuốc điều trị ung thư: Fluorouracil,...\nTrong thời gian điều trị, bệnh nhân cần hạn chế tối đa các loại thức ăn hay đồ uống có chứa cồn hoặc chất kích thích.\nĐể được hướng dẫn sử dụng thuốc hợp lý, an toàn, tránh các tương tác thuốc có hại tới sức khỏe, bệnh nhân nên kể cho bác sĩ hoặc dược sĩ tất cả các thuốc hoặc thực phẩm mình hiện tại đang dùng.",
+  "chiDinh": "Nhiễm trùng răng miệng cấp, mạn tính hoặc tái phát như áp-xe răng, viêm tấy, viêm mô tế bào quanh xương hàm, viêm quanh thân răng, viêm nướu, viêm nha chu, viêm miệng, viêm tuyến mang tai, viêm dưới hàm...\nPhòng nhiễm khuẩn răng miệng sau phẫu thuật.\nChỉ định của thuốc Rodogyl bao gồm các loại nhiễm khuẩn xoang miệng cấp tính, mãn tính hoặc tái diễn",
+  "chongChiDinh": "Quá mẫn với các thuốc nhóm imidazole, spiramycin hay bất kỳ tá dược nào trong thành phần\nTrẻ em dưới 6 tuổi do dạng bào chế viên nén không phù hợp cho đối tượng này",
+  "lieuDung": "Liều dùng khuyến cáo:\nĐiều trị nhiễm khuẩn:\nNgười lớn:\n- Uống 4 đến 6 viên Rodogyl mỗi ngày (khoảng 3 đến 4,5 triệu IU spiramycin và 500 đến 750mg metronidazole), chia ra 2-3 lần/ngày và uống trong bữa ăn. Đối với các trường hợp nặng, có thể tăng liều Rodogyl lên đến 8 viên một ngày.\nTrẻ em:\n- Từ 6 đến 10 tuổi: uống 2 viên Rodogyl mỗi ngày (khoảng 1,5 triệu IU spiramycin và 250mg metronidazole).\n- Từ 10 đến 15 tuổi: uống 3 viên Rodogyl mỗi ngày (khoảng 2,25 triệu IU spiramycin và 375 mg metronidazole).\nDự phòng nhiễm khuẩn tại chỗ sau phẫu thuật răng miệng:\n- Người lớn: uống 4 đến 6 viên Rodogyl mỗi ngày, chia ra 2-3 lần và uống trong bữa ăn.\n- Trẻ em:\n- Từ 6 đến 10 tuổi: liều dùng là 2 viên Rodogyl mỗi ngày (khoảng 1,5 triệu IU spiramycin và 250mg metronidazole).\n- Từ 10 đến 15 tuổi: dùng 3 viên Rodogyl mỗi ngày (khoảng 2,25 triệu IU spiramycin và 375 mg metronidazole).\nRối loạn tiêu hóa: buồn nôn, nôn, tiêu chảy, đau bụng, đau dạ dày.\nPhản ứng dị ứng: hồng ban đa dạng, mề đay, ngứa.\nThay đổi khẩu vị, miệng có vị kim loại.\nHoa mắt, chóng mặt.\nNước tiểu có màu nâu đỏ."
+ }
 }

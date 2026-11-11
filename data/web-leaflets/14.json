@@ -1,9 +1,19 @@
 {
  "productId": "14",
  "brandName": "Liverbil",
- "notFound": true,
- "tried": [
-  "VD2361715"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VD-23618-15",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Liverbil OPC - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-1100/liverbil.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Dùng cho những người thiểu năng gan, viêm gan gây mệt mỏi, khó tiêu, vàng da, mụn nhọt, lở ngứa, bí đại tiểu tiện, táo bón. - Giải độc, chống dị ứng. Đặc biệt suy giảm chức năng gan do dùng nhiều bia rượu. - Xơ vữa động mạch, mỡ trong máu cao.",
+  "tuongTac": "Tương tác với thuốc uống chống đông máu, thuốc uống hạ đường huyết, thuốc uống ngừa thai. Nên kết hợp với các thuốc kháng lao khác.",
+  "baoQuan": "Nơi khô ráo, nhiệt độ không quá 30 độ C, tránh ánh sáng."
+ }
 }

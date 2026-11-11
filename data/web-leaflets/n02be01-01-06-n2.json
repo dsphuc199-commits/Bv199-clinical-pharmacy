@@ -1,10 +1,22 @@
 {
  "productId": "n02be01-01-06-n2",
  "brandName": "Thermodol",
- "notFound": true,
- "tried": [
-  "890110005200",
-  "VN1518912"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "890110297725",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thermodol 1000mg/100ml - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-42898/thermodol.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Giảm đau nhanh các triệu chứng sốt, đau nhức và khó chịu như nhức đầu, đau tai, đau răng, đau nhức do cảm cúm. - Hạ sốt trong những trường hợp như sốt do thấp khớp, và các nhiễm trùng đường hô hấp khác.",
+  "chongChiDinh": "Quá mẫn với paracetamol. Trường hợp thiểu năng tế bào gan.",
+  "lieuDung": "Truyền tĩnh mạch trong 15 phút. Khoảng cách >= 4 giờ giữa 2 lần truyền. Vị thành niên & người lớn > 50 kg: 1 g/lần (= 1 chai 100 mL), có thể 4 lần/ngày, liều tối đa 4 g paracetamol/ngày. Trẻ > 33 kg (khoảng 11 tuổi), vị thành niên & người lớn < 50 kg: 15 mg/kg/lần (= 1,5 mL dung dịch/1 kg), liều tối đa 60 mg paracetamol/1 kg/ngày.",
+  "tacDungPhu": "- Hiếm: hạ HA, tăng men gan. - Rất hiếm: phát ban hoặc phản ứng dị ứng.",
+  "tuongTac": "Tránh uống rượu khi dùng thuốc. Lưu ý nếu phối hợp với thuốc khác cùng chứa paracetamol. Probenecid.",
+  "baoQuan": "Bảo quản ở nhiệt độ dưới 30 độ C. Không được để trong tủ lạnh hoặc làm đông lạnh."
+ }
 }

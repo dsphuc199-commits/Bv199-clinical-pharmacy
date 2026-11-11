@@ -3,7 +3,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import type { LeafletBlock } from "@/lib/drugs/format-leaflet";
 
-export type LeafletSectionView = { key: string; title: string; open?: boolean; blocks: LeafletBlock[] };
+export type LeafletSectionView = { key: string; title: string; group?: string; open?: boolean; blocks: LeafletBlock[] };
 
 /* Cac muc HDSD: muc luc nhanh + khoi co the mo/thu gon, noi dung chia doan/danh sach de de doc. */
 export default function LeafletSections({ sections }: { sections: LeafletSectionView[] }) {
@@ -20,10 +20,13 @@ export default function LeafletSections({ sections }: { sections: LeafletSection
     <div className="lf">
       <nav className="lf-toc" aria-label="Mục lục tờ hướng dẫn sử dụng">
         <div className="lf-chips">
-          {sections.map((s) => (
-            <button key={s.key} type="button" className={`lf-chip${open[s.key] ? " is-open" : ""}`} onClick={() => jump(s.key)}>
-              {s.title}
-            </button>
+          {sections.map((s, i) => (
+            <span key={s.key} className="lf-chipwrap">
+              {s.group && s.group !== sections[i - 1]?.group && <span className="lf-chipgroup">{s.group}</span>}
+              <button type="button" className={`lf-chip${open[s.key] ? " is-open" : ""}`} onClick={() => jump(s.key)}>
+                {s.title}
+              </button>
+            </span>
           ))}
         </div>
         <div className="lf-all">
@@ -34,20 +37,32 @@ export default function LeafletSections({ sections }: { sections: LeafletSection
       </nav>
 
       <div className="lf-list">
-        {sections.map((s) => (
-          <section key={s.key} ref={(el) => { refs.current[s.key] = el; }} className={`lf-sec${open[s.key] ? " is-open" : ""}`}>
+        {sections.map((s, i) => (
+          <div key={s.key} className="lf-item">
+          {s.group && s.group !== sections[i - 1]?.group && <h3 className="lf-group">{s.group}</h3>}
+          <section ref={(el) => { refs.current[s.key] = el; }} className={`lf-sec${open[s.key] ? " is-open" : ""}`}>
             <button type="button" className="lf-head" aria-expanded={!!open[s.key]} onClick={() => setOpen((o) => ({ ...o, [s.key]: !o[s.key] }))}>
               <span>{s.title}</span>
               <span className="lf-caret" aria-hidden>▾</span>
             </button>
             {open[s.key] && <div className="lf-body">{renderBlocks(s.blocks)}</div>}
           </section>
+          </div>
         ))}
       </div>
 
       <style>{`
+        .lf, .lf-list, .lf-sec { min-width: 0; }
+        .lf-list { grid-template-columns: minmax(0, 1fr); }
         .lf-toc { position: sticky; top: 0; z-index: 5; margin: 14px -4px 10px; padding: 10px 4px; background: rgba(255,255,255,.96); backdrop-filter: blur(4px); border-bottom: 1px solid #e6edf2; }
-        .lf-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .lf-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .lf-chipwrap { display: contents; }
+        .lf-chipgroup { flex-basis: 100%; height: 0; }
+        .lf-chipgroup:first-child { display: none; }
+        @media (min-width: 900px) { .lf-chipgroup { flex-basis: auto; height: auto; margin: 0 2px 0 8px; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #8aa0b0; } .lf-chipgroup:first-child { display: inline; margin-left: 0; } }
+        .lf-item { display: contents; }
+        .lf-group { margin: 12px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #087f89; }
+        .lf-group:first-child { margin-top: 0; }
         .lf-chip { border: 1px solid #cfe0ea; background: #f5f9fc; color: #1e3a5f; border-radius: 999px; padding: 5px 11px; font-size: 12.5px; font-weight: 600; cursor: pointer; }
         .lf-chip:hover { border-color: #087f89; color: #087f89; }
         .lf-chip.is-open { background: #e3f3f4; border-color: #9fd3d6; color: #065f66; }
@@ -70,7 +85,17 @@ export default function LeafletSections({ sections }: { sections: LeafletSection
         .lf-body .lf-h:first-child { margin-top: 0; }
         .lf-body .lf-label { font-weight: 700; color: #10243e; }
         .lf-head:focus-visible, .lf-chip:focus-visible, .lf-all button:focus-visible { outline: 3px solid #087f89; outline-offset: 2px; }
-        @media (max-width: 640px) { .lf-body { padding: 12px 14px 14px; font-size: 14px; } .lf-head { padding: 11px 14px; } }
+        @media (max-width: 640px) {
+          .lf-body { padding: 12px 14px 14px; font-size: 14px; }
+          .lf-head { padding: 11px 14px; }
+          /* Dien thoai: muc luc 1 hang vuot ngang, khong chiem man hinh khi bam theo. */
+          .lf-toc { margin: 10px -16px 8px; padding: 8px 16px; }
+          .lf-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+          .lf-chips::-webkit-scrollbar { display: none; }
+          .lf-chip { flex: 0 0 auto; white-space: nowrap; }
+          .lf-chipgroup { display: none !important; }
+          .lf-all { margin-top: 6px; }
+        }
       `}</style>
     </div>
   );

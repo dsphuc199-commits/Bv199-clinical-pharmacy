@@ -1,10 +1,23 @@
 {
  "productId": "2250300018351-01",
  "brandName": "Bamifen",
- "notFound": true,
- "tried": [
-  "529110784424",
-  "VN2235619"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-10082-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Bamifen - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-33032/bamifen.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Co thắt trong: xơ cứng rải rác; tổn thương tuỷ sống khác (u tuỷ sống, rỗng tuỷ sống, bệnh thần kinh vận động, viêm tuỷ ngang, chấn thương tuỷ sống); đột quỵ mạch máu não; liệt do não; viêm màng não; chấn thương đầu.\nCác thông tin dược lý, dược động học và tác dụng của hoạt chất chính",
+  "chongChiDinh": "Mẫn cảm với baclofen. Loét dạ dày.",
+  "lieuDung": "- Người lớn: 3 ngày đầu: 5 mg x 3 lần/ngày, 3 ngày kế: 10 mg x 3 lần/ngày, 3 ngày sau: 15 mg x 3 lần/ngày, 3 ngày tiếp: 20 mg x 3 lần/ngày. Tối đa 100 mg/ngày.\n- Trẻ em: 0,75 - 2 mg/kg/ngày.\n- Trẻ em: 12 tháng - 2 tuổi: 10 - 20 mg/ngày.\n- Trẻ em: 2 - 6 tuổi: 20 - 30 mg/ngày.\n- Trẻ em: 6 - 10 tuổi: 30 - 60 mg/ngày.\n- Trẻ > 10 tuôỉ tối đa 2,5 mg/kg/ngày.\nNgười lớn: 3 ngày đầu: 5mg x 3 lần/ngày; 3 ngày kế: 10mg x 3 lần/ngày; 3 ngày sau: 15mg x 3 lần/ngày; 3 ngày tiếp: 20mg x 3 lần/ngày. Tối đa 100mg/ngày. Trẻ em: 0,75-2mg/kg/ngày, 12 tháng-2 tuổi: 10-20mg/ngày; 2-6 tuổi: 20-30mg/ngày; 6-10 tuổi: 30-60mg/ngày. Trẻ > 10 tuổi tối đa 2,5mg/kg/ngày.",
+  "tacDungPhu": "- Chóng mặt, buồn nôn, lẫn lộn, đau đầu, mất ngủ, ngái ngủ, mệt mỏi.\n- Hiếm: kích động, trầm cảm, ảo giác, tê nửa thân dưới, đau cơ, mất điều hoà, khô miệng, run, nôn, loạn điều tiết & ác mộng. Hạ huyết áp, khó thở, bí tiểu.",
+  "tuongTac": "Rượu, thuốc ức chế thần kinh trung ương, chống trầm cảm, hạ áp. Thuốc độc thận. Fentanyl. Lithium. Levodopa, carbidopa.\nDùng đồng thời baclofen với các thuốc làm suy giảm thần kinh trung ương như rượu, các chất chủ vận opiat như percocet, dilaudid; các thuốc chống tâm thần như thorazine, stelazine, haldol; các thuốc an thần như valium, ativan, ambien; các thuốc kháng histamine như benadryl, vistaryl, tavist có thể làm tăng suy giảm thần kinh.\nNgoài nguy cơ ức chế thần kinh trung ương, việc sử dụng baclofen với các thuốc chống trầm cảm 3 vòng như elavil, sinequant có thể gây yếu cơ. Dùng đồng thời baclofen với các chất ức chế nono-amino oxidase như nadril, pamate gây tăng suy giảm thần kinh trung ương và hạ huyết áp. Do baclofen có thể làm tăng đường huyết nên liều dùng của các thuốc chống đái đường cần phải điều chỉnh khi bắt đầu dùng baclofen.\nĐối với phụ nữ có thai: Chưa biết rõ tác dụng của baclofen lên thai nhi. Thầy thuốc cần cân nhắc giữa lợi ích và nguy cơ trước khi dùng thuốc cho phụ nữ có thai.\nĐối với phụ nữ cho con bú: Chưa biết rõ tác dụng của baclofen lên trẻ bú sữa mẹ. Không nên dùng thuốc cho phụ nữ trong thời }kỳ cho con bú",
+  "duocLuc": "Giống như GABA, Baclofen phong bế các dây thần kinh trong việc hình thành tổ chức lưới của não, các dây thần kinh này kiểm soát các cơ.\nBaclofen, một chất có cấu trúc giống GABA có tác dụng hoạt hóa một chất dẫn truyền thần kinh ức chế, từ đó ngăn chặn được các kích thích nấc. Đây là một trong những thuốc hiệu quả nhất trong điều trị các trường hợp nấc mạn tính do nhiều nguyên nhân khác nhau như các bệnh lý ở dạ dày - thực quản, tổn thương thân não hoặc nấc vô căn, kể cả những trường hợp không đáp ứng với nhiều loại thuốc khác.\nThuốc giãn cơ ngăn chận hoạt động thần kinh trong tuỷ sống. Baclofen giảm co thắt cơ và cứng khớp do chấn thương sọ não và tuỷ sống, do đột quỵ hay do các chấn động thần kinh như xơ cứng rải rác",
+  "canhBao": "Suy thận. Ðột quỵ, suy hô hấp, hoặc suy gan. Tâm thần, co giật & lú lẫn. Tăng co thắt bàng quang. Ðang dùng thuốc hạ áp, chống co giật. Người duy trì thế đứng & cân bằng khó khăn. Người cao tuổi. Có thai & cho con bú. Tránh lái xe & vận hành máy. Không nên ngừng thuốc đột ngột.\nHỗ trợ 24/7 - Miễn phí tư vấn\n12 sản phẩm\nCác sản phẩm có cùng thành phần hoạt chất với Bamifen\nVD-31103-18\nVD-31756-19\nVD-32319-19\nVD-33028-19\nVD-33050-19\nVD-34336-20\nVD-34346-20\nVD-34434-20\nVD-34824-20\nVD-35253-21\nVD-35254-21\nVD-35255-21\n10 sản phẩm\nCác sản phẩm liên quan đến Bamifen\nVN-14692-12\nVN-2926-07\nVN-14224-11\nVN-6178-02\nVN-1760-06\nVN-6363-02\nChọn cách bạn muốn được tư vấn\nNhắn tin qua Messenger\nChưa có bình luận nào\nHãy là người đầu tiên bình luận về nội dung này!\nThuốc Biệt Dược - Hệ thống tra cứu thông tin thuốc hàng đầu Việt Nam. Cung cấp thông tin chính xác, cập nhật về các loại thuốc.\n- Tra cứu thuốc\n- Tin tức\n- Hỏi đáp\n- Danh bạ\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\n85 Vũ Trọng Phụng\nEmail: nvtruong17@gmail.com\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\nGọi\nFacebook"
+ }
 }

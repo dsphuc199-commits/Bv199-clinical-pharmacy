@@ -1,9 +1,18 @@
 {
  "productId": "2",
  "brandName": "Cảm mạo thông",
- "notFound": true,
- "tried": [
-  "3292119"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VD-32921-19",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Cảm mạo thông - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-36401/cam-mao-thong.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Trị cảm gió, cảm lạnh.\nBệnh cúm.\nĐầy trướng bụng.",
+  "chongChiDinh": "Bệnh nhân mẫn cảm với bất cứ thành phần nào của thuốc"
+ }
 }

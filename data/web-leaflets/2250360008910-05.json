@@ -1,10 +1,20 @@
 {
  "productId": "2250360008910-05",
  "brandName": "CIMAher",
- "notFound": true,
- "tried": [
-  "850410110124",
-  "QLSP100217"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": null,
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Cimaher 50mg/ml - Thuốc điều trị ung thư đầu và cổ",
+  "url": "https://thuocbietduoc.com.vn/thuoc-70686/cimaher.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" dir=\"auto\" data-turn-id=\"request-WEB:39081170-b825-44f8-b4e3-e724c7a3e6ee-9\" data-testid=\"conversation-turn-8\" data-scroll-anchor=\"true\" data-turn=\"assistant\">\nSự hoạt hóa của EGFR thúc đẩy quá trình phân chia tế bào, hình thành mạch máu mới, đồng thời tăng khả năng tồn tại và lan rộng của tế bào ung thư. Nimotuzumab là một kháng thể đơn dòng hướng đích EGFR với ái lực trung bình, được thiết kế nhằm tối ưu độ an toàn, khác biệt so với nhiều thuốc cùng nhóm khi ít gây tình trạng hạ magie máu hay phát ban da mức độ nặng (độ 3–4). Hoạt chất này không chỉ kìm hãm sự tăng sinh tế bào và quá trình tạo mạch mà còn kích hoạt cơ chế miễn dịch như tăng hoạt động của tế bào tiêu diệt tự nhiên (NK), thúc đẩy biệt hóa nguyên bào sợi và tăng cường đáp ứng của tế bào T gây độc. Ngoài ra, Nimotuzumab còn giúp khôi phục biểu hiện MHC-I trên tế bào u, từ đó hạn chế khả năng “né tránh” hệ miễn dịch của khối u liên quan đến EGFR. Thuốc được ghi nhận có độ an toàn và hiệu quả tốt ngay cả ở bệnh nhân thể trạng yếu chỉ điều trị bằng xạ trị, cũng như ở những trường hợp kết hợp với Cisplatin và xạ trị. Đặc biệt, trong ung thư biểu mô tế bào vảy vùng đầu – cổ tiến triển tại chỗ, phác đồ phối hợp Nimotuzumab với Cisplatin liều thấp và xạ trị cho thấy cải thiện rõ rệt về thời gian sống không tiến triển, thời gian sống không bệnh và khả năng kiểm soát khối u tại chỗ so với phác đồ truyền thống.\n- Giai đoạn tiến triển của ung thư biểu mô tế bào vảy ở vị trí vùng đầu và cổ kết hợp với hóa trị, xạ trị.\n- Dùng đơn trị liệu điều trị u tế bào hình sao sau phẫu thuật, xạ trị hoặc hóa trị ở bệnh nhi.\n- U nguyên bào thần kinh đệm đa dạng, kết hợp với xạ trị.",
+  "chongChiDinh": "Không dùng thuốc Cimaher 50mg/10ml cho người có bất cứ mẫn cảm nào với các thành phần của thuốc",
+  "lieuDung": "- Cách dùng:\nCIMAher nên được sử dụng dưới dạng truyền tĩnh mạch liên tục (IV), hòa tan trong 250 ml Natri clorid và truyền trong 0,5h.\n- Liều dùng:\n- Bệnh nhân ở giai đoạn tiến triển của khối u đầu và cổ:\n- Liều khuyến cáo là 200 hoặc 400 mg, một lần /tuần trong 6 tuần, kết hợp với xạ trị và/hoặc hóa trị chuẩn cho bệnh ung thư đầu và cổ.\n- Bệnh nhân nhi mắc bệnh u tế bào hình sao ác tính mức độ nặng\n- Liều lượng là 150 mg/m2, một lần /tuần trong 6 tuần dưới dạng liệu pháp đơn trị liệu.\n- Bệnh nhân người lớn mắc bệnh u thần kinh đệm đa dạng:\n- Liều khuyến cáo là 200 mg, một lần /tuần trong 6 tuần kết hợp với xạ trị tiêu chuẩn.\n- Liều duy trì của các trường hợp trên được khuyến cáo là 200 hoặc 400 mg cứ sau 15 ngày cho đến khi tiến triển xấu đi về mặt lâm sàng.\n- Run\n- Buồn nôn, nôn\n- Thiếu máu\n- Tăng hoặc giảm huyết áp\n- Tăng phosphatase kiềm\n- Sốt\n- Ớn lạnh\n- Tác dụng phụ ít gặp hơn:\n- Mất ngủ\n- Đái máu\n- Đau cơ\n- Khô miệng\n- Yếu tay\n- Tăng creatinine\n- Hạ bạch cầu\n- Đau ngực",
+  "baoQuan": "CIMAher phải được giữ mát ở nhiệt độ 2 – 8°C. Không được đông lạnh hoặc lắc chai."
+ }
 }

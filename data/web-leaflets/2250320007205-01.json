@@ -1,10 +1,20 @@
 {
  "productId": "2250320007205-01",
  "brandName": "Tamiflu",
- "notFound": true,
- "tried": [
-  "VN2214319",
-  "800110994624"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-14166-11",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Tamiflu 12mg/ml Roche - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-41296/tamiflu.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Điều trị cúm sớm trong vòng vài giờ khi bệnh khởi phát ở nhóm có nguy cơ cao: người trên 65 tuổi, trẻ nhỏ, bệnh phổi mạn tính, bệnh tim mạch mạn tính, bệnh thận mạn tính, suy hụt miễn dịch, bệnh đái tháo đường.\nOseltamivir cũng được khuyến cáo để dự phòng dùng trong vòng 48 giờ sau khi tiếp xúc với bệnh nhân hoặc khi tiêm phòng không bảo vệ được trong dịch cúm, nhưng thuốc này không thay thế được vacxin cúm (biện pháp dự phòng hữu hiệu nhất).",
+  "chongChiDinh": "Không dùng cho những người khoẻ mạnh bị cúm.\nQuá mẫn với oseltamivir phosphate hoặc với bất kỳ thành phần nào của thuốc.",
+  "lieuDung": "Dự phòng cúm\n*Người lớn dự phòng sau tiếp xúc với bệnh nhân: 75 mg/ngày uống 1 lần, ít nhất trong vòng 7 ngày; khi xảy ra vụ dịch cúm (vaccin hiện có không có tác dụng bảo vệ với chủng gây dịch) có thể dùng dự phòng tới 6 tuần.\n*Trẻ từ một tuổi trở lên:\nTrọng lượng cơ thể Liều khuyên dùng trong 10 ngày\n≤ 15kg 30 mg ngày một lần\n> 15kg đến 23kg 45 mg ngày một lần\n> 23kg đến 40kg 60 mg ngày một lần\n> 40kg 75 mg ngày một lần\nĐiều trị cúm\n*Người lớn: 75 mg cách 12 giờ uống 1 lần, dùng trong 5 ngày;\n*Trẻ em trên 1 tuổi:\ntrọng lượng cơ thể = 15 kg: 30 mg cách 12 giờ uống 1 lần;\ntrọng lượng cơ thể 16 - 23 kg: 45 mg cách 12 giờ uống 1 lần;\ntrọng lượng cơ thể 24 - 40 kg: 60 mg cách 12 giờ uống 1 lần;\ntrọng lượng cơ thể > 40 kg: như liều người lớn\nBuồn nôn, nôn, đau bụng, khó tiêu, ỉa chảy, nhức đầu, mệt mỏi, mất ngủ, choáng váng; viêm niêm mạc mắt, chảy máu cam; rối loạn thính giác; phát ban; hiếm khi viêm gan.",
+  "tuongTac": "Thông tin từ những nghiên cứu về dược lý và dược động học của oseltamivir phosphate cho thấy ít có khả năng xảy ra tương tác thuốc có ý nghĩa về mặt lâm sàng.\nMột lượng lớn oseltamivir phosphate được chuyển hóa thành hợp chất có hoạt tính nhờ esterase khu trú chủ yếu ở gan. Tương tác thuốc do sự cạnh tranh gắn esterase vẫn chưa được báo cáo nhiều trong y văn. Do oseltamivir và chất chuyển hóa có hoạt tính đều gắn kết kém với protein huyết tương, khả năng tương tác do chiếm chỗ của thuốc khó có thể xảy ra.\nCác nghiên cứu in vitro cho thấy cả oseltamivir phosphate lẫn chất chuyển hóa có hoạt tính đều không phải là chất nền tốt cho men oxidase có chức năng hỗn hợp P450 hoặc cho men glucuronyl transferases. (Xem mục Dược động học). Không có cơ sở nào về mặt cơ chế cho thấy có sự tương tác giữa thuốc và thuốc ngừa thai dùng đường uống.\nCimetidine, một chất ức chế không đặc hiệu của các đồng dạng cytochrome P450 và là chất cạnh tranh với những thuốc gốc bazơ hoặc thuốc cation hóa để bài tiết qua ống thận, không có ảnh hưởng gì lên nồng độ trong huyết tương của oseltamivir hoặc chất chuyển hóa có hoạt tính của nó.\nXét về mặt lâm sàng, các tương tác thuốc quan trọng có liên quan đến sự cạnh tranh để bài tiết qua ống thận khó có thể xảy ra do giới hạn an toàn đã được biết của hầu hết các thuốc, đặc điểm thải trừ của chất chuyển hoá có hoạt tính (lọc ở vi cầu thận và tiết ở ống thận dưới dạng anion) và khả năng thải trừ của những đường này. Dùng thuốc đồng thời với probenecid sẽ làm tăng nồng độ các chất chuyển hóa có hoạt tính lên gần gấp đôi do làm giảm sự tiết chủ động của chúng ở ống thận. Tuy vậy, nhờ giới hạn an toàn của chất chuyển hóa có hoạt tính rất rộng nên không cần thiết phải điều chỉnh liều khi dùng thuốc chung với probenecid.\nDùng thuốc đồng thời với amoxicillin không làm thay đổi nồng độ của cả hai loại thuốc trong huyết tương, điều này cho thấy rằng sự cạnh tranh để được bài tiết dưới dạng anion là rất yếu.\nDùng thuốc đồng thời với paracetamol không làm thay đổi nồng độ trong huyết tương của oseltamivir, chất chuyển hóa có hoạt tính của nó, hoặc paracetamol.\nKhông có tương tác thuốc về dược động học giữa oseltamivir hoặc chất chuyển hóa chính của nó được ghi nhận khi dùng chung oseltamivir với paracetamol, acid acetylsalicylic, cimetidine hoặc các thuốc kháng acid (magnesium và hydroxid nhôm và carbonate canxi)\nTrong các nghiên cứu lâm sàng để điều trị và dự phòng phase III, người ta đã dùng Tamiflu chung với các thuốc thông dụng khác như thuốc ức chế men chuyển (enalapril, captopril), các thiazide lợi tiểu (bendrofluazide), kháng sinh (penicillin, cephalosporin, azithromycin, erythromycin và doxycycline), thuốc chẹn thụ thể H2 (ranitidine, cimetidine), chẹn beta (propanolol), các xanthine (theophyline), thuốc giống giao cảm (pseudoephedrine), chế phẩm thuốc phiện (codeine), corticosteroids, thuốc dãn phế quản dạng hít, và thuốc giảm đau (aspirin, ibuprofen và paracetamol). Không thấy có sự thay đổi nào về phản ứng phụ hoặc tần suất xuất hiện các phản ứng phụ khi dùng Tamiflu chung với các thuốc này."
+ }
 }

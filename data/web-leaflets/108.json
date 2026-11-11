@@ -1,10 +1,19 @@
 {
  "productId": "108",
  "brandName": "Hoạt huyết dưỡng não",
- "notFound": true,
- "tried": [
-  "VD2257215",
-  "893210193725"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "V1030-H12-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Hoạt huyết dưỡng não - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-31966/hoat-huyet-duong-nao.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Suy giảm trí nhớ, căng thẳng thần kinh, kém tập trung.\n- Thiểu năng tuần hoàn não, hội chứng tiền đình với các biểu hiện: Đau đầu, hoa mắt, chóng mặt, mất ngủ, mất thăng bằng.\n- Giảm chức năng não bộ: Giảm trí nhớ, suy nhược thần kinh, di chứng não.\n- Chứng run giật của bệnh nhân Parkinson, hỗ trợ điều trị nhũn não.",
+  "chongChiDinh": "Người mẫn cảm với thành phần của thuốc. Phụ nữ có thai, người có rối loạn về máu, người rối loạn đông máu.",
+  "lieuDung": "- Người lớn và trẻ em trên 12 tuổi: Uống 3 - 4viên/lần, mỗi ngày 2 - 3 lần.\n- Trẻ em từ 4 - 12 tuổi: Uống 1 - 2 viên/lần, mỗi ngày 1 - 2 lần.\nDùng theo chỉ dẫn của bác sĩ;"
+ }
 }

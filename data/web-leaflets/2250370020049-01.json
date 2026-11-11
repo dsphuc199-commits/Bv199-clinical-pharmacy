@@ -1,9 +1,23 @@
 {
  "productId": "2250370020049-01",
  "brandName": "Stablon",
- "notFound": true,
- "tried": [
-  "VN2216519"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-14727-12",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Stablon - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-41637/stablon.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Chỉ định trong các trạng thái trầm cảm nhẹ, vừa và nặng.",
+  "chongChiDinh": "Dị ứng (quá mẫn cảm) với tianeptine hoặc với bất cứ thành phần nào của Stablon.\nTrẻ em dưới 15 tuổi.\nTrường hợp có thai hoặc cho con bú.\nKết hợp với nhóm MAOI.",
+  "lieuDung": "Liều trung bình là 3 viên mỗi ngày, uống ngay trước bữa sáng, bữa trưa và bữa tối. Uống với nước.\nỞ những bệnh nhân trên 70 tuổi, và có kèm suy giảm chức năng thận. Liều dùng không được vượt quá 2 viên mỗi ngày Không được ngừng dùng thuốc này nếu không hỏi ý kiến bác sĩ.\nTheo đúng thời gian điều trị do bác sĩ chỉ định.\nTrong bất kì tình huống nào, không được kéo dài điều trị mà không được bác sĩ cho phép.\nBAO GIỜ CŨNG CẦN TUÂN THỦ NGHIÊM TÚC ĐƠN CỦA BÁC SĨ.",
+  "tuongTac": "Dùng thuốc này phối hợp với một số thuốc thuộc nhóm ức chế monoamin oxydase (MAOI, chỉ định trong trường hợp trầm cảm) có thể gây hậu quả nghiêm trọng. Sau khi điều trị với MAOI, cần chờ 2 tuần trước khi uống Stablon.\nHãy báo cho bác sĩ hoặc dược sĩ nếu bạn gần đây đang dùng bất kì thuốc nào khác, kể cả thuốc không cần kê đơn.",
+  "duocLuc": "Tianeptine là thuốc chống trầm cảm.\nTrên động vật, tianeptine có các đặc tính sau:\nLàm tăng tính tự phát của tế bào tháp ở hồi hải mã và làm cho chức năng này được hồi phục nhanh sau khi bị ức chế.\nLàm tăng tốc độ thu hồi serotonine của các tế bào thần kinh ở vỏ não và hồi hải mã.\nTrên người, tianeptine mang những đặc trưng sau:\nTác động lên các rối loạn khí sắc, được xếp ở giữa hai nhóm thuốc chống trầm cảm gây êm dịu và thuốc chống trầm cảm gây hưng phấn.\nTác động tốt trên những bệnh nhân có những than phiền về cơ thể, nhất là những than phiền về rối loạn tiêu hóa có nguyên nhân do sự lo âu và các rối loạn khí sắc.\nMặt khác tianeptine không ảnh hưởng lên:\nGiấc ngủ và sự tỉnh táo.\nHệ cholenergic (không có những biểu hiện kiểu kháng cholinergic).",
+  "duocDong": "Hấp thu nhanh và hoàn toàn qua đường tiêu hóa.\nPhan bố nhanh, khả năng gắn kết cao với protein (vào khoảng 94%). Chuyển hóa mạnh ở gan qua tiến trình oxy hóa ở vị trí be6ta và loại gốc methyl ở nitơ.\nThời giab bán thải ngắn khoảng 2 giờ 30 phút, bài tiết chủ yếu qua thận dưới dạng chất chuyển hóa.\nỞ người cao tuổi: Các nghiên cứu dược động học được thực hiện ở người già trên 70 tuổi và điều trị dài hạn cho thấy thời gian bán thải tăng thêm 1 giờ.\nỞ bệnh nhân suy gan: các nghiên cứu cho thấy rượu có ảnh hưởng không đáng kể lên các thông số dược động học của bệnh nhân nghiện rượu kinh niên, ngay cả khi kèm xơ gan.\nỞ bệnh nhân suy thận: các nghiên cứu cho thấy thời gian bán thải thêm 1 giờ.",
+  "quaLieu": "Trong mọi trường hợp, dừng điều trị và theo dõi sát bệnh nhân\nRửa dạ dày\nTheo dõi tim mạch, ho hấp, chuyển hóa, tiết niệu.\nĐiều trị triệu chứng của bất kỳ biểu hiện quá liều trên lam sàng, đặc biệt cần giúp đỡ thông khí và điều chỉnh các rối loạn trên chuyển hóa và trên thận.\nĐau dạ dày, đau bụng, khô miệng, chán ăn, buồn nôn, nôn, táo bón, đầy hơi.\nMất ngủ, ngủ gà, ác mộng, mệt mỏi.\nĐánh tróng ngực, đau tim, đau vùng trước tim, nhịp nhanh.\nChóng mặt, đau đầu, khó chịu, run, nóng đỏ bừng.\nKhó thở, cảm giác có cục nghẹn ở họng.\nĐau cơ, đau lưng.\nPhát ban trên da, ngứa, nổi mày đay, nổi mụn."
+ }
 }

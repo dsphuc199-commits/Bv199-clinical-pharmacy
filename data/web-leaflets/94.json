@@ -1,10 +1,18 @@
 {
  "productId": "94",
  "brandName": "Crila Forte",
- "notFound": true,
- "tried": [
-  "VD2465416",
-  "893210191825"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VD-12073-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Crila Forte - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-32273/crila-forte.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "• Điều trị phì đại lành tính tuyến tiền liệt. Giảm các triệu chứng của bệnh phì đại lành tính tuyến tiền liệt (đi tiểu khó, đi tiểu nhiều lần vào ban đêm).\n• Điều trị u xơ tử cung.",
+  "baoQuan": "Bảo quản nơi khô mát, tránh ánh sáng.Hạn dùng: 24 tháng kể từ ngày sản xuất."
+ }
 }

@@ -25,6 +25,7 @@ const FORCE = args.includes("--force");
 const LIMIT = args.includes("--limit") ? Number(args[args.indexOf("--limit") + 1]) : Infinity;
 const ONLY = args.includes("--only") ? args[args.indexOf("--only") + 1] : null;
 const RETRY = args.includes("--retry-missing");
+const RELAXED = args.includes("--relaxed");
 const UA = "Mozilla/5.0 (compatible; BV199-Clinical-Pharmacy/1.0)";
 const MAX_CANDIDATES = 6;
 const DELAY_MS = 600;
@@ -248,6 +249,19 @@ function rank(index, head, words, full, brand, strength) {
   return scored.sort((a, b) => b.score - a.score).slice(0, MAX_CANDIDATES).map((x) => x.url);
 }
 
+/* Cung san pham theo ten + nha san xuat: slug trang = ten thuoc (bo phan trong ngoac), va trang co ten nha san xuat. */
+const GENERIC_WORDS = /^(cong|ty|co|phan|tnhh|duoc|pham|trung|uong|tw|ltd|limited|pvt|inc|gmbh|sa|ag|spa|s|a|c|the|and|pharma|pharmaceutical|pharmaceuticals|laboratories|industries|corporation|corp|company|hoa|chi|nhanh|mot|thanh|vien|so|chuc|hang|nha|may|xuat|khau|nhap|viet|nam)$/;
+function sameProductByName(site, url, html, p) {
+  const brandSlug = slugify(String(p.brandName || "").replace(/\([^)]*\)?/g, " "));
+  const slug = site.slugOf(url).replace(/^thuoc-/, "");
+  if (!brandSlug || brandSlug.length < 4) return false;
+  if (slug !== brandSlug && slug !== `${brandSlug}-${slugify(p.strength || "")}`) return false;
+  const words = slugify(p.manufacturer || "").split("-").filter((w) => w.length >= 3 && !GENERIC_WORDS.test(w));
+  if (!words.length) return false;
+  const page = slugify(htmlToText(html).slice(0, 20000));
+  return words.filter((w) => page.includes(w)).length >= Math.min(2, words.length);
+}
+
 /* ---------- Chay ---------- */
 const products = JSON.parse(readFileSync(join(ROOT, "data", "drug-products.json"), "utf8"));
 const registry = JSON.parse(readFileSync(join(ROOT, "data", "drug-registry.json"), "utf8")).items;
@@ -300,11 +314,16 @@ async function work(p) {
       const html = await get(url);
       if (!html) continue;
       const sdk = site.sdk(html);
-      if (!sdk || !wanted.has(normSdk(sdk))) continue;
+      let matchedBy = "sdk";
+      if (!sdk || !wanted.has(normSdk(sdk))) {
+        // --relaxed: chap nhan khi trang TRUNG TEN thuoc (slug) va ghi DUNG nha san xuat (thuong la cung san pham doi SDK).
+        if (!RELAXED || !sameProductByName(site, url, html, p)) continue;
+        matchedBy = "ten-nha-san-xuat";
+      }
       const sections = splitHtmlSections(site.content(html));
       if (Object.keys(sections).length < 2) continue;
       const title = decode((html.match(/<title>([^<]*)<\/title>/i) || [])[1] || "").trim();
-      result = { site, url, sdk, sections, title };
+      result = { site, url, sdk, sections, title, matchedBy };
       break outer;
     }
   }
@@ -314,6 +333,7 @@ async function work(p) {
         productId: p.id,
         brandName: p.brandName,
         soDangKy: result.sdk,
+        matchedBy: result.matchedBy,
         source: { title: result.title || p.brandName, url: result.url, site: result.site.label },
         method: "web",
         extractedAt: new Date().toISOString().slice(0, 10),

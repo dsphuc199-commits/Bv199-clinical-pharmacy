@@ -1,10 +1,22 @@
 {
  "productId": "2250370004131-04",
  "brandName": "Cephalexin 500 mg",
- "notFound": true,
- "tried": [
-  "893110546724",
-  "VD2926618"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "893110592324",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Cephalexin 500 mg Pharimexco - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-35474/cephalexin-500-mg.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Nhiễm khuẩn đường hô hấp: viêm phế quản cấp và mãn, giản phế quản có bội nhiễm. Nhiễm khuẩn tai mũi họng: viêm tai giữa, viêm xương chũm, viêm xoang, viêm amydale và viêm họng. Nhiễm trùng đường tiểu: viêm thận-bể thận cấp và mãn, viêm bàng quang, viêm tuyến tiền liệt. Ngăn ngừa những trường hợp tái phát lại. Nhiễm khuẩn sản và phụ khoa. Nhiễm khuẩn da, mô mềm và xương khớp, kể cả viêm xương tủy. Bệnh lậu và giang mai (khi dùng penicillin không phù hợp); Trong nha khoa: thay thế tạm thời điều trị phòng ngừa với penicillin cho bệnh nhân mắc bệnh tim phải điều trị bệnh răng",
+  "chongChiDinh": "Không dùng cho bệnh nhân nhạy cảm với kháng sinh nhóm Cephalosporin",
+  "lieuDung": "Người lớn và trẻ em > 12 tuổi: 500mg x 3 lần/ngày. Trẻ em 5-12 tuổi: 250mg x 3 lần/ngày. Trẻ em 1-5 tuổi: 125mg x 3 lần/ngày. QUÁ LIỀU Triệu chứng khi xảy ra quá liều: buồn nôn, nôn, đau thượng vị, tiêu chảy, đi tiểu ra máu. Hỗ trợ hô hấp bệnh nhân. Truyền dung dịch các chất điện giải, dùng than họat để làm giảm sự hấp thu thuốc qua đường tiêu hóa. Quá trình thẩm phân máu và màng bụngcó thể làm giảm nồng độ Cephalexin trong máu khi sử dụng quá liều.",
+  "tacDungPhu": "Khi dùng cephalexin một số bệnh nhân có thể bị rối loạn tiêu hóa như buồn nô, nôn mữa và tiêu chảy. Cũng giống như các kháng sinh phổ rộng khác, cephalexin có thể gây tăng trưởng vi khuẩn cộng sinh (đôi khi có thể xuất hiện Candida albicans dưới dạng viêm âm đạo) Đôi khi giảm bạch cầu trung tính có hồi phục Ít khi xảy ra nổi ban, mề đay và dát sần.",
+  "tuongTac": "Dùng kết hợp với probenecide sẽ làm kéo dài thời gian đào thải của cephalexin và làm tăng nồng độ trong huyết thanh đến 50-100%",
+  "baoQuan": "Bảo quản nơi khô, mát. Tránh ánh sáng."
+ }
 }

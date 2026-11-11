@@ -1,10 +1,22 @@
 {
  "productId": "j01db01-01-01-n2",
  "brandName": "Cephalexin PMP 500",
- "notFound": true,
- "tried": [
-  "893110514924",
-  "VD2495816"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VD-24430-16",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Cephalexin PMP 500 dạng viên nang cứng",
+  "url": "https://thuocbietduoc.com.vn/thuoc-52394/cephalexin-pmp-500.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Nhiễm trùng do một số vi khuẩn Gr(-); & Gr(+) kể cả Staphylococcus sản xuất men penicillinase, nhiễm trùng đường tiết niệu, hô hấp, da & mô mềm.\nNgười bị nhiễm khuẩn ở đường hô hấp trên hoặc dưới.\nNhiễm khuẩn tiết niệu - sinh dục thể nhẹ hoặc nhiễm khuẩn ở bàng quang không có các biến chứng phức tạp.\nDự phòng và điều trị các nhiễm khuẩn da mô mềm hoặc sản phụ khoa khi cần thiết.\nBệnh lậu không biến chứng, hoặc dùng để điều trị các nhiễm khuẩn ở nha khoa.\nCephalexin có thể được sử dụng để thay thế cho Penicilin khi cần thiết.",
+  "chongChiDinh": "Quá mẫn với cephalosporin.\nKhông dùng cho người có tiền sử dị ứng với Cephalexin hoặc với bất cứ hoạt chất nào cùng nhóm Beta - lactam.\nChống chỉ định dùng cho người từng bị sốc phản vệ do sử dụng penicillin hoặc qua trung gian IgE. Việc dùng thuốc trên nhóm đối tượng này có thể gia tăng nguy cơ dị ứng.\nTiêu chảy.\nMề đay.\nMẩn ngứa.\nBuồn nôn.\nMệt mỏi.\nRối loạn tiêu hóa.\nHoại tử biểu bì.\nKích động hoặc ảo giác.\nChóng mặt.\nNgứa bộ phận sinh dục.\nGiảm bạch cầu.",
+  "lieuDung": "- Uống thuốc trước bữa ăn 1 giờ.\n- Người lớn: 0.5 g- 1 g/ lần, uống cách khoảng 6 giờ.\n- Trẻ em: 25 - 50mg/ kg/ngày, chia 4 lần. Trường hợp nhiễm khuẩn nặng, phải tăng gấp đôi liều dùng.\n- Viêm họng và viêm bàng quang cấp: liều hàng ngày có thể chia làm 2 lần.\n- Viêm tai giữa: 75 - 100mg/ngày/kg, chia 4 lần.\n- Nhiễm khuẩn Beta-tan huyết, thời gian điều trị tối thiểu ≥ 10 ngày.",
+  "tacDungPhu": "Rối loạn tiêu hóa, phản ứng dị ứng, tăng bạch cầu ái toan, phù mạch, phản ứng phản vệ, giảm bạch cầu trung tính, bội nhiễm, viêm đại tràng giả mạc. - Tiêu chảy, buồn nôn, nôn, chứng khó tiêu, chán ăn, đau bụng, khó chịu thượng vị. Ban da, mày đay, đau đầu, bệnh candida sinh dục, viêm âm đạo, ngứa âm hộ. - Đã có xảy ra chóng mặt, ù tai, điếc tai và thay đổi hành vi tập tính ở trẻ nhỏ khi dùng Cefalexin.",
+  "tuongTac": "- Nghiệm pháp Coomb (+) giả. - Glucoza niệu (+) giả trong thử nghiệm với Benedict,Fehling hoặc với viên Clinitest , nhưng không xảy ra với Test – Tape (Glucose Enzymatic Test Strip, USP).",
+  "quaLieu": "- Triệu chứng:buồn nôn, nôn, khó chịu thượng vị, tiêu chảy và huyết niệu\nĐiều trị: Nên chỉ định than hoạt thay cho hoặc cùng với việc rửa dạ dày\n- Bài niệu, lọc máu hầu như không có tác dụng."
+ }
 }

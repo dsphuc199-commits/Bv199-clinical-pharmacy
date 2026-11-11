@@ -1,9 +1,27 @@
 {
  "productId": "1471",
  "brandName": "Actilyse",
- "notFound": true,
- "tried": [
-  "QLSP94816"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-11467-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thuốc Actilyse 50mg trị các bệnh lý do cục máu đông, phòng đau tim",
+  "url": "https://trungtamthuoc.com/actilyse-50mg",
+  "site": "Trung Tâm Thuốc (trungtamthuoc.com)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "Thành phần: Actilyse 50mg chứa Alteplase 50mgDạng bào chế: Bột đông khô pha tiêm",
+  "chiDinh": "Actilyse 50mg điều trị hình thành cục máu đông\nĐiều trị bệnh lý do sự hình thành cục máu đông trong mạch máu như đau tim, cục máu đông trong động mạch não làm đột quỵ, cục máu đông trong động mạch phổi",
+  "lieuDung": "Pha bột đông khô Actilyse với lọ nước pha tiêm vô trùng\nKhi nhận thấy có dấu hiệu bệnh thì dùng thuốc sớm nhất có thểĐau tim: liều 100mg Actilyse, thời gian tiêm 90-180 phútThuyên tắc phổi: liều 100mg Actilyse, thời gian tiêm > 120 phútNgười có cân < 65 kg: liều thấp hơn, liều 1,5mg/kgĐột quy do thiếu máu cục bộ: 0,9 mg / kg trong 1h",
+  "chongChiDinh": "Không dùng thuốc cho người có bất cứ mẫn cảm nào với các thành phần của thuốcKhông dùng cho các đối tượng:\n- Rối loạn chảy máu\n- Xuất huyết tạng\n- Đang dùng Thuốc chống đông máu hiệu quả\n- Đã từng tổn thương thần kinh trung ương\n- Tăng huyết áp không kiểm soát được\n- Phẫu thuật lớn trong vòng 10 ngày qua\n- Đột quỵ xuất huyết\n- Đột quỵ do thiếu máu cục bộ trong vòng nửa năm trước,...",
+  "tacDungPhu": "- Cục máu đông, chảy máu trong não\n- Buồn ngủ, nói lắp, chóng mặt, mất trí nhớ, stress, co giật, rối loạn tinh thần,...\n- Khó thở, mệt mỏi, da ngăm ngăm, hoạt động nhẹ nhàng cũng mệt,...\nKhi có bất cứ biểu hiện nào cần báo ngay cho bác sĩ",
+  "tuongTac": "Actilyse làm tăng nồng độ thuốc dùng cùng như dabigatran etesilat, chất chống đông, các dẫn chất prostacyclinActilyse bị tăng nồng độ do limapest, các salicylat, thuốc có tính chống đôngActilyse bị giảm tác dụng do aprotinin, Nitroglycerin.",
+  "canhBao": "Chú ý khi dùng thuốc với người già, tăng huyết áp, rung nhĩ, hẹp van 2 lá, bà bầu, phụ nữ cho con bú",
+  "thaiKy": "Phụ nữ đang có thai hoặc đang cho con bú đều phải thận trọng khi dùng thuốc này",
+  "baoQuan": "Nơi khô ráoTránh ánh sáng chiếu trực tiếp\nSĐK: VN-11467-10Nhà sản xuất: Boehringer Ingelheim Pharma GmbH & Co. KG - GermanyĐóng gói: Hộp 1 lọ chứa 50mg thuốc và 1 lọ dung môi chứa 50ml nước pha tiêm",
+  "duocLuc": "Alteplase được tạo ra bằng công nghệ DNA tái tổ hợp, thuộc nhóm tan huyết khối. Alteplase không có tính kháng nguyên. Cơ chế cụ thể: Alteplase gắn với fibrin, đẩy nhanh quá trình chuyển plasminogen thành plasmin. Chất hoạt hoá plasminogen mô làm tăng tái tưới máu, giảm nguy cơ suy tim, giảm tử vong, chất hoạt hoá này cũng điều trị đột quỵ do thiếu máu cục bộ cấp tính. [1]",
+  "duocDong": "Thuốc không hấp thu qua đường tiêu hoá, dùng tiêm IV. Ở trong cơ thể, nồng độ thuốc giảm theo 2 pha. Thuốc thải trừ chủ yếu qua gan, độ thanh thải 550-650 ml/phút"
+ }
 }

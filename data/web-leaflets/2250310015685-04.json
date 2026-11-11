@@ -1,10 +1,26 @@
 {
  "productId": "2250310015685-04",
  "brandName": "BisacodylDHG",
- "notFound": true,
- "tried": [
-  "VD2112914",
-  "893100427324"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VD-11436-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "BisacodylDHG - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-35119/bisacodyldhg.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Táo bón. Chuẩn bị trong các phương sách chẩn đoán, điều trị trước & sau phẫu thuật, trong những điều kiện đòi hỏi đại tiện được dễ dàng.\nCác thông tin dược lý, dược động học và tác dụng của hoạt chất chính",
+  "chongChiDinh": "Viêm kết tràng. Hội chứng đau bụng không rõ nguyên nhân.\nBệnh nhân bị tắc ruột, phẫu thuật bụng cấp tính (viêm ruột thừa), bệnh đường ruột cấp tính và khi mất nước nghiêm trọng.\nBệnh nhân quá mẫn cảm với hoạt chất thuộc nhóm triarylmethane.",
+  "lieuDung": "Thuốc uống:\nNgười lớn và trẻ em trên 10 tuổi : Uống 1-2 viên(5mg); vào buổi tối có thể dùng liều cao hơn 3-4 viên nếu cần.\nTrẻ em 6 - 10 tuổi : uống 1 viên(5mg) vào buổi tối.\nThuốc đạn:\n1 viên, 10-40 phút trước giờ đại tiện hàng ngày.\n* Táo bón:\n- Viên bao:\nNgười lớn & trẻ em > 10 tuổi: 1-2 viên (5-10mg).\nTrẻ em 4-10 tuổi: 1 viên.\nTrẻ 10 tuổi: 1 viên (10 mg).\nTrẻ em",
+  "duocLuc": "Bisacodyl là dẫn chất của diphenylmethan, có tác dụng nhuận tràng kích thích, thuốc không tan trong nước, tan ít trong cồn. Bisacodyl làm tăng nhu động do tác dụng trực tiếp lên cơ trơn ruột bởi kích thích đám rối thần kinh trong thành ruột, thuốc cũng làm tăng tích luỹ ion và dịch thể trong đại tràng.",
+  "duocDong": "Bisacodyl bị thủy phân nhờ enzym của niêm mạc ruột thành dạng desacetylbisacodyl được hấp thu và đào thải một phần qua nước tiểu và mật dưới dạng glucuronide. Nhờ sự phân tách của vi khuẩn, thành phần hoạt chất, diphenol tự do, được thành lập trong ruột già. Công thức bisacodyl bền vững với dịch vị và dịch ruột non, do đó viên bao đường Dulcolax đến ruột già mà không bị hấp thu đáng kể và nhờ vậy tránh được lưu chuyển gan ruột.\nKết quả, các dạng thuốc viên uống có thời gian tác động khoảng 6-12 giờ sau khi uống. Dạng toạ dược bisacodyl có thời gian tác động trong vòng 5-10 phút, mặc dù trong vài trường hợp, tác động này có thể kéo dài trong 15-60 phút. Thời gian bắt đầu tác động được xác định bởi sự phóng thích các hoạt chất từ chế phẩm. Sau khi dùng, chỉ một lượng nhỏ thuốc có thể vào máu. Lượng bài tiết qua nước tiểu phản ánh lượng vào máu thấp sau khi uống và dùng toạ dược.\nKhông có liên quan nào giữa tác động gây nhuận tràng và nồng độ trong huyết tương của hoạt chất diphenol.\nÐỘC TÍNH\nThử nghiệm độc tính cấp trên các loại động vật khác nhau không cho thấy bất kỳ nhạy cảm đặc hiệu nào. Thử nghiệm độc tính mạn tính trên chuột cống và chuột nhắt cũng không thấy độc tính.\nCác thử nghiệm về biến đổi di truyền không cho thấy biểu hiện nào về nguy cơ đột biến di truyền hoặc độc tính di truyền.\nHiện chưa có các nghiên cứu dài hạn về nguy cơ gây ung thư trên các động vật thực nghiệm.\nKhông thấy tác động gây ung thư trên chuột với liều 10-15mg bisacodyl/kg/ngày.\nBisacodyl là dẫn chất của diphenylmethan, có tác dụng nhuận tràng kích thích, thuốc không tan trong nước, tan ít trong cồn. Bisacodyl làm tăng nhu động do tác dụng trực tiếp lên cơ trơn ruột bởi kích thích đám rối thần kinh trong thành ruột, thuốc cũng làm tăng tích luỹ ion và dịch thể trong đại tràng.",
+  "tuongTac": "Khi dùng chung với lợi tiểu hoặc adrenocorticoid làm tăng nguy cơ mất cân bằng điện giải nếu dùng Dulcolax quá liều.\nRối loạn cân bằng điện giải có thể làm tăng nhạy cảm đối với các glycoside tim.",
+  "tacDungPhu": "Hiếm thấy đau bụng, tiêu chảy.",
+  "canhBao": "Cũng như các thuốc nhuận tràng khác, Dulcolax không nên dùng liên tiếp trong thời gian dài.\nNếu phải dùng thuốc nhuận tràng mỗi ngày, nên khám để tìm nguyên nhân gây táo bón.\nDùng quá liều dài hạn có thể gây rối loạn cân bằng điện giải và hạ kali máu, và có thể gây táo bón phản ứng. Việc dùng tọa dược có thể gây cảm giác đau và kích ứng tại chỗ, đặc biệt nếu bị dò hậu môn và viêm loét hậu môn.",
+  "baoQuan": "Thuốc cần tránh nóng, ánh sáng và ẩm. Bảoquản ở nhiệt độ dưới 25 độ C.\nHỗ trợ 24/7 - Miễn phí tư vấn\n12 sản phẩm\nCác sản phẩm có cùng thành phần hoạt chất với BisacodylDHG\nVN-5067-07\nVD-1544-06\nVN-7209-02\nVN-2562-07\nV496-H12-05\nVN-4330-07\nVD-22050-14\n893110317224\nVN-14842-12\nVD-9971-10\nVNB-0963-01\nVD-17161-12\n10 sản phẩm\nCác sản phẩm liên quan đến BisacodylDHG\nVN-7863-03\nVN-15249-12\nV1120-H12-05\nVN-19202-15\nVN-11032-10\nVN-15174-12\nChọn cách bạn muốn được tư vấn\nNhắn tin qua Messenger\nChưa có bình luận nào\nHãy là người đầu tiên bình luận về nội dung này!\nThuốc Biệt Dược - Hệ thống tra cứu thông tin thuốc hàng đầu Việt Nam. Cung cấp thông tin chính xác, cập nhật về các loại thuốc.\n- Tra cứu thuốc\n- Tin tức\n- Hỏi đáp\n- Danh bạ\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\n85 Vũ Trọng Phụng\nEmail: nvtruong17@gmail.com\nĐiều khoản sử dụng\nChính sách bảo mật\nChính sách thanh toán\nChính sách đổi trả\nGọi\nFacebook",
+  "thaiKy": "Kinh nghiệm dùng lâu dài không cho thấy bằng chứng về tác dụng phụ hoặc gây hại trong thai kỳ.\nTuy nhiên, cũng như các thuốc khác, Dulcolax chỉ nên dùng trong thai kỳ theo hướng dẫn của thầy thuốc.\nDùng trong nhi khoa: Trẻ em không nên dùng Dulcolax mà không có hướng dẫn của thầy thuốc."
+ }
 }

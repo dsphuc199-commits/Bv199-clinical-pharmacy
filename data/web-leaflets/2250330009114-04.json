@@ -1,10 +1,20 @@
 {
  "productId": "2250330009114-04",
  "brandName": "Exemesin",
- "notFound": true,
- "tried": [
-  "VD318822",
-  "893114173126"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": null,
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Exemesin 25mg - Thuốc điều trị ung thư vú giai đoạn sớm",
+  "url": "https://thuocbietduoc.com.vn/thuoc-70645/exemesin.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" dir=\"auto\" data-turn-id=\"request-WEB:92427429-5886-4e99-ab86-c8baf840588f-30\" data-testid=\"conversation-turn-8\" data-scroll-anchor=\"true\" data-turn=\"assistant\">\n- Exemestane là hoạt chất có khả năng ức chế enzym aromatase dạng steroid, từ đó làm giảm quá trình hình thành estrogen, đặc biệt hiệu quả ở phụ nữ sau mãn kinh. Hoạt chất này thường được sử dụng trong điều trị ung thư vú có thụ thể estrogen dương tính, nhất là ở giai đoạn sau phẫu thuật hoặc khi điều trị bằng Tamoxifen không còn đáp ứng. Trong quá trình sử dụng, thuốc có thể gây tăng nhẹ men gan trong một số trường hợp, tuy nhiên hiếm khi ghi nhận tổn thương gan rõ rệt trên lâm sàng.\n- U vú xâm lấn trong giai đoạn sớm khi thụ thể estrogen dương tính (EBC), điều trị hỗ trợ ban đầu bằng Tamoxifen ở phụ nữ sau mãn kinh sau 2 - 3 năm.\n- U vú tiến triển với phụ nữ sau mãn kinh theo qúa trình sinh lý tự nhiên hay do những nguyên nhân khác khiến bệnh phát triển sau khi dùng liệu pháp kháng estrogen.",
+  "chongChiDinh": "- Dị ứng với bất kỳ thành phần nào trong công thức thuốc.\n- Phụ nữ tiền mãn kinh và phụ nữ có thai hoặc đang cho con bú.",
+  "lieuDung": "- Cách dùng:\nLấy một cốc nước uống đun sôi để nguội đủ để nuốt trôi số lượng viên thuốc theo liều dùng đã được chỉ định riêng sau ăn. Tuyệt đối không bẻ viên thuốc, nhai hay cắn nát thuốc.\n- Liều dùng:\n- Người lớn và người cao tuổi khuyến cáo dùng 1 viên exemestane là 25 mg/lần/ngày.\n- Cần tiếp tục điều trị bằng exemestane với những bệnh nhân u vú giai đoạn sớm cho đến khi hoàn thành 5 năm điều trị với liệu pháp hormon hỗ trợ kết hợp liên tiếp (tamoxifen rồi đến exemestane), hoặc sớm hơn nếu xảy ra khối u tái phát.\n- Ở bệnh nhân ung thư vú tiến triển, nên tiếp tục điều trị bằng exemestane cho đến khi sự tiến triển của khối u rõ ràng.\n- Không cần điều chỉnh liều ở những bệnh nhân suy gan hoặc suy thận.\n- Rất thường gặp (ADR ≥ 10):\n- Máu và hệ tạo máu: Giảm bạch cầu(**).\n- Tâm thần: Trầm cảm, mất ngủ.\n- Hệ thần kinh: Đau đầu, chóng mặt.\n- Mạch máu: Nóng bừng.\n- Tiêu hóa: Đau bụng, buồn nôn.\n- Gan mật: Tăng enzym gan, tăng bilirubin máu, tăng alkaline phosphatase máu.\n- Da và mô dưới da: Tăng tiết mồ hôi.\n- Cơ xương và xương: Đau khớp và cơ xương(*).\n- Rối loạn toàn thân và tại chỗ: Đau, mệt mỏi.\nThường gặp (1/100 ≤ ADR\n- Máu và hệ tạo máu: Giảm tiểu cầu(**).\n- Chuyển hóa và dinh dưỡng: Chán ăn.\n- Hệ thần kinh: hội chứng ống cổ tay, dị cảm.\n- Tiêu hóa: Nôn, tiêu chảy, táo bón, khó tiêu.\n- Da và mô dưới da: Rụng tóc, phát ban, mày đay, ngứa.\n- Cơ xương và xương: Gãy xương, loãng xương.\n- Rối loạn toàn thân và tại chỗ: Phù ngoại biên, suy nhược.\n- Ít gặp (1/1000 ≤ ADR\n- Hệ miễn dịch: Quá mẫn.\n- Da và mô dưới da: Ngoại ban mụn mủ toàn thân cấp tính(+).\nHiếm gặp (1/10000 ≤ ADR\n- Thần kinh: Ngủ gật.\n- Gan mật: Viêm gan(+), viêm gan ứ mật(+).",
+  "baoQuan": "Bảo quản ở nhiệt độ phòng"
+ }
 }

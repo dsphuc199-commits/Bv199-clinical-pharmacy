@@ -1,10 +1,19 @@
 {
  "productId": "2250360008187-04",
  "brandName": "Bigemax 200",
- "notFound": true,
- "tried": [
-  "893114121625",
-  "VD2123414"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "QLĐB-361-12",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Bigemax 200 - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-60277/bigemax-200.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "- Ung thư phổi không phải tế bào nhỏ.\n- Ung thư tụy dạng tuyến. Ung thư tụy kháng với 5-FU.\n- Ung thư bàng quang, ung thư vú\n- Tác dụng điều trị khác: Gemcitabin cũng có tác dụng trong carcinome phổi tế bào nhỏ thể tiến triển, buồng trứng, vú. Có một số đáp ứng với thuốc trong điều trị ung thư bàng quang tiến triển.\n* Bệnh nhân dùng gemcitabin có thể có cải thiện trên lâm sàng, hoặc tăng tỉ lệ sống hoặc cả hai.",
+  "chongChiDinh": "Bệnh nhân quá mẫn với Gemcitabin.",
+  "lieuDung": "Liều dùng:\n- Ung thư phổi không phải tế bào nhỏ:\n+ Dùng đơn trị liệu: Ở người lớn, liều đề nghị của gemcitabin là 1.000 mg/m2 truyền tĩnh mạch trong 30 phút. Lặp lại liều này mỗi tuần 1 lần trong 3 tuần, tiếp theo đó ngưng 1 tuần. Sau đó lặp lại chu kỳ 4 tuần này. Giảm liều thuốc dựa vào mức độ độc tính xảy ra trên bệnh nhân.\n+ Dùng kết hợp: Ở người lớn, gemcitabin được nghiên cứu dùng kết hợp với cisplatin theo 2 phác đồ sau:\nPhác đồ 3 tuần: Dùng gemcitabin 1.250 mg/m2, tiêm truyền tĩnh mạch trong 30 phút vào ngày 1 và 8 của một chu kỳ 21 ngày. Phác đồ 3 tuần dùng cisplatin 75-100 mg/m2 vào ngày 1 của chu kỳ 21 ngày, trước khi dùng gemcitabin. Có thể giảm liều dựa vào mức độ độc ở mỗi bệnh nhân.\nPhác đồ 4 tuần: Dùng gemcitabin 1.000 mg/m2, tiêm truyền tĩnh mạch trong 30 phút vào ngày 1, 8 và 15 của một chu kỳ 28 ngày. Phác đồ 4 tuần dùng cisplatin 75-100 mg/m2 vào ngày 1 của chu kỳ 28 ngày, sau khi dùng gemcitabin. Có thể giảm liều dựa vào mức độ độc ở mỗi bệnh nhân.\n- Ung thư tụy: Ở người lớn, liều đề nghị của gemcitabin là 1.000 mg/m2 truyền tĩnh mạch trong 30 phút. Lặp lại liều này mỗi tuần 1 lần trong 7 tuần, sau đó ngưng 1 tuần. Dùng tiếp liều này mỗi tuần 1 lần trong 3 tuần, rồi ngưng 1 tuần. Cứ như thế lặp lại chu kỳ 4 tuần này. Giảm liều thuốc dựa vào mức độ độc tính xảy ra trên bệnh nhân.\n- Ung thư bàng quang: Ở bệnh nhân ung thư bàng quang không dung nạp cisplatin trong trị liệu kết hợp, nên xem xét dùng đơn trị liệu gemcitabin.\n+ Dùng đơn trị liệu: Ở người lớn, liều đề nghị của gemcitabin là 1.250 mg/m2 truyền tĩnh mạch trong 30 phút vào các ngày 1, 8 và 15 của chu kỳ 28 ngày. Sau đó lặp lại chu kỳ 4 tuần này.\n+ Dùng kết hợp: Ở người lớn, khi kết hợp với cisplatin, liều đề nghị của gemcitabin là 1.000 mg/m2 truyền tĩnh mạch trong 30 phút vào các ngày 1, 8 và 15 của chu kỳ 28 ngày. Cisplatin ở liều khuyến cáo 70 mg/m2 ngày thứ 1 sau khi dùng gemcitabin hay vào ngày thứ 2 của mỗi chu kỳ 28 ngày. Sau đó lặp lại chu kỳ 4 tuần này. Giảm liều thuốc dựa vào mức độ độc tính xảy ra trên bệnh nhân. Một thử nghiệm lâm sàng cho thấy suy tủy nhiều hơn khi dùng cisplatin ở liều 100 mg/m2.\n- Ung thư vú: Ở người lớn, gemcitabin dùng kết hợp với một paclitaxel, gemcitabin (1.250 mg/m2); được khuyến cáo tiêm truyền tĩnh mạch trong 30 phút, vào ngày 1 và 8 của chu kỳ 21 ngày. Paclitaxel (175 mg/m2) được tiêm truyền tĩnh mạch trong hơn 3 giờ sau khi dùng gemcitabin.\nSuy tủy, bất thường men gan, nôn, buồn nôn."
+ }
 }

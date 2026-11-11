@@ -1,10 +1,23 @@
 {
  "productId": "2250300022464-01",
  "brandName": "Natecal D3",
- "notFound": true,
- "tried": [
-  "800100014724",
-  "VN1631413"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "800100347425",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Natecal D3 - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-44067/natecal-d3.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Phục hồi sự thiếu vitamin D kết hợp với calci ở người cao tuổi; bổ sung vitamin D và calci như hỗ trợ cho điều trị đặc hiệu ở bệnh nhân loãng xương mà được chẩn đoán là thiếu vitamin D kết hợp với calci hoặc có nguy cơ cao thiếu vitamin D và calci.",
+  "chongChiDinh": "Tiền sử dị ứng với calci, vitamin D3 hoặc bất kỳ thành phần nào của thuốc (đặc biệt là dầu đậu nành). Sỏi thận (bệnh sỏi thận, chứng nhiễm calci thận). Suy thận nặng và hỏng thận. Tăng calci trong máu và trong nước tiểu, hoặc trường hợp bệnh nhân bị bệnh mà kết quả có thể làm tăng nồng độ calci trong máu hoặc trong nước tiểu (bệnh u tủy, cường tuyến cận giáp nguyên phát). Nồng độ vitamin D trong máu cao.",
+  "lieuDung": "Người lớn và người cao tuổi: 1 viên/lần x 2 lần/ngày (sáng, chiều). Nên giảm liều trong các trường hợp phải kiểm soát nồng độ calci được chỉ ra trong mục Thận trọng và tương tác thuốc.\nNên ngậm viên thuốc, không nên nuốt nguyên viên thuốc.\nTốt nhất nên dùng thuốc sau bữa ăn.",
+  "duocLuc": "Natecal D3 là sự phối hợp của calci và vitamin D. Vitamin D giúp phục hồi sự thiếu vitamin D của cơ thể. Nó làm tăng sự hấp thu calci trong ruột. Lượng vitamin tối ưu nhất cho người cao tuổi là 500-1000UI/ngày.\nCalci giúp bổ sung sự thiếu calci trong chế độ ăn. Thông thường nhu cầu calci ơ người cao tuổi là 1500mg/ngày.\nVitamin D điều trị chứng cường tuyến cận giáp thứ phát ở người cao tuổi.",
+  "duocDong": "Calci carbonat - Trong dạ dày, calci carbonat giải phóng calci phụ thuộc vào độ pH. Calci uống dưới dạng calci carbonat được hấp thu từ 20-30% và sự hấp thu xảy ra phần lớn ơ tá tràng qua cơ chế chuyên chơ tích cực phu thuộc vitamin D bao hòa. Calci\nđược bài tiết qua nươc tiểu, phân và mồ hôi. Sự bài tiết calci qua nước tiểu phụ thuộc vào sự lọc ở cầu thận và tái hấp thu ở ống thận của calci.\nCholecalciferol (vitamin D3) - Vitamin D được hấp thu ở ruột non, sau đó gắn kết với d-globulin đặc hiệu và vận chuyển đến gan. Tại gan được chuyển hóa thành 25-hydroxy-cholecalciferol. Chất này tiếp tục được hydroxyl hóa lần hai thành 1,25-dihydroxy-\ncholecalciferol ở thận. Dạng chuyển hóa này sẽ làm tăng sự hấp thu calci. Vitamin D dạng không chuyển hóa được tích trữ trong các mô như mô mỡ và cơ. Vitamin D được bài tiết qua phân và nước tiểu.",
+  "thaiKy": "Bệnh nhãn suy gan: Không cần điều chỉnh liều ở bệnh nhân suy gan.\nChú ý: Hạn dùng sau khi mở nắp lần đầu là 60 ngày.",
+  "quaLieu": "Quá liều có thể dẫn đến tăng nồng độ vitamin trong máu và tăng nồng calci trong máu và trong nước tiểu. Triệu chứng của tăng calci huyết có thể gồm chán ăn, khát nước, buồn nôn, nôn, táo bón, đau bụng, yếu cơ, mệt mỏi, rối loạn tâm thần, khát nước, tiểu nhiều, đau xương, nhiễm calci thận, sỏi thận và trong những trường hợp nặng có thể bị loạn nhịp tim. Tăng calci huyểt cao có thể dẫn đến hôn mê và tử vong. Nồng độ calci cao kéo dài có thể dẫn đến tổn thương thận vĩnh viễn và vôi hóa mô mềm.\nXử trí: Phải ngừng sử dụng calci và vitamin D. Cũng phải ngừng điều trị với thuốc lợi tiểu nhóm thiazide, lithi, vitamin A, vitamin D và glycoside tim.\nLàm rỗng dạ dày ở bệnh nhân không còn tỉnh táo. Bù nước và tùy vào mức độ nghiêm trọng có thể điều trị riêng biệt hoặc phối hợp với thuốc lợi tiểu quai thận, các biphosphonate, calcitonin và các corticosteroid. Các chất điện giải huyết thanh, chức năng thận và sự tiểu tiện phải được theo dõi. Trong những trường hợp nặng, ECG và CVP nên được thực hiện.\nCác tác dụng phụ dưới đây được phân loại theo các cơ quan hệ thống và tần suất xảy ra. Các tần suất như sau: rất thường gặp (> 1/10), thường gặp (≥ 1/100,"
+ }
 }

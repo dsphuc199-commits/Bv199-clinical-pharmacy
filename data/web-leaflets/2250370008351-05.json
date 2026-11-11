@@ -1,11 +1,27 @@
 {
  "productId": "2250370008351-05",
  "brandName": "Megval 50 mg",
- "notFound": true,
- "tried": [
-  "688QLDKD",
-  "2577QLDKD",
-  "991QLDKD"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": null,
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thuốc Megval 50 mg - Điều trị đa u tủy xương đơn trị hoặc kết hợp",
+  "url": "https://trungtamthuoc.com/megval-50-mg",
+  "site": "Trung Tâm Thuốc (trungtamthuoc.com)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "thanhPhan": "Melphalan 50mgTá dược vừa đủDạng bào chế: Bột đông khô PHA tiêm hoặc tiêm truyền\nThuốc Megval 50 mg - Điều trị đa u tủy xương đơn trị hoặc kết hợp\nThuốc Megval 50 mg được chỉ định trong các trường hợp sau:\n- Điều trị đa u tủy xương, dùng đơn trị hoặc kết hợp trong các phác đồ hóa trị tiêu chuẩn.\n- Sử dụng trong chuẩn bị ghép tế bào gốc tạo máu, giúp tiêu diệt tủy bệnh và tạo điều kiện ghép.\n- Có thể được chỉ định trong một số bệnh ung thư khác khi bác sĩ đánh giá phù hợp.\n==>> Xem thêm sản phẩm khác: Thuốc Thalidomid 50 Dopharma điều trị u đa tủy xương",
+  "lieuDung": "Liều tùy thuộc phác đồ điều trị, chức năng tủy xương, gan – thận và tình trạng chung của người bệnh.Trong ghép tế bào gốc, thường sử dụng liều cao theo phác đồ điều hòa tủy; ngoài ra có thể dùng liều thông thường trong điều trị duy trì/điều trị phối hợp.Thời điểm truyền, tốc độ truyền và Dung dịch pha loãng do bác sĩ quy định.\nThuốc Megval 50 mg được pha và truyền tĩnh mạch bởi nhân viên y tế.",
+  "chongChiDinh": "Không dùng Thuốc Megval 50 mg cho:\n- Mẫn cảm với Melphalan hoặc bất kỳ thành phần nào của thuốc.\n- Suy tủy nặng, bạch cầu hoặc tiểu cầu rất thấp không hồi phục.\n- Phụ nữ đang mang thai hoặc cho con bú.\n- Trường hợp đã từng không đáp ứng hoặc có phản ứng độc tính nghiêm trọng với Melphalan trước đó.\n==>> Bạn đọc có thể tham khảo thêm: Thuốc Alkeran 2mg Melphalan điều trị ung thư máu, buồng trứng",
+  "tacDungPhu": "Huyết học\n- Giảm bạch cầu, giảm tiểu cầu, thiếu máu.\n- Tăng nguy cơ nhiễm trùng, xuất huyết, bầm tím.\nTiêu hóa\n- Buồn nôn, nôn, tiêu chảy.\n- Viêm loét niêm mạc miệng, đau rát họng.\nToàn thân – Da liễu\n- Mệt mỏi, vã mồ hôi, choáng nhẹ, hạ huyết áp.\n- Rụng tóc, phát ban, ngứa.\nNguy cơ lâu dài\n- Ức chế tủy kéo dài, nguy cơ suy tủy không phục hồi.\nCó thể làm tăng nguy cơ hình thành bệnh ác tính thứ phát do tác động lên DNA.",
+  "tuongTac": "Thuốc Megval 50 mg có thể làm tăng độc tính khi phối hợp với các thuốc gây suy tủy hoặc thuốc có độc tính trên thận.Một số thuốc kháng nấm, kháng sinh, thuốc gây mê hoặc thuốc ức chế miễn dịch có thể làm thay đổi dược động học của Melphalan.",
+  "canhBao": "Điều trị bằng Thuốc Megval 50 mg phải thực hiện tại cơ sở có năng lực theo dõi huyết học và xử trí biến chứng. Kiểm tra định kỳ: công thức máu, chức năng gan, thận, tình trạng nhiễm trùng khi dùng Thuốc Megval 50 mg. Tránh tiếp xúc Thuốc Megval 50 mgvới người đang mắc bệnh nhiễm trùng. Thuốc Megval 50 mg nhạy cảm với ánh sáng và nhiệt – cần pha và sử dụng theo đúng quy định an toàn.",
+  "thaiKy": "Không sử dụng Thuốc Megval 50 mg trong thai kỳ vì thuốc có nguy cơ gây độc cho thai, gây dị tật và ảnh hưởng phát triển bào thai.Không nên dùng Thuốc Megval 50 mg khi đang cho con bú vì thuốc có thể bài tiết qua sữa và gây hại cho trẻ",
+  "baoQuan": "Thuốc Megval 50 mg nên được bảo quản nơi khô ráo, tránh ánh sáng trực tiếp từ mặt trời, nhiệt độ < 30oC.",
+  "quaLieu": "Ngưng truyền ngay khi có nghi ngờ quá liều, điều trị hỗ trợ tích cực: truyền dịch, điều chỉnh điện giải, chăm sóc niêm mạc, phòng nhiễm khuẩn, hỗ trợ hô hấp – tuần hoàn khi cần. Theo dõi huyết học sát, có thể phải truyền máu, tiểu cầu hoặc hỗ trợ tủy xương.",
+  "duocLuc": "Melphalan thuộc nhóm thuốc alkyl hóa, tạo liên kết chéo giữa các sợi DNA, làm gián đoạn quá trình sao chép và phiên mã. Tế bào ung thư không thể nhân đôi → kích hoạt chết tế bào. Melphalan có tác dụng trên cả tế bào đang phân chia và tế bào nghỉ [1]",
+  "duocDong": "Melphalan phân bố rộng, gắn kết với protein huyết tương ở mức cao, chuyển hóa chủ yếu trong huyết tương và mô. Melphalan thải trừ qua thận do đó chức năng thận ảnh hưởng mạnh đến nồng độ thuốc."
+ }
 }

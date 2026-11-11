@@ -1,9 +1,22 @@
 {
  "productId": "2250350010831-05",
  "brandName": "Troysar AM",
- "notFound": true,
- "tried": [
-  "VN2309322"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-11838-11",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Troysar AM dạng viên nén bao phim - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-38258/troysar-am.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Cao huyết áp vô căn ở người lớn.\nTrường hợp tăng huyết áp hoặc/và CAD. Trong trường hợp này, nên dùng liều Losartan 50 mg và Amlodipine 5mg.\nBệnh tăng huyết áp.\nBệnh ĐM vành (CAD).\nĐau thắt ngực ổn định mạn tính.\nĐau thắt ngực (Prinzmetal’s hoặc biến thể của đau thắt ngực).\nChụp X-quang mạch máu dự liệu CAD.",
+  "chongChiDinh": "Tiền sử nhạy cảm với hoạt chất hoặc dihydropyridine. Phụ nữ mang thai, có thể có thai, cho con bú. Suy gan nặng. Hẹp van động mạch chủ nặng. Bệnh nhân bị sốc.\nKhông sử dụng thuốc Troysar AM cho người bị mẫn cảm với losartan hoặc amlodipine hoặc bất cứ thành phần của thuốc.",
+  "lieuDung": "Liều dùng:\nNgày 1 viên. Tối đa 100mg losartan/5mg amlodipine. Có thể dùng với thuốc chống tăng huyết áp khác.\nViên 50mg/5mg: dùng cho bệnh nhân có huyết áp không kiểm soát tốt bằng losartan 50mg/amlodipine 5mg đơn độc.\nViên 100mg/5mg: dùng cho bệnh nhân có huyết áp không kiểm soát tốt bằng losartan 100mg hoặc Viên 50mg/5mg. Đang dùng cả losartan và amlodipine có thể chuyển sang kết hợp losartan/amlodipine cho tiện dụng.\nCách dùng:\nCó thể dùng lúc đói hoặc no: Dùng trong hoặc ngoài bữa ăn, nên uống với nước.\nLiều dùng khuyến cáo:\nLiều dùng: 1 viên/lần/ngày hoặc theo chỉ dẫn của bác sĩ.\nCách dùng:\nDùng thuốc khi có sự kê đơn và dùng đúng theo chỉ dẫn của bác sĩ.\nUống thuốc vào buổi tối.\nCơ xương: đau lưng, co cứng cơ,Globin cơ niệu, đau chân, chuột rút cơ bắp, đau khớp,đau cơ\nToàn thân: suy nhược, phù/sưng, mệt mỏi, tăng /giảm cân, khó chịu, đau đớn, phản ứng dị ứng,run.\nThần kinh: Chóng mặt, đau thần kinh ngoại vi, chóng mặt, run, mất ngủ.\nHô hấp: tắc nghẽn đường thở, chảy máu cam, đường hô hấp trên bị nhiễm trùng, ho,sưng thanh quản và thanh môn,viêm xoang, nghẹt mũi, sưng mặt, họng, lưỡi, môi.\nTiêu hóa: buồn nôn, tiêu chảy, khó tiêu,viêm gan, biếng ăn, đầy hơi, táo bón, viêm tụy,nôn, khó tiêu, tăng sản nướu răng, mắc chứng khó nuốt.\nTăng kali máu, natri máu hạ.\nTăng creatinine huyết thanh, nitrogen urê máu.\nTăng bilirubin huyết thanh, enzym gan.\nTim mạch: nhịp tim chậm/ nhanh , ngất xỉu,chóng mặt, đau ngực, hạ huyết áp thế đứng,loạn nhịp tim, hạ huyết áp,viêm mạch.\nRối loạn chức năng tình dục.\nTiết niệu: tiểu đêm, tiểu rắt.\nHuyết học: nổi ban, bạch cầu/ tiểu cầu giảm.",
+  "tacDungPhu": "Choáng váng, nhức đầu.",
+  "tuongTac": "Thuốc lợi niệu giữ K, thuốc bổ sung K, chất thay thế muối chứa K. Muối lithi. NSAID.",
+  "baoQuan": "Để Troysar AM ở nơi có độ ẩm thấp, nhiệt độ dưới 30 độ và nơi thoáng mát."
+ }
 }

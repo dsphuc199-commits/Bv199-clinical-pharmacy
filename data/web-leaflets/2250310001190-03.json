@@ -1,10 +1,22 @@
 {
  "productId": "2250310001190-03",
  "brandName": "Tatanol",
- "notFound": true,
- "tried": [
-  "893100551124",
-  "VD2539716"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VNA-1148-03",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Tatanol 500mg dạng viên nén - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-370/tatanol-500mg.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Thuốc có tác dụng giảm đau, hạ sốt. Điều trị làm giảm các cơn đau do cảm cúm, nhức đầu, đau họng, đau nhức cơ xương, đau do hành kinh, đau răng, đau nửa đầu. Có thể phối hợp trong phương pháp điều trị nguyên nhân gây đau hoặc sốt.\nAcetaminophen được dùng rộng rãi trong điều trị các chứng đau và sốt từ nhẹ đến vừa.\nĐau: Acetaminophen được dùng giảm đau tạm thời trong điều trị các chứng đau nhẹ và vừa như đau do cảm cúm, nhức đầu, đau họng, đau nhức cơ xương, đau do hành kinh, đau răng, đau nửa đầu.\nSốt: Acetaminophen được dùng để giảm thân nhiệt ở bệnh nhân sốt do mọi nguyên nhân nhưng không làm giảm thân nhiệt ở người bình thường.",
+  "chongChiDinh": "Bệnh nhân mẫn cảm với acetaminophen Bệnh nhân suy chức năng gan và thận nặng, viêm gan siêu vi.\nBệnh nhân mẫn cảm với acetaminophen hoặc với bất kỳ thành phần nào của thuốc.\nSuy gan nặng.",
+  "lieuDung": "Người lớn và trẻ em trên 12 tuổi:\n1-2 viên (500mg); /lần, cách nhau 4-6 giờ Không quá 8 viên trong 24 giờ Trong điều trị dài hạn nên tham khảo ý kiến bác sĩ.\nTrẻ em 7-12 tuổi:\n1 viên (500mg) /lần cách nhau tối thiểu 4 giờ. Không quá 4 viên trong 24 giờ.\nLiều dùng khuyến cáo:\nLiều thường dùng ở người lớn và trẻ em trên 12 tuổi: Uống 500-1000mg tương đương 1-2 viên mỗi lần. Thời gian giữa 2 lần uống cách nhau 4-6 giờ. Mỗi ngày uống không quá 8 viên.\nLiều thường dùng ở trẻ em 7-12 tuổi: Uống 500mg tương đương 1 viên mỗi lần. Thời gian giữa hai lần uống thuốc cách nhau tối thiểu 4 tiếng. Mỗi ngày uống không quá 4 viên.\nCách dùng:\nThuốc được bào chế dạng viên nang do đó bệnh nhân sử dụng thuốc bằng cách uống trực tiếp viên thuốc với nước lọc. Không nên bẻ nhỏ, nghiền, nhai viên nang, nên uống trực tiếp cả viên nang. Thuốc có thể uống ngay sau khi ăn bữa ăn hoặc trong bữa ăn.\nKhi sử dụng Acetaminophen thỉnh thoảng gặp ban da hoặc dị ứng. Thường gặp các triệu chứng như ban đỏ, mày đay có thể kèm hoặc không kèm sốt.\nÍt gặp các triệu chứng như buồn nôn, ban da, nôn, rối loạn tạo máu, thiếu máu, độc lên thận hoặc bệnh thận.\nKhi dùng Acetaminophen dù hiếm nhưng vẫn có thể gặp các phản ứng trên da nghiêm trọng như hội chứng Stevens-Johnson, hội chứng Lyell, quá mẫn,…",
+  "tacDungPhu": "Dùng liều điều trị không gây tác dụng phụ đáng kể. Các phản ứng dị ứng rất hiếm gặp và thường bao gồm cả chứng nổi mề đay, ban đỏ. Khi có bất kỳ một phản ứng dị ứng nào xảy ra, việc điều trị phải được chấm dứt ngay lập tức.",
+  "tuongTac": "Phối hợp với các thuốc có độc tính trên gan làm tăng nguy cơ độc trên gan. Thuốc chống đông: liều cao acetaminophen gây tăng hiệu quả chống đông. Không có tương tác nào ghi nhận có ảnh hưởng đến tác dụng hoặc sự an toàn của acetaminophen.",
+  "baoQuan": "Bảo quản nơi khô, mát. Tránh ánh sáng."
+ }
 }

@@ -1,10 +1,20 @@
 {
  "productId": "2250340006684-04",
  "brandName": "Tetracyclin 1%",
- "notFound": true,
- "tried": [
-  "893110920324",
-  "VD2639517"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "893110598324",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Tetracyclin 1% Quapharco - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-8164/tetracyclin-1.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Viêm kết mạc, giác mạc do vi khuẩn, loét giác mạc bội nhiễm, bệnh mắt hột, viêm mí mắt, lẹo.",
+  "lieuDung": "- Tra thuốc vào buổi chiều thường giúp kéo dài tác dụng của thuốc suốt đêm.\n- Ngừa nhiễm trùng hậu phẫu, bắt đầu trị liệu vào ngày mổ và tiếp tục sau đó 4 ngày.\n- Tra mắt 3 - 6 lần trong 24 giờ.\nChú ý:\nBóp 1 lượng nhỏ thuốc đặt vào mí mắt dưới của mắt nhiễm khuẩn.\nTránh làm nhiễm bẩn đầu của tuýp thuốc khi tra mắt.\nThuốc này có thể dùng một mình hoặc phối hợp trong điều trị toàn thân.\nCó thể có phản ứng dị ứng, ngứa, nổi mề đay, xung huyết. Ghi chú: Thông báo cho bác sỹ những tác dụng không mong muốn gặp phải khi sử dụng thuốc.",
+  "duocLuc": "Tetracyclin là một kháng sinh phổ rộng có tác dụng kìm khuẩn do tác dụng ức chế quá trình tổng hợp protein của vi khuẩn.\nCơ chế tác dụng của tetracyclin là do khả năng gắn vào và ức chế chức năng ribosom của vi khuẩn, đặc biệt là gắn vào đơn vị 30S của ribosom. Do vậy, tetracyclin ngăn cản quá trình gắn aminoacyl t - RNA dẫn đến ức chế quá trình tổng hợp protein.\nKhi vi khuẩn kháng tetracyclin, vị trí gắn tetracyclin trên ribosom bị biến đổi. Vì vậy tetracyclin không gắn vào ribosom của vi khuẩn và mất tác dụng.",
+  "duocDong": "Thuốc mỡ mắt tetracyclin có giới hạn tác dụng trị liệu tại chỗ do nhiễm khuẩn ở cấu trúc bên ngoài mắt và các phần phụ do các chủng vi khuẩn nhạy cảm với tetracyclin."
+ }
 }

@@ -1,10 +1,19 @@
 {
  "productId": "2250330019427-01",
  "brandName": "Stresam",
- "notFound": true,
- "tried": [
-  "VN2198819",
-  "300110027325"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-13888-11",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Stresam 50mg Biocodex - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-11120/stresam.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Điều trị các triệu chứng dạng tâm thể của lo âu.\nBảo vệ thần kinh, phục hồi thần kinh và chống viêm.\nCác biểu hiện tâm thần & thực thể của stress gây lo âu như căng thẳng, khó tập trung, rối loạn trí nhớ, rối loạn giấc ngủ, rối loạn thần kinh thực vật & nhất là các biểu hiện tim mạch, tiêu hóa như hồi hộp, tim đập nhanh, đánh trống ngực, tăng HA, đau ngực, cảm giác nghẹt thở, hội chứng ruột kích thích, loét dạ dày-tá tràng...",
+  "chongChiDinh": "Người mẫn cảm với bất kỳ thành phần nào của thuốc.\nBệnh nhân suy gan, suy thận.\nBệnh nhân gặp phải tình trạng sốc.\nBệnh nhân nhược cơ.",
+  "lieuDung": "Cách dùng:\n- Thuốc được sử dụng bằng đường uống, nuốt cả viên vơi một cốc nước.\nLiều dùng\n- Người lớn: Liều thông thường cho hiệu quả điều trị trên lâm sàng từ 3-4 viên/ngày (tương đương 150-200mg/ngày), chia làm 2-3 lần mỗi ngày.\n- Trẻ em: Hiện chưa có chưng cứ về độ an toàn và hiệu quả khi sử dụng thuốc Stresam 50mg cho trẻ em dưới 15 tuổi. Chính vì vậy, không khuyến cáo sử dụng cho đối tượng này.\nThời gian:\n- Thời gian điều trị có thể từ vài ngày đến vài tuần.\nDa và mô dưới da: phát ban, ngứa, nổi mề đay,...\nSinh sản và tuyến vú: có thể gây băng huyết ở phụ nữ dùng thuốc ngừa thai dạng uống.\nHệ thần kinh: buồn ngủ trong quá trình điều trị."
+ }
 }

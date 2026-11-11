@@ -1,9 +1,18 @@
 {
  "productId": "2250380016353-01",
  "brandName": "Stimol",
- "notFound": true,
- "tried": [
-  "VN1846914"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "VN-18106-14",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Stimol 1g/10ml Biocodex - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-8415/stimol.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Ðiều trị suy nhược cơ thể : - Sau nhiễm trùng, sau phẫu thuật, trong thời kỳ dưỡng bệnh. - Trong thai kỳ và sau khi sinh. - Ở người lớn tuổi: Trong hoạt động tình dục, Stress. Trong hoạt động thể dục, thể thao : - Giúp tăng cường hoạt động cơ. - Giúp tăng sức chịu đựng của cơ.",
+  "lieuDung": "- Người lớn : 3 gói hoặc 3 ống mỗi ngày, chia đều ra trong ngày.\n- Trẻ em trên 6 tuổi : 2 gói hoặc 2 ống mỗi ngày, chia đều ra trong ngày.\n- Trẻ em dưới 6 tuổi : 1 gói hoặc 1 ống mỗi ngày.\nKhi dùng, pha loãng thuốc trong một ly nước. Như mọi thuốc chống suy nhược, thời gian điều trị phải có giới hạn.\nVài trường hợp đau dạ dày thoáng qua khi bắt đầu điều trị."
+ }
 }

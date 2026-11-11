@@ -25,10 +25,12 @@ const index = {
 /* Thuoc chua co HDSD rieng -> chon 1 thuoc khac trong danh muc CUNG hoat chat + CUNG duong dung da co HDSD
    (uu tien cung dang bao che, cung ham luong, nguon Cuc QLD) de hien thi tham khao, ghi ro la cua thuoc khac. */
 const plain = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[đĐ]/g, "d").toLowerCase().trim();
-const ingredientKey = (p) => plain(p.ingredientName).replace(/\([^)]*\)?/g, " ").replace(/chlor/g, "clor").replace(/ph/g, "f").replace(/\d.*$/, "").replace(/\s+/g, " ").trim();
+/* Bo tien to "Mỗi ống 2ml chứa:" truoc ten hoat chat. */
+const stripPrefix = (s) => s.replace(/^.*?\bchua\s*:\s*/, "");
+const ingredientKey = (p) => stripPrefix(plain(p.ingredientName)).replace(/\([^)]*\)?/g, " ").replace(/chlor/g, "clor").replace(/ph/g, "f").replace(/\d.*$/, "").replace(/\s+/g, " ").trim();
 /* Thuoc 1 hoat chat (bo phan trong ngoac nhu "dưới dạng ..."); loai phoi hop va duoc lieu dang cao/hon hop. */
 const singleIngredient = (p) => {
-  const ing = plain(p.ingredientName).replace(/\([^)]*\)?/g, " ");
+  const ing = stripPrefix(plain(p.ingredientName)).replace(/\([^)]*\)?/g, " ");
   return !/[;,+&/]| va | voi /.test(ing) && !/^(cao|bot|hon hop|duoc lieu)\b|duoc lieu|cao (dac|kho|long)/.test(ing) && ingredientKey(p).length >= 4;
 };
 const routeKey = (p) => plain(p.route).replace(/tiem truyen tinh mach|truyen tinh mach|tiem truyen/, "tiem truyen");
@@ -41,20 +43,36 @@ const sourceOf = (p) => {
   if (rec && !rec.notFound && davOk.has(rec.davId)) return "dav";
   return webOk.has(p.id) ? "web" : null;
 };
+/* Thuoc phoi hop (khong phai duoc lieu): khoa = bo hoat chat da sap xep, vd. "acid clavulanic+amoxicilin". */
+const isHerbal = (p) => /cao (dac|kho|long)|duoc lieu|hon hop|tuong (duong|ung) voi/.test(plain(p.ingredientName) + " " + plain(p.strength));
+const comboKey = (p) => {
+  if (isHerbal(p)) return null;
+  const parts = stripPrefix(plain(p.ingredientName)).replace(/\([^)]*\)?/g, " ").replace(/chlor/g, "clor").replace(/ph/g, "f")
+    .split(/[;,+&/]| va | voi /)
+    .map((s) => s.replace(/\d.*$/, "").replace(/\s+/g, " ").trim())
+    .filter((s) => s.length >= 3);
+  // 2-4 hoat chat (thuoc phoi hop tan duoc); >4 thanh phan thuong la bai thuoc dong duoc -> khong ghep.
+  return parts.length >= 2 && parts.length <= 4 ? [...new Set(parts)].sort().join("+") : null;
+};
 const groups = new Map();
 const unique = [...new Map(products.map((p) => [p.id, p])).values()];
 for (const p of unique) {
   const src = sourceOf(p);
   const ing = ingredientKey(p);
   // Chi ghep hoat chat don (khong ghep thuoc phoi hop nhieu hoat chat de tranh nham).
-  if (!src || !singleIngredient(p)) continue;
+  if (!src) continue;
+  const combo = comboKey(p);
+  if (combo) groups.set(`${combo}|${routeKey(p)}`, [...(groups.get(`${combo}|${routeKey(p)}`) || []), { p, src }]);
+  if (!singleIngredient(p)) continue;
   const k = `${ing}|${routeKey(p)}`;
   groups.set(k, [...(groups.get(k) || []), { p, src }]);
 }
 const siblings = {};
 for (const p of unique) {
-  if (sourceOf(p) || !singleIngredient(p)) continue;
-  const list = groups.get(`${ingredientKey(p)}|${routeKey(p)}`);
+  if (sourceOf(p)) continue;
+  const combo = comboKey(p);
+  if (!combo && !singleIngredient(p)) continue;
+  const list = groups.get(`${combo ?? ingredientKey(p)}|${routeKey(p)}`);
   if (!list) continue;
   // Nhom phu thuoc nong do (dich truyen, dien giai, insulin, heparin) hoac ham luong dang %: bat buoc cung ham luong.
   const critical = /natri clorid|kali clorid|glucose|dextrose|magnesi sulfat|calci clorid|calci gluconat|natri bicarbonat|natri hydrocarbonat|ringer|insulin|heparin|kali clorid|albumin|nhu dich|lipid|acid amin|amino|sodium|potassium|manitol|mannitol/.test(ingredientKey(p)) || /%/.test(`${p.strength} ${p.brandName}`) || /truyen/.test(routeKey(p));

@@ -12,10 +12,21 @@ export type LeafletBlock =
 const FREQ = "(?:Rất thường gặp|Thường gặp|Ít gặp|Hiếm gặp|Rất hiếm gặp|Rất hiếm|Chưa rõ tần suất|Không rõ tần suất|Không rõ tần số|Không xác định được tần suất)";
 const MAX_PARAGRAPH = 320;
 
+/* Dong quang cao/dieu huong cua trang web (khong phai noi dung HDSD). */
+const PROMO_LINE = /(xem thêm|bạn đọc có thể|tham khảo thêm|mua (thuốc|hàng|ở đâu)|giá bao nhiêu|trung tâm thuốc|central pharmacy|nhà thuốc|liên hệ|hotline|tư vấn miễn phí|đặt hàng|zalo)/i;
+
 function normalize(text: string): string {
   return text
     .replace(/\r/g, "")
     .replace(/[ \t]+/g, " ")
+    // "==>> Xem them ..." den het dong; so trich dan "[1]", "[2,3]".
+    .replace(/\s*=+\s*>+.*$/gm, "")
+    .replace(/\s*\[\d+(?:\s*[,–-]\s*\d+)*\]/g, "")
+    // Cau hoi kieu bai viet: "3B MEDI là thuốc gì?"
+    .replace(/^[^.\n?]{0,90}\blà (thuốc )?gì\s*\?\s*/gim, "")
+    .split("\n")
+    .filter((l) => !PROMO_LINE.test(l))
+    .join("\n")
     // Cau bi dinh lien: "...thần kinh.Vitamin B6" -> xuong dong.
     .replace(/([\p{Ll}\d%)\]])\.(?=\p{Lu}\p{Ll})/gu, "$1.\n")
     // Nhan tan suat dinh vao chu truoc: "chóng mặtÍt gặp:" -> xuong dong truoc nhan.

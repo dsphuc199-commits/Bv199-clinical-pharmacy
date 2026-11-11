@@ -1,9 +1,20 @@
 {
  "productId": "131",
  "brandName": "Thập toàn đại bổ",
- "notFound": true,
- "tried": [
-  "VD1875913"
- ],
- "extractedAt": "2026-11-10"
+ "soDangKy": "V618-H12-10",
+ "matchedBy": "ten-nha-san-xuat",
+ "source": {
+  "title": "Thập toàn đại bổ - Công dụng, liều dùng & lưu ý",
+  "url": "https://thuocbietduoc.com.vn/thuoc-35181/thap-toan-dai-bo.aspx",
+  "site": "Thuốc biệt dược (thuocbietduoc.com.vn)"
+ },
+ "method": "web",
+ "extractedAt": "2026-11-11",
+ "reviewed": false,
+ "sections": {
+  "chiDinh": "Tác dụng:\nÔn bổ khí huyết.\nChỉ định :\nKhí và huyết đều hư, sắc mặt trắng xanh, hơi thở ngắn, đánh trống ngực, chóng mặt, dễ ra mồ hôi, sức yếu, mệt mỏi, tay chân không ấm.",
+  "chongChiDinh": "Người đang bị tiêu chảy, hoặc mẫn cảm với thuốc. Phụ nữ có thai.",
+  "lieuDung": "Người lớn : liều trung bình\nMỗi lần uống 5ml. Ngày uống 2-3 lần.\nHoặc theo chỉ định của bác sĩ;\nChưa phát hiện thấy tác dụng không mong muốn của thuốc.Nếu có bất thường khi dùng thuốc cần ngừng ngay và báo cho bác sĩ hoặc dược sĩ biết để xử lý.",
+  "tuongTac": "- Các loại thuốc kháng acid thường xảy ra các tương tác với các thuốc sử dụng bằng đường uống . Do đó, không nên dùng đồng thời thuốc kháng acid với các loại thuốc khác vì nó có thể làm giảm tác dụng của các thuốc này\n- Chú ý: nên sử dụng các loại thuốc cách nhau khoảng 2 giờ."
+ }
 }

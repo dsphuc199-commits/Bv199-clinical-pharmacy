@@ -22,29 +22,39 @@ export type Leaflet = {
   totalPages?: number;
   extractedAt: string;
   reviewed?: boolean;
+  /* Nguon web: "sdk" = trang ghi trung so dang ky; "ten-nha-san-xuat" = trung ten thuoc va nha san xuat. */
+  matchedBy?: "sdk" | "ten-nha-san-xuat";
   sections?: Partial<Record<LeafletSectionKey, string>>;
   rawText?: string;
 };
 
-/* Thu tu hien thi: noi dung lam sang truoc, thong tin bao che/bao quan sau. */
-export const LEAFLET_SECTIONS: { key: LeafletSectionKey; title: string; open?: boolean }[] = [
-  { key: "chiDinh", title: "Chỉ định", open: true },
-  { key: "lieuDung", title: "Liều dùng và cách dùng", open: true },
-  { key: "chongChiDinh", title: "Chống chỉ định", open: true },
-  { key: "canhBao", title: "Cảnh báo và thận trọng" },
-  { key: "thaiKy", title: "Phụ nữ có thai và cho con bú" },
-  { key: "tuongTac", title: "Tương tác thuốc" },
-  { key: "tuongKy", title: "Tương kỵ" },
-  { key: "tacDungPhu", title: "Tác dụng không mong muốn" },
-  { key: "quaLieu", title: "Quá liều và cách xử trí" },
-  { key: "laiXe", title: "Ảnh hưởng lên khả năng lái xe, vận hành máy" },
-  { key: "duocLuc", title: "Dược lực học" },
-  { key: "duocDong", title: "Dược động học" },
-  { key: "thanhPhan", title: "Thành phần" },
-  { key: "dangBaoChe", title: "Dạng bào chế" },
-  { key: "dongGoi", title: "Quy cách đóng gói" },
-  { key: "baoQuan", title: "Bảo quản" },
-  { key: "hanDung", title: "Hạn dùng" },
+/* Thu tu va nhom hien thi theo trinh tu lam sang: dung thuoc -> an toan -> tuong tac -> duoc ly -> bao che. */
+export const LEAFLET_GROUPS = {
+  dung: "Sử dụng thuốc",
+  antoan: "An toàn",
+  tuongtac: "Tương tác",
+  duocly: "Dược lý",
+  baoche: "Bào chế – Bảo quản",
+} as const;
+
+export const LEAFLET_SECTIONS: { key: LeafletSectionKey; title: string; group: keyof typeof LEAFLET_GROUPS; open?: boolean }[] = [
+  { key: "chiDinh", title: "Chỉ định", group: "dung", open: true },
+  { key: "lieuDung", title: "Liều dùng và cách dùng", group: "dung", open: true },
+  { key: "chongChiDinh", title: "Chống chỉ định", group: "dung", open: true },
+  { key: "canhBao", title: "Cảnh báo và thận trọng", group: "antoan" },
+  { key: "tacDungPhu", title: "Tác dụng không mong muốn", group: "antoan" },
+  { key: "thaiKy", title: "Phụ nữ có thai và cho con bú", group: "antoan" },
+  { key: "laiXe", title: "Lái xe, vận hành máy móc", group: "antoan" },
+  { key: "quaLieu", title: "Quá liều và xử trí", group: "antoan" },
+  { key: "tuongTac", title: "Tương tác thuốc", group: "tuongtac" },
+  { key: "tuongKy", title: "Tương kỵ", group: "tuongtac" },
+  { key: "duocLuc", title: "Dược lực học", group: "duocly" },
+  { key: "duocDong", title: "Dược động học", group: "duocly" },
+  { key: "thanhPhan", title: "Thành phần", group: "baoche" },
+  { key: "dangBaoChe", title: "Dạng bào chế", group: "baoche" },
+  { key: "dongGoi", title: "Quy cách đóng gói", group: "baoche" },
+  { key: "baoQuan", title: "Bảo quản", group: "baoche" },
+  { key: "hanDung", title: "Hạn dùng", group: "baoche" },
 ];
 
 export async function getLeaflet(davId: number | undefined | null): Promise<Leaflet | null> {
