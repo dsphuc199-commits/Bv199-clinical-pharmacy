@@ -58,16 +58,15 @@ const GROUPS: Group[] = [
     number: "03",
     title: "Kháng sinh & AMS",
     items: [
-      { label: "Tổng quan AMS", href: "/antibiotics", code: "KS" },
       { section: "Khởi đầu điều trị", label: "Phác đồ kinh nghiệm", href: "/antibiotics/empiric", code: "KN" },
       { label: "Chọn theo người bệnh", href: "/antibiotics/empiric/select", code: "NB" },
       { label: "Dị ứng kháng sinh", href: "/antibiotics/allergy", code: "DU" },
       { section: "Đánh giá lại 48–72 giờ", label: "Theo tác nhân vi sinh", href: "/antibiotics/organism", code: "TN" },
       { label: "Xuống thang", href: "/antibiotics/deescalation", code: "XT" },
       { label: "Chuyển tĩnh mạch → uống", href: "/antibiotics/iv-to-po", code: "IV" },
-      { section: "Tối ưu liều", label: "PK/PD kháng sinh", href: "/pkpd", code: "PK" },
-      { section: "Dự phòng và giám sát", label: "Dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
+      { section: "Dự phòng và dữ liệu", label: "Dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
       { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
+      { label: "PK/PD kháng sinh", href: "/pkpd", code: "PK" },
     ],
   },
   {
@@ -99,7 +98,8 @@ const GROUPS: Group[] = [
 ];
 
 function currentGroup(path: string) {
-  if (path === "/") return "home";
+  /* Trang chu chuyen toi Tong quan AMS (/antibiotics): coi la cung mot trang. */
+  if (path === "/" || path === "/antibiotics") return "home";
   if (path.startsWith("/antibiotics") || path.startsWith("/pkpd")) return "antibiotics";
   if (path.startsWith("/calculators")) return "tools";
   if (path.startsWith("/reports")) return "reports";
@@ -329,7 +329,7 @@ export default function Sidebar() {
                       fontSize: 16,
                     }}
                   >
-                    {isOpen ? "⌄" : "›"}
+                    {group.id === "home" ? "" : isOpen ? "⌄" : "›"}
                   </span>
                 </button>
 

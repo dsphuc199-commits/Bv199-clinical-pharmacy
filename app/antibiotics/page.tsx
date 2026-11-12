@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
-  Stethoscope, Microscope, SlidersHorizontal, ShieldCheck, UserRound, TrendingDown,
-  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, FlaskConical, Gauge,
+  Stethoscope, Microscope, ShieldCheck, UserRound, TrendingDown,
+  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, Gauge,
 } from "lucide-react";
 
 /**
@@ -13,8 +13,7 @@ import {
  */
 const START = "Khởi đầu điều trị";
 const REVIEW = "Đánh giá lại sau 48–72 giờ";
-const DOSE = "Tối ưu liều";
-const PREVENT = "Dự phòng và giám sát";
+const PREVENT = "Dự phòng và dữ liệu";
 const modules = [
   { id: "empiric", title: "Phác đồ kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng, yếu tố nguy cơ.", href: "/antibiotics/empiric", icon: Stethoscope, group: START },
   { id: "select", title: "Chọn theo người bệnh", description: "Lọc phác đồ theo CrCl, dị ứng, tiêu chí nguy cơ.", href: "/antibiotics/empiric/select", icon: UserRound, group: START },
@@ -22,13 +21,11 @@ const modules = [
   { id: "organism", title: "Theo tác nhân vi sinh", description: "Điều chỉnh theo vi khuẩn, kháng sinh đồ, MIC.", href: "/antibiotics/organism", icon: Microscope, group: REVIEW },
   { id: "deescalation", title: "Xuống thang", description: "Thu hẹp phổ hoặc ngừng kháng sinh.", href: "/antibiotics/deescalation", icon: TrendingDown, group: REVIEW },
   { id: "iv-to-po", title: "Chuyển tĩnh mạch → uống", description: "Tiêu chí chuyển sang đường uống.", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: REVIEW },
-  { id: "dosing", title: "Hiệu chỉnh liều", description: "Theo chức năng thận – Dược thư quốc gia 2023.", href: "/hieu-chinh-lieu", icon: SlidersHorizontal, group: DOSE },
-  { id: "tdm", title: "Theo dõi nồng độ (TDM)", description: "Vancomycin, aminoglycosid, colistin.", href: "/tdm", icon: FlaskConical, group: DOSE },
-  { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC, chỉ số PK/PD, cách dùng.", href: "/pkpd", icon: Gauge, group: DOSE },
   { id: "prophylaxis", title: "Dự phòng phẫu thuật", description: "Lựa chọn, thời điểm dùng và ngừng KSDP.", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: PREVENT },
   { id: "antibiogram", title: "Antibiogram BV199", description: "Dữ liệu vi sinh và kháng thuốc tại bệnh viện.", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: PREVENT },
+  { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC, chỉ số PK/PD, cách dùng.", href: "/pkpd", icon: Gauge, group: PREVENT },
 ] as const;
-const groups = [START, REVIEW, DOSE, PREVENT] as const;
+const groups = [START, REVIEW, PREVENT] as const;
 
 export default function AntibioticsPage() {
   return (
@@ -59,6 +56,7 @@ export default function AntibioticsPage() {
             </div>
           </div>
         ))}
+        <p className="bv199-ams-v3-related">Tối ưu liều kháng sinh: <Link href="/hieu-chinh-lieu">Hiệu chỉnh liều</Link> · <Link href="/tdm">Theo dõi nồng độ thuốc (TDM)</Link></p>
       </div>
       <style>{`
         .bv199-ams-home.bv199-ams-v3 {width:100%;max-width:100%;min-width:0;box-sizing:border-box;background:#f5f9fb;padding:28px 24px 96px;color:#172b3b;}
@@ -80,6 +78,9 @@ export default function AntibioticsPage() {
         .bv199-ams-v3-copy strong{display:block;font-size:15px;line-height:1.4;font-weight:750;}
         .bv199-ams-v3-desc{display:block;font-size:12.5px;line-height:1.5;color:#5a7385;}
         .bv199-ams-v3-action{display:block;font-size:12.5px;line-height:1.5;font-weight:750;color:#007e87;margin-top:4px;}
+        .bv199-ams-v3-related{margin:4px 0 0;font-size:13px;color:#5a7385;}
+        .bv199-ams-v3-related a{color:#007e87;font-weight:700;text-decoration:none;}
+        .bv199-ams-v3-related a:hover{text-decoration:underline;}
         .bv199-ams-v3-chevron{flex:0 0 auto;color:#8199a6;}
         @media(max-width:1100px) and (min-width:801px){.bv199-ams-v3-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
         @media(max-width:800px){
