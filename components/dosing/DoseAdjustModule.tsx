@@ -237,14 +237,6 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
   indication: string; setIndication: (v: string) => void; source: string; note: string;
 }) {
   const d = entry.dtqg;
-  // Doan chu nhieu so lien tiep = bang bi tron cot khi trich chu -> khong hien chu, xem anh trang goc.
-  const numCount = (t: string) => (t.match(/\d+(?:[.,]\d+)?/g) ?? []).length;
-  // Dau hieu bang bi tron cot: nhieu so, hoac cum "> 10", "0 - 10", "< 30" (muc CrCl) xuat hien trong doan.
-  const isTableLike = (b: { t: string; text: string }) =>
-    b.t === "table" || numCount(b.text) >= 8 || (b.text.match(/(?:[<>≤≥]\s*\d+|\d+\s*-\s*\d+\s+(?!ml|mg|giờ|lần|ngày|%))/g) ?? []).length >= 2;
-  const hasTable = !!d?.blocks.some(isTableLike) && (d?.clips.length ?? 0) > 0;
-  // Co bang: chi hien anh trang goc (chu + bang dung nhu sach), khong hien chu trich de tranh doc nham.
-  const prose = hasTable ? [] : d?.blocks ?? [];
   const [zoom, setZoom] = useState<string | null>(null);
 
   return (
@@ -273,7 +265,9 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
               </select>
             </label>
           )}
-          {crcl === null ? (
+          {profile.ranges.length === 0 ? (
+            <p className="da-muted">Nguồn không có bảng mức liều theo CrCl cho chỉ định này – xem nguyên văn Dược thư bên dưới.</p>
+          ) : crcl === null ? (
             <p className="da-muted">Nhập CrCl ở trên để chọn sẵn mức liều.</p>
           ) : range ? (
             <div className="da-hit">
@@ -284,7 +278,7 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
           ) : (
             <p className="da-warn">Nguồn không có mức liều cho CrCl này – không tự suy ra; tra nguyên văn bên dưới.</p>
           )}
-          <div className="da-table-wrap">
+          {profile.ranges.length > 0 && <div className="da-table-wrap">
             <table className="da-table">
               <thead><tr><th>CrCl</th><th>Liều</th><th>Khoảng cách</th><th>Ghi chú</th></tr></thead>
               <tbody>
@@ -293,7 +287,7 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
                 ))}
               </tbody>
             </table>
-          </div>
+          </div>}
           <p className="da-src">Liều chuẩn: {profile.normalDose} · {profile.normalInterval}{profile.route ? ` · ${profile.route}` : ""}. Nguồn: {profile.source.title} ({profile.source.year}){profile.source.page ? `, ${profile.source.page}` : ""}.</p>
         </section>
       )}
@@ -307,35 +301,65 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
       )}
 
       {/* Nguyen van Duoc thu */}
-      {d && (d.blocks.length > 0 || d.clips.length > 0) && (
-        <section className="da-sec">
+      {d && d.content.length > 0 && (
+        <section className="da-sec da-dt">
           <h3><BookOpen size={17} aria-hidden /> Theo Dược thư quốc gia Việt Nam 2023</h3>
-          {d.noAdjust && <p className="da-okline">Dược thư ghi: không cần hiệu chỉnh liều theo chức năng thận (xem nguyên văn).</p>}
-          {prose.length > 0 && (
-            <div className="da-prose">
-              {prose.map((b, i) => <p key={i}>{b.text}</p>)}
-            </div>
+          {d.noAdjust && <p className="da-okline">Dược thư ghi: không cần hiệu chỉnh liều theo chức năng thận.</p>}
+          <div className="da-prose">
+            {d.content.map((b, i) => {
+              if (b.t === "p") {
+                return (
+                  <p key={i} className={b.head ? "da-dt-h" : undefined}>
+                    {b.runs.map((r, k) => {
+                      const el = r.b && r.i ? <strong><em>{r.text}</em></strong> : r.b ? <strong>{r.text}</strong> : r.i ? <em>{r.text}</em> : r.text;
+                      return <span key={k}>{el}</span>;
+                    })}
+                  </p>
+                );
+              }
+              if (b.t === "img") {
+                return (
+                  <figure key={i} className="da-formula">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={b.src} alt={`Công thức: ${b.alt}`} width={b.w} height={b.h} loading="lazy" />
+                  </figure>
+                );
+              }
+              const head = b.rows.length > 1 && b.rows[0].every((c) => c.b);
+              return (
+                <div key={i} className="da-table-wrap da-dt-table">
+                  <table>
+                    {head && (
+                      <thead><tr>{b.rows[0].map((c, k) => <th key={k} rowSpan={c.rs} colSpan={c.cs}>{c.text}</th>)}</tr></thead>
+                    )}
+                    <tbody>
+                      {(head ? b.rows.slice(1) : b.rows).map((row, r) => (
+                        <tr key={r}>
+                          {row.map((c, k) => (
+                            <td key={k} rowSpan={c.rs} colSpan={c.cs} className={c.b ? "b" : undefined}>
+                              {c.text.split("\n").map((line, li) => <span key={li} className="ln">{line}</span>)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })}
+          </div>
+          {d.clips.length > 0 && (
+            <details className="da-clips da-clips-more">
+              <summary>Đối chiếu trang gốc Dược thư ({d.clips.map((c) => `tr. ${c.printedPage}`).filter((v, i, a) => a.indexOf(v) === i).join(", ")})</summary>
+              {d.clips.map((c) => (
+                <button key={c.src} type="button" className="da-clip" onClick={() => setZoom(c.src)} aria-label={`Phóng to trang ${c.printedPage}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={c.src} alt={`Dược thư quốc gia Việt Nam 2023, trang ${c.printedPage}`} width={c.w} height={c.h} loading="lazy" />
+                  <span>Trang {c.printedPage}</span>
+                </button>
+              ))}
+            </details>
           )}
-          {d.clips.length > 0 && (() => {
-            const imgs = d.clips.map((c) => (
-              <button key={c.src} type="button" className="da-clip" onClick={() => setZoom(c.src)} aria-label={`Phóng to trang ${c.printedPage}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.src} alt={`Dược thư quốc gia Việt Nam 2023, trang ${c.printedPage}`} width={c.w} height={c.h} loading="lazy" />
-                <span>Trang {c.printedPage}</span>
-              </button>
-            ));
-            return hasTable ? (
-              <div className="da-clips">
-                <p className="da-clips-t">Nguyên văn hiệu chỉnh liều theo chức năng thận – ảnh trang gốc Dược thư, giữ nguyên bảng liều (bấm để phóng to)</p>
-                {imgs}
-              </div>
-            ) : (
-              <details className="da-clips da-clips-more">
-                <summary>Xem trang gốc Dược thư ({d.clips.map((c) => `tr. ${c.printedPage}`).filter((v, i, a) => a.indexOf(v) === i).join(", ")})</summary>
-                {imgs}
-              </details>
-            );
-          })()}
         </section>
       )}
 
@@ -462,7 +486,23 @@ function Styles() {
       .da-outside { background: #f4f7fa; }
       .da-outside p { margin: 0; font-size: 14.5px; line-height: 1.6; }
       .da-okline { margin: 0 0 10px; border-radius: 10px; background: #e9f7f0; color: #12623c; font-weight: 700; font-size: 13.5px; padding: 8px 12px; }
-      .da-prose p { margin: 0 0 8px; font-size: 15px; line-height: 1.7; color: #24384c; }
+      .da-prose { display: grid; gap: 10px; }
+      .da-prose p { margin: 0; font-size: 15px; line-height: 1.7; color: #24384c; text-align: left; }
+      .da-prose strong { color: #0f2236; }
+      .da-prose .da-dt-h { margin-top: 6px; padding-left: 10px; border-left: 3px solid #087f89; font-size: 15.5px; font-weight: 700; color: #0b3a5b; }
+      .da-prose .da-dt-h:first-child { margin-top: 0; }
+      .da-prose em { color: #0b3a5b; }
+      .da-formula { margin: 2px 0; padding: 10px 12px; border: 1px solid #e6edf2; border-radius: 10px; background: #fbfcfd; overflow-x: auto; }
+      .da-formula img { display: block; max-width: 100%; height: auto; }
+      .da-dt-table { border: 1px solid #d9e3ea; border-radius: 12px; overflow: hidden; overflow-x: auto; }
+      .da-dt-table table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+      .da-dt-table th { background: #eef4f8; color: #10243e; font-weight: 800; text-align: center; vertical-align: middle; padding: 9px 12px; border: 1px solid #d9e3ea; line-height: 1.45; }
+      .da-dt-table td { padding: 8px 12px; border: 1px solid #e3eaf0; color: #1f3347; vertical-align: middle; text-align: center; line-height: 1.55; }
+      .da-dt-table td.b { font-weight: 700; }
+      .da-dt-table td:first-child { background: #fafcfd; }
+      .da-dt-table tbody tr:hover td { background: #f3f9fa; }
+      .da-dt-table .ln { display: block; }
+      .da-dt-table .ln + .ln { margin-top: 2px; }
       .da-clips { margin-top: 10px; display: grid; gap: 10px; }
       .da-clips-more summary { cursor: pointer; font-size: 13.5px; font-weight: 700; color: #087f89; margin-bottom: 8px; }
       .da-clips-more[open] { display: grid; gap: 10px; }

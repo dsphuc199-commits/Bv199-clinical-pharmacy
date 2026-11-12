@@ -2,12 +2,16 @@
   Trich phan "hieu chinh lieu o nguoi suy than" tu Duoc thu quoc gia Viet Nam (lan xuat ban thu ba, 2023)
   cho cac thuoc trong danh muc BV199 + khang sinh uu tien quan ly theo QD 5631/QD-BYT (Phu luc 2).
 
-  Moi thuoc: doan van NGUYEN VAN (khong dien giai) + anh cat dung vung trang Duoc thu chua doan do
-  (bang lieu theo CrCl giu nguyen nhu sach). Khong tu suy ra lieu.
+  Ket qua la VAN BAN NGUYEN VAN co cau truc (khong dien giai, khong tu suy ra lieu):
+    - doan van: giu chu dam / nghieng nhu ban goc, ngat doan theo ban goc;
+    - bang: dung lai tu duong ke bang tren trang (nhan dien duong ke tren anh trang), dat chu vao dung o,
+      ho tro o gop (rowspan/colspan);
+    - chong chi dinh / than trong lien quan than: cau nguyen van.
+  Kem anh cat trang goc de doi chieu.
 
   Dau ra: data/renal-dtqg.json, public/duoc-thu/*.webp
   Can: pdfjs-dist + @napi-rs/canvas (LEAFLET_TOOLS), sharp (dependency cua du an).
-  Chay: LEAFLET_TOOLS=<tools> node scripts/build-renal-dtqg.mjs "<duong dan Duoc thu 2023.pdf>" [--only ten] [--no-images]
+  Chay: LEAFLET_TOOLS=<tools> node scripts/build-renal-dtqg.mjs "<Duoc thu 2023.pdf>" [--only ten] [--no-images]
 */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -33,70 +37,231 @@ const key = (s) => plain(s).replace(/\([^)]*\)?/g, " ").replace(/[^a-z0-9 ]/g, "
 const slug = (s) => key(s).replace(/ /g, "-");
 
 const pdf = await getDocument({ data: new Uint8Array(readFileSync(PDF)), verbosity: 0 }).promise;
-const PAGE_OFFSET = 6; // trang in = trang PDF + 6 (theo du lieu da doi chieu: PDF tr. 202 = trang in 208)
+const PAGE_OFFSET = 6; // trang in = trang PDF + 6 (da doi chieu: PDF tr. 202 = trang in 208)
+const S = 2; // ti le dung anh de nhan dien duong ke bang
 
-/* ---------- Dong chu theo vi tri (trang, cot, y) ---------- */
-const lineCache = new Map();
-async function pageLines(n) {
-  if (lineCache.has(n)) return lineCache.get(n);
+/* =================== Doc trang: chu (co kieu chu) + bang =================== */
+const pageCache = new Map();
+async function readPage(n) {
+  if (pageCache.has(n)) return pageCache.get(n);
   const page = await pdf.getPage(n);
   const vp = page.getViewport({ scale: 1 });
+  const W = vp.width, H = vp.height, mid = W / 2;
   const tc = await page.getTextContent();
-  const mid = vp.width / 2;
-  const rows = [];
-  const items = tc.items.filter((it) => it.str && it.str.trim()).map((it) => ({ x: it.transform[4], y: it.transform[5], h: Math.abs(it.transform[3]) || 9, w: it.width || 0, s: it.str }));
+  await page.getOperatorList();
+  const style = {};
+  const styleOf = (f) => {
+    if (style[f]) return style[f];
+    let name = "";
+    try { name = page.commonObjs.get(f)?.name || ""; } catch { /* */ }
+    return (style[f] = { b: /Bold|Black|Heavy/i.test(name), i: /Italic|Oblique/i.test(name) });
+  };
+  const raw = tc.items.filter((it) => it.str && it.str.trim()).map((it) => ({
+    x: it.transform[4], y: it.transform[5], w: it.width || 0, h: Math.abs(it.transform[3]) || 9, s: it.str, ...styleOf(it.fontName),
+  }));
+  // Bo tieu de chay dau trang va so trang cuoi trang.
+  const items = raw.filter((i) => i.y < H - 52 && i.y > 36);
   const hs = items.map((i) => i.h).sort((a, b) => a - b);
   const medH = hs[Math.floor(hs.length / 2)] || 10;
-  // Chu nho (chi so tren/duoi: m², Clcr, HbA1c) gan vao dong chinh gan nhat, noi lien khong cach.
+
+  /* ---- Nhan dien duong ke bang tren anh trang ---- */
+  const vpS = page.getViewport({ scale: S });
+  const canvas = createCanvas(Math.ceil(vpS.width), Math.ceil(vpS.height));
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  await page.render({ canvasContext: ctx, viewport: vpS }).promise;
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const CW = canvas.width, CH = canvas.height;
+  // Duong ke manh (0,5 pt) khi dung anh co mau xam -> nguong 175.
+  const dark = (x, y) => { const o = (y * CW + x) * 4; return img.data[o] < 175 && img.data[o + 1] < 175 && img.data[o + 2] < 175; };
+  const hSeg = [], vSeg = [];
+  const MIN_H = 70 * S, MIN_V = 14 * S;
+  for (let y = 0; y < CH; y++) {
+    let run = 0;
+    for (let x = 0; x <= CW; x++) {
+      if (x < CW && dark(x, y)) run++;
+      else { if (run >= MIN_H) hSeg.push({ y, x0: x - run, x1: x - 1 }); run = 0; }
+    }
+  }
+  for (let x = 0; x < CW; x++) {
+    let run = 0;
+    for (let y = 0; y <= CH; y++) {
+      if (y < CH && dark(x, y)) run++;
+      else { if (run >= MIN_V) vSeg.push({ x, y0: y - run, y1: y - 1 }); run = 0; }
+    }
+  }
+  // Gop cac duong day (nhieu pixel) thanh 1.
+  const mergeH = [];
+  for (const s of hSeg.sort((a, b) => a.y - b.y || a.x0 - b.x0)) {
+    const m = mergeH.find((q) => Math.abs(q.y - s.y) <= 3 && s.x0 <= q.x1 + 4 && s.x1 >= q.x0 - 4);
+    if (m) { m.x0 = Math.min(m.x0, s.x0); m.x1 = Math.max(m.x1, s.x1); m.y = (m.y + s.y) / 2; } else mergeH.push({ ...s });
+  }
+  const mergeV = [];
+  for (const s of vSeg.sort((a, b) => a.x - b.x || a.y0 - b.y0)) {
+    const m = mergeV.find((q) => Math.abs(q.x - s.x) <= 3 && s.y0 <= q.y1 + 4 && s.y1 >= q.y0 - 4);
+    if (m) { m.y0 = Math.min(m.y0, s.y0); m.y1 = Math.max(m.y1, s.y1); m.x = (m.x + s.x) / 2; } else mergeV.push({ ...s });
+  }
+  // Nhom duong ke thanh bang: cac duong ngang chong lan theo x va duoc noi boi duong doc.
+  // Hai duong ngang lien tiep cung 1 bang CHI KHI co duong doc noi lien khoang giua chung
+  // (tranh gop cac bang dung sat nhau cung doan van o giua).
+  const tables = [];
+  for (const h of mergeH) {
+    let t = tables.find((tb) => h.x0 < tb.x1 - 10 && h.x1 > tb.x0 + 10 && h.y > tb.y1 &&
+      mergeV.some((v) => v.x >= Math.max(tb.x0, h.x0) - 4 && v.x <= Math.min(tb.x1, h.x1) + 4 && v.y0 <= tb.y1 + 3 && v.y1 >= h.y - 3));
+    if (!t) { t = { x0: h.x0, x1: h.x1, y0: h.y, y1: h.y, h: [] }; tables.push(t); }
+    t.h.push(h); t.x0 = Math.min(t.x0, h.x0); t.x1 = Math.max(t.x1, h.x1); t.y1 = Math.max(t.y1, h.y);
+  }
+  const grids = [];
+  for (const t of tables) {
+    if (t.h.length < 2) continue;
+    const vs = mergeV.filter((v) => v.x >= t.x0 - 4 && v.x <= t.x1 + 4 && v.y1 > t.y0 + 2 && v.y0 < t.y1 - 2);
+    if (vs.length < 2) continue;
+    const uniq = (arr) => arr.sort((a, b) => a - b).reduce((acc, v) => (acc.length && v - acc[acc.length - 1] <= 5 ? acc : [...acc, v]), []);
+    const xs = uniq(vs.map((v) => v.x));
+    const ys = uniq(t.h.map((h) => h.y));
+    if (xs.length < 2 || ys.length < 2) continue;
+    const hasH = (y, xa, xb) => t.h.some((h) => Math.abs(h.y - y) <= 5 && h.x0 <= (xa + xb) / 2 && h.x1 >= (xa + xb) / 2);
+    const hasV = (x, ya, yb) => vs.some((v) => Math.abs(v.x - x) <= 5 && v.y0 <= (ya + yb) / 2 && v.y1 >= (ya + yb) / 2);
+    const R = ys.length - 1, C = xs.length - 1;
+    // owner[r][c] = o goc (o gop)
+    const owner = Array.from({ length: R }, () => Array(C).fill(null));
+    const cells = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      if (owner[r][c]) continue;
+      let cs = 1, rs = 1;
+      while (c + cs < C && !hasV(xs[c + cs], ys[r], ys[r + 1])) cs++;
+      while (r + rs < R && !hasH(ys[r + rs], xs[c], xs[c + cs])) rs++;
+      const cell = { r, c, rs, cs, x0: xs[c], x1: xs[c + cs], y0: ys[r], y1: ys[r + rs], items: [] };
+      for (let rr = r; rr < r + rs; rr++) for (let cc = c; cc < c + cs; cc++) owner[rr][cc] = cell;
+      cells.push(cell);
+    }
+    // Toa do PDF (diem) cua bang.
+    grids.push({ cells, R, C, x0: xs[0] / S, x1: xs[xs.length - 1] / S, top: H - ys[0] / S, bottom: H - ys[ys.length - 1] / S });
+  }
+
+  // Gan chu vao o bang; chu con lai la dong van.
+  const free = [];
+  for (const it of items) {
+    const px = (it.x + it.w / 2) * S, py = (H - it.y - it.h * 0.35) * S;
+    let placed = false;
+    for (const g of grids) {
+      const cell = g.cells.find((c) => px >= c.x0 && px <= c.x1 && py >= c.y0 && py <= c.y1);
+      if (cell) { cell.items.push(it); placed = true; break; }
+    }
+    if (!placed) free.push(it);
+  }
+
+  /* ---- Dong van theo cot (cot trai -> cot phai), co chi so tren/duoi ---- */
   const small = (it) => it.h < medH * 0.8 && it.s.trim().length <= 4;
-  for (const it of items.filter((i) => !small(i))) {
+  const rows = [];
+  for (const it of free.filter((i) => !small(i))) {
     const col = it.x + it.w / 2 < mid ? 0 : 1;
     let r = rows.find((q) => q.col === col && Math.abs(q.y - it.y) < 2.2);
     if (!r) { r = { col, y: it.y, h: it.h, parts: [] }; rows.push(r); }
-    r.parts.push({ x: it.x, s: it.s });
-    r.h = Math.max(r.h, it.h);
+    r.parts.push(it); r.h = Math.max(r.h, it.h);
   }
-  for (const it of items.filter(small)) {
+  for (const it of free.filter(small)) {
     const col = it.x + it.w / 2 < mid ? 0 : 1;
     const near = rows.filter((q) => q.col === col && Math.abs(q.y - it.y) < medH * 0.9).sort((a, b) => Math.abs(a.y - it.y) - Math.abs(b.y - it.y))[0];
-    const sup = near && it.y > near.y;
-    if (near) near.parts.push({ x: it.x, s: sup && /^\d$/.test(it.s.trim()) ? ({ 2: "²", 3: "³" }[it.s.trim()] ?? it.s.trim()) : it.s.trim(), glue: true });
-    else rows.push({ col, y: it.y, h: it.h, parts: [{ x: it.x, s: it.s }] });
+    if (near) near.parts.push({ ...it, glue: true, sup: it.y > near.y });
+    else rows.push({ col, y: it.y, h: it.h, parts: [it] });
   }
-  // Dong tieu de trang (chay qua 2 cot) xep vao cot trai.
-  const lines = rows
-    // Bo dong tieu de chay (dau trang) va so trang (cuoi trang).
-    .filter((r) => r.y < vp.height - 52 && r.y > 36)
-    .map((r) => ({ page: n, col: r.col, y: r.y, h: r.h, text: r.parts.sort((a, b) => a.x - b.x).reduce((acc, q) => (q.glue ? acc.replace(/\s+$/, "") + q.s + " " : acc + q.s + " "), "").replace(/\s+/g, " ").replace(/\s+([,.;:)])/g, "$1").trim() }))
-    .sort((a, b) => a.col - b.col || b.y - a.y);
-  const res = { lines, width: vp.width, height: vp.height };
-  lineCache.set(n, res);
+  const colRight = (col) => (col === 0 ? mid - 8 : W - 36);
+  const lines = rows.map((r) => {
+    const parts = r.parts.sort((a, b) => a.x - b.x);
+    // Dong "ro rac" (khoang trong lon giua cac cum chu) – dau hieu cong thuc/phan so.
+    let gappy = false;
+    for (let i = 1; i < parts.length; i++) if (parts[i].x - (parts[i - 1].x + parts[i - 1].w) > 22) gappy = true;
+    return { kind: "line", page: n, col: r.col, y: r.y, h: r.h, x0: parts[0].x, x1: Math.max(...parts.map((p) => p.x + p.w)), right: colRight(r.col), gappy, runs: toRuns(parts) };
+  });
+  const tablesOut = grids.map((g) => ({
+    kind: "table", page: n, col: (g.x0 + g.x1) / 2 < mid ? 0 : 1, y: g.top, top: g.top, bottom: g.bottom, x0: g.x0, x1: g.x1,
+    rows: gridRows(g),
+  }));
+  // Thu tu doc: cot trai tren xuong, roi cot phai.
+  const elements = [...lines, ...tablesOut].sort((a, b) => a.col - b.col || b.y - a.y);
+  const res = { elements, W, H, canvas };
+  pageCache.set(n, res);
   page.cleanup();
+  if (pageCache.size > 6) { const k = pageCache.keys().next().value; pageCache.delete(k); }
   return res;
 }
 
-/* ---------- Chi muc chuyen luan ---------- */
-const index = [];
-/* Dong "Ten chung quoc te": PDF co the tach ky tu ("Tên chung qu ố c t ế") -> so sanh sau khi bo khoang trang. */
+/* Chuoi cac doan chu cung kieu (dam/nghieng). */
+function toRuns(parts) {
+  const runs = [];
+  for (const p of parts) {
+    let s = p.s;
+    if (p.glue) s = p.sup && /^\d$/.test(s.trim()) ? ({ 2: "²", 3: "³" }[s.trim()] ?? s.trim()) : s.trim();
+    const last = runs[runs.length - 1];
+    if (last && last.b === p.b && last.i === p.i) last.text += p.glue ? s : (needSpace(last.text, s) ? " " : "") + s;
+    else {
+      if (last && !p.glue && needSpace(last.text, s)) last.text += " ";
+      runs.push({ text: p.glue && last ? s : s, b: !!p.b, i: !!p.i });
+      if (p.glue && last && last.b === !!p.b) { /* da xu ly */ }
+    }
+  }
+  return runs.map((r) => ({ ...r, text: r.text.replace(/\s+/g, " ") }));
+}
+const needSpace = (a, b) => a && !/\s$/.test(a) && !/^\s/.test(b) && !/^[,.;:)\]%]/.test(b) && !/[(\[/]$/.test(a);
+
+/* Chu trong o: noi dong bi ngat (dong sau chu thuong / dong truoc ket thuc dau phay...) ; giu xuong dong giua cac gia tri. */
+function cellText(cell) {
+  const rs = [];
+  for (const it of cell.items.sort((a, b) => b.y - a.y || a.x - b.x)) {
+    let r = rs.find((q) => Math.abs(q.y - it.y) < 2.5);
+    if (!r) { r = { y: it.y, parts: [] }; rs.push(r); }
+    r.parts.push(it);
+  }
+  const ls = rs.sort((a, b) => b.y - a.y).map((r) => ({ text: r.parts.sort((a, b) => a.x - b.x).map((p) => p.s).join(" ").replace(/\s+/g, " ").trim(), b: r.parts.every((p) => p.b) }));
+  let out = "";
+  ls.forEach((l, i) => {
+    if (i === 0) { out = l.text; return; }
+    const join = /[,/–-]$/.test(out) || /^[\p{Ll}(]/u.test(l.text);
+    out += (join ? (/[/]$/.test(out) ? "" : " ") : "\n") + l.text;
+  });
+  return { text: out.replace(/ +\n/g, "\n").trim(), b: ls.length > 0 && ls.every((l) => l.b) };
+}
+function gridRows(g) {
+  const rows = Array.from({ length: g.R }, () => []);
+  for (const c of g.cells.sort((a, b) => a.r - b.r || a.c - b.c)) {
+    const t = cellText(c);
+    rows[c.r].push({ text: t.text, b: t.b, ...(c.rs > 1 ? { rs: c.rs } : {}), ...(c.cs > 1 ? { cs: c.cs } : {}) });
+  }
+  return rows;
+}
+
+/* =================== Chi muc chuyen luan =================== */
+const lineText = (el) => (el.kind === "line" ? el.runs.map((r) => r.text).join("") : "");
 const isInnLine = (t) => t.replace(/\s+/g, "").startsWith("Tênchungquốctế");
 const innOf = (t) => {
   let i = 0, seen = 0;
-  const target = "Tênchungquốctế";
-  while (i < t.length && seen < target.length) { if (!/\s/.test(t[i])) seen++; i++; }
+  while (i < t.length && seen < 14) { if (!/\s/.test(t[i])) seen++; i++; }
   return t.slice(i).replace(/^\s*:?\s*/, "").replace(/\.$/, "").replace(/\s+/g, " ").trim();
 };
+const raw0 = await pdf.getPage(1);
+raw0.cleanup();
+const index = [];
 for (let n = 100; n <= pdf.numPages; n++) {
-  const { lines } = await pageLines(n);
-  const i = lines.findIndex((l) => isInnLine(l.text));
-  if (i < 0) continue;
-  const head = lines.slice(Math.max(0, i - 4), i).map((l) => l.text).filter((t) => t === t.toUpperCase() && /[A-ZĐ]{3}/.test(t));
-  index.push({ page: n, vn: head[head.length - 1] || "", inn: innOf(lines[i].text) });
+  const page = await pdf.getPage(n);
+  const tc = await page.getTextContent();
+  const text = tc.items.map((i) => i.str).join("\n");
+  page.cleanup();
+  const flat = text.replace(/\s+/g, "");
+  const k = flat.indexOf("Tênchungquốctế");
+  if (k < 0) continue;
+  // Ten tieng Viet: dong IN HOA ngay truoc; INN: sau "Ten chung quoc te:".
+  const ls = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  const li = ls.findIndex((l, i) => isInnLine(ls.slice(i, i + 6).join("")) && /^T/.test(l));
+  const before = ls.slice(Math.max(0, li - 6), li).filter((t) => t === t.toUpperCase() && /[A-ZĐ]{3}/.test(t));
+  const innLine = ls.slice(li, li + 8).join(" ");
+  index.push({ page: n, vn: before[before.length - 1] || "", inn: innOf(innLine).split(/\.\s/)[0].replace(/Mã ATC.*$/, "").trim() });
 }
-// Pham vi gom ca trang co chuyen luan ke tiep (chuyen luan sau co the bat dau giua trang).
 for (let i = 0; i < index.length; i++) index[i].end = index[i + 1]?.page ?? pdf.numPages;
 console.log("Chuyen luan:", index.length);
 
-/* ---------- Danh sach can trich ---------- */
+/* =================== Danh sach can trich =================== */
 const products = JSON.parse(readFileSync(join(ROOT, "data", "drug-products.json"), "utf8"));
 const formularyKeys = new Set();
 for (const p of products) {
@@ -105,183 +270,240 @@ for (const p of products) {
   const parts = ing.split(" ");
   formularyKeys.add(ing); formularyKeys.add(parts[0]); formularyKeys.add(parts.slice(0, 2).join(" "));
 }
-
-/* QD 5631/QD-BYT - Phu luc 2: khang sinh uu tien quan ly. */
 const QD5631_N1 = ["ceftolozan", "tigecyclin", "colistin", "fosfomycin", "linezolid", "amphotericin", "caspofungin", "micafungin", "voriconazol", "ceftazidim avibactam", "meropenem", "imipenem", "doripenem", "ertapenem", "vancomycin", "teicoplanin", "aciclovir", "valganciclovir", "posaconazol"];
 const QD5631_N2 = ["amikacin", "gentamicin", "tobramycin", "netilmicin", "ciprofloxacin", "levofloxacin", "lomefloxacin", "moxifloxacin", "norfloxacin", "ofloxacin", "pefloxacin", "sparfloxacin"];
 const ANTIMICROBIAL = /(cef|penem|cillin|cilin|mycin|micin|floxacin|cyclin|azol|fungin|vir\b|ciclovir|ganciclovir|colistin|polymyxin|sulfamethoxazol|trimethoprim|metronidazol|tinidazol|linezolid|vancomycin|teicoplanin|fosfomycin|rifampicin|isoniazid|ethambutol|pyrazinamid|clindamycin|amphotericin|nystatin|griseofulvin|terbinafin|aztreonam|chloramphenicol|nitrofurantoin|oseltamivir|entecavir|tenofovir|lamivudin|zidovudin|abacavir|ribavirin|ivermectin|albendazol|mebendazol|praziquantel|cloroquin|quinin|artesunat|primaquin)/;
-
 const groupOf = (k) => QD5631_N1.some((x) => k.includes(x)) ? "ks-n1" : QD5631_N2.some((x) => k.includes(x)) ? "ks-n2" : ANTIMICROBIAL.test(k) ? "khang-sinh" : "thuoc-khac";
 
-/* ---------- Trich doan suy than trong phan "Lieu luong va cach dung" ---------- */
-/* Cum mo dau doan trich (lien quan lieu o nguoi suy than). "tham tach/loc mau" chi de keo dai doan, khong mo doan moi. */
-const RENAL = /suy thận|chức năng tim\s*-\s*thận|tình trạng tim\s*-\s*thận|suy giảm chức năng thận|theo chức năng thận|Cl\s*cr\b|ClCr|thanh thải creatinin|eGFR|mức lọc cầu thận|độ lọc cầu thận/i;
-const RENAL_CONT = /suy thận|thận|Cl\s*cr|ClCr|thanh thải creatinin|thẩm tách|thẩm phân|lọc máu|eGFR|lọc cầu thận/i;
+/* =================== Doan van tu dong =================== */
+const RENAL = /suy thận|chức năng tim\s*-\s*thận|tình trạng tim\s*-\s*thận|suy giảm chức năng thận|theo chức năng thận|Cl\s*cr\b|Clcr|ClCr|thanh thải creatinin|eGFR|mức lọc cầu thận|độ lọc cầu thận/i;
+const RENAL_CONT = /suy thận|Cl\s*cr|Clcr|ClCr|thanh thải creatinin|thẩm tách|thẩm phân|lọc máu|eGFR|lọc cầu thận|chức năng thận/i;
 const STOP_SECTION = /^(Tương tác thuốc|Tương kỵ|Quá liều|Độ ổn định|Thông tin qui chế|Thông tin quy chế|Dạng thuốc và hàm lượng)\b/;
-const POP_HEAD = /^(Người cao tuổi|Người suy gan|Suy gan|Bệnh nhân suy gan|Trẻ em|Trẻ sơ sinh|Trẻ nhỏ|Người lớn|Cách dùng|Người béo|Phụ nữ|Người mang thai|Dự phòng|Điều trị|Liều thông thường|Tiêm|Uống|Đường uống|Bệnh nhân suy gan|Người bệnh suy gan|Liều dùng cho người (cao tuổi|suy gan|béo|nhẹ cân)|Liều dùng trong suy gan)/i;
+const MAJOR = /^(Chỉ định|Chống chỉ định|Thận trọng|Thời kỳ mang thai|Thời kỳ cho con bú|Tác dụng không mong muốn|Liều lượng và cách dùng|Tương tác thuốc|Tương kỵ|Quá liều|Độ ổn định|Dược lực học|Dược động học|Dạng thuốc và hàm lượng|Hướng dẫn cách xử trí ADR)\b/;
 
-async function extract(m) {
-  const all = [];
-  for (let n = m.page; n <= m.end; n++) all.push(...(await pageLines(n)).lines);
-  // Chuyen luan co the bat dau giua trang: bo phan cua chuyen luan dung truoc (truoc dong "Ten chung quoc te").
-  const startAt = all.findIndex((l) => l.page === m.page && isInnLine(l.text) && innOf(l.text).startsWith(m.inn.slice(0, 10)));
-  if (startAt > 0) all.splice(0, startAt);
-  // ... va ket thuc truoc tieu de cua chuyen luan ke tiep.
-  const nextAt = all.findIndex((l, i) => i > 0 && isInnLine(l.text));
-  if (nextAt > 0) all.splice(Math.max(1, nextAt - 3));
-  const a = all.findIndex((l) => /^Liều lượng và cách dùng/.test(l.text));
-  if (a < 0) return null;
-  let b = all.findIndex((l, i) => i > a && STOP_SECTION.test(l.text));
-  if (b < 0) b = all.length;
-  const sec = all.slice(a + 1, b);
-  const picked = new Set();
-  for (let i = 0; i < sec.length; i++) {
-    if (!RENAL.test(sec[i].text) || picked.has(i)) continue;
-    // Bat dau doan: lui ve dau cau/tieu de.
-    let s = i;
-    while (s > 0 && !/[.:;]$/.test(sec[s - 1].text) && i - s < 6) s--;
-    // Ket thuc: den tieu de nhom doi tuong khac hoac het muc, toi da 70 dong.
-    let e = i;
-    while (e + 1 < sec.length && e - i < 70) {
-      const nx = sec[e + 1].text;
-      if (POP_HEAD.test(nx) && !RENAL.test(nx) && /[.:;]$/.test(sec[e].text)) break;
-      e++;
-      // Doan van ket thuc bang dau cham va dong sau khong lien quan than, khong phai bang -> dung.
-      if (/[.]$/.test(sec[e].text) && e + 1 < sec.length && !RENAL_CONT.test(sec[e + 1].text) && sec[e + 1].text.length > 40 && !/^\d|^[<>≤≥]/.test(sec[e + 1].text)) {
-        const ahead = sec.slice(e + 1, e + 4).some((l) => RENAL_CONT.test(l.text) || /^\d|^[<>≤≥]/.test(l.text));
-        if (!ahead) break;
+/* Ghep dong -> doan: ngat doan khi dong truoc ket thuc som (khong cham le phai) hoac dong moi bat dau bang chu dam/nghieng. */
+function toBlocks(els) {
+  const blocks = [];
+  let cur = null;
+  const push = () => { if (cur) { cur.runs = mergeRuns(cur.runs); blocks.push(cur); cur = null; } };
+  els.forEach((el, idx) => {
+    if (el.kind === "table") { push(); blocks.push({ t: "table", rows: el.rows, src: [el] }); return; }
+    // Cong thuc/phan so (dong ro rac, co "=" hoac "x" trong cum dong ro rac) -> giu dang anh.
+    if (el.gappy) {
+      const near = els.slice(Math.max(0, idx - 2), idx + 3).filter((e) => e.kind === "line" && e.gappy);
+      if (near.some((e) => /=|×|\bx\b/.test(lineText(e)))) {
+        push();
+        const last = blocks[blocks.length - 1];
+        if (last && last.t === "formula") last.src.push(el); else blocks.push({ t: "formula", src: [el] });
+        return;
       }
     }
-    for (let k = s; k <= e; k++) picked.add(k);
+    const startsStyled = el.runs[0] && (el.runs[0].b || el.runs[0].i) && el.runs[0].text.trim().length > 2;
+    const prev = els[idx - 1];
+    // Dong tieu de rieng (toan bo dam/nghieng, ngan) -> khoi tieu de doc lap, giong ban goc.
+    const lt0 = lineText(el).trim();
+    if (el.runs.length && el.runs.every((r) => r.b || r.i || !r.text.trim()) && lt0.length <= 70 && !/[.;]$/.test(lt0)) {
+      const next = els[idx + 1];
+      const nextStyledAll = next && next.kind === "line" && next.runs.every((r) => r.b || r.i || !r.text.trim());
+      if (!nextStyledAll) {
+        push();
+        blocks.push({ t: "p", head: true, runs: mergeRuns(el.runs.map((r) => ({ ...r }))), src: [el] });
+        return;
+      }
+    }
+    const prevEnded = !prev || prev.kind === "table" || prev.page !== el.page && false || (prev.kind === "line" && (prev.right - prev.x1 > 14) && /[.:;!?)]$/.test(lineText(prev).trim()));
+    if (!cur || prevEnded || startsStyled && prevEndedSoft(prev)) { push(); cur = { t: "p", runs: [], src: [] }; }
+    const last = cur.runs[cur.runs.length - 1];
+    const lt = last ? last.text : "";
+    const first = el.runs[0];
+    if (last && first) {
+      const glueNoSpace = /\/$/.test(lt) || /^[,.;:)]/.test(first.text);
+      if (!glueNoSpace && !/\s$/.test(lt)) last.text += " ";
+    }
+    cur.runs.push(...el.runs.map((r) => ({ ...r })));
+    cur.src.push(el);
+  });
+  push();
+  // Gom vung cong thuc: cac khoi "formula" sat nhau va dong chu ngan nam trong vung (tu so/mau so) -> 1 khoi.
+  for (let changed = true; changed;) {
+    changed = false;
+    for (let i = 0; i < blocks.length; i++) {
+      const f = blocks[i];
+      if (f.t !== "formula") continue;
+      const ys = f.src.map((e) => e.y), lo = Math.min(...ys) - 34, hi = Math.max(...ys) + 34;
+      const inZone = (b) => b && (b.t === "formula" || (b.t === "p" && b.runs.map((r) => r.text).join("").length < 70)) &&
+        b.src.every((e) => e.page === f.src[0].page && e.col === f.src[0].col && e.y >= lo && e.y <= hi);
+      for (const j of [i + 1, i - 1]) {
+        if (inZone(blocks[j])) {
+          f.src = [...f.src, ...blocks[j].src].sort((a, b) => b.y - a.y);
+          blocks.splice(j, 1);
+          changed = true;
+          break;
+        }
+      }
+      if (changed) break;
+    }
   }
-  const lines = [...picked].sort((x, y) => x - y).map((i) => sec[i]);
-  return { dose: lines.length ? lines : null, ci: renalSentences(all, "Chống chỉ định", false), caution: renalSentences(all, "Thận trọng", true) };
-}
-
-/* Cau lien quan than trong muc "Chong chi dinh" / "Than trong" (nguyen van).
-   Than trong: chi lay cau co nguong so (Clcr/eGFR...) de tranh cau chung chung. */
-const MAJOR = /^(Chỉ định|Chống chỉ định|Thận trọng|Thời kỳ mang thai|Thời kỳ cho con bú|Tác dụng không mong muốn|Liều lượng và cách dùng|Tương tác thuốc|Tương kỵ|Quá liều|Độ ổn định|Dược lực học|Dược động học|Dạng thuốc và hàm lượng|Hướng dẫn cách xử trí ADR)\b/;
-function renalSentences(all, heading, needThreshold) {
-  const a = all.findIndex((l) => new RegExp(`^${heading}\\b`).test(l.text));
-  if (a < 0) return [];
-  let b = all.findIndex((l, i) => i > a && MAJOR.test(l.text));
-  if (b < 0) b = Math.min(all.length, a + 80);
-  const text = all.slice(a + 1, b).map((l) => l.text).join(" ").replace(/(\S)- (\S)/g, "$1-$2").replace(/\s+/g, " ");
-  const sentences = text.split(/(?<=[.;])\s+(?=[\p{Lu}(])/u);
-  return sentences
-    .filter((s) => RENAL.test(s) && (!needThreshold || /(Cl\s*cr|ClCr|thanh thải creatinin|eGFR|lọc cầu thận)[^.]{0,40}\d/i.test(s)))
-    .map((s) => s.replace(/Cl\s+cr\b/g, "Clcr").trim())
-    .slice(0, 6);
-}
-
-/* Gop dong thanh doan; doan nhieu dong ngan (bang) -> danh dau "bang". */
-function toBlocks(lines) {
-  const blocks = [];
-  let buf = [];
-  const flush = () => {
-    if (!buf.length) return;
-    const shortRatio = buf.filter((l) => l.text.length < 34).length / buf.length;
-    if (buf.length >= 4 && shortRatio > 0.6) blocks.push({ t: "table", text: buf.map((l) => l.text).join(" | ") });
-    else blocks.push({ t: "p", text: buf.map((l) => l.text).join(" ").replace(/(\S)- (\S)/g, "$1-$2").replace(/\s+/g, " ").trim() });
-    buf = [];
-  };
-  let prevShort = null;
-  for (const l of lines) {
-    const short = l.text.length < 34;
-    if (buf.length && (prevShort !== null && short !== prevShort && buf.length >= 3)) flush();
-    buf.push(l);
-    if (/[.:]$/.test(l.text) && !short) flush();
-    prevShort = short;
-  }
-  flush();
   return blocks;
 }
+const prevEndedSoft = (prev) => !prev || prev.kind === "table" || /[.:;]$/.test(lineText(prev).trim());
+function mergeRuns(runs) {
+  const out = [];
+  for (const r of runs) {
+    const last = out[out.length - 1];
+    if (last && last.b === r.b && last.i === r.i) last.text += r.text;
+    else if (r.text) out.push({ ...r });
+  }
+  return out.map((r, i) => ({ ...r, text: (i === 0 ? r.text.trimStart() : r.text).replace(/\s+/g, " ") })).map((r, i, a) => (i === a.length - 1 ? { ...r, text: r.text.trimEnd() } : r));
+}
+const blockText = (b) => (b.t === "p" ? b.runs.map((r) => r.text).join("") : b.t === "table" ? b.rows.flat().map((c) => c.text).join(" ") : b.src.map(lineText).join(" "));
 
-/* Anh cat: moi (trang, cot) mot anh, tu dong dau den dong cuoi cua doan trich. */
-async function clips(lines, id) {
+/* =================== Trich 1 chuyen luan =================== */
+async function extract(m) {
+  const all = [];
+  for (let n = m.page; n <= m.end; n++) all.push(...(await readPage(n)).elements);
+  const startAt = all.findIndex((e) => e.page === m.page && isInnLine(lineText(e)));
+  if (startAt > 0) all.splice(0, startAt);
+  const nextAt = all.findIndex((e, i) => i > 0 && isInnLine(lineText(e)));
+  if (nextAt > 0) all.splice(Math.max(1, nextAt - 3));
+
+  const sectionEls = (re) => {
+    const a = all.findIndex((e) => re.test(lineText(e).trim()));
+    if (a < 0) return [];
+    let b = all.findIndex((e, i) => i > a && MAJOR.test(lineText(e).trim()));
+    if (b < 0) b = all.length;
+    return all.slice(a + 1, b);
+  };
+  // Lieu luong va cach dung -> doan/bang lien quan than.
+  const dose = (() => {
+    const a = all.findIndex((e) => /^Liều lượng và cách dùng/.test(lineText(e).trim()));
+    if (a < 0) return [];
+    let b = all.findIndex((e, i) => i > a && STOP_SECTION.test(lineText(e).trim()));
+    if (b < 0) b = all.length;
+    return all.slice(a + 1, b);
+  })();
+  const blocks = toBlocks(dose);
+  const keep = new Set();
+  /* Tieu muc rieng ve suy than (dong dau doan in dam/nghieng chua "thận"/Clcr/creatinin, vd. "Người suy thận:")
+     -> chi lay tieu muc do, den tieu muc in dam/nghieng tiep theo khong lien quan than. */
+  const styledHead = (b) => b.t === "p" && b.runs[0] && (b.runs[0].b || b.runs[0].i) && b.runs[0].text.trim().length > 3 ? b.runs[0].text : "";
+  const RENAL_HEAD = /suy thận|chức năng thận|Cl\s*cr|Clcr|creatinin|thẩm tách|lọc máu|thẩm phân/i;
+  const STOP_HEAD = /^(Người (cao tuổi|già|suy gan|lớn|béo|nhẹ cân|mang thai|bệnh suy gan)|Bệnh nhân (suy gan|cao tuổi|béo|nhi)|Suy gan|Trẻ|Phụ nữ|Thiếu niên|Cách dùng|Liều (dùng |lượng )?(cho|ở|trong) (người|trẻ|bệnh nhân|suy gan)(?!.*thận)|Chế độ dùng thuốc|Dự phòng|Điều trị|Nhiễm|Viêm|Bệnh|Hội chứng|Ung thư|Đau|Tăng|Giảm|Chống|Gây|Phẫu thuật|Thời gian|Quá liều|Liều thông thường|Liều tối đa)/i;
+  const heads = blocks.map((b, i) => (RENAL_HEAD.test(styledHead(b)) ? i : -1)).filter((i) => i >= 0);
+  if (heads.length) {
+    for (const h of heads) {
+      keep.add(h);
+      for (let j = h + 1; j < blocks.length; j++) {
+        const sh = styledHead(blocks[j]).trim();
+        // Dung o tieu de nhom doi tuong/chu de khac; tieu de con (Cách 1, Đường uống, Liều duy trì...) thi di tiep.
+        if (sh && !RENAL_HEAD.test(sh) && STOP_HEAD.test(sh)) break;
+        keep.add(j);
+      }
+    }
+  }
+  for (let i = 0; i < blocks.length && !heads.length; i++) {
+    if (blocks[i].t !== "p" || !RENAL.test(blockText(blocks[i]))) continue;
+    keep.add(i);
+    // Tieu de ngan ngay truoc (vd. "Đường uống:", "Người suy thận:") neu doan nay la phan tiep.
+    if (i > 0 && blocks[i - 1].t === "p" && /:$/.test(blockText(blocks[i - 1]).trim()) && blockText(blocks[i - 1]).length < 90) keep.add(i - 1);
+    for (let j = i + 1; j < blocks.length; j++) {
+      const b = blocks[j], t = blockText(b);
+      const nextIsTable = blocks[j + 1]?.t === "table";
+      if (b.t === "table" || RENAL_CONT.test(t) || (/:$/.test(t.trim()) && t.length < 120 && (nextIsTable || RENAL.test(blockText(blocks[j + 1] ?? { t: "p", runs: [] }))))) keep.add(j);
+      else break;
+    }
+  }
+  const picked = [...keep].sort((a, b) => a - b).map((i) => blocks[i]);
+  const sentences = (re, needThreshold) => {
+    const text = toBlocks(sectionEls(re)).map(blockText).join(" ").replace(/\s+/g, " ");
+    return text.split(/(?<=[.;])\s+(?=[\p{Lu}(])/u)
+      .filter((s) => RENAL.test(s) && (!needThreshold || /(Cl\s*cr|Clcr|ClCr|thanh thải creatinin|eGFR|lọc cầu thận)[^.]{0,40}\d/i.test(s)))
+      .map((s) => s.replace(/Cl\s+cr\b/g, "Clcr").trim()).slice(0, 6);
+  };
+  return { blocks: picked, ci: sentences(/^Chống chỉ định\b/, false), caution: sentences(/^Thận trọng\b/, true) };
+}
+
+/* Anh cat de doi chieu: moi (trang, cot) 1 anh tu phan tu dau den cuoi cua doan trich. */
+async function clips(blocks, id) {
   const groups = new Map();
-  for (const l of lines) {
-    const k = `${l.page}-${l.col}`;
-    const g = groups.get(k) || { page: l.page, col: l.col, top: -Infinity, bottom: Infinity };
-    g.top = Math.max(g.top, l.y + l.h);
-    g.bottom = Math.min(g.bottom, l.y);
+  for (const b of blocks) for (const e of b.src) {
+    const k = `${e.page}-${e.col}`;
+    const g = groups.get(k) || { page: e.page, col: e.col, top: -Infinity, bottom: Infinity };
+    const top = e.kind === "table" ? e.top : e.y + e.h, bottom = e.kind === "table" ? e.bottom : e.y;
+    g.top = Math.max(g.top, top); g.bottom = Math.min(g.bottom, bottom);
     groups.set(k, g);
   }
   const out = [];
   let n = 0;
   for (const g of groups.values()) {
-    const page = await pdf.getPage(g.page);
-    const scale = 2.4;
-    const vp = page.getViewport({ scale });
-    const { width, height } = await pageLines(g.page);
-    const canvas = createCanvas(Math.ceil(vp.width), Math.ceil(vp.height));
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    await page.render({ canvasContext: ctx, viewport: vp }).promise;
-    page.cleanup();
-    const pad = 6;
-    // Cat sat cot (tranh lan chu cot ben canh); mep ngoai chua le bang.
-    const x0 = g.col === 0 ? 30 : width / 2 + 1;
-    const x1 = g.col === 0 ? width / 2 - 1 : width - 30;
-    const y0 = Math.max(0, height - g.top - pad);
-    const y1 = Math.min(height, height - g.bottom + pad + 3);
-    const left = Math.round(x0 * scale), top = Math.round(y0 * scale);
-    const w = Math.round((x1 - x0) * scale), h = Math.round((y1 - y0) * scale);
+    const { W, H, canvas } = await readPage(g.page);
+    const x0 = g.col === 0 ? 30 : W / 2 + 1, x1 = g.col === 0 ? W / 2 - 1 : W - 30;
+    const y0 = Math.max(0, H - g.top - 4), y1 = Math.min(H, H - g.bottom + 6);
+    const left = Math.round(x0 * S), top = Math.round(y0 * S), w = Math.round((x1 - x0) * S), h = Math.round((y1 - y0) * S);
     const file = `${id}-${++n}.webp`;
-    if (!NO_IMAGES) {
-      await sharp(canvas.toBuffer("image/png")).extract({ left, top, width: w, height: h }).webp({ quality: 72 }).toFile(join(OUT_IMG, file));
-    }
+    if (!NO_IMAGES) await sharp(canvas.toBuffer("image/png")).extract({ left, top, width: w, height: h }).webp({ quality: 74 }).toFile(join(OUT_IMG, file));
     out.push({ src: `/duoc-thu/${file}`, page: g.page, printedPage: g.page + PAGE_OFFSET, w, h });
   }
   return out;
 }
 
-/* ---------- Chay ---------- */
+/* Anh cat cho cong thuc: vung bao cac dong (cung trang, cung cot). */
+async function cropLines(els, id) {
+  const e0 = els[0];
+  const { W, H, canvas } = await readPage(e0.page);
+  const same = els.filter((e) => e.page === e0.page && e.col === e0.col);
+  const top = Math.max(...same.map((e) => e.y + e.h)), bottom = Math.min(...same.map((e) => e.y));
+  const x0 = e0.col === 0 ? 30 : W / 2 + 1, x1 = e0.col === 0 ? W / 2 - 1 : W - 30;
+  const left = Math.round(x0 * S), y = Math.round(Math.max(0, H - top - 5) * S), w = Math.round((x1 - x0) * S), h = Math.round((top - bottom + 11) * S);
+  const file = id + ".webp";
+  await sharp(canvas.toBuffer("image/png")).extract({ left, top: y, width: w, height: Math.min(h, Math.round(H * S) - y) }).webp({ quality: 80 }).toFile(join(OUT_IMG, file));
+  return { src: "/duoc-thu/" + file, w, h };
+}
+
+/* =================== Chay =================== */
 const results = [];
 for (const m of index) {
   const k = key(`${m.vn} ${m.inn}`);
-  const inFormulary = [key(m.vn), key(m.inn)].some((x) => x && (formularyKeys.has(x) || formularyKeys.has(x.split(" ")[0]) && x.split(" ")[0].length > 5));
+  const inFormulary = [key(m.vn), key(m.inn)].some((x) => x && (formularyKeys.has(x) || (formularyKeys.has(x.split(" ")[0]) && x.split(" ")[0].length > 5)));
   const group = groupOf(k);
   const priority = group === "ks-n1" || group === "ks-n2";
   if (!inFormulary && !priority) continue;
   if (ONLY && !k.includes(ONLY)) continue;
+  const id = slug(m.vn || m.inn).slice(0, 60);
+  const name = m.vn ? m.vn.charAt(0) + m.vn.slice(1).toLowerCase() : m.inn;
+  const pages = { pdf: [m.page, m.end], printed: [m.page + PAGE_OFFSET, m.end + PAGE_OFFSET] };
   const ex = await extract(m);
-  const empty = !ex || (!ex.dose && !ex.ci.length && !ex.caution.length);
+  const empty = !ex.blocks.length && !ex.ci.length && !ex.caution.length;
   if (empty && !priority) continue;
   if (empty) {
-    // Khang sinh uu tien quan ly (QD 5631) co chuyen luan nhung khong neu hieu chinh theo than: van dua vao, ghi ro.
-    results.push({ id: slug(m.vn || m.inn).slice(0, 60), name: m.vn ? m.vn.charAt(0) + m.vn.slice(1).toLowerCase() : m.inn, inn: m.inn, group, inFormulary,
-      pages: { pdf: [m.page, m.end], printed: [m.page + PAGE_OFFSET, m.end + PAGE_OFFSET] }, noAdjust: false, noRenalText: true, blocks: [], clips: [], contraindications: [], cautions: [] });
-    console.log(`${group.padEnd(10)} ${m.vn || m.inn} | Duoc thu khong neu hieu chinh theo than`);
+    results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust: false, noRenalText: true, content: [], clips: [], contraindications: [], cautions: [] });
+    console.log(`${group.padEnd(10)} ${name} | Duoc thu khong neu hieu chinh theo than`);
     continue;
   }
-  const lines = ex.dose ?? [];
-  const id = slug(m.vn || m.inn).slice(0, 60);
-  const blocks = toBlocks(lines);
-  const text = blocks.map((b) => b.text).join(" ");
-  const noAdjust = /không cần (phải )?(điều|hiệu) chỉnh liều/i.test(text) && !/giảm liều|điều chỉnh liều theo|hiệu chỉnh liều như sau|khoảng cách|mỗi \d+ giờ|Cl\s*cr\s*[<≤]/i.test(text);
-  results.push({
-    id, name: m.vn ? m.vn.charAt(0) + m.vn.slice(1).toLowerCase() : m.inn, inn: m.inn, group, inFormulary,
-    pages: { pdf: [m.page, m.end], printed: [m.page + PAGE_OFFSET, m.end + PAGE_OFFSET] },
-    noAdjust, blocks, clips: lines.length ? await clips(lines, id) : [],
-    contraindications: ex.ci, cautions: ex.caution,
-  });
-  console.log(`${group.padEnd(10)} ${m.vn || m.inn} | lieu: ${blocks.length} doan | CCD: ${ex.ci.length} | TT: ${ex.caution.length} ${noAdjust ? "| khong can HC" : ""}`);
+  const text = ex.blocks.map(blockText).join(" ");
+  const noAdjust = /không cần (phải )?(điều|hiệu) chỉnh liều/i.test(text) && !/giảm liều|điều chỉnh liều theo|hiệu chỉnh liều như sau|khoảng cách|mỗi \d+ giờ|Cl\s*cr\s*[<≤]|Clcr\s*[<≤]/i.test(text);
+  const content = [];
+  let fi = 0;
+  for (const b of ex.blocks) {
+    if (b.t === "p") content.push({ t: "p", runs: b.runs, ...(b.head ? { head: true } : {}) });
+    else if (b.t === "table") content.push({ t: "table", rows: b.rows });
+    else content.push({ t: "img", ...(await cropLines(b.src, id + "-ct" + ++fi)), alt: blockText(b) });
+  }
+  results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust, content, clips: ex.blocks.length ? await clips(ex.blocks, id) : [], contraindications: ex.ci, cautions: ex.caution });
+  console.log(`${group.padEnd(10)} ${name} | ${content.filter((c) => c.t === "p").length} doan, ${content.filter((c) => c.t === "table").length} bang | CCD ${ex.ci.length} | TT ${ex.caution.length}${noAdjust ? " | khong can HC" : ""}`);
 }
-// --only: gop vao du lieu da co (thay muc cung id), khong ghi de toan bo.
 if (ONLY) {
   try {
     const prev = JSON.parse(readFileSync(join(ROOT, "data", "renal-dtqg.json"), "utf8")).items;
     const ids = new Set(results.map((r) => r.id));
     results.push(...prev.filter((r) => !ids.has(r.id)));
-  } catch { /* chua co du lieu */ }
+  } catch { /* */ }
 }
 results.sort((a, b) => a.name.localeCompare(b.name, "vi"));
 writeFileSync(join(ROOT, "data", "renal-dtqg.json"), JSON.stringify({
   source: "Bộ Y tế – Hội đồng Dược thư quốc gia Việt Nam. Dược thư quốc gia Việt Nam, lần xuất bản thứ ba (2023)",
   extractedAt: new Date().toISOString().slice(0, 10),
-  note: "Trích nguyên văn phần hiệu chỉnh liều ở người suy thận trong mục Liều lượng và cách dùng; ảnh cắt từ trang gốc. Chưa được dược sĩ lâm sàng BV199 xác nhận.",
+  note: "Trích nguyên văn phần hiệu chỉnh liều ở người suy thận (mục Liều lượng và cách dùng), chống chỉ định và thận trọng liên quan chức năng thận; bảng dựng lại theo đường kẻ của trang gốc. Chưa được dược sĩ lâm sàng BV199 xác nhận.",
   items: results,
 }, null, 1));
 console.log("Tong:", results.length, "| theo nhom:", JSON.stringify(results.reduce((a, r) => ((a[r.group] = (a[r.group] || 0) + 1), a), {})));

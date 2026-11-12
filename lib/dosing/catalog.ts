@@ -18,7 +18,13 @@ export const GROUP_LABEL: Record<DoseGroup, string> = {
   "thuoc-khac": "Thuốc khác",
 };
 
-export type DtqgBlock = { t: "p" | "table"; text: string };
+/* Noi dung nguyen van co cau truc: doan (giu dam/nghieng), bang (o gop), anh cong thuc. */
+export type DtqgRun = { text: string; b?: boolean; i?: boolean };
+export type DtqgCell = { text: string; b?: boolean; rs?: number; cs?: number };
+export type DtqgBlock =
+  | { t: "p"; runs: DtqgRun[]; head?: boolean }
+  | { t: "table"; rows: DtqgCell[][] }
+  | { t: "img"; src: string; w: number; h: number; alt: string };
 export type DtqgClip = { src: string; page: number; printedPage: number; w: number; h: number };
 export type DtqgItem = {
   id: string;
@@ -30,7 +36,7 @@ export type DtqgItem = {
   noAdjust: boolean;
   /* Chuyen luan co, nhung khong neu hieu chinh theo chuc nang than (khang sinh uu tien quan ly). */
   noRenalText?: boolean;
-  blocks: DtqgBlock[];
+  content: DtqgBlock[];
   clips: DtqgClip[];
   contraindications: string[];
   cautions: string[];
