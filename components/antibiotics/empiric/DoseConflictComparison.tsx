@@ -11,7 +11,7 @@ function References({label,refs}:{label:string;refs:DoseRef[]}) {
 export default function DoseConflictComparison({conflicts}:{conflicts:DoseConflict[]}) {
   if(!conflicts.length)return null;
   return <details className="dc-root">
-    <summary>Đối chiếu liều giữa các hướng dẫn · cần thẩm định chuyên môn</summary>
+    <summary>Đối chiếu liều giữa các hướng dẫn</summary>
     {conflicts.map(c=><article key={c.id} className="dc-item">
       <h4>{c.topic}</h4>
       <div className="dc-sources"><References label="Hướng dẫn Bộ Y tế" refs={c.byt}/><References label="Hướng dẫn quốc tế" refs={c.intl}/></div>

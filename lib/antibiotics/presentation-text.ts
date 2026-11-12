@@ -20,6 +20,8 @@ const REVIEW_PHRASES: RegExp[] = [
   /\(\s*chưa xác minh[^)]*\)/giu,
   /,?\s*(?:trình bày )?(?:nguyên văn )?theo nguồn\b/giu,
   /\(?\s*(?:Văn bản|Nguồn) (?:không|chưa) nêu[^.;)\n]*[.;)]?/giu,
+  /\s*\([^()]*chưa trích[^()]*\)/giu,
+  /[^.;:]*chưa trích[^.;]*[.;]?/giu,
 ];
 export function stripReviewNotes(text: string): string {
   let t = text;

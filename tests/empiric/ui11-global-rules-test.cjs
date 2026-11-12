@@ -107,14 +107,14 @@ const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.
 check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
 /* Gop nguon: moi khung toi da mot "Nguồn và đối chiếu"; khong hien "Phụ lục" (ke ca khoi dong) – moi mat benh, tab Quoc te, module */
 const appendixHits=[],multiSrc=[],reviewHits=[];
-const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);if(/Chưa xác minh|chưa xác minh|Cần thẩm định|cần thẩm định|CẦN THẨM ĐỊNH|nguồn chưa nêu|Văn bản không nêu|theo nguồn\b/.test(h.replace(/<[^>]+>/g,' ')))reviewHits.push(name+" :: "+(h.replace(/<[^>]+>/g," ").match(/.{0,60}(Chưa xác minh|chưa xác minh|Cần thẩm định|cần thẩm định|CẦN THẨM ĐỊNH|nguồn chưa nêu|Văn bản không nêu|theo nguồnb).{0,60}/)||[""])[0]);if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
+const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);{const REVIEW=/.{0,160}(chưa xác minh|cần thẩm định|nguồn chưa nêu|văn bản không nêu|theo nguồn\b|chưa trích).{0,60}/i;const m=h.replace(/<[^>]+>/g,' ').match(REVIEW);if(m)reviewHits.push(name+' :: '+m[0]);}if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
 for(const d of C.DISEASES){const sc=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!sc.has(r.scenario))sc.set(r.scenario,[]);sc.get(r.scenario).push(r);}
   for(const [nm,l] of sc)scanAll(`${d.id} ${nm.slice(0,30)}`,render(React.createElement(Panel,{sections:V.sectionsFor(l).sections,sources:l.map(r=>`QĐ x — ${r.source.section}`),rationale:getRationale(d.id,nm,l),scenarios:[{value:nm,label:nm,criteria:[nm]}],scenario:nm})));
   scanAll(`${d.id} Quốc tế`,render(React.createElement(GT.IntlTab,{diseaseId:d.id})));scanAll(`${d.id} So sánh`,render(React.createElement(GT.CompareTab,{diseaseId:d.id})));}
 for(const s of CAPM.CAP_SCENARIOS)scanAll(`CAP ${s.id}`,render(React.createElement(CAPM.default,{initialScenarioId:s.id})));
 for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k])scanAll(`${k} ${s.id}`,render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id})));
 check('Không hiển thị "Phụ lục" ở bất kỳ mặt bệnh, tab hay module nào (kể cả khối đóng)',appendixHits.length===0,appendixHits.slice(0,5));
-check('Không còn câu ghi chú quy trình ("chưa xác minh", "cần thẩm định", "nguồn chưa nêu", "văn bản không nêu") ở mọi mặt bệnh, tab Quốc tế, So sánh',reviewHits.length===0,reviewHits.slice(0,12));
+check('Không còn câu ghi chú quy trình ("chưa xác minh", "cần thẩm định", "nguồn chưa nêu", "văn bản không nêu") ở mọi mặt bệnh, tab Quốc tế, So sánh',reviewHits.length===0,reviewHits);
 check('Mỗi khung phác đồ chỉ có tối đa một khối "Nguồn và đối chiếu" (đã gộp)',multiSrc.length===0,multiSrc.slice(0,5));
 /* Trinh bay: khong lap duong dung/cach chia da co trong cau lieu goc; khong cat chu giua tu */
 const clinda=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-2')]).sections,sources:[]}));

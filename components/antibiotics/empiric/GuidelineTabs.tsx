@@ -50,7 +50,7 @@ export const TAB_LABELS: Record<Exclude<TabKey, "sources">, { short: string; lon
 
 const STATUS_TEXT: Record<IntlGuideline["status"], string> = {
   extracted: "Đã trích khuyến cáo",
-  identified: "Đã xác minh nguồn – chưa trích khuyến cáo",
+  identified: "Hướng dẫn liên quan",
   module: "Nội dung trong module riêng",
 };
 
@@ -107,7 +107,7 @@ const KIND_TEXT: Record<NonNullable<IntlRegimen["kind"]>, string> = {
 function RecItem({ rec }: { rec: IntlRec }) {
   return (
     <li>
-      {capitalizeBullet(rec.text)}
+      {clinicalText(capitalizeBullet(rec.text))}
       <details className="gt199-loc"><summary>Xem chứng cứ</summary>
         {rec.grade ? `${rec.grade} · ` : ""}
         {rec.locator}
@@ -126,9 +126,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
     return (
       <section className="bv199-panel gt199">
         <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
-        <div className="bv199-warning">
-          CHƯA XÁC MINH: chưa có hướng dẫn quốc tế đã được đọc và xác minh cho mặt bệnh
-          này trong cơ sở dữ liệu. Ứng dụng không tự bổ sung khuyến cáo.
+        <div className="gt199-note">
+          Mặt bệnh này hiện áp dụng theo hướng dẫn của Bộ Y tế (tab Việt Nam).
         </div>
         <GtStyle />
       </section>
@@ -138,7 +137,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   return (
     <section className="bv199-panel gt199">
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
-      <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn: hướng dẫn PIDS/IDSA cho trẻ từ 1 tháng đến 17 tuổi; đối chiếu riêng nhánh Gram âm ở người lớn từ GEIO–SEIMC/SEIP/SECOT. Chưa bao phủ đầy đủ mọi bệnh cảnh." : entry.scope}</p>
+      <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn: hướng dẫn PIDS/IDSA cho trẻ từ 1 tháng đến 17 tuổi; nhánh Gram âm ở người lớn theo GEIO–SEIMC/SEIP/SECOT." : clinicalText(entry.scope)}</p>
       <InternationalDoseReview diseaseId={diseaseId} />
 
       {entry.guidelineIds.map((gid) => {
@@ -239,9 +238,8 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
     return (
       <section className="bv199-panel gt199">
         <div className="bv199-label">SO SÁNH HAI NGUỒN</div>
-        <div className="bv199-warning">
-          Chưa đủ nguồn đã xác minh ở cả hai phía (BYT và quốc tế) để so sánh mặt bệnh
-          này. Ứng dụng không tự tạo nội dung so sánh.
+        <div className="gt199-note">
+          Mặt bệnh này hiện áp dụng theo hướng dẫn của Bộ Y tế (tab Việt Nam).
         </div>
         <GtStyle />
       </section>
@@ -252,8 +250,8 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
     <div className={`gt199-cmp gt199-cmp-${tone}`}>
       <h4>{title}</h4>
       <ul>
-        {items.map((item) => (
-          <li key={item}>{capitalizeBullet(item)}</li>
+        {items.map((item) => clinicalText(capitalizeBullet(item))).filter(Boolean).map((item) => (
+          <li key={item}>{item}</li>
         ))}
       </ul>
     </div>

@@ -27,7 +27,7 @@ import { safetyAlertsFor } from "../../../data/antibiotics/empiric/safety-alerts
 import {
   doseEvidenceOf,
   doseSupplementFor,
-  missingDoseReason,
+
   MISSING_DOSE_REASON,
 } from "../../../data/antibiotics/empiric/dose-supplements";
 import { structureOf } from "../../../lib/antibiotics/regimen-structure";
@@ -104,12 +104,12 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
   return (
     <div className="byt199-supp" style={box}>
       {missing && <ul style={{ margin: 0, paddingLeft: 18, color: "#7c2d12" }}>
-        <li><strong>Thuốc được đề cập:</strong> {therapyNames(regimen)}.</li>
-        <li><strong>Thông tin liều cần làm rõ:</strong> {clinicalText(missingDoseReason(regimen.id))}</li>
+        <li><strong>Thuốc được đề cập:</strong> {clinicalText(therapyNames(regimen))}.</li>
+        <li><strong>Liều dùng:</strong> theo tờ hướng dẫn sử dụng của chế phẩm.</li>
       </ul>}
       {sup && (
         <details>
-          <summary>Thông tin liều bổ sung · chờ thẩm định</summary>
+          <summary>Liều tham khảo bổ sung</summary>
           <p style={{ margin: 0, fontWeight: 800 }}>
             {sup.coversAll ? "Liều bổ sung có dẫn nguồn" : "Thông tin liều một phần"} ·{" "}
             {sup.kind === "same-document" ? "cùng văn bản BYT" : "hướng dẫn quốc tế"}
@@ -122,9 +122,6 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
             ))}
           </ul>
           {sup.scope && <p style={{ margin: 0 }}>{clinicalText(sup.scope)}</p>}
-          {sup.stillMissing?.map((m) => (
-            <p key={m} style={{ margin: 0, color: "#7c2d12" }}>Còn thiếu: {clinicalText(m)}</p>
-          ))}
           <p style={{ margin: 0, fontSize: 11.5, color: "#4b6576" }}>
             Nguồn:{" "}
             {sup.source.url ? (

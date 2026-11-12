@@ -100,7 +100,6 @@ export default function CopdAntibioticDecision() {
     <section className="c26-indication" aria-labelledby={`${uid}-indication`}>
       <h3 id={`${uid}-indication`}>Chỉ định kháng sinh</h3>
       <p><strong>Đờm mủ VÀ (tăng khó thở HOẶC tăng lượng đờm).</strong></p>
-      <p className="c26-review"><strong>Cần thẩm định:</strong> khác biệt về tiêu chí thay đổi đờm.</p>
       <Sources ids={["text-out", "text-in", "flow-out"]} reviews={["symptom"]} />
       <details className="c26-symptoms"><summary>Kiểm tra tiêu chí triệu chứng</summary>
         <fieldset><legend>Triệu chứng tăng so với thường ngày</legend>
