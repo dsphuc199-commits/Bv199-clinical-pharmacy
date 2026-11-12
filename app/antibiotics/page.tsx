@@ -1,24 +1,33 @@
 import Link from "next/link";
 import {
-  Stethoscope, Microscope, SlidersHorizontal, ShieldCheck,
-  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight,
+  Stethoscope, Microscope, SlidersHorizontal, ShieldCheck, UserRound, TrendingDown,
+  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, FlaskConical, Gauge,
 } from "lucide-react";
 
 /**
  * BV199 AMS — one responsive card tree. No duplicated desktop/mobile modules.
+ * Thu tu theo quy trinh quan ly su dung khang sinh: khoi dau dieu tri -> danh gia lai
+ * sau 48–72 gio (vi sinh, xuong thang, chuyen duong uong, toi uu lieu) -> du lieu.
  * Important: use DIVs rather than SECTION elements for grouping because an
  * older global mobile rule targets `.bv199-ams-home section` indiscriminately.
  */
+const START = "Khởi đầu điều trị";
+const REVIEW = "Đánh giá lại sau 48–72 giờ";
+const DATA = "Dữ liệu vi sinh và PK/PD";
 const modules = [
-  { id: "empiric", title: "Lựa chọn kháng sinh kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng và yếu tố nguy cơ.", action: "Tra cứu phác đồ", href: "/antibiotics/empiric", icon: Stethoscope, group: "Lựa chọn điều trị" },
-  { id: "organism", title: "Kháng sinh theo tác nhân vi sinh", description: "Tham khảo lựa chọn kháng sinh theo vi khuẩn, AST và MIC.", action: "Tra cứu theo tác nhân", href: "/antibiotics/organism", icon: Microscope, group: "Lựa chọn điều trị" },
-  { id: "dosing", title: "Hiệu chỉnh liều", description: "Theo chức năng thận: kháng sinh cần hội chẩn (QĐ 5631) và các thuốc khác theo Dược thư quốc gia 2023.", action: "Đánh giá và hiệu chỉnh liều", href: "/hieu-chinh-lieu", icon: SlidersHorizontal, group: "Tối ưu điều trị" },
-  { id: "allergy", title: "Đánh giá dị ứng kháng sinh", description: "Khai thác tiền sử và đánh giá nguy cơ phản ứng chéo.", action: "Đánh giá nguy cơ dị ứng", href: "/antibiotics/allergy", icon: Activity, group: "Tối ưu điều trị" },
-  { id: "iv-to-po", title: "Chuyển kháng sinh IV → PO", description: "Đánh giá tiêu chí chuyển đổi từ đường tĩnh mạch sang đường uống.", action: "Đánh giá chuyển đường dùng", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: "Tối ưu điều trị" },
-  { id: "prophylaxis", title: "Kháng sinh dự phòng phẫu thuật", description: "Tra cứu khuyến cáo KSDP theo loại phẫu thuật.", action: "Tra cứu KSDP", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: "Dự phòng và giám sát" },
-  { id: "antibiogram", title: "Antibiogram BV199", description: "Dữ liệu vi sinh, kháng sinh đồ và báo cáo tổng hợp KKS của Bệnh viện 199.", action: "Xem dữ liệu kháng thuốc", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: "Dự phòng và giám sát" },
+  { id: "empiric", title: "Phác đồ kháng sinh kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng và yếu tố nguy cơ; đối chiếu BYT và khuyến cáo quốc tế.", action: "Tra cứu phác đồ", href: "/antibiotics/empiric", icon: Stethoscope, group: START },
+  { id: "select", title: "Chọn kháng sinh theo người bệnh", description: "Chọn mặt bệnh, nhập thông tin người bệnh (CrCl, dị ứng, tiêu chí nguy cơ) để lọc phác đồ phù hợp.", action: "Chọn theo người bệnh", href: "/antibiotics/empiric/select", icon: UserRound, group: START },
+  { id: "allergy", title: "Đánh giá dị ứng kháng sinh", description: "Khai thác tiền sử, phân tầng nguy cơ và phản ứng chéo beta-lactam trước khi kê đơn.", action: "Đánh giá nguy cơ dị ứng", href: "/antibiotics/allergy", icon: Activity, group: START },
+  { id: "prophylaxis", title: "Kháng sinh dự phòng phẫu thuật", description: "Khuyến cáo KSDP theo loại phẫu thuật: lựa chọn thuốc, thời điểm dùng và ngừng.", action: "Tra cứu KSDP", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: START },
+  { id: "organism", title: "Kháng sinh theo tác nhân vi sinh", description: "Điều chỉnh theo vi khuẩn phân lập, kháng sinh đồ (AST) và MIC.", action: "Tra cứu theo tác nhân", href: "/antibiotics/organism", icon: Microscope, group: REVIEW },
+  { id: "deescalation", title: "Xuống thang kháng sinh", description: "Đánh giá thu hẹp phổ hoặc ngừng kháng sinh dựa trên lâm sàng và kết quả vi sinh.", action: "Đánh giá xuống thang", href: "/antibiotics/deescalation", icon: TrendingDown, group: REVIEW },
+  { id: "iv-to-po", title: "Chuyển đường tĩnh mạch → uống", description: "Tiêu chí chuyển kháng sinh từ đường tĩnh mạch sang đường uống.", action: "Đánh giá chuyển đường dùng", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: REVIEW },
+  { id: "dosing", title: "Hiệu chỉnh liều", description: "Theo chức năng thận: kháng sinh cần hội chẩn (QĐ 5631) và các thuốc khác theo Dược thư quốc gia 2023.", action: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", icon: SlidersHorizontal, group: REVIEW },
+  { id: "tdm", title: "Theo dõi nồng độ thuốc (TDM)", description: "Vancomycin, aminoglycosid, colistin: đích nồng độ và điều chỉnh liều.", action: "Tính và theo dõi TDM", href: "/tdm", icon: FlaskConical, group: REVIEW },
+  { id: "antibiogram", title: "Antibiogram BV199", description: "Dữ liệu vi sinh, kháng sinh đồ và báo cáo tổng hợp KKS của Bệnh viện 199.", action: "Xem dữ liệu kháng thuốc", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: DATA },
+  { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC và điểm gãy nhạy cảm; chỉ số PK/PD để tối ưu cách dùng.", action: "Tra cứu PK/PD", href: "/pkpd", icon: Gauge, group: DATA },
 ] as const;
-const groups = ["Lựa chọn điều trị", "Tối ưu điều trị", "Dự phòng và giám sát"] as const;
+const groups = [START, REVIEW, DATA] as const;
 
 export default function AntibioticsPage() {
   return (

@@ -14,10 +14,11 @@ const navigation = [
 ];
 
 const moreLinks = [
-  { label: "PK/PD", href: "/pkpd" },
-  { label: "TDM", href: "/tdm" },
+  { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu" },
   { label: "Tương tác thuốc", href: "/tuong-tac-thuoc" },
-  { label: "An toàn thuốc", href: "/safety" },
+  { label: "Theo dõi nồng độ thuốc (TDM)", href: "/tdm" },
+  { label: "Thuốc LASA", href: "/safety/lasa" },
+  { label: "PK/PD kháng sinh", href: "/pkpd" },
   { label: "Báo cáo", href: "/reports" },
   { label: "Quản trị", href: "/admin" },
 ];

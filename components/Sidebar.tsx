@@ -18,6 +18,8 @@ import { usePathname } from "next/navigation";
 */
 
 type Item = {
+  /* Tieu de nhom con (hien phia tren muc dau tien cua nhom con). */
+  section?: string;
   label: string;
   href: string;
   code: string;
@@ -34,7 +36,7 @@ const GROUPS: Group[] = [
   {
     id: "home",
     number: "01",
-    title: "Tổng quan",
+    title: "Trang chủ",
     items: [
       { label: "Trang chủ", href: "/", code: "TC" },
     ],
@@ -42,12 +44,13 @@ const GROUPS: Group[] = [
   {
     id: "clinical",
     number: "02",
-    title: "Điều trị & Dược lâm sàng",
+    title: "Dược lâm sàng",
     items: [
-      { label: "Thông tin thuốc", href: "/drugs", code: "DT" },
-      { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "RL" },
-      { label: "Tương tác thuốc", href: "/tuong-tac-thuoc", code: "TT" },
-      { label: "An toàn thuốc", href: "/safety", code: "AT" },
+      { label: "Thông tin thuốc", href: "/drugs", code: "TT" },
+      { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "HC" },
+      { label: "Tương tác thuốc", href: "/tuong-tac-thuoc", code: "TG" },
+      { label: "Theo dõi nồng độ thuốc (TDM)", href: "/tdm", code: "TD" },
+      { label: "Thuốc nhìn giống, đọc giống (LASA)", href: "/safety/lasa", code: "LA" },
     ],
   },
   {
@@ -56,29 +59,20 @@ const GROUPS: Group[] = [
     title: "Kháng sinh & AMS",
     items: [
       { label: "Tổng quan AMS", href: "/antibiotics", code: "KS" },
-      { label: "Điều trị kinh nghiệm", href: "/antibiotics/empiric", code: "KN" },
-      { label: "Chọn KS theo người bệnh", href: "/antibiotics/empiric/select", code: "CK" },
-      { label: "Lựa chọn theo tác nhân", href: "/antibiotics/organism", code: "TN" },
-      { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
-      { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "LD" },
-      { label: "Dị ứng kháng sinh", href: "/antibiotics/allergy", code: "DA" },
-      { label: "Dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
-      { label: "IV → PO", href: "/antibiotics/iv-to-po", code: "PO" },
-      { label: "De-escalation", href: "/antibiotics/deescalation", code: "DE" },
-    ],
-  },
-  {
-    id: "pkpd",
-    number: "04",
-    title: "PK/PD & TDM",
-    items: [
-      { label: "PK/PD", href: "/pkpd", code: "PK" },
-      { label: "TDM", href: "/tdm", code: "TD" },
+      { section: "Khởi đầu điều trị", label: "Phác đồ kinh nghiệm", href: "/antibiotics/empiric", code: "KN" },
+      { label: "Chọn kháng sinh theo người bệnh", href: "/antibiotics/empiric/select", code: "NB" },
+      { label: "Đánh giá dị ứng kháng sinh", href: "/antibiotics/allergy", code: "DU" },
+      { label: "Kháng sinh dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
+      { section: "Đánh giá lại sau 48–72 giờ", label: "Kháng sinh theo tác nhân", href: "/antibiotics/organism", code: "TN" },
+      { label: "Xuống thang kháng sinh", href: "/antibiotics/deescalation", code: "XT" },
+      { label: "Chuyển đường tĩnh mạch → uống", href: "/antibiotics/iv-to-po", code: "IV" },
+      { section: "Dữ liệu vi sinh và PK/PD", label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
+      { label: "PK/PD kháng sinh", href: "/pkpd", code: "PK" },
     ],
   },
   {
     id: "tools",
-    number: "05",
+    number: "04",
     title: "Công cụ lâm sàng",
     items: [
       { label: "Tổng quan công cụ", href: "/calculators", code: "CC" },
@@ -88,7 +82,7 @@ const GROUPS: Group[] = [
   },
   {
     id: "reports",
-    number: "06",
+    number: "05",
     title: "Báo cáo & Can thiệp",
     items: [
       { label: "Báo cáo", href: "/reports", code: "BC" },
@@ -96,7 +90,7 @@ const GROUPS: Group[] = [
   },
   {
     id: "admin",
-    number: "07",
+    number: "06",
     title: "Quản trị",
     items: [
       { label: "Quản trị hệ thống", href: "/admin", code: "QT" },
@@ -106,11 +100,7 @@ const GROUPS: Group[] = [
 
 function currentGroup(path: string) {
   if (path === "/") return "home";
-  if (path.startsWith("/antibiotics")) return "antibiotics";
-  if (path.startsWith("/pkpd") || path.startsWith("/tdm"))
-    return "pkpd";
-  if (path.startsWith("/calculators/clinical-scores"))
-    return "tools";
+  if (path.startsWith("/antibiotics") || path.startsWith("/pkpd")) return "antibiotics";
   if (path.startsWith("/calculators")) return "tools";
   if (path.startsWith("/reports")) return "reports";
   if (path.startsWith("/admin")) return "admin";
@@ -363,8 +353,23 @@ export default function Sidebar() {
                         isCurrent;
 
                       return (
+                        <div key={group.id + item.href} style={{ display: "contents" }}>
+                        {item.section && (
+                          <div
+                            style={{
+                              padding: "8px 9px 2px",
+                              fontSize: 9.5,
+                              fontWeight: 800,
+                              letterSpacing: ".06em",
+                              textTransform: "uppercase",
+                              color: "rgba(255,255,255,.72)",
+                              fontFamily: "Arial, sans-serif",
+                            }}
+                          >
+                            {item.section}
+                          </div>
+                        )}
                         <Link
-                          key={group.id + item.href}
                           href={item.href}
                           onClick={() => setMobileOpen(false)}
                           style={{
@@ -408,6 +413,7 @@ export default function Sidebar() {
                             {item.label}
                           </span>
                         </Link>
+                        </div>
                       );
                     })}
                   </div>
