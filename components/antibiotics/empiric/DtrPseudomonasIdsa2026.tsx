@@ -126,8 +126,8 @@ export default function DtrPseudomonasIdsa2026() {
         />
         <p className="bv199-muted" style={{ margin: "8px 0 0" }}>
           Các thuốc phối hợp mới (ceftolozan-tazobactam, ceftazidim-avibactam,
-          imipenem-relebactam, cefiderocol) cần được hiệu chỉnh bằng nguồn đúng
-          chế phẩm. Chưa xác minh đầy đủ chuyên luận hiệu chỉnh liều tại đây.
+          imipenem-relebactam, cefiderocol): hiệu chỉnh liều theo chức năng thận
+          theo tờ hướng dẫn sử dụng của chế phẩm.
         </p>
         <p className="bv199-muted" style={{ margin: "8px 0 0" }}>
           Theo IDSA, liều gợi ý của một số thuốc có thể khác liều FDA khuyến

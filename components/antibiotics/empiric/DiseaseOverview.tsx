@@ -8,6 +8,7 @@
 */
 
 import { getDiseaseOverview, type Point } from "@/data/antibiotics/empiric/overviews";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { EMPIRIC_TREATMENT_UI_RULES as RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 
 export function hasDiseaseOverview(diseaseId: string): boolean {
@@ -16,11 +17,13 @@ export function hasDiseaseOverview(diseaseId: string): boolean {
 
 /* Bo cuc dong deu moi mat benh: muc nao nguon khong neu thi ghi ro, khong an muc, khong tu bo sung noi dung. */
 function List({ points, empty }: { points: Point[]; empty: string }) {
-  return points.length > 0 ? <ul>{points.map((p) => <Item key={p.text} p={p} />)}</ul> : <p className="do-empty">{empty}</p>;
+  return points.length > 0 ? <ul>{points.map((p) => <Item key={p.text} p={p} />)}</ul> : empty ? <p className="do-empty">{empty}</p> : null;
 }
 
 function Item({ p }: { p: Point }) {
-  return <li>{p.text}{RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
+  const t = clinicalText(p.text);
+  if (!t) return null;
+  return <li>{t}{RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
 }
 
 export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
@@ -36,10 +39,12 @@ export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
           </div>
         ))}
       </div>
-      <div className="do-control">
-        <h4>Kiểm soát ổ nhiễm và can thiệp</h4>
-        <List points={o.sourceControl} empty="Văn bản không nêu biện pháp kiểm soát ổ nhiễm hoặc can thiệp riêng cho bệnh này." />
-      </div>
+      {o.sourceControl.length > 0 && (
+        <div className="do-control">
+          <h4>Kiểm soát ổ nhiễm và can thiệp</h4>
+          <List points={o.sourceControl} empty="" />
+        </div>
+      )}
       <DiseaseOverviewStyle />
     </section>
   );
@@ -52,12 +57,12 @@ export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
     <section className="do do-monitor" aria-label="Theo dõi và an toàn">
       <h3>Theo dõi, đánh giá lại và an toàn</h3>
       <div className="do-mon-grid">
-        <div><h4>Theo dõi hiệu quả</h4><List points={o.monitoring.efficacy} empty="Văn bản không nêu chỉ số theo dõi riêng." /></div>
-        <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="Văn bản không nêu thời điểm đánh giá lại riêng." /></div>
+        {o.monitoring.efficacy.length > 0 && <div><h4>Theo dõi hiệu quả</h4><List points={o.monitoring.efficacy} empty="" /></div>}
+        {o.monitoring.reassessment.length > 0 && <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="" /></div>}
       </div>
       <details className="do-safety">
         <summary>Cảnh báo an toàn thiết yếu ({o.monitoring.safety.length})</summary>
-        <List points={o.monitoring.safety} empty="Văn bản không nêu cảnh báo an toàn riêng cho bệnh này." />
+        <List points={o.monitoring.safety} empty="" />
         {!RULES.showDoseAdjustmentTables && (
           <p className="do-link">Hiệu chỉnh liều theo chức năng thận, gan: xem module <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a>.</p>
         )}

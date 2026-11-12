@@ -210,16 +210,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 
       {moduleContent}
 
-      {entry.gaps && entry.gaps.length > 0 && (
-        <details className="bv199-warning gt199-gaps">
-          <summary><strong>Còn {entry.gaps.length} nội dung quốc tế chưa xác minh hoặc chưa trích xuất</strong> – xem chi tiết</summary>
-          <ul style={{ margin: "4px 0 0", paddingLeft: 18 }}>
-            {entry.gaps.map((gap) => (
-              <li key={gap}>{clinicalText(capitalizeBullet(diseaseId === "v8-33" && gap.startsWith("PIDS/IDSA 2023: Bảng 5") ? "Đã bổ sung các hàng liều nhi khoa tham khảo; còn cần thẩm định trần liều, hiệu chỉnh và toàn văn bản đính chính." : diseaseId === "v8-33" && gap.startsWith("Người lớn:") ? "Người lớn: đã bổ sung nhánh Gram âm có liều đối chiếu; các nhánh còn lại chưa được xác minh đầy đủ." : diseaseId === "v8-28" && gap === "Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất." ? "Đã bổ sung đối chiếu một phần liều người lớn; còn thiếu thẩm định liều trẻ em, cá thể hóa và các lựa chọn khác." : gap))}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+      {/* Khong hien danh sach "noi dung chua trich xuat" (ghi chu quy trinh, khong phai van phong dieu tri). */}
       {/* Mot khoi nguon duy nhat: to chuc, ten huong dan, nam (moi nhat truoc). */}
       <details className="gt199-cite">
         <summary>Nguồn và đối chiếu</summary>

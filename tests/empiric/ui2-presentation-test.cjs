@@ -9,10 +9,10 @@ const Links=load('components/antibiotics/links/DrugActionLinks.tsx').default;
 let pass=0,fail=0;function check(n,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${n}`);}
 const g={rule:'all',optional:false,ambiguous:false,raw:[{name:'Thuốc tham khảo',dose:'100 mg'}],options:[{name:'Thuốc tham khảo',dose:'100',doseUnit:'mg',population:'adult',doseBasis:'per-dose',ingredientIds:[],flags:[],raw:'100 mg',complete:false}]};
 const h=render(React.createElement(Table,{groups:[g],status:'PARTIAL'}));
-check('Unknown route is explicit rather than a dash or an invented route',h.includes('data-route="">Chưa xác minh đường dùng')&&!h.includes('>—<')&&!h.includes('>Tĩnh mạch<'));
+check('Unknown route is omitted: no review placeholder, no dash, no invented route',!h.includes('Chưa xác minh')&&!h.includes('>—<')&&!h.includes('>Tĩnh mạch<'));
 check('Technical empty-cell explanation removed',!h.includes('ô “—”')&&!h.includes('là nguồn không nêu'));
 const raw=render(React.createElement(Table,{groups:[g],status:'NEEDS_STRUCTURED_REVIEW'}));
-check('Technical review code not exposed in visible output',!raw.includes('NEEDS_STRUCTURED_REVIEW')&&!raw.includes('hiển thị nguyên văn')&&raw.includes('Chưa xác minh đầy đủ liều và cách dùng')&&raw.includes('Cần thẩm định'));
+check('Technical review code not exposed in visible output',!raw.includes('NEEDS_STRUCTURED_REVIEW')&&!raw.includes('hiển thị nguyên văn')&&!raw.includes('Chưa xác minh')&&!raw.includes('Cần thẩm định'));
 check('Source content remains accessible',raw.includes('Thuốc tham khảo')&&raw.includes('100 mg'));
 const noLinks=render(React.createElement(AbxLinkProvider,{value:{hideDrugNavigation:true}},React.createElement(Links,{texts:['vancomycin 1 g']})));
 check('Empiric context suppresses both dosing and antibiogram links',!noLinks.includes('/antibiotics/dosing')&&!noLinks.includes('/antibiotics/antibiogram'));

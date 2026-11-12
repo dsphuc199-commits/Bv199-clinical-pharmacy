@@ -17,7 +17,7 @@ const names=V.therapyNames(mssa).toLowerCase();
 check('Referenced MSSA choices name the actual drugs',names.includes('oxac')&&names.includes('nafc')&&names.includes('clindamycin'));
 const missing=R.getRegimensForDisease('v8-33').filter(r=>load('lib/antibiotics/regimen-structure.ts').structureOf(r).status==='NO_DOSE');
 const listed=render(React.createElement(Panel,{sections:V.sectionsFor(missing).sections,sources:[]}));
-check('Named source-only choices are scoped to the selected group and marked missing-dose',missing.length>0&&missing.every(r=>h.includes(r.scenario))&&listed.includes('Hoạt chất được nguồn liệt kê')&&!h.includes('data-regimen='));
+check('Named source-only choices are scoped to the selected group, without review notes',missing.length>0&&missing.every(r=>h.includes(r.scenario))&&!listed.includes('Hoạt chất được nguồn liệt kê')&&!/chưa xác minh|Cần thẩm định/i.test(listed)&&!h.includes('data-regimen='));
 const c=DOSE_CONFLICTS.find(c=>c.id==='septic-arthritis');
 const compare=render(React.createElement(Comparison,{conflicts:[c]}));
 check('Domestic international caution and decision sections remain distinct',compare.includes('Hướng dẫn Bộ Y tế')&&compare.includes('Hướng dẫn quốc tế')&&compare.includes('Điểm cần lưu ý')&&compare.includes('Nội dung cần quyết định'));

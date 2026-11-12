@@ -32,7 +32,7 @@ const dailyRaw='2,4 g TM/ngày chia 4 lần';
 const daily=render(React.createElement(Table,{groups:[{...group,options:[{...drug('Clindamycin'),dose:'2,4',doseUnit:'g',raw:dailyRaw}]}],status:'STRUCTURED'}));
 check('Explicit daily total stays visible in usage cell despite incomplete legacy parsing',daily.includes(`data-label="Cách dùng"><div><span data-dose="">${dailyRaw}</span>`));
 const unresolved=render(React.createElement(Table,{groups:[{...group,ambiguous:true}],status:'NEEDS_STRUCTURED_REVIEW'}));
-check('Unresolved source remains raw and marked for review, not fabricated table',unresolved.includes('A hoặc B')&&unresolved.includes('thẩm định')&&!unresolved.includes('class="tx-table"'));
+check('Unresolved source remains raw (no fabricated table, no review note)',unresolved.includes('A hoặc B')&&!unresolved.includes('thẩm định')&&!unresolved.includes('class="tx-table"'));
 const blockedCombo=render(React.createElement(Tools,{name:'Imipenem-cilastatin-relebactam'}));
 check('New combination does not silently link to single-drug renal dose',blockedCombo.includes('Chưa tìm thấy chuyên luận khớp chính xác')&&!blockedCombo.includes('<details class="rdt-profile"'));
 for(const [id,label]of [['v8-3','Điều trị kháng nấm'],['v8-142','Phác đồ điều trị lao'],['v8-46','Điều trị theo tác nhân']]){const html=render(React.createElement(AbxLinkProvider,{value:{diseaseId:id}},React.createElement(Panel,{sections:[],sources:[]})));check(`Stream heading respects source scope ${id}`,html.includes(label)&&!html.includes('Phác đồ kháng sinh kinh nghiệm'));}

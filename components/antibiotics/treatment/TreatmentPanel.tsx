@@ -100,10 +100,10 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
   return (
     <details className="tp-rationale" open={open || undefined}>
       <summary>Vì sao chọn phác đồ này?</summary>
-      {rationale.status === "requires_review" && <p className="tp-rationale-review">Chưa soạn giải thích tiêu chí cho nhánh này – cần thẩm định. Điều kiện áp dụng theo nguồn:</p>}
+      {rationale.status === "requires_review" && <p className="tp-rationale-review">Điều kiện áp dụng:</p>}
       <dl className="tp-rationale-list">
         {/* Chi giu tieu chi dan toi lua chon thuoc (co "Anh huong den lua chon") hoac canh bao CAN THAM DINH. */}
-        {rationale.items.filter((c) => rationale.status !== "authored" || !!c.treatmentImplication || /CẦN THẨM ĐỊNH/u.test(`${c.condition} ${c.clinicalMeaning ?? ""}`)).map((c, i) => (
+        {rationale.items.filter((c) => rationale.status !== "authored" || !!c.treatmentImplication || /CẦN THẨM ĐỊNH/u.test(`${c.condition} ${c.clinicalMeaning ?? ""}`)).filter((c) => clinicalText(c.condition)).map((c, i) => (
           <div key={i} className="tp-rationale-item">
             <dt>{rationale.status === "authored" && <span className="tp-rationale-k">Tiêu chí</span>}{clinicalText(c.condition)}</dt>
             {c.clinicalMeaning && <dd><span className="tp-rationale-k">Ý nghĩa lâm sàng</span>{clinicalText(c.clinicalMeaning)}</dd>}
@@ -161,7 +161,7 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
       <div className="tp-card-main">
         {!label && head}
         {card.condition && <p className="tp-cond">{clinicalText(card.condition)}</p>}
-        {(card.status === "PARTIAL" || card.status === "NEEDS_STRUCTURED_REVIEW" || card.status === "NO_DOSE") && <p className="tp-review">{card.status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${card.sourceDoseAbsent ? "nguồn chưa nêu đủ liều." : "chưa xác minh liều cho chỉ định này."}` : "Cần thẩm định: còn trường liều hoặc quan hệ phối hợp chưa xác minh đầy đủ."}</p>}
+        
 
         {critical.map((a) => (
           <div key={a.id} className="byt199-alert byt199-alert-critical tp-alert tp-alert-critical" role="alert">

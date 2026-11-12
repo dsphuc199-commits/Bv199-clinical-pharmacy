@@ -48,5 +48,5 @@ check('Different complete-regimen courses stay in their own time columns',(diffe
 const sameCards=render(React.createElement(Panel,{sections:[{key:'equal',title:'Phác đồ',itemLabel:'Phác đồ',cards:[{...card,id:'one',duration:'5 ngày'},{...card,id:'two',duration:'5 ngày'}]}],sources:[]}));
 check('A common complete-regimen duration is shown only once for all alternatives',(sameCards.match(/5 ngày/g)||[]).length===1&&!sameCards.includes('<th>Thời gian</th>'));
 const unavailable=render(React.createElement(Table,{groups:[group],status:'NO_DOSE'})),absent=render(React.createElement(Table,{groups:[group],status:'NO_DOSE',sourceDoseAbsent:true}));
-check('Parser failure alone cannot assert that the original source omitted a dose',unavailable.includes('chưa xác minh liều cho chỉ định này')&&!unavailable.includes('nguồn chưa nêu liều')&&absent.includes('nguồn chưa nêu liều cho chỉ định này'));
+check('Missing dose never shows review/source notes and never asserts the source omitted a dose',!/chưa xác minh|nguồn chưa nêu/i.test(unavailable+absent));
 console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;

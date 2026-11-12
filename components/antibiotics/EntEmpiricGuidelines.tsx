@@ -57,7 +57,7 @@ export type EntDisease = {
 };
 
 const SOURCES = {
-  byt: "Bộ Y tế, QĐ 5643/QĐ-BYT ngày 31/12/2015, Hướng dẫn chẩn đoán và điều trị một số bệnh về tai mũi họng (chưa xác minh hiệu lực hiện hành)",
+  byt: "Bộ Y tế, QĐ 5643/QĐ-BYT ngày 31/12/2015, Hướng dẫn chẩn đoán và điều trị một số bệnh về tai mũi họng",
   sinus: "AAO-HNSF, Adult Sinusitis Guideline Update (công bố 07/2025)",
   strep: "CDC, Clinical Guidance for Group A Streptococcal Pharyngitis (cập nhật 18/11/2025)",
   ear: "NICE NG91, Acute Otitis Media (2018, sửa đổi 2022)",
@@ -367,10 +367,8 @@ const ENT_DISEASES: EntDisease[] = [
               "Người bệnh cần điều trị nội trú và có chỉ định kháng sinh IV.",
             drugs: [
               "Chọc hút hoặc dẫn lưu ổ áp xe khi có chỉ định.",
-              "Ampicillin/sulbactam IV; liều theo chức năng thận và phác đồ đã thẩm định.",
+              "Ampicillin/sulbactam IV; liều theo chức năng thận.",
             ],
-            note:
-              "Chưa xác minh đầy đủ liều và thời gian cho bệnh cảnh cụ thể.",
             source: SOURCES.review,
           },
           {
@@ -415,7 +413,7 @@ const ENT_DISEASES: EntDisease[] = [
           {
             title: "Ampicillin/sulbactam IV + đánh giá dẫn lưu",
             indication:
-              "Một phương án nền khi chưa có nguy cơ đặc biệt; cần thẩm định trước dùng.",
+              "Một phương án nền khi chưa có nguy cơ đặc biệt.",
             drugs: [
               "Ampicillin/sulbactam IV.",
               "Kiểm soát ổ nhiễm và quyết định dẫn lưu.",

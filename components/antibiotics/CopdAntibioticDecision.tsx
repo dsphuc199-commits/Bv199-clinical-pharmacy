@@ -20,15 +20,14 @@ const COPD_CITATION = citeSource("QĐ 2131/QĐ-BYT").label;
 /* Mot khoi "Nguồn và đối chiếu" duy nhat (cuoi nhanh, `cite`); cac vi tri khac chi hien "Chi tiết cần thẩm định" khi co.
    Lieu duy tri theo Clcr cua colistin: xem module Hieu chinh lieu (khong lap bang o day). */
 function Sources({ reviews = [], cite = false }: { ids: SourceId[]; reviews?: ReviewId[]; cite?: boolean }) {
-  if (!cite && reviews.length === 0) return null;
-  return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Chi tiết cần thẩm định"}</summary>
+  if (!cite && !reviews.includes("colistin")) return null;
+  return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Colistin – liều nạp và liều duy trì"}</summary>
     {cite && <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>}
-    {reviews.map(id => <p key={id}><strong>Cần thẩm định:</strong> {clinicalText(COPD_REVIEWS[id].detail)}</p>)}
-    {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — số liệu nguồn để thẩm định, chưa phải liều kê đơn</strong>
+    {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — liều theo QĐ 2131/QĐ-BYT</strong>
       <p>Theo văn bản: {clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
       <p>Liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>
       <p>Liều duy trì theo chức năng thận: xem module <Link href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link>.</p>
-      <p>Giữ nguyên ký hiệu MUI của nguồn; không quy đổi giữa mg và MUI khi chưa xác minh chế phẩm và quy ước hoạt lực.</p>
+      <p>Giữ nguyên ký hiệu MUI của nguồn; không quy đổi giữa mg và MUI khi chưa xác định rõ chế phẩm và quy ước hoạt lực.</p>
     </div>}
   </details>;
 }
@@ -63,7 +62,7 @@ export function CopdRegimenCard({ regimen, index, hideDuration=false, durationCo
       {dose.note && <p className="c26-dose-note">{dose.note}</p>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <DrugTools drugId={dose.drugId} />}
     </div>)}
     {!hideDuration && !durationColumn && <p className="c26-duration"><strong>Thời gian điều trị:</strong> {regimen.duration}.</p>}
-    {regimen.reviewIds.length > 0 && <div className="c26-review"><strong>Cần thẩm định</strong><ul>{regimen.reviewIds.map(id => <li key={id}>{COPD_REVIEWS[id].label}</li>)}</ul></div>}
+
     <Sources ids={regimen.sourceIds} reviews={regimen.reviewIds} />
   </article>;
 }
@@ -117,7 +116,7 @@ export default function CopdAntibioticDecision() {
           {ventilated && <p role="status">Có chỉ định kháng sinh liên quan đến thông khí cơ học trong nhánh nội trú.</p>}
           <p>Nếu nghi viêm phổi (sốt, đông đặc trên X-quang) hoặc nhiễm khuẩn nơi khác: đánh giá và điều trị theo bệnh lý tương ứng.</p>
         </div>}
-        <PatientGroupSelect key={setting} groups={patientGroupsFor(COPD_GROUPS.filter(g=>g.setting===setting).map(g=>({value:g.id,label:g.title,setting:g.setting,criteria:g.criteria,regimenIds:COPD_REGIMENS.filter(r=>r.groupId===g.id).map(r=>r.id),sources:[...new Set([...g.sourceIds,...g.reviewIds.flatMap(id=>COPD_REVIEWS[id].sources)])].map(id=>COPD_SOURCES[id]),reviewNotes:g.reviewIds.map(id=>COPD_REVIEWS[id].label)})))} value={groupId??''} onChange={value=>{setGroupId(COPD_GROUPS.find(g=>g.id===value&&g.setting===setting)?.id??null);setBaseId('');}}/>
+        <PatientGroupSelect key={setting} groups={patientGroupsFor(COPD_GROUPS.filter(g=>g.setting===setting).map(g=>({value:g.id,label:g.title,setting:g.setting,criteria:g.criteria,regimenIds:COPD_REGIMENS.filter(r=>r.groupId===g.id).map(r=>r.id),sources:[...new Set([...g.sourceIds,...g.reviewIds.flatMap(id=>COPD_REVIEWS[id].sources)])].map(id=>COPD_SOURCES[id]),reviewNotes:[]})))} value={groupId??''} onChange={value=>{setGroupId(COPD_GROUPS.find(g=>g.id===value&&g.setting===setting)?.id??null);setBaseId('');}}/>
         {group && <section className="c26-group" aria-label={group.title}>
           <h4>Kháng sinh theo kinh nghiệm</h4>
           {groupId === "in-mdr" && <label className="c26-base-picker">Chọn thuốc nền để xem phác đồ phối hợp có điều kiện<select value={baseId} onChange={event => setBaseId(event.target.value as DrugId | "")}><option value="">Chọn kháng sinh có phổ trên P. aeruginosa</option>{[...new Set(COPD_REGIMENS.filter(r => r.groupId === "in-mdr").map(r => r.drugs[0].drugId))].map(id => <option key={id} value={id}>{COPD_DRUGS[id].name}</option>)}</select></label>}

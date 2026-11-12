@@ -102,18 +102,19 @@ const BV=V.default;const single=(id)=>render(React.createElement(BV,{diseaseId:i
 check('Bệnh một bệnh cảnh: ẩn "Tiêu chí áp dụng" khi nhãn chỉ nhắc tên bệnh (v8-27, v8-25), giữ khi có điều kiện (v8-54 > 3 tuổi, v8-129 mức độ)',
   !single('v8-27').includes('<strong class="tp-scn-label"')&&!single('v8-25').includes('<strong class="tp-scn-label"')&&single('v8-54').includes('<strong class="tp-scn-label"')&&single('v8-129').includes('<strong class="tp-scn-label"'));
 const raHidden=render(React.createElement(Panel,{sections:V.sectionsFor(R.getRegimensForDisease('v8-117').slice(0,1)).sections,sources:[],rationale:{status:'authored',items:[{condition:'Mô tả không dẫn tới lựa chọn'},{condition:'Có lựa chọn',treatmentImplication:'Thuốc X'},{condition:'CẦN THẨM ĐỊNH – mâu thuẫn',clinicalMeaning:'Chi tiết'}]}}));
-check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc và mục CẦN THẨM ĐỊNH',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&raHidden.includes('CẦN THẨM ĐỊNH – mâu thuẫn'));
+check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc; không hiện ghi chú thẩm định',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&!/CẦN THẨM ĐỊNH|Cần thẩm định/.test(raHidden));
 const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.ts').RATIONALE_708,load('data/antibiotics/empiric/rationale-other.ts').RATIONALE_OTHER,load('data/antibiotics/empiric/overviews.ts').DISEASE_OVERVIEWS]);
 check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
 /* Gop nguon: moi khung toi da mot "Nguồn và đối chiếu"; khong hien "Phụ lục" (ke ca khoi dong) – moi mat benh, tab Quoc te, module */
-const appendixHits=[],multiSrc=[];
-const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
+const appendixHits=[],multiSrc=[],reviewHits=[];
+const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);if(/Chưa xác minh|chưa xác minh|Cần thẩm định|cần thẩm định|CẦN THẨM ĐỊNH|nguồn chưa nêu|Văn bản không nêu|theo nguồn\b/.test(h.replace(/<[^>]+>/g,' ')))reviewHits.push(name+" :: "+(h.replace(/<[^>]+>/g," ").match(/.{0,60}(Chưa xác minh|chưa xác minh|Cần thẩm định|cần thẩm định|CẦN THẨM ĐỊNH|nguồn chưa nêu|Văn bản không nêu|theo nguồnb).{0,60}/)||[""])[0]);if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
 for(const d of C.DISEASES){const sc=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!sc.has(r.scenario))sc.set(r.scenario,[]);sc.get(r.scenario).push(r);}
   for(const [nm,l] of sc)scanAll(`${d.id} ${nm.slice(0,30)}`,render(React.createElement(Panel,{sections:V.sectionsFor(l).sections,sources:l.map(r=>`QĐ x — ${r.source.section}`),rationale:getRationale(d.id,nm,l),scenarios:[{value:nm,label:nm,criteria:[nm]}],scenario:nm})));
   scanAll(`${d.id} Quốc tế`,render(React.createElement(GT.IntlTab,{diseaseId:d.id})));scanAll(`${d.id} So sánh`,render(React.createElement(GT.CompareTab,{diseaseId:d.id})));}
 for(const s of CAPM.CAP_SCENARIOS)scanAll(`CAP ${s.id}`,render(React.createElement(CAPM.default,{initialScenarioId:s.id})));
 for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k])scanAll(`${k} ${s.id}`,render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id})));
 check('Không hiển thị "Phụ lục" ở bất kỳ mặt bệnh, tab hay module nào (kể cả khối đóng)',appendixHits.length===0,appendixHits.slice(0,5));
+check('Không còn câu ghi chú quy trình ("chưa xác minh", "cần thẩm định", "nguồn chưa nêu", "văn bản không nêu") ở mọi mặt bệnh, tab Quốc tế, So sánh',reviewHits.length===0,reviewHits.slice(0,12));
 check('Mỗi khung phác đồ chỉ có tối đa một khối "Nguồn và đối chiếu" (đã gộp)',multiSrc.length===0,multiSrc.slice(0,5));
 /* Trinh bay: khong lap duong dung/cach chia da co trong cau lieu goc; khong cat chu giua tu */
 const clinda=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-2')]).sections,sources:[]}));
@@ -125,8 +126,8 @@ const OVA=load('data/antibiotics/empiric/overviews.ts');
 check('69/69 mặt bệnh có tổng quan và phần theo dõi/an toàn (kể cả CAP, HAP, VAP, COPD)',C.DISEASES.every(d=>!!OVA.getDiseaseOverview(d.id)));
 const DOV=load('components/antibiotics/empiric/DiseaseOverview.tsx');const uniformBad=[];
 for(const d of C.DISEASES){const h=render(React.createElement(DOV.DiseaseOverviewSummary,{diseaseId:d.id}))+render(React.createElement(DOV.DiseaseMonitoring,{diseaseId:d.id}));
-  if(!h.includes('class="do-cards"')||!h.includes('Kiểm soát ổ nhiễm và can thiệp')||!h.includes('Theo dõi hiệu quả')||!h.includes('Đánh giá lại điều trị')||!h.includes('Cảnh báo an toàn thiết yếu'))uniformBad.push(d.id);}
-check('Mọi mặt bệnh hiển thị đủ các mục tổng quan/theo dõi (mục nguồn không nêu ghi rõ, không ẩn)',uniformBad.length===0,uniformBad);
+  if(!h.includes('class="do-cards"')||!h.includes('Cảnh báo an toàn thiết yếu')||/Văn bản không nêu|Cần thẩm định|Chưa xác minh/.test(h))uniformBad.push(d.id);}
+check('Mọi mặt bệnh có khung tổng quan/theo dõi; mục trống được ẩn, không hiện câu "Văn bản không nêu"',uniformBad.length===0,uniformBad);
 const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
 check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan + theo dõi như khung chung',/selected\.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" \/><CopdByt2026 \/><DiseaseMonitoring diseaseId="v8-6" \/><\/>/.test(pageSrc)&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.includes('<DiseaseMonitoring diseaseId={selected.id} />'));
 const COPDD=load('data/antibiotics/copd-2131.ts');

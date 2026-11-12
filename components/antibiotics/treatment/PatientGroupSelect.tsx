@@ -1,6 +1,7 @@
 "use client";
 import { useId } from "react";
 import type { PatientGroup } from "@/lib/antibiotics/patient-groups";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
 
 /*
   Chon nhom nguoi benh: chi o chon. Khong hien "tieu chi phan nhom" (ten nhom da du nghia).
@@ -11,7 +12,7 @@ export default function PatientGroupSelect({ groups,value,onChange }:{groups:Pat
   return <div className="patient-group-control clinical-scenario-select">
     <label htmlFor={uid}>Nhóm người bệnh</label>
     <select id={uid} value={group?.id??''} onChange={event=>onChange(event.target.value)}><option value="">Chọn nhóm người bệnh</option>{groups.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select>
-    {group&&group.reviewNotes.length>0&&<p className="patient-group-review" data-selected-group={group.id}><strong>Cần thẩm định:</strong> {group.reviewNotes.join(' ')}</p>}
+    {group&&clinicalText(group.reviewNotes.join(' '))&&<p className="patient-group-review" data-selected-group={group.id}><strong>Lưu ý:</strong> {clinicalText(group.reviewNotes.join(' '))}</p>}
     <style>{`
       .patient-group-control { display:grid; gap:8px; min-width:0; margin:18px 0; color:#152b40; }.patient-group-control > label { font-weight:700; font-size:15px; }
       .patient-group-control select { width:100%; min-width:0; padding:11px 12px; border:1px solid #a9c8d2; border-radius:6px; background:white; font:inherit; color:#162c40; }

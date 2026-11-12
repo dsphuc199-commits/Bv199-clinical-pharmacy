@@ -112,7 +112,7 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
           <summary>Thông tin liều bổ sung · chờ thẩm định</summary>
           <p style={{ margin: 0, fontWeight: 800 }}>
             {sup.coversAll ? "Liều bổ sung có dẫn nguồn" : "Thông tin liều một phần"} ·{" "}
-            {sup.kind === "same-document" ? "cùng văn bản BYT" : "hướng dẫn quốc tế – cần thẩm định"}
+            {sup.kind === "same-document" ? "cùng văn bản BYT" : "hướng dẫn quốc tế"}
           </p>
           <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
             {sup.items.map((it) => (
@@ -159,7 +159,7 @@ function toCard(regimen: Regimen): TxCard {
   }
   return {
     id: regimen.id,
-    condition: regimen.condition ?? (regimen.role === "allergy" ? "Áp dụng khi dị ứng hoặc không dung nạp (theo nguồn)" : undefined),
+    condition: regimen.condition ?? (regimen.role === "allergy" ? "Áp dụng khi dị ứng hoặc không dung nạp" : undefined),
     groups: structure.groups,
     status: structure.status,
     sourceDoseAbsent: /không nêu liều|chỉ nêu (?:nhóm|tên) thuốc/iu.test(MISSING_DOSE_REASON[regimen.id] ?? ""),

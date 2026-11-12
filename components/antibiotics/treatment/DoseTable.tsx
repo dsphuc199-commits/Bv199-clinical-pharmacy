@@ -102,7 +102,7 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
       </td>
       <td data-label="Cách dùng">
         <div>
-          <span data-dose="">{dose}</span>{showRoute && <><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route || "Chưa xác minh đường dùng")}</span></>}{showInterval && <><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval || "Chưa xác minh khoảng cách liều")}</span></>}
+          <span data-dose="">{dose}</span>{showRoute && o.route && <><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route)}</span></>}{showInterval && o.interval && <><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval)}</span></>}
           {o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
           {o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
           {o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
@@ -111,7 +111,7 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
           {o.flags.filter((f) => f.startsWith("Ghi chú kèm")).map((f) => <span key={f} className="tx-sub">{clinicalText(f.replace(/^Ghi chú kèm:\s*/u, ""))}</span>)}
         </div>
       </td>
-      {showCourse && <td data-label="Thời gian"><div>{clinicalText(o.course || duration || "Chưa xác minh thời gian điều trị")}</div></td>}
+      {showCourse && <td data-label="Thời gian"><div>{clinicalText(o.course || duration || "") || "—"}</div></td>}
     </tr>
   );
 }
@@ -123,14 +123,14 @@ function hidesCombination(groups: DrugGroup[]): boolean {
   return groups.some((g) => g.rule === "one-of" && g.raw.some((r) => MID_COMBINATION.test(`${r.name} ${r.dose ?? ""}`)));
 }
 
-export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, sourceDoseAbsent, hideReviewNote }: Props) {
+export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, hideReviewNote }: Props) {
   if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE" || hidesCombination(groups)) {
     return (
       <div className="tx">
-        {(!hideReviewNote || status === "STRUCTURED") && <p className="tx-dur">{status === "NO_DOSE" ? `Hoạt chất được nguồn liệt kê — ${sourceDoseAbsent ? "nguồn chưa nêu liều cho chỉ định này." : "chưa xác minh liều cho chỉ định này."}` : status === "NEEDS_STRUCTURED_REVIEW" ? "Chưa xác minh đầy đủ liều và cách dùng. Cần thẩm định trước khi áp dụng." : "Phác đồ có phối hợp thuốc trong từng lựa chọn – trình bày nguyên văn theo nguồn. Cần thẩm định trước khi áp dụng."}</p>}
+        {status === "NO_DOSE" && !hideReviewNote && <p className="tx-dur">Liều dùng theo tờ hướng dẫn sử dụng của chế phẩm.</p>}
         {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
         <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
-        {duration && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
+        {duration && clinicalText(duration) && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(duration)}</p>}
         <TxStyle />
       </div>
     );
@@ -176,11 +176,11 @@ export default function DoseTable({ groups, status, duration, population, indepe
                 </Fragment>)}
               </tbody>
             </table>
-            {sharedCourse && !duration && !showCourse && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(sharedCourse)}</p>}
+            {sharedCourse && clinicalText(sharedCourse) && !duration && !showCourse && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(sharedCourse)}</p>}
           </div>
         );
       })}
-      {duration && !durationColumn && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {duration}</p>}
+      {duration && clinicalText(duration) && !durationColumn && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(duration)}</p>}
       {/* Khong lap "Chi tiết cách dùng theo văn bản": cach dung da the hien trong bang; truong chua xac minh hien ngay trong o. */}
       <TxStyle />
     </div>
