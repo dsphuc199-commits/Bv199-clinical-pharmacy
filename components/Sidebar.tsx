@@ -232,13 +232,12 @@ export default function Sidebar() {
                 lineHeight: 1.3,
                 fontWeight: 800,
                 maxWidth: "100%",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
+                overflowWrap: "break-word",
               }}
-              title="BV199 Clinical Pharmacy"
             >
-              BV199 Clinical Pharmacy
+              BV199
+              <br />
+              Clinical Pharmacy
             </strong>
             <span
               style={{
