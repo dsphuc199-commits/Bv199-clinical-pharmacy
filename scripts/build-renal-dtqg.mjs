@@ -444,8 +444,11 @@ for (const m of index) {
   const priority = group === "ks-n1" || group === "ks-n2";
   if (!inFormulary && !priority) continue;
   if (ONLY && !k.includes(ONLY)) continue;
-  const id = slug(m.vn || m.inn).slice(0, 60);
-  const name = m.vn ? m.vn.charAt(0) + m.vn.slice(1).toLowerCase() : m.inn;
+  /* Ten chuyen luan mat phan hoat chat (vd "(DUNG TRONG HO HAP)"): ghep ten INN goc vao truoc. */
+  const base = m.inn.replace(/s*(.*$/, "").trim();
+  const vn = m.vn && /^s*(/.test(m.vn) ? `${base} ${m.vn.toLowerCase()}` : m.vn;
+  const id = slug(vn || m.inn).slice(0, 60);
+  const name = (vn ? vn.charAt(0) + vn.slice(1).toLowerCase() : m.inn).replace(/((i{1,3}|iv|v))/g, (x) => x.toUpperCase());
   const pages = { pdf: [m.page, m.end], printed: [m.page + PAGE_OFFSET, m.end + PAGE_OFFSET] };
   const ex = await extract(m);
   const empty = !ex.blocks.length && !ex.ci.length && !ex.caution.length;

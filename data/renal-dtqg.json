@@ -4,9 +4,9 @@
  "note": "Trích nguyên văn phần hiệu chỉnh liều ở người suy thận (mục Liều lượng và cách dùng), chống chỉ định và thận trọng liên quan chức năng thận; bảng dựng lại theo đường kẻ của trang gốc. Chưa được dược sĩ lâm sàng BV199 xác nhận.",
  "items": [
   {
-   "id": "",
-   "name": "(dùng trong hô hấp)",
-   "inn": "Salbutamol (used in pneumalogy)",
+   "id": "salbutamol-dung-trong-ho-hap",
+   "name": "Salbutamol (dùng trong hô hấp)",
+   "inn": "Salbutamol (used in pneumology)",
    "group": "thuoc-khac",
    "inFormulary": true,
    "pages": {
@@ -17570,7 +17570,7 @@
   },
   {
    "id": "sat-sulfat",
-   "name": "Sắt (ii) sulfat",
+   "name": "Sắt (II) sulfat",
    "inn": "Ferrous sulfate",
    "group": "thuoc-khac",
    "inFormulary": true,
