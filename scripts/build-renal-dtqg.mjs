@@ -23,7 +23,6 @@ const TOOLS = process.env.LEAFLET_TOOLS;
 const PDF = process.argv[2];
 const args = process.argv.slice(3);
 const ONLY = args.includes("--only") ? args[args.indexOf("--only") + 1].toLowerCase() : null;
-const NO_IMAGES = args.includes("--no-images");
 if (!TOOLS || !PDF) { console.error("Thieu LEAFLET_TOOLS hoac duong dan PDF"); process.exit(1); }
 
 const mod = (p) => import(pathToFileURL(join(TOOLS, "node_modules", p)).href);
@@ -423,30 +422,6 @@ async function extract(m) {
   return { blocks: picked, ci: sentences(/^Chống chỉ định\b/, false), caution: sentences(/^Thận trọng\b/, true) };
 }
 
-/* Anh cat de doi chieu: moi (trang, cot) 1 anh tu phan tu dau den cuoi cua doan trich. */
-async function clips(blocks, id) {
-  const groups = new Map();
-  for (const b of blocks) for (const e of b.src) {
-    const k = `${e.page}-${e.col}`;
-    const g = groups.get(k) || { page: e.page, col: e.col, top: -Infinity, bottom: Infinity };
-    const top = e.kind === "table" ? e.top : e.y + e.h, bottom = e.kind === "table" ? e.bottom : e.y;
-    g.top = Math.max(g.top, top); g.bottom = Math.min(g.bottom, bottom);
-    groups.set(k, g);
-  }
-  const out = [];
-  let n = 0;
-  for (const g of groups.values()) {
-    const { W, H, canvas } = await readPage(g.page);
-    const x0 = g.col === 0 ? 30 : W / 2 + 1, x1 = g.col === 0 ? W / 2 - 1 : W - 30;
-    const y0 = Math.max(0, H - g.top - 4), y1 = Math.min(H, H - g.bottom + 6);
-    const left = Math.round(x0 * S), top = Math.round(y0 * S), w = Math.round((x1 - x0) * S), h = Math.round((y1 - y0) * S);
-    const file = `${id}-${++n}.webp`;
-    if (!NO_IMAGES) await sharp(canvas.toBuffer("image/png")).extract({ left, top, width: w, height: h }).webp({ quality: 74 }).toFile(join(OUT_IMG, file));
-    out.push({ src: `/duoc-thu/${file}`, page: g.page, printedPage: g.page + PAGE_OFFSET, w, h });
-  }
-  return out;
-}
-
 /* Anh cat cho cong thuc: vung bao cac dong (cung trang, cung cot). */
 async function cropLines(els, id) {
   const e0 = els[0];
@@ -476,7 +451,7 @@ for (const m of index) {
   const empty = !ex.blocks.length && !ex.ci.length && !ex.caution.length;
   if (empty && !priority) continue;
   if (empty) {
-    results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust: false, noRenalText: true, content: [], clips: [], contraindications: [], cautions: [] });
+    results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust: false, noRenalText: true, content: [], contraindications: [], cautions: [] });
     console.log(`${group.padEnd(10)} ${name} | Duoc thu khong neu hieu chinh theo than`);
     continue;
   }
@@ -489,7 +464,7 @@ for (const m of index) {
     else if (b.t === "table") content.push({ t: "table", rows: b.rows });
     else content.push({ t: "img", ...(await cropLines(b.src, id + "-ct" + ++fi)), alt: blockText(b) });
   }
-  results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust, content, clips: ex.blocks.length ? await clips(ex.blocks, id) : [], contraindications: ex.ci, cautions: ex.caution });
+  results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust, content, contraindications: ex.ci, cautions: ex.caution });
   console.log(`${group.padEnd(10)} ${name} | ${content.filter((c) => c.t === "p").length} doan, ${content.filter((c) => c.t === "table").length} bang | CCD ${ex.ci.length} | TT ${ex.caution.length}${noAdjust ? " | khong can HC" : ""}`);
 }
 if (ONLY) {

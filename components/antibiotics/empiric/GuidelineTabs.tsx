@@ -232,7 +232,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 /* ---------------- Tab 3 ---------------- */
 
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
-  if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p>Phần Việt Nam đã cập nhật theo QĐ 2131/QĐ-BYT ngày 14/7/2026. Đối chiếu trước đây dựa trên QĐ 2767/2023 không được hiển thị như đối chiếu của hướng dẫn mới.</p></section>;
+  if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p></section>;
   const c = getComparison(diseaseId);
   if (!c) {
     return (

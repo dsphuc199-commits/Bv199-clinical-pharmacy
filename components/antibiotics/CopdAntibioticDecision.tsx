@@ -24,7 +24,7 @@ function Sources({ reviews = [], cite = false }: { ids: SourceId[]; reviews?: Re
   return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Colistin – liều nạp và liều duy trì"}</summary>
     {cite && <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>}
     {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — liều theo QĐ 2131/QĐ-BYT</strong>
-      <p>Theo văn bản: {clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
+      <p>{clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
       <p>Liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>
       <p>Liều duy trì theo chức năng thận: xem module <Link href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link>.</p>
       <p>Giữ nguyên ký hiệu MUI của nguồn; không quy đổi giữa mg và MUI khi chưa xác định rõ chế phẩm và quy ước hoạt lực.</p>

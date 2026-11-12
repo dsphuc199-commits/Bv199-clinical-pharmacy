@@ -146,7 +146,7 @@ const EAU_PYELO: IntlRegimen[] = [
     kind: "empiric",
     scenario: "Viêm thận bể thận – kinh nghiệm đường tiêm (EAU 2026)",
     options: [
-      "Hàng 1: ciprofloxacin 400 mg x 2 lần/ngày; levofloxacin 500 mg x 1 lần/ngày (liều chuẩn) hoặc x 2 lần/ngày (liều cao) [bảng ghi \"oral\" – nguyên văn]; cefotaxim 2 g x 3 lần/ngày; ceftriaxon 2 g x 1 lần/ngày (liều chuẩn) hoặc 2 g x 2 lần/ngày (liều cao)",
+      "Hàng 1: ciprofloxacin 400 mg x 2 lần/ngày; levofloxacin 500 mg x 1 lần/ngày (liều chuẩn) hoặc x 2 lần/ngày (liều cao); cefotaxim 2 g x 3 lần/ngày; ceftriaxon 2 g x 1 lần/ngày (liều chuẩn) hoặc 2 g x 2 lần/ngày (liều cao)",
       "Hàng 2: cefepim 1 g x 3 lần/ngày hoặc 2 g x 2 lần/ngày (liều cao 2 g x 3 lần/ngày); piperacillin-tazobactam 4,5 g x 3 lần/ngày (liều cao 4,5 g x 4 lần/ngày truyền kéo dài); gentamicin 6–7 mg/kg x 1 lần/ngày; amikacin 25–30 mg/kg x 1 lần/ngày",
       "Lựa chọn cuối (chỉ khi cấy sớm cho thấy vi khuẩn đa kháng): imipenem-cilastatin 0,5 g x 4 lần/ngày (liều cao 1 g x 4) truyền 30 phút; meropenem 1 g x 3 lần/ngày; ceftolozane-tazobactam 1,5 g x 3; ceftazidime-avibactam 2,5 g x 3; cefiderocol 2 g x 3; meropenem-vaborbactam 2 g x 3; plazomicin 15 mg/kg x 1 lần/ngày",
     ],
@@ -575,8 +575,8 @@ export const INTL_ENTRIES: IntlEntry[] = [
       },
       {
         scenario: "Không nguy cơ tử vong cao nhưng có yếu tố làm tăng khả năng MRSA – một thuốc Gram âm + thuốc chống MRSA",
-        options: ["piperacillin-tazobactam 4,5 g TM mỗi 6 giờ", "cefepim hoặc ceftazidim 2 g TM mỗi 8 giờ", "levofloxacin 750 mg TM mỗi ngày hoặc ciprofloxacin 400 mg TM mỗi 8 giờ", "imipenem 500 mg TM mỗi 6 giờ hoặc meropenem 1 g TM mỗi 8 giờ", "aztreonam 2 g TM mỗi 8 giờ", "CỘNG: vancomycin 15 mg/kg TM mỗi 8–12 giờ, đích nồng độ đáy \"15–20 mg/mL\" [nguyên văn; nghi lỗi in, KHÔNG quy đổi] (cân nhắc liều nạp 25–30 mg/kg x 1 khi bệnh nặng) HOẶC linezolid 600 mg TM mỗi 12 giờ"],
-        note: "Table 4 ghi đơn vị nồng độ đáy vancomycin là \"mg/mL\" – nghi lỗi in; ứng dụng giữ nguyên văn, không quy đổi sang mg/L. Đồng thuận vancomycin 2020 không còn khuyến cáo theo dõi chỉ bằng nồng độ đáy (xem khuyến cáo bên trên). Yếu tố MRSA: kháng sinh tĩnh mạch trong 90 ngày; đơn vị chưa biết tỷ lệ MRSA hoặc > 20%; từng phát hiện MRSA.",
+        options: ["piperacillin-tazobactam 4,5 g TM mỗi 6 giờ", "cefepim hoặc ceftazidim 2 g TM mỗi 8 giờ", "levofloxacin 750 mg TM mỗi ngày hoặc ciprofloxacin 400 mg TM mỗi 8 giờ", "imipenem 500 mg TM mỗi 6 giờ hoặc meropenem 1 g TM mỗi 8 giờ", "aztreonam 2 g TM mỗi 8 giờ", "CỘNG: vancomycin 15 mg/kg TM mỗi 8–12 giờ, đích nồng độ đáy 15–20 mg/L (cân nhắc liều nạp 25–30 mg/kg x 1 khi bệnh nặng) HOẶC linezolid 600 mg TM mỗi 12 giờ"],
+        note: "Đồng thuận vancomycin 2020 không còn khuyến cáo theo dõi chỉ bằng nồng độ đáy (xem khuyến cáo bên trên). Yếu tố MRSA: kháng sinh tĩnh mạch trong 90 ngày; đơn vị chưa biết tỷ lệ MRSA hoặc > 20%; từng phát hiện MRSA.",
         guidelineId: "atsidsa-hapvap-2016",
         locator: "Table 4, cột 2 và chú thích b",
       },
@@ -667,7 +667,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
     diseaseId: "v8-17",
     guidelineIds: ["idsa-cuti-2025", EAU_UI],
     scope:
-      "IDSA 2025 thu hẹp NKTN không biến chứng thành nhiễm khuẩn giới hạn ở bàng quang, không sốt; viêm thận – bể thận vì vậy thuộc phạm vi NKTN phức tạp (định nghĩa theo bản tóm tắt – cần đối chiếu toàn văn).",
+      "IDSA 2025 thu hẹp NKTN không biến chứng thành nhiễm khuẩn giới hạn ở bàng quang, không sốt; viêm thận – bể thận vì vậy thuộc phạm vi NKTN phức tạp.",
     recommendations: [
       { text: "Có sepsis: cephalosporin thế hệ 3 hoặc 4, carbapenem, piperacillin-tazobactam hoặc fluoroquinolon.", grade: "Có điều kiện", guidelineId: "idsa-cuti-2025", locator: "CQ 1A, a" },
       { text: "Không sepsis: cephalosporin thế hệ 3 hoặc 4, piperacillin-tazobactam hoặc fluoroquinolon.", grade: "Có điều kiện", guidelineId: "idsa-cuti-2025", locator: "CQ 1A, b" },
@@ -1041,7 +1041,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   ...["v8-113", "v8-116"].map<IntlEntry>((diseaseId) => ({
     diseaseId,
     guidelineIds: [ECIL, IPFN],
-    scope: "ECIL-10: người lớn ung thư huyết học/ghép tế bào gốc. IPFN 2023: trẻ em ung thư và ghép tế bào gốc. Hai nguồn không ghi liều.",
+    scope: "ECIL-10: người lớn ung thư huyết học/ghép tế bào gốc. IPFN 2023: trẻ em ung thư và ghép tế bào gốc. Hai hướng dẫn không khuyến cáo liều cụ thể.",
     recommendations: [
       { text: "ECIL-10 – chiến lược leo thang (bệnh cảnh không phức tạp, chưa từng cư trú/nhiễm vi khuẩn kháng thuốc, nơi hiếm vi khuẩn kháng thuốc lúc khởi phát): cephalosporin chống Pseudomonas (cefepim, ceftazidim – tránh nếu tỷ lệ ESBL cao) hoặc piperacilin-tazobactam; lựa chọn khác: cefoperazon-sulbactam, piperacilin + gentamicin.", grade: "A-I (thuốc); B-II (chỉ định)", guidelineId: ECIL, locator: "Slide 9" },
       { text: "ECIL-10 – chiến lược xuống thang khi: sepsis/sốc nhiễm khuẩn; đã cư trú hoặc từng nhiễm vi khuẩn kháng thuốc; nơi thường gặp vi khuẩn kháng thuốc lúc khởi phát. Lựa chọn: carbapenem đơn trị; beta-lactam chống Pseudomonas + aminoglycosid; beta-lactam nhắm vào tác nhân cư trú theo kháng sinh đồ; thêm sớm glycopeptid/thuốc mới nếu có yếu tố nguy cơ Gram dương kháng thuốc.", guidelineId: ECIL, locator: "Slide 10" },

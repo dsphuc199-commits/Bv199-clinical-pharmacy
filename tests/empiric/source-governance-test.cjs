@@ -23,7 +23,7 @@ const html=renderToStaticMarkup(React.createElement('div',null,React.createEleme
 const ids=[...html.matchAll(/<select id="([^"]+)"/g)].map(x=>x[1]);
 check('Two treatment panels have distinct labelled scenario controls',ids.length===2&&ids[0]!==ids[1]&&ids.every(id=>html.includes(`for="${id}"`)));
 const selectedEvidence=renderToStaticMarkup(React.createElement(Panel,{...props,scenarios:undefined}));
-check('Source location preserved for selected guidance and absent before group selection',!html.includes('PDF trang 15; bảng 2')&&/<details class="tp-sources"><summary>Nguồn và đối chiếu<\/summary><ul><li>PDF trang 15; bảng 2<\/li>/.test(selectedEvidence));
+check('Source location preserved for selected guidance and absent before group selection',!html.includes('PDF trang 15; bảng 2')&&/<details class="tp-box tp-sources"><summary>Nguồn tham khảo \(\d+\)<\/summary><ul><li>PDF trang 15; bảng 2<\/li>/.test(selectedEvidence));
 const links=renderToStaticMarkup(React.createElement(Links,{texts:['vancomycin 1 g mỗi 12 giờ'],compact:true}));
 check('Dosing navigation retained without inline renal dose list',links.includes('/antibiotics/dosing')&&!links.includes('CrCl ')&&!links.includes('<ul'));
 const allergyHtml=renderToStaticMarkup(React.createElement(ClinicalFilterProvider,{value:{...DEFAULT_FILTERS,penicillinAllergy:true,crcl:'25'}},React.createElement(Panel,{sections:[{key:'x',title:'Điều kiện áp dụng',itemLabel:'Lựa chọn',cards:[{id:'test',groups:[],status:'NO_DOSE',linkTexts:['amoxicillin 1 g'],alerts:[{id:'danger',level:'critical',title:'Cảnh báo thử',text:'Nguy cơ cần đánh giá'}]}]}],sources:[]})));

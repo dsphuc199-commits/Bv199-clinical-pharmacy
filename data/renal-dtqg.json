@@ -37,15 +37,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/-1.webp",
-     "page": 1448,
-     "printedPage": 1454,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -120,15 +111,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/acarbose-1.webp",
-     "page": 116,
-     "printedPage": 122,
-     "w": 533,
-     "h": 183
-    }
-   ],
    "contraindications": [
     "Bệnh nhân suy thận có Clcr < 25 ml/phút."
    ],
@@ -163,15 +145,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/acenocoumarol-1.webp",
-     "page": 120,
-     "printedPage": 126,
-     "w": 533,
-     "h": 89
-    }
-   ],
    "contraindications": [
     "Suy thận nặng."
    ],
@@ -195,7 +168,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy gan, suy thận, xơ gan."
    ],
@@ -557,22 +529,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/aciclovir-1.webp",
-     "page": 127,
-     "printedPage": 133,
-     "w": 533,
-     "h": 352
-    },
-    {
-     "src": "/duoc-thu/aciclovir-2.webp",
-     "page": 127,
-     "printedPage": 133,
-     "w": 533,
-     "h": 915
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -628,22 +584,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/acid-tranexamic-1.webp",
-     "page": 149,
-     "printedPage": 155,
-     "w": 533,
-     "h": 234
-    },
-    {
-     "src": "/duoc-thu/acid-tranexamic-2.webp",
-     "page": 149,
-     "printedPage": 155,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -731,22 +671,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/acid-zoledronic-1.webp",
-     "page": 154,
-     "printedPage": 160,
-     "w": 533,
-     "h": 88
-    },
-    {
-     "src": "/duoc-thu/acid-zoledronic-2.webp",
-     "page": 155,
-     "printedPage": 161,
-     "w": 533,
-     "h": 88
-    }
-   ],
    "contraindications": [
     "Clcr < 30 ml/phút, hoặc bệnh nhân có suy thận cấp."
    ],
@@ -779,15 +703,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/adapalen-1.webp",
-     "page": 158,
-     "printedPage": 164,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -827,15 +742,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/alendronat-natri-1.webp",
-     "page": 169,
-     "printedPage": 175,
-     "w": 533,
-     "h": 111
-    }
-   ],
    "contraindications": [
     "Suy thận nặng (Clcr < 35 ml/phút)."
    ],
@@ -868,15 +774,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/alfuzosin-hydroclorid-1.webp",
-     "page": 171,
-     "printedPage": 177,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [
@@ -1073,15 +970,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/alopurinol-1.webp",
-     "page": 176,
-     "printedPage": 182,
-     "w": 533,
-     "h": 662
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -1257,22 +1145,6 @@
      "alt": "Độ thanh thải creatinin của Liều Liều nạp bệnh nhân suy thận (ml/phút) duy = x ban đầu Độ thanh thải creatinin bình trì (mg) thường (ml/phút)"
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amikacin-1.webp",
-     "page": 188,
-     "printedPage": 194,
-     "w": 533,
-     "h": 596
-    },
-    {
-     "src": "/duoc-thu/amikacin-2.webp",
-     "page": 188,
-     "printedPage": 194,
-     "w": 533,
-     "h": 174
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -1303,15 +1175,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amiodaron-1.webp",
-     "page": 194,
-     "printedPage": 200,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -1355,15 +1218,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amitriptylin-1.webp",
-     "page": 196,
-     "printedPage": 202,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [],
@@ -1565,22 +1419,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amoxicilin-1.webp",
-     "page": 201,
-     "printedPage": 207,
-     "w": 533,
-     "h": 251
-    },
-    {
-     "src": "/duoc-thu/amoxicilin-2.webp",
-     "page": 201,
-     "printedPage": 207,
-     "w": 533,
-     "h": 680
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Cần thận trọng và hiệu chỉnh liều thích hợp khi sử dụng thuốc trên bệnh nhân suy thận nặng (mức lọc cầu thận dưới 30 ml/phút) hoặc thẩm tách."
@@ -1777,15 +1615,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amoxicilin-va-kali-clavulanat-1.webp",
-     "page": 205,
-     "printedPage": 211,
-     "w": 533,
-     "h": 899
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -1816,22 +1645,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/amphotericin-b-1.webp",
-     "page": 208,
-     "printedPage": 214,
-     "w": 533,
-     "h": 256
-    },
-    {
-     "src": "/duoc-thu/amphotericin-b-2.webp",
-     "page": 208,
-     "printedPage": 214,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -1876,15 +1689,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ampicilin-1.webp",
-     "page": 211,
-     "printedPage": 217,
-     "w": 533,
-     "h": 112
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -1922,15 +1726,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ampicilin-va-sulbactam-1.webp",
-     "page": 213,
-     "printedPage": 219,
-     "w": 533,
-     "h": 233
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -1966,15 +1761,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/anastrozol-1.webp",
-     "page": 215,
-     "printedPage": 221,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -2083,15 +1869,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/apixaban-1.webp",
-     "page": 220,
-     "printedPage": 226,
-     "w": 533,
-     "h": 619
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Người suy thận nặng (Clcr 15 - 29 ml/phút) cần thận trọng khi sử dụng apixaban do nồng độ apixaban trong huyết tương tăng lên ở người suy thận nặng có thể dẫn đến tăng nguy cơ chảy máu.",
@@ -2117,7 +1894,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Người có bệnh ưa chảy máu hoặc rối loạn chảy máu, giảm tiểu cầu, loét dạ dày hoặc tá tràng đang hoạt động, suy tim vừa và nặng, suy gan nặng, suy thận nặng (tốc độ lọc cầu thận dưới 10 ml/phút) và xơ gan."
    ],
@@ -2185,15 +1961,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/atenolol-1.webp",
-     "page": 242,
-     "printedPage": 248,
-     "w": 533,
-     "h": 183
     }
    ],
    "contraindications": [],
@@ -2264,22 +2031,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/atorvastatin-1.webp",
-     "page": 244,
-     "printedPage": 250,
-     "w": 533,
-     "h": 88
-    },
-    {
-     "src": "/duoc-thu/atorvastatin-2.webp",
-     "page": 245,
-     "printedPage": 251,
-     "w": 533,
-     "h": 287
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -2315,15 +2066,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/atracurium-besylat-1.webp",
-     "page": 247,
-     "printedPage": 253,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -2368,22 +2110,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/azithromycin-1.webp",
-     "page": 256,
-     "printedPage": 262,
-     "w": 533,
-     "h": 87
-    },
-    {
-     "src": "/duoc-thu/azithromycin-2.webp",
-     "page": 256,
-     "printedPage": 262,
-     "w": 533,
-     "h": 136
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Ngoài ra, cần thận trọng khi dùng thuốc trên người bệnh suy thận nặng (mức lọc cầu thận < 10 ml/phút)."
@@ -2416,15 +2142,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/baclofen-1.webp",
-     "page": 262,
-     "printedPage": 268,
-     "w": 533,
-     "h": 114
     }
    ],
    "contraindications": [],
@@ -2468,15 +2185,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/benzathin-penicilin-1.webp",
-     "page": 276,
-     "printedPage": 282,
-     "w": 533,
-     "h": 161
     }
    ],
    "contraindications": [],
@@ -2543,15 +2251,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/betamethason-1.webp",
-     "page": 284,
-     "printedPage": 290,
-     "w": 533,
-     "h": 207
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -2587,15 +2286,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bevacizumab-1.webp",
-     "page": 289,
-     "printedPage": 295,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -2726,15 +2416,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bezafibrat-1.webp",
-     "page": 292,
-     "printedPage": 298,
-     "w": 533,
-     "h": 543
-    }
-   ],
    "contraindications": [
     "Suy thận nặng, hội chứng thận hư."
    ],
@@ -2767,15 +2448,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bicalutamid-1.webp",
-     "page": 293,
-     "printedPage": 299,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -2813,15 +2485,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bimatoprost-1.webp",
-     "page": 295,
-     "printedPage": 301,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -2864,22 +2527,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bisoprolol-1.webp",
-     "page": 299,
-     "printedPage": 305,
-     "w": 533,
-     "h": 89
-    },
-    {
-     "src": "/duoc-thu/bisoprolol-2.webp",
-     "page": 299,
-     "printedPage": 305,
-     "w": 533,
-     "h": 114
     }
    ],
    "contraindications": [],
@@ -2994,22 +2641,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bleomycin-1.webp",
-     "page": 301,
-     "printedPage": 307,
-     "w": 533,
-     "h": 39
-    },
-    {
-     "src": "/duoc-thu/bleomycin-2.webp",
-     "page": 302,
-     "printedPage": 308,
-     "w": 533,
-     "h": 270
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3045,15 +2676,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bortezomib-1.webp",
-     "page": 304,
-     "printedPage": 310,
-     "w": 533,
-     "h": 184
     }
    ],
    "contraindications": [],
@@ -3095,15 +2717,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/bosentan-1.webp",
-     "page": 306,
-     "printedPage": 312,
-     "w": 533,
-     "h": 64
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3134,15 +2747,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/brinzolamid-1.webp",
-     "page": 308,
-     "printedPage": 314,
-     "w": 533,
-     "h": 210
     }
    ],
    "contraindications": [
@@ -3184,15 +2788,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/busulfan-1.webp",
-     "page": 330,
-     "printedPage": 336,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3223,15 +2818,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/calci-clorid-1.webp",
-     "page": 335,
-     "printedPage": 341,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [],
@@ -3296,15 +2882,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/calci-gluconat-1.webp",
-     "page": 338,
-     "printedPage": 344,
-     "w": 533,
-     "h": 318
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3326,7 +2903,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Tình trạng tăng calci huyết nặng và tăng calci niệu (ví dụ như tăng vitamin D, cường tuyến cận giáp, suy thận nặng, loãng xương do bất động và các bệnh lý ác tính như đa u tuỷ xương và di căn xương)."
    ],
@@ -3350,7 +2926,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy gan nặng hoặc suy thận nặng."
    ],
@@ -3385,15 +2960,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/calcitonin-1.webp",
-     "page": 343,
-     "printedPage": 349,
-     "w": 533,
-     "h": 64
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3424,15 +2990,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/candesartan-cilexetil-1.webp",
-     "page": 345,
-     "printedPage": 351,
-     "w": 533,
-     "h": 91
     }
    ],
    "contraindications": [
@@ -3474,15 +3031,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/capecitabin-1.webp",
-     "page": 347,
-     "printedPage": 353,
-     "w": 533,
-     "h": 112
-    }
-   ],
    "contraindications": [
     "Suy thận nặng (Clcr < 30 ml/phút)."
    ],
@@ -3515,15 +3063,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/capsaicin-1.webp",
-     "page": 352,
-     "printedPage": 358,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -3644,15 +3183,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/captopril-1.webp",
-     "page": 355,
-     "printedPage": 361,
-     "w": 533,
-     "h": 285
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3741,15 +3271,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/carboplatin-1.webp",
-     "page": 365,
-     "printedPage": 371,
-     "w": 533,
-     "h": 209
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3802,15 +3323,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/carvedilol-1.webp",
-     "page": 371,
-     "printedPage": 377,
-     "w": 533,
-     "h": 135
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -3861,15 +3373,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefaclor-1.webp",
-     "page": 374,
-     "printedPage": 380,
-     "w": 533,
-     "h": 307
     }
    ],
    "contraindications": [],
@@ -3988,22 +3491,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefadroxil-1.webp",
-     "page": 375,
-     "printedPage": 381,
-     "w": 533,
-     "h": 244
-    },
-    {
-     "src": "/duoc-thu/cefadroxil-2.webp",
-     "page": 376,
-     "printedPage": 382,
-     "w": 533,
-     "h": 112
     }
    ],
    "contraindications": [],
@@ -4145,15 +3632,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefalexin-1.webp",
-     "page": 378,
-     "printedPage": 384,
-     "w": 533,
-     "h": 410
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -4249,22 +3727,6 @@
        }
       ]
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefamandol-1.webp",
-     "page": 382,
-     "printedPage": 388,
-     "w": 533,
-     "h": 65
-    },
-    {
-     "src": "/duoc-thu/cefamandol-2.webp",
-     "page": 383,
-     "printedPage": 389,
-     "w": 533,
-     "h": 203
     }
    ],
    "contraindications": [],
@@ -4506,22 +3968,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefazolin-1.webp",
-     "page": 387,
-     "printedPage": 393,
-     "w": 533,
-     "h": 407
-    },
-    {
-     "src": "/duoc-thu/cefazolin-2.webp",
-     "page": 388,
-     "printedPage": 394,
-     "w": 533,
-     "h": 367
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -4573,22 +4019,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefdinir-1.webp",
-     "page": 390,
-     "printedPage": 396,
-     "w": 533,
-     "h": 187
-    },
-    {
-     "src": "/duoc-thu/cefdinir-2.webp",
-     "page": 390,
-     "printedPage": 396,
-     "w": 533,
-     "h": 112
     }
    ],
    "contraindications": [],
@@ -4972,22 +4402,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefepim-1.webp",
-     "page": 394,
-     "printedPage": 400,
-     "w": 533,
-     "h": 1078
-    },
-    {
-     "src": "/duoc-thu/cefepim-2.webp",
-     "page": 395,
-     "printedPage": 401,
-     "w": 533,
-     "h": 1386
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -5031,15 +4445,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefixim-1.webp",
-     "page": 398,
-     "printedPage": 404,
-     "w": 533,
-     "h": 256
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Đối với người cao tuổi: Nhìn chung không cần điều chỉnh liều, trừ khi có suy giảm chức năng thận (độ thanh thải creatinin < 60 ml/phút)."
@@ -5072,15 +4477,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefoperazon-1.webp",
-     "page": 400,
-     "printedPage": 406,
-     "w": 533,
-     "h": 161
     }
    ],
    "contraindications": [],
@@ -5155,15 +4551,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefotaxim-1.webp",
-     "page": 402,
-     "printedPage": 408,
-     "w": 533,
-     "h": 209
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -5194,15 +4581,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefotiam-1.webp",
-     "page": 404,
-     "printedPage": 410,
-     "w": 533,
-     "h": 65
     }
    ],
    "contraindications": [
@@ -5375,15 +4753,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefoxitin-1.webp",
-     "page": 406,
-     "printedPage": 412,
-     "w": 533,
-     "h": 521
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -5492,22 +4861,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefpirom-1.webp",
-     "page": 408,
-     "printedPage": 414,
-     "w": 533,
-     "h": 311
-    },
-    {
-     "src": "/duoc-thu/cefpirom-2.webp",
-     "page": 408,
-     "printedPage": 414,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -5592,15 +4945,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefpodoxim-proxetil-1.webp",
-     "page": 410,
-     "printedPage": 416,
-     "w": 533,
-     "h": 283
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -5646,15 +4990,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefradin-1.webp",
-     "page": 412,
-     "printedPage": 418,
-     "w": 533,
-     "h": 192
     }
    ],
    "contraindications": [],
@@ -6043,15 +5378,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ceftazidim-1.webp",
-     "page": 415,
-     "printedPage": 421,
-     "w": 533,
-     "h": 1285
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6092,15 +5418,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ceftibuten-1.webp",
-     "page": 417,
-     "printedPage": 423,
-     "w": 533,
-     "h": 189
     }
    ],
    "contraindications": [],
@@ -6178,15 +5495,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cefuroxim-1.webp",
-     "page": 425,
-     "printedPage": 431,
-     "w": 533,
-     "h": 448
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6222,15 +5530,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/celecoxib-1.webp",
-     "page": 427,
-     "printedPage": 433,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [
@@ -6272,15 +5571,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ciclosporin-1.webp",
-     "page": 435,
-     "printedPage": 441,
-     "w": 533,
-     "h": 183
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6311,15 +5601,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cimetidin-1.webp",
-     "page": 441,
-     "printedPage": 447,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -6455,22 +5736,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ciprofloxacin-1.webp",
-     "page": 448,
-     "printedPage": 454,
-     "w": 533,
-     "h": 378
-    },
-    {
-     "src": "/duoc-thu/ciprofloxacin-2.webp",
-     "page": 448,
-     "printedPage": 454,
-     "w": 533,
-     "h": 136
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6522,15 +5787,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/citalopram-1.webp",
-     "page": 455,
-     "printedPage": 461,
-     "w": 533,
-     "h": 112
     }
    ],
    "contraindications": [],
@@ -6613,15 +5869,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/clarithromycin-1.webp",
-     "page": 459,
-     "printedPage": 465,
-     "w": 533,
-     "h": 235
     }
    ],
    "contraindications": [],
@@ -6712,22 +5959,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/clindamycin-1.webp",
-     "page": 462,
-     "printedPage": 468,
-     "w": 533,
-     "h": 39
-    },
-    {
-     "src": "/duoc-thu/clindamycin-2.webp",
-     "page": 463,
-     "printedPage": 469,
-     "w": 533,
-     "h": 281
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6763,15 +5994,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/clorpromazin-hydroclorid-1.webp",
-     "page": 495,
-     "printedPage": 501,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -6816,15 +6038,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cloxacilin-1.webp",
-     "page": 499,
-     "printedPage": 505,
-     "w": 533,
-     "h": 111
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -6865,15 +6078,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/clozapin-1.webp",
-     "page": 502,
-     "printedPage": 508,
-     "w": 533,
-     "h": 89
     }
    ],
    "contraindications": [
@@ -6954,15 +6158,6 @@
        }
       ]
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/codein-1.webp",
-     "page": 505,
-     "printedPage": 511,
-     "w": 533,
-     "h": 205
     }
    ],
    "contraindications": [],
@@ -7331,22 +6526,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/colistin-1.webp",
-     "page": 512,
-     "printedPage": 518,
-     "w": 533,
-     "h": 491
-    },
-    {
-     "src": "/duoc-thu/colistin-2.webp",
-     "page": 512,
-     "printedPage": 518,
-     "w": 533,
-     "h": 666
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -7377,15 +6556,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cyclophosphamid-1.webp",
-     "page": 522,
-     "printedPage": 528,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [],
@@ -7423,15 +6593,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/cytarabin-1.webp",
-     "page": 526,
-     "printedPage": 532,
-     "w": 533,
-     "h": 163
     }
    ],
    "contraindications": [],
@@ -7581,22 +6742,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/dabigatran-etexilat-1.webp",
-     "page": 528,
-     "printedPage": 534,
-     "w": 533,
-     "h": 63
-    },
-    {
-     "src": "/duoc-thu/dabigatran-etexilat-2.webp",
-     "page": 528,
-     "printedPage": 534,
-     "w": 533,
-     "h": 785
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -7618,7 +6763,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Bệnh nhân suy gan, suy thận, suy tim."
    ],
@@ -7694,15 +6838,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/dapagliflozin-1.webp",
-     "page": 544,
-     "printedPage": 550,
-     "w": 533,
-     "h": 550
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Suy thận: Có ít kinh nghiệm khi bắt đầu điều trị bằng dapagliflozin ở những bệnh nhân có eGFR < 25 ml/phút/1,73m², và không có kinh nghiệm khi bắt đầu điều trị ở những bệnh nhân có eGFR < 15 ml/phút/1,73m².",
@@ -7745,15 +6880,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/deferasirox-1.webp",
-     "page": 554,
-     "printedPage": 560,
-     "w": 533,
-     "h": 87
-    }
-   ],
    "contraindications": [
     "Độ thanh thải creatinin < 40 ml/phút hoặc creatinin huyết thanh > 2 lần giá trị trung bình."
    ],
@@ -7786,22 +6912,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/deferipron-1.webp",
-     "page": 554,
-     "printedPage": 560,
-     "w": 533,
-     "h": 39
-    },
-    {
-     "src": "/duoc-thu/deferipron-2.webp",
-     "page": 555,
-     "printedPage": 561,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -7867,22 +6977,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/deferoxamin-mesilat-1.webp",
-     "page": 556,
-     "printedPage": 562,
-     "w": 533,
-     "h": 305
-    },
-    {
-     "src": "/duoc-thu/deferoxamin-mesilat-2.webp",
-     "page": 557,
-     "printedPage": 563,
-     "w": 533,
-     "h": 331
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Suy thận nặng (Clcr < 10 ml/phút): Thẩm tách máu, thẩm tách màng bụng để tăng đào thải thuốc, nên tránh dùng."
@@ -7936,15 +7030,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/desloratadin-1.webp",
-     "page": 560,
-     "printedPage": 566,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [],
@@ -8011,15 +7096,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/dexamethason-1.webp",
-     "page": 564,
-     "printedPage": 570,
-     "w": 533,
-     "h": 217
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -8057,15 +7133,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/diazepam-1.webp",
-     "page": 577,
-     "printedPage": 583,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -8101,15 +7168,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/diclofenac-1.webp",
-     "page": 580,
-     "printedPage": 586,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -9161,29 +8219,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/digoxin-1.webp",
-     "page": 588,
-     "printedPage": 594,
-     "w": 533,
-     "h": 622
-    },
-    {
-     "src": "/duoc-thu/digoxin-2.webp",
-     "page": 589,
-     "printedPage": 595,
-     "w": 533,
-     "h": 1488
-    },
-    {
-     "src": "/duoc-thu/digoxin-3.webp",
-     "page": 589,
-     "printedPage": 595,
-     "w": 533,
-     "h": 427
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -9219,15 +8254,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/dihydroergotamin-1.webp",
-     "page": 592,
-     "printedPage": 598,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -9267,15 +8293,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/diltiazem-hydroclorid-1.webp",
-     "page": 595,
-     "printedPage": 601,
-     "w": 533,
-     "h": 231
     }
    ],
    "contraindications": [],
@@ -9339,15 +8356,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/docetaxel-1.webp",
-     "page": 619,
-     "printedPage": 625,
-     "w": 533,
-     "h": 448
     }
    ],
    "contraindications": [],
@@ -9423,15 +8431,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/doripenem-1.webp",
-     "page": 628,
-     "printedPage": 634,
-     "w": 533,
-     "h": 235
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -9462,15 +8461,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/doxazosin-1.webp",
-     "page": 630,
-     "printedPage": 636,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [
@@ -9567,22 +8557,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/doxycyclin-1.webp",
-     "page": 639,
-     "printedPage": 645,
-     "w": 533,
-     "h": 88
-    },
-    {
-     "src": "/duoc-thu/doxycyclin-2.webp",
-     "page": 640,
-     "printedPage": 646,
-     "w": 533,
-     "h": 401
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -9613,15 +8587,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/dutasterid-1.webp",
-     "page": 643,
-     "printedPage": 649,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -9689,15 +8654,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/empagliflozin-1.webp",
-     "page": 651,
-     "printedPage": 657,
-     "w": 533,
-     "h": 575
     }
    ],
    "contraindications": [],
@@ -9778,15 +8734,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/enalapril-1.webp",
-     "page": 654,
-     "printedPage": 660,
-     "w": 533,
-     "h": 207
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -9817,15 +8764,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/enoxaparin-natri-1.webp",
-     "page": 657,
-     "printedPage": 663,
-     "w": 533,
-     "h": 88
     }
    ],
    "contraindications": [],
@@ -9935,15 +8873,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/entecavir-1.webp",
-     "page": 659,
-     "printedPage": 665,
-     "w": 533,
-     "h": 442
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10007,15 +8936,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/epoetin-1.webp",
-     "page": 670,
-     "printedPage": 676,
-     "w": 533,
-     "h": 307
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10051,15 +8971,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/erlotinib-1.webp",
-     "page": 677,
-     "printedPage": 683,
-     "w": 533,
-     "h": 136
     }
    ],
    "contraindications": [],
@@ -10125,15 +9036,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ertapenem-natri-1.webp",
-     "page": 680,
-     "printedPage": 686,
-     "w": 533,
-     "h": 285
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10177,15 +9079,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/erythromycin-1.webp",
-     "page": 683,
-     "printedPage": 689,
-     "w": 533,
-     "h": 87
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10216,15 +9109,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/esomeprazol-1.webp",
-     "page": 691,
-     "printedPage": 697,
-     "w": 533,
-     "h": 208
     }
    ],
    "contraindications": [],
@@ -10338,15 +9222,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ethambutol-1.webp",
-     "page": 704,
-     "printedPage": 710,
-     "w": 533,
-     "h": 282
     }
    ],
    "contraindications": [],
@@ -10513,22 +9388,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/etoposid-1.webp",
-     "page": 718,
-     "printedPage": 724,
-     "w": 533,
-     "h": 581
-    },
-    {
-     "src": "/duoc-thu/etoposid-2.webp",
-     "page": 718,
-     "printedPage": 724,
-     "w": 533,
-     "h": 253
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10559,15 +9418,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ezetimib-1.webp",
-     "page": 725,
-     "printedPage": 731,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -10613,15 +9463,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/famotidin-1.webp",
-     "page": 729,
-     "printedPage": 735,
-     "w": 533,
-     "h": 187
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10657,22 +9498,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fenofibrat-1.webp",
-     "page": 732,
-     "printedPage": 738,
-     "w": 533,
-     "h": 87
-    },
-    {
-     "src": "/duoc-thu/fenofibrat-2.webp",
-     "page": 733,
-     "printedPage": 739,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [
@@ -10718,15 +9543,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fexofenadin-hydroclorid-1.webp",
-     "page": 737,
-     "printedPage": 743,
-     "w": 533,
-     "h": 112
     }
    ],
    "contraindications": [],
@@ -10817,15 +9633,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fluconazol-1.webp",
-     "page": 749,
-     "printedPage": 755,
-     "w": 533,
-     "h": 342
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -10898,22 +9705,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fludarabin-phosphat-1.webp",
-     "page": 755,
-     "printedPage": 761,
-     "w": 533,
-     "h": 353
-    },
-    {
-     "src": "/duoc-thu/fludarabin-phosphat-2.webp",
-     "page": 756,
-     "printedPage": 762,
-     "w": 533,
-     "h": 476
-    }
-   ],
    "contraindications": [
     "Suy thận nặng (Clcr < 30 ml/phút)."
    ],
@@ -10959,15 +9750,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fluorouracil-1.webp",
-     "page": 765,
-     "printedPage": 771,
-     "w": 533,
-     "h": 208
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -11003,15 +9785,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fluvastatin-1.webp",
-     "page": 780,
-     "printedPage": 786,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -11151,15 +9924,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/fosfomycin-1.webp",
-     "page": 789,
-     "printedPage": 795,
-     "w": 533,
-     "h": 518
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -11294,15 +10058,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/furosemid-1.webp",
-     "page": 792,
-     "printedPage": 798,
-     "w": 533,
-     "h": 537
     }
    ],
    "contraindications": [
@@ -11489,22 +10244,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/gabapentin-1.webp",
-     "page": 794,
-     "printedPage": 800,
-     "w": 533,
-     "h": 1342
-    },
-    {
-     "src": "/duoc-thu/gabapentin-2.webp",
-     "page": 794,
-     "printedPage": 800,
-     "w": 533,
-     "h": 280
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -11540,15 +10279,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/galantamin-1.webp",
-     "page": 796,
-     "printedPage": 802,
-     "w": 533,
-     "h": 112
     }
    ],
    "contraindications": [
@@ -11685,15 +10415,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ganciclovir-1.webp",
-     "page": 798,
-     "printedPage": 804,
-     "w": 533,
-     "h": 286
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -11729,15 +10450,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/gefitinib-1.webp",
-     "page": 800,
-     "printedPage": 806,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -11781,15 +10493,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/gemcitabin-hydroclorid-1.webp",
-     "page": 802,
-     "printedPage": 808,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [],
@@ -12027,22 +10730,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/gentamicin-1.webp",
-     "page": 809,
-     "printedPage": 815,
-     "w": 533,
-     "h": 1488
-    },
-    {
-     "src": "/duoc-thu/gentamicin-2.webp",
-     "page": 809,
-     "printedPage": 815,
-     "w": 533,
-     "h": 192
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -12101,15 +10788,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/glibenclamid-1.webp",
-     "page": 811,
-     "printedPage": 817,
-     "w": 533,
-     "h": 376
-    }
-   ],
    "contraindications": [
     "Suy gan nặng hoặc suy thận nặng."
    ],
@@ -12133,7 +10811,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy gan nặng hoặc suy thận nặng (trong những trường hợp này khuyến cáo dùng insulin)."
    ],
@@ -12181,15 +10858,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/glimepirid-1.webp",
-     "page": 815,
-     "printedPage": 821,
-     "w": 533,
-     "h": 304
     }
    ],
    "contraindications": [
@@ -12242,15 +10910,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/glipizid-1.webp",
-     "page": 817,
-     "printedPage": 823,
-     "w": 533,
-     "h": 161
-    }
-   ],
    "contraindications": [
     "Suy gan nặng hoặc suy thận nặng."
    ],
@@ -12285,15 +10944,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/goserelin-1.webp",
-     "page": 840,
-     "printedPage": 846,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -12324,15 +10974,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/granisetron-1.webp",
-     "page": 842,
-     "printedPage": 848,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -12372,15 +11013,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/haloperidol-1.webp",
-     "page": 847,
-     "printedPage": 853,
-     "w": 533,
-     "h": 160
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -12416,15 +11048,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/heparin-1.webp",
-     "page": 852,
-     "printedPage": 858,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -12854,22 +11477,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/hydrocortison-1.webp",
-     "page": 866,
-     "printedPage": 872,
-     "w": 533,
-     "h": 219
-    },
-    {
-     "src": "/duoc-thu/hydrocortison-2.webp",
-     "page": 867,
-     "printedPage": 873,
-     "w": 533,
-     "h": 1465
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -12900,15 +11507,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ibuprofen-1.webp",
-     "page": 881,
-     "printedPage": 887,
-     "w": 533,
-     "h": 86
     }
    ],
    "contraindications": [
@@ -12949,15 +11547,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/idarubicin-hydroclorid-1.webp",
-     "page": 884,
-     "printedPage": 890,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -13010,15 +11599,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/imatinib-1.webp",
-     "page": 890,
-     "printedPage": 896,
-     "w": 533,
-     "h": 155
     }
    ],
    "contraindications": [],
@@ -13086,15 +11666,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/imidapril-1.webp",
-     "page": 893,
-     "printedPage": 899,
-     "w": 533,
-     "h": 178
     }
    ],
    "contraindications": [
@@ -13322,22 +11893,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/imipenem-va-cilastatin-1.webp",
-     "page": 896,
-     "printedPage": 902,
-     "w": 533,
-     "h": 750
-    },
-    {
-     "src": "/duoc-thu/imipenem-va-cilastatin-2.webp",
-     "page": 897,
-     "printedPage": 903,
-     "w": 533,
-     "h": 204
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13359,7 +11914,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy thận nặng (mức lọc cầu thận dưới 30 ml/phút).",
     "Trẻ sơ sinh thiếu tháng đang có chảy máu như chảy máu dạ dày, xuất huyết trong sọ, trẻ có giảm tiểu cầu và rối loạn đông máu, trẻ có nhiễm khuẩn chưa được điều trị, suy thận nghi ngờ có viêm ruột hoại tử."
@@ -13395,15 +11949,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/infliximab-1.webp",
-     "page": 905,
-     "printedPage": 911,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13425,7 +11970,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Đối với tất cả các thủ thuật (đặc biệt khi cần tiêm vào trong ống tủy hoặc mạch máu): Chống chỉ định iohexol ở người có tiền sử dị ứng hoặc hen, người suy thận nặng, bị đái tháo đường, trẻ em và người cao tuổi, mẫn cảm với iod."
    ],
@@ -13463,15 +12007,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/irbesartan-1.webp",
-     "page": 928,
-     "printedPage": 934,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [
@@ -13513,15 +12048,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/irinotecan-1.webp",
-     "page": 931,
-     "printedPage": 937,
-     "w": 533,
-     "h": 88
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13559,15 +12085,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/isotretinoin-1.webp",
-     "page": 943,
-     "printedPage": 949,
-     "w": 533,
-     "h": 110
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13598,22 +12115,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/itraconazol-1.webp",
-     "page": 946,
-     "printedPage": 952,
-     "w": 533,
-     "h": 110
-    },
-    {
-     "src": "/duoc-thu/itraconazol-2.webp",
-     "page": 947,
-     "printedPage": 953,
-     "w": 533,
-     "h": 86
     }
    ],
    "contraindications": [
@@ -13655,15 +12156,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ivabradin-1.webp",
-     "page": 949,
-     "printedPage": 955,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13699,22 +12191,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/kali-clorid-1.webp",
-     "page": 952,
-     "printedPage": 958,
-     "w": 533,
-     "h": 86
-    },
-    {
-     "src": "/duoc-thu/kali-clorid-2.webp",
-     "page": 953,
-     "printedPage": 959,
-     "w": 533,
-     "h": 369
     }
    ],
    "contraindications": [],
@@ -13770,15 +12246,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ketoprofen-1.webp",
-     "page": 963,
-     "printedPage": 969,
-     "w": 533,
-     "h": 329
-    }
-   ],
    "contraindications": [
     "Suy thận nặng với mức lọc cầu thận dưới 30 ml/phút."
    ],
@@ -13811,15 +12278,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ketotifen-1.webp",
-     "page": 967,
-     "printedPage": 973,
-     "w": 533,
-     "h": 160
     }
    ],
    "contraindications": [],
@@ -13900,15 +12358,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lamivudin-1.webp",
-     "page": 978,
-     "printedPage": 984,
-     "w": 533,
-     "h": 340
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -13939,15 +12388,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lamotrigin-1.webp",
-     "page": 981,
-     "printedPage": 987,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [],
@@ -13982,15 +12422,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lansoprazol-1.webp",
-     "page": 983,
-     "printedPage": 989,
-     "w": 533,
-     "h": 135
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14021,15 +12452,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lercanidipin-1.webp",
-     "page": 989,
-     "printedPage": 995,
-     "w": 533,
-     "h": 160
     }
    ],
    "contraindications": [
@@ -14064,15 +12486,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/letrozol-1.webp",
-     "page": 991,
-     "printedPage": 997,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -14238,22 +12651,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/levetiracetam-1.webp",
-     "page": 997,
-     "printedPage": 1003,
-     "w": 533,
-     "h": 429
-    },
-    {
-     "src": "/duoc-thu/levetiracetam-2.webp",
-     "page": 998,
-     "printedPage": 1004,
-     "w": 533,
-     "h": 209
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14380,15 +12777,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/levocetirizin-1.webp",
-     "page": 999,
-     "printedPage": 1005,
-     "w": 533,
-     "h": 289
-    }
-   ],
    "contraindications": [
     "Bệnh nhân bị bệnh thận giai đoạn cuối (mức lọc cầu thận < 10 ml/phút) và bệnh nhân đang chạy thận nhân tạo.",
     "Trẻ em từ 6 đến 11 tuổi bị suy giảm chức năng thận."
@@ -14413,7 +12801,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Người bệnh suy thận, ngoại trừ người bệnh đang lọc máu và đang điều trị hội chứng chân không nghỉ."
    ],
@@ -14597,15 +12984,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/levofloxacin-1.webp",
-     "page": 1005,
-     "printedPage": 1011,
-     "w": 533,
-     "h": 582
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14648,22 +13026,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lidocain-1.webp",
-     "page": 1020,
-     "printedPage": 1026,
-     "w": 533,
-     "h": 63
-    },
-    {
-     "src": "/duoc-thu/lidocain-2.webp",
-     "page": 1020,
-     "printedPage": 1026,
-     "w": 533,
-     "h": 88
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14701,15 +13063,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/linezolid-1.webp",
-     "page": 1025,
-     "printedPage": 1031,
-     "w": 533,
-     "h": 114
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14740,15 +13093,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/liraglutid-1.webp",
-     "page": 1032,
-     "printedPage": 1038,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [],
@@ -14819,22 +13163,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lisinopril-1.webp",
-     "page": 1034,
-     "printedPage": 1040,
-     "w": 533,
-     "h": 376
-    },
-    {
-     "src": "/duoc-thu/lisinopril-2.webp",
-     "page": 1035,
-     "printedPage": 1041,
-     "w": 533,
-     "h": 136
-    }
-   ],
    "contraindications": [
     "Suy thận khi creatinin huyết  250 mmol/lít hoặc kali huyết  5 mmol/lít."
    ],
@@ -14872,15 +13200,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/loperamid-hydroclorid-1.webp",
-     "page": 1042,
-     "printedPage": 1048,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -14946,15 +13265,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/loratadin-1.webp",
-     "page": 1049,
-     "printedPage": 1055,
-     "w": 533,
-     "h": 162
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -14990,15 +13300,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/losartan-1.webp",
-     "page": 1053,
-     "printedPage": 1059,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -15040,15 +13341,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/loteprednol-etabonat-1.webp",
-     "page": 1055,
-     "printedPage": 1061,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -15084,15 +13376,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/lovastatin-1.webp",
-     "page": 1056,
-     "printedPage": 1062,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -15157,15 +13440,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/magnesi-sulfat-1.webp",
-     "page": 1059,
-     "printedPage": 1065,
-     "w": 533,
-     "h": 663
-    }
-   ],
    "contraindications": [
     "Không dùng đường tiêm trong trường hợp: tăng magnesi huyết, blốc tim, tổn thương cơ tim, suy thận nặng, mẹ có nhiễm độc thai nghén trước 2 giờ chuyển dạ."
    ],
@@ -15215,15 +13489,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/meloxicam-1.webp",
-     "page": 1070,
-     "printedPage": 1076,
-     "w": 533,
-     "h": 87
-    }
-   ],
    "contraindications": [
     "Suy gan nặng và suy thận nặng không lọc máu."
    ],
@@ -15261,15 +13526,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/melphalan-1.webp",
-     "page": 1072,
-     "printedPage": 1078,
-     "w": 533,
-     "h": 257
     }
    ],
    "contraindications": [],
@@ -15325,15 +13581,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/meropenem-1.webp",
-     "page": 1080,
-     "printedPage": 1086,
-     "w": 533,
-     "h": 232
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -15355,7 +13602,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy thận nặng (GFR < 20 ml/phút), suy gan nặng."
    ],
@@ -15393,15 +13639,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/metformin-hydroclorid-1.webp",
-     "page": 1088,
-     "printedPage": 1094,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -15567,15 +13804,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/methotrexat-1.webp",
-     "page": 1098,
-     "printedPage": 1104,
-     "w": 533,
-     "h": 472
-    }
-   ],
    "contraindications": [
     "Suy thận: Chống chỉ định liều < 100 mg/m² khi Clcr < 30 ml/phút; chống chỉ định liều > 100 mg/m² khi Clcr < 60 ml/phút."
    ],
@@ -15660,15 +13888,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/methyldopa-1.webp",
-     "page": 1101,
-     "printedPage": 1107,
-     "w": 533,
-     "h": 209
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -15704,15 +13923,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/metoclopramid-1.webp",
-     "page": 1110,
-     "printedPage": 1116,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -15760,15 +13970,6 @@
        "i": true
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/metoprolol-1.webp",
-     "page": 1113,
-     "printedPage": 1119,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -15917,15 +14118,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/milrinon-1.webp",
-     "page": 1126,
-     "printedPage": 1132,
-     "w": 533,
-     "h": 470
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -15956,15 +14148,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/mirtazapin-1.webp",
-     "page": 1130,
-     "printedPage": 1136,
-     "w": 533,
-     "h": 88
     }
    ],
    "contraindications": [],
@@ -15999,15 +14182,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/misoprostol-1.webp",
-     "page": 1133,
-     "printedPage": 1139,
-     "w": 533,
-     "h": 88
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16040,15 +14214,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/montelukast-1.webp",
-     "page": 1141,
-     "printedPage": 1147,
-     "w": 533,
-     "h": 87
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16079,22 +14244,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/morphin-1.webp",
-     "page": 1144,
-     "printedPage": 1150,
-     "w": 533,
-     "h": 39
-    },
-    {
-     "src": "/duoc-thu/morphin-2.webp",
-     "page": 1145,
-     "printedPage": 1151,
-     "w": 533,
-     "h": 498
     }
    ],
    "contraindications": [],
@@ -16134,15 +14283,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/moxifloxacin-hydroclorid-1.webp",
-     "page": 1149,
-     "printedPage": 1155,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16173,15 +14313,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/naproxen-1.webp",
-     "page": 1166,
-     "printedPage": 1172,
-     "w": 533,
-     "h": 163
     }
    ],
    "contraindications": [
@@ -16228,15 +14359,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/natri-bicarbonat-1.webp",
-     "page": 1169,
-     "printedPage": 1175,
-     "w": 533,
-     "h": 477
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16274,15 +14396,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/natri-nitroprusiat-1.webp",
-     "page": 1174,
-     "printedPage": 1180,
-     "w": 533,
-     "h": 137
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16313,15 +14426,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nebivolol-1.webp",
-     "page": 1178,
-     "printedPage": 1184,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -16395,15 +14499,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/neostigmin-1.webp",
-     "page": 1185,
-     "printedPage": 1191,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [],
@@ -16561,22 +14656,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/netilmicin-1.webp",
-     "page": 1187,
-     "printedPage": 1193,
-     "w": 533,
-     "h": 546
-    },
-    {
-     "src": "/duoc-thu/netilmicin-2.webp",
-     "page": 1188,
-     "printedPage": 1194,
-     "w": 533,
-     "h": 787
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16607,15 +14686,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nhom-hydroxyd-1.webp",
-     "page": 1193,
-     "printedPage": 1199,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [
@@ -16657,15 +14727,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nicardipin-1.webp",
-     "page": 1197,
-     "printedPage": 1203,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16703,15 +14764,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nicorandil-1.webp",
-     "page": 1200,
-     "printedPage": 1206,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16742,15 +14794,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nifedipin-1.webp",
-     "page": 1204,
-     "printedPage": 1210,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -16790,15 +14833,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/nizatidin-1.webp",
-     "page": 1212,
-     "printedPage": 1218,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Dùng thận trọng và giảm liều và/hoặc kéo dài khoảng cách giữa các lần dùng thuốc ở người suy thận (Clcr < 50 ml/phút) vì thuốc được thải trừ chủ yếu qua thận."
@@ -16831,15 +14865,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/norfloxacin-1.webp",
-     "page": 1218,
-     "printedPage": 1224,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -16877,15 +14902,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/octreotid-acetat-1.webp",
-     "page": 1222,
-     "printedPage": 1228,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -16945,15 +14961,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ofloxacin-1.webp",
-     "page": 1226,
-     "printedPage": 1232,
-     "w": 533,
-     "h": 160
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -16991,15 +14998,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/olanzapin-1.webp",
-     "page": 1228,
-     "printedPage": 1234,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17030,15 +15028,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/omeprazol-1.webp",
-     "page": 1230,
-     "printedPage": 1236,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -17076,15 +15065,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ondansetron-1.webp",
-     "page": 1232,
-     "printedPage": 1238,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -17258,22 +15238,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/oseltamivir-1.webp",
-     "page": 1236,
-     "printedPage": 1242,
-     "w": 533,
-     "h": 111
-    },
-    {
-     "src": "/duoc-thu/oseltamivir-2.webp",
-     "page": 1237,
-     "printedPage": 1243,
-     "w": 533,
-     "h": 694
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17326,15 +15290,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/oxacilin-natri-1.webp",
-     "page": 1239,
-     "printedPage": 1245,
-     "w": 533,
-     "h": 233
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17365,15 +15320,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/oxaliplatin-1.webp",
-     "page": 1241,
-     "printedPage": 1247,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -17418,15 +15364,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/oxcarbazepin-1.webp",
-     "page": 1245,
-     "printedPage": 1251,
-     "w": 533,
-     "h": 161
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17457,15 +15394,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/paclitaxel-1.webp",
-     "page": 1254,
-     "printedPage": 1260,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -17540,22 +15468,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pamidronat-1.webp",
-     "page": 1259,
-     "printedPage": 1265,
-     "w": 533,
-     "h": 256
-    },
-    {
-     "src": "/duoc-thu/pamidronat-2.webp",
-     "page": 1259,
-     "printedPage": 1265,
-     "w": 533,
-     "h": 318
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17586,15 +15498,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pantoprazol-1.webp",
-     "page": 1264,
-     "printedPage": 1270,
-     "w": 533,
-     "h": 240
     }
    ],
    "contraindications": [],
@@ -17634,15 +15537,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/paracetamol-1.webp",
-     "page": 1268,
-     "printedPage": 1274,
-     "w": 533,
-     "h": 135
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -17665,7 +15559,6 @@
    "noAdjust": false,
    "noRenalText": true,
    "content": [],
-   "clips": [],
    "contraindications": [],
    "cautions": []
   },
@@ -17711,29 +15604,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pemetrexed-1.webp",
-     "page": 1281,
-     "printedPage": 1287,
-     "w": 533,
-     "h": 352
-    },
-    {
-     "src": "/duoc-thu/pemetrexed-2.webp",
-     "page": 1282,
-     "printedPage": 1288,
-     "w": 533,
-     "h": 111
-    },
-    {
-     "src": "/duoc-thu/pemetrexed-3.webp",
-     "page": 1282,
-     "printedPage": 1288,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -17840,15 +15710,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/perindopril-1.webp",
-     "page": 1290,
-     "printedPage": 1296,
-     "w": 533,
-     "h": 366
-    }
-   ],
    "contraindications": [
     "Phối hợp với các chế phẩm chứa aliskiren trên bệnh nhân đái tháo đường hoặc suy thận (GFR < 60 ml/phút/1,73 m²)."
    ],
@@ -17874,7 +15735,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy gan nặng, suy thận nặng."
    ],
@@ -17912,15 +15772,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/phenylephrin-hydroclorid-1.webp",
-     "page": 1302,
-     "printedPage": 1308,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [],
@@ -18107,22 +15958,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/piperacilin-1.webp",
-     "page": 1313,
-     "printedPage": 1319,
-     "w": 533,
-     "h": 755
-    },
-    {
-     "src": "/duoc-thu/piperacilin-2.webp",
-     "page": 1314,
-     "printedPage": 1320,
-     "w": 533,
-     "h": 190
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -18286,15 +16121,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/piperacilin-tazobactam-1.webp",
-     "page": 1316,
-     "printedPage": 1322,
-     "w": 533,
-     "h": 587
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -18348,15 +16174,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/piracetam-1.webp",
-     "page": 1319,
-     "printedPage": 1325,
-     "w": 533,
-     "h": 140
-    }
-   ],
    "contraindications": [
     "Người bệnh suy thận nặng (Clcr < 20 ml/phút)."
    ],
@@ -18389,15 +16206,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/piroxicam-1.webp",
-     "page": 1320,
-     "printedPage": 1326,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [
@@ -18437,15 +16245,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/povidon-iod-1.webp",
-     "page": 1327,
-     "printedPage": 1333,
-     "w": 533,
-     "h": 64
     }
    ],
    "contraindications": [],
@@ -18550,15 +16349,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pramipexol-1.webp",
-     "page": 1330,
-     "printedPage": 1336,
-     "w": 533,
-     "h": 725
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -18594,15 +16384,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pravastatin-1.webp",
-     "page": 1332,
-     "printedPage": 1338,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -18642,15 +16423,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/praziquantel-1.webp",
-     "page": 1334,
-     "printedPage": 1340,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -18681,15 +16453,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/prednisolon-1.webp",
-     "page": 1340,
-     "printedPage": 1346,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [],
@@ -19036,22 +16799,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/pregabalin-1.webp",
-     "page": 1346,
-     "printedPage": 1352,
-     "w": 533,
-     "h": 339
-    },
-    {
-     "src": "/duoc-thu/pregabalin-2.webp",
-     "page": 1346,
-     "printedPage": 1352,
-     "w": 533,
-     "h": 580
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -19087,15 +16834,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/progesteron-1.webp",
-     "page": 1362,
-     "printedPage": 1368,
-     "w": 533,
-     "h": 110
     }
    ],
    "contraindications": [],
@@ -19150,15 +16888,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/promethazin-hydroclorid-1.webp",
-     "page": 1366,
-     "printedPage": 1372,
-     "w": 533,
-     "h": 112
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -19194,15 +16923,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/propranolol-1.webp",
-     "page": 1375,
-     "printedPage": 1381,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [],
@@ -19256,15 +16976,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/propylthiouracil-1.webp",
-     "page": 1378,
-     "printedPage": 1384,
-     "w": 533,
-     "h": 88
     }
    ],
    "contraindications": [],
@@ -19402,15 +17113,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/quinapril-1.webp",
-     "page": 1393,
-     "printedPage": 1399,
-     "w": 533,
-     "h": 729
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -19446,15 +17148,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/rabeprazol-1.webp",
-     "page": 1398,
-     "printedPage": 1404,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -19540,15 +17233,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ramipril-1.webp",
-     "page": 1402,
-     "printedPage": 1408,
-     "w": 533,
-     "h": 328
-    }
-   ],
    "contraindications": [
     "Không phối hợp ramipril với các thuốc ức chế thụ thể AT1, sacubitril, aliskiren trên bệnh nhân tăng huyết áp, suy tim, đái tháo đường hoặc suy thận có tốc độ lọc cầu thận GFR < 60 ml/phút/1,73 m²."
    ],
@@ -19581,15 +17265,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/rifampicin-1.webp",
-     "page": 1418,
-     "printedPage": 1424,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -19643,15 +17318,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/risedronat-1.webp",
-     "page": 1422,
-     "printedPage": 1428,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [
@@ -19780,15 +17446,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/rivaroxaban-1.webp",
-     "page": 1436,
-     "printedPage": 1442,
-     "w": 533,
-     "h": 352
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -19824,15 +17481,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/rosuvastatin-1.webp",
-     "page": 1442,
-     "printedPage": 1448,
-     "w": 533,
-     "h": 87
     }
    ],
    "contraindications": [
@@ -19872,15 +17520,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/salmeterol-1.webp",
-     "page": 1452,
-     "printedPage": 1458,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -19926,22 +17565,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/saxagliptin-1.webp",
-     "page": 1465,
-     "printedPage": 1471,
-     "w": 533,
-     "h": 184
-    },
-    {
-     "src": "/duoc-thu/saxagliptin-2.webp",
-     "page": 1466,
-     "printedPage": 1472,
-     "w": 533,
-     "h": 63
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -19974,15 +17597,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sat-sulfat-1.webp",
-     "page": 1463,
-     "printedPage": 1469,
-     "w": 533,
-     "h": 88
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20013,15 +17627,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sertralin-1.webp",
-     "page": 1473,
-     "printedPage": 1479,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -20074,15 +17679,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/simvastatin-1.webp",
-     "page": 1482,
-     "printedPage": 1488,
-     "w": 533,
-     "h": 162
     }
    ],
    "contraindications": [],
@@ -20147,15 +17743,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sitagliptin-1.webp",
-     "page": 1484,
-     "printedPage": 1490,
-     "w": 533,
-     "h": 520
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20186,15 +17773,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sofosbuvir-1.webp",
-     "page": 1487,
-     "printedPage": 1493,
-     "w": 533,
-     "h": 135
     }
    ],
    "contraindications": [],
@@ -20234,15 +17812,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sorafenib-tosylat-1.webp",
-     "page": 1489,
-     "printedPage": 1495,
-     "w": 533,
-     "h": 111
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20264,7 +17833,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy thận cấp, suy thận nặng, vô niệu."
    ],
@@ -20302,15 +17870,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sucralfat-1.webp",
-     "page": 1506,
-     "printedPage": 1512,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -20380,15 +17939,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sulpirid-1.webp",
-     "page": 1512,
-     "printedPage": 1518,
-     "w": 533,
-     "h": 209
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20421,15 +17971,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/sumatriptan-1.webp",
-     "page": 1515,
-     "printedPage": 1521,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20460,22 +18001,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tacrolimus-1.webp",
-     "page": 1520,
-     "printedPage": 1526,
-     "w": 533,
-     "h": 87
-    },
-    {
-     "src": "/duoc-thu/tacrolimus-2.webp",
-     "page": 1520,
-     "printedPage": 1526,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -20727,15 +18252,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/teicoplanin-1.webp",
-     "page": 1525,
-     "printedPage": 1531,
-     "w": 533,
-     "h": 1058
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -20771,15 +18287,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/telmisartan-1.webp",
-     "page": 1527,
-     "printedPage": 1533,
-     "w": 533,
-     "h": 64
     }
    ],
    "contraindications": [
@@ -20825,22 +18332,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/temozolomid-1.webp",
-     "page": 1529,
-     "printedPage": 1535,
-     "w": 533,
-     "h": 87
-    },
-    {
-     "src": "/duoc-thu/temozolomid-2.webp",
-     "page": 1530,
-     "printedPage": 1536,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -20960,15 +18451,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tenofovir-1.webp",
-     "page": 1534,
-     "printedPage": 1540,
-     "w": 533,
-     "h": 330
-    }
-   ],
    "contraindications": [],
    "cautions": [
     "Cần kiểm soát thường xuyên hơn ở những người có tiền sử suy thận hoặc có nguy cơ cao (tuổi cao, tăng huyết áp, nhiễm đồng thời viêm gan C, giảm Clcr, CD4+ thấp, dùng đồng thời thuốc ức chế protease điều trị HIV).",
@@ -21025,15 +18507,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tenoxicam-1.webp",
-     "page": 1535,
-     "printedPage": 1541,
-     "w": 533,
-     "h": 112
-    }
-   ],
    "contraindications": [
     "Trường hợp dễ có nguy cơ chảy máu như xơ gan, suy tim, suy thận (Clcr < 30 ml/phút)."
    ],
@@ -21073,15 +18546,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/terbutalin-sulfat-1.webp",
-     "page": 1542,
-     "printedPage": 1548,
-     "w": 533,
-     "h": 39
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -21117,15 +18581,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tetracyclin-1.webp",
-     "page": 1552,
-     "printedPage": 1558,
-     "w": 533,
-     "h": 141
     }
    ],
    "contraindications": [],
@@ -21165,15 +18620,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/theophylin-1.webp",
-     "page": 1559,
-     "printedPage": 1565,
-     "w": 533,
-     "h": 87
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -21195,7 +18641,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Suy thận nặng."
    ],
@@ -21324,22 +18769,6 @@
        }
       ]
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ticarcilin-1.webp",
-     "page": 1574,
-     "printedPage": 1580,
-     "w": 533,
-     "h": 89
-    },
-    {
-     "src": "/duoc-thu/ticarcilin-2.webp",
-     "page": 1574,
-     "printedPage": 1580,
-     "w": 533,
-     "h": 376
     }
    ],
    "contraindications": [],
@@ -21502,15 +18931,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ticarcilin-va-acid-clavulanic-1.webp",
-     "page": 1576,
-     "printedPage": 1582,
-     "w": 533,
-     "h": 500
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -21546,15 +18966,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tigecyclin-1.webp",
-     "page": 1581,
-     "printedPage": 1587,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -21609,15 +19020,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tinidazol-1.webp",
-     "page": 1586,
-     "printedPage": 1592,
-     "w": 533,
-     "h": 183
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -21653,15 +19055,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tiotropium-bromid-1.webp",
-     "page": 1590,
-     "printedPage": 1596,
-     "w": 533,
-     "h": 88
     }
    ],
    "contraindications": [],
@@ -21701,15 +19094,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tizanidin-hydroclorid-1.webp",
-     "page": 1591,
-     "printedPage": 1597,
-     "w": 533,
-     "h": 136
     }
    ],
    "contraindications": [],
@@ -22075,22 +19459,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tobramycin-1.webp",
-     "page": 1595,
-     "printedPage": 1601,
-     "w": 533,
-     "h": 546
-    },
-    {
-     "src": "/duoc-thu/tobramycin-2.webp",
-     "page": 1595,
-     "printedPage": 1601,
-     "w": 533,
-     "h": 840
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -22131,15 +19499,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tocilizumab-1.webp",
-     "page": 1598,
-     "printedPage": 1604,
-     "w": 533,
-     "h": 111
     }
    ],
    "contraindications": [],
@@ -22184,15 +19543,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/topiramat-1.webp",
-     "page": 1605,
-     "printedPage": 1611,
-     "w": 533,
-     "h": 159
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -22223,15 +19573,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/tretinoin-1.webp",
-     "page": 1615,
-     "printedPage": 1621,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -22269,15 +19610,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/trihexyphenidyl-hydroclorid-1.webp",
-     "page": 1622,
-     "printedPage": 1628,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],
@@ -22348,15 +19680,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/trimetazidin-1.webp",
-     "page": 1623,
-     "printedPage": 1629,
-     "w": 533,
-     "h": 256
-    }
-   ],
    "contraindications": [
     "Suy thận nặng (Clcr < 30 ml/phút)."
    ],
@@ -22389,15 +19712,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/triptorelin-1.webp",
-     "page": 1629,
-     "printedPage": 1635,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [],
@@ -22435,22 +19749,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/valsartan-1.webp",
-     "page": 1634,
-     "printedPage": 1640,
-     "w": 533,
-     "h": 39
-    },
-    {
-     "src": "/duoc-thu/valsartan-2.webp",
-     "page": 1634,
-     "printedPage": 1640,
-     "w": 533,
-     "h": 39
     }
    ],
    "contraindications": [
@@ -22733,15 +20031,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/vancomycin-1.webp",
-     "page": 1638,
-     "printedPage": 1644,
-     "w": 533,
-     "h": 1218
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -22792,15 +20081,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/venlafaxin-1.webp",
-     "page": 1679,
-     "printedPage": 1685,
-     "w": 533,
-     "h": 248
     }
    ],
    "contraindications": [],
@@ -23150,22 +20430,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/vitamin-d-va-cac-thuoc-tuong-tu-1.webp",
-     "page": 1701,
-     "printedPage": 1707,
-     "w": 533,
-     "h": 1029
-    },
-    {
-     "src": "/duoc-thu/vitamin-d-va-cac-thuoc-tuong-tu-2.webp",
-     "page": 1701,
-     "printedPage": 1707,
-     "w": 533,
-     "h": 713
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -23239,22 +20503,6 @@
      ]
     }
    ],
-   "clips": [
-    {
-     "src": "/duoc-thu/voriconazol-1.webp",
-     "page": 1704,
-     "printedPage": 1710,
-     "w": 533,
-     "h": 111
-    },
-    {
-     "src": "/duoc-thu/voriconazol-2.webp",
-     "page": 1704,
-     "printedPage": 1710,
-     "w": 533,
-     "h": 280
-    }
-   ],
    "contraindications": [],
    "cautions": []
   },
@@ -23276,7 +20524,6 @@
    },
    "noAdjust": false,
    "content": [],
-   "clips": [],
    "contraindications": [
     "Người bị suy thận nặng."
    ],
@@ -23309,15 +20556,6 @@
        "i": false
       }
      ]
-    }
-   ],
-   "clips": [
-    {
-     "src": "/duoc-thu/ziprasidon-1.webp",
-     "page": 1719,
-     "printedPage": 1725,
-     "w": 533,
-     "h": 63
     }
    ],
    "contraindications": [],

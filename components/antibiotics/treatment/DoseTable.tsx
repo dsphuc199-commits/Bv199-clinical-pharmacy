@@ -20,7 +20,7 @@ import {
 } from "@/lib/antibiotics/regimen-structure";
 import { Fragment } from "react";
 import RegimenDrugTools from "./RegimenDrugTools";
-import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { clinicalText, displayRewrite } from "@/lib/antibiotics/presentation-text";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 
 type Props = {
@@ -71,7 +71,7 @@ const SOURCE_WORDING_FLAG = /xem nguyên văn|liều như trên/iu;
 function sourceExtra(o: StructuredDrug): string {
   const raw = clinicalText(o.raw);
   const cut = raw.indexOf(";");
-  return cut > 0 && raw.slice(cut + 1).trim() ? `Lưu ý theo văn bản: ${raw.slice(cut + 1).trim()}` : `Theo văn bản: ${raw}`;
+  return cut > 0 && raw.slice(cut + 1).trim() ? `Lưu ý: ${raw.slice(cut + 1).trim()}` : `Liều dùng: ${raw}`;
 }
 function needsSourceWording(o: StructuredDrug): boolean {
   return o.flags.some((f) => SOURCE_WORDING_FLAG.test(f));
@@ -93,7 +93,7 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
     <tr className={critical.length ? "tx-row tx-row-warn" : "tx-row"}>
       {showRelation && <td className="tx-marker" data-label="Quan hệ lựa chọn">{marker}</td>}
       <td data-label="Hoạt chất" className="tx-drug">
-        <strong>{o.name}</strong>
+        <strong>{displayRewrite(o.name)}</strong>
         {o.populationLabel && <span className="tx-pop">{o.populationLabel}</span>}
         {o.context && <span className="tx-ctx">{o.context}</span>}
         {critical.map((f) => (
@@ -129,7 +129,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
       <div className="tx">
         {status === "NO_DOSE" && !hideReviewNote && <p className="tx-dur">Liều dùng theo tờ hướng dẫn sử dụng của chế phẩm.</p>}
         {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
-        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{r.name}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{displayRewrite(r.name)}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         {duration && clinicalText(duration) && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(duration)}</p>}
         <TxStyle />
       </div>

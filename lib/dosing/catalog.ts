@@ -2,7 +2,7 @@
   Danh muc module "Hieu chinh lieu" (chi dung phia may chu):
     - renalDosingDatabase (data/renal-dosing.ts): bang lieu theo CrCl da nhap va doi chieu.
     - data/renal-dtqg.json: trich NGUYEN VAN Duoc thu quoc gia VN 2023 (lieu o nguoi suy than,
-      chong chi dinh/than trong lien quan than) + anh cat trang goc.
+      chong chi dinh/than trong lien quan than), chi dang chu.
     - QD 5631/QD-BYT (31/12/2020) Phu luc 2: khang sinh uu tien quan ly (Nhom 1) va can giam sat (Nhom 2).
 */
 import dtqg from "@/data/renal-dtqg.json";
@@ -37,7 +37,7 @@ export type DtqgItem = {
   /* Chuyen luan co, nhung khong neu hieu chinh theo chuc nang than (khang sinh uu tien quan ly). */
   noRenalText?: boolean;
   content: DtqgBlock[];
-  clips: DtqgClip[];
+  clips?: DtqgClip[];
   contraindications: string[];
   cautions: string[];
 };

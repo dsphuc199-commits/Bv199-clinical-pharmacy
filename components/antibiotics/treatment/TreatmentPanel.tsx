@@ -277,20 +277,14 @@ export default function TreatmentPanel({
           <h3>{heading}</h3>
         </div>
         {sections.length > 0 ? sections.map((s) => <Section key={s.key} section={s} />) : <p className="tp-empty">{emptyText ?? "Không có phác đồ cho bệnh cảnh này."}</p>}
-        {rationale && EMPIRIC_TREATMENT_UI_RULES.explainClinicalRationale && <RationaleAccordion rationale={rationale} />}
         {footer}
-        {!EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && sections.length > 0 && (
-          <p className="tp-module-links">Hiệu chỉnh liều theo chức năng thận, gan và kiểm tra tương tác thuốc: xem module{" "}
-            <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a> và{" "}
-            <a href={SPECIALIZED_MODULE_LINKS.interactions.href}>{SPECIALIZED_MODULE_LINKS.interactions.label}</a>.</p>
-        )}
       </section>
       {comparison}
 
-      {/* (4) Luu y lam sang + (5) Nguon tham khao (mot dong, cuoi khung) */}
-      {(hasNotes || allCitations.length > 0) && (
+      {/* (4) Luu y lam sang, theo doi ngay sau phac do */}
+      {hasNotes && (
         <section className="tp-box tp-notes">
-          {hasNotes && (
+          {(
             <div className="tp-notes-body">
               <span className="tp-info" aria-hidden="true">i</span>
               <div>
@@ -319,13 +313,20 @@ export default function TreatmentPanel({
               </div>
             </div>
           )}
-          {allCitations.length > 0 && (
-            <details className="tp-sources">
-              <summary>Nguồn và đối chiếu</summary>
-              <ul>{allCitations.map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
-            </details>
-          )}
         </section>
+      )}
+      {/* (5) Co so lua chon (thu gon) -> lien ket module -> nguon (cuoi khung) */}
+      {rationale && EMPIRIC_TREATMENT_UI_RULES.explainClinicalRationale && <RationaleAccordion rationale={rationale} />}
+      {!EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && sections.length > 0 && (
+        <p className="tp-module-links">Hiệu chỉnh liều theo chức năng thận, gan và kiểm tra tương tác thuốc: xem module{" "}
+          <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a> và{" "}
+          <a href={SPECIALIZED_MODULE_LINKS.interactions.href}>{SPECIALIZED_MODULE_LINKS.interactions.label}</a>.</p>
+      )}
+      {allCitations.length > 0 && (
+        <details className="tp-box tp-sources">
+          <summary>Nguồn tham khảo ({allCitations.length})</summary>
+          <ul>{allCitations.map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
+        </details>
       )}
       </>}
       <TpStyle />
@@ -405,6 +406,11 @@ function TpStyle() {
         .tp-card { grid-template-columns: minmax(0, 1fr); padding: 10px 12px; }
         .tp-card-head { flex-direction: row; flex-wrap: wrap; align-items: center; }
       }
+      /* Thu tu: phac do -> luu y/theo doi -> co so lua chon -> lien ket module -> nguon. */
+      .tp > .tp-rationale { margin-top: 0; }
+      .tp > .tp-module-links { margin: 0; }
+      .tp > .tp-sources { margin: 0; padding: 12px 0 0; border-top: 1px solid #edf2f6; }
+      .tp > .tp-sources > summary { cursor: pointer; font-weight: 700; color: #1e3a5f; }
     `}</style>
   );
 }

@@ -125,7 +125,7 @@ export default function DoseAdjustModule({ entries, params, source, note }: { en
           <h1>Hiệu chỉnh liều</h1>
           <p className="da-sub">
             Theo chức năng thận – <strong>Dược thư quốc gia Việt Nam 2023</strong> và danh mục kháng sinh ưu tiên quản lý theo{" "}
-            <strong>QĐ 5631/QĐ-BYT</strong>. Trích nguyên văn, kèm ảnh bảng liều từ trang gốc.
+            <strong>QĐ 5631/QĐ-BYT</strong>. Nội dung trích nguyên văn Dược thư quốc gia.
           </p>
         </header>
 
@@ -237,7 +237,6 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
   indication: string; setIndication: (v: string) => void; source: string; note: string;
 }) {
   const d = entry.dtqg;
-  const [zoom, setZoom] = useState<string | null>(null);
 
   return (
     <article className="da-card da-doc">
@@ -348,18 +347,6 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
               );
             })}
           </div>
-          {d.clips.length > 0 && (
-            <details className="da-clips da-clips-more">
-              <summary>Đối chiếu trang gốc Dược thư ({d.clips.map((c) => `tr. ${c.printedPage}`).filter((v, i, a) => a.indexOf(v) === i).join(", ")})</summary>
-              {d.clips.map((c) => (
-                <button key={c.src} type="button" className="da-clip" onClick={() => setZoom(c.src)} aria-label={`Phóng to trang ${c.printedPage}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={c.src} alt={`Dược thư quốc gia Việt Nam 2023, trang ${c.printedPage}`} width={c.w} height={c.h} loading="lazy" />
-                  <span>Trang {c.printedPage}</span>
-                </button>
-              ))}
-            </details>
-          )}
         </section>
       )}
 
@@ -390,14 +377,6 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
         {d && <p><strong>Nguồn:</strong> {source}, chuyên luận {d.name}, trang {d.pages.printed[0]}–{d.pages.printed[1]}.</p>}
         <p><strong>Trạng thái:</strong> {note}</p>
       </footer>
-
-      {zoom && (
-        <div className="da-zoom" role="dialog" aria-modal="true" onClick={() => setZoom(null)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={zoom} alt="Trang Dược thư phóng to" />
-          <button type="button" aria-label="Đóng" onClick={() => setZoom(null)}><X size={20} /></button>
-        </div>
-      )}
     </article>
   );
 }

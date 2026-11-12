@@ -6,6 +6,7 @@ export default function ClinicalNotes({items}:{items:string[]}) {
   return <div className="clinical-notes-block"><ul className="clinical-notes">
     {items.map((original,index)=>{
       const text=clinicalText(original);
+      if(!text)return null;
       const heading=text.match(/^([^:;\n]{2,80}):\s+([\s\S]+)$/u);
       const topic=heading&&/^(?:Lưu ý(?: an toàn| lâm sàng)?|Theo dõi(?: đáp ứng| hiệu quả| an toàn| điều trị)?|Đánh giá(?: ban đầu| đáp ứng| lại)?|Hiệu chỉnh liều|Liều dùng|Thời gian(?: điều trị)?|Đường dùng|Tương tác(?: thuốc)?|Chống chỉ định|Điều kiện(?: lựa chọn| áp dụng)?|Trước khi kê đơn|Chuyển đường dùng|Vi sinh|Xuống thang)$/iu.test(heading[1]);
       if(!heading||!topic)return <li key={index}>{text}</li>;

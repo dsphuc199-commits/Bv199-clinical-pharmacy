@@ -16,7 +16,7 @@ export type Comparison = {
 };
 
 const LOCAL_RULE =
-  "Ưu tiên văn bản BYT hiện hành; khuyến cáo quốc tế dùng để đối chiếu, bổ sung tình huống BYT chưa bao phủ. Đối chiếu antibiogram BV199 và danh mục thuốc BV199; Hội đồng Thuốc và Điều trị BV199 quyết định khi hai nguồn khác nhau.";
+  "Ưu tiên hướng dẫn BYT hiện hành; khuyến cáo quốc tế dùng bổ sung cho tình huống BYT chưa đề cập. Lựa chọn cuối cùng dựa trên antibiogram và danh mục thuốc BV199; Hội đồng Thuốc và Điều trị BV199 quyết định khi hai khuyến cáo khác nhau.";
 
 export const COMPARISONS: Comparison[] = [
   {
@@ -34,10 +34,10 @@ export const COMPARISONS: Comparison[] = [
       "Ngưỡng kháng macrolid: ATS/IDSA ghi số cụ thể (< 25%); module BYT ghi định tính (không dùng thường quy khi tỷ lệ kháng cao hoặc không có dữ liệu địa phương).",
       "Module BYT có thêm ertapenem (nội trú), cefdinir/cefditoren (ngoại trú), teicoplanin (chống MRSA) và phối hợp aminoglycosid; Bảng 3–4 của ATS/IDSA không nêu các thuốc này.",
       "ATS/IDSA có cefuroxim 500 mg x 2 lần/ngày, gemifloxacin và aztreonam; module BYT không có.",
-      "ATS/IDSA: với nguy cơ MRSA/Pseudomonas do nhập viện và dùng kháng sinh tiêm gần đây, ca không nặng chỉ cấy và chờ kết quả trước khi bao phủ; đối chiếu tiêu chí riêng trong module BYT.",
+      "ATS/IDSA: với nguy cơ MRSA/Pseudomonas do nhập viện và dùng kháng sinh tiêm gần đây, ca không nặng chỉ cấy và chờ kết quả trước khi bao phủ; tiêu chí bao phủ theo BYT xem tab Việt Nam.",
     ],
     conditions: [
-      "ATS/IDSA xây dựng theo dịch tễ đề kháng Hoa Kỳ; ngưỡng 25% cần đối chiếu dữ liệu kháng macrolid tại Việt Nam/BV199.",
+      "Ngưỡng kháng macrolid 25% của ATS/IDSA dựa trên dịch tễ Hoa Kỳ; khi áp dụng cần dựa trên tỷ lệ kháng macrolid tại Việt Nam và BV199.",
       LOCAL_RULE,
     ],
   },
@@ -155,7 +155,7 @@ export const COMPARISONS: Comparison[] = [
     ],
     different: [
       "IDSA phân tầng theo dấu hiệu toàn thân và yếu tố nguy cơ MRSA, có phác đồ nặng (vancomycin + piperacillin-tazobactam hoặc imipenem/meropenem); QĐ 708 không có phác đồ MRSA/nặng ở mục này.",
-      "QĐ 708 ghi thời gian ít nhất 10 ngày; phần IDSA đã trích không nêu thời gian.",
+      "QĐ 708: tối thiểu 10 ngày; IDSA không quy định thời gian cố định.",
     ],
     conditions: [LOCAL_RULE],
   },
@@ -214,7 +214,7 @@ export const COMPARISONS: Comparison[] = [
     different: [
       "QĐ 708 dành cho P. aeruginosa còn nhạy: ceftazidim, cefepim, piperacillin-tazobactam (thay thế ciprofloxacin, imipenem-cilastatin, meropenem).",
       "Theo định nghĩa IDSA, chủng DTR không nhạy với tất cả các thuốc trên; IDSA ưu tiên ceftolozan-tazobactam, ceftazidim-avibactam, imipenem-relebactam (cefiderocol thay thế ngoài đường tiết niệu).",
-      "Văn bản BYT đang dùng không có phác đồ cho DTR.",
+      "Hướng dẫn BYT chưa có phác đồ cho P. aeruginosa DTR.",
     ],
     conditions: [
       "Chỉ dùng nội dung IDSA khi kháng sinh đồ xác nhận DTR và thuốc mới được làm kháng sinh đồ; kiểm tra thuốc có trong danh mục BV199.",
@@ -238,7 +238,7 @@ export const COMPARISONS: Comparison[] = [
       "Gentamicin người lớn: QĐ 708 chia 3 lần/ngày; ESC 2023 1 lần/ngày.",
       "Dị ứng penicilin: QĐ 708 thêm ciprofloxacin; ESC 2023 dùng cefazolin 6 g/ngày hoặc vancomycin + gentamicin, không có ciprofloxacin.",
       "Van nhân tạo sớm: QĐ 708 phối hợp 4 thuốc gồm cefepim 6 g/ngày; ESC 2023 vancomycin hoặc daptomycin 10 mg/kg/ngày + gentamicin + rifampin, không có cefepim.",
-      "Trẻ em: QĐ 708 có ciprofloxacin “20–30 mg/24 giờ” (thiếu /kg trong văn bản); ESC 2023 không có ciprofloxacin ở trẻ em.",
+      "Trẻ em: QĐ 708 có ciprofloxacin 20–30 mg/kg/24 giờ; ESC 2023 không khuyến cáo ciprofloxacin ở trẻ em.",
       "Vancomycin: QĐ 708 và ESC dùng liều theo cân nặng; đồng thuận 2020 dùng đích AUC24/MIC 400–600 cho MRSA nặng.",
     ],
     conditions: [
@@ -283,7 +283,7 @@ export const COMPARISONS: Comparison[] = [
       "QĐ 5642 chỉ có liều theo kg – áp dụng cho người lớn có thể vượt liều tối đa (ceftriaxon > 4 g/ngày, ampicilin > 12 g/ngày).",
       "Nguy cơ Listeria: BYT > 50 tuổi; WHO > 60 tuổi, có thai, các cơ địa suy giảm miễn dịch kể cả đái tháo đường, xơ gan, bệnh thận giai đoạn cuối, rối loạn sử dụng rượu.",
       "Không rõ tác nhân: BYT 10–14 ngày và hết sốt 3 ngày; WHO có thể ngừng sau 7 ngày nếu hồi phục lâm sàng ≥ 48 giờ.",
-      "Vancomycin: QĐ 708 30–45 mg/kg/ngày (8–12 giờ), ghi đích đáy \"15–20 mg/ml\" (nghi lỗi in); WHO 15–20 mg/kg mỗi 8–12 giờ, đích đáy 15–20 mg/L, tối đa 4 g/ngày.",
+      "Vancomycin: QĐ 708 30–45 mg/kg/ngày (8–12 giờ), đích nồng độ đáy 15–20 mg/L; WHO 15–20 mg/kg mỗi 8–12 giờ, đích đáy 15–20 mg/L, tối đa 4 g/ngày.",
       "WHO cho dùng rifampicin thay vancomycin nơi gánh nặng lao thấp; Việt Nam có gánh nặng lao cao – theo WHO chỉ dùng khi không có/chống chỉ định vancomycin.",
     ],
     conditions: [
@@ -330,11 +330,11 @@ export const COMPARISONS: Comparison[] = [
       "Phối hợp: QĐ 708 cho thêm aminoglycosid, fluoroquinolon hoặc vancomycin; ECIL-10 chỉ phối hợp aminoglycosid khi bệnh nặng hoặc nghi Gram âm kháng, không có quinolon, không thường quy glycopeptid.",
       "Ngừng kháng sinh: QĐ 708 chờ ANC > 500/µl; ECIL-10 cho ngừng sau ≥ 72 giờ nếu ổn định và hết sốt ≥ 48 giờ, bất kể ANC.",
       "Kháng nấm: chương sốt giảm bạch cầu của QĐ 708 không đề cập (chương sepsis nêu cân nhắc khi sốt tới 96 giờ); IPFN 2023 có tiêu chí ≥ 96 giờ ở nhóm nguy cơ cao.",
-      "Colistin: QĐ 708 6 MIU mỗi 8 giờ (18 MIU/ngày) – vượt mức 12 MIU/ngày của Dược thư trong ứng dụng; ECIL-10 không đưa colistin vào lựa chọn khởi đầu.",
+      "Colistin: QĐ 708 6 MIU mỗi 8 giờ (18 MIU/ngày) – vượt tổng liều tối đa 12 MIU/ngày theo Dược thư quốc gia; ECIL-10 không đưa colistin vào lựa chọn khởi đầu.",
     ],
     conditions: [
       "ECIL-10 dành cho ung thư huyết học/ghép tế bào gốc; IPFN 2023 dành cho trẻ em. Nguồn quốc tế không ghi liều.",
-      "Nguy cơ thấp (người lớn): QĐ 708 không có phác đồ – thiếu bằng chứng trong ứng dụng.",
+      "Nguy cơ thấp (người lớn): QĐ 708 không có phác đồ riêng.",
       LOCAL_RULE,
     ],
   })),

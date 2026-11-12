@@ -135,7 +135,7 @@ const COPD: DiseaseOverviewData = {
       { text: "Đổi theo kháng sinh đồ khi không cải thiện và vi khuẩn kháng thuốc đang dùng; ưu tiên phổ hẹp.", ref: "Biểu đồ 3.2" },
     ],
     safety: [
-      { text: "Đối chiếu dị ứng, chức năng thận, bệnh đồng mắc, tác nhân trước đó và độ nhạy kháng sinh tại địa phương.", ref: "Mục 3.4" },
+      { text: "Cân nhắc tiền sử dị ứng, chức năng thận, bệnh đồng mắc, tác nhân phân lập trước đó và độ nhạy kháng sinh tại địa phương.", ref: "Mục 3.4" },
     ],
   },
 };
