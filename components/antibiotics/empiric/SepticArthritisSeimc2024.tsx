@@ -10,8 +10,12 @@
 */
 
 import { useMemo, useState, type ReactNode } from "react";
+import {
+  PIDS_AGENTS, PIDS_AGES, PIDS_CONTEXTS, PIDS_DEFINITIVE_PRINCIPLE, PIDS_DOSE_NOTES, PIDS_DOSE_TABLE, PIDS_KINGELLA,
+  PIDS_PRINCIPLES, PIDS_ROUTE, PIDS_TIMING, pidsDuration, type PidsAge, type RxItem,
+} from "./septic-arthritis-pids2023";
 
-type Item = { role: string; text: string; grade?: string; ref: string; al?: "std" | "alt" };
+type Item = RxItem;
 type Pop = "adult" | "child";
 type Stage = "empiric" | "directed";
 
@@ -419,31 +423,39 @@ const PRINCIPLES: { title: string; items: Item[] }[] = [
 ];
 
 /* ================= Giao dien ================= */
-const STRENGTH = [
-  { k: "A", t: "Khuyến cáo mạnh nên dùng" },
-  { k: "B", t: "Khuyến cáo vừa nên dùng" },
-  { k: "C", t: "Khuyến cáo yếu nên dùng" },
-  { k: "D", t: "Khuyến cáo không nên dùng" },
+type Source = "seimc" | "pids";
+
+const SEIMC_LEGEND: [string, string][] = [
+  ["A · B · C · D", "Sức mạnh khuyến cáo: A mạnh, B vừa, C yếu nên dùng; D khuyến cáo không nên dùng"],
+  ["I · II · III", "Chất lượng bằng chứng: I thử nghiệm ngẫu nhiên có đối chứng; II thử nghiệm không ngẫu nhiên, thuần tập, bệnh chứng; III ý kiến chuyên gia, mô tả ca"],
+  ["Không nhãn", "Lựa chọn nêu trong bảng thuốc hoặc phần phân tích của hướng dẫn, không xếp mức"],
 ];
-const EVIDENCE = [
-  { k: "I", t: "Ít nhất một thử nghiệm ngẫu nhiên có đối chứng" },
-  { k: "II", t: "Thử nghiệm không ngẫu nhiên, nghiên cứu thuần tập hoặc bệnh chứng" },
-  { k: "III", t: "Ý kiến chuyên gia, kinh nghiệm lâm sàng, mô tả ca" },
+const PIDS_LEGEND: [string, string][] = [
+  ["Mạnh · Có ĐK", "Sức mạnh khuyến cáo (GRADE): mạnh – phần lớn người bệnh nên nhận; có điều kiện – cân nhắc theo từng người bệnh"],
+  ["Cao → Rất thấp", "Độ tin cậy của bằng chứng: cao, trung bình, thấp, rất thấp"],
+  ["TH tốt", "Khuyến cáo thực hành tốt: dựa trên bằng chứng gián tiếp lớn, lợi ích rõ ràng"],
+  ["Không nhãn", "Thuốc trong bảng lựa chọn theo tác nhân hoặc phần phân tích của hướng dẫn, không xếp mức"],
 ];
+const CERT: Record<string, string> = { H: "cao", M: "TB", L: "thấp", VL: "rất thấp" };
 
 function Grade({ g }: { g?: string }) {
-  if (!g) return <span className="sa24-g sa24-g-n" title="Nội dung phân tích của hướng dẫn, không xếp mức khuyến cáo">Tham khảo</span>;
-  return <span className={`sa24-g sa24-g-${g[0].toLowerCase()}`}>{g}</span>;
+  if (!g) return null;
+  if (g === "GPS") return <span className="sa24-g sa24-g-gps" title="Khuyến cáo thực hành tốt">TH tốt</span>;
+  const m = g.match(/^([SC])-(H|M|L|VL)$/);
+  if (m) return <span className={`sa24-g ${m[1] === "S" ? "sa24-g-a" : "sa24-g-c"}`} title="Sức mạnh khuyến cáo · độ tin cậy bằng chứng (GRADE)">{m[1] === "S" ? "Mạnh" : "Có ĐK"} · {CERT[m[2]]}</span>;
+  return <span className={`sa24-g sa24-g-${g[0].toLowerCase()}`} title="Mức khuyến cáo – chất lượng bằng chứng">{g}</span>;
 }
 function Rx({ items }: { items: Item[] }) {
   if (!items.length) return null;
+  const hasDose = items.some((i) => i.dose);
   return (
-    <table className="sa24-rx">
+    <table className={`sa24-rx${hasDose ? " has-dose" : ""}`}>
       <tbody>
-        {items.map((it) => (
-          <tr key={it.role + it.text} className={it.al === "alt" || it.role.startsWith(ALG) ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
+        {items.map((it, i) => (
+          <tr key={it.role + it.text + i} className={it.al === "alt" || it.role.startsWith(ALG) || it.role.startsWith("Không dùng được beta") ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
             <th scope="row">{it.role}</th>
-            <td>{it.text}</td>
+            <td className="sa24-drug">{it.text}</td>
+            {hasDose && <td className="sa24-dose">{it.dose ?? "—"}</td>}
             <td className="sa24-gc"><Grade g={it.grade} /></td>
           </tr>
         ))}
@@ -463,28 +475,36 @@ function Seg<T extends string>({ value, options, onChange, label }: { value: T; 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return <div className="sa24-row"><div className="sa24-lab">{label}</div><div className="sa24-ctl">{children}</div></div>;
 }
-function Legend() {
+function Legend({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="sa24-legend" aria-label="Cách đọc mức khuyến cáo">
-      <div className="lg-row"><b>Mức khuyến cáo (chữ cái)</b><div className="lg-items">{STRENGTH.map((s) => <span key={s.k}><Grade g={s.k} /> {s.t}</span>)}</div></div>
-      <div className="lg-row"><b>Chất lượng bằng chứng (số La Mã)</b><div className="lg-items">{EVIDENCE.map((s) => <span key={s.k}><em>{s.k}</em> {s.t}</span>)}</div></div>
-      <div className="lg-row"><b>Không xếp mức</b><div className="lg-items"><span><Grade /> Nội dung phân tích của hướng dẫn</span></div></div>
-    </div>
+    <dl className="sa24-legend" aria-label="Cách đọc mức khuyến cáo">
+      {rows.map(([k, v]) => (<div key={k}><dt>{k}</dt><dd>{v}</dd></div>))}
+    </dl>
   );
 }
 
-/* Loc theo di ung; nhanh khong co lua chon thay the -> giu phac do chuan kem canh bao. */
-function byAllergy(items: Item[], allergy: boolean): { shown: Item[]; noAlt: boolean } {
-  if (!allergy) return { shown: items.filter((i) => i.al !== "alt"), noAlt: false };
-  const hasAlt = items.some((i) => i.al === "alt");
-  const hasStd = items.some((i) => i.al === "std");
-  if (!hasAlt && hasStd) return { shown: items, noAlt: true };
-  return { shown: items.filter((i) => i.al !== "std"), noAlt: false };
+/* Chu dau thuong cho ten nhom vi khuan tieng Viet (giu nguyen ten khoa hoc). */
+const lc = (t: string) => (/^(Liên|Phế|Trực|Không)/.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t);
+
+/* Loc theo di ung beta-lactam:
+   - co lua chon danh rieng cho di ung -> chi hien lua chon do (va thuoc khong phai beta-lactam);
+   - khong co -> an beta-lactam, giu thuoc khong phai beta-lactam, kem ghi chu;
+   - chi co beta-lactam -> giu nguyen, canh bao. */
+type AlgState = "none" | "explicit" | "filtered" | "only-bl";
+function byAllergy(items: Item[], allergy: boolean): { shown: Item[]; state: AlgState } {
+  if (!allergy) return { shown: items.filter((i) => i.al !== "alt"), state: "none" };
+  const rest = items.filter((i) => i.al !== "std");
+  if (items.some((i) => i.al === "alt")) return { shown: rest, state: "explicit" };
+  if (!items.some((i) => i.al === "std")) return { shown: items, state: "none" };
+  const nonBL = rest.filter((i) => !["Nguyên tắc", "Chuyển uống"].includes(i.role));
+  return nonBL.length ? { shown: rest, state: "filtered" } : { shown: items, state: "only-bl" };
 }
 
 export default function SepticArthritisSeimc2024() {
   const [pop, setPop] = useState<Pop>("adult");
+  const [source, setSource] = useState<Source>("seimc");
   const [age, setAge] = useState<ChildAge>("3m2y");
+  const [pAge, setPAge] = useState<PidsAge>("6m48m");
   const [stage, setStage] = useState<Stage>("empiric");
   const [ctx, setCtx] = useState("none");
   const [agentId, setAgentId] = useState("mssa");
@@ -493,66 +513,113 @@ export default function SepticArthritisSeimc2024() {
   const [childSite, setChildSite] = useState<ChildSite>("simple");
   const [slow, setSlow] = useState(false);
 
+  const pids = pop === "child" && source === "pids";
   const contexts = useMemo(() => CONTEXTS.filter((c) => c.pop === "both" || c.pop === pop), [pop]);
   const agents = useMemo(() => AGENTS.filter((a) => a.pop === "both" || a.pop === pop), [pop]);
-  const context = stage === "empiric" ? contexts.find((c) => c.id === ctx) ?? null : null;
-  const agent = stage === "directed" ? agents.find((a) => a.id === agentId) ?? agents[0] : null;
   const al = allergy === "yes";
 
   function changePop(p: Pop) {
     setPop(p);
-    setCtx(p === "adult" ? "none" : "age");
-    setAgentId(p === "adult" ? "mssa" : "mssa-c");
+    setSource(p === "child" ? "pids" : "seimc");
+    setCtx(p === "adult" ? "none" : "lowmrsa");
+    setAgentId("mssa");
     setSlow(false);
   }
-
-  let base: Item[] = [];
-  let agentsText = "";
-  let notes: Item[] = [];
-  let extraNotes: string[] = [];
-  if (stage === "empiric") {
-    if (context) { base = context.items; agentsText = context.agents; extraNotes = context.notes ?? []; }
-    else { base = CHILD_EMPIRIC[age]; agentsText = "S. aureus (luôn bao phủ cho đến khi loại trừ); trẻ nhỏ cần bao phủ thêm K. kingae"; }
-  } else if (agent) {
-    base = agent.iv; notes = agent.notes ?? [];
+  function changeSource(s: Source) {
+    setSource(s);
+    setCtx(s === "pids" ? "lowmrsa" : "age");
+    setAgentId(s === "pids" ? "mssa" : "mssa-c");
   }
-  const childEmpiricAllergy = al && stage === "empiric" && !context;
-  const start = byAllergy(base, al);
-  const oral = agent?.oral ? byAllergy(agent.oral, al).shown : [];
-  const durations = durationItems(pop, agent, adultSite, childSite, slow, pop === "child" && age === "lt3m");
 
-  const dx = stage === "empiric"
-    ? `Viêm khớp nhiễm khuẩn, chưa có kết quả cấy – ${context ? context.label.charAt(0).toLowerCase() + context.label.slice(1) : "không có yếu tố nguy cơ đặc biệt"}`
-    : `Viêm khớp nhiễm khuẩn do ${agent?.label}`;
-  const who = [pop === "adult" ? "Người lớn" : `Trẻ ${CHILD_AGES.find((a) => a.id === age)?.label}`, al ? "dị ứng beta-lactam" : null].filter(Boolean).join(", ");
+  /* ---- Ket qua ---- */
+  let start: Item[] = [];
+  let oral: Item[] = [];
+  let notes: Item[] = [];
+  let durations: Item[] = [];
+  let route: Item[] = [];
+  let timing: Item[] = [];
+  let principle: Item[] = [];
+  let tips: string[] = [];
+  let covers = "";
+  let dx = "";
+
+  if (pids) {
+    route = PIDS_ROUTE;
+    if (stage === "empiric") {
+      const c = PIDS_CONTEXTS.find((x) => x.id === ctx) ?? PIDS_CONTEXTS[0];
+      timing = PIDS_TIMING;
+      start = [...c.items, ...(pAge === "6m48m" ? [PIDS_KINGELLA] : [])];
+      covers = pAge === "6m48m" ? "S. aureus (kể cả MRSA khi tỷ lệ cao) và K. kingae" : "S. aureus (kể cả MRSA khi tỷ lệ cao)";
+      dx = `Viêm khớp nhiễm khuẩn cấp, chưa có kết quả cấy – ${c.label.charAt(0).toLowerCase() + c.label.slice(1)}`;
+      durations = pidsDuration("std", childSite === "osteo");
+    } else {
+      const a = PIDS_AGENTS.find((x) => x.id === agentId) ?? PIDS_AGENTS[0];
+      principle = [PIDS_DEFINITIVE_PRINCIPLE];
+      start = a.iv;
+      oral = a.oral;
+      notes = a.notes ?? [];
+      dx = `Viêm khớp nhiễm khuẩn cấp do ${lc(a.label)}`;
+      durations = pidsDuration(a.dur, childSite === "osteo");
+    }
+  } else {
+    route = ROUTE[pop];
+    const agent = stage === "directed" ? agents.find((a) => a.id === agentId) ?? agents[0] : null;
+    const context = stage === "empiric" ? contexts.find((c) => c.id === ctx) ?? null : null;
+    if (stage === "empiric") {
+      if (context) { start = context.items; covers = context.agents; tips = context.notes ?? []; }
+      else { start = CHILD_EMPIRIC[age]; covers = "S. aureus (luôn bao phủ cho đến khi loại trừ); trẻ nhỏ thêm K. kingae"; }
+      dx = `Viêm khớp nhiễm khuẩn, chưa có kết quả cấy – ${context ? context.label.charAt(0).toLowerCase() + context.label.slice(1) : "không có yếu tố nguy cơ đặc biệt"}`;
+      if (pop === "adult" && ctx === "none") tips = ["Phác đồ dành cho nhuộm Gram dịch khớp không thấy vi khuẩn; thấy vi khuẩn thì chọn theo hình thái trên tiêu bản. Nhiễm khuẩn bệnh viện, sau phẫu thuật hoặc chọc khớp, gai thực vật, vết đâm qua giày, vết cắn, tiếp xúc trang trại, nghi lây qua đường tình dục: chọn đúng mục Bối cảnh."];
+    } else if (agent) {
+      start = agent.iv; oral = agent.oral ?? []; notes = agent.notes ?? [];
+      dx = `Viêm khớp nhiễm khuẩn do ${lc(agent.label)}`;
+    }
+    durations = durationItems(pop, agent, adultSite, childSite, slow, pop === "child" && age === "lt3m");
+  }
+
+  const s = byAllergy(start, al);
+  const o = byAllergy(oral, al);
+  const who = [pop === "adult" ? "Người lớn" : `Trẻ ${pids ? PIDS_AGES.find((x) => x.id === pAge)?.label : CHILD_AGES.find((x) => x.id === age)?.label}`, al ? "dị ứng beta-lactam" : null].filter(Boolean).join(", ");
+  const srcName = pids ? "PIDS/IDSA 2023" : "GEIO–SEIMC/SEIP/SECOT 2024";
 
   return (
     <article className="sa24">
       <header>
         <p className="sa24-eyebrow">Lựa chọn kháng sinh theo chẩn đoán</p>
         <h3>Viêm khớp nhiễm khuẩn khớp tự nhiên</h3>
-        <p className="sa24-sub">Người lớn và trẻ em. Không áp dụng cho nhiễm khuẩn khớp nhân tạo và viêm khớp do virus.</p>
+        <ol className="sa24-flow" aria-label="Trình tự lựa chọn">
+          <li>Đối tượng</li><li>Giai đoạn</li><li>Bối cảnh hoặc tác nhân</li><li>Dị ứng beta-lactam</li><li>Khởi trị → chuyển uống → thời gian</li>
+        </ol>
       </header>
 
       <div className="sa24-form">
         <Row label="Đối tượng">
           <Seg label="Đối tượng" value={pop} onChange={changePop} options={[{ id: "adult", label: "Người lớn" }, { id: "child", label: "Trẻ em" }] as const} />
-          {pop === "child" && <Seg label="Nhóm tuổi" value={age} onChange={setAge} options={CHILD_AGES} />}
+          {pop === "child" && <Seg label="Hướng dẫn" value={source} onChange={changeSource} options={[{ id: "pids", label: "PIDS/IDSA 2023 (1 tháng – 17 tuổi)" }, { id: "seimc", label: "GEIO–SEIMC 2024" }] as const} />}
+          {pop === "child" && (pids
+            ? <Seg label="Nhóm tuổi" value={pAge} onChange={setPAge} options={PIDS_AGES} />
+            : <Seg label="Nhóm tuổi" value={age} onChange={setAge} options={CHILD_AGES} />)}
         </Row>
         <Row label="Giai đoạn">
           <Seg label="Giai đoạn" value={stage} onChange={setStage} options={[{ id: "empiric", label: "Kinh nghiệm – chưa có kết quả cấy" }, { id: "directed", label: "Đích – đã có tác nhân" }] as const} />
         </Row>
         {stage === "empiric" ? (
           <Row label="Bối cảnh">
-            <select value={context ? ctx : "age"} onChange={(e) => setCtx(e.target.value)} aria-label="Bối cảnh dịch tễ">
-              {pop === "child" && <option value="age">Không có yếu tố nguy cơ tác nhân đặc biệt hoặc vi khuẩn kháng thuốc</option>}
-              {contexts.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
-            </select>
+            {pids ? (
+              <select value={ctx} onChange={(e) => setCtx(e.target.value)} aria-label="Bối cảnh">
+                {PIDS_CONTEXTS.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+              </select>
+            ) : (
+              <select value={contexts.some((c) => c.id === ctx) ? ctx : "age"} onChange={(e) => setCtx(e.target.value)} aria-label="Bối cảnh dịch tễ">
+                {pop === "child" && <option value="age">Không có yếu tố nguy cơ tác nhân đặc biệt hoặc vi khuẩn kháng thuốc</option>}
+                {contexts.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+              </select>
+            )}
           </Row>
         ) : (
           <Row label="Tác nhân">
-            <select value={agent?.id} onChange={(e) => setAgentId(e.target.value)} aria-label="Tác nhân">
-              {agents.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+            <select value={agentId} onChange={(e) => setAgentId(e.target.value)} aria-label="Tác nhân">
+              {(pids ? PIDS_AGENTS : agents).map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
             </select>
           </Row>
         )}
@@ -562,52 +629,66 @@ export default function SepticArthritisSeimc2024() {
         <Row label="Vị trí khớp">
           {pop === "adult"
             ? <Seg label="Vị trí khớp" value={adultSite} onChange={setAdultSite} options={ADULT_SITES} />
-            : <Seg label="Biến chứng" value={childSite} onChange={setChildSite} options={CHILD_SITES} />}
-          <label className="sa24-chk"><input type="checkbox" checked={slow} onChange={(e) => setSlow(e.target.checked)} /> {pop === "adult" ? "Suy giảm miễn dịch hoặc đáp ứng chậm với điều trị ban đầu" : "Trẻ suy giảm miễn dịch"}</label>
+            : <Seg label="Biến chứng" value={childSite} onChange={setChildSite} options={pids ? CHILD_SITES.filter((x) => x.id !== "axial") : CHILD_SITES} />}
+          {!pids && <label className="sa24-chk"><input type="checkbox" checked={slow} onChange={(e) => setSlow(e.target.checked)} /> {pop === "adult" ? "Suy giảm miễn dịch hoặc đáp ứng chậm với điều trị ban đầu" : "Trẻ suy giảm miễn dịch"}</label>}
         </Row>
       </div>
 
       <section className="sa24-out" aria-live="polite">
         <div className="sa24-dx">
-          <p><b>Chẩn đoán:</b> {dx}</p>
-          <p><b>Người bệnh:</b> {who}</p>
-          {agentsText && <p><b>Căn nguyên cần bao phủ:</b> {agentsText}</p>}
+          <p><b>Chẩn đoán</b> {dx}</p>
+          <p><b>Người bệnh</b> {who}</p>
+          {covers && <p><b>Cần bao phủ</b> {covers}</p>}
+          <p><b>Hướng dẫn</b> {srcName}</p>
         </div>
 
-        <Legend />
+        <Legend rows={pids ? PIDS_LEGEND : SEIMC_LEGEND} />
 
-        <h4>1. Phác đồ khởi trị{al && !start.noAlt && !childEmpiricAllergy ? " – người dị ứng beta-lactam" : ""}</h4>
-        {childEmpiricAllergy
-          ? <p className="sa24-warn">Hướng dẫn chưa có phác đồ kinh nghiệm riêng cho trẻ dị ứng beta-lactam; các phác đồ theo tuổi dưới đây đều có beta-lactam. Khi đã có tác nhân, chọn giai đoạn Đích để xem thuốc thay thế (ví dụ MSSA: clindamycin; hoặc linezolid, levofloxacin, daptomycin, vancomycin).</p>
-          : start.noAlt && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này. Phác đồ dưới đây có beta-lactam: đánh giá loại và mức độ dị ứng, hội chẩn trước khi dùng.</p>}
-        <Rx items={start.shown} />
-        {stage === "empiric" && pop === "adult" && ctx === "none" && <p className="sa24-tip">Phác đồ trên dành cho nhuộm Gram dịch khớp không thấy vi khuẩn; nhuộm Gram thấy vi khuẩn thì chọn theo hình thái vi khuẩn trên tiêu bản. Nhiễm khuẩn bệnh viện, có phẫu thuật hoặc chọc khớp trước đó, gai thực vật đâm, vết đâm qua giày, người hoặc động vật cắn, tiếp xúc trang trại, nghi lây qua đường tình dục: căn nguyên và phác đồ khác – chọn đúng ở mục Bối cảnh.</p>}
-        {extraNotes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
+        {timing.length > 0 && (<><h4>Thời điểm khởi trị</h4><Rx items={timing} /></>)}
 
-        <h4>2. Đường dùng và uống nối tiếp</h4>
-        <Rx items={[...ROUTE[pop], ...oral]} />
-        {al && agent?.id === "mssa-c" && <p className="sa24-tip">Hướng dẫn không tách riêng thuốc uống cho trẻ dị ứng beta-lactam; dùng các thuốc thay thế ở phần khởi trị theo độ nhạy của chủng.</p>}
+        <h4>{stage === "empiric" ? "Phác đồ kinh nghiệm" : "Phác đồ đích – đường tĩnh mạch"}{al && s.state === "explicit" ? " · dị ứng beta-lactam" : ""}</h4>
+        {principle.length > 0 && <Rx items={principle} />}
+        {s.state === "filtered" && <p className="sa24-warn">Đã ẩn thuốc beta-lactam; còn lại các lựa chọn không phải beta-lactam của hướng dẫn trong nhánh này.</p>}
+        {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; phác đồ dưới đây có beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
+        <Rx items={s.shown} />
+        {tips.map((t) => <p key={t} className="sa24-tip">{t}</p>)}
 
-        <h4>3. Thời gian điều trị</h4>
+        <h4>Chuyển đường uống</h4>
+        <Rx items={route} />
+        {o.shown.length > 0 && (<><h4>Thuốc uống nối tiếp</h4><Rx items={o.shown} /></>)}
+        {o.state === "filtered" && <p className="sa24-tip">Đã ẩn thuốc uống beta-lactam.</p>}
+
+        <h4>Thời gian điều trị</h4>
         <Rx items={durations} />
         {pop === "adult" && <p className="sa24-tip">Áp dụng cho người lớn không có viêm nội tâm mạc.</p>}
 
-        {notes.length > 0 && (<><h4>4. Lưu ý khi dùng thuốc</h4><Rx items={notes} /></>)}
-        <p className="sa24-tip">Thuốc không kèm liều: hướng dẫn không nêu liều – tra tại module Hiệu chỉnh liều.</p>
+        {notes.length > 0 && (<><h4>Lưu ý</h4><Rx items={notes} /></>)}
+        {!pids && <p className="sa24-tip">Hướng dẫn GEIO–SEIMC không nêu liều cho phần lớn thuốc – tra tại module Hiệu chỉnh liều.</p>}
       </section>
 
+      {pids && (
+        <details className="sa24-more">
+          <summary>Liều kháng sinh ở trẻ em (PIDS/IDSA 2023)</summary>
+          <table className="sa24-rx has-dose sa24-dosetab">
+            <tbody>{PIDS_DOSE_TABLE.map((d) => (<tr key={d.drug + d.route}><th scope="row">{d.drug}</th><td>{d.route}</td><td className="sa24-dose">{d.dose}</td></tr>))}</tbody>
+          </table>
+          {PIDS_DOSE_NOTES.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
+        </details>
+      )}
       <details className="sa24-more">
-        <summary>Nguyên tắc chung: bệnh phẩm, dẫn lưu khớp, điều trị bổ trợ, phục hồi chức năng, theo dõi</summary>
-        {PRINCIPLES.map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
+        <summary>Nguyên tắc chung ({srcName})</summary>
+        {(pids ? PIDS_PRINCIPLES : PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <p className="sa24-src">Nguồn: {SRC}. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <p className="sa24-src">Nguồn: {pids ? "PIDS/IDSA 2023 – Hướng dẫn chẩn đoán và điều trị viêm khớp nhiễm khuẩn cấp ở trẻ em (J Pediatric Infect Dis Soc 2024;13:1–59)" : SRC}. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
 
       <style>{`
         .sa24 { border: 1px solid #dbe6ed; border-radius: 16px; padding: 16px; margin: 12px 0; background: #fff; display: grid; gap: 14px; min-width: 0; }
         .sa24-eyebrow { margin: 0; font-size: 11.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #087f89; }
         .sa24 h3 { margin: 2px 0 0; font-size: 18px; font-weight: 800; color: #0f2236; }
-        .sa24-sub { margin: 2px 0 0; font-size: 13px; color: #4b6576; }
+        .sa24-flow { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; counter-reset: f; }
+        .sa24-flow li { counter-increment: f; font-size: 12px; color: #33505f; background: #f1f6f9; border-radius: 999px; padding: 2px 10px 2px 4px; }
+        .sa24-flow li::before { content: counter(f); display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: 5px; border-radius: 50%; background: #0b3a5b; color: #fff; font-size: 10.5px; font-weight: 800; }
         .sa24-form { display: grid; border: 1px solid #e3eaf0; border-radius: 12px; overflow: hidden; }
         .sa24-row { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 12px; align-items: start; padding: 10px 12px; border-top: 1px solid #edf2f6; }
         .sa24-row:first-child { border-top: 0; }
@@ -619,32 +700,33 @@ export default function SepticArthritisSeimc2024() {
         .sa24 select { width: 100%; max-width: 100%; border: 1px solid #cfdde6; border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 13.5px; background: #fff; }
         .sa24-chk { display: flex; gap: 6px; align-items: center; font-size: 13px; color: #33505f; }
         .sa24-out { border: 1px solid #cfe3e6; background: #f8fcfc; border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; min-width: 0; }
-        .sa24-dx { display: grid; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid #dcebed; }
-        .sa24-dx p { margin: 0; font-size: 13.5px; line-height: 1.5; color: #10243e; }
-        .sa24-dx b { color: #0b3a5b; }
-        .sa24-legend { display: grid; gap: 4px; font-size: 12px; line-height: 1.5; color: #4b6576; background: #fff; border: 1px solid #e3eaf0; border-radius: 8px; padding: 6px 10px; }
-        .sa24-legend .lg-row { display: grid; grid-template-columns: 200px minmax(0,1fr); gap: 8px; align-items: start; }
-        .sa24-legend .lg-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 2px 12px; }
-        .sa24-legend b { color: #33505f; }
-        .sa24-legend em { font-style: normal; font-weight: 800; color: #0b3a5b; }
+        .sa24-dx { display: grid; gap: 3px; padding-bottom: 8px; border-bottom: 1px solid #dcebed; }
+        .sa24-dx p { margin: 0; display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 8px; font-size: 13.5px; line-height: 1.5; color: #10243e; }
+        .sa24-dx b { color: #0b3a5b; font-size: 12.5px; }
+        .sa24-legend { margin: 0; display: grid; gap: 6px; font-size: 12.5px; line-height: 1.75; color: #4b6576; background: #fff; border: 1px solid #e3eaf0; border-radius: 8px; padding: 8px 12px; }
+        .sa24-legend > div { display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 10px; }
+        .sa24-legend dt { font-weight: 800; color: #0b3a5b; }
+        .sa24-legend dd { margin: 0; }
         .sa24-out h4 { margin: 8px 0 0; font-size: 15px; font-weight: 800; color: #0b3a5b; }
         .sa24-rx { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e3eaf0; border-radius: 10px; overflow: hidden; }
         .sa24-rx th, .sa24-rx td { padding: 8px 10px; border-top: 1px solid #edf2f6; text-align: left; vertical-align: top; font-size: 14px; line-height: 1.55; }
         .sa24-rx tr:first-child th, .sa24-rx tr:first-child td { border-top: 0; }
-        .sa24-rx th { width: 30%; font-weight: 700; color: #33505f; font-size: 13px; }
-        .sa24-rx td { color: #10243e; }
-        .sa24-rx .sa24-gc { width: 84px; text-align: right; white-space: nowrap; }
+        .sa24-rx th { width: 28%; font-weight: 700; color: #33505f; font-size: 13px; }
+        .sa24-rx.has-dose .sa24-drug { width: 22%; font-weight: 700; }
+        .sa24-rx .sa24-dose { font-size: 13px; color: #33505f; }
+        .sa24-rx .sa24-gc { width: 112px; text-align: right; white-space: nowrap; }
         .sa24-rx tr.is-pref th { color: #0b6b3a; }
         .sa24-rx tr.is-alg { background: #fff8f1; }
         .sa24-rx tr.is-alg th { color: #9a3412; }
+        .sa24-dosetab th { width: 24%; }
         .sa24-g { display: inline-block; border-radius: 6px; padding: 0 6px; font-size: 11.5px; font-weight: 800; line-height: 1.7; white-space: nowrap; }
         .sa24-g-a { background: #dff3e8; color: #106b3d; }
         .sa24-g-b { background: #e6f0fb; color: #1d4f8a; }
         .sa24-g-c { background: #fff3d6; color: #8a5a00; }
         .sa24-g-d { background: #fde4e4; color: #9b1c1c; }
-        .sa24-g-n { background: #f1f5f8; color: #557080; font-weight: 700; }
+        .sa24-g-gps { background: #e6f0fb; color: #1d4f8a; }
         .sa24-warn { margin: 0; font-size: 13px; line-height: 1.55; color: #7c2d12; background: #fff4ed; border: 1px solid #f6cfb5; border-radius: 8px; padding: 6px 10px; }
-        .sa24-tip { margin: 0; font-size: 12.5px; line-height: 1.55; color: #4b6576; }
+        .sa24-tip { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4b6576; }
         .sa24-more summary { cursor: pointer; font-weight: 700; font-size: 13.5px; color: #0b3a5b; }
         .sa24-more[open] { display: grid; gap: 10px; }
         .sa24-pblock h5 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #33505f; text-transform: uppercase; letter-spacing: .03em; }
@@ -652,12 +734,12 @@ export default function SepticArthritisSeimc2024() {
         @media (max-width: 640px) {
           .sa24-row { grid-template-columns: 1fr; gap: 6px; }
           .sa24-lab { padding-top: 0; }
-          .sa24-rx, .sa24-rx tbody, .sa24-rx tr, .sa24-rx th, .sa24-rx td { display: block; width: auto; }
+          .sa24-dx p, .sa24-legend > div { grid-template-columns: 1fr; gap: 0; }
+          .sa24-rx, .sa24-rx tbody, .sa24-rx tr, .sa24-rx th, .sa24-rx td { display: block; width: auto !important; }
           .sa24-rx tr { border-top: 1px solid #edf2f6; padding: 6px 10px; }
           .sa24-rx tr:first-child { border-top: 0; }
           .sa24-rx th, .sa24-rx td { border: 0; padding: 0; }
           .sa24-rx .sa24-gc { text-align: left; padding-top: 2px; }
-          .sa24-legend .lg-row { grid-template-columns: 1fr; gap: 2px; }
         }
       `}</style>
     </article>
