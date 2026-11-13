@@ -3,7 +3,7 @@
 /*
   Viem khop nhiem khuan khop tu nhien – GEIO (SEIMC), SEIP, SECOT 2024.
   - Chi ghi noi dung co trong van ban; muc khuyen cao (A–D, I–III) theo Bang 1 cua van ban.
-  - Can cu ghi so khuyen cao (KC); noi dung tu phan phan tich (khong danh so) ghi "Bàn luận – mục …".
+  - ref: vi tri trong huong dan (chi luu de doi chieu, KHONG hien thi). Noi dung khong xep muc -> nhan "Tham khảo".
   - al: "std" = thuoc beta-lactam/phac do chuan (an khi di ung beta-lactam); "alt" = lua chon khi di ung
     (chi hien khi di ung); khong ghi = hien ca hai.
   - Lieu: chi ghi khi van ban neu; khong tu bo sung.
@@ -57,7 +57,7 @@ const CONTEXTS: Context[] = [
   },
   {
     id: "gramneg", label: "Nghi trực khuẩn Gram âm (người cao tuổi, nhiễm khuẩn bệnh viện, suy giảm miễn dịch, tiêm chích ma túy)", pop: "adult",
-    agents: "Trực khuẩn Gram âm; luôn bao phủ S. aureus (KC VIII.1)",
+    agents: "Trực khuẩn Gram âm; luôn kèm thuốc có tác dụng trên S. aureus",
     items: [
       { text: "Phác đồ có cephalosporin thế hệ 3: ceftriaxon 2 g tĩnh mạch mỗi 24 giờ, hoặc cefotaxim 2 g tĩnh mạch mỗi 8 giờ.", ref: BL("VIII"), al: "std" },
       { text: "Nghi P. aeruginosa: ceftazidim.", ref: BL("VIII"), al: "std" },
@@ -341,9 +341,9 @@ function durationItems(pop: Pop, agent: Agent | null, adultSite: AdultSite, chil
   return out;
 }
 
-const ORAL_SWITCH: Record<Pop, Item> = {
-  adult: { text: "Khởi trị tĩnh mạch (B-III, KC VII.8). Chuyển uống sau vài ngày (ví dụ 2–7 ngày) khi: không viêm nội tâm mạc, cấy máu âm tính, lâm sàng và xét nghiệm cải thiện, có thuốc uống phù hợp.", grade: "A-II", ref: "KC VII.9" },
-  child: { text: "Khởi trị tĩnh mạch (B-III, KC VII.8). Diễn biến lâm sàng và xét nghiệm thuận lợi sau 2–4 ngày tĩnh mạch: chuyển uống.", grade: "A-I", ref: "KC VII.9" },
+const ORAL_SWITCH: Record<Pop, Item[]> = {
+  adult: [{ text: "Khởi trị đường tĩnh mạch.", grade: "B-III", ref: "KC VII.8" }, { text: "Chuyển uống sau vài ngày (ví dụ 2–7 ngày) khi: không viêm nội tâm mạc, cấy máu âm tính, lâm sàng và xét nghiệm cải thiện, có thuốc uống phù hợp.", grade: "A-II", ref: "KC VII.9" }],
+  child: [{ text: "Khởi trị đường tĩnh mạch.", grade: "B-III", ref: "KC VII.8" }, { text: "Diễn biến lâm sàng và xét nghiệm thuận lợi sau 2–4 ngày tĩnh mạch: chuyển uống.", grade: "A-I", ref: "KC VII.9" }],
 };
 
 const PRINCIPLES: { title: string; items: Item[] }[] = [
@@ -396,14 +396,14 @@ const PRINCIPLES: { title: string; items: Item[] }[] = [
 
 /* ---------------- Giao dien ---------------- */
 function Grade({ g }: { g?: string }) {
-  if (!g) return <span className="sa24-g sa24-g-n" title="Nội dung phần phân tích, không phải khuyến cáo đánh số">Bàn luận</span>;
+  if (!g) return <span className="sa24-g sa24-g-n" title="Nội dung phân tích của hướng dẫn, không xếp mức khuyến cáo">Tham khảo</span>;
   return <span className={`sa24-g sa24-g-${g[0].toLowerCase()}`} title="Mức khuyến cáo – chất lượng bằng chứng">{g}</span>;
 }
 function List({ items }: { items: Item[] }) {
   return (
     <ul className="sa24-list">
       {items.map((it) => (
-        <li key={it.text}><Grade g={it.grade} /><span>{it.text} <em>{it.ref}</em></span></li>
+        <li key={it.text}>{it.text} <Grade g={it.grade} /></li>
       ))}
     </ul>
   );
@@ -520,14 +520,14 @@ export default function SepticArthritisSeimc2024() {
 
         <h4>{al && !start.noAlt && !childEmpiricAllergy ? "Phác đồ khởi trị khi dị ứng beta-lactam" : "Phác đồ khởi trị"}</h4>
         {childEmpiricAllergy
-          ? <p className="sa24-warn">Hướng dẫn không nêu phác đồ kinh nghiệm riêng cho trẻ dị ứng beta-lactam; các phác đồ theo tuổi dưới đây đều có beta-lactam. Khi đã có tác nhân, chọn Đã có tác nhân để xem lựa chọn thay thế (ví dụ MSSA: clindamycin A-I; linezolid, levofloxacin, daptomycin, vancomycin B-III).</p>
+          ? <p className="sa24-warn">Hướng dẫn không nêu phác đồ kinh nghiệm riêng cho trẻ dị ứng beta-lactam; các phác đồ theo tuổi dưới đây đều có beta-lactam. Khi đã có tác nhân, chọn Đã có tác nhân để xem lựa chọn thay thế (ví dụ MSSA: clindamycin; hoặc linezolid, levofloxacin, daptomycin, vancomycin).</p>
           : start.noAlt && <p className="sa24-warn">Hướng dẫn không nêu lựa chọn thay thế cho người dị ứng beta-lactam ở nhánh này. Phác đồ dưới đây có beta-lactam: đánh giá loại và mức độ dị ứng, hội chẩn trước khi dùng.</p>}
         <List items={start.shown} />
-        {stage === "empiric" && pop === "adult" && ctx === "none" && <p className="sa24-tip">Nhuộm Gram dương tính: chọn theo vi khuẩn thấy trên nhuộm Gram. Bối cảnh đặc biệt (bệnh viện, sau thủ thuật, vết cắn…): chọn ở mục Bối cảnh.</p>}
+        {stage === "empiric" && pop === "adult" && ctx === "none" && <p className="sa24-tip">Phác đồ trên dành cho nhuộm Gram dịch khớp không thấy vi khuẩn. Nhuộm Gram thấy vi khuẩn: chọn kháng sinh theo hình thái vi khuẩn trên tiêu bản. Người bệnh nhiễm khuẩn bệnh viện, có phẫu thuật hoặc chọc khớp trước đó, bị gai thực vật đâm, vết đâm xuyên qua giày, bị người hoặc động vật cắn, tiếp xúc trang trại, nghi lây qua đường tình dục: căn nguyên và phác đồ khác – chọn đúng bối cảnh ở mục Bối cảnh.</p>}
         {extraNotes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
 
         <h4>Chuyển đường uống</h4>
-        <List items={[ORAL_SWITCH[pop], ...oral]} />
+        <List items={[...ORAL_SWITCH[pop], ...oral]} />
         {al && agent?.id === "mssa-c" && <p className="sa24-tip">Hướng dẫn không tách riêng thuốc uống cho trẻ dị ứng beta-lactam; các lựa chọn thay thế ở phần khởi trị được nêu chung, chọn theo độ nhạy của chủng.</p>}
 
         <h4>Thời gian điều trị</h4>
@@ -544,7 +544,7 @@ export default function SepticArthritisSeimc2024() {
       </details>
       <details className="sa24-more">
         <summary>Cách đọc mức khuyến cáo</summary>
-        <p className="sa24-legend">Sức mạnh khuyến cáo: A ủng hộ mạnh · B ủng hộ vừa · C ủng hộ ít · D khuyến cáo không dùng. Chất lượng bằng chứng: I thử nghiệm ngẫu nhiên có đối chứng · II thử nghiệm không ngẫu nhiên, nghiên cứu thuần tập hoặc bệnh chứng · III ý kiến chuyên gia, mô tả ca. KC: số khuyến cáo trong hướng dẫn. Bàn luận: nội dung phần phân tích, không phải khuyến cáo đánh số.</p>
+        <p className="sa24-legend">Mức khuyến cáo ghi cuối mỗi dòng. Chữ cái là sức mạnh khuyến cáo: A ủng hộ mạnh, B ủng hộ vừa, C ủng hộ ít, D khuyến cáo không dùng. Chữ số La Mã là chất lượng bằng chứng: I thử nghiệm ngẫu nhiên có đối chứng; II thử nghiệm không ngẫu nhiên, nghiên cứu thuần tập hoặc bệnh chứng; III ý kiến chuyên gia, mô tả ca. "Tham khảo": nội dung phân tích của hướng dẫn, không xếp mức khuyến cáo.</p>
       </details>
 
       <p className="sa24-src">Nguồn: {SRC}. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
@@ -569,9 +569,9 @@ export default function SepticArthritisSeimc2024() {
         .sa24-agents { margin: 0; font-size: 13.5px; color: #33505f; }
         .sa24-out h4 { margin: 10px 0 0; font-size: 15px; font-weight: 800; color: #0b3a5b; }
         .sa24-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-        .sa24-list li { display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 8px; align-items: start; font-size: 14px; line-height: 1.55; color: #10243e; }
-        .sa24-list em { font-style: normal; font-size: 12px; color: #6b8293; white-space: nowrap; }
-        .sa24-g { display: inline-block; text-align: center; border-radius: 6px; padding: 1px 4px; font-size: 11.5px; font-weight: 800; }
+        .sa24-list li { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.6; color: #10243e; }
+        .sa24-list li::before { content: ""; position: absolute; left: 2px; top: .68em; width: 5px; height: 5px; border-radius: 50%; background: #087f89; }
+                .sa24-g { display: inline-block; margin-left: 4px; vertical-align: 1px; border-radius: 6px; padding: 0 5px; font-size: 11px; font-weight: 800; line-height: 1.6; white-space: nowrap; }
         .sa24-g-a { background: #dff3e8; color: #106b3d; }
         .sa24-g-b { background: #e6f0fb; color: #1d4f8a; }
         .sa24-g-c { background: #fff3d6; color: #8a5a00; }
@@ -587,9 +587,6 @@ export default function SepticArthritisSeimc2024() {
         @media (max-width: 640px) {
           .sa24-row { grid-template-columns: 1fr; gap: 6px; }
           .sa24-lab { padding-top: 0; }
-          .sa24-list li { grid-template-columns: 1fr; gap: 2px; }
-          .sa24-g { justify-self: start; }
-          .sa24-list em { white-space: normal; }
         }
       `}</style>
     </article>
