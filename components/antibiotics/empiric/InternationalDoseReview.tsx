@@ -3,8 +3,8 @@ import type { DrugGroup } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
 import ClinicalNotes from "../treatment/ClinicalNotes";
 
-export default function InternationalDoseReview({diseaseId}:{diseaseId:string}) {
-  const reviews=INTERNATIONAL_DOSE_REVIEWS.filter(r=>r.diseaseIds.includes(diseaseId));
+export default function InternationalDoseReview({diseaseId,exclude=[]}:{diseaseId:string;exclude?:string[]}) {
+  const reviews=INTERNATIONAL_DOSE_REVIEWS.filter(r=>r.diseaseIds.includes(diseaseId)&&!exclude.includes(r.id));
   if(!reviews.length)return null;
   return <section aria-label="Đối chiếu liều quốc tế">
     <h3>Liều theo khuyến cáo quốc tế</h3>

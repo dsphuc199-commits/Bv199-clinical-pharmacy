@@ -140,7 +140,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
       <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn khớp tự nhiên: GEIO–SEIMC/SEIP/SECOT 2024 cho người lớn và trẻ em; PIDS/IDSA 2023 cho trẻ từ 1 tháng đến 17 tuổi." : clinicalText(entry.scope)}</p>
       {diseaseId === "v8-33" && <SepticArthritisSeimc2024 />}
-      <InternationalDoseReview diseaseId={diseaseId} />
+      {/* v8-33: nhanh Gram am GEIO–SEIMC da nam trong cong cu chon khang sinh – khong lap lai. */}
+      <InternationalDoseReview diseaseId={diseaseId} exclude={diseaseId === "v8-33" ? ["arthritis-seimc-adult-gramnegative"] : []} />
 
       {entry.guidelineIds.map((gid) => {
         const g = INTL_GUIDELINES[gid];
