@@ -17,6 +17,8 @@ const moreLinks = [
   { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu" },
   { label: "Tương tác thuốc", href: "/tuong-tac-thuoc" },
   { label: "Theo dõi nồng độ thuốc (TDM)", href: "/tdm" },
+  { label: "Thai kỳ & cho con bú", href: "/safety/pregnancy" },
+  { label: "Thay thế thuốc", href: "/safety/substitution" },
   { label: "Thuốc LASA", href: "/safety/lasa" },
   { label: "PK/PD kháng sinh", href: "/pkpd" },
   { label: "Báo cáo", href: "/reports" },

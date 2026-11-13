@@ -1,45 +1,8 @@
 {
  "source": "Bộ Y tế – Hội đồng Dược thư quốc gia Việt Nam. Dược thư quốc gia Việt Nam, lần xuất bản thứ ba (2023)",
- "extractedAt": "2026-11-12",
+ "extractedAt": "2026-11-13",
  "note": "Trích nguyên văn phần hiệu chỉnh liều ở người suy thận (mục Liều lượng và cách dùng), chống chỉ định và thận trọng liên quan chức năng thận; bảng dựng lại theo đường kẻ của trang gốc. Chưa được dược sĩ lâm sàng BV199 xác nhận.",
  "items": [
-  {
-   "id": "salbutamol-dung-trong-ho-hap",
-   "name": "Salbutamol (dùng trong hô hấp)",
-   "inn": "Salbutamol (used in pneumology)",
-   "group": "thuoc-khac",
-   "inFormulary": true,
-   "pages": {
-    "pdf": [
-     1446,
-     1449
-    ],
-    "printed": [
-     1452,
-     1455
-    ]
-   },
-   "noAdjust": true,
-   "content": [
-    {
-     "t": "p",
-     "runs": [
-      {
-       "text": "Người già, người suy gan, suy thận: ",
-       "b": true,
-       "i": true
-      },
-      {
-       "text": "Không cần hiệu chỉnh liều.",
-       "b": false,
-       "i": false
-      }
-     ]
-    }
-   ],
-   "contraindications": [],
-   "cautions": []
-  },
   {
    "id": "acarbose",
    "name": "Acarbose",
@@ -1336,7 +1299,7 @@
      "t": "p",
      "runs": [
       {
-       "text": "Hiệu chỉnh liều trên tr ẻ em suy giảm chức năng thận:",
+       "text": "Hiệu chỉnh liều trên trẻ em suy giảm chức năng thận:",
        "b": false,
        "i": true
       }
@@ -1380,7 +1343,7 @@
         "b": false
        },
        {
-        "text": "15 mg/kg m ỗ i 12 gi ờ (t ố i đa 500 mg m ỗ i 12 gi ờ ).",
+        "text": "15 mg/kg mỗi 12 giờ (tối đa 500 mg mỗi 12 giờ ).",
         "b": false
        },
        {
@@ -1394,7 +1357,7 @@
         "b": false
        },
        {
-        "text": "15 mg/kg m ỗ i 24 gi ờ (t ố i đa 500 mg m ỗ i 24 gi ờ ).",
+        "text": "15 mg/kg mỗi 24 giờ (tối đa 500 mg mỗi 24 giờ ).",
         "b": false
        },
        {
@@ -1404,7 +1367,7 @@
       ],
       [
        {
-        "text": "T hẩm tách máu",
+        "text": "Thẩm tách máu",
         "b": false
        },
        {
@@ -2003,7 +1966,7 @@
      "t": "p",
      "runs": [
       {
-       "text": "D ù ng ph ố i h ợ p v ớ i c á c thu ố c kh á c",
+       "text": "Dùng phối hợp với các thuốc khác",
        "b": false,
        "i": true
       }
@@ -2024,7 +1987,7 @@
      "t": "p",
      "runs": [
       {
-       "text": "Ở bệnh nhân dùng chất ức chế protease HIV l à nelfinavir hoặc chất ức chế protease viêm gan C l à boceprevir, điều trị bằng atorvastatin nên giới hạn tới liều 40 mg, và nên có đánh giá lâm sàng thích hợp để đảm bảo liều atorvastatin cần thiết đang dùng là thấp nhất.",
+       "text": "Ở bệnh nhân dùng chất ức chế protease HIV là nelfinavir hoặc chất ức chế protease viêm gan C là boceprevir, điều trị bằng atorvastatin nên giới hạn tới liều 40 mg, và nên có đánh giá lâm sàng thích hợp để đảm bảo liều atorvastatin cần thiết đang dùng là thấp nhất.",
        "b": false,
        "i": false
       }
@@ -2395,7 +2358,7 @@
         "b": false
        },
        {
-        "text": "200 mg/lần, 1 ngày 1 lần ho ặ c 2 ng à y 1 l ầ n.",
+        "text": "200 mg/lần, 1 ngày 1 lần hoặc 2 ngày 1 lần.",
         "b": false
        }
       ],
@@ -2409,7 +2372,7 @@
         "b": false
        },
        {
-        "text": "Không s ử d ụ ng",
+        "text": "Không sử dụng",
         "b": false
        }
       ]
@@ -8619,7 +8582,7 @@
        "i": true
       },
       {
-       "text": ": Do cơ ch ế t á c d ụ ng c ủ a thu ố c, t á c d ụ ng trên đường huyết c ủ a empagliflozin ph ụ thu ộ c v à o ch ứ c năng th ậ n.",
+       "text": ": Do cơ chế tác dụng của thuốc, tác dụng trên đường huyết của empagliflozin phụ thuộc vào chức năng thận.",
        "b": false,
        "i": false
       }
@@ -8649,7 +8612,7 @@
        "i": true
       },
       {
-       "text": "Không cần chỉnh liều ở bệnh nhân suy gan. N ồ ng đ ộ empagliflozin tăng ở nh ữ ng b ệ nh nhân suy gan n ặ ng. Kinh nghi ệ m đi ề u tr ị trên b ệ nh nhân suy gan n ặ ng c ò n h ạ n ch ế, do đ ó không khuy ế n c á o d ù ng thu ố c cho nh ó m b ệ nh nhân n à y.",
+       "text": "Không cần chỉnh liều ở bệnh nhân suy gan. Nồng độ empagliflozin tăng ở những bệnh nhân suy gan nặng. Kinh nghiệm điều trị trên bệnh nhân suy gan nặng còn hạn chế, do đó không khuyến cáo dùng thuốc cho nhóm bệnh nhân này.",
        "b": false,
        "i": false
       }
@@ -9493,7 +9456,7 @@
        "i": true
       },
       {
-       "text": "Không dùng cho người suy thận nặng (eGFR < 30 ml/ph ú t/1,73 m²). Tuy nhiên dạng 67 mg fenofibrat vi hạt chuẩn ho ặ c 100 mg d ạ ng không vi h ạ t được phép dùng cho bệnh nhân có Clcr từ 30 - 60 ml/phút. Dạng bào chế có sinh khả dụng cải tiến được phép dùng liều hàng ngày từ 30 đến 54 mg (tương đương với khoảng 67 mg fenofibrat vi hạt chuẩn) cho bệnh nhân suy thận, nhưng chống chỉ định dùng cho người suy thận nặng.",
+       "text": "Không dùng cho người suy thận nặng (eGFR < 30 ml/phút/1,73 m²). Tuy nhiên dạng 67 mg fenofibrat vi hạt chuẩn hoặc 100 mg dạng không vi hạt được phép dùng cho bệnh nhân có Clcr từ 30 - 60 ml/phút. Dạng bào chế có sinh khả dụng cải tiến được phép dùng liều hàng ngày từ 30 đến 54 mg (tương đương với khoảng 67 mg fenofibrat vi hạt chuẩn) cho bệnh nhân suy thận, nhưng chống chỉ định dùng cho người suy thận nặng.",
        "b": false,
        "i": false
       }
@@ -9501,7 +9464,7 @@
     }
    ],
    "contraindications": [
-    "Suy th ậ n n ặ ng (eGFR < 30 ml/phút/1,73 m²)."
+    "Suy thận nặng (eGFR < 30 ml/phút/1,73 m²)."
    ],
    "cautions": []
   },
@@ -17489,6 +17452,43 @@
    "cautions": []
   },
   {
+   "id": "salbutamol-dung-trong-ho-hap",
+   "name": "Salbutamol (dùng trong hô hấp)",
+   "inn": "Salbutamol (used in pneumology)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1446,
+     1449
+    ],
+    "printed": [
+     1452,
+     1455
+    ]
+   },
+   "noAdjust": true,
+   "content": [
+    {
+     "t": "p",
+     "runs": [
+      {
+       "text": "Người già, người suy gan, suy thận: ",
+       "b": true,
+       "i": true
+      },
+      {
+       "text": "Không cần hiệu chỉnh liều.",
+       "b": false,
+       "i": false
+      }
+     ]
+    }
+   ],
+   "contraindications": [],
+   "cautions": []
+  },
+  {
    "id": "salmeterol",
    "name": "Salmeterol",
    "inn": "Salmeterol",
@@ -17504,18 +17504,18 @@
      1458
     ]
    },
-   "noAdjust": false,
+   "noAdjust": true,
    "content": [
     {
      "t": "p",
      "runs": [
       {
-       "text": "Ngư ờ i cao tuổi, người suy thận ho ặ c suy gan: ",
+       "text": "Người cao tuổi, người suy thận hoặc suy gan: ",
        "b": false,
        "i": true
       },
       {
-       "text": "Không c ầ n đi ề u ch ỉ nh li ề u.",
+       "text": "Không cần điều chỉnh liều.",
        "b": false,
        "i": false
       }
@@ -17569,7 +17569,7 @@
    "cautions": []
   },
   {
-   "id": "sat-sulfat",
+   "id": "sat-ii-sulfat",
    "name": "Sắt (II) sulfat",
    "inn": "Ferrous sulfate",
    "group": "thuoc-khac",
@@ -19547,7 +19547,7 @@
    "cautions": []
   },
   {
-   "id": "tretinoin",
+   "id": "tretinoin-uong",
    "name": "Tretinoin (uống)",
    "inn": "Tretinoin (oral)",
    "group": "thuoc-khac",

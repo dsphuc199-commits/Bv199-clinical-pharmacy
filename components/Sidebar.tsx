@@ -50,6 +50,8 @@ const GROUPS: Group[] = [
       { label: "Hiệu chỉnh liều", href: "/hieu-chinh-lieu", code: "HC" },
       { label: "Tương tác thuốc", href: "/tuong-tac-thuoc", code: "TG" },
       { label: "Theo dõi nồng độ (TDM)", href: "/tdm", code: "TD" },
+      { label: "Thai kỳ & cho con bú", href: "/safety/pregnancy", code: "TK" },
+      { label: "Thay thế thuốc", href: "/safety/substitution", code: "TH" },
       { label: "Thuốc LASA", href: "/safety/lasa", code: "LA" },
     ],
   },
