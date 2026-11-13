@@ -36,6 +36,7 @@ import DrugActionLinks from "../links/DrugActionLinks";
 import { EvidencePanel } from "./EvidencePanel";
 import InternationalDoseReview from "./InternationalDoseReview";
 import SepticArthritisSeimc2024 from "./SepticArthritisSeimc2024";
+import OsteomyelitisIntl from "./OsteomyelitisIntl";
 import LungAbscessInternational from "./LungAbscessInternational";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
@@ -122,6 +123,8 @@ function RecItem({ rec }: { rec: IntlRec }) {
 export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; moduleContent?: ReactNode }) {
   if (diseaseId === "v8-9") return <LungAbscessInternational />;
   /* Viem khop nhiem khuan: cong cu chon khang sinh (GEIO–SEIMC 2024, PIDS/IDSA 2023) thay cho phan doc khuyen cao. */
+  /* Viem xuong tuy: cong cu chon khang sinh (WikiGuidelines 2022/2025 nguoi lon, PIDS/IDSA 2021 tre em). */
+  if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
   if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;
   const entry = getIntlEntry(diseaseId);
 
