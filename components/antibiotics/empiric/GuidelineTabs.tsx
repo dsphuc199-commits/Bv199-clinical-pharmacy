@@ -40,6 +40,7 @@ import OsteomyelitisIntl from "./OsteomyelitisIntl";
 import CopdGold2026 from "./CopdGold2026";
 import PneumoniaIntl from "./PneumoniaIntl";
 import LungAbscessInternational from "./LungAbscessInternational";
+import EsblIdsa2026 from "./EsblIdsa2026";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
 
@@ -129,6 +130,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   /* Dot cap COPD: cong cu chon khang sinh theo GOLD 2026. */
   /* Viem phoi: cong cu chon khang sinh (ATS/IDSA 2019 VPCD; IDSA/ATS 2016 VPBV, VPLQTM; IDSA 2026 vi khuan khang thuoc). */
   if (diseaseId === "v8-1" || diseaseId === "v8-4" || diseaseId === "v8-5") return <section className="bv199-panel gt199"><PneumoniaIntl kind={diseaseId === "v8-1" ? "cap" : diseaseId === "v8-4" ? "hap" : "vap"} /><GtStyle /></section>;
+  /* Enterobacterales sinh ESBL: cong cu chon khang sinh theo IDSA 2026 (Section 1, Table 1). */
+  if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
   if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;
