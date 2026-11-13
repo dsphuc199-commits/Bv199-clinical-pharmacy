@@ -518,17 +518,21 @@ export default function SepticArthritisSeimc2024() {
   const agents = useMemo(() => AGENTS.filter((a) => a.pop === "both" || a.pop === pop), [pop]);
   const al = allergy === "yes";
 
+  function pickSource(s: Source) {
+    if (s === "pids") { setPop("child"); setSlow(false); }
+    changeSource(s);
+  }
   function changePop(p: Pop) {
     setPop(p);
-    setSource(p === "child" ? "pids" : "seimc");
-    setCtx(p === "adult" ? "none" : "lowmrsa");
-    setAgentId("mssa");
+    setSource("seimc");
+    setCtx(p === "adult" ? "none" : "age");
+    setAgentId(p === "adult" ? "mssa" : "mssa-c");
     setSlow(false);
   }
   function changeSource(s: Source) {
     setSource(s);
-    setCtx(s === "pids" ? "lowmrsa" : "age");
-    setAgentId(s === "pids" ? "mssa" : "mssa-c");
+    setCtx(s === "pids" ? "lowmrsa" : pop === "adult" ? "none" : "age");
+    setAgentId(s === "pids" ? "mssa" : pop === "adult" ? "mssa" : "mssa-c");
   }
 
   /* ---- Ket qua ---- */
@@ -588,14 +592,16 @@ export default function SepticArthritisSeimc2024() {
         <p className="sa24-eyebrow">Lựa chọn kháng sinh theo chẩn đoán</p>
         <h3>Viêm khớp nhiễm khuẩn khớp tự nhiên</h3>
         <ol className="sa24-flow" aria-label="Trình tự lựa chọn">
-          <li>Đối tượng</li><li>Giai đoạn</li><li>Bối cảnh hoặc tác nhân</li><li>Dị ứng beta-lactam</li><li>Khởi trị → chuyển uống → thời gian</li>
+          <li>Hướng dẫn</li><li>Đối tượng</li><li>Giai đoạn</li><li>Bối cảnh hoặc tác nhân</li><li>Dị ứng beta-lactam</li><li>Kết quả: thuốc, liều, chuyển uống, thời gian</li>
         </ol>
       </header>
 
       <div className="sa24-form">
+        <Row label="Hướng dẫn">
+          <Seg label="Hướng dẫn" value={pids ? "pids" : "seimc"} onChange={pickSource} options={[{ id: "seimc", label: "GEIO–SEIMC 2024 · người lớn và trẻ em" }, { id: "pids", label: "IDSA/PIDS 2023 · trẻ 1 tháng – 17 tuổi" }] as const} />
+        </Row>
         <Row label="Đối tượng">
-          <Seg label="Đối tượng" value={pop} onChange={changePop} options={[{ id: "adult", label: "Người lớn" }, { id: "child", label: "Trẻ em" }] as const} />
-          {pop === "child" && <Seg label="Hướng dẫn" value={source} onChange={changeSource} options={[{ id: "pids", label: "PIDS/IDSA 2023 (1 tháng – 17 tuổi)" }, { id: "seimc", label: "GEIO–SEIMC 2024" }] as const} />}
+          {!pids && <Seg label="Đối tượng" value={pop} onChange={changePop} options={[{ id: "adult", label: "Người lớn" }, { id: "child", label: "Trẻ em" }] as const} />}
           {pop === "child" && (pids
             ? <Seg label="Nhóm tuổi" value={pAge} onChange={setPAge} options={PIDS_AGES} />
             : <Seg label="Nhóm tuổi" value={age} onChange={setAge} options={CHILD_AGES} />)}

@@ -121,6 +121,8 @@ function RecItem({ rec }: { rec: IntlRec }) {
 
 export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; moduleContent?: ReactNode }) {
   if (diseaseId === "v8-9") return <LungAbscessInternational />;
+  /* Viem khop nhiem khuan: cong cu chon khang sinh (GEIO–SEIMC 2024, PIDS/IDSA 2023) thay cho phan doc khuyen cao. */
+  if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;
   const entry = getIntlEntry(diseaseId);
 
   if (!entry) {
@@ -139,7 +141,6 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
     <section className="bv199-panel gt199">
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
       <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn khớp tự nhiên: GEIO–SEIMC/SEIP/SECOT 2024 cho người lớn và trẻ em; PIDS/IDSA 2023 cho trẻ từ 1 tháng đến 17 tuổi." : clinicalText(entry.scope)}</p>
-      {diseaseId === "v8-33" && <SepticArthritisSeimc2024 />}
       {/* v8-33: nhanh Gram am GEIO–SEIMC da nam trong cong cu chon khang sinh – khong lap lai. */}
       <InternationalDoseReview diseaseId={diseaseId} exclude={diseaseId === "v8-33" ? ["arthritis-seimc-adult-gramnegative"] : []} />
 
