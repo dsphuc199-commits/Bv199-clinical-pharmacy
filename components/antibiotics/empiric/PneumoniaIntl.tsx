@@ -3,8 +3,8 @@
    kind "cap": ATS/IDSA 2019 + Lo trinh IDSA; "hap" | "vap": IDSA/ATS 2016 + IDSA 2026 (vi khuan Gram am khang thuoc). */
 import { useState } from "react";
 import {
-  CAP_DIAG, CAP_DURATION, CAP_MAJOR, CAP_MINOR, CAP_SPECIAL, HV_COURSE, PATHOGENS,
-  capPlans, hvDiagnosis, hvGrades, hvPlan, type Plan,
+  CAP_DIAG, CAP_MAJOR, CAP_MINOR, HV_COURSE, PATHOGENS,
+  capDuration, capPlans, capSpecial, capVirus, hvDiagnosis, hvGrades, hvPlan, type Plan,
 } from "./pneumonia-intl";
 import { Grade, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
 
@@ -69,11 +69,15 @@ function CapTool({ al }: { al: boolean }) {
   const [localPa, setLocalPa] = useState(false);
   const [nasalPcr, setNasalPcr] = useState(false);
   const [noMacFq, setNoMacFq] = useState(false);
+  const [virus, setVirus] = useState(false);
   const nMaj = major.filter(Boolean).length;
   const nMin = minor.filter(Boolean).length;
   const severe = setting === "in" && (nMaj >= 1 || nMin >= 3);
   const o = capPlans({ setting, severe, comorb, macLow, mrsaPrior, paPrior, recentHosp, localMrsa, localPa, nasalPcr, noMacFq });
   const plans = filterPlans(o.plans, al);
+  const ctx = { setting, severe, comorb, virus };
+  const vr = capVirus(ctx);
+  const noAbx = virus && !vr.abx;
   const extra = [o.mrsa, o.pa].filter((x): x is Plan => !!x).map((p) => filterPlans([p], al)[0] ?? { ...p, blocks: [] });
   const toggle = (arr: boolean[], set: (v: boolean[]) => void, k: number) => set(arr.map((x, j) => (j === k ? !x : x)));
   const dx = setting === "out"
@@ -106,23 +110,25 @@ function CapTool({ al }: { al: boolean }) {
             {!severe && <Row label="Chống chỉ định"><Chk on={noMacFq} set={setNoMacFq}>Chống chỉ định cả macrolid và fluoroquinolon</Chk></Row>}
           </>
         )}
+        <Row label="Virus hô hấp"><Chk on={virus} set={setVirus}>Xét nghiệm virus hô hấp dương tính (cúm, RSV hoặc virus khác)</Chk></Row>
       </div>
       <section className="sa24-out" aria-live="polite">
         <div className="sa24-dx">
           <p><b>Chẩn đoán</b> {dx}</p>
-          <p><b>Phác đồ</b> {o.headline}</p>
-          <p><b>Hướng dẫn</b> ATS/IDSA 2019; Lộ trình lâm sàng IDSA</p>
+          <p><b>Phác đồ</b> {noAbx ? "Đề nghị không kê kháng sinh kinh nghiệm; chỉ dùng phác đồ dưới đây khi nghi đồng nhiễm vi khuẩn." : o.headline}</p>
+          <p><b>Hướng dẫn</b> ATS/IDSA 2019; ATS 2025; Lộ trình lâm sàng IDSA</p>
         </div>
         <Legend rows={[...L_GRADE, L_PW]} />
-        <h4>Kháng sinh kinh nghiệm</h4>
+        {virus && (<><h4>Xét nghiệm virus hô hấp dương tính</h4><Rx items={vr.items} /></>)}
+        <h4>{noAbx ? "Kháng sinh kinh nghiệm – chỉ khi nghi đồng nhiễm vi khuẩn" : "Kháng sinh kinh nghiệm"}</h4>
         {al && <p className="sa24-warn">Dị ứng penicilin nhẹ – vừa thường dung nạp beta-lactam không phải penicilin; phản ứng tức thì có thể dung nạp cephalosporin thế hệ 3–4 hoặc carbapenem; tránh mọi beta-lactam khi từng có hội chứng Stevens-Johnson hoặc hoại tử thượng bì nhiễm độc (Lộ trình IDSA).</p>}
         {plans.length ? <Plans plans={plans} /> : <p className="sa24-warn">Hướng dẫn không nêu phác đồ thay thế cho người dị ứng beta-lactam ở tình huống này – đánh giá loại, mức độ dị ứng trước khi chọn thuốc.</p>}
         {o.notes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
         {extra.length > 0 && (<><h4>Điều chỉnh theo nguy cơ MRSA, P. aeruginosa</h4>{extra.map((p) => <PlanCard key={p.title} p={p} />)}</>)}
         <h4>Tình huống đặc biệt</h4>
-        <Rx items={CAP_SPECIAL} />
-        <h4>Thời gian điều trị và chuyển đường uống</h4>
-        <Rx items={CAP_DURATION} />
+        <Rx items={capSpecial(ctx)} />
+        <h4>{setting === "in" ? "Thời gian điều trị và chuyển đường uống" : "Thời gian điều trị"}</h4>
+        <Rx items={capDuration(ctx)} />
       </section>
       <details className="sa24-more"><summary>Xét nghiệm vi sinh và đánh giá mức độ nặng</summary><Rx items={CAP_DIAG} /></details>
     </>
@@ -223,7 +229,7 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
 
 const TITLE: Record<Kind, string> = { cap: "Viêm phổi cộng đồng – người lớn", hap: "Viêm phổi bệnh viện – người lớn", vap: "Viêm phổi liên quan thở máy – người lớn" };
 const SRC: Record<Kind, string> = {
-  cap: "ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn (Am J Respir Crit Care Med 2019;200:e45–e67); IDSA – Lộ trình lâm sàng viêm phổi cộng đồng",
+  cap: "ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn (Am J Respir Crit Care Med 2019;200:e45–e67); ATS 2025 – cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (Am J Respir Crit Care Med 2026;212:24–44; IDSA chưa thông qua); IDSA – Lộ trình lâm sàng viêm phổi cộng đồng",
   hap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
   vap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
 };

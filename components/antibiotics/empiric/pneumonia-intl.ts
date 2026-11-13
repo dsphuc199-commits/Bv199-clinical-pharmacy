@@ -1,6 +1,8 @@
 /*
   Viem phoi – du lieu cong cu chon khang sinh theo nguon quoc te (nguoi lon, mien dich binh thuong).
   - VPCD: ATS/IDSA 2019 (Metlay JP et al. Am J Respir Crit Care Med 2019;200:e45–e67), Bang 1, 3, 4; Q1–Q16.
+    Cap nhat ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 2026;212:24–44): sieu am phoi, virus duong tinh,
+    thoi gian khang sinh, corticoid – thay khuyen cao 2019 tuong ung (Q12, Q14, Q15).
     Bo sung thuc hanh: IDSA CAP Clinical Pathway (dau ‡ trong ban goc) -> grade "PW".
   - VPBV/VPLQTM: IDSA/ATS 2016 (Kalil AC et al. Clin Infect Dis 2016;63:e61–e111), Bang 2–4; muc I–XXV.
   - Dieu tri dich vi khuan Gram am khang thuoc: IDSA 2026 AMR Guidance (Tamma PD et al. Clin Infect Dis 2026, ciag481),
@@ -145,30 +147,75 @@ export function capPlans(i: CapIn): CapOut {
   return { headline, plans, mrsa, pa, notes };
 }
 
+/* ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 2026;212:24–44) cap nhat 4 cau hoi: sieu am phoi (Q1),
+   khang sinh khi xet nghiem virus ho hap duong tinh (Q2), thoi gian khang sinh (Q3), corticoid (Q4).
+   Phac do khang sinh van theo ATS/IDSA 2019 (ATS 2025 dan chieu lai). ref "A25 Qn" = ATS 2025. */
+export type CapCtx = { setting: "out" | "in"; severe: boolean; comorb: boolean; virus: boolean };
+
 export const CAP_DIAG: RxItem[] = [
+  { role: "Chẩn đoán hình ảnh", text: "Siêu âm phổi là lựa chọn thay thế chấp nhận được cho X-quang ngực, tại nơi có chuyên môn phù hợp (người thực hiện được đào tạo và đánh giá năng lực, quy trình chuẩn, lưu hình ảnh và báo cáo). Cân nhắc X-quang hoặc CT khi nghi chẩn đoán khác (thuyên tắc phổi, u) hoặc siêu âm khó thực hiện (béo phì, dẫn lưu, sẹo, vết thương).", grade: "C-L", ref: "A25 Q1; Bảng 4" },
   { role: "Nơi điều trị", text: "Dùng thang điểm tiên lượng kèm đánh giá lâm sàng: ưu tiên PSI (Mạnh · TB) hơn CURB-65 (Có ĐK · thấp).", grade: "S-M", ref: "Q6" },
   { role: "Vào ICU trực tiếp", text: "Tụt huyết áp cần vận mạch hoặc suy hô hấp cần thở máy.", grade: "S-L", ref: "Q7" },
   { role: "Nhuộm Gram, cấy đờm và cấy máu", text: "Ngoại trú: không làm thường quy (Mạnh · rất thấp). Nội trú: làm trước kháng sinh khi viêm phổi nặng, khi phủ MRSA/P. aeruginosa theo kinh nghiệm (Mạnh · rất thấp), từng nhiễm MRSA/P. aeruginosa hoặc nhập viện + kháng sinh tiêm trong 90 ngày (Có ĐK · rất thấp).", grade: "S-VL", ref: "Q1–Q2" },
   { role: "Kháng nguyên niệu", text: "Phế cầu và Legionella: không làm thường quy, trừ viêm phổi nặng hoặc yếu tố dịch tễ Legionella.", grade: "C-L", ref: "Q3" },
   { role: "Cúm", text: "Khi cúm lưu hành: xét nghiệm sinh học phân tử nhanh, ưu tiên hơn test kháng nguyên.", grade: "S-M", ref: "Q4" },
-  { role: "Procalcitonin", text: "Bắt đầu kháng sinh khi nghi lâm sàng và có xác nhận X-quang, bất kể procalcitonin ban đầu.", grade: "S-M", ref: "Q5" },
+  { role: "Virus hô hấp khác", text: "Quyết định xét nghiệm theo lâm sàng và dịch tễ tại chỗ.", ref: "A25 Q2" },
+  { role: "Procalcitonin", text: "Bắt đầu kháng sinh khi nghi lâm sàng và có xác nhận trên hình ảnh, bất kể procalcitonin ban đầu.", grade: "S-M", ref: "Q5" },
 ];
-export const CAP_SPECIAL: RxItem[] = [
-  { role: "Nghi viêm phổi hít", text: "Không thêm thường quy thuốc phủ kỵ khí, trừ khi nghi áp xe phổi hoặc mủ màng phổi.", grade: "C-VL", ref: "Q10" },
-  { role: "Cúm dương tính – nội trú", text: "Dùng thuốc kháng cúm (oseltamivir) bất kể thời gian khởi bệnh.", grade: "S-M", ref: "Q13" },
-  { role: "Cúm dương tính – ngoại trú", text: "Đề nghị dùng thuốc kháng cúm bất kể thời gian khởi bệnh.", grade: "C-L", ref: "Q13" },
-  { role: "Cúm dương tính – kháng sinh", text: "Vẫn dùng kháng sinh chuẩn ban đầu; có thể ngừng sớm sau 48–72 giờ nếu không có bằng chứng vi khuẩn (kể cả procalcitonin thấp) và ổn định sớm.", grade: "S-L", ref: "Q14" },
-  { role: "Corticoid", text: "Không dùng thường quy: viêm phổi không nặng (Mạnh · cao), viêm phổi nặng (Có ĐK · TB), viêm phổi cúm nặng (Có ĐK · thấp). Sốc nhiễm khuẩn kháng trị: theo Surviving Sepsis Campaign.", grade: "S-H", ref: "Q12" },
-];
-export const CAP_DURATION: RxItem[] = [
-  { role: "Thời gian", text: "Theo tiêu chuẩn ổn định lâm sàng; tiếp tục đến khi ổn định và tổng không dưới 5 ngày.", grade: "S-M", ref: "Q15" },
-  { role: "Tiêu chuẩn ổn định", text: "Nhiệt độ ≤ 38 °C; mạch ≤ 100 lần/phút; nhịp thở ≤ 24 lần/phút; SaO₂ ≥ 90% hoặc PaO₂ > 60 mmHg; tri giác về nền; HA tâm thu ≥ 90 mmHg; ăn uống được.", grade: "PW", ref: "Pathway Bảng 5" },
-  { role: "MRSA hoặc P. aeruginosa (nghi ngờ hoặc xác định)", text: "7 ngày.", ref: "Q15 cơ sở" },
-  { role: "Kéo dài hơn", text: "Biến chứng viêm màng não, viêm nội tâm mạc, nhiễm khuẩn sâu; tác nhân ít gặp (Burkholderia pseudomallei, lao, nấm lưu hành). Không ổn định sau 5 ngày: tìm vi khuẩn kháng thuốc, mủ màng phổi, áp xe phổi, ổ nhiễm khác.", ref: "Q15" },
-  { role: "Chuyển uống", text: "Dùng cùng thuốc hoặc cùng nhóm. Không yếu tố nguy cơ đa kháng: amoxicilin-acid clavulanic 500/125 mg × 3 lần/ngày hoặc 875–2.000/125 mg × 2 lần/ngày, cefpodoxim 200 mg × 2 lần/ngày, cefuroxim 500 mg × 2 lần/ngày. Có yếu tố nguy cơ đa kháng: levofloxacin 750 mg/ngày.", grade: "PW", ref: "Q15; Pathway Bảng 5" },
-  { role: "Ổn định từ ngày 3", text: "Cân nhắc tổng 3–5 ngày (tại cấp cứu và nội trú). Azithromycin: ngừng sau tổng 1.500 mg nếu Legionella âm tính.", grade: "PW", ref: "Pathway Bảng 5" },
-  { role: "Chụp phim kiểm tra", text: "Không chụp thường quy khi hết triệu chứng trong 5–7 ngày.", grade: "C-L", ref: "Q16" },
-];
+
+/* Bang 5 – benh dong mac > 50% thanh vien hoi dong dong y nen dung khang sinh khi virus duong tinh (ngoai tru). */
+export const VIRUS_COMORB = "Bệnh phổi mạn trừ hen (COPD, giãn phế quản, bệnh phổi kẽ); bệnh gan giai đoạn cuối; bệnh thận giai đoạn cuối (MLCT < 15 mL/phút trên 3 tháng); bệnh tim mạch (suy tim, bệnh mạch vành, tăng huyết áp kiểm soát kém); nghiện rượu; bệnh ung thư không đang hóa trị ức chế miễn dịch";
+
+export function capVirus(c: CapCtx): { abx: boolean; items: RxItem[] } {
+  const out: RxItem[] = [];
+  let abx = true;
+  if (c.setting === "out" && !c.comorb) {
+    abx = false;
+    out.push({ role: "Ngoại trú, không bệnh đồng mắc", text: "Đề nghị không kê kháng sinh kinh nghiệm.", grade: "C-VL", ref: "A25 Q2" });
+    out.push({ role: "Vẫn cân nhắc kháng sinh khi", text: "Nghi đồng nhiễm vi khuẩn (khởi bệnh kéo dài, bệnh nặng lên lần hai sau giai đoạn cải thiện, đờm mủ, dấu ấn viêm tăng, đông đặc trên phim, loại virus hay đồng nhiễm vi khuẩn, phơi nhiễm Mycoplasma pneumoniae); nguy cơ cao nếu bỏ sót (người cao tuổi, có thai, dấu hiệu bệnh nặng hơn); khó theo dõi, tái khám.", ref: "A25 Bảng 1" });
+    out.push({ role: "Khi không kê kháng sinh", text: "Theo dõi sát, hẹn tái khám, dặn rõ dấu hiệu cần quay lại (sốt, mạch nhanh, khó thở, lú lẫn).", ref: "A25 Patient input" });
+  } else if (c.setting === "out") {
+    out.push({ role: "Ngoại trú, có bệnh đồng mắc", text: "Đề nghị kê kháng sinh kinh nghiệm do lo ngại đồng nhiễm vi khuẩn – virus.", grade: "C-VL", ref: "A25 Q2" });
+    out.push({ role: "Bệnh đồng mắc được đa số hội đồng đồng thuận", text: `${VIRUS_COMORB}.`, ref: "A25 Bảng 5" });
+  } else {
+    out.push({ role: c.severe ? "Nội trú, viêm phổi nặng" : "Nội trú, viêm phổi không nặng", text: "Đề nghị dùng kháng sinh kinh nghiệm do lo ngại đồng nhiễm vi khuẩn – virus.", grade: "C-VL", ref: "A25 Q2" });
+  }
+  if (abx) out.push({ role: "Sau khi bắt đầu", text: "Đánh giá hằng ngày ổn định lâm sàng và kết quả vi sinh để xuống thang hoặc ngừng sớm. Chưa có dấu ấn sinh học (kể cả procalcitonin) đủ tin cậy để loại trừ đồng nhiễm vi khuẩn.", ref: "A25 Q2" });
+  out.push({ role: "Cúm dương tính – thuốc kháng virus", text: c.setting === "in" ? "Dùng thuốc kháng cúm (oseltamivir) bất kể thời gian khởi bệnh." : "Đề nghị dùng thuốc kháng cúm bất kể thời gian khởi bệnh.", grade: c.setting === "in" ? "S-M" : "C-L", ref: "Q13" });
+  return { abx, items: out };
+}
+
+export function capSpecial(c: CapCtx): RxItem[] {
+  const out: RxItem[] = [
+    { role: "Nghi viêm phổi hít", text: "Không thêm thường quy thuốc phủ kỵ khí, trừ khi nghi áp xe phổi hoặc mủ màng phổi.", grade: "C-VL", ref: "Q10" },
+  ];
+  if (c.setting === "in" && !c.severe) {
+    out.push({ role: "Corticoid toàn thân", text: "Không dùng, trừ khi có chỉ định khác (đợt cấp COPD, hen, nghi viêm phổi do Pneumocystis).", grade: "S-L", ref: "A25 Q4" });
+  } else if (c.setting === "in") {
+    out.push({ role: "Corticoid toàn thân", text: "Đề nghị dùng. Không áp dụng cho viêm phổi nặng do cúm.", grade: "C-L", ref: "A25 Q4" });
+    out.push({ role: "Lợi ích nhiều hơn khi", text: "Dùng sớm (trong 24 giờ từ khi đủ tiêu chuẩn nặng); khởi bệnh gần; nằm ICU; suy hô hấp (PaO₂/FiO₂ < 300); dấu ấn viêm tăng (CRP, IL-6).", ref: "A25 Bảng 1" });
+    out.push({ role: "Cân nhắc không dùng khi", text: "Cúm, Aspergillus, đái tháo đường không kiểm soát, xuất huyết tiêu hóa gần đây; có thai; đã quá 72 giờ từ khi viêm phổi nặng; không suy hô hấp; dấu ấn viêm bình thường hoặc thấp.", ref: "A25 Bảng 1" });
+    out.push({ role: "Thuốc, liều", text: "Hướng dẫn chưa khuyến cáo loại thuốc và thời gian. Thử nghiệm có kết quả rõ nhất (Dequin 2023): hydrocortison 200 mg/ngày truyền tĩnh mạch liên tục 4 hoặc 7 ngày tùy cải thiện lâm sàng, sau đó giảm liều, tổng 8 hoặc 14 ngày; ngừng khi ra ICU nếu cải thiện nhanh.", ref: "A25 Q4" });
+  }
+  return out;
+}
+
+export function capDuration(c: CapCtx): RxItem[] {
+  const out: RxItem[] = [];
+  if (c.setting === "in" && c.severe) {
+    out.push({ role: "Viêm phổi nặng, đã ổn định lâm sàng", text: "Từ 5 ngày trở lên, không dùng dưới 5 ngày.", grade: "S-L", ref: "A25 Q3" });
+  } else {
+    out.push({ role: c.setting === "out" ? "Ngoại trú, đã ổn định lâm sàng" : "Nội trú không nặng, đã ổn định lâm sàng", text: "Dưới 5 ngày (tối thiểu 3 ngày) thay vì từ 5 ngày trở lên. Quyết định hằng ngày theo đáp ứng, không ấn định từ đầu" + (c.setting === "in" ? "; hơn một nửa người bệnh nội trú không phù hợp đợt ngắn." : "."), grade: "C-L", ref: "A25 Q3" });
+    out.push({ role: "Không rút ngắn khi", text: "S. aureus, P. aeruginosa, nghi Legionella hoặc vi khuẩn nội bào khác; biến chứng (mủ màng phổi, tràn dịch cận viêm phổi, áp xe, hoại tử, nhiễm khuẩn huyết, nhiễm khuẩn ngoài phổi); bệnh phổi nền (giãn phế quản, viêm phổi sau tắc nghẽn, suy hô hấp hoặc giảm oxy máu mạn); có thai; mới dùng kháng sinh; mới nằm viện hoặc sống tại cơ sở chăm sóc dài hạn" + (c.setting === "out" ? "; tổn thương lan rộng, đông đặc dày trên phim; khó tự theo dõi, tái khám." : "."), ref: "A25 Bảng 1" });
+  }
+  out.push({ role: "Tiêu chuẩn ổn định lâm sàng", text: "Nhiệt độ ≤ 37,8 °C; mạch < 100 lần/phút; nhịp thở < 24 lần/phút; SpO₂ ≥ 90% hoặc PaO₂ ≥ 60 mmHg khí trời (hoặc nhu cầu oxy nền); HA tâm thu ≥ 90 mmHg; tri giác bình thường. Đánh giá hằng ngày.", ref: "A25 Bảng 6" });
+  out.push({ role: "Tính số ngày hiệu dụng", text: "Theo dược động học và chức năng gan, thận – nhất là macrolid (thời gian bán thải khoảng 3 ngày): azithromycin 500 mg × 3 ngày tương đương khoảng 5 ngày điều trị.", ref: "A25 Q3" });
+  out.push({ role: "MRSA hoặc P. aeruginosa (nghi ngờ hoặc xác định)", text: "7 ngày.", ref: "Q15 cơ sở" });
+  out.push({ role: "Kéo dài hơn", text: "Biến chứng viêm màng não, viêm nội tâm mạc, nhiễm khuẩn sâu; tác nhân ít gặp (Burkholderia pseudomallei, lao, nấm lưu hành). Không ổn định sau 5 ngày: tìm vi khuẩn kháng thuốc, mủ màng phổi, áp xe phổi, ổ nhiễm khác.", ref: "Q15" });
+  if (c.setting === "in") out.push({ role: "Chuyển uống", text: "Dùng cùng thuốc hoặc cùng nhóm. Không yếu tố nguy cơ đa kháng: amoxicilin-acid clavulanic 500/125 mg × 3 lần/ngày hoặc 875–2.000/125 mg × 2 lần/ngày, cefpodoxim 200 mg × 2 lần/ngày, cefuroxim 500 mg × 2 lần/ngày. Có yếu tố nguy cơ đa kháng: levofloxacin 750 mg/ngày.", grade: "PW", ref: "Q15; Pathway Bảng 5" });
+  out.push({ role: "Chụp phim kiểm tra", text: "Không chụp thường quy khi hết triệu chứng trong 5–7 ngày.", grade: "C-L", ref: "Q16" });
+  return out;
+}
 
 /* ======================= VPBV / VPLQTM (IDSA/ATS 2016) ======================= */
 export const HV_DOSE = {
