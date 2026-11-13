@@ -35,6 +35,7 @@ import { SOURCE_ROLE_TEXT, sourceRole, confirmedLifecycle } from "@/lib/antibiot
 import DrugActionLinks from "../links/DrugActionLinks";
 import { EvidencePanel } from "./EvidencePanel";
 import InternationalDoseReview from "./InternationalDoseReview";
+import SepticArthritisSeimc2024 from "./SepticArthritisSeimc2024";
 import LungAbscessInternational from "./LungAbscessInternational";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
@@ -137,7 +138,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   return (
     <section className="bv199-panel gt199">
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
-      <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn: hướng dẫn PIDS/IDSA cho trẻ từ 1 tháng đến 17 tuổi; nhánh Gram âm ở người lớn theo GEIO–SEIMC/SEIP/SECOT." : clinicalText(entry.scope)}</p>
+      <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn khớp tự nhiên: GEIO–SEIMC/SEIP/SECOT 2024 cho người lớn và trẻ em; PIDS/IDSA 2023 cho trẻ từ 1 tháng đến 17 tuổi." : clinicalText(entry.scope)}</p>
+      {diseaseId === "v8-33" && <SepticArthritisSeimc2024 />}
       <InternationalDoseReview diseaseId={diseaseId} />
 
       {entry.guidelineIds.map((gid) => {
