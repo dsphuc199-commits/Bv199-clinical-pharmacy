@@ -38,6 +38,7 @@ import InternationalDoseReview from "./InternationalDoseReview";
 import SepticArthritisSeimc2024 from "./SepticArthritisSeimc2024";
 import OsteomyelitisIntl from "./OsteomyelitisIntl";
 import CopdGold2026 from "./CopdGold2026";
+import PneumoniaIntl from "./PneumoniaIntl";
 import LungAbscessInternational from "./LungAbscessInternational";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
@@ -126,6 +127,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   /* Viem khop nhiem khuan: cong cu chon khang sinh (GEIO–SEIMC 2024, PIDS/IDSA 2023) thay cho phan doc khuyen cao. */
   /* Viem xuong tuy: cong cu chon khang sinh (WikiGuidelines 2022/2025 nguoi lon, PIDS/IDSA 2021 tre em). */
   /* Dot cap COPD: cong cu chon khang sinh theo GOLD 2026. */
+  /* Viem phoi: cong cu chon khang sinh (ATS/IDSA 2019 VPCD; IDSA/ATS 2016 VPBV, VPLQTM; IDSA 2026 vi khuan khang thuoc). */
+  if (diseaseId === "v8-1" || diseaseId === "v8-4" || diseaseId === "v8-5") return <section className="bv199-panel gt199"><PneumoniaIntl kind={diseaseId === "v8-1" ? "cap" : diseaseId === "v8-4" ? "hap" : "vap"} /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
   if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;

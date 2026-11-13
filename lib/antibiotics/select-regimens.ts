@@ -169,7 +169,7 @@ function selectHap(ctx: PatientContext): SelectionResult {
   } else {
     scenarioId = "hap-low";
     reason =
-      "HAP không nặng, không nguy cơ đa kháng → nhánh 'Không nặng – không nguy cơ đa kháng' (Bảng 3.1, cột 1).";
+      "HAP không nặng, không nguy cơ đa kháng → nhánh 'Không nặng – không nguy cơ đa kháng' .";
   }
 
   return {

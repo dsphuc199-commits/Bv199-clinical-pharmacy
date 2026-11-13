@@ -212,13 +212,13 @@ const HAP: Scenario[] = [
     id: "hap-low",
     title: "Không nặng – không nguy cơ đa kháng",
     description:
-      "Cột 1 của Bảng 3.1: một trong những lựa chọn sau, đơn trị liệu với một kháng sinh có tác dụng trên Pseudomonas aeruginosa.",
+      "Viêm phổi bệnh viện không nặng, không có yếu tố nguy cơ đa kháng: đơn trị bằng một kháng sinh có tác dụng trên Pseudomonas aeruginosa – chọn một trong năm thuốc dưới đây, các lựa chọn ngang hàng.",
     regimens: [
       {
         id: "hap-pip",
         name: "Piperacillin/tazobactam đơn trị",
         drugs: [DRUGS.piptazo],
-        indication: "Một trong năm lựa chọn đơn trị của cột 1.",
+        indication: "",
         notes: [
           "Đối chiếu tình hình nhạy cảm Pseudomonas tại bệnh viện.",
         ],
@@ -228,7 +228,7 @@ const HAP: Scenario[] = [
         id: "hap-cef",
         name: "Cefepim đơn trị",
         drugs: [DRUGS.cefepime],
-        indication: "Một trong năm lựa chọn đơn trị của cột 1.",
+        indication: "",
         notes: ["Theo dõi chức năng thận và độc tính thần kinh."],
         source: HAP_SRC,
       },
@@ -236,7 +236,7 @@ const HAP: Scenario[] = [
         id: "hap-levo",
         name: "Levofloxacin đơn trị",
         drugs: [DRUGS.levoHap],
-        indication: "Một trong năm lựa chọn đơn trị của cột 1.",
+        indication: "",
         notes: [
           "Kiểm tra QT, ADR, tương tác và tỷ lệ nhạy cảm tại đơn vị.",
         ],
@@ -246,7 +246,7 @@ const HAP: Scenario[] = [
         id: "hap-imi",
         name: "Imipenem/cilastatin đơn trị",
         drugs: [DRUGS.imipenemStd],
-        indication: "Một trong năm lựa chọn đơn trị của cột 1.",
+        indication: "",
         notes: [
           "Không sử dụng carbapenem mặc định cho mọi HAP nguy cơ thấp; cân nhắc theo dịch tễ và nhạy cảm tại đơn vị.",
         ],
@@ -256,9 +256,9 @@ const HAP: Scenario[] = [
         id: "hap-mero",
         name: "Meropenem đơn trị",
         drugs: [DRUGS.meropenemStd],
-        indication: "Một trong năm lựa chọn đơn trị của cột 1.",
+        indication: "",
         notes: [
-          "Liều ở cột này (1 g mỗi 8 giờ) khác liều cột nặng/nguy cơ đa kháng (1–2 g mỗi 8 giờ).",
+          "Liều cho viêm phổi không nặng là 1 g mỗi 8 giờ; viêm phổi nặng hoặc có nguy cơ đa kháng dùng 1–2 g mỗi 8 giờ.",
           "Không sử dụng carbapenem mặc định cho mọi HAP nguy cơ thấp.",
         ],
         source: HAP_SRC,
@@ -269,7 +269,7 @@ const HAP: Scenario[] = [
     id: "hap-mdr",
     title: "Nặng hoặc có nguy cơ đa kháng",
     description:
-      "Cột 2 của Bảng 3.1: hai trong các lựa chọn sau, tránh dùng 2 beta-lactam. Có thể xem xét thêm thuốc chống MRSA.",
+      "Viêm phổi bệnh viện nặng hoặc có yếu tố nguy cơ đa kháng: phối hợp hai kháng sinh có tác dụng trên P. aeruginosa thuộc hai nhóm khác nhau, không dùng hai beta-lactam cùng lúc; cân nhắc thêm thuốc chống MRSA khi có nguy cơ.",
     pool: [
       {
         title: "Nhóm beta-lactam (chọn tối đa một)",
@@ -299,7 +299,7 @@ const HAP: Scenario[] = [
         name: "Cefepim + levofloxacin",
         drugs: [DRUGS.cefepimeSevere, DRUGS.levoHap],
         indication:
-          "Ví dụ: một beta-lactam + một fluoroquinolon, theo quy tắc hai trong các lựa chọn.",
+          "Beta-lactam kháng Pseudomonas + fluoroquinolon.",
         notes: [
           "Kiểm tra tỷ lệ nhạy cảm của cả hai thuốc.",
           "Không duy trì phối hợp kéo dài khi có thể xuống thang.",
@@ -311,9 +311,9 @@ const HAP: Scenario[] = [
         name: "Piperacillin/tazobactam + ciprofloxacin",
         drugs: [DRUGS.piptazoSevere, DRUGS.cipro],
         indication:
-          "Ví dụ: một beta-lactam + một fluoroquinolon khác.",
+          "Beta-lactam kháng Pseudomonas + fluoroquinolon.",
         notes: [
-          "Bảng không xếp hạng ưu tiên giữa các phác đồ.",
+          "Hướng dẫn không xếp thứ tự ưu tiên giữa các phác đồ phối hợp.",
         ],
         source: HAP_SRC,
       },
@@ -322,7 +322,7 @@ const HAP: Scenario[] = [
         name: "Meropenem + amikacin",
         drugs: [DRUGS.meropenemSevere, DRUGS.amikacin],
         indication:
-          "Ví dụ: một beta-lactam + một aminoglycosid.",
+          "Beta-lactam kháng Pseudomonas + aminoglycosid.",
         notes: [
           "Aminoglycosid cần cá thể hóa bằng TDM, không dùng đơn độc.",
           "Đánh giá xuống thang sớm theo cấy và AST.",
@@ -335,14 +335,14 @@ const HAP: Scenario[] = [
     id: "hap-mrsa",
     title: "Không nặng nhưng có nguy cơ MRSA",
     description:
-      "Cột 3 của Bảng 3.1: một thuốc Gram âm nền (một trong các lựa chọn) kết hợp một thuốc chống MRSA (vancomycin, teicoplanin hoặc linezolid).",
+      "Viêm phổi bệnh viện không nặng nhưng có yếu tố nguy cơ MRSA: một kháng sinh có tác dụng trên Gram âm và P. aeruginosa, phối hợp một thuốc chống MRSA (vancomycin, teicoplanin hoặc linezolid).",
     regimens: [
       {
         id: "hap-cef-vanco",
         name: "Cefepim + vancomycin",
         drugs: [DRUGS.cefepime, DRUGS.vancomycin],
         indication:
-          "Ví dụ: thuốc Gram âm nền + glycopeptid.",
+          "Kháng sinh Gram âm + glycopeptid.",
         notes: [
           "Vancomycin không thay thế bao phủ Gram âm của cefepim.",
           "Kiểm tra nguy cơ và kết quả MRSA trước khi duy trì.",
@@ -354,7 +354,7 @@ const HAP: Scenario[] = [
         name: "Piperacillin/tazobactam + linezolid",
         drugs: [DRUGS.piptazo, DRUGS.linezolid],
         indication:
-          "Ví dụ: thuốc Gram âm nền + oxazolidinon.",
+          "Kháng sinh Gram âm + oxazolidinon.",
         notes: [
           "Không mặc định dùng đồng thời linezolid và vancomycin.",
         ],
@@ -365,7 +365,7 @@ const HAP: Scenario[] = [
         name: "Piperacillin/tazobactam + teicoplanin",
         drugs: [DRUGS.piptazo, DRUGS.teicoplanin],
         indication:
-          "Ví dụ: thuốc Gram âm nền + glycopeptid khác.",
+          "Kháng sinh Gram âm + teicoplanin.",
         notes: [
           "Chọn một thuốc chống MRSA, không phối hợp vancomycin với teicoplanin.",
         ],
@@ -377,7 +377,7 @@ const HAP: Scenario[] = [
     id: "hap-mdr-mrsa",
     title: "Nặng/nguy cơ đa kháng + xem xét chống MRSA",
     description:
-      "Cột 2 của Bảng 3.1 có dòng 'xem xét kết hợp' vancomycin, teicoplanin hoặc linezolid. Chỉ cân nhắc khi cùng lúc cần hai thuốc Gram âm và nguy cơ MRSA.",
+      "Viêm phổi bệnh viện nặng hoặc có nguy cơ đa kháng, kèm nguy cơ MRSA: phối hợp hai kháng sinh Gram âm khác nhóm và thêm một thuốc chống MRSA (vancomycin, teicoplanin hoặc linezolid).",
     regimens: [
       {
         id: "hap-mdr-mrsa-ex",
@@ -410,7 +410,7 @@ const VAP: Scenario[] = [
         id: "vap-pip",
         name: "Piperacillin/tazobactam đơn trị",
         drugs: [DRUGS.piptazo],
-        indication: "Thuốc nhóm B (penicillin kháng Pseudomonas).",
+        indication: "Penicilin kháng Pseudomonas.",
         notes: [
           "Chỉ khi đủ dữ liệu nhạy cảm của đơn vị; không đơn trị chỉ vì chưa có kết quả cấy.",
           "Đánh giá riêng nguy cơ MRSA.",
@@ -421,7 +421,7 @@ const VAP: Scenario[] = [
         id: "vap-cef",
         name: "Cefepim đơn trị",
         drugs: [DRUGS.cefepime],
-        indication: "Thuốc nhóm B (cephalosporin).",
+        indication: "Cephalosporin kháng Pseudomonas.",
         notes: ["Đối chiếu nhạy cảm Pseudomonas của đơn vị."],
         source: VAP_SRC,
       },
@@ -429,7 +429,7 @@ const VAP: Scenario[] = [
         id: "vap-caz",
         name: "Ceftazidim đơn trị",
         drugs: [DRUGS.ceftazidime],
-        indication: "Thuốc nhóm B (cephalosporin).",
+        indication: "Cephalosporin kháng Pseudomonas.",
         notes: ["Đối chiếu nhạy cảm Pseudomonas của đơn vị."],
         source: VAP_SRC,
       },
@@ -437,7 +437,7 @@ const VAP: Scenario[] = [
         id: "vap-imi",
         name: "Imipenem/cilastatin đơn trị – có điều kiện",
         drugs: [DRUGS.imipenemSevere],
-        indication: "Thuốc nhóm B (carbapenem).",
+        indication: "Carbapenem.",
         notes: [
           "Không sử dụng carbapenem mặc định cho mọi VPLQTM.",
         ],
@@ -447,7 +447,7 @@ const VAP: Scenario[] = [
         id: "vap-mero",
         name: "Meropenem đơn trị – có điều kiện",
         drugs: [DRUGS.meropenemSevere],
-        indication: "Thuốc nhóm B (carbapenem).",
+        indication: "Carbapenem.",
         notes: [
           "Không sử dụng carbapenem mặc định cho mọi VPLQTM.",
         ],
@@ -462,7 +462,7 @@ const VAP: Scenario[] = [
       "Có một yếu tố nguy cơ đa kháng, đơn vị có > 10% vi khuẩn kháng thuốc định đơn trị, hoặc chưa biết tỷ lệ nhạy cảm: phối hợp hai kháng sinh thuộc các nhóm khác nhau có tác dụng trên P. aeruginosa và Gram âm (nhóm B + nhóm C).",
     pool: [
       {
-        title: "Nhóm B – beta-lactam kháng Pseudomonas",
+        title: "Beta-lactam kháng Pseudomonas (chọn một)",
         drugs: [
           DRUGS.piptazo,
           DRUGS.cefepime,
@@ -473,7 +473,7 @@ const VAP: Scenario[] = [
         ],
       },
       {
-        title: "Nhóm C – không phải beta-lactam",
+        title: "Kháng sinh Gram âm không phải beta-lactam (chọn một)",
         drugs: [
           DRUGS.cipro,
           DRUGS.levoVap,
@@ -489,7 +489,7 @@ const VAP: Scenario[] = [
         id: "vap-cef-levo",
         name: "Cefepim + levofloxacin",
         drugs: [DRUGS.cefepime, DRUGS.levoVap],
-        indication: "Ví dụ ghép nhóm B + C (fluoroquinolon).",
+        indication: "Beta-lactam kháng Pseudomonas + fluoroquinolon.",
         notes: [
           "Không ghép hai beta-lactam với nhau.",
           "Đánh giá độc lập nguy cơ MRSA.",
@@ -500,7 +500,7 @@ const VAP: Scenario[] = [
         id: "vap-pip-cipro",
         name: "Piperacillin/tazobactam + ciprofloxacin",
         drugs: [DRUGS.piptazo, DRUGS.cipro],
-        indication: "Ví dụ ghép nhóm B + C (fluoroquinolon).",
+        indication: "Beta-lactam kháng Pseudomonas + fluoroquinolon.",
         notes: ["Chỉ áp dụng khi có cơ sở phối hợp hai thuốc."],
         source: VAP_SRC,
       },
@@ -508,7 +508,7 @@ const VAP: Scenario[] = [
         id: "vap-mero-amik",
         name: "Meropenem + amikacin",
         drugs: [DRUGS.meropenemSevere, DRUGS.amikacin],
-        indication: "Ví dụ ghép nhóm B + C (aminoglycosid).",
+        indication: "Beta-lactam kháng Pseudomonas + aminoglycosid.",
         notes: [
           "Aminoglycosid không dùng đơn độc.",
           "Theo dõi TDM và độc tính thận, tai.",
@@ -521,15 +521,15 @@ const VAP: Scenario[] = [
     id: "vap-mrsa",
     title: "Có nguy cơ MRSA",
     description:
-      "Có một yếu tố nguy cơ đa kháng, đơn vị có tỷ lệ MRSA > 10% hoặc không có dữ liệu: bổ sung một thuốc nhóm A (vancomycin, teicoplanin hoặc linezolid) vào phác đồ Gram âm thích hợp.",
+      "Có một yếu tố nguy cơ đa kháng, đơn vị có tỷ lệ MRSA > 10% hoặc không có dữ liệu: bổ sung một thuốc chống MRSA (vancomycin, teicoplanin hoặc linezolid) vào phác đồ Gram âm thích hợp.",
     regimens: [
       {
         id: "vap-cef-vanco",
         name: "Cefepim + vancomycin",
         drugs: [DRUGS.cefepime, DRUGS.vancomycin],
-        indication: "Ví dụ nhóm B + A.",
+        indication: "Beta-lactam kháng Pseudomonas + vancomycin.",
         notes: [
-          "Nếu đồng thời nguy cơ đa kháng Gram âm, cần đánh giá nhóm C (xem phác đồ ba thuốc).",
+          "Nếu đồng thời nguy cơ đa kháng Gram âm, cân nhắc thêm kháng sinh Gram âm không phải beta-lactam (phác đồ ba thuốc).",
           "TDM vancomycin theo thực hành phù hợp.",
         ],
         source: VAP_SRC,
@@ -538,7 +538,7 @@ const VAP: Scenario[] = [
         id: "vap-pip-line",
         name: "Piperacillin/tazobactam + linezolid",
         drugs: [DRUGS.piptazo, DRUGS.linezolid],
-        indication: "Ví dụ nhóm B + A (oxazolidinon).",
+        indication: "Beta-lactam kháng Pseudomonas + linezolid.",
         notes: ["Kiểm tra tương tác và nguy cơ giảm tiểu cầu."],
         source: VAP_SRC,
       },
@@ -546,8 +546,8 @@ const VAP: Scenario[] = [
         id: "vap-pip-teico",
         name: "Piperacillin/tazobactam + teicoplanin",
         drugs: [DRUGS.piptazo, DRUGS.teicoplanin],
-        indication: "Ví dụ nhóm B + A (glycopeptid khác).",
-        notes: ["Chọn một thuốc nhóm A, không phối hợp hai glycopeptid."],
+        indication: "Beta-lactam kháng Pseudomonas + teicoplanin.",
+        notes: ["Chọn một thuốc chống MRSA, không phối hợp hai glycopeptid."],
         source: VAP_SRC,
       },
       {
@@ -559,7 +559,7 @@ const VAP: Scenario[] = [
           DRUGS.vancomycin,
         ],
         indication:
-          "Ví dụ nhóm B + C + A, chỉ khi có cả nguy cơ Gram âm đa kháng và MRSA.",
+          "Beta-lactam kháng Pseudomonas + kháng sinh Gram âm khác nhóm + thuốc chống MRSA – chỉ khi có cả nguy cơ Gram âm đa kháng và MRSA.",
         notes: [
           "Không phải phác đồ mặc định cho VPLQTM.",
           "Đánh giá nguy cơ độc tính thận và nhu cầu duy trì aminoglycosid.",
@@ -622,7 +622,7 @@ export default function HapVap2023({
     : [];
 
   const notes = [
-    "Mỗi lựa chọn là một tổ hợp ví dụ theo quy tắc của bảng nguồn – không phải thứ tự ưu tiên.",
+    "Các lựa chọn ngang hàng, không theo thứ tự ưu tiên; tổ hợp phối hợp là ví dụ minh họa quy tắc chọn thuốc.",
     "Phần lớn tác nhân VPBV/VPLQTM ở Việt Nam là P. aeruginosa và vi khuẩn Gram âm khác – chọn kháng sinh có tác dụng trên P. aeruginosa và Gram âm.",
     kind === "hap"
       ? "HAP nặng hoặc có nguy cơ đa kháng: phối hợp hai kháng sinh; các trường hợp còn lại có thể đơn trị bằng một kháng sinh có tác dụng trên P. aeruginosa (tr. 57)."

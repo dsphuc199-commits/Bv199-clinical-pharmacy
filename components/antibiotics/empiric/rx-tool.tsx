@@ -20,6 +20,8 @@ export function Grade({ g }: { g?: string }) {
   if (!g) return null;
   if (g === "CR") return <span className="sa24-g sa24-g-a" title="Khuyến cáo rõ: có bằng chứng tiến cứu, có đối chứng, lặp lại được">KC rõ</span>;
   if (g === "RV") return <span className="sa24-g sa24-g-c" title="Tổng quan lâm sàng: bằng chứng chưa đủ để đưa khuyến cáo rõ">TQ lâm sàng</span>;
+  if (g === "PW") return <span className="sa24-g sa24-g-gps" title="Bổ sung thực hành của Lộ trình lâm sàng IDSA, ngoài hướng dẫn ATS/IDSA 2019">Lộ trình IDSA</span>;
+  if (g === "AMR") return <span className="sa24-g sa24-g-gps" title="IDSA 2026 – hướng dẫn điều trị vi khuẩn Gram âm kháng thuốc, không xếp mức GRADE">IDSA 2026</span>;
   if (g === "GPS") return <span className="sa24-g sa24-g-gps" title="Khuyến cáo thực hành tốt">TH tốt</span>;
   const m = g.match(/^([SC])-(H|M|L|VL)$/);
   if (m) return <span className={`sa24-g ${m[1] === "S" ? "sa24-g-a" : "sa24-g-c"}`} title="Sức mạnh khuyến cáo · độ tin cậy bằng chứng (GRADE)">{m[1] === "S" ? "Mạnh" : "Có ĐK"} · {CERT[m[2]]}</span>;
