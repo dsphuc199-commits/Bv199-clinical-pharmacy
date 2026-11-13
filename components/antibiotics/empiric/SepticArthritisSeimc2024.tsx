@@ -604,7 +604,6 @@ export default function SepticArthritisSeimc2024() {
         {pop === "adult" && <p className="sa24-tip">Áp dụng cho người lớn không có viêm nội tâm mạc.</p>}
 
         {notes.length > 0 && (<><h4>Lưu ý</h4><Rx items={notes} /></>)}
-        {!pids && <p className="sa24-tip">Hướng dẫn GEIO–SEIMC không nêu liều cho phần lớn thuốc – tra tại module Hiệu chỉnh liều.</p>}
       </section>
 
       {pids && (

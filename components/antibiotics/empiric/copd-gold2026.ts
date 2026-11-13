@@ -60,7 +60,7 @@ export function goldEmpiric(): RxItem[] {
     bytRow("azi5", "Macrolid"),
     bytRow("azi3", "Macrolid"),
     bytRow("clari", "Macrolid"),
-    { role: "Tetracyclin", text: "Doxycyclin", dose: "QĐ 2131 không có phác đồ tetracyclin cho đợt cấp COPD – tra module Hiệu chỉnh liều", ref: "Ch.4 Antibiotics" },
+    { role: "Tetracyclin", text: "Doxycyclin", ref: "Ch.4 Antibiotics" },
     bytRow("out-levo", "Quinolon – người bệnh chọn lọc"),
     bytRow("out-moxi", "Quinolon – người bệnh chọn lọc"),
   ];

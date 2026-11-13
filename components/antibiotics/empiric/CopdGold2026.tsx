@@ -81,7 +81,7 @@ export default function CopdGold2026() {
             <Rx items={[GOLD_PRINCIPLE]} />
             {rx.state === "filtered" && <p className="sa24-warn">Đã ẩn aminopenicilin + acid clavulanic; còn lại các nhóm không phải beta-lactam GOLD nêu.</p>}
             <Rx items={drugs} />
-            <p className="sa24-tip">GOLD chỉ nêu nhóm thuốc, không nêu liều. Cột liều lấy từ phác đồ QĐ 2131/QĐ-BYT (tab Việt Nam), người lớn chức năng thận bình thường.</p>
+            <p className="sa24-tip">Liều lấy từ phác đồ QĐ 2131/QĐ-BYT (tab Việt Nam), người lớn chức năng thận bình thường.</p>
             {needCulture && (<><h4>Cấy đờm – nguy cơ Gram âm, vi khuẩn kháng thuốc</h4><Rx items={[GOLD_CULTURE]} /></>)}
             <h4>Đường dùng</h4>
             <Rx items={setting === "out" ? GOLD_ROUTE.slice(0, 1) : GOLD_ROUTE} />

@@ -104,7 +104,7 @@ export function adultOral(t: AdultType): RxItem[] {
     rows.push({ role: "Lựa chọn (ít dữ liệu)", text: "Doxycyclin ± rifampicin", ref: "Bảng 2 e" });
   }
   rows.push({ role: "Rifampicin (nếu phối hợp)", text: "Thêm vào fluoroquinolon khi điều trị S. aureus để hạn chế kháng thuốc; dữ liệu hiệu quả còn chưa thống nhất.", dose: W_DOSE.rif, grade: "RV", ref: "Bảng 2 c; Q4" });
-  rows.push({ role: "Bổ sung 2025", text: "Cefalexin, cefadroxil, cephradin; tedizolid (dữ liệu còn hạn chế)", dose: "Liều theo bảng 3 bản cập nhật 2025 (phụ lục) – chưa tích hợp", ref: "Cập nhật 2025 II.3–4" });
+  rows.push({ role: "Bổ sung 2025", text: "Cefalexin, cefadroxil, cephradin; tedizolid (dữ liệu còn hạn chế)", ref: "Cập nhật 2025 II.3–4" });
   return rows;
 }
 export const W_GPOS_NOTE = "Clindamycin và linezolid không phủ Gram âm: chỉ dùng khi chắc chắn không do Gram âm; nếu còn nghi Gram âm phải phối hợp thêm thuốc phủ Gram âm.";
@@ -247,7 +247,7 @@ export const P_AGENTS: PAgent[] = [
   },
   {
     id: "strep", label: "Phế cầu nhạy penicilin hoặc liên cầu nhóm A", sa: false,
-    iv: [{ role: "Ưu tiên", text: "Penicilin hoặc ampicilin (Bảng liều của hướng dẫn không nêu liều cho viêm xương tủy)", ref: "VIII bàn luận", al: "std" }],
+    iv: [{ role: "Ưu tiên", text: "Penicilin hoặc ampicilin", ref: "VIII bàn luận", al: "std" }],
     oral: [{ role: "Uống nối tiếp", text: "Amoxicilin (chưa được nghiên cứu cho viêm xương tủy do phế cầu, liên cầu nhóm A ở trẻ em)", dose: D.amox, ref: "Bảng 5", al: "std" }],
   },
   {

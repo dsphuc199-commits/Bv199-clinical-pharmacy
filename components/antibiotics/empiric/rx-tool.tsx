@@ -37,7 +37,7 @@ export function Rx({ items }: { items: Item[] }) {
           <tr key={it.role + it.text + i} className={it.al === "alt" || it.role.startsWith(ALG) || it.role.startsWith("Không dùng được beta") ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
             <th scope="row">{it.role}</th>
             <td className="sa24-drug">{it.text}</td>
-            {hasDose && <td className="sa24-dose">{it.dose ?? "—"}</td>}
+            {hasDose && <td className="sa24-dose">{it.dose ?? ""}</td>}
             <td className="sa24-gc"><Grade g={it.grade} /></td>
           </tr>
         ))}

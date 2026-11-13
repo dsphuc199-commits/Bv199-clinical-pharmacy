@@ -268,7 +268,7 @@ export const PATHOGENS: Pathogen[] = [
   },
   {
     id: "mssa", label: "MSSA", source: "2016",
-    items: [{ role: "Ưu tiên", text: "Oxacilin, nafcilin hoặc cefazolin", dose: "Hướng dẫn không nêu liều", ref: "X.3; XII.1.iii", al: "std" }],
+    items: [{ role: "Ưu tiên", text: "Oxacilin, nafcilin hoặc cefazolin", ref: "X.3; XII.1.iii", al: "std" }],
   },
   {
     id: "pa", label: "P. aeruginosa nhạy kháng sinh thông thường", source: "both",
