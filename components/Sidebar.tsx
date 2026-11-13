@@ -81,17 +81,10 @@ const GROUPS: Group[] = [
       { label: "Thang điểm lâm sàng", href: "/calculators/clinical-scores", code: "TĐ" },
     ],
   },
-  {
-    id: "reports",
-    number: "05",
-    title: "Báo cáo & Can thiệp",
-    items: [
-      { label: "Báo cáo", href: "/reports", code: "BC" },
-    ],
-  },
+  /* "Bao cao & Can thiep": tam an cho den khi Khoa co mau bao cao (so ghi nhan can thiep khong dinh danh). */
   {
     id: "admin",
-    number: "06",
+    number: "05",
     title: "Quản trị",
     items: [
       { label: "Quản trị hệ thống", href: "/admin", code: "QT" },
@@ -104,7 +97,6 @@ function currentGroup(path: string) {
   if (path === "/" || path === "/antibiotics") return "home";
   if (path.startsWith("/antibiotics") || path.startsWith("/pkpd")) return "antibiotics";
   if (path.startsWith("/calculators")) return "tools";
-  if (path.startsWith("/reports")) return "reports";
   if (path.startsWith("/admin")) return "admin";
   return "clinical";
 }

@@ -21,7 +21,6 @@ const moreLinks = [
   { label: "Thay thế thuốc", href: "/safety/substitution" },
   { label: "Thuốc LASA", href: "/safety/lasa" },
   { label: "PK/PD kháng sinh", href: "/pkpd" },
-  { label: "Báo cáo", href: "/reports" },
   { label: "Quản trị", href: "/admin" },
 ];
 

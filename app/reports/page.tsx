@@ -1,12 +1,6 @@
-export default function ReportsPage() {
-  return (
-    <div style={{ padding: "32px" }}>
-      <h1>Báo cáo Dược lâm sàng</h1>
+import { redirect } from "next/navigation";
 
-      <p>
-        Tổng hợp hoạt động Dược lâm sàng,
-        can thiệp và các chỉ số chuyên môn.
-      </p>
-    </div>
-  );
+/* Bao cao & Can thiep: tam an khoi menu cho den khi Khoa co mau bao cao. */
+export default function ReportsPage() {
+  redirect("/");
 }
