@@ -8,7 +8,7 @@ import {
   type AdultType, type MrsaRate, type Severity,
 } from "./osteomyelitis-intl";
 import type { RxItem } from "./septic-arthritis-pids2023";
-import { GRADE_LEGEND, Legend, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
 
 type Src = "wiki" | "pids";
 type Stage = "empiric" | "directed";
@@ -172,6 +172,7 @@ export default function OsteomyelitisIntl() {
         {principle.length > 0 && <Rx items={principle} />}
         {s.state === "filtered" && <p className="sa24-warn">Đã ẩn thuốc beta-lactam; còn lại các lựa chọn không phải beta-lactam của hướng dẫn trong nhánh này.</p>}
         {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
+        <ReadHint />
         <Rx items={s.shown} />
         {wiki && type !== "ulcer" && <p className="sa24-tip">Luôn điều chỉnh theo độ nhạy tại chỗ và kết quả cấy.</p>}
         {notes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}

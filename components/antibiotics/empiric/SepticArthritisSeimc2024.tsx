@@ -14,7 +14,7 @@ import {
   PIDS_AGENTS, PIDS_AGES, PIDS_CONTEXTS, PIDS_DEFINITIVE_PRINCIPLE, PIDS_DOSE_NOTES, PIDS_DOSE_TABLE, PIDS_KINGELLA,
   PIDS_PRINCIPLES, PIDS_ROUTE, PIDS_TIMING, pidsDuration, type PidsAge, type RxItem,
 } from "./septic-arthritis-pids2023";
-import { ALG, ALT, PREF, GRADE_LEGEND, Legend, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { ALG, ALT, PREF, GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
 
 type Item = RxItem;
 type Pop = "adult" | "child";
@@ -591,6 +591,7 @@ export default function SepticArthritisSeimc2024() {
         {principle.length > 0 && <Rx items={principle} />}
         {s.state === "filtered" && <p className="sa24-warn">Đã ẩn thuốc beta-lactam; còn lại các lựa chọn không phải beta-lactam của hướng dẫn trong nhánh này.</p>}
         {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; phác đồ dưới đây có beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
+        <ReadHint />
         <Rx items={s.shown} />
         {tips.map((t) => <p key={t} className="sa24-tip">{t}</p>)}
 

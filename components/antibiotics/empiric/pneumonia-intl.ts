@@ -29,7 +29,7 @@ export const CAP_MINOR = [
 
 /* Phac do = khoi co ten, muc khuyen cao, cac nhom thuoc (moi dong mot thuoc). */
 export type Block = { title: string; items: RxItem[] };
-export type Plan = { title: string; grade?: string; al?: "std" | "alt"; blocks: Block[]; note?: string };
+export type Plan = { title: string; grade?: string; al?: "std" | "alt"; blocks: Block[]; note?: string; lead?: string };
 const row = (role: string, text: string, dose: string, ref: string, extra: Partial<RxItem> = {}): RxItem => ({ role, text, dose, ref, ...extra });
 
 const CAP_BL: RxItem[] = [
@@ -81,7 +81,7 @@ export function capPlans(i: CapIn): CapOut {
   if (i.setting === "out") {
     if (!i.comorb) {
       headline = "Đơn trị bằng một kháng sinh uống.";
-      plans.push({ title: "Đơn trị – chọn một", blocks: [{ title: "", items: [
+      plans.push({ title: "Đơn trị", blocks: [{ title: "", items: [
         row("Aminopenicilin", "Amoxicilin", "1 g × 3 lần/ngày", "Q8.1", { grade: "S-M", al: "std" }),
         row("Tetracyclin", "Doxycyclin", "100 mg × 2 lần/ngày", "Q8.1", { grade: "C-L" }),
         ...(i.macLow ? [
@@ -94,18 +94,18 @@ export function capPlans(i: CapIn): CapOut {
     } else {
       headline = "Phối hợp beta-lactam với macrolid hoặc doxycyclin, hoặc đơn trị fluoroquinolon hô hấp.";
       plans.push({ title: "Phác đồ 1 – Beta-lactam + macrolid hoặc doxycyclin", grade: "S-M", al: "std", blocks: [
-        { title: "Beta-lactam – chọn một", items: [
+        { title: "Beta-lactam", items: [
           row("Penicilin + ức chế beta-lactamase", "Amoxicilin-acid clavulanic", "500/125 mg × 3 lần/ngày; 875/125 mg × 2 lần/ngày; hoặc 2.000/125 mg × 2 lần/ngày", "Q8.2", { al: "std" }),
           row("Cephalosporin", "Cefpodoxim", "200 mg × 2 lần/ngày", "Q8.2", { al: "std" }),
           row("Cephalosporin", "Cefuroxim", "500 mg × 2 lần/ngày", "Q8.2", { al: "std" }),
         ] },
-        { title: "Kèm – chọn một", items: [
+        { title: "Macrolid hoặc doxycyclin", items: [
           row("Macrolid", "Azithromycin", "500 mg ngày 1, sau đó 250 mg/ngày", "Q8.2", { grade: "S-M" }),
           row("Macrolid", "Clarithromycin", "500 mg × 2 lần/ngày, hoặc dạng phóng thích kéo dài 1.000 mg/ngày", "Q8.2", { grade: "S-M" }),
           row("Tetracyclin", "Doxycyclin", "100 mg × 2 lần/ngày", "Q8.2", { grade: "C-L" }),
         ] },
       ] });
-      plans.push({ title: "Phác đồ 2 – Đơn trị fluoroquinolon hô hấp", grade: "S-M", blocks: [{ title: "Chọn một", items: [
+      plans.push({ title: "Phác đồ 2 – Đơn trị fluoroquinolon hô hấp", grade: "S-M", blocks: [{ title: "", items: [
         row("Fluoroquinolon hô hấp", "Levofloxacin", "750 mg/ngày", "Q8.2"),
         row("Fluoroquinolon hô hấp", "Moxifloxacin", "400 mg/ngày", "Q8.2"),
         row("Fluoroquinolon hô hấp", "Gemifloxacin", "320 mg/ngày", "Q8.2"),
@@ -116,15 +116,15 @@ export function capPlans(i: CapIn): CapOut {
   }
   if (!i.severe) {
     headline = "Viêm phổi không nặng: beta-lactam + macrolid, hoặc đơn trị fluoroquinolon hô hấp.";
-    plans.push({ title: "Phác đồ 1 – Beta-lactam + macrolid", grade: "S-H", al: "std", blocks: [{ title: "Beta-lactam – chọn một", items: CAP_BL }, { title: "Kèm macrolid – chọn một", items: CAP_MAC }] });
-    plans.push({ title: "Phác đồ 2 – Đơn trị fluoroquinolon hô hấp", grade: "S-H", blocks: [{ title: "Chọn một", items: CAP_FQ }] });
-    if (i.noMacFq) plans.push({ title: "Phác đồ 3 – Beta-lactam + doxycyclin (chống chỉ định cả macrolid và fluoroquinolon)", grade: "C-L", al: "std", blocks: [{ title: "Beta-lactam – chọn một", items: CAP_BL }, { title: "Kèm", items: [row("Tetracyclin", "Doxycyclin", "100 mg × 2 lần/ngày", "Q9.1")] }] });
+    plans.push({ title: "Phác đồ 1 – Beta-lactam + macrolid", grade: "S-H", al: "std", blocks: [{ title: "Beta-lactam", items: CAP_BL }, { title: "Macrolid", items: CAP_MAC }] });
+    plans.push({ title: "Phác đồ 2 – Đơn trị fluoroquinolon hô hấp", grade: "S-H", blocks: [{ title: "", items: CAP_FQ }] });
+    if (i.noMacFq) plans.push({ title: "Phác đồ 3 – Beta-lactam + doxycyclin (chống chỉ định cả macrolid và fluoroquinolon)", grade: "C-L", al: "std", blocks: [{ title: "Beta-lactam", items: CAP_BL }, { title: "Doxycyclin", items: [row("Tetracyclin", "Doxycyclin", "100 mg × 2 lần/ngày", "Q9.1")] }] });
     notes.push("Không dùng beta-lactam đơn trị thường quy cho người bệnh nội trú.");
   } else {
     headline = "Viêm phổi nặng: beta-lactam phối hợp macrolid (bằng chứng mạnh hơn) hoặc fluoroquinolon hô hấp.";
-    plans.push({ title: "Phác đồ 1 – Beta-lactam + macrolid", grade: "S-M", al: "std", blocks: [{ title: "Beta-lactam – chọn một", items: CAP_BL }, { title: "Kèm macrolid – chọn một", items: CAP_MAC }] });
-    plans.push({ title: "Phác đồ 2 – Beta-lactam + fluoroquinolon hô hấp", grade: "S-L", al: "std", blocks: [{ title: "Beta-lactam – chọn một", items: CAP_BL }, { title: "Kèm fluoroquinolon – chọn một", items: CAP_FQ }] });
-    plans.push({ title: "Dị ứng beta-lactam – Levofloxacin ± aztreonam ± thuốc chống MRSA", grade: "PW", al: "alt", blocks: [{ title: "", items: [
+    plans.push({ title: "Phác đồ 1 – Beta-lactam + macrolid", grade: "S-M", al: "std", blocks: [{ title: "Beta-lactam", items: CAP_BL }, { title: "Macrolid", items: CAP_MAC }] });
+    plans.push({ title: "Phác đồ 2 – Beta-lactam + fluoroquinolon hô hấp", grade: "S-L", al: "std", blocks: [{ title: "Beta-lactam", items: CAP_BL }, { title: "Fluoroquinolon hô hấp", items: CAP_FQ }] });
+    plans.push({ title: "Dị ứng beta-lactam – Levofloxacin ± aztreonam ± thuốc chống MRSA", grade: "PW", al: "alt", lead: "Levofloxacin; thêm aztreonam khi cần phủ trực khuẩn Gram âm, thêm thuốc chống MRSA khi có nguy cơ.", blocks: [{ title: "", items: [
       row("Fluoroquinolon hô hấp", "Levofloxacin", "750 mg mỗi 24 giờ", "Pathway"),
       row("Monobactam (± khi cần phủ Gram âm)", "Aztreonam", "2 g mỗi 8 giờ", "Pathway"),
     ] }] });
@@ -133,12 +133,12 @@ export function capPlans(i: CapIn): CapOut {
   let mrsa: Plan | undefined;
   let pa: Plan | undefined;
   if (i.mrsaPrior || (i.recentHosp && i.localMrsa)) {
-    if (i.mrsaPrior || i.severe) mrsa = { title: "Thêm thuốc chống MRSA", grade: "S-M", blocks: [{ title: "Chọn một", items: CAP_MRSA_ROWS }], note: "Cấy đờm, cấy máu và PCR MRSA ngoáy mũi; ngừng thuốc chống MRSA sau 48 giờ nếu âm tính và lâm sàng cải thiện." };
-    else if (i.nasalPcr) mrsa = { title: "Theo PCR MRSA ngoáy mũi", grade: "S-M", blocks: [{ title: "Chỉ thêm khi PCR dương tính – chọn một", items: CAP_MRSA_ROWS }], note: "PCR âm tính: không dùng thuốc chống MRSA. PCR dương tính: thêm thuốc và cấy để xác nhận." };
+    if (i.mrsaPrior || i.severe) mrsa = { title: "Thêm thuốc chống MRSA", grade: "S-M", lead: "Thêm vào phác đồ trên một thuốc chống MRSA – chọn một trong hai.", blocks: [{ title: "", items: CAP_MRSA_ROWS }], note: "Cấy đờm, cấy máu và PCR MRSA ngoáy mũi; ngừng thuốc chống MRSA sau 48 giờ nếu âm tính và lâm sàng cải thiện." };
+    else if (i.nasalPcr) mrsa = { title: "Theo PCR MRSA ngoáy mũi", grade: "S-M", lead: "Chỉ khi PCR dương tính: thêm vào phác đồ trên một thuốc chống MRSA – chọn một trong hai.", blocks: [{ title: "", items: CAP_MRSA_ROWS }], note: "PCR âm tính: không dùng thuốc chống MRSA. PCR dương tính: thêm thuốc và cấy để xác nhận." };
     else mrsa = { title: "Chưa phủ MRSA – cấy đờm, cấy máu", grade: "S-M", blocks: [], note: "Chỉ thêm vancomycin hoặc linezolid khi cấy dương tính MRSA." };
   }
   if (i.paPrior || (i.recentHosp && i.localPa)) {
-    if (i.paPrior || i.severe) pa = { title: "Thay beta-lactam bằng beta-lactam kháng Pseudomonas", grade: "S-M", blocks: [{ title: "Chọn một (giữ macrolid hoặc fluoroquinolon)", items: CAP_PA_ROWS }], note: "Cấy trước điều trị; quay về phác đồ chuẩn sau 48 giờ nếu cấy âm tính và lâm sàng cải thiện." };
+    if (i.paPrior || i.severe) pa = { title: "Thay beta-lactam bằng beta-lactam kháng Pseudomonas", grade: "S-M", lead: "Bỏ beta-lactam của phác đồ trên, thay bằng một thuốc dưới đây; giữ nguyên macrolid hoặc fluoroquinolon.", blocks: [{ title: "", items: CAP_PA_ROWS }], note: "Cấy trước điều trị; quay về phác đồ chuẩn sau 48 giờ nếu cấy âm tính và lâm sàng cải thiện." };
     else pa = { title: "Chưa phủ P. aeruginosa – cấy đờm, cấy máu", grade: "S-M", blocks: [], note: "Chỉ dùng beta-lactam kháng Pseudomonas khi cấy dương tính." };
   }
   if (mrsa || pa) notes.push("Không dùng khái niệm viêm phổi liên quan chăm sóc y tế (HCAP) để quyết định phổ rộng. Phác đồ phủ P. aeruginosa không nhằm Enterobacterales sinh ESBL.");
@@ -249,11 +249,11 @@ export function hvPlan(i: HvIn): HvOut {
   const blocks: Block[] = [];
   let headline: string;
   if (!dual) {
-    blocks.push({ title: "Kháng sinh kháng Pseudomonas – chọn một", items: [...bl, ...fq, ...(wide ? [azt] : [])] });
+    blocks.push({ title: mrsa ? "Kháng sinh kháng Pseudomonas" : "", items: [...bl, ...fq, ...(wide ? [azt] : [])] });
     headline = mrsa ? "Một kháng sinh kháng Pseudomonas + một thuốc chống MRSA." : "Đơn trị bằng một kháng sinh kháng Pseudomonas (đồng thời phủ MSSA).";
   } else {
-    blocks.push({ title: "Thuốc 1 – beta-lactam kháng Pseudomonas, chọn một", items: [...bl, azt] });
-    blocks.push({ title: "Thuốc 2 – khác nhóm, chọn một", items: [
+    blocks.push({ title: "Beta-lactam kháng Pseudomonas", items: [...bl, azt] });
+    blocks.push({ title: "Kháng sinh khác nhóm (không phải beta-lactam)", items: [
       ...fq.map((x) => ({ ...x })),
       r("Aminoglycosid", "Amikacin", D.amikacin),
       r("Aminoglycosid", "Gentamicin", D.genta),
@@ -262,7 +262,7 @@ export function hvPlan(i: HvIn): HvOut {
     ] });
     headline = mrsa ? "Hai kháng sinh kháng Pseudomonas khác nhóm + một thuốc chống MRSA." : "Hai kháng sinh kháng Pseudomonas khác nhóm.";
   }
-  if (mrsa) blocks.push({ title: "Thuốc chống MRSA – chọn một", items: MRSA_ROWS });
+  if (mrsa) blocks.push({ title: "Thuốc chống MRSA", items: MRSA_ROWS });
   const notes: string[] = [];
   if (dual) notes.push("Không phối hợp hai beta-lactam (aztreonam chỉ phối hợp với beta-lactam khác khi không còn lựa chọn). Có kháng sinh đồ: chuyển về đơn trị.");
   notes.push(i.kind === "vap" ? "Tránh aminoglycosid và colistin khi có thuốc Gram âm khác còn hiệu lực." : "Không dùng aminoglycosid làm thuốc kháng Pseudomonas duy nhất.");

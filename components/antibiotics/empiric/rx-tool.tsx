@@ -76,6 +76,10 @@ export function byAllergy(items: Item[], allergy: boolean): { shown: Item[]; sta
   return nonBL.length ? { shown: rest, state: "filtered" } : { shown: items, state: "only-bl" };
 }
 
+/* Cach doc bang thuoc: dong la lua chon thay the nhau; "+" / Them / Kem / Phoi hop la dung dong thoi. */
+export function ReadHint() {
+  return <p className="sa24-lead">Cách đọc: mỗi dòng là một lựa chọn thay thế nhau – chỉ chọn một. Thuốc nối bằng dấu “+” trong cùng dòng, hoặc dòng ghi “Thêm”, “Kèm”, “Phối hợp”, là dùng đồng thời với thuốc đã chọn.</p>;
+}
 export function RxToolStyle() {
   return <style>{`
         .sa24 { border: 1px solid #dbe6ed; border-radius: 16px; padding: 16px; margin: 12px 0; background: #fff; display: grid; gap: 14px; min-width: 0; }
@@ -121,6 +125,7 @@ export function RxToolStyle() {
         .sa24-g-d { background: #fde4e4; color: #9b1c1c; }
         .sa24-g-gps { background: #e6f0fb; color: #1d4f8a; }
         .sa24-warn { margin: 0; font-size: 13px; line-height: 1.55; color: #7c2d12; background: #fff4ed; border: 1px solid #f6cfb5; border-radius: 8px; padding: 6px 10px; }
+        .sa24-lead { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.55; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
         .sa24-tip { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4b6576; }
         .sa24-more summary { cursor: pointer; font-weight: 700; font-size: 13.5px; color: #0b3a5b; }
         .sa24-more[open] { display: grid; gap: 10px; }

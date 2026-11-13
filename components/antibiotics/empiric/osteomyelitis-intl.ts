@@ -50,28 +50,28 @@ export function adultEmpiric(t: AdultType, r: AdultRisk): { items: RxItem[]; not
     ? "Beta-lactam kháng trực khuẩn mủ xanh không phải carbapenem (cefepim hoặc piperacilin-tazobactam) thay ceftriaxon"
     : CTX;
   if (t === "native") {
-    items.push({ role: "Kinh nghiệm", text: bl, grade: "RV", ref: "Bảng 2", al: "std" });
-    if (r.mrsa) items.push({ role: "Phối hợp (nguy cơ MRSA)", text: "Vancomycin", grade: "RV", ref: "Bảng 2 b" });
-    if (r.anaer) items.push({ role: "Nghi kỵ khí, vết thương hoại tử", text: "Thêm metronidazol, hoặc thay ceftriaxon bằng ampicilin-sulbactam / amoxicilin-acid clavulanic", grade: "RV", ref: "Bảng 2 b", al: "std" });
+    items.push({ role: "Phác đồ nền", text: bl, grade: "RV", ref: "Bảng 2", al: "std" });
+    if (r.mrsa) items.push({ role: "Thêm (nguy cơ MRSA)", text: "Vancomycin", grade: "RV", ref: "Bảng 2 b" });
+    if (r.anaer) items.push({ role: "Thêm hoặc thay (nghi kỵ khí, vết thương hoại tử)", text: "Thêm metronidazol, hoặc thay ceftriaxon bằng ampicilin-sulbactam / amoxicilin-acid clavulanic", grade: "RV", ref: "Bảng 2 b", al: "std" });
     if (!r.mrsa) notes.push("Không có yếu tố nguy cơ MRSA: một số tác giả thêm beta-lactam kháng tụ cầu (oxacilin, cloxacilin, nafcilin hoặc cefazolin) vào ceftriaxon.");
   } else if (t === "dfo") {
-    if (r.pseudo) items.push({ role: "Kinh nghiệm (nguy cơ P. aeruginosa)", text: `${bl} ± metronidazol`, grade: "RV", ref: "Bảng 2 b", al: "std" });
+    if (r.pseudo) items.push({ role: "Phác đồ nền (nguy cơ P. aeruginosa)", text: `${bl} ± metronidazol`, grade: "RV", ref: "Bảng 2 b", al: "std" });
     else {
-      items.push({ role: "Kinh nghiệm – một trong", text: "Ampicilin-sulbactam", grade: "RV", ref: "Bảng 2", al: "std" });
-      items.push({ role: "Kinh nghiệm – một trong", text: "Amoxicilin-acid clavulanic", grade: "RV", ref: "Bảng 2", al: "std" });
-      items.push({ role: "Kinh nghiệm – một trong", text: "Ceftriaxon ± metronidazol", grade: "RV", ref: "Bảng 2", al: "std" });
+      items.push({ role: "Phác đồ nền – chọn một", text: "Ampicilin-sulbactam", grade: "RV", ref: "Bảng 2", al: "std" });
+      items.push({ role: "Phác đồ nền – chọn một", text: "Amoxicilin-acid clavulanic", grade: "RV", ref: "Bảng 2", al: "std" });
+      items.push({ role: "Phác đồ nền – chọn một", text: "Ceftriaxon ± metronidazol", grade: "RV", ref: "Bảng 2", al: "std" });
     }
-    if (r.mrsa) items.push({ role: "Phối hợp (nguy cơ MRSA)", text: "Vancomycin", grade: "RV", ref: "Bảng 2 b" });
+    if (r.mrsa) items.push({ role: "Thêm (nguy cơ MRSA)", text: "Vancomycin", grade: "RV", ref: "Bảng 2 b" });
     notes.push("Nhiều bác sĩ thêm thuốc phủ kỵ khí thường quy; chưa có dữ liệu chứng minh lợi ích.");
     notes.push("Ngoáy mũi MRSA âm tính có giá trị dự báo âm > 90% loại trừ MRSA khi tỷ lệ MRSA tại chỗ < 15% – hỗ trợ không dùng thuốc kháng MRSA kinh nghiệm (cập nhật 2025).");
   } else if (t === "implant-early") {
-    items.push({ role: "Kinh nghiệm", text: "Beta-lactam kháng trực khuẩn mủ xanh hoặc ceftriaxon", grade: "RV", ref: "Bảng 2", al: "std" });
-    items.push({ role: "Phối hợp", text: "Vancomycin", grade: "RV", ref: "Bảng 2" });
+    items.push({ role: "Phác đồ nền", text: "Beta-lactam kháng trực khuẩn mủ xanh hoặc ceftriaxon", grade: "RV", ref: "Bảng 2", al: "std" });
+    items.push({ role: "Thêm", text: "Vancomycin", grade: "RV", ref: "Bảng 2" });
     notes.push("Một số tác giả không phủ trực khuẩn mủ xanh thường quy, tùy tần suất gặp tại chỗ.");
     notes.push("Rifampicin: đa số chờ đến khi chuyển uống; nên chờ sạch vi khuẩn trong máu và kiểm soát ổ nhiễm bằng phẫu thuật.");
   } else if (t === "implant-late") {
-    items.push({ role: "Kinh nghiệm", text: bl, grade: "RV", ref: "Bảng 2", al: "std" });
-    items.push({ role: "Phối hợp", text: "Vancomycin", grade: "RV", ref: "Bảng 2" });
+    items.push({ role: "Phác đồ nền", text: bl, grade: "RV", ref: "Bảng 2", al: "std" });
+    items.push({ role: "Thêm", text: "Vancomycin", grade: "RV", ref: "Bảng 2" });
     notes.push("Rifampicin: đa số chờ đến khi chuyển uống; nên chờ sạch vi khuẩn trong máu và kiểm soát ổ nhiễm bằng phẫu thuật.");
   }
   if (t !== "ulcer") {
@@ -92,8 +92,8 @@ export function adultOral(t: AdultType): RxItem[] {
   const rows: RxItem[] = [];
   if (t === "dfo") rows.push({ role: "Lựa chọn", text: "Amoxicilin-acid clavulanic", dose: W_DOSE.amoxclav, ref: "Bảng 2–3", al: "std" });
   if (t === "implant-early") {
-    rows.push({ role: "Kinh nghiệm", text: "Ciprofloxacin ± rifampicin", dose: W_DOSE.cipro, ref: "Bảng 2–3" });
-    rows.push({ role: "Kinh nghiệm", text: "Levofloxacin ± rifampicin", dose: W_DOSE.levo, ref: "Bảng 2–3" });
+    rows.push({ role: "Lựa chọn", text: "Ciprofloxacin ± rifampicin", dose: W_DOSE.cipro, ref: "Bảng 2–3" });
+    rows.push({ role: "Lựa chọn", text: "Levofloxacin ± rifampicin", dose: W_DOSE.levo, ref: "Bảng 2–3" });
     rows.push({ role: "Khi xác định Gram dương", text: "Cotrimoxazol, clindamycin, linezolid hoặc doxycyclin ± rifampicin", ref: "Bảng 2" });
   } else {
     rows.push({ role: "Lựa chọn", text: "Cotrimoxazol", dose: W_DOSE.tmp, ref: "Bảng 2–3" });

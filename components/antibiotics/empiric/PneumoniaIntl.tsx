@@ -6,7 +6,7 @@ import {
   CAP_DIAG, CAP_DURATION, CAP_MAJOR, CAP_MINOR, CAP_SPECIAL, HV_COURSE, PATHOGENS,
   capPlans, hvDiagnosis, hvGrades, hvPlan, type Plan,
 } from "./pneumonia-intl";
-import { Grade, Legend, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { Grade, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
 
 type Kind = "cap" | "hap" | "vap";
 const L_GRADE: [string, string][] = [
@@ -27,13 +27,24 @@ function filterPlans(plans: Plan[], al: boolean): Plan[] {
     .map((p) => ({ ...p, blocks: p.blocks.map((b) => ({ ...b, items: byAllergy(b.items, al).shown })).filter((b) => b.items.length) }));
 }
 
+/* Cach dung phac do: noi ro so thuoc dung dong thoi; danh so tung nhom, moi nhom chon mot thuoc. */
+function leadOf(p: Plan): string {
+  if (p.lead) return p.lead;
+  const n = p.blocks.length;
+  if (n >= 2) return `Phối hợp ${n} thuốc, dùng đồng thời: mỗi nhóm đánh số dưới đây chọn đúng một thuốc. Ví dụ: ${p.blocks.map((b) => b.items[0]?.text).join(" + ")}.`;
+  const k = p.blocks[0]?.items.length ?? 0;
+  return k > 1 ? "Đơn trị: chỉ dùng một thuốc – chọn một trong các thuốc dưới đây." : "Dùng thuốc dưới đây.";
+}
 function PlanCard({ p }: { p: Plan }) {
+  const multi = p.blocks.length >= 2;
   return (
     <div className="pn-plan">
       {p.title && <div className="pn-plan-h"><span>{p.title}</span><Grade g={p.grade} /></div>}
-      {p.blocks.map((b) => (
-        <div key={b.title} className="pn-block">
-          {b.title && <p className="pn-block-t">{b.title}</p>}
+      {(p.blocks.length > 0 || p.lead) && <p className="pn-lead">{leadOf(p)}</p>}
+      {p.blocks.map((b, k) => (
+        <div key={b.title + k} className="pn-block">
+          {multi && k > 0 && <div className="pn-plus" aria-hidden="true">+</div>}
+          {multi ? <p className="pn-block-t"><span className="pn-num">{k + 1}</span>Thuốc {k + 1}: {b.title || "chọn một"} – chọn một</p> : b.title && <p className="pn-block-t">{b.title}</p>}
           <Rx items={b.items} />
         </div>
       ))}
@@ -196,6 +207,7 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
             <h4>Phác đồ đích</h4>
             {pd.state === "filtered" && <p className="sa24-warn">Đã ẩn beta-lactam; còn lại các lựa chọn không phải beta-lactam. Với vi khuẩn kháng carbapenem, phần lớn thuốc hiệu quả là beta-lactam – cần đánh giá kỹ loại và mức độ dị ứng.</p>}
             {pd.state === "only-bl" && <p className="sa24-warn">Các lựa chọn hiệu quả đều là beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
+            <ReadHint />
             <Rx items={pd.shown} />
             {(p.notes ?? []).map((n) => <p key={n} className="sa24-tip">{n}</p>)}
             <p className="sa24-tip">Phác đồ đích áp dụng khi đã định danh và có kháng sinh đồ xác nhận nhạy. Liều cho người lớn, chức năng thận và gan bình thường.</p>
@@ -240,8 +252,11 @@ export default function PneumoniaIntl({ kind }: { kind: Kind }) {
         .pn-plan { border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 8px; }
         .pn-plan-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; color: #0b3a5b; font-size: 14.5px; }
         .pn-block { display: grid; gap: 4px; }
-        .pn-block-t { margin: 0; font-size: 12.5px; font-weight: 700; color: #4b6576; text-transform: uppercase; letter-spacing: .02em; }
+        .pn-block-t { margin: 0; font-size: 13px; font-weight: 800; color: #0b3a5b; }
         .pn-plan .sa24-rx { border: 0; border-top: 1px solid #edf2f6; border-radius: 0; }
+        .pn-lead { margin: 0; font-size: 13.5px; font-weight: 700; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
+        .pn-plus { text-align: center; font-size: 20px; font-weight: 800; color: #087f89; line-height: 1; margin: 2px 0; }
+        .pn-num { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 6px; border-radius: 50%; background: #087f89; color: #fff; font-size: 11px; }
         .pn-or { display: flex; align-items: center; gap: 8px; margin: 6px 0; color: #6b8293; font-size: 12px; font-weight: 700; text-transform: uppercase; }
         .pn-or::before, .pn-or::after { content: ""; flex: 1; border-top: 1px dashed #cfdde6; }
       `}</style>

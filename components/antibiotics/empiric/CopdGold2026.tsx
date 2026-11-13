@@ -5,7 +5,7 @@ import {
   CULTURE_TRIGGERS, GOLD_BIOMARKER, GOLD_CULTURE, GOLD_PRINCIPLE, GOLD_PREVENTION, GOLD_ROUTE, NO_INDICATION_HINT, ROME, SYMPTOMS,
   goldCotherapy, goldDuration, goldEmpiric, goldIndication, type Setting, type Severity, type Sym,
 } from "./copd-gold2026";
-import { Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
 
 export default function CopdGold2026() {
   const [sym, setSym] = useState<Record<Sym, boolean>>({ dyspnea: false, fever: false, volume: false, purulence: false });
@@ -80,6 +80,7 @@ export default function CopdGold2026() {
             <h4>Kháng sinh kinh nghiệm</h4>
             <Rx items={[GOLD_PRINCIPLE]} />
             {rx.state === "filtered" && <p className="sa24-warn">Đã ẩn aminopenicilin + acid clavulanic; còn lại các nhóm không phải beta-lactam GOLD nêu.</p>}
+            <ReadHint />
             <Rx items={drugs} />
             <p className="sa24-tip">Liều lấy từ phác đồ QĐ 2131/QĐ-BYT (tab Việt Nam), người lớn chức năng thận bình thường.</p>
             {needCulture && (<><h4>Cấy đờm – nguy cơ Gram âm, vi khuẩn kháng thuốc</h4><Rx items={[GOLD_CULTURE]} /></>)}
