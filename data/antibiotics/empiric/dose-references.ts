@@ -77,3 +77,18 @@ export function resolvedDrugs(regimen: Pick<Regimen, "id" | "drugs">): DrugItem[
 }
 
 export const RESOLVED_REGIMEN_IDS = [...BY_REGIMEN.keys()];
+
+/*
+  PHUONG AN DUNG CHUNG CHO NHIEU TINH HUONG (chi hien thi, khong nhan ban du lieu nguon).
+  QĐ 708, Viem khop nhiem khuan, tr. 164 – "Truong hop cay mau, dich khop duong tinh thi dieu tri theo
+  khang sinh do: ... tu cau vang khang methicilin thi dung vancomycin, hoac daptomycin, hoac teicoplanin
+  (lieu nhu tren) trong 4 tuan" -> phuong an MRSA (r-sa-mrsa) cung thuoc tinh huong "theo ket qua cay".
+*/
+export const SHARED_SCENARIO_REGIMENS: { scenario: string; regimenId: string; after: string; condition: string }[] = [
+  {
+    scenario: "Viêm khớp không do lậu cầu – điều chỉnh theo kết quả cấy máu, dịch khớp và kháng sinh đồ",
+    regimenId: "r-sa-mrsa",
+    after: "r-sa-mssa",
+    condition: "Tụ cầu vàng kháng methicilin (MRSA)",
+  },
+];

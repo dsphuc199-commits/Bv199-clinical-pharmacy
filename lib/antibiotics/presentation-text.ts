@@ -36,7 +36,9 @@ const DISPLAY_REWRITES: [string, string][] = [
   ["+ gentamycin liều như trên.", "+ gentamycin 5–7,5 mg/kg/ngày TB hoặc TM, 1 lần/ngày."],
   ["Thể mạn: itraconazol như trên ít nhất 1 năm", "Thể mạn: itraconazol 200 mg 1–2 lần/ngày, ít nhất 1 năm"],
   ["Văn bản nêu 2 dạng liều ceftazidim ở 2 vị trí khác nhau (2 g x 2–3 lần/ngày khi nghi ngờ; 1 g mỗi 8 giờ khi đã xác định): giữ nguyên, cần thẩm định.", "Ceftazidim: 2 g x 2–3 lần/ngày khi mới nghi ngờ; 1 g mỗi 8 giờ khi đã xác định tác nhân."],
-  ["Văn bản không nêu riêng thời gian cho MSSA ở nhánh này", ""],
+  /* QĐ 708 tr. 164: "trong 4 tuần" khép lại cả mục tụ cầu vàng (nhạy và kháng methicilin). */
+  ["Văn bản không nêu riêng thời gian cho MSSA ở nhánh này", "4 tuần"],
+  ["4 tuần (tụ cầu vàng kháng methicilin)", "4 tuần"],
   ["7 ngày (theo văn bản)", "7 ngày"],
   ["Văn bản liệt kê rifampicin cùng chuỗi lựa chọn; cần thẩm định nếu dùng đơn độc (thường phối hợp, không dùng đơn độc).", "Rifampicin chỉ dùng phối hợp với kháng sinh khác, không dùng đơn trị (nguy cơ chọn lọc chủng kháng)."],
   ["Chênh lệch giữa văn bản BYT: QĐ 361/QĐ-BYT (2014, cơ xương khớp, tr. 97 và 105 theo bản PDF) ghi gentamycin 3 mg/kg/ngày, trong khi QĐ 708 ghi 5 mg/kg/ngày. Không tự chọn; cần thẩm định.", "Liều gentamycin khác nhau giữa hai hướng dẫn BYT: QĐ 361/QĐ-BYT (2014) 3 mg/kg/ngày; QĐ 708/QĐ-BYT (2015) 5 mg/kg/ngày. Chọn liều theo chức năng thận; theo dõi độc tính trên thận và thính giác."],

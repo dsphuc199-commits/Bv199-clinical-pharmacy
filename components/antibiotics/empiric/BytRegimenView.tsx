@@ -15,7 +15,7 @@
 */
 
 import { useMemo, useState } from "react";
-import { RESOLVED_REGIMEN_IDS, resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
+import { RESOLVED_REGIMEN_IDS, SHARED_SCENARIO_REGIMENS, resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 
 import {
   DOCS,
@@ -239,6 +239,14 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault }: Props) {
         map.set(r.scenario, []);
       }
       map.get(r.scenario)!.push(r);
+    }
+    /* Phuong an nguon dung chung cho tinh huong khac (vd. MRSA trong nhanh "theo kháng sinh đồ"). */
+    for (const s of SHARED_SCENARIO_REGIMENS) {
+      const list = map.get(s.scenario);
+      const src = regimens.find((r) => r.id === s.regimenId);
+      if (!list || !src || list.some((r) => r.id === s.regimenId)) continue;
+      const at = list.findIndex((r) => r.id === s.after);
+      list.splice(at < 0 ? list.length : at + 1, 0, { ...src, scenario: s.scenario, condition: s.condition });
     }
     return order.map((name) => ({ name, items: map.get(name)! }));
   }, [regimens]);
