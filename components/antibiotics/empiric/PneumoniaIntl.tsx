@@ -115,7 +115,7 @@ function CapTool({ al }: { al: boolean }) {
         </div>
         <Legend rows={[...L_GRADE, L_PW]} />
         <h4>Kháng sinh kinh nghiệm</h4>
-        {al && <p className="sa24-warn">Dị ứng beta-lactam: đã ẩn phác đồ có beta-lactam. Dị ứng penicilin nhẹ – vừa thường dung nạp beta-lactam không phải penicilin; phản ứng tức thì có thể dung nạp cephalosporin thế hệ 3–4 hoặc carbapenem; tránh mọi beta-lactam khi từng có hội chứng Stevens-Johnson hoặc hoại tử thượng bì nhiễm độc (Lộ trình IDSA).</p>}
+        {al && <p className="sa24-warn">Dị ứng penicilin nhẹ – vừa thường dung nạp beta-lactam không phải penicilin; phản ứng tức thì có thể dung nạp cephalosporin thế hệ 3–4 hoặc carbapenem; tránh mọi beta-lactam khi từng có hội chứng Stevens-Johnson hoặc hoại tử thượng bì nhiễm độc (Lộ trình IDSA).</p>}
         {plans.length ? <Plans plans={plans} /> : <p className="sa24-warn">Hướng dẫn không nêu phác đồ thay thế cho người dị ứng beta-lactam ở tình huống này – đánh giá loại, mức độ dị ứng trước khi chọn thuốc.</p>}
         {o.notes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
         {extra.length > 0 && (<><h4>Điều chỉnh theo nguy cơ MRSA, P. aeruginosa</h4>{extra.map((p) => <PlanCard key={p.title} p={p} />)}</>)}
@@ -196,7 +196,7 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
         {stage === "empiric" ? (
           <>
             <h4>Kháng sinh kinh nghiệm</h4>
-            {al && <p className="sa24-warn">Dị ứng beta-lactam: đã ẩn beta-lactam. Dị ứng penicilin nặng có thể dùng aztreonam thay beta-lactam, kèm thuốc phủ MSSA.</p>}
+            {al && <p className="sa24-warn">Dị ứng penicilin nặng có thể dùng aztreonam thay beta-lactam, kèm thuốc phủ MSSA.</p>}
             {plan && <PlanCard p={plan} />}
             {e.notes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
             <h4>Tiêu chí áp dụng</h4>
@@ -205,7 +205,7 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
         ) : (
           <>
             <h4>Phác đồ đích</h4>
-            {pd.state === "filtered" && <p className="sa24-warn">Đã ẩn beta-lactam; còn lại các lựa chọn không phải beta-lactam. Với vi khuẩn kháng carbapenem, phần lớn thuốc hiệu quả là beta-lactam – cần đánh giá kỹ loại và mức độ dị ứng.</p>}
+            {pd.state === "filtered" && <p className="sa24-warn">Với vi khuẩn kháng carbapenem, phần lớn thuốc hiệu quả là beta-lactam – cần đánh giá kỹ loại và mức độ dị ứng.</p>}
             {pd.state === "only-bl" && <p className="sa24-warn">Các lựa chọn hiệu quả đều là beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
             <ReadHint />
             <Rx items={pd.shown} />

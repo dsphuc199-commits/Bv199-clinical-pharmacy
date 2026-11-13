@@ -170,7 +170,6 @@ export default function OsteomyelitisIntl() {
 
         <h4>{wiki ? (type === "ulcer" ? "Chỉ định kháng sinh" : "Kháng sinh kinh nghiệm – đường tĩnh mạch") : stage === "empiric" ? "Kháng sinh kinh nghiệm – đường tĩnh mạch" : "Phác đồ đích – đường tĩnh mạch"}</h4>
         {principle.length > 0 && <Rx items={principle} />}
-        {s.state === "filtered" && <p className="sa24-warn">Đã ẩn thuốc beta-lactam; còn lại các lựa chọn không phải beta-lactam của hướng dẫn trong nhánh này.</p>}
         {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
         <ReadHint />
         <Rx items={s.shown} />
@@ -180,7 +179,6 @@ export default function OsteomyelitisIntl() {
 
         {route.length > 0 && (<><h4>Chuyển đường uống</h4><Rx items={route} /></>)}
         {o.shown.length > 0 && (<><h4>{wiki ? "Kháng sinh uống (kinh nghiệm hoặc nối tiếp)" : "Thuốc uống nối tiếp"}</h4><Rx items={o.shown} /></>)}
-        {o.state === "filtered" && <p className="sa24-tip">Đã ẩn thuốc uống beta-lactam.</p>}
         {wiki && type !== "ulcer" && <p className="sa24-tip">{W_GPOS_NOTE}</p>}
 
         {!wiki && (<><h4>Can thiệp ngoại khoa</h4><Rx items={P_SURGERY} /></>)}

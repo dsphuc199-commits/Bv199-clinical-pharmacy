@@ -589,7 +589,6 @@ export default function SepticArthritisSeimc2024() {
 
         <h4>{stage === "empiric" ? "Phác đồ kinh nghiệm" : "Phác đồ đích – đường tĩnh mạch"}{al && s.state === "explicit" ? " · dị ứng beta-lactam" : ""}</h4>
         {principle.length > 0 && <Rx items={principle} />}
-        {s.state === "filtered" && <p className="sa24-warn">Đã ẩn thuốc beta-lactam; còn lại các lựa chọn không phải beta-lactam của hướng dẫn trong nhánh này.</p>}
         {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; phác đồ dưới đây có beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
         <ReadHint />
         <Rx items={s.shown} />
@@ -598,7 +597,6 @@ export default function SepticArthritisSeimc2024() {
         <h4>Chuyển đường uống</h4>
         <Rx items={route} />
         {o.shown.length > 0 && (<><h4>Thuốc uống nối tiếp</h4><Rx items={o.shown} /></>)}
-        {o.state === "filtered" && <p className="sa24-tip">Đã ẩn thuốc uống beta-lactam.</p>}
 
         <h4>Thời gian điều trị</h4>
         <Rx items={durations} />
