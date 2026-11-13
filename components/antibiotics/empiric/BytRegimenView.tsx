@@ -15,6 +15,7 @@
 */
 
 import { useMemo, useState } from "react";
+import { RESOLVED_REGIMEN_IDS, resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 
 import {
   DOCS,
@@ -97,7 +98,8 @@ function year(doc: Regimen["source"]["doc"]): string {
 
 /* Lieu bo sung co dan nguon / ly do thieu lieu (tach rieng, khong sua nguyen van BYT). */
 function SupplementBox({ regimen }: { regimen: Regimen }) {
-  const sup = doseSupplementFor(regimen.id);
+  /* Lieu "nhu tren" da hien ngay trong dong phac do -> khong lap lai o hop lieu bo sung. */
+  const sup = RESOLVED_REGIMEN_IDS.includes(regimen.id) ? undefined : doseSupplementFor(regimen.id);
   const missing = doseEvidenceOf(regimen) === "MISSING_DOSE_EVIDENCE";
   if (!sup && !missing) return null;
   const box = { fontSize: 12.5, lineHeight: 1.5, borderRadius: 8, padding: "6px 10px", background: "#f0f9ff", borderLeft: "3px solid #0e7490", overflowWrap: "break-word" as const };
@@ -165,7 +167,7 @@ function toCard(regimen: Regimen): TxCard {
     alerts: alerts.map((a) => ({ id: a.id, level: a.level, title: a.title, text: a.text, checklist: a.checklist, sources: a.sources })),
     flags,
     extra: <SupplementBox regimen={regimen} />,
-    linkTexts: regimen.drugs.map((d) => `${d.name}: ${d.dose}`),
+    linkTexts: resolvedDrugs(regimen).map((d) => `${d.name}: ${d.dose}`),
     linkScenario: regimen.scenario,
     sources: [`QĐ ${DOCS[regimen.source.doc].number} (${DOCS[regimen.source.doc].date}) — ${regimen.source.section}; ${regimen.source.page}`],
   };

@@ -31,6 +31,10 @@ const REVIEW_PHRASES: RegExp[] = [
 /* Du lieu BYT giu nguyen van (co test bao ve); khi HIEN THI doi cau giong van ban sang van phong
    dieu tri cung noi ham. Khoa = chuoi con nguyen van trong du lieu. */
 const DISPLAY_REWRITES: [string, string][] = [
+  /* "Lieu nhu tren": thay bang lieu cua phuong an duoc tham chieu trong CUNG muc nguon. */
+  ["liều như trên (500–750 mg 1 lần/ngày)", "500–750 mg 1 lần/ngày, uống hoặc TM"],
+  ["+ gentamycin liều như trên.", "+ gentamycin 5–7,5 mg/kg/ngày TB hoặc TM, 1 lần/ngày."],
+  ["Thể mạn: itraconazol như trên ít nhất 1 năm", "Thể mạn: itraconazol 200 mg 1–2 lần/ngày, ít nhất 1 năm"],
   ["Văn bản nêu 2 dạng liều ceftazidim ở 2 vị trí khác nhau (2 g x 2–3 lần/ngày khi nghi ngờ; 1 g mỗi 8 giờ khi đã xác định): giữ nguyên, cần thẩm định.", "Ceftazidim: 2 g x 2–3 lần/ngày khi mới nghi ngờ; 1 g mỗi 8 giờ khi đã xác định tác nhân."],
   ["Văn bản không nêu riêng thời gian cho MSSA ở nhánh này", ""],
   ["7 ngày (theo văn bản)", "7 ngày"],

@@ -18,6 +18,7 @@
 */
 
 import { ALL_REGIMENS, isConcreteRegimen, type Regimen } from "./regimens";
+import { resolvedDrugs } from "./dose-references";
 
 export type DoseEvidence = "SOURCE_DOSE" | "SUPPLEMENTED" | "MISSING_DOSE_EVIDENCE";
 
@@ -115,6 +116,17 @@ export const DOSE_SUPPLEMENTS: DoseSupplement[] = [
     checkedOn: CHECKED,
     coversAll: true,
     stillMissing: ["Streptomycin trẻ em: Phụ lục 6 Bảng 1 chỉ có cột người lớn 15 (12–18) mg/kg – không có liều trẻ em trong văn bản."],
+  },
+
+  /* ---------- Viem khop nhiem khuan (QĐ 708, tr. 164): MSSA "lieu nhu tren" -> lieu phac do ban dau cung muc ---------- */
+  {
+    regimenId: "r-sa-mssa",
+    kind: "same-document",
+    items: [{ drug: "Một trong", dose: resolvedDrugs({ id: "r-sa-mssa", drugs: [{ name: "Một trong", dose: "" }] })[0].dose }],
+    scope: "Văn bản ghi \"oxacilin; nafcilin; clindamycin (liều như trên)\" – liều lấy từ phương án điều trị ban đầu cùng mục (oxacilin hoặc nafcilin; clindamycin).",
+    source: { title: "QĐ 708/QĐ-BYT (2015) – Hướng dẫn sử dụng kháng sinh", locator: "Viêm khớp nhiễm khuẩn, mục 4.2.1a, tr. 164" },
+    checkedOn: "13/11/2026",
+    coversAll: true,
   },
 
   /* ---------- Gian phe quan (QĐ 708, muc 4.3): van ban ghi "nhu muc tren" ---------- */

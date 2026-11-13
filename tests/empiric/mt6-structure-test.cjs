@@ -9,6 +9,8 @@ const A = load("data/antibiotics/empiric/safety-alerts.ts");
 const I = load("data/antibiotics/empiric/international.ts");
 const CAP = load("components/antibiotics/CapByt2026.tsx");
 const HV = load("components/antibiotics/HapVap2023.tsx");
+/* "Lieu nhu tren" giai bang chuoi nguyen van cua phuong an duoc tham chieu (cung van ban, cung muc). */
+const { resolvedDrugs } = load("data/antibiotics/empiric/dose-references.ts");
 let pass = 0, fail = 0;
 const check = (n, ok, d) => { ok ? pass++ : fail++; console.log(`${ok ? "PASS" : "FAIL"}  ${n}${!ok && d !== undefined ? "  — " + JSON.stringify(d).slice(0, 400) : ""}`); };
 const byId = new Map(R.ALL_REGIMENS.map((r) => [r.id, r]));
@@ -23,14 +25,15 @@ check("300 phương án BYT gốc vẫn còn đủ (lớp cấu trúc không s�
 check(`Tách cấu trúc được cho toàn bộ ${shown.size} phương án đang hiển thị`, all.length === shown.size && all.every(({ s }) => s.groups.length > 0));
 const rawLost = all.filter(({ r, s }) => {
   const raws = s.groups.flatMap((g) => g.raw);
-  return raws.length !== r.drugs.length || raws.some((x, i) => x.name !== r.drugs[i].name || x.dose !== r.drugs[i].dose);
+  const src = resolvedDrugs(r);
+  return raws.length !== src.length || raws.some((x, i) => x.name !== src[i].name || x.dose !== src[i].dose);
 });
 check("Mỗi phương án giữ đủ nguyên văn từng mục thuốc (kể cả mục 'hoặc …' đã gộp nhóm)", rawLost.length === 0, rawLost.map((x) => x.r.id));
 
 const norm = (t) => (t ?? "").replace(/\s+/g, " ").trim();
 const invented = [];
 for (const { r, s } of all) {
-  const full = norm(r.drugs.map((d) => `${d.name} ${d.dose}`).join(" "));
+  const full = norm(resolvedDrugs(r).map((d) => `${d.name} ${d.dose}`).join(" "));
   for (const g of s.groups) for (const o of g.options) {
     for (const k of ["dose", "interval", "infusionDuration", "maxDose", "dailyDose", "course", "context"]) {
       const v = norm(o[k]);

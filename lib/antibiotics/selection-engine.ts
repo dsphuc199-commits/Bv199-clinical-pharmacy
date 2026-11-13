@@ -35,6 +35,7 @@ import {
 } from "@/components/antibiotics/HapVap2023";
 import { DISEASES, normalize } from "@/data/antibiotics/empiric/catalog";
 import { icdOf } from "@/data/antibiotics/empiric/icd10";
+import { resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 import { getIntlEntry } from "@/data/antibiotics/empiric/international";
 import {
   DOCS,
@@ -534,12 +535,12 @@ function fromRegimen(regimen: Regimen, reason: string): Option {
   return {
     id: regimen.id,
     title: regimen.scenario,
-    drugs: regimen.drugs.map((d) => ({ name: d.name, dose: d.dose })),
+    drugs: resolvedDrugs(regimen).map((d) => ({ name: d.name, dose: d.dose })),
     duration: regimen.duration ?? "Nguồn không ghi thời gian ở phương án này",
     reason,
     warnings: regimen.notes ?? [],
     source: docLabel(regimen),
-    noDose: doseEvidenceOf(regimen) === "MISSING_DOSE_EVIDENCE" || regimen.drugs.some((d) => NO_DOSE_RE.test(d.dose)),
+    noDose: doseEvidenceOf(regimen) === "MISSING_DOSE_EVIDENCE" || resolvedDrugs(regimen).some((d) => NO_DOSE_RE.test(d.dose)),
     alerts: safetyAlertsFor(regimen.id).map((a) => ({ level: a.level, title: a.title, text: a.text, checklist: a.checklist })),
     doseEvidence: doseEvidenceOf(regimen),
     supplement: supplementOf(regimen.id),

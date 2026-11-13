@@ -21,6 +21,13 @@
       "to": "NEEDS_REVIEW",
       "step": "Master Task 5 – Final (26/10/2026)",
       "reason": "Kiem tra thieu lieu chat hon: r-neo-late-gramneg ghi 'Ket hop imipenem: lieu khong neu trong van ban' (QĐ 315)."
+    },
+    {
+      "id": "v8-33",
+      "from": "NEEDS_REVIEW",
+      "to": "VERIFIED_SOURCE",
+      "step": "Giai tham chieu 'lieu nhu tren' (13/11/2026)",
+      "reason": "Phuong an duy nhat thieu lieu r-sa-mssa ghi 'oxacilin; nafcilin; clindamycin (lieu nhu tren)': lieu lay bang code tu phuong an dieu tri ban dau CUNG muc 4.2.1a, tr. 164 QĐ 708 (r-sa-empiric-1, r-sa-empiric-2) – data/antibiotics/empiric/dose-references.ts. Khong con phuong an thieu lieu."
     }
   ]
 }

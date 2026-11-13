@@ -775,7 +775,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
         scenario: "ĐIỀU TRỊ ĐÍCH – liên cầu miệng/S. gallolyticus tăng phơi nhiễm hoặc kháng penicilin (I, B)",
         options: [
           "Van tự nhiên, 4 tuần + gentamicin 2 tuần: penicilin G 24 triệu U/ngày TM chia 4–6 lần hoặc truyền liên tục; amoxicilin 12 g/ngày TM chia 4–6 lần; ceftriaxon 2 g/ngày TM 1 lần; gentamicin 3 mg/kg/ngày TM hoặc TB 1 lần",
-          "Van nhân tạo, 6 tuần + gentamicin 2 tuần: cùng liều như trên",
+          "Van nhân tạo, 6 tuần + gentamicin 2 tuần: penicilin G 24 triệu U/ngày TM chia 4–6 lần hoặc truyền liên tục; amoxicilin 12 g/ngày TM chia 4–6 lần; ceftriaxon 2 g/ngày TM 1 lần; gentamicin 3 mg/kg/ngày TM hoặc TB 1 lần",
           "Dị ứng beta-lactam (I, C): vancomycin 30 mg/kg/ngày TM chia 2 lần – 4 tuần (van tự nhiên); 6 tuần + gentamicin 2 tuần (van nhân tạo)",
         ],
         guidelineId: ESC_IE,
@@ -787,7 +787,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
         options: [
           "Van tự nhiên, 4–6 tuần – người lớn: (flu)cloxacilin 12 g/ngày TM chia 4–6 lần hoặc cefazolin 6 g/ngày TM chia 3 lần; trẻ em: (flu)cloxacilin 200–300 mg/kg/ngày chia đều 4–6 lần hoặc cefazolin 100 mg/kg/ngày chia 3–4 lần, tối đa 6 g/ngày",
           "Van nhân tạo, ≥ 6 tuần: (flu)cloxacilin hoặc cefazolin + rifampin 900 mg/ngày TM hoặc uống chia đều 3 lần (trẻ em 20 mg/kg/ngày, tối đa 900 mg/ngày) + gentamicin 3 mg/kg/ngày TM hoặc TB 1 lần (ưu tiên) hoặc 2 lần, 2 tuần",
-          "Dị ứng penicilin (I, B): cefazolin như trên (van tự nhiên 4–6 tuần; van nhân tạo + rifampin ≥ 6 tuần + gentamicin 2 tuần). Cefazolin chỉ thay cloxacilin khi phản ứng quá mẫn KHÔNG tức thì",
+          "Dị ứng penicilin (I, B): cefazolin 6 g/ngày TM chia 3 lần (trẻ em 100 mg/kg/ngày chia 3–4 lần, tối đa 6 g/ngày) (van tự nhiên 4–6 tuần; van nhân tạo + rifampin ≥ 6 tuần + gentamicin 2 tuần). Cefazolin chỉ thay cloxacilin khi phản ứng quá mẫn KHÔNG tức thì",
           "Dị ứng penicilin (IIb, C): daptomycin 10 mg/kg/ngày TM 1 lần + ceftarolin 1800 mg/ngày TM chia 3 lần HOẶC fosfomycin 8–12 g/ngày TM chia 4 lần (van nhân tạo: thêm gentamicin hoặc rifampin)",
         ],
         note: "Chú thích Bảng 8: cloxacilin không dùng khi dị ứng penicilin; ceftarolin liều cao có thể gây giảm bạch cầu sau 2 tuần; fosfomycin – tải natri cao có thể gây suy tim cấp ở người suy tim.",

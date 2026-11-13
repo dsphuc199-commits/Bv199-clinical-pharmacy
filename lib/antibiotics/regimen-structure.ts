@@ -22,6 +22,7 @@
 
 import { ALL_REGIMENS, type Regimen, type RegimenRole } from "@/data/antibiotics/empiric/regimens";
 import { renalDosingDatabase } from "@/data/renal-dosing";
+import { resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 
 import { findDrugs } from "./drug-links";
 import { mdrOf, severityOf } from "./clinical-filters";
@@ -516,7 +517,7 @@ function populationOfScenario(text: string): StructuredRegimen["population"] {
 }
 
 export function structureOf(regimen: Regimen): StructuredRegimen {
-  const groups = buildGroups(regimen.drugs);
+  const groups = buildGroups(resolvedDrugs(regimen));
   const all = groups.flatMap((g) => g.options);
   const core = groups.filter((g) => g.label !== "Hỗ trợ").flatMap((g) => g.options);
   const reviewReasons: string[] = [];

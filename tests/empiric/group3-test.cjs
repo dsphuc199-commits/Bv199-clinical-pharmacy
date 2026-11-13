@@ -27,7 +27,7 @@ check("Ghi chú BYT gốc giữ nguyên; chỉ thêm ghi chú ĐỐI CHIẾU LI�
 // 2. Trang thai
 const s = E.summarize();
 check(`69 bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === 69 && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
-check("Nhóm 3: không tự nâng VERIFIED_SOURCE; v9-1 vẫn MISSING_EVIDENCE", G3.filter((x) => x !== "v9-1").every((id) => E.evidenceFor(id).status === "NEEDS_REVIEW") && E.evidenceFor("v9-1").status === "MISSING_EVIDENCE");
+check("Nhóm 3: không tự nâng VERIFIED_SOURCE (ngoài thay đổi có chủ đích); v9-1 vẫn MISSING_EVIDENCE", G3.filter((x) => x !== "v9-1").every((id) => E.evidenceFor(id).status === EXP.expected[id]) && E.evidenceFor("v9-1").status === "MISSING_EVIDENCE");
 
 // 3. Nguon quoc te
 for (const id of G3) {
