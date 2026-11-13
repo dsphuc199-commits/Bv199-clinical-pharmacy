@@ -38,6 +38,7 @@ export const RECONCILIATION_NOTES: ReconciliationNote[] = [
       "Văn bản BYT hiện hành là QĐ 2147/QĐ-BYT ngày 15/7/2026, hiệu lực từ ngày ký, thay thế QĐ 4815/QĐ-BYT (20/11/2020). Đã xác minh trên kcb.vn ngày 25/10/2026.",
       "Đã ẩn các phương án CAP nặng/ICU của QĐ 1493/QĐ-BYT (2015) vì QĐ 2147 đã bao phủ các tình huống này. Phác đồ áp dụng xem trong module CAP bên dưới.",
       "Giữ mục \"Viêm phổi do hít hoặc do vi khuẩn kỵ khí\" của QĐ 1493 để tham khảo, vì module CAP chưa có mục riêng cho tình huống này. Cần đối chiếu toàn văn QĐ 2147.",
+      "Quốc tế: ATS 2025 (Jones BE và cs., DOI 10.1164/rccm.202507-1692ST; ATS phê duyệt 05/2025, IDSA không phê duyệt) cập nhật 4 câu hỏi của ATS/IDSA 2019: siêu âm phổi, kháng sinh khi xét nghiệm virus hô hấp dương tính, thời gian kháng sinh, corticoid toàn thân. Phác đồ kháng sinh kinh nghiệm không đổi. Khác QĐ 2147 ở thời gian kháng sinh và cách dùng corticoid – xem tab Đối chiếu.",
     ],
     sources: [{ label: "QĐ 2147/QĐ-BYT – kcb.vn", url: KCB_2147 }],
   },

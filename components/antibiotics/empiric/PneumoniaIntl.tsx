@@ -116,6 +116,8 @@ function CapTool({ al }: { al: boolean }) {
         <div className="sa24-dx">
           <p><b>Chẩn đoán</b> {dx}</p>
           <p><b>Phác đồ</b> {noAbx ? "Đề nghị không kê kháng sinh kinh nghiệm; chỉ dùng phác đồ dưới đây khi nghi đồng nhiễm vi khuẩn." : o.headline}</p>
+          <p><b>Thời gian</b> {severe ? "Từ 5 ngày trở lên, sau khi đạt ổn định lâm sàng (Mạnh · thấp)." : "Dưới 5 ngày, tối thiểu 3 ngày, khi đạt ổn định lâm sàng và không có yếu tố cần điều trị dài hơn (Có ĐK · thấp)."}</p>
+          {setting === "in" && <p><b>Corticoid</b> {severe ? "Đề nghị dùng sớm; không áp dụng cho viêm phổi nặng do cúm (Có ĐK · thấp)." : "Không dùng, trừ khi có chỉ định khác (Mạnh · thấp)."}</p>}
           <p><b>Hướng dẫn</b> ATS/IDSA 2019; ATS 2025; Lộ trình lâm sàng IDSA</p>
         </div>
         <Legend rows={[...L_GRADE, L_PW]} />
@@ -229,7 +231,7 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
 
 const TITLE: Record<Kind, string> = { cap: "Viêm phổi cộng đồng – người lớn", hap: "Viêm phổi bệnh viện – người lớn", vap: "Viêm phổi liên quan thở máy – người lớn" };
 const SRC: Record<Kind, string> = {
-  cap: "ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn (Am J Respir Crit Care Med 2019;200:e45–e67); ATS 2025 – cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (Am J Respir Crit Care Med 2026;212:24–44; IDSA chưa thông qua); IDSA – Lộ trình lâm sàng viêm phổi cộng đồng",
+  cap: "ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn (Am J Respir Crit Care Med 2019;200:e45–e67); ATS 2025 – cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST; ATS phê duyệt 05/2025, IDSA không phê duyệt); IDSA – Lộ trình lâm sàng viêm phổi cộng đồng",
   hap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
   vap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
 };

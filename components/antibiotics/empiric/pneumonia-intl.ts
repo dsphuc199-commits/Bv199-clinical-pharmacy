@@ -1,7 +1,7 @@
 /*
   Viem phoi – du lieu cong cu chon khang sinh theo nguon quoc te (nguoi lon, mien dich binh thuong).
   - VPCD: ATS/IDSA 2019 (Metlay JP et al. Am J Respir Crit Care Med 2019;200:e45–e67), Bang 1, 3, 4; Q1–Q16.
-    Cap nhat ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 2026;212:24–44): sieu am phoi, virus duong tinh,
+    Cap nhat ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 212(1):24–44, DOI 10.1164/rccm.202507-1692ST): sieu am phoi, virus duong tinh,
     thoi gian khang sinh, corticoid – thay khuyen cao 2019 tuong ung (Q12, Q14, Q15).
     Bo sung thuc hanh: IDSA CAP Clinical Pathway (dau ‡ trong ban goc) -> grade "PW".
   - VPBV/VPLQTM: IDSA/ATS 2016 (Kalil AC et al. Clin Infect Dis 2016;63:e61–e111), Bang 2–4; muc I–XXV.
@@ -147,7 +147,7 @@ export function capPlans(i: CapIn): CapOut {
   return { headline, plans, mrsa, pa, notes };
 }
 
-/* ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 2026;212:24–44) cap nhat 4 cau hoi: sieu am phoi (Q1),
+/* ATS 2025 (Jones BE et al. Am J Respir Crit Care Med 212(1):24–44, DOI 10.1164/rccm.202507-1692ST) cap nhat 4 cau hoi: sieu am phoi (Q1),
    khang sinh khi xet nghiem virus ho hap duong tinh (Q2), thoi gian khang sinh (Q3), corticoid (Q4).
    Phac do khang sinh van theo ATS/IDSA 2019 (ATS 2025 dan chieu lai). ref "A25 Qn" = ATS 2025. */
 export type CapCtx = { setting: "out" | "in"; severe: boolean; comorb: boolean; virus: boolean };

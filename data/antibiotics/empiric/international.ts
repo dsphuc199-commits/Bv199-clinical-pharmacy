@@ -176,6 +176,17 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     checkedOn: CHECKED,
     checkNote: "Trang IDSA ghi trạng thái CURRENT. Phác đồ và liều đọc từ Table 3–4 (PMC6812437).",
   },
+  "ats-cap-2025": {
+    id: "ats-cap-2025",
+    org: "ATS",
+    title: "Diagnosis and Management of Community-acquired Pneumonia. An Official American Thoracic Society Clinical Practice Guideline",
+    citation: "Jones BE và cs. Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST",
+    published: "18/07/2025",
+    url: "https://doi.org/10.1164/rccm.202507-1692ST",
+    status: "extracted",
+    checkedOn: "14/11/2026",
+    checkNote: "Đọc toàn văn PDF do người dùng cung cấp. Cập nhật 4 câu hỏi (siêu âm phổi; kháng sinh khi xét nghiệm virus hô hấp dương tính; thời gian kháng sinh; corticoid toàn thân). ATS phê duyệt 05/2025; IDSA không phê duyệt. Phác đồ kháng sinh kinh nghiệm vẫn theo ATS/IDSA 2019.",
+  },
   "atsidsa-hapvap-2016": {
     id: "atsidsa-hapvap-2016",
     org: "ATS/IDSA",
@@ -481,13 +492,19 @@ export const INTL_ENTRIES: IntlEntry[] = [
   // ================= CAP =================
   {
     diseaseId: "v8-1",
-    guidelineIds: ["atsidsa-cap-2019"],
-    scope: "Người lớn, viêm phổi cộng đồng, miễn dịch bình thường (Hoa Kỳ).",
+    guidelineIds: ["atsidsa-cap-2019", "ats-cap-2025"],
+    scope: "Người lớn, viêm phổi cộng đồng, miễn dịch bình thường (Hoa Kỳ). Phác đồ kháng sinh theo ATS/IDSA 2019; siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh và corticoid theo ATS 2025 (thay khuyến cáo 2019 tương ứng).",
     recommendations: [
       { text: "Macrolid đơn trị ngoại trú chỉ dùng ở khu vực có tỷ lệ phế cầu kháng macrolid < 25%.", guidelineId: "atsidsa-cap-2019", locator: "Question 8; Table 3 chú thích †" },
       { text: "Bệnh đồng mắc gồm: bệnh tim, phổi, gan hoặc thận mạn; đái tháo đường; nghiện rượu; bệnh ác tính; hoặc không có lách.", guidelineId: "atsidsa-cap-2019", locator: "Table 3 chú thích ‡" },
       { text: "Không thường quy bổ sung thuốc phủ kỵ khí cho nghi viêm phổi hít, trừ khi nghi áp xe phổi hoặc mủ màng phổi.", grade: "Có điều kiện; bằng chứng rất thấp", guidelineId: "atsidsa-cap-2019", locator: "Question 10" },
-      { text: "Tiếp tục kháng sinh tới khi bệnh nhân ổn định và tổng thời gian không dưới 5 ngày.", guidelineId: "atsidsa-cap-2019", locator: "Question 15" },
+      { text: "Nghi viêm phổi cộng đồng: siêu âm phổi là lựa chọn thay thế chấp nhận được cho X-quang ngực tại cơ sở có chuyên môn phù hợp.", grade: "Có điều kiện; bằng chứng thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 1" },
+      { text: "Xét nghiệm virus hô hấp dương tính, ngoại trú, không bệnh đồng mắc: đề nghị không dùng kháng sinh kinh nghiệm; vẫn cân nhắc kháng sinh khi nghi đồng nhiễm vi khuẩn, nguy cơ cao nếu bỏ sót hoặc khó theo dõi.", grade: "Có điều kiện; bằng chứng rất thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 2; Bảng 1" },
+      { text: "Xét nghiệm virus hô hấp dương tính, ngoại trú có bệnh đồng mắc hoặc nội trú (nặng và không nặng): đề nghị dùng kháng sinh kinh nghiệm.", grade: "Có điều kiện; bằng chứng rất thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 2; Bảng 5" },
+      { text: "Ngoại trú và nội trú không nặng, đạt ổn định lâm sàng: đề nghị kháng sinh dưới 5 ngày (tối thiểu 3 ngày) thay vì từ 5 ngày trở lên.", grade: "Có điều kiện; bằng chứng thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 3; Bảng 6" },
+      { text: "Viêm phổi nặng, đạt ổn định lâm sàng: khuyến cáo kháng sinh từ 5 ngày trở lên.", grade: "Mạnh; bằng chứng thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 3" },
+      { text: "Nội trú không nặng: khuyến cáo không dùng corticoid toàn thân.", grade: "Mạnh; bằng chứng thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 4" },
+      { text: "Viêm phổi nặng: đề nghị dùng corticoid toàn thân; không áp dụng cho viêm phổi nặng do cúm. Hướng dẫn không khuyến cáo thuốc, liều và thời gian cụ thể.", grade: "Có điều kiện; bằng chứng thấp", guidelineId: "ats-cap-2025", locator: "Câu hỏi 4; Bảng 1" },
     ],
     regimens: [
       {
