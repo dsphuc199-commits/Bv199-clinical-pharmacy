@@ -30,8 +30,10 @@ function cookie() {
       const errors = [];
       const onErr = (e) => errors.push(e.message || e.text());
       page.on("pageerror", onErr);
-      const onCon = (m) => { if (m.type() === "error") errors.push(m.text()); };
+      const onCon = (m) => { if (m.type() === "error") errors.push(m.text() + (m.location()?.url ? ` [${m.location().url}]` : "")); };
       page.on("console", onCon);
+      const onRes = (r) => { if (r.status() >= 400) errors.push(`HTTP ${r.status()} ${r.url()}`); };
+      page.on("response", onRes);
       const url = `${base}/antibiotics/empiric/guideline-v9?disease=${id}`;
       try {
         const res = await page.goto(url, { waitUntil: "networkidle" });
@@ -75,7 +77,7 @@ function cookie() {
         check(`${id}: chạy kiểm tra`, false, e.message.split("\n")[0]);
       }
       check(`${id}: không lỗi console`, errors.length === 0, errors.slice(0, 2).join(" | "));
-      page.off("pageerror", onErr); page.off("console", onCon);
+      page.off("pageerror", onErr); page.off("console", onCon); page.off("response", onRes);
     }
   } finally {
     await browser.close();

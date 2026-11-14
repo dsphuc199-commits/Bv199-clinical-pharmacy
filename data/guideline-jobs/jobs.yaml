@@ -291,9 +291,9 @@ jobs:
     class: antibacterial
     priority: 3
     preferred_orgs: []
-    status: audited
+    status: published
     last_checked: 2026-11-14
-    published_at: null
+    published_at: 2026-11-14
     notes: "JSON data/guidelines/intl/sot-giam-bach-cau-trung-tinh.json – ECIL-10 (người lớn), IPFN 2023 (trẻ em). population trong JSON: adult + child (trường population của job chỉ nhận 1 giá trị nên để null)."
   - id: sot-giam-bach-cau-trung-tinh-nguy-co-cao
     disease_id: v8-116
@@ -306,9 +306,9 @@ jobs:
     class: antibacterial
     priority: 3
     preferred_orgs: []
-    status: audited
+    status: published
     last_checked: 2026-11-14
-    published_at: null
+    published_at: 2026-11-14
     notes: "JSON data/guidelines/intl/sot-giam-bach-cau-trung-tinh-nguy-co-cao.json – ECIL-10 (người lớn), IPFN 2023 (trẻ em). population trong JSON: adult + child (trường population của job chỉ nhận 1 giá trị nên để null)."
   - id: lao-phoi
     disease_id: v8-142

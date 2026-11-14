@@ -11,3 +11,4 @@ Mỗi lần chạy nối một mục: ngày, bệnh, nguồn, kết quả valida
   - Đã sửa: thêm dòng carbapenem có điều kiện (sepsis + nguy cơ Gram âm kháng beta-lactam, slide 11, A-IIu); tách phần giải thích IPFN A6a/A7b thành dòng không xếp mức; ghi rõ phiên bản bài báo ECIL-10; cập nhật current_version_check.
   - Còn lại: mức khuyến cáo ECIL-10 lấy từ slide, chưa đối chiếu bản bài báo sau bình duyệt (ghi trong gaps).
 - CẦN XÁC MINH: 0.
+- Xuất bản 2026-11-14 (commit cffbee2, Vercel Production Ready). Kiểm tra trang thật https://bv199-clinical-pharmacy.vercel.app/antibiotics/empiric/guideline-v9?disease=v8-113 và ?disease=v8-116: tiêu đề, nhãn bản nháp, khối khuyến cáo, đổi trục cho kết quả khác – PASS. Lỗi console duy nhất là 404 do prefetch /pkpd (liên kết điều hướng có sẵn của app, gặp cả ở trang v8-14), không liên quan nội dung này.
