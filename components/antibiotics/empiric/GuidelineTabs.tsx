@@ -43,6 +43,8 @@ import LungAbscessInternational from "./LungAbscessInternational";
 import EsblIdsa2026 from "./EsblIdsa2026";
 import GnbBsiIntl from "./GnbBsiIntl";
 import SabIntl from "./SabIntl";
+import IntlGuidelineView from "./IntlGuidelineView";
+import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
 
@@ -140,6 +142,9 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
   if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;
+  /* JSON huong dan quoc te (data/guidelines/intl, lenh /guideline-live): xep sau cong cu viet tay; khong ap cho mat benh co module rieng. */
+  const intlJson = INTL_GUIDELINE_JSON[diseaseId];
+  if (intlJson && !getIntlEntry(diseaseId)?.module) return <section className="bv199-panel gt199"><IntlGuidelineView data={intlJson} /><GtStyle /></section>;
   const entry = getIntlEntry(diseaseId);
 
   if (!entry) {

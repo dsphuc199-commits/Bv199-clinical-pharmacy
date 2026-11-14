@@ -124,6 +124,7 @@ export function RxToolStyle() {
         .sa24-g-c { background: #fff3d6; color: #8a5a00; }
         .sa24-g-d { background: #fde4e4; color: #9b1c1c; }
         .sa24-g-gps { background: #e6f0fb; color: #1d4f8a; }
+        .sa24-g-đ { background: #e6f0fb; color: #1d4f8a; }
         .sa24-warn { margin: 0; font-size: 13px; line-height: 1.55; color: #7c2d12; background: #fff4ed; border: 1px solid #f6cfb5; border-radius: 8px; padding: 6px 10px; }
         .sa24-lead { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.55; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
         .sa24-tip { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4b6576; }

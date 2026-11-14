@@ -1,0 +1,2508 @@
+{
+  "schema_version": 1,
+  "slug": "nkh-s-aureus",
+  "disease_id": "v8-13",
+  "name_vi": "Nhiễm khuẩn huyết do S. aureus",
+  "name_en": "Staphylococcus aureus bacteremia",
+  "icd10": [
+    "A41.0",
+    "A41.1"
+  ],
+  "population": [
+    "adult",
+    "child",
+    "neonate"
+  ],
+  "status": "extracted",
+  "header": {
+    "eyebrow": "Phân tầng nguy cơ – thăm dò – điều trị",
+    "title": "Nhiễm khuẩn huyết do Staphylococcus aureus",
+    "flow": [
+      "Đánh giá ban đầu",
+      "Phân tầng nguy cơ",
+      "Thăm dò cá thể hóa",
+      "Phân loại cuối cùng, thời gian",
+      "Vancomycin khi MRSA"
+    ]
+  },
+  "axes": [
+    {
+      "id": "age",
+      "label": "Đối tượng",
+      "type": "seg",
+      "default": "adult",
+      "options": [
+        {
+          "id": "adult",
+          "label": "Người lớn"
+        },
+        {
+          "id": "child",
+          "label": "Trẻ em (≥ 28 ngày)"
+        },
+        {
+          "id": "neo",
+          "label": "Sơ sinh (< 28 ngày)"
+        }
+      ]
+    },
+    {
+      "id": "risks",
+      "label": "Yếu tố nguy cơ",
+      "type": "multi",
+      "default": [],
+      "visible_when": {
+        "age": "adult"
+      },
+      "options": [
+        {
+          "id": "community",
+          "label": "Nhiễm khuẩn huyết khởi phát tại cộng đồng",
+          "group": "Yếu tố nguy cơ chính",
+          "suffix": "*"
+        },
+        {
+          "id": "bc48",
+          "label": "Cấy máu còn dương tính ở mẫu lấy 48 giờ sau mẫu dương tính đầu tiên",
+          "group": "Yếu tố nguy cơ chính",
+          "suffix": "*"
+        },
+        {
+          "id": "device",
+          "label": "Có dụng cụ trong tim (van tim nhân tạo, máy tạo nhịp vĩnh viễn, máy phá rung cấy được, dụng cụ hỗ trợ thất trái)",
+          "group": "Yếu tố nguy cơ chính",
+          "suffix": "*"
+        },
+        {
+          "id": "valve",
+          "label": "Bệnh lý van tim dễ mắc (yếu tố thuận lợi)",
+          "group": "Yếu tố nguy cơ khác",
+          "suffix": "*"
+        },
+        {
+          "id": "pwid",
+          "label": "Tiêm chích ma túy",
+          "group": "Yếu tố nguy cơ khác",
+          "suffix": "*"
+        },
+        {
+          "id": "graft",
+          "label": "Mảnh ghép nội mạch",
+          "group": "Yếu tố nguy cơ khác"
+        },
+        {
+          "id": "prior90",
+          "label": "Nhiễm khuẩn huyết do S. aureus trong 90 ngày trước",
+          "group": "Yếu tố nguy cơ khác"
+        },
+        {
+          "id": "focal",
+          "label": "Triệu chứng, dấu hiệu khu trú gợi ý ổ nhiễm sâu hoặc di bệnh",
+          "group": "Yếu tố nguy cơ khác"
+        },
+        {
+          "id": "embolic",
+          "label": "Biến cố tắc mạch",
+          "group": "Yếu tố nguy cơ khác",
+          "suffix": "*"
+        },
+        {
+          "id": "multifocal",
+          "label": "Hơn một ổ nhiễm khuẩn không liền kề",
+          "group": "Yếu tố nguy cơ khác",
+          "suffix": "*"
+        },
+        {
+          "id": "unknown",
+          "label": "Chưa xác định được ổ nhiễm khuẩn",
+          "group": "Yếu tố nguy cơ khác"
+        }
+      ],
+      "tip": "* Đặc điểm tăng nguy cơ viêm nội tâm mạc. Khởi phát cộng đồng (định nghĩa thống nhất trong các nghiên cứu): mẫu cấy máu dương tính đầu tiên lấy trước hoặc trong 48 giờ sau nhập viện."
+    },
+    {
+      "id": "final",
+      "label": "Kết quả thăm dò",
+      "type": "seg",
+      "default": "pending",
+      "visible_when": {
+        "age": "adult"
+      },
+      "options": [
+        {
+          "id": "pending",
+          "label": "Đang đánh giá"
+        },
+        {
+          "id": "nofocus",
+          "label": "Không có ổ nhiễm sâu"
+        },
+        {
+          "id": "focus",
+          "label": "Có ổ nhiễm sâu, di bệnh"
+        }
+      ]
+    },
+    {
+      "id": "vpop",
+      "label": "Nhóm người bệnh",
+      "type": "seg",
+      "default": "std",
+      "placement": "output",
+      "options": [
+        {
+          "id": "std",
+          "label": "Người lớn"
+        },
+        {
+          "id": "obese",
+          "label": "Người lớn béo phì"
+        },
+        {
+          "id": "ihd",
+          "label": "Lọc máu chu kỳ"
+        },
+        {
+          "id": "sled",
+          "label": "Lọc máu lai (SLED)"
+        },
+        {
+          "id": "crrt",
+          "label": "Lọc máu liên tục (CRRT)"
+        },
+        {
+          "id": "ped",
+          "label": "Trẻ ≥ 3 tháng"
+        },
+        {
+          "id": "neo",
+          "label": "Sơ sinh – < 3 tháng"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "neo-note",
+      "position": "before",
+      "lead": "Sơ sinh (< 28 ngày tuổi, đặc biệt trẻ sinh non) cần xem xét riêng: ít khi tìm thấy ổ nhiễm khuẩn (không xác định được ổ ở 43% trẻ sơ sinh so với 9% trẻ 1–18 tuổi trong một nghiên cứu đa trung tâm) nhưng tỷ lệ viêm nội tâm mạc cao hơn (10–49% so với 1–6%) và tử vong cao hơn.",
+      "show_when": {
+        "age": "neo"
+      },
+      "items": []
+    },
+    {
+      "id": "vanco-head",
+      "position": "after",
+      "title": "Vancomycin – khi nghi ngờ hoặc xác định MRSA nặng",
+      "lead": "IDSA/ESCMID 2026 Part 1 chưa đưa khuyến cáo chọn thuốc cho MSSA/MRSA. Phần dưới chỉ là liều và theo dõi nồng độ vancomycin theo ASHP 2020 (chức năng thận bình thường, trừ các mục lọc máu).",
+      "controls": [
+        "vpop"
+      ],
+      "items": []
+    },
+    {
+      "id": "vanco-std",
+      "position": "after",
+      "items": [
+        {
+          "role": "Liều duy trì",
+          "text": "Truyền ngắt quãng; đa số người bệnh chức năng thận bình thường, giả định MIC 1 mg/L. Có thể không đạt đích khi MIC = 2 mg/L.",
+          "dose": "15–20 mg/kg (cân nặng thực) mỗi 8–12 giờ",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 9",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều nạp",
+          "text": "Bệnh nặng nghi ngờ hoặc xác định nhiễm MRSA nặng, để nhanh đạt nồng độ đích; theo cân nặng thực.",
+          "dose": "20–35 mg/kg; tối đa 3.000 mg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 12",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Truyền liên tục",
+          "text": "Bệnh nặng: có thể cân nhắc; là lựa chọn hợp lý khi không đạt đích AUC bằng truyền ngắt quãng (KC 6). Đích nồng độ ổn định 20–25 mg/L; AUC24 = nồng độ ổn định × 24. Chỉnh tốc độ truyền để đạt đích.",
+          "dose": "Nạp 15–20 mg/kg, sau đó 30–40 mg/kg/ngày (tới 60 mg/kg/ngày)",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 10",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Đường truyền",
+          "text": "Truyền liên tục: dùng đường truyền hoặc catheter riêng do tương kỵ với nhiều thuốc thường dùng ở hồi sức.",
+          "grade": "A-III",
+          "ref": "ASHP 2020 – KC 7",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Độc tính thận",
+          "text": "Nguy cơ độc thận của truyền liên tục tương đương hoặc thấp hơn truyền ngắt quãng (đích nồng độ ổn định 15–25 mg/L so với đáy 10–20 mg/L).",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 11",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi AUC",
+          "text": "Cách chính xác và tối ưu là chỉnh liều và theo dõi theo AUC. Ưu tiên: phần mềm Bayes với 1–2 nồng độ (ít nhất 1 nồng độ đáy); nên lấy 2 mẫu – 1–2 giờ sau truyền và cuối khoảng đưa liều.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 8b",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Cách khác",
+          "text": "2 nồng độ gần trạng thái ổn định (đỉnh sau phân bố 1–2 giờ sau truyền và đáy cuối khoảng đưa liều), tốt nhất trong cùng một khoảng đưa liều, tính AUC bằng phương trình dược động học bậc 1.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 8a",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Lưu ý",
+          "text": "Một nồng độ đáy đơn độc có thể đủ để ước tính AUC theo Bayes ở một số người bệnh, nhưng cần thêm dữ liệu.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 8b",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "std"
+      }
+    },
+    {
+      "id": "vanco-obese",
+      "position": "after",
+      "items": [
+        {
+          "role": "Liều nạp",
+          "text": "Người lớn béo phì nhiễm khuẩn nặng; theo cân nặng thực.",
+          "dose": "20–25 mg/kg; tối đa 3.000 mg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 13",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều duy trì",
+          "text": "Liều kinh nghiệm thường không vượt quá 4.500 mg/ngày, tùy chức năng thận.",
+          "dose": "Thường ≤ 4.500 mg/ngày",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 13",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi",
+          "text": "Theo dõi AUC sớm và thường xuyên để chỉnh liều, đặc biệt khi liều kinh nghiệm vượt 4.000 mg/ngày. Theo dõi điều trị sớm và tích cực hơn ở người béo phì (B-II, KC 12).",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 12–13",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi AUC",
+          "text": "Cách chính xác và tối ưu là chỉnh liều và theo dõi theo AUC. Ưu tiên: phần mềm Bayes với 1–2 nồng độ (ít nhất 1 nồng độ đáy); nên lấy 2 mẫu – 1–2 giờ sau truyền và cuối khoảng đưa liều.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 8b",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Cách khác",
+          "text": "2 nồng độ gần trạng thái ổn định (đỉnh sau phân bố 1–2 giờ sau truyền và đáy cuối khoảng đưa liều), tốt nhất trong cùng một khoảng đưa liều, tính AUC bằng phương trình dược động học bậc 1.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 8a",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Lưu ý",
+          "text": "Một nồng độ đáy đơn độc có thể đủ để ước tính AUC theo Bayes ở một số người bệnh, nhưng cần thêm dữ liệu.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 8b",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "obese"
+      }
+    },
+    {
+      "id": "vanco-ihd",
+      "position": "after",
+      "items": [
+        {
+          "role": "Sau lọc – màng thấm thấp",
+          "text": "Liều duy trì dùng 3 lần/tuần.",
+          "dose": "Nạp 25 mg/kg; duy trì 7,5 mg/kg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – Bảng lọc máu",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Sau lọc – màng thấm cao",
+          "text": "Liều duy trì dùng 3 lần/tuần.",
+          "dose": "Nạp 25 mg/kg; duy trì 10 mg/kg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – Bảng lọc máu",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Trong lọc – màng thấm thấp",
+          "text": "Truyền trong buổi lọc; liều duy trì dùng 3 lần/tuần.",
+          "dose": "Nạp 30 mg/kg; duy trì 7,5–10 mg/kg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – Bảng lọc máu",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Trong lọc – màng thấm cao",
+          "text": "Truyền trong buổi lọc; liều duy trì dùng 3 lần/tuần.",
+          "dose": "Nạp 35 mg/kg; duy trì 10–15 mg/kg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – Bảng lọc máu",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi",
+          "text": "Duy trì nồng độ trước lọc 15–20 mg/L nhiều khả năng đạt AUC 400–600 mg·h/L trong 24 giờ trước đó.",
+          "grade": "C-III",
+          "ref": "ASHP 2020 – KC 14",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Chỉnh liều",
+          "text": "Định lượng nồng độ trước lọc ít nhất mỗi tuần; nồng độ quyết định các liều sau, liều theo cân nặng chỉ là điểm khởi đầu.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 14",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "ihd"
+      }
+    },
+    {
+      "id": "vanco-sled",
+      "position": "after",
+      "items": [
+        {
+          "role": "Liều nạp",
+          "text": "Theo cân nặng thực; các phương thức lọc lai (SLED, PIRRT) thải vancomycin hiệu quả. Không trì hoãn liều đầu để chờ kết thúc buổi lọc.",
+          "dose": "20–25 mg/kg",
+          "grade": "B-III",
+          "ref": "ASHP 2020 – KC 15",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều duy trì",
+          "text": "Dùng sau khi kết thúc buổi lọc hoặc trong 60–90 phút cuối buổi lọc, như lọc máu chu kỳ. Các liều tiếp theo theo nồng độ thuốc.",
+          "dose": "15 mg/kg",
+          "grade": "B-III",
+          "ref": "ASHP 2020 – KC 15",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "sled"
+      }
+    },
+    {
+      "id": "vanco-crrt",
+      "position": "after",
+      "items": [
+        {
+          "role": "Liều nạp",
+          "text": "CRRT với tốc độ dịch thải theo KDIGO 20–25 mL/kg/giờ; theo cân nặng thực.",
+          "dose": "20–25 mg/kg",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 16",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều duy trì",
+          "text": "Khởi đầu với tốc độ dịch thải 20–25 mL/kg/giờ. Liều và khoảng đưa liều theo nồng độ thuốc, định lượng trong 24 giờ đầu. Quá tải dịch: có thể giảm liều khi người bệnh về thể tích bình thường.",
+          "dose": "7,5–10 mg/kg mỗi 12 giờ",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 16",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Truyền liên tục",
+          "text": "Có thể thay cho truyền ngắt quãng, nhất là khi tốc độ dịch lọc/dịch thẩm tách cao.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 16",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "crrt"
+      }
+    },
+    {
+      "id": "vanco-ped",
+      "position": "after",
+      "items": [
+        {
+          "role": "3 tháng – < 12 tuổi",
+          "text": "Chức năng thận bình thường, nghi nhiễm MRSA nặng (viêm phổi, viêm cơ mủ, viêm xương tủy đa ổ, nhiễm khuẩn huyết có biến chứng, viêm cân hoại tử).",
+          "dose": "60–80 mg/kg/ngày chia mỗi 6 giờ",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 17",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "≥ 12 tuổi",
+          "text": "Cùng điều kiện như trên.",
+          "dose": "60–70 mg/kg/ngày chia mỗi 6–8 giờ",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 17",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều tối đa",
+          "text": "Liều kinh nghiệm tối đa thường 3.600 mg/ngày khi chức năng thận đủ; đa số trẻ không cần quá 3.000 mg/ngày.",
+          "dose": "Thường ≤ 3.600 mg/ngày",
+          "grade": "C-III",
+          "ref": "ASHP 2020 – KC 18",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi sớm",
+          "text": "Định lượng sớm khi liều vượt 2.000–3.000 mg/ngày. Theo dõi sát nồng độ và chức năng thận khi thanh thải thận giảm hoặc tăng (chức năng thận có thể hồi phục trong 5 ngày đầu).",
+          "grade": "A-III",
+          "ref": "ASHP 2020 – KC 18",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi AUC",
+          "text": "Theo dõi theo AUC, ưu tiên ước tính Bayes, cho mọi lứa tuổi: Bayes với 1 nồng độ đáy hoặc phương trình dược động học bậc 1 với 2 nồng độ. Theo dõi cả nồng độ thuốc và chức năng thận.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 19",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Thời điểm",
+          "text": "Có thể bắt đầu định lượng trong 24–48 giờ đầu; chỉnh liều khi suy thận, béo phì, dùng đồng thời thuốc độc thận.",
+          "grade": "B-III",
+          "ref": "ASHP 2020 – KC 20",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Ngưỡng an toàn",
+          "text": "Duy trì AUC < 800 mg·h/L và nồng độ đáy < 15 mg/L để giảm tổn thương thận cấp.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 21",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Tránh",
+          "text": "Tránh liều ≥ 100 mg/kg/ngày (nhiều khả năng vượt các ngưỡng trên); độ an toàn trên 80 mg/kg/ngày chưa được đánh giá tiến cứu.",
+          "grade": "B-III",
+          "ref": "ASHP 2020 – KC 21",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Liều nạp",
+          "text": "Trẻ không béo phì: chưa đủ dữ liệu để khuyến cáo; có thể cân nhắc liều nạp từ nghiên cứu ở người lớn.",
+          "grade": "C-III",
+          "ref": "ASHP 2020 – KC 22",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Trẻ béo phì",
+          "text": "Liều nạp theo tổng cân nặng (A-III). Liều mg/kg kinh nghiệm như trẻ không béo phì; trẻ < 12 tuổi có thể cần liều mg/kg cao hơn trẻ ≥ 12 tuổi; theo dõi nồng độ như trẻ không béo phì (B-II).",
+          "dose": "Nạp 20 mg/kg",
+          "grade": "A-III",
+          "ref": "ASHP 2020 – KC 23–24",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "ped"
+      }
+    },
+    {
+      "id": "vanco-neo",
+      "position": "after",
+      "items": [
+        {
+          "role": "Sơ sinh, < 3 tháng",
+          "text": "Liều để đạt AUC 400 mg·h/L (giả định MIC 1 mg/L), tùy tuổi sau kinh chót, cân nặng và creatinin huyết thanh.",
+          "dose": "10–20 mg/kg mỗi 8–48 giờ",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 25",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Theo dõi AUC",
+          "text": "Theo dõi theo AUC, ưu tiên ước tính Bayes (thanh thải vancomycin thay đổi theo phát triển từ sơ sinh đến vị thành niên).",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 19",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ],
+      "show_when": {
+        "vpop": "neo"
+      }
+    },
+    {
+      "id": "vanco-common",
+      "position": "after",
+      "title": "Nguyên tắc chung vancomycin",
+      "items": [
+        {
+          "role": "Đích",
+          "text": "Nhiễm MRSA nặng nghi ngờ hoặc xác định: đích AUC/MIC 400–600 (giả định MIC vi pha loãng = 1 mg/L), cá thể hóa để đạt hiệu quả và an toàn.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 1",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Thời điểm",
+          "text": "Đạt mức phơi nhiễm đích sớm, tốt nhất trong 24–48 giờ đầu; ước tính AUC theo Bayes không cần nồng độ ở trạng thái ổn định nên phù hợp cho đánh giá sớm.",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 2",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Không dùng",
+          "text": "Không còn khuyến cáo theo dõi chỉ bằng nồng độ đáy với đích 15–20 mg/L (dữ liệu hiệu quả và độc tính thận ở nhiễm MRSA nặng).",
+          "grade": "A-II",
+          "ref": "ASHP 2020 – KC 3",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Chỉ định theo dõi",
+          "text": "Theo dõi nồng độ cho mọi người bệnh nhiễm MRSA nặng; ngoài ra cho người bệnh nguy cơ cao độc tính thận (ví dụ bệnh nặng dùng đồng thời thuốc độc thận), chức năng thận không ổn định (xấu đi hoặc cải thiện rõ), điều trị kéo dài trên 3–5 ngày. Tần suất theo lâm sàng: thường xuyên hoặc hằng ngày khi huyết động không ổn định; mỗi tuần một lần khi ổn định.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 4",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "MIC",
+          "text": "Khi dùng liều kinh nghiệm, giả định MIC = 1 mg/L. MIC > 1 mg/L: khả năng đạt AUC/MIC 400 thấp với liều thông thường, tăng liều có thể gây độc – quyết định đổi thuốc theo lâm sàng. MIC < 1 mg/L: không giảm liều để đạt đích AUC/MIC.",
+          "grade": "B-II",
+          "ref": "ASHP 2020 – KC 5",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        },
+        {
+          "role": "Pha, truyền",
+          "text": "Pha loãng (ví dụ nồng độ không quá 5 mg/mL), truyền trong ít nhất 60 phút hoặc tốc độ 10–15 mg/phút (1 giờ cho mỗi 1.000 mg) để giảm phản ứng liên quan tiêm truyền.",
+          "ref": "ASHP 2020 – Loading doses",
+          "source_ids": [
+            "ashp-idsa-vanco-2020"
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "adult-low-pending",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": true
+        },
+        "final": "pending"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ thấp – không có yếu tố nguy cơ nào ở thời điểm đánh giá; vẫn cần đủ các đánh giá khuyến cáo và theo dõi sát"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ thấp – theo dõi",
+          "items": [
+            {
+              "role": "Theo dõi",
+              "text": "\"Nguy cơ thấp\" không có nghĩa là \"không có nguy cơ\": tiếp tục khám lâm sàng nhắc lại và cấy máu kiểm tra; đánh giá lại khi xuất hiện yếu tố nguy cơ mới (nguy cơ có thể thay đổi theo thời gian).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-knownfocus-pending",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": false,
+          "includes_none": [
+            "unknown"
+          ]
+        },
+        "final": "pending"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Nếu chưa tìm thấy ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-unknownfocus-pending",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "includes_any": [
+            "unknown"
+          ]
+        },
+        "final": "pending"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Chưa rõ ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-low-nofocus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": true
+        },
+        "final": "nofocus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ thấp – không có yếu tố nguy cơ nào ở thời điểm đánh giá; vẫn cần đủ các đánh giá khuyến cáo và theo dõi sát"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ thấp – theo dõi",
+          "items": [
+            {
+              "role": "Theo dõi",
+              "text": "\"Nguy cơ thấp\" không có nghĩa là \"không có nguy cơ\": tiếp tục khám lâm sàng nhắc lại và cấy máu kiểm tra; đánh giá lại khi xuất hiện yếu tố nguy cơ mới (nguy cơ có thể thay đổi theo thời gian).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-knownfocus-nofocus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": false,
+          "includes_none": [
+            "unknown"
+          ]
+        },
+        "final": "nofocus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Nếu chưa tìm thấy ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-unknownfocus-nofocus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "includes_any": [
+            "unknown"
+          ]
+        },
+        "final": "nofocus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Chưa rõ ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Không có ổ nhiễm sâu",
+              "text": "Không tìm thấy ổ nhiễm sâu hoặc di bệnh sau đánh giá phù hợp → phân loại \"nhiễm khuẩn huyết do S. aureus không có ổ nhiễm sâu\" (bất kể nhóm nguy cơ ban đầu) → điều trị ngắn: 2 tuần (CS 6, 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cân nhắc kéo dài",
+              "text": "Thời gian dài hơn (dựa trên ổ nhiễm nhiều khả năng) có thể phù hợp trong một số tình huống: còn dụng cụ trong tim, mảnh ghép nội mạch mới đặt, huyết khối tĩnh mạch sâu tại vị trí catheter tĩnh mạch trung tâm – đặc biệt khi nhiễm khuẩn huyết kéo dài, hoặc thăm dò chưa đầy đủ hay chưa kết luận được. Khi đó cũng cần đánh giá lại kiểm soát ổ nhiễm (CS 7).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-low-focus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": true
+        },
+        "final": "focus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ thấp – không có yếu tố nguy cơ nào ở thời điểm đánh giá; vẫn cần đủ các đánh giá khuyến cáo và theo dõi sát"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ thấp – theo dõi",
+          "items": [
+            {
+              "role": "Theo dõi",
+              "text": "\"Nguy cơ thấp\" không có nghĩa là \"không có nguy cơ\": tiếp tục khám lâm sàng nhắc lại và cấy máu kiểm tra; đánh giá lại khi xuất hiện yếu tố nguy cơ mới (nguy cơ có thể thay đổi theo thời gian).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-knownfocus-focus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "is_empty": false,
+          "includes_none": [
+            "unknown"
+          ]
+        },
+        "final": "focus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Nếu chưa tìm thấy ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-increased-unknownfocus-focus",
+      "kind": "primary",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "includes_any": [
+            "unknown"
+          ]
+        },
+        "final": "focus"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – người lớn"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Nguy cơ tăng – có ít nhất 1 yếu tố nguy cơ; tiếp tục thăm dò đến khi xác định hoặc loại trừ chắc chắn ổ nhiễm sâu, di bệnh"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu – mọi người bệnh",
+          "items": [
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu ít nhất 2 bộ khi nghi nhiễm khuẩn huyết do S. aureus (mỗi bộ gồm 1 chai hiếu khí và 1 chai kỵ khí). Một mẫu cấy dương tính với S. aureus kèm triệu chứng, dấu hiệu nhiễm khuẩn là đủ xác định chẩn đoán; tạp nhiễm hiếm gặp nên thường coi là nhiễm khuẩn thật.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; ghi nhận dụng cụ trong tim, dụng cụ nhân tạo, mảnh ghép nội mạch, catheter tĩnh mạch trung tâm, tiền sử tiêm chích ma túy, tiền sử nhiễm khuẩn huyết hoặc nhiễm khuẩn do S. aureus.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu kiểm tra",
+              "text": "Ít nhất 2 bộ tại thời điểm 48 giờ sau mẫu cấy dương tính đầu tiên, sau đó lặp lại 1 hoặc 2 bộ mỗi 24–48 giờ đến khi âm tính để ghi nhận sạch khuẩn (CS 2). Mốc 48 giờ tính từ mẫu cấy dương tính đầu tiên, không phụ thuộc thời điểm bắt đầu kháng sinh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực (TTE) thường quy cho mọi người bệnh (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Catheter",
+              "text": "Rút catheter tĩnh mạch trung tâm (tăng nguy cơ biến chứng theo đường máu và tái phát). Rút catheter tĩnh mạch ngoại vi nếu xác định là ổ nhiễm khuẩn.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hội chẩn",
+              "text": "Hội chẩn chuyên khoa Truyền nhiễm (nếu có) để hỗ trợ đánh giá nguy cơ, chỉ định thăm dò tiếp và kế hoạch điều trị.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Practical advice",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Thăm dò cá thể hóa theo đặc điểm người bệnh, biểu hiện lâm sàng và khả năng xét nghiệm tại chỗ; nên có bác sĩ Truyền nhiễm hỗ trợ chọn chiến lược. Càng nhiều yếu tố nguy cơ, nguy cơ càng cao và thường cần thăm dò rộng hơn trước khi loại trừ ổ nhiễm sâu; ít yếu tố nguy cơ và nghi ngờ lâm sàng thấp có thể giới hạn phạm vi thăm dò.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu nhắc lại đến khi ghi nhận sạch khuẩn (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Rationale",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hình ảnh theo triệu chứng",
+              "text": "Chọn thăm dò theo triệu chứng, thăm khám: ví dụ MRI cột sống khi đau lưng mới xuất hiện hoặc nặng lên; CT ngực khi ho hoặc đau ngực kiểu màng phổi; siêu âm Doppler tĩnh mạch khi nghi nhiễm khuẩn mạch máu.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Chưa rõ ổ",
+              "text": "Sau đánh giá ban đầu và thăm dò theo nguy cơ vẫn chưa rõ ổ nhiễm: cân nhắc chẩn đoán hình ảnh toàn thân – [18F]FDG-PET/CT, hoặc phối hợp các phương tiện (ví dụ CT ngực/bụng, siêu âm Doppler tĩnh mạch) khảo sát các vị trí nhiều khả năng có ổ nhiễm (CS 5).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phân loại cuối cùng, thời gian điều trị",
+          "items": [
+            {
+              "role": "Có ổ nhiễm sâu, di bệnh",
+              "text": "Phát hiện ổ nhiễm sâu hoặc di bệnh → phân loại \"nhiễm khuẩn huyết do S. aureus có ổ nhiễm sâu hoặc di bệnh\" → can thiệp kiểm soát ổ nhiễm; điều trị kéo dài (≥ 4 tuần), lựa chọn kháng sinh và thời gian chính xác theo ổ nhiễm được xác định.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng thuật ngữ \"nguy cơ thấp\" / \"nguy cơ tăng\" thay cho \"không biến chứng\" / \"có biến chứng\". Phần lớn người bệnh thuộc nhóm nguy cơ tăng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Danh sách yếu tố nguy cơ dựa trên tổng quan y văn và ý kiến chuyên gia, không bao gồm mọi yếu tố nguy cơ.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Theo dõi trong và sau điều trị kháng sinh để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại và có thể phân loại lại chẩn đoán cuối cùng.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-addon-key",
+      "kind": "addon",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "includes_any": [
+            "bc48",
+            "device"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Yếu tố chính",
+              "text": "Nhiễm khuẩn huyết kéo dài quá 48 giờ hoặc có dụng cụ tim mạch trong lòng mạch là các yếu tố cho thấy khả năng cao hơn có ổ nhiễm sâu hoặc di bệnh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Implementation",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "adult-addon-endocarditis",
+      "kind": "addon",
+      "when": {
+        "age": "adult",
+        "risks": {
+          "includes_any": [
+            "community",
+            "bc48",
+            "device",
+            "valve",
+            "pwid",
+            "embolic",
+            "multifocal"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Nguy cơ tăng – thăm dò cá thể hóa",
+          "items": [
+            {
+              "role": "Viêm nội tâm mạc",
+              "text": "Có đặc điểm tăng nguy cơ viêm nội tâm mạc (các yếu tố đánh dấu *): thăm dò tích cực hơn, nhắm vào phát hiện viêm nội tâm mạc. Quyết định siêu âm tim qua thực quản (TEE) dựa trên các đặc điểm nguy cơ này, chất lượng TTE và tác động dự kiến lên xử trí (CS 4).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Figure 1",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "child",
+      "kind": "primary",
+      "when": {
+        "age": "child"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – trẻ em"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Mọi trẻ đều cần đánh giá tìm ổ nhiễm sâu – chưa xác định được nhóm trẻ nguy cơ thấp"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá, xử trí",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Mọi trẻ nhiễm khuẩn huyết do S. aureus đều được đánh giá tìm ổ nhiễm sâu. Chưa đủ dữ liệu để xác định nhóm trẻ nguy cơ thấp (ổ nhiễm sâu, di bệnh hoặc tái phát).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu khi nghi ngờ; một mẫu dương tính với S. aureus là đủ xác định chẩn đoán (tạp nhiễm hiếm). Cấy máu nhắc lại sau mẫu dương tính đầu tiên – dù đã hay chưa bắt đầu kháng sinh – để đánh giá nhiễm khuẩn huyết kéo dài (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; đánh giá có hệ thống tiền sử bệnh tim bẩm sinh hoặc mắc phải (tăng rõ nguy cơ viêm nội tâm mạc).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực khi trẻ có bệnh tim bẩm sinh, triệu chứng hoặc dấu hiệu viêm nội tâm mạc, hoặc nhiễm khuẩn huyết kéo dài (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Chẩn đoán hình ảnh",
+              "text": "Chọn thăm dò theo biểu hiện lâm sàng và đặc điểm người bệnh: hình ảnh tim, hình ảnh cắt lớp hoặc hình ảnh toàn thân để tìm ổ nhiễm sâu, di bệnh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Kiểm soát ổ, catheter",
+              "text": "Cân nhắc kiểm soát ổ nhiễm khi có ổ nhiễm sâu. Rút catheter tĩnh mạch trung tâm sớm. Hội chẩn Truyền nhiễm (nếu có).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Theo dõi",
+              "text": "Theo dõi trong và sau điều trị để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Khó khăn thực hành ở trẻ em: có thể cần an thần khi chụp MRI hoặc siêu âm tim; một số trẻ chỉ có catheter tĩnh mạch trung tâm là đường truyền tin cậy; đọc siêu âm tim ở trẻ bệnh tim bẩm sinh cần người có kinh nghiệm.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Thời gian điều trị ở trẻ em: thuộc Consensus Statement 6–7, chưa trích trong công cụ này.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    },
+    {
+      "id": "neonate",
+      "kind": "primary",
+      "when": {
+        "age": "neo"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Nhiễm khuẩn huyết do S. aureus – sơ sinh"
+        },
+        {
+          "label": "Phân tầng",
+          "text": "Mọi trẻ đều cần đánh giá tìm ổ nhiễm sâu – chưa xác định được nhóm trẻ nguy cơ thấp"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IDSA/ESCMID 2026 – Consensus Statement 1; vancomycin: ASHP/IDSA/PIDS/SIDP 2020"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá, xử trí",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Mọi trẻ nhiễm khuẩn huyết do S. aureus đều được đánh giá tìm ổ nhiễm sâu. Chưa đủ dữ liệu để xác định nhóm trẻ nguy cơ thấp (ổ nhiễm sâu, di bệnh hoặc tái phát).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu khi nghi ngờ; một mẫu dương tính với S. aureus là đủ xác định chẩn đoán (tạp nhiễm hiếm). Cấy máu nhắc lại sau mẫu dương tính đầu tiên – dù đã hay chưa bắt đầu kháng sinh – để đánh giá nhiễm khuẩn huyết kéo dài (CS 2).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Hỏi bệnh, thăm khám",
+              "text": "Hỏi bệnh và khám toàn diện; đánh giá có hệ thống tiền sử bệnh tim bẩm sinh hoặc mắc phải (tăng rõ nguy cơ viêm nội tâm mạc).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Siêu âm tim",
+              "text": "Siêu âm tim qua thành ngực khi trẻ có bệnh tim bẩm sinh, triệu chứng hoặc dấu hiệu viêm nội tâm mạc, hoặc nhiễm khuẩn huyết kéo dài (CS 3).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Chẩn đoán hình ảnh",
+              "text": "Chọn thăm dò theo biểu hiện lâm sàng và đặc điểm người bệnh: hình ảnh tim, hình ảnh cắt lớp hoặc hình ảnh toàn thân để tìm ổ nhiễm sâu, di bệnh.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Kiểm soát ổ, catheter",
+              "text": "Cân nhắc kiểm soát ổ nhiễm khi có ổ nhiễm sâu. Rút catheter tĩnh mạch trung tâm sớm. Hội chẩn Truyền nhiễm (nếu có).",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            },
+            {
+              "role": "Theo dõi",
+              "text": "Theo dõi trong và sau điều trị để phát hiện triệu chứng, dấu hiệu di bệnh mới; mọi thay đổi lâm sàng cần đánh giá lại.",
+              "grade": "Đồng thuận",
+              "ref": "CS 1 – Pediatric",
+              "source_ids": [
+                "idsa-escmid-sab-2026-cs1"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Khó khăn thực hành ở trẻ em: có thể cần an thần khi chụp MRI hoặc siêu âm tim; một số trẻ chỉ có catheter tĩnh mạch trung tâm là đường truyền tin cậy; đọc siêu âm tim ở trẻ bệnh tim bẩm sinh cần người có kinh nghiệm.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        },
+        {
+          "text": "Thời gian điều trị ở trẻ em: thuộc Consensus Statement 6–7, chưa trích trong công cụ này.",
+          "source_ids": [
+            "idsa-escmid-sab-2026-cs1"
+          ]
+        }
+      ],
+      "source_ids": [
+        "idsa-escmid-sab-2026-cs1"
+      ]
+    }
+  ],
+  "source_text": "Nguồn: IDSA/ESCMID 2026 Consensus Statement 1 – Risk Stratification of Patients with S. aureus Bacteremia (Kaasch AJ, Strnad L và cs.), Table 1, Figure 1, Implementation considerations – phương pháp đồng thuận (> 75% hội đồng), không xếp mức bằng chứng; ASHP/IDSA/PIDS/SIDP 2020 – Therapeutic monitoring of vancomycin for serious MRSA infections (Rybak MJ và cs., Am J Health-Syst Pharm 2020;77:835–864), Table 2 – mức khuyến cáo A/B/C, chất lượng bằng chứng I/II/III. CS = Consensus Statement; KC = khuyến cáo. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.",
+  "gaps": [
+    "Lựa chọn thuốc MSSA/MRSA: chưa có trong IDSA/ESCMID 2026 Part 1.",
+    "Thời gian điều trị ở trẻ em và mốc bắt đầu tính thời gian (Consensus Statement 2, 6, 7): chưa trích trong công cụ."
+  ],
+  "discordance": [],
+  "selection_rationale": {
+    "chosen": "Bản chuyển đổi từ công cụ viết tay hiện có của app (SabIntl.tsx, sab-intl.ts). Nguồn là PDF người dùng cung cấp ngày 14/11/2026: IDSA/ESCMID 2026 Consensus Statement 1 (phân tầng nguy cơ, người lớn và trẻ em) và ASHP/IDSA/PIDS/SIDP 2020 (liều, theo dõi vancomycin). Lựa chọn thuốc MSSA/MRSA chưa có trong Part 1 nên không đưa vào.",
+    "current_version_check": "Không kiểm tra lại khi chuyển đổi sang JSON; phiên bản theo PDF người dùng cung cấp và data/antibiotics/empiric/international.ts.",
+    "excluded": []
+  },
+  "sources": [
+    {
+      "id": "idsa-escmid-sab-2026-cs1",
+      "org": "IDSA/ESCMID",
+      "title": "2026 Consensus Statement 1 by the IDSA and ESCMID on Risk Stratification of Patients with Staphylococcus aureus Bacteremia",
+      "year": 2026,
+      "version": "Part 1, công bố 09/09/2026",
+      "url": "https://www.idsociety.org/practice-guideline/staphylococcus-aureus-bacteremia/",
+      "accessed": "2026-11-14",
+      "population": [
+        "adult",
+        "child",
+        "neonate"
+      ],
+      "evidence_system": "Đồng thuận (> 75% hội đồng), không xếp mức bằng chứng",
+      "grade_system": "consensus"
+    },
+    {
+      "id": "ashp-idsa-vanco-2020",
+      "org": "ASHP/IDSA/PIDS/SIDP",
+      "title": "Therapeutic monitoring of vancomycin for serious MRSA infections: a revised consensus guideline and review",
+      "year": 2020,
+      "version": "Am J Health-Syst Pharm 2020;77(11):835–864; doi:10.1093/ajhp/zxaa036",
+      "url": "https://doi.org/10.1093/ajhp/zxaa036",
+      "accessed": "2026-11-14",
+      "population": [
+        "adult",
+        "child",
+        "neonate"
+      ],
+      "evidence_system": "Sức mạnh khuyến cáo A/B/C – chất lượng bằng chứng I/II/III (Table 1 của nguồn)",
+      "grade_system": "letter-roman"
+    }
+  ],
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
+}

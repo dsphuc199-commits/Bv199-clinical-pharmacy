@@ -1,0 +1,3897 @@
+{
+  "schema_version": 1,
+  "slug": "sot-giam-bach-cau-trung-tinh-nguy-co-cao",
+  "disease_id": "v8-116",
+  "name_vi": "Sốt giảm bạch cầu trung tính nguy cơ cao",
+  "name_en": "Febrile neutropenia",
+  "icd10": [
+    "D70"
+  ],
+  "population": [
+    "adult",
+    "child"
+  ],
+  "status": "extracted",
+  "header": {
+    "eyebrow": "Lựa chọn kháng sinh theo chẩn đoán",
+    "title": "Sốt giảm bạch cầu trung tính nguy cơ cao",
+    "flow": [
+      "Đối tượng",
+      "Giai đoạn",
+      "Mức độ nặng, nguy cơ kháng thuốc",
+      "Phác đồ, mức khuyến cáo",
+      "Đánh giá lại, ngừng thuốc"
+    ]
+  },
+  "axes": [
+    {
+      "id": "pop",
+      "label": "Đối tượng",
+      "type": "seg",
+      "default": "adult",
+      "options": [
+        {
+          "id": "adult",
+          "label": "Người lớn – ung thư huyết học, ghép tế bào gốc (ECIL-10)"
+        },
+        {
+          "id": "child",
+          "label": "Trẻ em – ung thư, ghép tế bào gốc (IPFN 2023)"
+        }
+      ]
+    },
+    {
+      "id": "phase",
+      "label": "Giai đoạn",
+      "type": "seg",
+      "default": "emp",
+      "visible_when": {
+        "pop": "adult"
+      },
+      "options": [
+        {
+          "id": "emp",
+          "label": "Kinh nghiệm ban đầu"
+        },
+        {
+          "id": "re",
+          "label": "Đánh giá lại 72–96 giờ"
+        },
+        {
+          "id": "stop",
+          "label": "Ngừng kháng sinh"
+        },
+        {
+          "id": "tgt",
+          "label": "Đích – Gram âm kháng thuốc"
+        }
+      ]
+    },
+    {
+      "id": "sev",
+      "label": "Mức độ nặng",
+      "type": "seg",
+      "default": "stable",
+      "visible_when": {
+        "pop": "adult",
+        "phase": "emp"
+      },
+      "options": [
+        {
+          "id": "stable",
+          "label": "Ổn định, không biến chứng"
+        },
+        {
+          "id": "sepsis",
+          "label": "Sepsis / sốc nhiễm khuẩn"
+        }
+      ]
+    },
+    {
+      "id": "res",
+      "label": "Nguy cơ vi khuẩn kháng",
+      "type": "select",
+      "default": "none",
+      "visible_when": {
+        "pop": "adult",
+        "phase": "emp"
+      },
+      "options": [
+        {
+          "id": "none",
+          "label": "Không cư trú/nhiễm vi khuẩn kháng thuốc; trung tâm hiếm gặp vi khuẩn kháng lúc khởi phát"
+        },
+        {
+          "id": "esbl",
+          "label": "Đã biết cư trú hoặc từng nhiễm Enterobacterales sinh ESBL, hoặc vi khuẩn Gram âm kháng beta-lactam phổ hẹp hơn"
+        },
+        {
+          "id": "center",
+          "label": "Trung tâm có tỷ lệ cao nhiễm khuẩn do vi khuẩn sinh ESBL lúc khởi phát sốt giảm bạch cầu"
+        },
+        {
+          "id": "gnr",
+          "label": "Nhiều khả năng vi khuẩn Gram âm kháng các beta-lactam hiện có (dịch tễ tại chỗ, cư trú/nhiễm trước đây, dùng carbapenem trong 30 ngày)"
+        },
+        {
+          "id": "kpc",
+          "label": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh KPC"
+        },
+        {
+          "id": "oxa48",
+          "label": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh OXA-48"
+        },
+        {
+          "id": "mbl",
+          "label": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh metallo-beta-lactamase (MBL)"
+        },
+        {
+          "id": "dtr",
+          "label": "Cư trú hoặc từng nhiễm P. aeruginosa khó điều trị (DTR)"
+        }
+      ]
+    },
+    {
+      "id": "pneu",
+      "label": "Viêm phổi",
+      "group": "Bệnh cảnh",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "pop": "adult",
+        "phase": "emp"
+      }
+    },
+    {
+      "id": "gp",
+      "label": "Yếu tố nguy cơ Gram dương",
+      "type": "multi",
+      "default": [],
+      "visible_when": {
+        "pop": "adult",
+        "phase": "emp"
+      },
+      "options": [
+        {
+          "id": "mrsa",
+          "label": "Đã biết cư trú MRSA"
+        },
+        {
+          "id": "vre",
+          "label": "Đã biết cư trú VRE kèm viêm niêm mạc nặng"
+        },
+        {
+          "id": "cath",
+          "label": "Nghi nhiễm khuẩn nặng liên quan catheter (rét run khi truyền, viêm mô quanh chân catheter)"
+        },
+        {
+          "id": "ssti",
+          "label": "Nhiễm khuẩn da – mô mềm"
+        }
+      ]
+    },
+    {
+      "id": "doc",
+      "label": "Loại nhiễm khuẩn",
+      "type": "seg",
+      "default": "fuo",
+      "visible_when": {
+        "pop": "adult",
+        "phase": [
+          "re",
+          "stop"
+        ]
+      },
+      "options": [
+        {
+          "id": "fuo",
+          "label": "Sốt không rõ nguồn"
+        },
+        {
+          "id": "cdi",
+          "label": "Có bằng chứng lâm sàng hoặc vi sinh"
+        }
+      ]
+    },
+    {
+      "id": "fever",
+      "label": "Tình trạng sốt",
+      "type": "seg",
+      "default": "afebrile",
+      "visible_when": {
+        "pop": "adult",
+        "phase": [
+          "re",
+          "stop"
+        ],
+        "doc": "fuo"
+      },
+      "options": [
+        {
+          "id": "afebrile",
+          "label": "Hết sốt (≥ 48 giờ nếu xét ngừng)"
+        },
+        {
+          "id": "febrile",
+          "label": "Còn sốt, lâm sàng ổn định"
+        }
+      ]
+    },
+    {
+      "id": "risk",
+      "label": "Nhóm nguy cơ",
+      "type": "seg",
+      "default": "high",
+      "visible_when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "fuo"
+      },
+      "options": [
+        {
+          "id": "high",
+          "label": "Nguy cơ cao (giảm bạch cầu sâu dự kiến > 10 ngày)"
+        },
+        {
+          "id": "intermediate",
+          "label": "Nguy cơ trung bình (7–10 ngày)"
+        }
+      ],
+      "tip": "Nguy cơ cao: ghép tế bào gốc đồng loài, điều trị tấn công bạch cầu cấp, bạch cầu cấp tái phát/kháng trị. Nguy cơ trung bình: ghép tự thân, u lympho, bạch cầu lympho mạn."
+    },
+    {
+      "id": "path",
+      "label": "Vi khuẩn",
+      "type": "select",
+      "default": "kpc",
+      "visible_when": {
+        "pop": "adult",
+        "phase": "tgt"
+      },
+      "options": [
+        {
+          "id": "kpc",
+          "label": "Enterobacterales sinh KPC"
+        },
+        {
+          "id": "oxa48",
+          "label": "Enterobacterales sinh OXA-48"
+        },
+        {
+          "id": "mbl",
+          "label": "Enterobacterales sinh MBL"
+        },
+        {
+          "id": "dtr",
+          "label": "P. aeruginosa khó điều trị (DTR)"
+        },
+        {
+          "id": "crab",
+          "label": "Acinetobacter baumannii kháng carbapenem (CRAB)"
+        },
+        {
+          "id": "steno_s",
+          "label": "Stenotrophomonas maltophilia – dùng được cotrimoxazol"
+        },
+        {
+          "id": "steno_r",
+          "label": "Stenotrophomonas maltophilia – kháng hoặc không dung nạp cotrimoxazol"
+        }
+      ]
+    },
+    {
+      "id": "cphase",
+      "label": "Giai đoạn",
+      "type": "seg",
+      "default": "init",
+      "visible_when": {
+        "pop": "child"
+      },
+      "options": [
+        {
+          "id": "init",
+          "label": "Ban đầu"
+        },
+        {
+          "id": "ongoing",
+          "label": "Điều chỉnh"
+        },
+        {
+          "id": "stop",
+          "label": "Ngừng kháng sinh"
+        },
+        {
+          "id": "antifungal",
+          "label": "Kéo dài ≥ 96 giờ – kháng nấm"
+        }
+      ]
+    },
+    {
+      "id": "crisk",
+      "label": "Nguy cơ sốt giảm bạch cầu",
+      "type": "seg",
+      "default": "high",
+      "visible_when": {
+        "pop": "child",
+        "cphase": [
+          "init",
+          "ongoing",
+          "stop"
+        ]
+      },
+      "options": [
+        {
+          "id": "high",
+          "label": "Nguy cơ cao"
+        },
+        {
+          "id": "low",
+          "label": "Nguy cơ thấp"
+        }
+      ],
+      "tip": "Phân tầng theo một công cụ đã thẩm định ở trẻ em (IPFN A1)."
+    },
+    {
+      "id": "ifd",
+      "label": "Nguy cơ nhiễm nấm xâm lấn",
+      "type": "seg",
+      "default": "high",
+      "visible_when": {
+        "pop": "child",
+        "cphase": "antifungal"
+      },
+      "options": [
+        {
+          "id": "high",
+          "label": "Nguy cơ cao"
+        },
+        {
+          "id": "low",
+          "label": "Nguy cơ thấp"
+        }
+      ],
+      "tip": "Nguy cơ cao: bạch cầu cấp dòng tủy, bạch cầu cấp dòng lympho nguy cơ cao hoặc tái phát, giảm bạch cầu kéo dài, corticoid liều cao, ghép đồng loài trong năm đầu chưa phục hồi tế bào T hoặc đang dùng corticoid/nhiều thuốc ức chế miễn dịch cho bệnh ghép chống chủ (IPFN C1, S-L)."
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-stop-after",
+      "position": "after",
+      "title": "Sau khi ngừng kháng sinh",
+      "show_when": {
+        "pop": "adult",
+        "phase": "stop"
+      },
+      "items": [
+        {
+          "role": "Theo dõi",
+          "text": "Theo dõi chặt nội trú hoặc ngoại trú sau khi ngừng kháng sinh, nhất là khi còn giảm bạch cầu trung tính",
+          "grade": "A-IIu",
+          "ref": "ECIL-10 slide 23",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "role": "Sốt lại",
+          "text": "Nếu sốt lại khi còn giảm bạch cầu: dùng lại kháng sinh ngay sau khi cấy máu và đánh giá lâm sàng",
+          "grade": "A-IIu",
+          "ref": "ECIL-10 slide 23",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "role": "Dự phòng",
+          "text": "Trung tâm có dùng kháng sinh dự phòng: cân nhắc dùng lại dự phòng khi ngừng điều trị kinh nghiệm nếu còn giảm bạch cầu",
+          "grade": "C-III",
+          "ref": "ECIL-10 slide 23",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a-tgt-after",
+      "position": "after",
+      "title": "Nguyên tắc chung điều trị đích",
+      "show_when": {
+        "pop": "adult",
+        "phase": "tgt"
+      },
+      "items": [
+        {
+          "role": "Xuống thang",
+          "text": "Điều trị theo vi khuẩn phân lập bằng thuốc phổ hẹp hơn, dựa trên kháng sinh đồ (gồm MIC khi có)",
+          "grade": "A-IIuh",
+          "ref": "ECIL-10 slide 37",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "role": "Thời gian",
+          "text": "Nhiễm khuẩn huyết Gram âm: ít nhất 7 ngày – đã hồi phục bạch cầu trung tính",
+          "grade": "A-IIu",
+          "ref": "ECIL-10 slide 38",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "role": "Thời gian",
+          "text": "Nhiễm khuẩn huyết Gram âm: ít nhất 7 ngày – chưa hồi phục bạch cầu trung tính",
+          "grade": "B-IIu",
+          "ref": "ECIL-10 slide 38",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "a-emp-stable-none",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "none"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược leo thang: beta-lactam chống trực khuẩn mủ xanh phổ hẹp hơn carbapenem."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Không cư trú/nhiễm vi khuẩn kháng thuốc; trung tâm hiếm gặp vi khuẩn kháng lúc khởi phát"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Chiến lược leo thang – chọn một",
+          "lead": "Chỉ định (B-II): bệnh cảnh không biến chứng; không biết cư trú và chưa từng nhiễm vi khuẩn kháng thuốc; trung tâm hiếm gặp vi khuẩn kháng thuốc lúc khởi phát sốt giảm bạch cầu.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Cephalosporin chống trực khuẩn mủ xanh: cefepim (tránh nếu vi khuẩn sinh ESBL phổ biến)",
+              "grade": "A-I",
+              "ref": "ECIL-10 slide 9",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Cephalosporin chống trực khuẩn mủ xanh: ceftazidim (tránh nếu vi khuẩn sinh ESBL phổ biến)",
+              "grade": "A-I",
+              "ref": "ECIL-10 slide 9",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Piperacilin-tazobactam",
+              "grade": "A-I",
+              "ref": "ECIL-10 slide 9",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Cefoperazon-sulbactam",
+              "ref": "ECIL-10 slide 9",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Piperacilin + gentamicin",
+              "ref": "ECIL-10 slide 9",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-esbl",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "esbl"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Đã biết cư trú hoặc từng nhiễm Enterobacterales sinh ESBL, hoặc vi khuẩn Gram âm kháng beta-lactam phổ hẹp hơn"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – đã biết cư trú hoặc từng nhiễm Enterobacterales sinh ESBL hoặc vi khuẩn Gram âm kháng beta-lactam phổ hẹp hơn",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-center",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "center"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Trung tâm có tỷ lệ cao nhiễm khuẩn do vi khuẩn sinh ESBL lúc khởi phát sốt giảm bạch cầu"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – trung tâm có tỷ lệ cao nhiễm khuẩn do vi khuẩn sinh ESBL lúc khởi phát",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-gnr",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "gnr"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Nhiều khả năng vi khuẩn Gram âm kháng các beta-lactam hiện có (dịch tễ tại chỗ, cư trú/nhiễm trước đây, dùng carbapenem trong 30 ngày)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Phối hợp beta-lactam chống trực khuẩn mủ xanh + aminoglycosid",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 12",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-kpc",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "kpc"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh KPC"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Meropenem-vaborbactam",
+              "grade": "B-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "C-IIt",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-oxa48",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "oxa48"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh OXA-48"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-mbl",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "mbl"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh metallo-beta-lactamase (MBL)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam + aztreonam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-stable-dtr",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "res": "dtr"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định, không sepsis"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm P. aeruginosa khó điều trị (DTR)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftolozan-tazobactam liều cao",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-none",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "none"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Không cư trú/nhiễm vi khuẩn kháng thuốc; trung tâm hiếm gặp vi khuẩn kháng lúc khởi phát"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – người bệnh nguy kịch (ví dụ sepsis/sốc nhiễm khuẩn) chưa biết cư trú hoặc nhiễm vi khuẩn kháng carbapenem",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-esbl",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "esbl"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Đã biết cư trú hoặc từng nhiễm Enterobacterales sinh ESBL, hoặc vi khuẩn Gram âm kháng beta-lactam phổ hẹp hơn"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – đã biết cư trú hoặc từng nhiễm Enterobacterales sinh ESBL hoặc vi khuẩn Gram âm kháng beta-lactam phổ hẹp hơn",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – người bệnh nguy kịch (ví dụ sepsis/sốc nhiễm khuẩn) chưa biết cư trú hoặc nhiễm vi khuẩn kháng carbapenem",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-center",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "center"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Trung tâm có tỷ lệ cao nhiễm khuẩn do vi khuẩn sinh ESBL lúc khởi phát sốt giảm bạch cầu"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – trung tâm có tỷ lệ cao nhiễm khuẩn do vi khuẩn sinh ESBL lúc khởi phát",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Carbapenem đơn trị – người bệnh nguy kịch (ví dụ sepsis/sốc nhiễm khuẩn) chưa biết cư trú hoặc nhiễm vi khuẩn kháng carbapenem",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-gnr",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "gnr"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Nhiều khả năng vi khuẩn Gram âm kháng các beta-lactam hiện có (dịch tễ tại chỗ, cư trú/nhiễm trước đây, dùng carbapenem trong 30 ngày)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Phối hợp beta-lactam chống trực khuẩn mủ xanh + aminoglycosid",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 12",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Beta-lactam",
+              "text": "Carbapenem đơn trị dùng được cho người bệnh nguy kịch (sepsis/sốc nhiễm khuẩn) chỉ khi chưa biết cư trú hoặc nhiễm vi khuẩn kháng carbapenem",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 11",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-kpc",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "kpc"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh KPC"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Meropenem-vaborbactam",
+              "grade": "B-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "C-IIt",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-oxa48",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "oxa48"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh OXA-48"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-mbl",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "mbl"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm Enterobacterales kháng carbapenem sinh metallo-beta-lactamase (MBL)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam + aztreonam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-emp-sepsis-dtr",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "res": "dtr"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, sepsis hoặc sốc nhiễm khuẩn"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Chiến lược xuống thang: khởi đầu phác đồ phổ rộng theo nguy cơ, rồi thu hẹp khi có kết quả và đánh giá lại."
+        },
+        {
+          "label": "Tình huống",
+          "text": "Cư trú hoặc từng nhiễm P. aeruginosa khó điều trị (DTR)"
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Beta-lactam mới chống vi khuẩn Gram âm – chọn một",
+          "lead": "Mức khuyến cáo dựa trên kinh nghiệm dùng thuốc trong sốt giảm bạch cầu nói chung, điều trị đích nhiễm khuẩn huyết do các vi khuẩn này, và điều trị kinh nghiệm ở người cư trú vi khuẩn kháng thuốc.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftolozan-tazobactam liều cao",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 13",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Lựa chọn khác",
+              "text": "Beta-lactam nhắm vào vi khuẩn cư trú nghi ngờ, dựa trên kháng sinh đồ",
+              "ref": "ECIL-10 slide 10",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Không thêm thường quy glycopeptid hoặc kháng sinh khác có tác dụng trên vi khuẩn Gram dương kháng thuốc.",
+              "grade": "D-IIru",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng kháng sinh ít tác dụng trên vi khuẩn Gram dương (ceftazidim, có hoặc không kèm avibactam, cefiderocol), cân nhắc phủ liên cầu xâm lấn, nhất là khi viêm niêm mạc nặng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Nên tầm soát vi khuẩn kháng thuốc ở môi trường nguy cơ cao.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-ag-sepsis",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis"
+      },
+      "blocks": [
+        {
+          "title": "Phối hợp aminoglycosid",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Aminoglycosid phối hợp beta-lactam – người bệnh nguy kịch, ví dụ sepsis/sốc nhiễm khuẩn, viêm phổi",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 12",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-ag-pneu",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "pneu": true
+      },
+      "blocks": [
+        {
+          "title": "Phối hợp aminoglycosid",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Aminoglycosid phối hợp beta-lactam – người bệnh nguy kịch, ví dụ sepsis/sốc nhiễm khuẩn, viêm phổi",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 12",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-mrsa-crit",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "gp": {
+          "includes_any": [
+            "mrsa"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Huyết động không ổn định hoặc sepsis, sốc nhiễm khuẩn, viêm phổi ở người đã biết cư trú MRSA",
+              "grade": "A-IIt",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-mrsa-pneu",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "pneu": true,
+        "gp": {
+          "includes_any": [
+            "mrsa"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Huyết động không ổn định hoặc sepsis, sốc nhiễm khuẩn, viêm phổi ở người đã biết cư trú MRSA",
+              "grade": "A-IIt",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-vre-crit",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "gp": {
+          "includes_any": [
+            "vre"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Sepsis, sốc nhiễm khuẩn hoặc viêm phổi ở người đã biết cư trú VRE kèm viêm niêm mạc nặng",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-vre-pneu",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "pneu": true,
+        "gp": {
+          "includes_any": [
+            "vre"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Sepsis, sốc nhiễm khuẩn hoặc viêm phổi ở người đã biết cư trú VRE kèm viêm niêm mạc nặng",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-nomrsa-crit",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "sepsis",
+        "gp": {
+          "includes_none": [
+            "mrsa"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Cân nhắc",
+              "text": "Sepsis, sốc nhiễm khuẩn hoặc viêm phổi ở người chưa biết cư trú MRSA",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-nomrsa-pneu",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "sev": "stable",
+        "pneu": true,
+        "gp": {
+          "includes_none": [
+            "mrsa"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Cân nhắc",
+              "text": "Sepsis, sốc nhiễm khuẩn hoặc viêm phổi ở người chưa biết cư trú MRSA",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-mrsa",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "gp": {
+          "includes_any": [
+            "mrsa"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Đã biết cư trú MRSA",
+              "grade": "B-IIrt",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-cath",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "gp": {
+          "includes_any": [
+            "cath"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Nghi nhiễm khuẩn nặng liên quan catheter: rét run khi truyền qua catheter, viêm mô tế bào quanh chân catheter",
+              "grade": "B-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-gp-ssti",
+      "kind": "addon",
+      "when": {
+        "pop": "adult",
+        "phase": "emp",
+        "gp": {
+          "includes_any": [
+            "ssti"
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "title": "Kháng sinh có tác dụng trên Gram dương kháng thuốc",
+          "items": [
+            {
+              "role": "Thêm",
+              "text": "Nhiễm khuẩn da – mô mềm ở bất kỳ vị trí nào",
+              "grade": "B-III",
+              "ref": "ECIL-10 slide 14",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-re-fuo-afeb",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "re",
+        "doc": "fuo",
+        "fever": "afebrile"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định lúc nhập và lúc đánh giá lại 72–96 giờ"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Sốt không rõ nguồn, hết sốt: ngừng thuốc phối hợp, thu hẹp phổ."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều chỉnh tại 72–96 giờ",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Ngừng aminoglycosid hoặc thuốc chống Gram dương nếu đã dùng phối hợp",
+              "grade": "B-IIuh",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thu hẹp",
+              "text": "Nếu khởi đầu bằng carbapenem hoặc beta-lactam mới: chuyển sang thuốc phổ hẹp hơn, ví dụ cefepim, ceftazidim, piperacilin-tazobactam, cefoperazon-sulbactam",
+              "grade": "B-IIuh",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ngừng kháng sinh",
+              "text": "Xem giai đoạn \"Ngừng kháng sinh\"",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-re-fuo-feb",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "re",
+        "doc": "fuo",
+        "fever": "febrile"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định lúc nhập và lúc đánh giá lại 72–96 giờ"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Sốt không rõ nguồn, còn sốt nhưng ổn định: ngừng thuốc phối hợp, giữ hoặc thu hẹp beta-lactam, tiếp tục tìm nguyên nhân."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều chỉnh tại 72–96 giờ",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Ngừng aminoglycosid hoặc thuốc chống Gram dương nếu đã dùng phối hợp",
+              "grade": "B-III",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Beta-lactam",
+              "text": "Giữ nguyên beta-lactam hoặc chuyển sang thuốc phổ hẹp hơn, ví dụ cefepim, ceftazidim, piperacilin-tazobactam, cefoperazon-sulbactam",
+              "grade": "B-III",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Chẩn đoán",
+              "text": "Làm thêm chẩn đoán; cân nhắc nấm và các căn nguyên khác",
+              "ref": "ECIL-10 slide 15",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-re-doc",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "re",
+        "doc": "cdi"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu, ổn định lúc nhập và lúc đánh giá lại 72–96 giờ"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Nhiễm khuẩn có bằng chứng lâm sàng hoặc vi sinh: kiểm tra phác đồ phù hợp, ngừng thuốc phối hợp không cần thiết, điều trị theo vi khuẩn."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều chỉnh tại 72–96 giờ",
+          "items": [
+            {
+              "role": "Kiểm tra",
+              "text": "Kiểm tra phác đồ kháng sinh có phù hợp không; cân nhắc ngừng aminoglycosid hoặc thuốc chống Gram dương nếu đã dùng phối hợp (dù còn sốt hay hết sốt)",
+              "grade": "B-IIuh",
+              "ref": "ECIL-10 slide 16",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Theo vi khuẩn",
+              "text": "Dù khởi đầu leo thang hay xuống thang, điều trị theo vi khuẩn phân lập (nếu là tác nhân hợp lý) bằng thuốc phổ hẹp hơn, dựa trên kháng sinh đồ, gồm MIC khi có",
+              "grade": "A-IIuh",
+              "ref": "ECIL-10 slide 37",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Nhiễm khuẩn đa vi khuẩn",
+              "text": "Nếu ngoài nhiễm khuẩn huyết còn nhiễm khuẩn có bằng chứng lâm sàng nghi do nhiều vi khuẩn: xuống thang sang thuốc có tác dụng trên các tác nhân chính, phủ P. aeruginosa nếu là nhiễm khuẩn ổ bụng",
+              "ref": "ECIL-10 slide 37",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-stop-fuo-afeb-high",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "fuo",
+        "fever": "afebrile",
+        "risk": "high"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Có thể ngừng kháng sinh kinh nghiệm sau ≥ 72 giờ, bất kể số lượng bạch cầu trung tính."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Ngừng kháng sinh kinh nghiệm khi đã điều trị ≥ 72 giờ, huyết động ổn định từ lúc nhập và hết sốt ≥ 48 giờ, bất kể số lượng bạch cầu trung tính hay thời gian giảm bạch cầu dự kiến – nhóm nguy cơ cao",
+              "grade": "B-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-stop-fuo-afeb-int",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "fuo",
+        "fever": "afebrile",
+        "risk": "intermediate"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Có thể ngừng kháng sinh kinh nghiệm sau ≥ 72 giờ, bất kể số lượng bạch cầu trung tính."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Ngừng kháng sinh kinh nghiệm khi đã điều trị ≥ 72 giờ, huyết động ổn định từ lúc nhập và hết sốt ≥ 48 giờ, bất kể số lượng bạch cầu trung tính hay thời gian giảm bạch cầu dự kiến – nhóm nguy cơ trung bình",
+              "grade": "A-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-stop-fuo-feb-high",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "fuo",
+        "fever": "febrile",
+        "risk": "high"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Còn sốt, ổn định: tiếp tục kháng sinh kinh nghiệm, không mở rộng phổ, tiếp tục tìm ổ nhiễm."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh",
+          "items": [
+            {
+              "role": "Tiếp tục",
+              "text": "Tiếp tục kháng sinh kinh nghiệm ở người bệnh nguy cơ cao hoặc trung bình, ổn định, sốt không rõ nguồn còn sốt kéo dài",
+              "grade": "B-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Chẩn đoán",
+              "text": "Tiếp tục tìm ổ nhiễm khuẩn hoặc nguyên nhân khác gây sốt; có thể cân nhắc ngừng kháng sinh sau này khi vi sinh và chẩn đoán hình ảnh đã loại trừ hợp lý nguồn nhiễm khuẩn",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Không thêm",
+              "text": "Không thêm thuốc phủ vi khuẩn Gram dương kháng thuốc ở người bệnh ổn định còn sốt",
+              "grade": "D-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Không thêm",
+              "text": "Không thêm thuốc phủ vi khuẩn Gram âm kháng thuốc ở người bệnh ổn định còn sốt",
+              "grade": "D-IIu",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-stop-fuo-feb-intermediate",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "fuo",
+        "fever": "febrile",
+        "risk": "intermediate"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Còn sốt, ổn định: tiếp tục kháng sinh kinh nghiệm, không mở rộng phổ, tiếp tục tìm ổ nhiễm."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh",
+          "items": [
+            {
+              "role": "Tiếp tục",
+              "text": "Tiếp tục kháng sinh kinh nghiệm ở người bệnh nguy cơ cao hoặc trung bình, ổn định, sốt không rõ nguồn còn sốt kéo dài",
+              "grade": "B-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Chẩn đoán",
+              "text": "Tiếp tục tìm ổ nhiễm khuẩn hoặc nguyên nhân khác gây sốt; có thể cân nhắc ngừng kháng sinh sau này khi vi sinh và chẩn đoán hình ảnh đã loại trừ hợp lý nguồn nhiễm khuẩn",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Không thêm",
+              "text": "Không thêm thuốc phủ vi khuẩn Gram dương kháng thuốc ở người bệnh ổn định còn sốt",
+              "grade": "D-I",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Không thêm",
+              "text": "Không thêm thuốc phủ vi khuẩn Gram âm kháng thuốc ở người bệnh ổn định còn sốt",
+              "grade": "D-IIu",
+              "ref": "ECIL-10 slide 21",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-stop-doc",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "stop",
+        "doc": "cdi"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Có thể ngừng trước khi hồi phục bạch cầu khi đủ đợt điều trị dự kiến và đạt các tiêu chí."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Ngừng kháng sinh trước khi hồi phục bạch cầu trung tính sau khi hoàn tất đợt điều trị dự kiến, nếu huyết động ổn định, hết sốt 72 giờ, hết mọi triệu chứng, dấu hiệu nhiễm khuẩn và đã sạch vi khuẩn (khi lấy lại mẫu được)",
+              "grade": "B-IIu",
+              "ref": "ECIL-10 slide 22",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Nhiễm khuẩn huyết Gram âm",
+              "text": "Thời gian điều trị ít nhất 7 ngày – khi đã hồi phục bạch cầu trung tính",
+              "grade": "A-IIu",
+              "ref": "ECIL-10 slide 38",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Nhiễm khuẩn huyết Gram âm",
+              "text": "Thời gian điều trị ít nhất 7 ngày – khi chưa hồi phục bạch cầu trung tính",
+              "grade": "B-IIu",
+              "ref": "ECIL-10 slide 38",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-kpc",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "kpc"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Enterobacterales sinh KPC"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 29",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Meropenem-vaborbactam",
+              "grade": "B-IItu",
+              "ref": "ECIL-10 slide 29",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "C-IIt",
+              "ref": "ECIL-10 slide 29",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-IIt",
+              "ref": "ECIL-10 slide 29",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nhiễm khuẩn kháng carbapenem: thường không khuyến khích phối hợp thêm thuốc không phải beta-lactam; có thể cân nhắc tới khi cải thiện lâm sàng ở người bệnh nguy kịch (sepsis), nhiễm khuẩn khó điều trị (chưa kiểm soát ổ, viêm phổi) hoặc chủng có MIC gần ngưỡng kháng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-oxa48",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "oxa48"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Enterobacterales sinh OXA-48"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 30",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "C-IIt",
+              "ref": "ECIL-10 slide 30",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nhiễm khuẩn kháng carbapenem: thường không khuyến khích phối hợp thêm thuốc không phải beta-lactam; có thể cân nhắc tới khi cải thiện lâm sàng ở người bệnh nguy kịch (sepsis), nhiễm khuẩn khó điều trị (chưa kiểm soát ổ, viêm phổi) hoặc chủng có MIC gần ngưỡng kháng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-mbl",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "mbl"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Enterobacterales sinh MBL"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam + aztreonam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 31",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 31",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Chưa đủ dữ liệu",
+              "text": "Aztreonam-avibactam – chưa đủ dữ liệu để xếp mức",
+              "ref": "ECIL-10 slide 31",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nhiễm khuẩn kháng carbapenem: thường không khuyến khích phối hợp thêm thuốc không phải beta-lactam; có thể cân nhắc tới khi cải thiện lâm sàng ở người bệnh nguy kịch (sepsis), nhiễm khuẩn khó điều trị (chưa kiểm soát ổ, viêm phổi) hoặc chủng có MIC gần ngưỡng kháng (C-III).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-dtr",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "dtr"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do P. aeruginosa khó điều trị (DTR)"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftolozan-tazobactam liều cao",
+              "dose": "9 g/ngày",
+              "grade": "A-IItur",
+              "ref": "ECIL-10 slide 33",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftazidim-avibactam",
+              "grade": "A-IItu",
+              "ref": "ECIL-10 slide 33",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Imipenem-cilastatin-relebactam",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 33",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefiderocol",
+              "grade": "B-IItur",
+              "ref": "ECIL-10 slide 33",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Có thể cân nhắc phối hợp một kháng sinh không phải beta-lactam còn tác dụng (amikacin, tobramycin, fosfomycin, fluoroquinolon – nhất là viêm phổi) khi người bệnh nguy kịch (sepsis, sốc nhiễm khuẩn, viêm phổi), chủng có MIC gần ngưỡng kháng hoặc nhiễm khuẩn chưa kiểm soát: với ceftolozan-tazobactam (B-IIr), ceftazidim-avibactam (B-III), imipenem-cilastatin-relebactam (B-III), cefiderocol (B-III). Có thể xuất hiện kháng thuốc trong khi điều trị.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-crab",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "crab"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Acinetobacter baumannii kháng carbapenem (CRAB)"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Nguyên tắc",
+              "text": "Điều trị phối hợp cho CRAB",
+              "grade": "A-IIt",
+              "ref": "ECIL-10 slide 35",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Sulbactam-durlobactam + imipenem liều cao (durlobactam chưa được EMA phê duyệt)",
+              "grade": "A-IIt",
+              "ref": "ECIL-10 slide 35",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Sulbactam liều cao + thuốc khác – khi không có sulbactam-durlobactam; thuốc phối hợp ưu tiên colistin, nếu không dùng được colistin thì thêm một trong: cefiderocol, tigecyclin, minocyclin",
+              "dose": "Sulbactam ≥ 9 g/ngày",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 35",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Phối hợp khác khi kháng sulbactam (MIC > 16): phối hợp các thuốc colistin, cefiderocol, tigecyclin/minocyclin, fosfomycin",
+              "grade": "B-IIt",
+              "ref": "ECIL-10 slide 35",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Cefiderocol đơn trị liên quan tăng tử vong trong thử nghiệm ngẫu nhiên; phác đồ phối hợp có cefiderocol cho kết quả tốt hơn – có thể ưu tiên khi chủng kháng sulbactam và/hoặc không dùng được colistin.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Tigecyclin: có thể dùng liều cao nếu dung nạp; tránh khi nhiễm khuẩn huyết, viêm phổi, nhiễm khuẩn tiết niệu hoặc MIC > 2. Minocyclin liều cao (tĩnh mạch/uống) có thể thay tigecyclin (dữ liệu lâm sàng hạn chế).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-steno_s",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "steno_s"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Stenotrophomonas maltophilia – dùng được cotrimoxazol"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Cotrimoxazol phối hợp một thuốc khác: levofloxacin, hoặc dẫn chất tetracyclin (minocyclin liều cao hoặc tigecyclin liều cao), hoặc cefiderocol",
+              "grade": "B-IItu",
+              "ref": "ECIL-10 slide 36",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Có thể chuyển sang đơn trị sau khi đáp ứng lâm sàng (và vi sinh, nếu áp dụng) và đã xác nhận nhạy với thuốc đơn trị.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Phần nền của slide ECIL nêu dữ liệu từ mô hình PK/PD trên động vật (không phải khuyến cáo liều): hiệu quả fluoroquinolon theo MIC với levofloxacin 750 mg mỗi ngày một lần; ciprofloxacin uống 750 mg × 2 lần/ngày hoặc tĩnh mạch 400 mg × 3 lần/ngày; cần liều cao minocyclin (200 mg × 2 lần/ngày) hoặc tigecyclin (100 mg × 2 lần/ngày sau liều nạp 200 mg).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "a-tgt-steno_r",
+      "kind": "primary",
+      "when": {
+        "pop": "adult",
+        "phase": "tgt",
+        "path": "steno_r"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – người lớn ung thư huyết học hoặc ghép tế bào gốc tạo máu; nhiễm khuẩn do Stenotrophomonas maltophilia – kháng hoặc không dung nạp cotrimoxazol"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều trị đích theo vi khuẩn và kháng sinh đồ; mức khuyến cáo theo ECIL-10."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "ECIL-10 (2025) – điều trị kháng sinh kinh nghiệm và điều trị đích"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị đích – chọn theo kháng sinh đồ",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Phối hợp 2 thuốc trong: levofloxacin (nếu nhạy), dẫn chất tetracyclin (minocyclin liều cao hoặc tigecyclin liều cao), cefiderocol",
+              "grade": "B-IIu",
+              "ref": "ECIL-10 slide 36",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Ceftazidim-avibactam + aztreonam, phối hợp levofloxacin (nếu nhạy) hoặc tetracyclin (minocyclin liều cao hoặc tigecyclin liều cao)",
+              "grade": "C-III",
+              "ref": "ECIL-10 slide 36",
+              "source_ids": [
+                "ecil10-2025"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Có thể chuyển sang đơn trị sau khi đáp ứng lâm sàng (và vi sinh, nếu áp dụng) và đã xác nhận nhạy với thuốc đơn trị.",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        },
+        {
+          "text": "Phần nền của slide ECIL nêu dữ liệu từ mô hình PK/PD trên động vật (không phải khuyến cáo liều): hiệu quả fluoroquinolon theo MIC với levofloxacin 750 mg mỗi ngày một lần; ciprofloxacin uống 750 mg × 2 lần/ngày hoặc tĩnh mạch 400 mg × 3 lần/ngày; cần liều cao minocyclin (200 mg × 2 lần/ngày) hoặc tigecyclin (100 mg × 2 lần/ngày sau liều nạp 200 mg).",
+          "source_ids": [
+            "ecil10-2025"
+          ]
+        }
+      ],
+      "source_ids": [
+        "ecil10-2025"
+      ]
+    },
+    {
+      "id": "c-init-high",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "init",
+        "crisk": "high"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Nguy cơ cao: đơn trị beta-lactam chống trực khuẩn mủ xanh; chỉ thêm thuốc thứ hai khi có chỉ định."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu",
+          "items": [
+            {
+              "role": "Phân tầng nguy cơ",
+              "text": "Áp dụng một chiến lược phân tầng nguy cơ đã được thẩm định và đưa vào quản lý thường quy",
+              "grade": "S-L",
+              "ref": "IPFN 2023 A1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu lúc khởi phát từ tất cả các nòng của catheter tĩnh mạch trung tâm",
+              "grade": "S-L",
+              "ref": "IPFN 2023 A2",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cân nhắc cấy máu ngoại vi đồng thời với cấy máu qua catheter tĩnh mạch trung tâm",
+              "grade": "C-M",
+              "ref": "IPFN 2023 A3",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Nước tiểu",
+              "text": "Cân nhắc tổng phân tích và cấy nước tiểu khi dễ lấy mẫu giữa dòng sạch; không trì hoãn kháng sinh để chờ lấy nước tiểu",
+              "grade": "C-L",
+              "ref": "IPFN 2023 A4",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "X-quang ngực",
+              "text": "Chỉ chụp X-quang ngực khi có triệu chứng hoặc dấu hiệu hô hấp",
+              "grade": "S-M",
+              "ref": "IPFN 2023 A5",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Thời điểm",
+              "text": "Trẻ sốt có lâm sàng không ổn định: bắt đầu kháng sinh kinh nghiệm theo hướng dẫn càng sớm càng tốt",
+              "grade": "GPS",
+              "ref": "IPFN 2023 Good practice statement 1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh kinh nghiệm – nguy cơ cao",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Đơn trị bằng beta-lactam chống trực khuẩn mủ xanh, cephalosporin thế hệ 4 hoặc carbapenem",
+              "grade": "S-H",
+              "ref": "IPFN 2023 A6a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Cách chọn",
+              "text": "Chọn thuốc theo tính nhạy cảm tại chỗ, chi phí và khả năng có thuốc; nếu được, dành carbapenem cho trẻ có lâm sàng không ổn định (phần giải thích, không xếp mức)",
+              "ref": "IPFN 2023 giải thích sau A6",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Thêm khi có chỉ định",
+              "text": "Chỉ thêm thuốc chống Gram âm thứ hai hoặc glycopeptid khi lâm sàng không ổn định, nghi nhiễm khuẩn kháng thuốc, hoặc ở trung tâm có tỷ lệ vi khuẩn kháng cao",
+              "grade": "S-M",
+              "ref": "IPFN 2023 A6b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-init-low",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "init",
+        "crisk": "low"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Nguy cơ thấp: cân nhắc điều trị ngoại trú hoặc chuyển ngoại trú và kháng sinh đường uống."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá ban đầu",
+          "items": [
+            {
+              "role": "Phân tầng nguy cơ",
+              "text": "Áp dụng một chiến lược phân tầng nguy cơ đã được thẩm định và đưa vào quản lý thường quy",
+              "grade": "S-L",
+              "ref": "IPFN 2023 A1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cấy máu lúc khởi phát từ tất cả các nòng của catheter tĩnh mạch trung tâm",
+              "grade": "S-L",
+              "ref": "IPFN 2023 A2",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Cấy máu",
+              "text": "Cân nhắc cấy máu ngoại vi đồng thời với cấy máu qua catheter tĩnh mạch trung tâm",
+              "grade": "C-M",
+              "ref": "IPFN 2023 A3",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Nước tiểu",
+              "text": "Cân nhắc tổng phân tích và cấy nước tiểu khi dễ lấy mẫu giữa dòng sạch; không trì hoãn kháng sinh để chờ lấy nước tiểu",
+              "grade": "C-L",
+              "ref": "IPFN 2023 A4",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "X-quang ngực",
+              "text": "Chỉ chụp X-quang ngực khi có triệu chứng hoặc dấu hiệu hô hấp",
+              "grade": "S-M",
+              "ref": "IPFN 2023 A5",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Thời điểm",
+              "text": "Trẻ sốt có lâm sàng không ổn định: bắt đầu kháng sinh kinh nghiệm theo hướng dẫn càng sớm càng tốt",
+              "grade": "GPS",
+              "ref": "IPFN 2023 Good practice statement 1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh kinh nghiệm – nguy cơ thấp",
+          "items": [
+            {
+              "role": "Nơi điều trị",
+              "text": "Cân nhắc điều trị ngoại trú từ đầu hoặc chuyển ngoại trú nếu có hạ tầng bảo đảm theo dõi và tái khám chặt chẽ",
+              "grade": "C-M",
+              "ref": "IPFN 2023 A7a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Đường dùng",
+              "text": "Cân nhắc kháng sinh đường uống nếu trẻ dung nạp đường uống ổn định",
+              "grade": "C-M",
+              "ref": "IPFN 2023 A7b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Lưu ý",
+              "text": "Khi dự định điều trị uống ngoại trú: bảo đảm trẻ nhận được thuốc kịp thời; nếu có thể chậm nhận thuốc hoặc lo ngại tuân thủ thì dùng đường tĩnh mạch (phần giải thích, không xếp mức)",
+              "ref": "IPFN 2023 giải thích sau A7",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-ong-high",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "ongoing",
+        "crisk": "high"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều chỉnh theo đáp ứng: ngừng phối hợp khi không cần, không mở rộng phổ chỉ vì còn sốt."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều chỉnh điều trị",
+          "items": [
+            {
+              "role": "Thu hẹp",
+              "text": "Trẻ đáp ứng với kháng sinh ban đầu: ngừng thuốc chống Gram âm thứ hai hoặc glycopeptid (nếu đã dùng) sau 24–72 giờ nếu không có chỉ định vi sinh để tiếp tục phối hợp",
+              "grade": "S-M",
+              "ref": "IPFN 2023 B1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Không mở rộng",
+              "text": "Không mở rộng phác đồ ban đầu chỉ vì sốt kéo dài ở trẻ có lâm sàng ổn định",
+              "grade": "S-L",
+              "ref": "IPFN 2023 B2",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Leo thang",
+              "text": "Sốt kéo dài và trở nên không ổn định: mở rộng phác đồ để phủ vi khuẩn Gram âm kháng thuốc, Gram dương và kỵ khí",
+              "grade": "S-VL",
+              "ref": "IPFN 2023 B3",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-ong-low",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "ongoing",
+        "crisk": "low"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Điều chỉnh theo đáp ứng: ngừng phối hợp khi không cần, không mở rộng phổ chỉ vì còn sốt."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều chỉnh điều trị",
+          "items": [
+            {
+              "role": "Thu hẹp",
+              "text": "Trẻ đáp ứng với kháng sinh ban đầu: ngừng thuốc chống Gram âm thứ hai hoặc glycopeptid (nếu đã dùng) sau 24–72 giờ nếu không có chỉ định vi sinh để tiếp tục phối hợp",
+              "grade": "S-M",
+              "ref": "IPFN 2023 B1",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Không mở rộng",
+              "text": "Không mở rộng phác đồ ban đầu chỉ vì sốt kéo dài ở trẻ có lâm sàng ổn định",
+              "grade": "S-L",
+              "ref": "IPFN 2023 B2",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Leo thang",
+              "text": "Sốt kéo dài và trở nên không ổn định: mở rộng phác đồ để phủ vi khuẩn Gram âm kháng thuốc, Gram dương và kỵ khí",
+              "grade": "S-VL",
+              "ref": "IPFN 2023 B3",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-stop-high",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "stop",
+        "crisk": "high"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Ngừng khi có bằng chứng hồi phục tủy, lâm sàng tốt, hết sốt ≥ 24 giờ và cấy máu âm tính 48 giờ."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh kinh nghiệm",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Lâm sàng tốt, hết sốt ít nhất 24 giờ: ngừng kháng sinh kinh nghiệm nếu cấy máu vẫn âm tính sau 48 giờ và có bằng chứng hồi phục tủy (nguy cơ cao và nguy cơ thấp)",
+              "grade": "S-L",
+              "ref": "IPFN 2023 B4",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-stop-low",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "cphase": "stop",
+        "crisk": "low"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Nguy cơ thấp: có thể ngừng sau 48 giờ cấy máu âm tính dù chưa hồi phục tủy."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ngừng kháng sinh kinh nghiệm",
+          "items": [
+            {
+              "role": "Ngừng",
+              "text": "Lâm sàng tốt, hết sốt ít nhất 24 giờ: ngừng kháng sinh kinh nghiệm nếu cấy máu vẫn âm tính sau 48 giờ và có bằng chứng hồi phục tủy (nguy cơ cao và nguy cơ thấp)",
+              "grade": "S-L",
+              "ref": "IPFN 2023 B4",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Ngừng sớm",
+              "text": "Nguy cơ thấp, lâm sàng tốt, hết sốt ít nhất 24 giờ: cân nhắc ngừng kháng sinh kinh nghiệm nếu cấy máu âm tính sau 48 giờ dù chưa có bằng chứng hồi phục tủy",
+              "grade": "C-M",
+              "ref": "IPFN 2023 B5",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-af-high",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "ifd": "high",
+        "cphase": "antifungal"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Sốt giảm bạch cầu kéo dài ≥ 96 giờ ở trẻ nguy cơ cao nhiễm nấm xâm lấn: chụp CT phổi; caspofungin hoặc amphotericin B liposome theo kinh nghiệm, trừ khi chọn chiến lược điều trị dựa trên bằng chứng sớm (pre-emptive)."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Chẩn đoán khi sốt giảm bạch cầu kéo dài (≥ 96 giờ) – trẻ nguy cơ cao nhiễm nấm",
+          "show_when": {
+            "ifd": "high"
+          },
+          "items": [
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Cân nhắc không dùng galactomannan huyết thanh",
+              "grade": "C-M",
+              "ref": "IPFN 2023 C2a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Không dùng beta-D-glucan",
+              "grade": "S-L",
+              "ref": "IPFN 2023 C2b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Không dùng PCR nấm trong máu",
+              "grade": "S-M",
+              "ref": "IPFN 2023 C2c",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Chụp CT phổi",
+              "grade": "S-L",
+              "ref": "IPFN 2023 C3a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Cân nhắc chẩn đoán hình ảnh ổ bụng, ví dụ siêu âm",
+              "grade": "C-L",
+              "ref": "IPFN 2023 C3b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Cân nhắc không chụp CT xoang thường quy khi không có triệu chứng, dấu hiệu khu trú",
+              "grade": "C-L",
+              "ref": "IPFN 2023 C3c",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng nấm",
+          "items": [
+            {
+              "role": "Kinh nghiệm",
+              "text": "Sốt giảm bạch cầu kéo dài ≥ 96 giờ không đáp ứng kháng sinh phổ rộng: bắt đầu caspofungin hoặc amphotericin B liposome, trừ khi chọn chiến lược pre-emptive",
+              "grade": "S-H",
+              "ref": "IPFN 2023 C4",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Pre-emptive",
+              "text": "Trẻ nguy cơ cao không ghép tế bào gốc, không dùng dự phòng kháng nấm mốc: cân nhắc hoãn kháng nấm kinh nghiệm, chỉ bắt đầu khi đánh giá gợi ý hoặc chỉ điểm nhiễm nấm xâm lấn",
+              "grade": "C-M",
+              "ref": "IPFN 2023 C5",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    },
+    {
+      "id": "c-af-low",
+      "kind": "primary",
+      "when": {
+        "pop": "child",
+        "ifd": "low",
+        "cphase": "antifungal"
+      },
+      "summary": [
+        {
+          "label": "Chẩn đoán",
+          "text": "Sốt giảm bạch cầu trung tính – trẻ em ung thư hoặc ghép tế bào gốc tạo máu"
+        },
+        {
+          "label": "Cách tiếp cận",
+          "text": "Nguy cơ thấp nhiễm nấm xâm lấn: cân nhắc không dùng kháng nấm kinh nghiệm."
+        },
+        {
+          "label": "Hướng dẫn",
+          "text": "IPFN 2023 – sốt giảm bạch cầu trung tính ở trẻ em"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Chẩn đoán khi sốt giảm bạch cầu kéo dài (≥ 96 giờ) – trẻ nguy cơ cao nhiễm nấm",
+          "show_when": {
+            "ifd": "high"
+          },
+          "items": [
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Cân nhắc không dùng galactomannan huyết thanh",
+              "grade": "C-M",
+              "ref": "IPFN 2023 C2a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Không dùng beta-D-glucan",
+              "grade": "S-L",
+              "ref": "IPFN 2023 C2b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Dấu ấn sinh học",
+              "text": "Không dùng PCR nấm trong máu",
+              "grade": "S-M",
+              "ref": "IPFN 2023 C2c",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Chụp CT phổi",
+              "grade": "S-L",
+              "ref": "IPFN 2023 C3a",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Cân nhắc chẩn đoán hình ảnh ổ bụng, ví dụ siêu âm",
+              "grade": "C-L",
+              "ref": "IPFN 2023 C3b",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            },
+            {
+              "role": "Hình ảnh",
+              "text": "Cân nhắc không chụp CT xoang thường quy khi không có triệu chứng, dấu hiệu khu trú",
+              "grade": "C-L",
+              "ref": "IPFN 2023 C3c",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng nấm",
+          "items": [
+            {
+              "role": "Không dùng",
+              "text": "Sốt giảm bạch cầu kéo dài ≥ 96 giờ ở trẻ nguy cơ thấp nhiễm nấm xâm lấn: cân nhắc không dùng kháng nấm kinh nghiệm",
+              "grade": "C-L",
+              "ref": "IPFN 2023 C6",
+              "source_ids": [
+                "ipfn-2023"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "ipfn-2023"
+      ]
+    }
+  ],
+  "source_text": "Nguồn: ECIL-10 (2025) – bộ slide khuyến cáo cuối cùng của nhóm vi khuẩn (Averbuch D và cs.; bài báo Lancet Infect Dis 2025, doi:10.1016/S1473-3099(25)00619-X), người lớn ung thư huyết học/ghép tế bào gốc; IPFN 2023 (Lehrnbecher T và cs., J Clin Oncol 2023;41:1774–1785), trẻ em. Hai hướng dẫn không nêu liều cho phác đồ kinh nghiệm – liều theo hướng dẫn liều của khoa/dược lâm sàng. Mức khuyến cáo chép đúng hệ của từng nguồn (ECIL: A–D, I–III kèm chỉ số; IPFN: GRADE). Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
+  "gaps": [
+    "Hai nguồn không nêu liều cho phác đồ kinh nghiệm.",
+    "Bài báo ECIL-10 đầy đủ trên Lancet Infect Dis cần thuê bao – nội dung lấy từ bộ slide khuyến cáo chính thức trên trang ECIL.",
+    "IPFN 2023 không nêu tên thuốc cụ thể trong từng nhóm beta-lactam.",
+    "Mức khuyến cáo ECIL-10 lấy từ bộ slide hội nghị; chưa đối chiếu với bản bài báo sau bình duyệt (cần thuê bao).",
+    "Slide ECIL-10 không ghi rõ giới hạn tuổi; app áp dụng ECIL-10 cho người lớn và IPFN 2023 cho trẻ em."
+  ],
+  "discordance": [
+    {
+      "topic": "Khởi đầu bằng carbapenem",
+      "primary_source_id": "ecil10-2025",
+      "other_source_id": "ipfn-2023",
+      "description": "ECIL-10 (người lớn) khuyến cáo carbapenem đơn trị cho người bệnh nguy kịch hoặc có nguy cơ vi khuẩn sinh ESBL (A-IIu). IPFN 2023 (trẻ em) cho phép chọn beta-lactam chống trực khuẩn mủ xanh, cephalosporin thế hệ 4 hoặc carbapenem, và khuyên nếu được thì dành carbapenem cho trẻ không ổn định. Hai nguồn áp dụng cho hai quần thể khác nhau."
+    },
+    {
+      "topic": "Ngừng kháng sinh khi chưa hồi phục bạch cầu",
+      "primary_source_id": "ecil10-2025",
+      "other_source_id": "ipfn-2023",
+      "description": "ECIL-10 (người lớn): ngừng sau ≥ 72 giờ khi hết sốt ≥ 48 giờ, bất kể bạch cầu, ở cả nhóm nguy cơ cao (B-I) và trung bình (A-I). IPFN 2023 (trẻ em): chỉ nhóm nguy cơ thấp được cân nhắc ngừng khi chưa hồi phục tủy (hết sốt ≥ 24 giờ, cấy máu âm tính 48 giờ – có điều kiện)."
+    }
+  ],
+  "selection_rationale": {
+    "chosen": "ECIL-10 (2025): khuyến cáo chính thức mới nhất của ECIL (European Conference on Infections in Leukaemia) về kháng sinh kinh nghiệm và điều trị đích trong sốt giảm bạch cầu ở người bệnh ung thư huyết học/ghép tế bào gốc, thay cho ECIL-4 (2011/2013). IPFN 2023: bản cập nhật chính thức của Hội đồng hướng dẫn quốc tế về sốt giảm bạch cầu ở trẻ em ung thư và ghép tế bào gốc (đăng trên J Clin Oncol), thay cho bản 2017. Hai nguồn đã được app ghi nhận trong international.ts.",
+    "current_version_check": "Ngày 14/11/2026: tải lại bộ slide ECIL-10 từ trang ECIL (44 slide, hội nghị 09/2024) và toàn văn IPFN 2023 qua Europe PMC (PMC10022858). Kiểm định độc lập cùng ngày: không thấy bản IPFN mới hơn 2023; bài báo ECIL-10 đã xuất bản trên Lancet Infect Dis (cần thuê bao) – mức khuyến cáo lấy từ bộ slide, chưa đối chiếu với bản bài báo.",
+    "excluded": [
+      {
+        "source": "IDSA 2010 – Clinical Practice Guideline for the Use of Antimicrobial Agents in Neutropenic Patients With Cancer",
+        "reason": "Bản cũ (2010); không dùng làm nguồn chính khi đã có ECIL-10 (2025) cho cùng quần thể huyết học."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "ecil10-2025",
+      "org": "ECIL (European Conference on Infections in Leukaemia)",
+      "title": "ECIL-10: Empirical and targeted antimicrobial therapy in patients with febrile neutropenia and haematological malignancy or after haematopoietic cell transplantation – bacterial group final recommendations",
+      "year": 2025,
+      "version": "Bộ slide khuyến cáo cuối cùng (44 slide), hội nghị ECIL-10 19–21/09/2024; bài báo Averbuch D và cs., Lancet Infect Dis, đăng trực tuyến 11/2025 (bản in 2026 theo trang chỉ mục), doi:10.1016/S1473-3099(25)00619-X – toàn văn cần thuê bao, chưa đọc",
+      "url": "https://ecil-leukaemia.com/images/ecil-10/ECIL_10_-_bacterial_group_final_recommendations.pdf",
+      "accessed": "2026-11-14",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Sức mạnh khuyến cáo A–D (A: ủng hộ mạnh; B: bằng chứng vừa; C: bằng chứng yếu; D: khuyến cáo không dùng); chất lượng bằng chứng I–III; chỉ số cho mức II: r (phân tích gộp/tổng quan hệ thống RCT), t (bằng chứng chuyển từ nhóm người bệnh khác), h (nhóm chứng lịch sử), u (thử nghiệm không đối chứng), a (tóm tắt hội nghị) – slide 3",
+      "grade_system": "letter-roman"
+    },
+    {
+      "id": "ipfn-2023",
+      "org": "International Pediatric Fever and Neutropenia Guideline Panel",
+      "title": "Guideline for the Management of Fever and Neutropenia in Pediatric Patients With Cancer and Hematopoietic Cell Transplantation Recipients: 2023 Update",
+      "year": 2023,
+      "version": "Lehrnbecher T và cs., J Clin Oncol 2023;41(9):1774–1785; doi:10.1200/JCO.22.02224; PMC10022858",
+      "url": "https://doi.org/10.1200/JCO.22.02224",
+      "accessed": "2026-11-14",
+      "population": [
+        "child"
+      ],
+      "evidence_system": "GRADE – khuyến cáo mạnh/có điều kiện; chất lượng bằng chứng cao/trung bình/thấp/rất thấp; tuyên bố thực hành tốt",
+      "grade_system": "GRADE"
+    }
+  ],
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
+}

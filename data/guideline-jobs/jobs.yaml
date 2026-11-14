@@ -1,0 +1,1038 @@
+# data/guideline-jobs/jobs.yaml – hàng đợi soạn hướng dẫn quốc tế (lệnh /guideline-run, /guideline-live, /guideline-update).
+# Sinh/cập nhật bằng: npm run build:guideline-jobs (giữ nguyên job đã có; chỉ thêm job mới, bổ sung trường thiếu).
+# status: todo | drafted | audited | needs_update | blocked_no_fulltext | no_intl_guideline | held_by_gate | published | done_handwritten
+# population: adult | child | neonate | null (null = chưa xác định – người dùng điền, không đoán)
+# class: antibacterial | antifungal | both | unknown
+# priority: số nhỏ chạy trước (mặc định 3). preferred_orgs: tổ chức ưu tiên khi chọn nguồn (vd. [IDSA, ESCMID]).
+# last_checked / published_at: YYYY-MM-DD.
+jobs:
+  - id: viem-khop-nhiem-khuan
+    disease_id: v8-33
+    disease_vi: Viêm khớp nhiễm khuẩn
+    disease_en: null
+    icd10:
+      - M00
+    category: Cơ xương khớp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-xuong-tuy
+    disease_id: v8-32
+    disease_vi: Viêm xương tủy
+    disease_en: null
+    icd10:
+      - M86
+    category: Cơ xương khớp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-mo-te-bao-co-mu-ap-xe
+    disease_id: v8-28
+    disease_vi: Viêm mô tế bào có mủ / áp xe
+    disease_en: null
+    icd10:
+      - L02
+    category: Da – mô mềm
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-mo-te-bao-khong-mu
+    disease_id: v8-27
+    disease_vi: Viêm mô tế bào không mủ
+    disease_en: null
+    icd10:
+      - L03
+    category: Da – mô mềm
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-mo-te-bao-o-tre-em
+    disease_id: v8-107
+    disease_vi: Viêm mô tế bào ở trẻ em
+    disease_en: null
+    icd10:
+      - L03
+    category: Da – mô mềm
+    population: child
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Trẻ em"); class từ getStream ("empiric")
+  - id: ap-xe-phoi
+    disease_id: v8-9
+    disease_vi: Áp xe phổi
+    disease_en: null
+    icd10:
+      - J85
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: dot-cap-copd-do-vi-khuan
+    disease_id: v8-6
+    disease_vi: Đợt cấp COPD do vi khuẩn
+    disease_en: null
+    icd10:
+      - J44.0
+      - J44.1
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: gian-phe-quan-boi-nhiem
+    disease_id: v8-10
+    disease_vi: Giãn phế quản bội nhiễm
+    disease_en: null
+    icd10:
+      - J47
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-phoi-benh-vien
+    disease_id: v8-4
+    disease_vi: Viêm phổi bệnh viện
+    disease_en: null
+    icd10: null
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-phoi-cong-dong
+    disease_id: v8-1
+    disease_vi: Viêm phổi cộng đồng
+    disease_en: null
+    icd10:
+      - J13
+      - J14
+      - J15
+      - J18
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-phoi-cong-dong-o-tre-em
+    disease_id: v8-101
+    disease_vi: Viêm phổi cộng đồng ở trẻ em
+    disease_en: null
+    icd10:
+      - J13
+      - J14
+      - J15
+      - J18
+    category: Hô hấp
+    population: child
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Trẻ em"); class từ getStream ("empiric")
+  - id: viem-phoi-lien-quan-tho-may
+    disease_id: v8-5
+    disease_vi: Viêm phổi liên quan thở máy
+    disease_en: null
+    icd10: null
+    category: Hô hấp
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: enterobacterales-sinh-esbl
+    disease_id: v8-43
+    disease_vi: Enterobacterales sinh ESBL
+    disease_en: null
+    icd10: null
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("pathogen")
+  - id: nhiem-khuan-huyet-do-gram-am
+    disease_id: v8-14
+    disease_vi: Nhiễm khuẩn huyết do Gram âm
+    disease_en: null
+    icd10:
+      - A41.5
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx); JSON mẫu _reference/nkh-gram-am.json. population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-khuan-huyet-do-s-aureus
+    disease_id: v8-13
+    disease_vi: Nhiễm khuẩn huyết do S. aureus
+    disease_en: null
+    icd10:
+      - A41.0
+      - A41.1
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: công cụ viết tay trong IntlTab (GuidelineTabs.tsx); JSON mẫu _reference/nkh-s-aureus.json. population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: pseudomonas-aeruginosa-nhay-thuoc-va-dtr
+    disease_id: v8-46
+    disease_vi: Pseudomonas aeruginosa (nhạy thuốc và DTR)
+    disease_en: null
+    icd10: null
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "dtr" (international.ts). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("pathogen")
+  - id: sepsis-chua-ro-nguon
+    disease_id: v8-11
+    disease_vi: Sepsis chưa rõ nguồn
+    disease_en: null
+    icd10:
+      - A41.9
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: soc-nhiem-khuan
+    disease_id: v8-12
+    disease_vi: Sốc nhiễm khuẩn
+    disease_en: null
+    icd10:
+      - R57.2
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: sot-giam-bach-cau-trung-tinh
+    disease_id: v8-113
+    disease_vi: Sốt giảm bạch cầu trung tính
+    disease_en: Febrile neutropenia
+    icd10:
+      - D70
+    category: Hồi sức tích cực
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: audited
+    last_checked: 2026-11-14
+    published_at: null
+    notes: "JSON data/guidelines/intl/sot-giam-bach-cau-trung-tinh.json – ECIL-10 (người lớn), IPFN 2023 (trẻ em). population trong JSON: adult + child (trường population của job chỉ nhận 1 giá trị nên để null)."
+  - id: sot-giam-bach-cau-trung-tinh-nguy-co-cao
+    disease_id: v8-116
+    disease_vi: Sốt giảm bạch cầu trung tính nguy cơ cao
+    disease_en: Febrile neutropenia
+    icd10:
+      - D70
+    category: Huyết học
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: audited
+    last_checked: 2026-11-14
+    published_at: null
+    notes: "JSON data/guidelines/intl/sot-giam-bach-cau-trung-tinh-nguy-co-cao.json – ECIL-10 (người lớn), IPFN 2023 (trẻ em). population trong JSON: adult + child (trường population của job chỉ nhận 1 giá trị nên để null)."
+  - id: lao-phoi
+    disease_id: v8-142
+    disease_vi: Lao phổi
+    disease_en: null
+    icd10:
+      - A15
+      - A16
+    category: Lao
+    population: null
+    class: unknown
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("tuberculosis")
+  - id: viem-mang-nao-do-lao
+    disease_id: v8-141
+    disease_vi: Viêm màng não do lao
+    disease_en: null
+    icd10:
+      - A17.0
+    category: Lao
+    population: null
+    class: unknown
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("tuberculosis")
+  - id: viem-giac-mac-do-vi-khuan
+    disease_id: v8-84
+    disease_vi: Viêm giác mạc do vi khuẩn
+    disease_en: null
+    icd10: null
+    category: Mắt
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-ket-mac-do-vi-khuan
+    disease_id: v8-83
+    disease_vi: Viêm kết mạc do vi khuẩn
+    disease_en: null
+    icd10:
+      - H10.0
+    category: Mắt
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-mo-te-bao-hoc-mat
+    disease_id: v8-87
+    disease_vi: Viêm mô tế bào hốc mắt
+    disease_en: null
+    icd10:
+      - H05.0
+    category: Mắt
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-noi-nhan-sau-phau-thuat
+    disease_id: v8-85
+    disease_vi: Viêm nội nhãn sau phẫu thuật
+    disease_en: null
+    icd10:
+      - H44.0
+    category: Mắt
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-tui-le-cap
+    disease_id: v8-88
+    disease_vi: Viêm túi lệ cấp
+    disease_en: null
+    icd10:
+      - H04.3
+    category: Mắt
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-khuan-huyet-so-sinh
+    disease_id: v8-103
+    disease_vi: Nhiễm khuẩn huyết sơ sinh
+    disease_en: null
+    icd10:
+      - P36
+    category: Nhi khoa – Sơ sinh
+    population: neonate
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Sơ sinh"); class từ getStream ("empiric")
+  - id: viem-phoi-so-sinh
+    disease_id: v8-102
+    disease_vi: Viêm phổi sơ sinh
+    disease_en: null
+    icd10:
+      - P23
+    category: Nhi khoa – Sơ sinh
+    population: neonate
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Sơ sinh"); class từ getStream ("empiric")
+  - id: aspergillosis-xoang-xam-lan
+    disease_id: v8-126
+    disease_vi: Aspergillosis xoang xâm lấn
+    disease_en: null
+    icd10: null
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: aspergillus-phoi-xam-lan
+    disease_id: v8-50
+    disease_vi: Aspergillus phổi xâm lấn
+    disease_en: null
+    icd10:
+      - B44.0
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: candida-noi-tam-mac
+    disease_id: v8-122
+    disease_vi: Candida nội tâm mạc
+    disease_en: null
+    icd10:
+      - B37.6
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: candida-o-bung
+    disease_id: v8-48
+    disease_vi: Candida ổ bụng
+    disease_en: null
+    icd10: null
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: candida-viem-xuong-khop
+    disease_id: v8-124
+    disease_vi: Candida viêm xương khớp
+    disease_en: null
+    icd10: null
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: candidemia-co-giam-bach-cau-trung-tinh
+    disease_id: v8-121
+    disease_vi: Candidemia có giảm bạch cầu trung tính
+    disease_en: null
+    icd10:
+      - B37.7
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: cryptococcus-ngoai-than-kinh-trung-uong
+    disease_id: v8-128
+    disease_vi: Cryptococcus ngoài thần kinh trung ương
+    disease_en: null
+    icd10:
+      - B45
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: cryptococcus-viem-mang-nao
+    disease_id: v8-51
+    disease_vi: Cryptococcus viêm màng não
+    disease_en: null
+    icd10:
+      - B45.1
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: mucormycosis
+    disease_id: v8-52
+    disease_vi: Mucormycosis
+    disease_en: null
+    icd10:
+      - B46
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-candida-huyet-candidemia
+    disease_id: v8-3
+    disease_vi: Nhiễm Candida huyết (candidemia)
+    disease_en: null
+    icd10:
+      - B37.7
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-nam-histoplasma
+    disease_id: v8-129
+    disease_vi: Nhiễm nấm Histoplasma
+    disease_en: null
+    icd10:
+      - B39
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-nam-talaromyces
+    disease_id: v8-130
+    disease_vi: Nhiễm nấm Talaromyces
+    disease_en: null
+    icd10: null
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-nam-xam-lan-o-benh-nhan-huyet-hoc
+    disease_id: v8-117
+    disease_vi: Nhiễm nấm xâm lấn ở bệnh nhân huyết học
+    disease_en: null
+    icd10: null
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: pneumocystis-jirovecii-pneumonia
+    disease_id: v8-53
+    disease_vi: Pneumocystis jirovecii pneumonia
+    disease_en: null
+    icd10:
+      - B59
+    category: Nhiễm nấm xâm lấn
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-trung-ban-chan-dai-thao-duong
+    disease_id: v9-1
+    disease_vi: Nhiễm trùng bàn chân đái tháo đường
+    disease_en: null
+    icd10: null
+    category: Nội tiết – Đái tháo đường
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-candida-am-ho-am-dao
+    disease_id: v8-96
+    disease_vi: Nhiễm Candida âm hộ–âm đạo
+    disease_en: null
+    icd10:
+      - B37.3
+    category: Sản phụ khoa
+    population: null
+    class: antifungal
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("antifungal")
+  - id: nhiem-khuan-hau-san
+    disease_id: v8-92
+    disease_vi: Nhiễm khuẩn hậu sản
+    disease_en: null
+    icd10:
+      - O86
+    category: Sản phụ khoa
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Thai kỳ / hậu sản"); class từ getStream ("empiric")
+  - id: nhiem-khuan-tiet-nieu-thai-ky
+    disease_id: v8-97
+    disease_vi: Nhiễm khuẩn tiết niệu thai kỳ
+    disease_en: null
+    icd10:
+      - O23
+    category: Sản phụ khoa
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Thai kỳ / hậu sản"); class từ getStream ("empiric")
+  - id: viem-am-dao-do-vi-khuan
+    disease_id: v8-95
+    disease_vi: Viêm âm đạo do vi khuẩn
+    disease_en: null
+    icd10:
+      - N76.0
+    category: Sản phụ khoa
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: ap-xe-quanh-amidan
+    disease_id: v8-56
+    disease_vi: Áp xe quanh amidan
+    disease_en: null
+    icd10:
+      - J36
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: ap-xe-sau-hong
+    disease_id: v8-57
+    disease_vi: Áp xe sau họng
+    disease_en: null
+    icd10:
+      - J39.0
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-khuan-khoang-co-sau
+    disease_id: v8-66
+    disease_vi: Nhiễm khuẩn khoang cổ sâu
+    disease_en: null
+    icd10: null
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-hong-do-lien-cau-nhom-a
+    disease_id: v8-54
+    disease_vi: Viêm họng do liên cầu nhóm A
+    disease_en: null
+    icd10:
+      - J02.0
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "ent" (international.ts). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-hong-lien-cau
+    disease_id: v8-8
+    disease_vi: Viêm họng liên cầu
+    disease_en: null
+    icd10:
+      - J02.0
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "ent" (international.ts). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-tai-giua-cap
+    disease_id: v8-60
+    disease_vi: Viêm tai giữa cấp
+    disease_en: null
+    icd10:
+      - H66.0
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "ent" (international.ts). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-tai-giua-cap-o-tre-em
+    disease_id: v8-99
+    disease_vi: Viêm tai giữa cấp ở trẻ em
+    disease_en: null
+    icd10:
+      - H66.0
+    category: Tai Mũi Họng
+    population: child
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "ent" (international.ts). population từ getPopulationHint ("Trẻ em"); class từ getStream ("empiric")
+  - id: viem-xoang-cap-do-vi-khuan
+    disease_id: v8-7
+    disease_vi: Viêm xoang cấp do vi khuẩn
+    disease_en: null
+    icd10:
+      - J01
+    category: Tai Mũi Họng
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "abrs" (international.ts). population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-xoang-cap-do-vi-khuan-o-nguoi-lon
+    disease_id: v8-58
+    disease_vi: Viêm xoang cấp do vi khuẩn ở người lớn
+    disease_en: null
+    icd10:
+      - J01
+    category: Tai Mũi Họng
+    population: adult
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: done_handwritten
+    last_checked: null
+    published_at: null
+    notes: module riêng "abrs" (international.ts). population từ getPopulationHint ("Người lớn"); class từ getStream ("empiric")
+  - id: nhiem-khuan-dan-luu-nao-that
+    disease_id: v8-38
+    disease_vi: Nhiễm khuẩn dẫn lưu não thất
+    disease_en: null
+    icd10: null
+    category: Thần kinh
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-mang-nao-o-tre-em
+    disease_id: v8-104
+    disease_vi: Viêm màng não ở trẻ em
+    disease_en: null
+    icd10:
+      - G00
+    category: Thần kinh
+    population: child
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Trẻ em"); class từ getStream ("empiric")
+  - id: viem-mang-nao-vi-khuan
+    disease_id: v8-36
+    disease_vi: Viêm màng não vi khuẩn
+    disease_en: null
+    icd10:
+      - G00
+    category: Thần kinh
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-khuan-tiet-nieu-phuc-tap
+    disease_id: v8-2
+    disease_vi: Nhiễm khuẩn tiết niệu phức tạp
+    disease_en: null
+    icd10:
+      - N39.0
+    category: Tiết niệu
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-bang-quang-khong-bien-chung
+    disease_id: v8-16
+    disease_vi: Viêm bàng quang không biến chứng
+    disease_en: null
+    icd10:
+      - N30.0
+    category: Tiết niệu
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-than-be-than
+    disease_id: v8-17
+    disease_vi: Viêm thận bể thận
+    disease_en: null
+    icd10:
+      - N10
+    category: Tiết niệu
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-c-difficile
+    disease_id: v8-25
+    disease_vi: Nhiễm C. difficile
+    disease_en: null
+    icd10:
+      - A04.7
+    category: Tiêu hóa – Gan mật
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: nhiem-khuan-duong-ruot-xam-lan
+    disease_id: v8-26
+    disease_vi: Nhiễm khuẩn đường ruột xâm lấn
+    disease_en: null
+    icd10: null
+    category: Tiêu hóa – Gan mật
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-duong-mat-cap
+    disease_id: v8-24
+    disease_vi: Viêm đường mật cấp
+    disease_en: null
+    icd10:
+      - K83.0
+    category: Tiêu hóa – Gan mật
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-phuc-mac-thu-phat
+    disease_id: v8-21
+    disease_vi: Viêm phúc mạc thứ phát
+    disease_en: null
+    icd10:
+      - K65.0
+    category: Tiêu hóa – Gan mật
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: viem-noi-tam-mac-nhiem-khuan
+    disease_id: v8-39
+    disease_vi: Viêm nội tâm mạc nhiễm khuẩn
+    disease_en: null
+    icd10:
+      - I33.0
+    category: Tim mạch
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")
+  - id: thuong-han
+    disease_id: v8-135
+    disease_vi: Thương hàn
+    disease_en: null
+    icd10:
+      - A01.0
+    category: Truyền nhiễm
+    population: null
+    class: antibacterial
+    priority: 3
+    preferred_orgs: []
+    status: todo
+    last_checked: null
+    published_at: null
+    notes: population từ getPopulationHint ("Chưa phân loại (cần đối chiếu nguồn)"); class từ getStream ("empiric")

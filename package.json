@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "test:empiric": "node tests/empiric/run-all.cjs",
-    "audit:empiric": "node tests/empiric/audit-report.cjs"
+    "audit:empiric": "node tests/empiric/audit-report.cjs",
+    "validate:guidelines": "tsx scripts/validate-guidelines.ts",
+    "build:intl-index": "tsx scripts/build-intl-index.ts",
+    "build:intl-reference": "tsx scripts/build-intl-reference.ts",
+    "build:guideline-jobs": "tsx scripts/build-guideline-jobs.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",
@@ -26,6 +30,9 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.7",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "yaml": "^2.8.1",
+    "zod": "^4.6.5"
   }
 }
