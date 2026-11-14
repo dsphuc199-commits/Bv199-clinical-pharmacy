@@ -42,6 +42,7 @@ import PneumoniaIntl from "./PneumoniaIntl";
 import LungAbscessInternational from "./LungAbscessInternational";
 import EsblIdsa2026 from "./EsblIdsa2026";
 import GnbBsiIntl from "./GnbBsiIntl";
+import SabIntl from "./SabIntl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
 
@@ -134,6 +135,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   /* Enterobacterales sinh ESBL: cong cu chon khang sinh theo IDSA 2026 (Section 1, Table 1). */
   /* Nhiem khuan huyet Gram am: kinh nghiem (IDSA 2025 cUTI, nguon tiet nieu) va dieu tri dich theo kieu hinh (IDSA 2026). */
   if (diseaseId === "v8-14") return <section className="bv199-panel gt199"><GnbBsiIntl /><GtStyle /></section>;
+  if (diseaseId === "v8-13") return <section className="bv199-panel gt199"><SabIntl /><GtStyle /></section>;
   if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
