@@ -71,7 +71,7 @@ const RAW_DISEASES: Disease[] = [
   { id: "v8-104", title: "Viêm màng não ở trẻ em", specialty: "Thần kinh" },
   { id: "v8-107", title: "Viêm mô tế bào ở trẻ em", specialty: "Da – mô mềm" },
   { id: "v8-113", title: "Sốt giảm bạch cầu trung tính", specialty: "Hồi sức tích cực" },
-  { id: "v8-116", title: "Sốt giảm bạch cầu trung tính nguy cơ cao", specialty: "Huyết học" },
+  { id: "v8-116", title: "Sốt giảm bạch cầu trung tính nguy cơ cao", specialty: "Hồi sức tích cực" },
   { id: "v8-117", title: "Nhiễm nấm xâm lấn ở bệnh nhân huyết học", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-121", title: "Candidemia có giảm bạch cầu trung tính", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },
   { id: "v8-122", title: "Candida nội tâm mạc", specialty: "Nhiễm nấm xâm lấn", stream: "antifungal" },

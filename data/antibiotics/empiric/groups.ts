@@ -43,7 +43,7 @@ export const CANONICAL_GROUPS: CanonicalGroup[] = [
     name: "Sốt giảm bạch cầu trung tính",
     type: "related",
     ids: ["v8-113", "v8-116"],
-    note: "Chung họ bệnh; v8-116 là nhóm nguy cơ cao (Huyết học).",
+    note: "Chung họ bệnh; v8-116 là nhóm nguy cơ cao (Hồi sức tích cực).",
   },
   {
     code: "CAN-CRYPTOCOCCUS",
