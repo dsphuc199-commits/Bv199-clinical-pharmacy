@@ -27,7 +27,6 @@ import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegime
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
-import DtrPseudomonasIdsa2026 from "../../../../components/antibiotics/empiric/DtrPseudomonasIdsa2026";
 import type { ModuleKey } from "../../../../lib/antibiotics/select-regimens";
 import {
   DISEASES,
@@ -1059,8 +1058,6 @@ function GuidelineContent() {
                       initialScenarioId={pickedScenario ?? undefined}
                     />
                   </>
-                ) : selected.id === "v8-46" ? (
-                  <DtrPseudomonasIdsa2026 />
                 ) : undefined
               }
             />

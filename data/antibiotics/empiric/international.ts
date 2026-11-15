@@ -915,7 +915,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   {
     diseaseId: "v8-46",
     guidelineIds: ["idsa-amr-2026"],
-    scope: "P. aeruginosa DTR (nội dung trong khung IDSA 2026 riêng).",
+    scope: "P. aeruginosa nhạy thuốc, kháng carbapenem và DTR (công cụ chọn kháng sinh IDSA 2026 Section 4 trong tab Quốc tế).",
     recommendations: [],
     regimens: [],
     module: "dtr",

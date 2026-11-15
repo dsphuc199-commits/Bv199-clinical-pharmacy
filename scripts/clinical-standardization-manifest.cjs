@@ -41,7 +41,7 @@ const manifests=C.DISEASES.map(d=>{
 for(const m of manifests) {
  const title=C.normalize(m.title);const abrs=m.specialty==='Tai Mũi Họng'&&['viem xoang cap do vi khuan','viem xoang cap do vi khuan o nguoi lon'].includes(title);
  const hasEntry=!!I.getIntlEntry(m.id);
- const intlComponent=m.id==='v8-9'?'components/antibiotics/empiric/LungAbscessInternational.tsx':!hasEntry?'components/antibiotics/empiric/GuidelineTabs.tsx':abrs?'components/antibiotics/AbrsUpToDate2026.tsx':m.specialty==='Tai Mũi Họng'&&isEntDisease(m.title)?'components/antibiotics/EntEmpiricGuidelines.tsx':m.id==='v8-46'?'components/antibiotics/empiric/DtrPseudomonasIdsa2026.tsx':'components/antibiotics/empiric/GuidelineTabs.tsx';
+ const intlComponent=m.id==='v8-9'?'components/antibiotics/empiric/LungAbscessInternational.tsx':!hasEntry?'components/antibiotics/empiric/GuidelineTabs.tsx':abrs?'components/antibiotics/AbrsUpToDate2026.tsx':m.specialty==='Tai Mũi Họng'&&isEntDisease(m.title)?'components/antibiotics/EntEmpiricGuidelines.tsx':m.id==='v8-46'?'components/antibiotics/empiric/PaeruginosaIdsa2026.tsx':'components/antibiotics/empiric/GuidelineTabs.tsx';
  m.internationalPresentation={component:intlComponent,wrapper:'components/antibiotics/empiric/GuidelineTabs.tsx',sourceIds:m.internationalSources,sourceComparison:'partial; see sourceScope and review items'};
  if(m.renderer==='COPD'){m.sharedComponents=['DecisionDisclosure'];m.presentationException='Dedicated source-driven COPD decision/dose/tools renderer retained for QD2131 rules and review locks; shared sibling disclosure control.';}
  if(['CAP','HAP','VAP'].includes(m.renderer))m.dataFiles=[m.component,'lib/antibiotics/regimen-structure.ts'];

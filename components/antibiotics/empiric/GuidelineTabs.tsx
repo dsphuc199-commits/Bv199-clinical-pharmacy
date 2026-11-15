@@ -43,6 +43,7 @@ import LungAbscessInternational from "./LungAbscessInternational";
 import EsblIdsa2026 from "./EsblIdsa2026";
 import GnbBsiIntl from "./GnbBsiIntl";
 import SabIntl from "./SabIntl";
+import PaeruginosaIdsa2026 from "./PaeruginosaIdsa2026";
 import IntlGuidelineView from "./IntlGuidelineView";
 import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
@@ -138,6 +139,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   /* Nhiem khuan huyet Gram am: kinh nghiem (IDSA 2025 cUTI, nguon tiet nieu) va dieu tri dich theo kieu hinh (IDSA 2026). */
   if (diseaseId === "v8-14") return <section className="bv199-panel gt199"><GnbBsiIntl /><GtStyle /></section>;
   if (diseaseId === "v8-13") return <section className="bv199-panel gt199"><SabIntl /><GtStyle /></section>;
+  /* P. aeruginosa nhay thuoc, khang carbapenem, DTR: cong cu chon khang sinh theo IDSA 2026 Section 4 (thay module van ban DTR cu). */
+  if (diseaseId === "v8-46") return <section className="bv199-panel gt199"><PaeruginosaIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;
