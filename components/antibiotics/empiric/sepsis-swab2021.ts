@@ -17,22 +17,30 @@ export type Gcr = "low" | "increased" | "high";
 export type Focus = "unknown" | "abdomen" | "biliary" | "hapvap" | "cvc" | "other";
 export type SwabIn = { gcr: Gcr; focus: Focus; pseudo: boolean; saureus: boolean; pcnAllergy: boolean };
 
-/* sTable 3 – lieu TM nguoi lon */
+/* sTable 3 – lieu TM nguoi lon. Du 17 thuoc, dung thu tu nguon.
+   Cot nguon: ngat quang (truyen < 60 phut) | keo dai (truyen 3–5 gio) | truyen lien tuc + lieu nap | ghi chu.
+   dose = lieu ngat quang; text = keo dai, lien tuc, ghi chu. (*) = xem EUCAST; (**) = can nang hieu chinh; (***) = TDM. */
+const d = (drug: string, intermittent: string, rest: string) => r(drug, rest, `${S} – sTable 3`, undefined, intermittent);
 export const SWAB_DOSE: RxItem[] = [
-  r("Ceftriaxon", "Ngắt quãng hoặc kéo dài: 1 × 2.000 mg/ngày. Truyền liên tục: 2.000 mg/24 giờ + liều nạp 2.000 mg.", `${S} – sTable 3`, undefined, "1 × 2.000 mg; 2 × 2.000 mg khi S. aureus"),
-  r("Cefuroxim (2GC)", "Ngắt quãng hoặc kéo dài: 3 × 1.500 mg/ngày. Truyền liên tục: 4.500 mg/24 giờ + liều nạp 1.500 mg.", `${S} – sTable 3`, undefined, "3 × 1.500 mg"),
-  r("Piperacilin-tazobactam", "Ngắt quãng hoặc kéo dài (truyền 3–5 giờ): 4 × 4.500 mg/ngày. Truyền liên tục: 18.000 mg/24 giờ + liều nạp 4.500 mg.", `${S} – sTable 3`, undefined, "4 × 4.500 mg; 3 × 4.500 mg khi không liên quan Pseudomonas"),
-  r("Meropenem", "Ngắt quãng hoặc kéo dài (truyền 3 giờ): 3 × 1.000 mg/ngày. Truyền liên tục: 3.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 6.000 mg/24 giờ (theo EUCAST).", `${S} – sTable 3`, undefined, "3 × 1.000 mg"),
-  r("Imipenem", "Ngắt quãng hoặc kéo dài: 4 × 1.000 mg/ngày. Truyền liên tục: 4.000 mg/24 giờ + liều nạp 1.000 mg.", `${S} – sTable 3`, undefined, "4 × 1.000 mg; 4 × 500 mg khi không liên quan Pseudomonas"),
-  r("Ceftazidim", "Ngắt quãng hoặc kéo dài (truyền 3 giờ): 3 × 2.000 mg/ngày. Truyền liên tục: 6.000 mg/24 giờ + liều nạp 2.000 mg.", `${S} – sTable 3`, undefined, "3 × 2.000 mg; 3 × 1.000 mg khi không liên quan Pseudomonas"),
-  r("Ciprofloxacin liều cao", "Tiêm truyền tĩnh mạch ngắt quãng.", `${S} – sTable 3, KC 55`, "GPS", "3 × 400 mg; 2 × 400 mg khi không liên quan Pseudomonas"),
-  r("Gentamicin", "Tính theo cân nặng hiệu chỉnh; định lượng nồng độ ngay; luôn phối hợp với kháng sinh khác (thường là beta-lactam); có thể không tối ưu cho P. aeruginosa. Ngừng aminoglycosid kinh nghiệm tối đa sau 2 ngày (SWAB KC 46, Mạnh; thấp).", `${S} – sTable 3, KC 46`, undefined, "1 × 5 mg/kg; 1 × 6–7 mg/kg có thể cần khi do Enterobacterales"),
-  r("Tobramycin", "Tính theo cân nặng hiệu chỉnh; định lượng nồng độ ngay; luôn phối hợp với kháng sinh khác. Ngừng aminoglycosid kinh nghiệm tối đa sau 2 ngày (SWAB KC 46, Mạnh; thấp).", `${S} – sTable 3, KC 46`, undefined, "1 × 5 mg/kg; 1 × 6–7 mg/kg có thể cần khi do Enterobacterales hoặc Pseudomonas"),
-  r("Metronidazol", "Tiêm truyền tĩnh mạch ngắt quãng.", `${S} – sTable 3`, undefined, "3 × 500 mg"),
-  r("Flucloxacilin", "Ngắt quãng hoặc kéo dài: 6 × 1.000 mg/ngày. Truyền liên tục: 6.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 12.000 mg/24 giờ.", `${S} – sTable 3`, undefined, "6 × 1.000 mg"),
-  r("Vancomycin", "Tính theo cân nặng hiệu chỉnh; theo dõi nồng độ. Truyền liên tục: 30–40 mg/kg/24 giờ + liều nạp 15–20 mg/kg (SWAB KC 54 gợi ý truyền liên tục).", `${S} – sTable 3, KC 54`, undefined, "2–3 × 15–20 mg/kg + liều nạp 25–30 mg/kg"),
+  d("Benzylpenicilin", "6 × 1 triệu IU", "Kéo dài: 6 × 1 triệu IU. Liên tục: 6 triệu IU/24 giờ + liều nạp 1 triệu IU. Có thể tăng tới 24 triệu IU/24 giờ (*)."),
+  d("Amoxicilin", "6 × 1.000 mg", "Kéo dài: 6 × 1.000 mg. Liên tục: 6.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 12.000 mg/24 giờ (*)."),
+  d("Flucloxacilin", "6 × 1.000 mg", "Kéo dài: 6 × 1.000 mg. Liên tục: 6.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 12.000 mg/24 giờ (*)."),
+  d("Amoxicilin-acid clavulanic", "4 × 1.200 mg", "Kéo dài: 4 × 1.200 mg. Truyền liên tục: không áp dụng."),
+  d("Piperacilin-tazobactam", "4 × 4.500 mg", "Kéo dài: 4 × 4.500 mg. Liên tục: 18.000 mg/24 giờ + liều nạp 4.500 mg. 3 × 4.500 mg khi không liên quan Pseudomonas (*)."),
+  d("Cefazolin", "3 × 1.000 mg", "Kéo dài: 3 × 1.000 mg. Liên tục: 3.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 6.000 mg/24 giờ (*)."),
+  d("Cefuroxim (2GC)", "3 × 1.500 mg", "Kéo dài: 3 × 1.500 mg. Liên tục: 4.500 mg/24 giờ + liều nạp 1.500 mg."),
+  d("Ceftriaxon", "1 × 2.000 mg", "Kéo dài: 1 × 2.000 mg. Liên tục: 2.000 mg/24 giờ + liều nạp 2.000 mg. 2 × 2.000 mg khi liên quan S. aureus (*)."),
+  d("Ceftazidim", "3 × 2.000 mg", "Kéo dài: 3 × 2.000 mg (truyền 3 giờ). Liên tục: 6.000 mg/24 giờ + liều nạp 2.000 mg. Khi không liên quan Pseudomonas có thể dùng 3 × 1.000 mg hoặc 3.000 mg/24 giờ + liều nạp 1.000 mg."),
+  d("Imipenem", "4 × 1.000 mg", "Kéo dài: 4 × 1.000 mg. Liên tục: 4.000 mg/24 giờ + liều nạp 1.000 mg. Có thể dùng 4 × 500 mg khi không liên quan Pseudomonas."),
+  d("Meropenem", "3 × 1.000 mg", "Kéo dài: 3 × 1.000 mg (truyền 3 giờ). Liên tục: 3.000 mg/24 giờ + liều nạp 1.000 mg. Có thể tăng tới 6.000 mg/24 giờ (*)."),
+  d("Ciprofloxacin", "3 × 400 mg", "Kéo dài, liên tục: không áp dụng. 2 × 400 mg khi không liên quan Pseudomonas (*). SWAB KC 55: khi có chỉ định, ciprofloxacin kinh nghiệm 400 mg × 3 lần/ngày (Có ĐK; thực hành tốt)."),
+  d("Gentamicin", "1 × 5 mg/kg (**)", "Kéo dài, liên tục: không áp dụng. 1 × 6–7 mg/kg có thể cần khi sepsis do Enterobacterales (*). Tính theo cân nặng hiệu chỉnh (**); định lượng nồng độ ngay (***). Dùng phối hợp với kháng sinh khác, thường là beta-lactam; có thể không tối ưu cho P. aeruginosa theo mô hình PK/PD (****). Ngừng aminoglycosid kinh nghiệm tối đa sau 2 ngày (SWAB KC 46, Mạnh; thấp)."),
+  d("Tobramycin", "1 × 5 mg/kg (**)", "Kéo dài, liên tục: không áp dụng. 1 × 6–7 mg/kg có thể cần khi sepsis do Enterobacterales hoặc Pseudomonas (*). Tính theo cân nặng hiệu chỉnh (**); định lượng nồng độ ngay (***). Dùng phối hợp với kháng sinh khác, thường là beta-lactam (****). Ngừng aminoglycosid kinh nghiệm tối đa sau 2 ngày (SWAB KC 46)."),
+  d("Vancomycin", "2–3 × 15–20 mg/kg + liều nạp 25–30 mg/kg", "Kéo dài: không áp dụng. Liên tục: 30–40 mg/kg/24 giờ + liều nạp 15–20 mg/kg. Tính theo cân nặng hiệu chỉnh (**); theo dõi nồng độ (***). SWAB KC 54 gợi ý truyền liên tục (Có ĐK; thực hành tốt)."),
+  d("Metronidazol", "3 × 500 mg", "Kéo dài, liên tục: không áp dụng."),
+  d("Trimethoprim-sulfamethoxazol", "2 × 960 mg", "Kéo dài, liên tục: không áp dụng. Có thể dùng liều cao hơn (*)."),
 ];
-export const SWAB_DOSE_NOTE = "Cefotaxim (cũng là 3GC theo SWAB) không có trong bảng liều. Cân nặng hiệu chỉnh = cân nặng lý tưởng + 0,4 × (cân nặng thực – cân nặng lý tưởng); cân nặng lý tưởng nam 50 kg + 0,9 × (số cm trên 150), nữ 45 kg + 0,9 × (số cm trên 150). Liều 24 giờ cao hơn thì liều nạp cũng cao hơn (một liều ngắt quãng). Liều theo EUCAST với tác nhân cần liều cao.";
+export const SWAB_DOSE_NOTE = "Cột liều = tiêm truyền ngắt quãng (truyền < 60 phút); kéo dài = truyền 3–5 giờ. (*) Xem bảng liều EUCAST cho tác nhân cần liều cao hơn và hướng dẫn của bệnh cần liều khác; liều 24 giờ cao hơn thì liều nạp cũng cao hơn (bằng một liều ngắt quãng). (**) Cân nặng hiệu chỉnh = cân nặng lý tưởng + 0,4 × (cân nặng thực – cân nặng lý tưởng); cân nặng lý tưởng: nam 50 kg + 0,9 × (số cm trên 150), nữ 45 kg + 0,9 × (số cm trên 150). (***) Theo dõi nồng độ theo tdm-monografie.org. (****) Từ 2020 EUCAST không còn ngưỡng nhạy aminoglycosid cho nhiễm khuẩn toàn thân (trừ nhiễm khuẩn tiết niệu) do Enterobacterales, Pseudomonas, Acinetobacter, Staphylococcus – aminoglycosid phải đi kèm thuốc có tác dụng khác; không còn ngưỡng nhạy gentamicin cho Pseudomonas. Cefotaxim (cũng là 3GC theo SWAB) không có trong bảng liều nên không ghi liều.";
 
 const PIP = "Piperacilin-tazobactam (truyền kéo dài hoặc liên tục)";
 const CARB = "Meropenem hoặc imipenem đơn trị";
