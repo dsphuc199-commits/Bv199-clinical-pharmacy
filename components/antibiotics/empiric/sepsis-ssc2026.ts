@@ -93,7 +93,7 @@ export function sepsisPlan(i: SepsisIn): SepsisOut {
     /* ---------- Pho khang sinh ---------- */
     const cov: RxItem[] = [
       r("Nguyên tắc chọn thuốc", "Chọn ban đầu theo tác nhân khả năng nhất, mức độ nặng, ổ nghi ngờ và yếu tố người bệnh; xem thêm: vi sinh và kháng sinh đồ trong 12 tháng, kháng sinh đã dùng trong 3 tháng, dịch tễ và kháng sinh đồ tích lũy tại chỗ. Phác đồ thường dùng hay không phủ A. baumannii kháng carbapenem và S. maltophilia – thêm thuốc cho các tác nhân này phải cá thể hóa.", "IDSA AMR 2026 – Empiric Therapy", "AMR"),
-      r("Phạm vi", "SSC 2026 không nêu tên thuốc cụ thể; dẫn chiếu hướng dẫn ESCMID và IDSA về vi khuẩn đa kháng, và hội chẩn chuyên gia truyền nhiễm/vi sinh khi có thể.", "Phần giải thích KC 25–26"),
+      r("Phạm vi", "SSC 2026 không nêu tên thuốc cụ thể; dẫn chiếu hướng dẫn ESCMID và IDSA về vi khuẩn đa kháng, và hội chẩn chuyên gia truyền nhiễm/vi sinh khi có thể. Thuốc cụ thể: xem phần SWAB 2021 ngay dưới.", "Phần giải thích KC 25–26"),
     ];
     if (has("mrsa") || has("gnmdr")) {
       cov.push(r("Phủ đa kháng", `Nguy cơ cao nhiễm ${[has("mrsa") && "MRSA", has("gnmdr") && "trực khuẩn Gram âm đa kháng"].filter(Boolean).join(" và ")}: phác đồ kinh nghiệm có phủ đúng tác nhân đa kháng đó.`, "KC 25", "C-VL"));

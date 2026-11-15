@@ -220,6 +220,17 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     checkedOn: CHECKED,
     checkNote: "Đọc trên trang SCCM. SSC không đưa phác đồ thuốc/liều cụ thể.",
   },
+  "swab-sepsis-2021": {
+    id: "swab-sepsis-2021",
+    org: "SWAB (Dutch Working Party on Antibiotic Policy)",
+    title: "The 2021 SWAB guidelines for empirical antibacterial therapy of sepsis in adults",
+    citation: "Sieswerda E, Bax HI, Hoogerwerf JJ và cs. BMC Infect Dis 2022;22:687. doi:10.1186/s12879-022-07653-3",
+    published: "11/08/2022",
+    url: "https://doi.org/10.1186/s12879-022-07653-3",
+    status: "extracted",
+    checkedOn: "15/11/2026",
+    checkNote: "Toàn văn Europe PMC (PMC9373543) và Additional file 1 (sTable 1–3), Figure 1. Được SSC 2026 trích dẫn (tài liệu 290). Xây dựng cho dịch tễ Hà Lan.",
+  },
   "idsa-cuti-2025": {
     id: "idsa-cuti-2025",
     org: "IDSA",
@@ -642,7 +653,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   // ================= SEPSIS / SOC NK =================
   ...["v8-11", "v8-12"].map<IntlEntry>((diseaseId) => ({
     diseaseId,
-    guidelineIds: ["ssc-2026", "ashp-idsa-vanco-2020"],
+    guidelineIds: ["ssc-2026", "swab-sepsis-2021", "ashp-idsa-vanco-2020"],
     scope: "Người lớn có hoặc có nguy cơ sepsis/sốc nhiễm khuẩn (công cụ SSC 2026 trong tab Quốc tế). SSC 2026 không có phác đồ thuốc/liều cụ thể. Đồng thuận vancomycin 2020 chỉ áp dụng khi nghi hoặc xác định MRSA nặng.",
     recommendations: [
       { text: "Có thể sốc nhiễm khuẩn, hoặc sepsis có khả năng/chắc chắn (có hoặc không sốc): dùng kháng sinh ngay, lý tưởng trong 1 giờ kể từ khi nhận biết.", grade: "Mạnh; rất thấp", guidelineId: "ssc-2026", locator: "Antimicrobial therapy – timing" },

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { LIKELY_TEXT, RISKS, sepsisPlan, type Culture, type Hemo, type Likely, type Phase, type RiskId } from "./sepsis-ssc2026";
 import { VANCO, VANCO_COMMON, VANCO_POP, type VancoPop } from "./sab-intl";
 import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { FOCUS_TEXT, SWAB_DOSE, SWAB_DOSE_NOTE, swabPlan, type Focus, type Gcr } from "./sepsis-swab2021";
 
 const ashp = (items: typeof VANCO_COMMON) => items.map((it) => ({ ...it, text: it.text.replace(/(KC (d+))/g, "(ASHP KC $1)").replace(/(([AB]-I+), KC (d+))/g, "($1, ASHP KC $2)") }));
 const ADULT_POP = VANCO_POP.filter((p) => p.id !== "ped" && p.id !== "neo");
@@ -18,6 +19,12 @@ export default function SepsisSsc2026({ initialShock = false }: { initialShock?:
   const [culture, setCulture] = useState<Culture>("pathogen");
   const [risks, setRisks] = useState<RiskId[]>([]);
   const [pop, setPop] = useState<VancoPop>("std");
+  const [gcr, setGcr] = useState<Gcr>("low");
+  const [focus, setFocus] = useState<Focus>("unknown");
+  const [pseudo, setPseudo] = useState(false);
+  const [saureus, setSaureus] = useState(false);
+  const [pcn, setPcn] = useState(false);
+  const sw = swabPlan({ gcr, focus, pseudo, saureus, pcnAllergy: pcn });
   const toggle = (id: RiskId) => setRisks((r) => (r.includes(id) ? r.filter((x) => x !== id) : [...r, id]));
   const o = sepsisPlan({ likely, hemo, prehosp, delay60, phase, culture, risks });
 
@@ -50,6 +57,27 @@ export default function SepsisSsc2026({ initialShock = false }: { initialShock?:
                 { id: "shock", label: "Sốc nhiễm khuẩn" },
               ] as const} />
             </Row>
+            <Row label="Ổ nhiễm">
+              <Seg label="Ổ nhiễm" value={focus} onChange={setFocus} options={[
+                { id: "unknown", label: "Chưa rõ" },
+                { id: "abdomen", label: "Ổ bụng" },
+                { id: "biliary", label: "Đường mật" },
+                { id: "hapvap", label: "Viêm phổi BV / thở máy" },
+                { id: "cvc", label: "Catheter TM trung tâm" },
+                { id: "other", label: "Phổi cộng đồng, tiết niệu, da" },
+              ] as const} />
+            </Row>
+            <Row label="Nguy cơ Enterobacterales kháng C3G">
+              <Seg label="Nguy cơ 3GCR-E" value={gcr} onChange={setGcr} options={[
+                { id: "low", label: "Thấp" },
+                { id: "increased", label: "Tăng" },
+                { id: "high", label: "Cao – đã nhiễm/cư trú trong 1 năm" },
+              ] as const} />
+              <p className="sa24-tip">Tăng: tỷ lệ kháng tại chỗ cao, nhiễm khuẩn bệnh viện/liên quan chăm sóc y tế, kháng sinh phổ rộng trong 2 tháng, đang dùng SDD, đi vùng lưu hành cao trong 3 tháng, nằm viện ở nước ngoài trong 2 tháng.</p>
+              <label className="sa24-chk"><input type="checkbox" checked={pseudo} onChange={(e) => setPseudo(e.target.checked)} /> Đã nhiễm/cư trú P. aeruginosa trong 1 năm</label>
+              <label className="sa24-chk"><input type="checkbox" checked={saureus} onChange={(e) => setSaureus(e.target.checked)} /> Nhiều khả năng S. aureus</label>
+              <label className="sa24-chk"><input type="checkbox" checked={pcn} onChange={(e) => setPcn(e.target.checked)} /> Có ghi nhận dị ứng penicilin</label>
+            </Row>
             <Row label="Bối cảnh">
               <label className="sa24-chk"><input type="checkbox" checked={prehosp} onChange={(e) => setPrehosp(e.target.checked)} /> Trên xe cấp cứu / máy bay (trước viện)</label>
               {prehosp && <label className="sa24-chk"><input type="checkbox" checked={delay60} onChange={(e) => setDelay60(e.target.checked)} /> Dự kiến &gt; 60 phút mới được đánh giá tại viện</label>}
@@ -74,13 +102,25 @@ export default function SepsisSsc2026({ initialShock = false }: { initialShock?:
         <div className="sa24-dx">
           <p><b>Chẩn đoán</b> {phase === "initial" ? `Sepsis ${LIKELY_TEXT[likely]}, ${HEMO_TEXT[hemo]}${prehosp ? ", trước viện" : ""}` : "Sepsis đang điều trị kháng sinh kinh nghiệm – đánh giá lại"}</p>
           <p><b>Phác đồ</b> {o.headline}</p>
-          <p><b>Hướng dẫn</b> Surviving Sepsis Campaign 2026</p>
+          <p><b>Hướng dẫn</b> Surviving Sepsis Campaign 2026; thuốc cụ thể theo SWAB 2021</p>
         </div>
         {o.blocks.map((b) => (
           <div key={b.title}>
             <h4>{b.title}</h4>
             {b.lead && <p className="sa24-lead">{b.lead}</p>}
             <Rx items={b.items} />
+            {phase === "initial" && b.title === "Phổ kháng sinh kinh nghiệm" && (
+              <>
+                <h4>{sw.title} – {FOCUS_TEXT[focus]}</h4>
+                <p className="sa24-lead">{sw.lead}</p>
+                <Rx items={sw.items} />
+                <ul className="sp-notes">{sw.notes.map((n) => <li key={n}>{n}</li>)}</ul>
+                <h4>Liều tĩnh mạch người lớn – SWAB 2021 (sTable 3)</h4>
+                <p className="sa24-lead">Beta-lactam: truyền kéo dài hoặc liên tục sau liều nạp (piperacilin-tazobactam, carbapenem: Mạnh; cao – SWAB KC 49; beta-lactam khác: Có ĐK; thấp – KC 50).</p>
+                <Rx items={SWAB_DOSE} />
+                <p className="sa24-lead">{SWAB_DOSE_NOTE}</p>
+              </>
+            )}
           </div>
         ))}
         {o.showVanco && (
@@ -94,7 +134,7 @@ export default function SepsisSsc2026({ initialShock = false }: { initialShock?:
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: Surviving Sepsis Campaign – International Guidelines for Management of Sepsis and Septic Shock 2026 (Prescott HC, Antonelli M và cs., Crit Care Med 2026;54:725–812), “KC n” là số khuyến cáo trong bảng 1, mức GRADE giữ nguyên của SSC; IDSA 2026 – hướng dẫn điều trị Gram âm kháng thuốc (Tamma PD và cs., Clin Infect Dis 2026; doi:10.1093/cid/ciag481), mục Empiric Therapy, Duration – không xếp mức GRADE; ASHP/IDSA/PIDS/SIDP 2020 – theo dõi vancomycin (Rybak MJ và cs., Am J Health-Syst Pharm 2020;77:835–864). SSC 2026 không nêu tên thuốc và liều cho phác đồ kinh nghiệm nên công cụ không đưa liều kháng sinh (trừ vancomycin theo ASHP 2020). Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ, kháng sinh đồ và danh mục thuốc tại chỗ.</p>
+      <p className="sa24-src">Nguồn: Surviving Sepsis Campaign – International Guidelines for Management of Sepsis and Septic Shock 2026 (Prescott HC, Antonelli M và cs., Crit Care Med 2026;54:725–812), “KC n” là số khuyến cáo trong bảng 1, mức GRADE giữ nguyên của SSC; IDSA 2026 – hướng dẫn điều trị Gram âm kháng thuốc (Tamma PD và cs., Clin Infect Dis 2026; doi:10.1093/cid/ciag481), mục Empiric Therapy, Duration – không xếp mức GRADE; ASHP/IDSA/PIDS/SIDP 2020 – theo dõi vancomycin (Rybak MJ và cs., Am J Health-Syst Pharm 2020;77:835–864). SSC 2026 không nêu tên thuốc và liều cho phác đồ kinh nghiệm; lựa chọn thuốc và liều cụ thể lấy từ SWAB 2021 – hướng dẫn kháng sinh kinh nghiệm cho sepsis người lớn của Hà Lan (Sieswerda E và cs., BMC Infect Dis 2022;22:687; doi:10.1186/s12879-022-07653-3; được SSC 2026 trích dẫn), Table 5, Figure 1, sTable 1–3 – “SWAB KC n” là số khuyến cáo của SWAB, GRADE mạnh/yếu (yếu hiển thị “Có ĐK”); SWAB không áp dụng cho sốt giảm bạch cầu, nhiễm virus/nấm, vật liệu nhân tạo, catheter dài ngày, viêm xương, viêm màng não, viêm trung thất, viêm nội tâm mạc, trẻ em. Vancomycin theo ASHP 2020. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ, kháng sinh đồ và danh mục thuốc tại chỗ.</p>
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>
