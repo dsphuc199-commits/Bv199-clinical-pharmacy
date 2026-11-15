@@ -44,6 +44,7 @@ import EsblIdsa2026 from "./EsblIdsa2026";
 import GnbBsiIntl from "./GnbBsiIntl";
 import SabIntl from "./SabIntl";
 import PaeruginosaIdsa2026 from "./PaeruginosaIdsa2026";
+import SepsisSsc2026 from "./SepsisSsc2026";
 import IntlGuidelineView from "./IntlGuidelineView";
 import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
@@ -141,6 +142,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-13") return <section className="bv199-panel gt199"><SabIntl /><GtStyle /></section>;
   /* P. aeruginosa nhay thuoc, khang carbapenem, DTR: cong cu chon khang sinh theo IDSA 2026 Section 4 (thay module van ban DTR cu). */
   if (diseaseId === "v8-46") return <section className="bv199-panel gt199"><PaeruginosaIdsa2026 /><GtStyle /></section>;
+  /* Sepsis chua ro nguon, soc nhiem khuan: cong cu theo SSC 2026 (+ IDSA AMR 2026 dieu tri kinh nghiem, ASHP 2020 vancomycin). */
+  if (diseaseId === "v8-11" || diseaseId === "v8-12") return <section className="bv199-panel gt199"><SepsisSsc2026 key={diseaseId} initialShock={diseaseId === "v8-12"} /><GtStyle /></section>;
   if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;

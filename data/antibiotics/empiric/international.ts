@@ -643,7 +643,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   ...["v8-11", "v8-12"].map<IntlEntry>((diseaseId) => ({
     diseaseId,
     guidelineIds: ["ssc-2026", "ashp-idsa-vanco-2020"],
-    scope: "Người lớn có hoặc có nguy cơ sepsis/sốc nhiễm khuẩn. SSC 2026 không có phác đồ thuốc/liều cụ thể. Đồng thuận vancomycin 2020 chỉ áp dụng khi nghi hoặc xác định MRSA nặng.",
+    scope: "Người lớn có hoặc có nguy cơ sepsis/sốc nhiễm khuẩn (công cụ SSC 2026 trong tab Quốc tế). SSC 2026 không có phác đồ thuốc/liều cụ thể. Đồng thuận vancomycin 2020 chỉ áp dụng khi nghi hoặc xác định MRSA nặng.",
     recommendations: [
       { text: "Có thể sốc nhiễm khuẩn, hoặc sepsis có khả năng/chắc chắn (có hoặc không sốc): dùng kháng sinh ngay, lý tưởng trong 1 giờ kể từ khi nhận biết.", grade: "Mạnh; rất thấp", guidelineId: "ssc-2026", locator: "Antimicrobial therapy – timing" },
       { text: "Có thể sepsis nhưng không sốc: đánh giá nhanh có giới hạn thời gian; nếu vẫn nghi nhiễm khuẩn, dùng kháng sinh trong 3 giờ kể từ khi nghi sepsis.", grade: "Có điều kiện", guidelineId: "ssc-2026", locator: "Antimicrobial therapy – timing" },
