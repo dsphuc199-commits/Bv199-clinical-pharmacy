@@ -89,6 +89,7 @@ const WHO_CRYPTO = "who-crypto-2022";
 const IDSA_ASB = "idsa-asb-2019";
 const CDC_STI = "cdc-sti-bv-2021";
 const ACOG_UTI = "acog-uti-pregnancy-2023";
+const ACE_SSTI = "ace-ssti-2026";
 const IDSA_DIARRHEA = "idsa-diarrhea-2017";
 const CDC_OUT = "cdc-outpatient-2024";
 
@@ -264,7 +265,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
     status: "extracted",
     checkedOn: CHECKED,
-    checkNote: "Trang IDSA ghi trạng thái CURRENT. Bảng liều (Table 2) chưa trích xuất.",
+    checkNote: "Trang IDSA ghi trạng thái CURRENT. Đọc toàn văn PDF người dùng cung cấp (16/11/2026): khuyến cáo 1–44, Hình 1, 2, Bảng 2–5. Số liệu nghi lỗi in (tiêu chí bạch cầu trong SIRS, ceftriaxon 1 g qid ở Vibrio, liều penicilin trẻ em ở Clostridium, SMX-TMP mỗi 6 giờ ở Bảng 3) không đưa lên giao diện.",
   },
   "iwgdf-idsa-2023": {
     id: "iwgdf-idsa-2023",
@@ -487,6 +488,17 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     status: "extracted",
     checkedOn: CHECKED_G4,
     checkNote: "Đọc toàn văn PDF MMWR Recomm Rep 2021;70(4) người dùng cung cấp, 16/11/2026: các khung phác đồ Recommended/Alternative và Special Considerations (lậu, Chlamydia, viêm niệu đạo, viêm cổ tử cung, M. genitalium, viêm vùng chậu, viêm mào tinh, viêm trực tràng, giang mai, hạ cam, hột xoài, u hạt bẹn, herpes, Trichomonas, viêm âm đạo do vi khuẩn, nấm Candida âm hộ – âm đạo). CDC không xếp mức GRADE.",
+  },
+  [ACE_SSTI]: {
+    id: ACE_SSTI,
+    org: "ACE (Bộ Y tế Singapore)",
+    title: "Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing (ACE Clinical Guideline)",
+    citation: "Agency for Care Effectiveness. ACE Clinical Guideline, Ministry of Health, Singapore 2026",
+    published: "21/09/2026",
+    url: "https://go.gov.sg/acg-ssti",
+    status: "extracted",
+    checkedOn: "16/11/2026",
+    checkNote: "Đọc toàn văn PDF người dùng cung cấp: Khuyến cáo 1–5, Hình 2, 3 và Supplement 2 (Bảng 1–3, liều theo tờ hướng dẫn sử dụng HSA, đối chiếu UpToDate, MIMS). ACE không xếp mức khuyến cáo.",
   },
   [ACOG_UTI]: {
     id: ACOG_UTI,
@@ -735,7 +747,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   // ================= Da – mo mem =================
   {
     diseaseId: "v8-27",
-    guidelineIds: ["idsa-ssti-2014"],
+    guidelineIds: [ACE_SSTI, "idsa-ssti-2014"],
     scope: "Viêm mô bào không mủ, người lớn.",
     recommendations: [
       { text: "Viêm mô bào điển hình không có dấu hiệu toàn thân: dùng kháng sinh có tác dụng trên liên cầu; điều trị ngoại trú khi không có SIRS, rối loạn ý thức hoặc huyết động không ổn định.", grade: "Mạnh; trung bình", guidelineId: "idsa-ssti-2014", locator: "Khuyến cáo IV.3, IV.7" },
@@ -744,11 +756,11 @@ export const INTL_ENTRIES: IntlEntry[] = [
       { text: "Nhiễm khuẩn nặng: vancomycin + piperacillin-tazobactam hoặc imipenem/meropenem là phác đồ kinh nghiệm hợp lý.", grade: "Mạnh; trung bình", guidelineId: "idsa-ssti-2014", locator: "Khuyến cáo IV.3" },
     ],
     regimens: [],
-    gaps: ["Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất."],
+    gaps: [],
   },
   {
     diseaseId: "v8-28",
-    guidelineIds: ["idsa-ssti-2014"],
+    guidelineIds: [ACE_SSTI, "idsa-ssti-2014"],
     scope: "Nhiễm khuẩn da có mủ (nhọt, cụm nhọt, áp xe).",
     recommendations: [
       { text: "Rạch dẫn lưu là điều trị khuyến cáo cho nang thượng bì viêm, cụm nhọt, áp xe và nhọt lớn.", grade: "Mạnh; cao", guidelineId: "idsa-ssti-2014", locator: "Khuyến cáo II.3" },
@@ -756,7 +768,16 @@ export const INTL_ENTRIES: IntlEntry[] = [
       { text: "Dùng kháng sinh có tác dụng trên MRSA khi thất bại kháng sinh ban đầu, suy giảm miễn dịch rõ, hoặc SIRS kèm tụt huyết áp.", grade: "Mạnh; thấp", guidelineId: "idsa-ssti-2014", locator: "Khuyến cáo II.4" },
     ],
     regimens: [],
-    gaps: ["Liều theo Table 2 của IDSA SSTI 2014 chưa trích xuất."],
+    gaps: [],
+  },
+
+  {
+    diseaseId: "v8-107",
+    guidelineIds: [ACE_SSTI, "idsa-ssti-2014"],
+    scope: "Viêm mô bào, viêm quầng ở trẻ em (không áp dụng cho sơ sinh); kèm các thể nhiễm khuẩn da – mô mềm khác trong công cụ.",
+    recommendations: [],
+    regimens: [],
+    gaps: [],
   },
 
   // ================= Buoc 4D Nhom 3: Viem noi tam mac =================

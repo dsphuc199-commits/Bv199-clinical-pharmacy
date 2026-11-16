@@ -49,6 +49,7 @@ import TbWho2025 from "./TbWho2025";
 import DfiIwgdf2023 from "./DfiIwgdf2023";
 import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
 import StiCdc2021 from "./StiCdc2021";
+import SstiIdsaAce from "./SstiIdsaAce";
 import IntlGuidelineView from "./IntlGuidelineView";
 import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
@@ -151,6 +152,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-141" || diseaseId === "v8-142") return <section className="bv199-panel gt199"><TbWho2025 key={diseaseId} site={diseaseId === "v8-141" ? "tbm" : "ptb"} /><GtStyle /></section>;
   /* Nhiem trung ban chan dai thao duong: cong cu chon khang sinh theo IWGDF/IDSA 2023 (Bang 1, 4, 5). */
   if (diseaseId === "v9-1") return <section className="bv199-panel gt199"><DfiIwgdf2023 /><GtStyle /></section>;
+  /* Nhiem khuan da – mo mem: cong cu chon khang sinh theo IDSA 2014 va ACE Singapore 2026 (Supplement 2). */
+  if (diseaseId === "v8-27" || diseaseId === "v8-28" || diseaseId === "v8-107") return <section className="bv199-panel gt199"><SstiIdsaAce key={diseaseId} initialForm={diseaseId === "v8-28" ? "purulent" : "cellulitis"} initialAge={diseaseId === "v8-107" ? "child" : "adult"} /><GtStyle /></section>;
   if (diseaseId === "v8-97") return <section className="bv199-panel gt199"><UtiPregnancyAcog2023 /><GtStyle /></section>;
   if (diseaseId === "v8-95" || diseaseId === "v8-96" || diseaseId === "v9-2") return <section className="bv199-panel gt199"><StiCdc2021 key={diseaseId} initial={diseaseId === "v8-95" ? "bv" : diseaseId === "v8-96" ? "vvc" : "gc"} /><GtStyle /></section>;
   if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
