@@ -82,6 +82,7 @@ const CUTI = "idsa-cuti-2025";
 const CHECKED_G4 = "26/10/2026";
 const GOLD = "gold-2026";
 const WHO_TB = "who-tb-module4-2025";
+const WHO_TB_HB = "who-tb-handbook-module4-2025";
 const AAO_BK = "aao-keratitis-2023";
 const AAO_CONJ = "aao-conjunctivitis-2023";
 const WHO_CRYPTO = "who-crypto-2022";
@@ -418,7 +419,18 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://tbksp.who.int/en/node/2951",
     status: "extracted",
     checkedOn: "15/11/2026",
-    checkNote: "Đọc toàn văn PDF người dùng cung cấp (15/11/2026): Chương 1 (KC 1.1–4.2 và Remarks, Subgroup, Implementation), Chương 2 (KC 1.1–6.1, liều BPaLM/BDLLfxC, mục lao màng não MDR/RR-TB), Phụ lục 1 (khuyến cáo lao trẻ em 2014). Module 4 không có bảng liều theo cân nặng cho người lớn.",
+    checkNote: "Đọc toàn văn PDF người dùng cung cấp (15/11/2026): Chương 1 (KC 1.1–4.2 và Remarks, Subgroup, Implementation), Chương 2 (KC 1.1–6.1, liều BPaLM/BDLLfxC, mục lao màng não MDR/RR-TB), Phụ lục 1 (khuyến cáo lao trẻ em 2014). Module 4 không có bảng liều theo cân nặng cho người lớn (có trong operational handbook – nguồn riêng)."
+  },
+  [WHO_TB_HB]: {
+    id: WHO_TB_HB,
+    org: "WHO",
+    title: "WHO consolidated operational handbook on tuberculosis. Module 4: treatment and care",
+    citation: "Geneva: World Health Organization; 2025. ISBN 978-92-4-010814-1",
+    published: "2025",
+    url: "https://www.who.int/publications/i/item/9789240108141",
+    status: "extracted",
+    checkedOn: "16/11/2026",
+    checkNote: "Đọc PDF 9789240108141-eng.pdf (396 trang; trang WHO trả 403, tải từ bản sao cùng tên tệp): Annex 4 bảng A4.1 (liều lao nhạy cảm thuốc theo nhóm cân nặng từ 25 kg) và A4.2 (liều thuốc lao đa kháng theo cân nặng), bảng 2.4.1 (BPaLM/BPaL), mục 4.2 Dosing (BDLLfxC), mục 5.2 (phác đồ 9 tháng cải tiến), mục 7.1–7.3 (lao ngoài phổi, lao màng não), mục 8.4 và Annex 1 (chỉnh liều suy thận). Không có liều corticoid.",
   },
   [AAO_BK]: {
     id: AAO_BK,
@@ -1166,7 +1178,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   },
   {
     diseaseId: "v8-142",
-    guidelineIds: [WHO_TB],
+    guidelineIds: [WHO_TB, WHO_TB_HB],
     scope: "Lao phổi: nhạy cảm thuốc (người lớn, vị thành niên, trẻ em), Hr-TB, MDR/RR-TB – công cụ chọn phác đồ theo WHO Module 4 (2025).",
     recommendations: [
       { text: "Người bệnh lao phổi mới: phác đồ có 6 tháng rifampicin 2HRZE/4HR.", grade: "Mạnh, độ tin cậy cao", guidelineId: WHO_TB, locator: "Chương 1, KC 1.1" },
@@ -1177,24 +1189,26 @@ export const INTL_ENTRIES: IntlEntry[] = [
     ],
     regimens: [],
     gaps: [
-      "Module 4 không có bảng liều theo cân nặng cho người lớn (thuộc WHO Operational handbook) – công cụ để trống liều, chỉ ghi liều văn bản nêu rõ.",
+      "Liều theo cân nặng lấy từ WHO operational handbook Module 4 (2025) Annex 4; trẻ < 25 kg (lao nhạy cảm thuốc) và < 24 kg (lao đa kháng) chưa nhập dạng phân tán theo nhóm cân nặng – dùng mg/kg hoặc bảng trẻ em của WHO.",
     ],
   },
   {
     diseaseId: "v8-141",
-    guidelineIds: [WHO_TB],
+    guidelineIds: [WHO_TB, WHO_TB_HB],
     scope: "Lao màng não: nhạy cảm thuốc, Hr-TB, MDR/RR-TB; corticoid bổ trợ; thời điểm ART – công cụ theo WHO Module 4 (2025).",
     recommendations: [
       { text: "Lao màng não: corticoid bổ trợ ban đầu bằng dexamethason hoặc prednisolon, giảm liều dần trong 6–8 tuần; dùng bất kể mức độ nặng; dùng đường uống nếu không có dạng tĩnh mạch.", grade: "Mạnh, độ tin cậy trung bình", guidelineId: WHO_TB, locator: "Chương 1, KC 4.1; Subgroup; Implementation" },
       { text: "Phác đồ 2HRZE/4HR áp dụng cho lao ngoài phổi trừ lao thần kinh trung ương, xương khớp – một số nhóm chuyên gia đề nghị điều trị dài hơn.", guidelineId: WHO_TB, locator: "Chương 1, KC 1.1, Remark A" },
+      { text: "Người lớn: phác đồ lõi 2HRZE/4HR, bác sĩ có thể kéo dài đến 12 tháng; ngoài khuyến cáo WHO, một số chuyên gia đề nghị 9–12 tháng.", guidelineId: WHO_TB_HB, locator: "Handbook mục 7.1–7.2" },
+      { text: "Trẻ em, vị thành niên: thay thế 6HRZEto (6 tháng tăng cường) – khuyến cáo có điều kiện, không dùng cho trẻ nhiễm HIV.", guidelineId: WHO_TB_HB, locator: "Handbook mục 7.1–7.2" },
       { text: "Trẻ em lao màng não: 2HRZE/10HR (tổng 12 tháng), liều như lao phổi (khuyến cáo trẻ em WHO 2014).", grade: "Mạnh, độ tin cậy thấp", guidelineId: WHO_TB, locator: "Phụ lục 1.1, KC 14 (2014)" },
       { text: "Người nhiễm HIV có viêm màng não: không áp dụng bắt đầu ART trong 2 tuần; có thể cân nhắc hoãn ART 4–8 tuần sau khi bắt đầu điều trị lao.", guidelineId: WHO_TB, locator: "Chương 1, KC 3.2 (chú thích a)" },
       { text: "MDR/RR-TB màng não: phác đồ 6 và 9 tháng loại trừ lao thần kinh trung ương; phác đồ dài hạn theo kháng sinh đồ và khả năng thấm thần kinh trung ương (meropenem ưu tiên hơn imipenem-cilastatin).", guidelineId: WHO_TB, locator: "Chương 2, mục Extrapulmonary TB and TB meningitis" },
     ],
     regimens: [],
     gaps: [
-      "Module 4 không nêu liều corticoid, thời gian điều trị lao màng não người lớn, và liều theo cân nặng cho người lớn – để trống.",
-      "Phác đồ 6HRZEto cho trẻ em lao màng não thuộc Module 5 – chưa đọc, chưa đưa vào.",
+      "Cả guidelines và operational handbook Module 4 không nêu liều corticoid – để trống.",
+      "Liều 6HRZEto (Module 5) chưa có trong tài liệu đã đọc – để trống.",
     ],
   },
   {
