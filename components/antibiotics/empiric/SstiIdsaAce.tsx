@@ -11,6 +11,9 @@ import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
 
 const STRAT_LABEL: Record<StrategyKind, string> = { mono: "ĐƠN TRỊ", combo: "PHỐI HỢP", mixed: "ĐƠN TRỊ / PHỐI HỢP", none: "KHÔNG KHÁNG SINH" };
 
+/* Nhan da the hien don tri/phoi hop: bo phan lap o dau tieu de. */
+const stratTitle = (t: string) => { const x = t.replace(/^(Đơn trị|Phối hợp|Không dùng kháng sinh) – /, ""); return x[0].toUpperCase() + x.slice(1); };
+
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
 }
@@ -110,7 +113,7 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
         </div>
         {o.strategy && (
           <div className={`ssti-strat ssti-strat-${o.strategy.kind}`}>
-            <p className="ssti-strat-head"><span className="ssti-badge">{STRAT_LABEL[o.strategy.kind]}</span> {o.strategy.title}</p>
+            <p className="ssti-strat-head"><span className="ssti-badge">{STRAT_LABEL[o.strategy.kind]}</span> {stratTitle(o.strategy.title)}</p>
             <p className="ssti-strat-sub">Lúc nào đơn trị, lúc nào phối hợp</p>
             <ul>{o.strategy.rules.map((x) => <li key={x}>{x}</li>)}</ul>
           </div>
