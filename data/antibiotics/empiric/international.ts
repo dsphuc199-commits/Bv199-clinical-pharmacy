@@ -274,7 +274,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://iwgdfguidelines.org/wp-content/uploads/2023/07/IWGDF-2023-04-Infection-Guideline.pdf",
     status: "extracted",
     checkedOn: CHECKED,
-    checkNote: "Đọc từ PDF chính thức trên iwgdfguidelines.org. Guideline không nêu liều cụ thể.",
+    checkNote: "Đọc từ PDF chính thức trên iwgdfguidelines.org; đối chiếu lại toàn văn bản Diabetes Metab Res Rev 2024;e3687 (16/11/2026): Bảng 1, 2, 4, 5 và khuyến cáo 1–25 – dùng cho công cụ chọn kháng sinh tab Quốc tế. Guideline không nêu liều cụ thể (liều thông thường cho nhiễm trùng nặng; theo hướng dẫn quốc gia).",
   },
   "sis-iai-2024": {
     id: "sis-iai-2024",
@@ -881,7 +881,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   {
     diseaseId: "v9-1",
     guidelineIds: ["iwgdf-idsa-2023"],
-    scope: "Người đái tháo đường có nhiễm trùng bàn chân (mô mềm, viêm xương).",
+    scope: "Người đái tháo đường có nhiễm trùng bàn chân (mô mềm, viêm xương) – công cụ chọn kháng sinh theo IWGDF/IDSA 2023 (Bảng 1, 4, 5).",
     recommendations: [
       { text: "Không dùng kháng sinh toàn thân hoặc tại chỗ cho loét không có nhiễm trùng lâm sàng nhằm giảm nguy cơ nhiễm trùng mới hoặc thúc đẩy lành loét.", grade: "Thực hành tốt nhất", guidelineId: "iwgdf-idsa-2023", locator: "Khuyến cáo 11" },
       { text: "Nhiễm trùng mô mềm: dùng phác đồ kháng sinh đã chứng minh hiệu quả trong thử nghiệm ngẫu nhiên, ở liều chuẩn.", grade: "Mạnh; cao", guidelineId: "iwgdf-idsa-2023", locator: "Khuyến cáo 12a" },
@@ -893,7 +893,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
       { text: "Không dùng kháng sinh tại chỗ (miếng xốp, kem, xi măng) kèm kháng sinh toàn thân để điều trị nhiễm trùng mô mềm hoặc xương.", guidelineId: "iwgdf-idsa-2023", locator: "Khuyến cáo 24" },
     ],
     regimens: [],
-    gaps: ["IWGDF/IDSA 2023 không nêu liều cụ thể."],
+    gaps: ["IWGDF/IDSA 2023 không nêu liều cụ thể (liều thông thường cho nhiễm trùng nặng; viêm xương dùng mức cao của khoảng liều) – liều theo hướng dẫn quốc gia."],
   },
 
   // ================= Da khang =================
