@@ -43,9 +43,18 @@ o = plan({ form: "purulent", sev: "severe", age: "child" });
 check("Trẻ em: không hiện daptomycin", !items(o).some((x) => x.text === "Daptomycin"));
 check("Vancomycin trẻ em 40 mg/kg/ngày tĩnh mạch, chia 4 lần", find(o, "Vancomycin").dose === "40 mg/kg/ngày tĩnh mạch, chia 4 lần");
 o = plan({ sev: "severe" });
-check("Viêm mô tế bào nặng: phối hợp vancomycin + piperacilin-tazobactam đủ liều hai thuốc", find(o, "Vancomycin + piperacilin-tazobactam").dose === "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + piperacilin-tazobactam 3,37 g tĩnh mạch mỗi 6–8 giờ");
+check("Viêm mô tế bào nặng: phối hợp vancomycin + piperacilin-tazobactam đủ liều hai thuốc", find(o, "Vancomycin + piperacilin-tazobactam").dose === "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + piperacilin-tazobactam 3,375 g tĩnh mạch mỗi 6 giờ hoặc 4,5 g tĩnh mạch mỗi 8 giờ");
+// Doi chieu nhan thuoc FDA (DailyMed)
+check("Nhãn FDA: linezolid trẻ ≤ 11 tuổi 10 mg/kg mỗi 8 giờ", find(plan({ form: "purulent", sev: "severe", age: "child" }), "Linezolid").dose.startsWith("Trẻ ≤ 11 tuổi: 10 mg/kg tĩnh mạch hoặc uống mỗi 8 giờ"));
+check("Nhãn FDA: ampicilin-sulbactam mỗi 6 giờ, sulbactam ≤ 4 g/ngày", find(plan({ form: "bite" }), "Ampicilin-sulbactam").dose === "1,5–3 g tĩnh mạch mỗi 6 giờ (tổng sulbactam ≤ 4 g/ngày)");
+check("Nhãn FDA: ampicilin-sulbactam trẻ ≥ 1 tuổi 300 mg/kg/ngày", find(plan({ form: "bite", age: "child" }), "Ampicilin-sulbactam").dose.startsWith("300 mg/kg/ngày"));
+check("Nhãn FDA: imipenem-cilastatin trẻ ≥ 3 tháng 15–25 mg/kg mỗi 6 giờ", find(plan({ form: "ssi", site: "gi", age: "child" }), "Imipenem-cilastatin").dose.startsWith("15–25 mg/kg/lần tĩnh mạch mỗi 6 giờ"));
+check("Nhãn FDA: ertapenem trẻ em tối đa 1 g/ngày", find(plan({ form: "bite", bite: "human", age: "child" }), "Ertapenem").dose.includes("tối đa 1 g/ngày"));
+check("Nhãn FDA: cefotaxim trẻ em 50–180 mg/kg/ngày", find(plan({ form: "nec", age: "child" }), "Vancomycin + cefotaxim + metronidazol").dose.includes("cefotaxim 50–180 mg/kg/ngày"));
+check("Nhãn FDA: gentamicin trẻ em 2–2,5 mg/kg mỗi 8 giờ", find(plan({ form: "ssi", site: "gi", age: "child" }), "Ampicilin-sulbactam + gentamicin").dose.includes("gentamicin 2–2,5 mg/kg tĩnh mạch mỗi 8 giờ"));
+check("Trẻ em: không hiện fluoroquinolon ở vết cắn, vết mổ", ![plan({ form: "bite", age: "child" }), plan({ form: "ssi", site: "axilla", age: "child" })].some((x) => items(x).some((it) => /floxacin/.test(it.text))));
 check("Corticoid chỉ ở người lớn", !items(plan({ age: "child" })).some((x) => x.role === "Corticoid") && items(plan({})).some((x) => x.role === "Corticoid" && x.grade === "W-M"));
-check("Vết cắn trẻ em: không hiện liều người lớn", items(plan({ form: "bite", age: "child" })).every((x) => !x.dose));
+check("Vết cắn trẻ em: amoxicilin-acid clavulanic theo liều trẻ em", find(plan({ form: "bite", age: "child" }), "Amoxicilin-acid clavulanic").dose.startsWith("Hỗn dịch 400 mg/57 mg"));
 o = plan({ form: "nec", pcnAllergy: true });
 check("Dị ứng penicilin nặng: ẩn phác đồ beta-lactam, hiện phác đồ thay thế", !find(o, "Vancomycin + piperacilin") && items(o).some((x) => x.role.startsWith("Dị ứng penicilin nặng")));
 
@@ -63,6 +72,7 @@ const shown = outs.flatMap((x) => [x.headline, ...x.notes, ...x.avoid.flatMap((i
 check("Giao diện không nêu số hình, số bảng, chú thích", shown.every((t) => !/(Hình|Bảng) \d|chú thích|Suppl/.test(t)));
 check("Dòng có dấu “+” đều ghi “phối hợp” ở vai trò", rows.filter((it) => it.text.includes(" + ")).every((it) => /phối hợp/i.test(it.role)));
 check("Dòng kháng sinh có liều đều ghi đơn trị, phối hợp hoặc bôi", rows.filter((it) => it.dose && !it.dose.startsWith("Bôi")).every((it) => /đơn trị|phối hợp/i.test(it.role)));
+check("Mọi dòng đơn trị, phối hợp đều có liều", rows.filter((it) => /^(Đơn trị|Phối hợp)$|– (đơn trị|phối hợp)/i.test(it.role) && !/^(Kinh nghiệm|Phối hợp thêm)$/.test(it.role)).every((it) => !!it.dose));
 check("Thống nhất tên thuốc và đường dùng: không dùng “Cephalexin”, “TM”", shown.every((t) => !/Cephalexin|cephalexin|\bTM\b/.test(t)));
 
 console.log(`${pass} passed, ${fail} failed`);

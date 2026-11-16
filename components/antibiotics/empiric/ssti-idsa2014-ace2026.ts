@@ -15,6 +15,14 @@
   Quy ước hiển thị: không nêu số hình, số bảng; mỗi dòng là một phác đồ, ghi rõ "Đơn trị" hoặc "Phối hợp".
   Phác đồ phối hợp vancomycin + beta-lactam ở viêm mô tế bào nặng, viêm cơ mủ dùng liều của Bảng 4 (cùng phác
   đồ kinh nghiệm cho nhiễm khuẩn hỗn hợp). Penicilin trẻ em ở Clostridium: liều penicilin trẻ em cùng Bảng 4.
+  - Đối chiếu liều với thông tin kê đơn được FDA phê duyệt (DailyMed, đọc 16/11/2026): linezolid (Zyvox), daptomycin
+    (Cubicin RF), ceftarolin (Teflaro), piperacilin-tazobactam (Zosyn), ampicilin-sulbactam (Unasyn), ertapenem (Invanz),
+    meropenem, imipenem-cilastatin (Primaxin), cefotaxim (Claforan), metronidazol, clindamycin (Cleocin Phosphate),
+    vancomycin, gentamicin, doxycyclin. Sửa theo nhãn: linezolid trẻ ≤ 11 tuổi 10 mg/kg mỗi 8 giờ (nhiễm khuẩn da có
+    biến chứng); piperacilin-tazobactam 3,375 g mỗi 6 giờ; ampicilin-sulbactam mỗi 6 giờ, sulbactam ≤ 4 g/ngày;
+    cefotaxim trẻ em 50–180 mg/kg/ngày. Liều trẻ em bổ sung từ nhãn: ampicilin-sulbactam, imipenem-cilastatin,
+    ertapenem (tối đa 1 g/ngày), gentamicin, doxycyclin. Vancomycin trẻ em trong phác đồ phối hợp: 15 mg/kg mỗi 6 giờ
+    (IDSA Bảng 4, dòng S. aureus; phù hợp ASHP/IDSA 2020).
   ref = vị trí trong văn bản (không hiển thị).
 */
 import type { RxItem } from "./septic-arthritis-pids2023";
@@ -182,11 +190,11 @@ const aceIvNotes = (age: Age): string[] => (age === "child" ? [] : [
 const T2 = "IDSA Bảng 2";
 const MRSA: Record<string, D> = {
   vanco: { a: "30 mg/kg/ngày tĩnh mạch, chia 2 lần", c: "40 mg/kg/ngày tĩnh mạch, chia 4 lần" },
-  linezolid: { a: "600 mg tĩnh mạch mỗi 12 giờ hoặc 600 mg uống 2 lần/ngày", c: "Trẻ < 12 tuổi: 10 mg/kg tĩnh mạch hoặc uống mỗi 12 giờ" },
+  linezolid: { a: "600 mg tĩnh mạch mỗi 12 giờ hoặc 600 mg uống 2 lần/ngày", c: "Trẻ ≤ 11 tuổi: 10 mg/kg tĩnh mạch hoặc uống mỗi 8 giờ; ≥ 12 tuổi: liều người lớn" },
   clinda: { a: "600 mg tĩnh mạch mỗi 8 giờ, hoặc 300–450 mg uống 4 lần/ngày", c: "25–40 mg/kg/ngày tĩnh mạch, chia 3 lần; hoặc 30–40 mg/kg/ngày uống, chia 3 lần" },
   dapto: { a: "4 mg/kg tĩnh mạch mỗi 24 giờ" },
   ceftaroline: { a: "600 mg tĩnh mạch 2 lần/ngày" },
-  doxy: { a: "100 mg uống 2 lần/ngày", c: "Không khuyến cáo cho trẻ < 8 tuổi" },
+  doxy: { a: "100 mg uống 2 lần/ngày", c: "Trẻ > 8 tuổi, < 45 kg: 4,4 mg/kg/ngày uống chia 2 lần ngày đầu, sau đó 2,2 mg/kg/ngày (1 lần hoặc chia 2 lần); ≥ 45 kg: liều người lớn. Không dùng cho trẻ ≤ 8 tuổi" },
   smx: { a: "1–2 viên hàm lượng gấp đôi (160 mg/800 mg) uống 2 lần/ngày", c: "8–12 mg/kg/ngày (tính theo trimethoprim) tĩnh mạch chia 4 lần, hoặc uống chia 2 lần" },
 };
 const MSSA: Record<string, D> = {
@@ -205,11 +213,23 @@ function mrsaSet(age: Age, label: string): RxItem[] {
 }
 /* Bảng 4 – nhiễm khuẩn hỗn hợp (dùng cho phác đồ phối hợp vancomycin + beta-lactam) */
 const T4 = "IDSA Bảng 4";
-const VANCO_T4: D = { a: "vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần", c: "vancomycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ" };
-const PIP_T4: D = { a: "piperacilin-tazobactam 3,37 g tĩnh mạch mỗi 6–8 giờ", c: "piperacilin-tazobactam 60–75 mg/kg/lần (tính theo piperacilin) tĩnh mạch mỗi 6 giờ" };
-const MERO_T4: D = { a: "meropenem 1 g tĩnh mạch mỗi 8 giờ", c: "meropenem 20 mg/kg/lần tĩnh mạch mỗi 8 giờ" };
-const IMI_T4: D = { a: "imipenem-cilastatin 1 g tĩnh mạch mỗi 6–8 giờ" };
-const ERTA_T4: D = { a: "ertapenem 1 g tĩnh mạch 1 lần/ngày", c: "ertapenem 15 mg/kg/lần tĩnh mạch mỗi 12 giờ (3 tháng – 12 tuổi)" };
+const VANCO_T4: D = { a: "vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần", c: "vancomycin 15 mg/kg/lần tĩnh mạch mỗi 6 giờ" };
+const PIP_T4: D = { a: "piperacilin-tazobactam 3,375 g tĩnh mạch mỗi 6 giờ hoặc 4,5 g tĩnh mạch mỗi 8 giờ", c: "piperacilin-tazobactam 60–75 mg/kg/lần (tính theo piperacilin) tĩnh mạch mỗi 6 giờ" };
+const MERO_T4: D = { a: "meropenem 1 g tĩnh mạch mỗi 8 giờ", c: "meropenem 20 mg/kg/lần tĩnh mạch mỗi 8 giờ (≥ 50 kg: 1 g)" };
+const IMI_T4: D = { a: "imipenem-cilastatin 1 g tĩnh mạch mỗi 6–8 giờ (tối đa 4 g/ngày)", c: "imipenem-cilastatin 15–25 mg/kg/lần tĩnh mạch mỗi 6 giờ (trẻ ≥ 3 tháng; tối đa 4 g/ngày)" };
+const ERTA_T4: D = { a: "ertapenem 1 g tĩnh mạch 1 lần/ngày", c: "ertapenem 15 mg/kg/lần tĩnh mạch mỗi 12 giờ (3 tháng – 12 tuổi; tối đa 1 g/ngày)" };
+const CTX_C = "cefotaxim 50–180 mg/kg/ngày tĩnh mạch, chia 4–6 lần (29 ngày – 12 tuổi, < 50 kg; ≥ 50 kg: liều người lớn)";
+const CRO_C = "ceftriaxon 50–80 mg/kg tĩnh mạch 1 lần/ngày (tối đa 2000 mg/ngày; ≥ 50 kg hoặc > 12 tuổi: liều người lớn)";
+const SAM_A = "ampicilin-sulbactam 1,5–3 g tĩnh mạch mỗi 6 giờ (tổng sulbactam ≤ 4 g/ngày)";
+const SAM_C = "ampicilin-sulbactam 300 mg/kg/ngày (ampicilin 200 mg/kg + sulbactam 100 mg/kg) tĩnh mạch, chia mỗi 6 giờ (trẻ ≥ 1 tuổi; ≥ 40 kg: liều người lớn)";
+const GENTA_C = "gentamicin 2–2,5 mg/kg tĩnh mạch mỗi 8 giờ (6–7,5 mg/kg/ngày)";
+const LZD_C = "linezolid 10 mg/kg tĩnh mạch mỗi 8 giờ (trẻ ≤ 11 tuổi)";
+const cap = (t: string) => t[0].toUpperCase() + t.slice(1);
+/* Dòng thuốc có liều theo đối tượng: không có liều cho đối tượng đang chọn thì không hiển thị dòng. */
+function dr(age: Age, role: string, text: string, d: D, ref: string, al?: "std" | "alt"): RxItem[] {
+  const x = pick(d, age);
+  return x ? [r(role, text, x, undefined, ref, al)] : [];
+}
 function vancoCombo(age: Age, partner: D, label: string, ref: string, al?: "std" | "alt"): RxItem | null {
   const v = pick(VANCO_T4, age), p = pick(partner, age);
   if (!v || !p) return null;
@@ -401,7 +421,7 @@ function cellulitis(i: SstiIn, aceSev: boolean): SstiOut {
       r("Tĩnh mạch – đơn trị", "Penicilin G", a ? "2–4 triệu đơn vị tĩnh mạch mỗi 4–6 giờ" : "60 000–100 000 đơn vị/kg/lần mỗi 6 giờ", undefined, ref, "std"),
       r("Tĩnh mạch – đơn trị", "Cefazolin", a ? "1 g tĩnh mạch mỗi 8 giờ" : "33 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, ref),
       r("Tĩnh mạch – đơn trị", "Clindamycin", a ? "600–900 mg tĩnh mạch mỗi 8 giờ" : "10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, ref),
-      r("Tĩnh mạch – đơn trị", "Ceftriaxon", undefined, undefined, "IDSA Hình 1"),
+      r("Tĩnh mạch – đơn trị", "Ceftriaxon", a ? "1–2 g tĩnh mạch 1 lần/ngày" : cap(CRO_C.replace("ceftriaxon ", "")), undefined, "IDSA Hình 1; ACE Suppl. 2, Bảng 3"),
     );
   } else {
     rx.push(r("Ngoại khoa", "Thăm dò, cắt lọc ngoại khoa cấp cứu; loại trừ nhiễm khuẩn hoại tử", undefined, undefined, "IDSA Hình 1"));
@@ -422,7 +442,7 @@ function cellulitis(i: SstiIn, aceSev: boolean): SstiOut {
     notes.push("IDSA: doxycyclin, sulfamethoxazol-trimethoprim chưa rõ hoạt tính trên liên cầu tan huyết beta, nên không dùng đơn trị cho viêm mô tế bào; không có áp xe, loét hoặc chảy mủ thì khuyến cáo một beta-lactam đơn trị.");
   }
   if (i.pcnAllergy) {
-    rx.push(r(`${ALG} nặng – đơn trị`, "Clindamycin, vancomycin, linezolid, daptomycin hoặc telavancin", undefined, undefined, `${T2} – viêm mô tế bào`, "alt"));
+    if (!i.mrsa) rx.push(...mrsaSet(i.age, `${ALG} nặng`).map((x) => ({ ...x, al: "alt" as const })), { ...mrsaRow(`${ALG} nặng – đơn trị`, "Clindamycin", "clinda", i.age), al: "alt" as const });
     notes.push("IDSA: tỷ lệ liên cầu kháng clindamycin < 1% nhưng có thể đang tăng ở châu Á. Cefalexin, cefazolin dùng được cho người dị ứng penicilin, trừ người có phản ứng quá mẫn tức thì.");
   }
   blocks.push({ title: "Theo IDSA 2014: phác đồ theo mức độ", items: rx });
@@ -443,65 +463,14 @@ function cellulitis(i: SstiIn, aceSev: boolean): SstiOut {
   return { headline, blocks, avoid: [], notes };
 }
 
-/* ===================== Nhiễm khuẩn vết mổ ===================== */
-function ssi(i: SstiIn): SstiOut {
-  const T3 = "IDSA Bảng 3";
-  const a = i.age === "adult";
-  const blocks: SstiBlock[] = [{
-    title: "Theo IDSA 2014: khuyến cáo",
-    items: [
-      r("Ngoại khoa", "Cắt chỉ, mở và dẫn lưu vết mổ", undefined, "S-L", "IDSA KC 22"),
-      r("Kháng sinh hỗ trợ", "Không thường quy; có thể có lợi khi kèm phản ứng toàn thân rõ: ban đỏ và cứng lan > 5 cm từ mép vết mổ, nhiệt độ > 38,5 °C, mạch > 110 lần/phút, hoặc bạch cầu > 12 000/µL", undefined, "W-L", "IDSA KC 23"),
-      r("Đợt ngắn", "Sau mổ sạch vùng thân, đầu – cổ, chi kèm dấu hiệu nhiễm khuẩn toàn thân: đợt kháng sinh ngắn (ví dụ 24–48 giờ)", undefined, "S-L", "IDSA KC 24; tr. e27"),
-      r("Không dùng kháng sinh", "Ban đỏ và cứng < 5 cm, dấu hiệu toàn thân tối thiểu (nhiệt độ < 38,5 °C, bạch cầu < 12 000/µL, mạch < 100 lần/phút)", undefined, undefined, "IDSA tr. e27"),
-      r("Sốt trong 48 giờ đầu", "Khám vết mổ; nhuộm Gram dịch vết mổ tìm liên cầu, Clostridium. Nếu có: mở vết mổ, cắt lọc, phối hợp penicilin và clindamycin", undefined, undefined, "IDSA Hình 2"),
-    ],
-  }];
-  const notes: string[] = [];
-  const rx: RxItem[] = [];
-  if (i.site === "clean") {
-    rx.push(r("Khuyến cáo", "MSSA: cephalosporin thế hệ 1 hoặc penicilin kháng tụ cầu, đơn trị. Nguy cơ MRSA cao (mang MRSA ở mũi, tiền sử nhiễm MRSA, mới nằm viện, mới dùng kháng sinh): vancomycin, linezolid, daptomycin, telavancin hoặc ceftarolin, đơn trị", undefined, "S-L", "IDSA KC 25"));
-    if (a) {
-      rx.push(
-        r(MONO, "Oxacilin hoặc nafcilin", "2 g tĩnh mạch mỗi 6 giờ", undefined, T3, "std"),
-        r(MONO, "Cefazolin", "0,5–1 g tĩnh mạch mỗi 8 giờ", undefined, T3, "std"),
-        r(MONO, "Cefalexin", "500 mg uống mỗi 6 giờ", undefined, T3, "std"),
-        r(i.mrsa ? "Nguy cơ MRSA – đơn trị" : "Dị ứng beta-lactam type 1 – đơn trị", "Vancomycin", "15 mg/kg tĩnh mạch mỗi 12 giờ", undefined, `${T3}; Hình 2`, i.mrsa ? undefined : "alt"),
-      );
-      if (i.mrsa) rx.push(mrsaRow("Nguy cơ MRSA – đơn trị", "Linezolid", "linezolid", i.age), mrsaRow("Nguy cơ MRSA – đơn trị", "Daptomycin", "dapto", i.age), mrsaRow("Nguy cơ MRSA – đơn trị", "Ceftarolin", "ceftaroline", i.age));
-    }
-    notes.push("IDSA: vết mổ sạch – bắt đầu cefazolin, hoặc vancomycin (người dị ứng beta-lactam type 1: phản vệ, mày đay) cho đến khi loại trừ MRSA.");
-  } else if (i.site === "gi") {
-    rx.push(r("Khuyến cáo", "Kháng sinh có tác dụng trên vi khuẩn Gram âm và kỵ khí, ví dụ phối hợp cephalosporin hoặc fluoroquinolon với metronidazol", undefined, "S-L", "IDSA KC 26"));
-    if (a) {
-      rx.push(
-        r(MONO, "Ticarcilin-acid clavulanic", "3,1 g tĩnh mạch mỗi 6 giờ", undefined, T3, "std"),
-        r(MONO, "Piperacilin-tazobactam", "3,375 g tĩnh mạch mỗi 6 giờ hoặc 4,5 g tĩnh mạch mỗi 8 giờ", undefined, T3, "std"),
-        r(MONO, "Imipenem-cilastatin", "500 mg tĩnh mạch mỗi 6 giờ", undefined, T3, "std"),
-        r(MONO, "Meropenem", "1 g tĩnh mạch mỗi 8 giờ", undefined, T3, "std"),
-        r(MONO, "Ertapenem", "1 g tĩnh mạch mỗi 24 giờ", undefined, T3, "std"),
-        r(COMBO, "Ceftriaxon + metronidazol", "Ceftriaxon 1 g tĩnh mạch mỗi 24 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ", undefined, T3, "std"),
-        r(COMBO, "Ciprofloxacin + metronidazol", "Ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ", undefined, `${T3}; trả lời tác giả 2015`),
-        r(COMBO, "Levofloxacin + metronidazol", "Levofloxacin 750 mg tĩnh mạch mỗi 24 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ", undefined, T3),
-        r(COMBO, "Ampicilin-sulbactam + gentamicin hoặc tobramycin", "Ampicilin-sulbactam 3 g tĩnh mạch mỗi 6 giờ + gentamicin hoặc tobramycin 5 mg/kg tĩnh mạch mỗi 24 giờ", undefined, T3, "std"),
-      );
-      if (i.mrsa) rx.push(r("Nguy cơ MRSA – phối hợp thêm", "Vancomycin vào một phác đồ trên", "15 mg/kg tĩnh mạch mỗi 12 giờ", undefined, `IDSA tr. e27; ${T3}`));
-    }
-  } else {
-    rx.push(r("Khuyến cáo", "Kháng sinh có tác dụng trên vi khuẩn Gram âm và kỵ khí, ví dụ phối hợp cephalosporin hoặc fluoroquinolon với metronidazol", undefined, "S-L", "IDSA KC 26"));
-    if (a) {
-      rx.push(
-        r(COMBO, "Metronidazol + ciprofloxacin", "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ", undefined, `${T3}; trả lời tác giả 2015`),
-        r(COMBO, "Metronidazol + levofloxacin", "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + levofloxacin 750 mg tĩnh mạch hoặc uống mỗi 24 giờ", undefined, T3),
-        r(COMBO, "Metronidazol + ceftriaxon", "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + ceftriaxon 1 g tĩnh mạch mỗi 24 giờ", undefined, T3, "std"),
-      );
-      if (i.mrsa) rx.push(r("Nguy cơ MRSA – phối hợp thêm", "Vancomycin vào một phác đồ trên", "15 mg/kg tĩnh mạch mỗi 12 giờ", undefined, T3));
-    }
-  }
-  blocks.push({ title: "Theo IDSA 2014: phác đồ theo vị trí phẫu thuật", items: rx });
-  if (a && i.mrsa) notes.push(VANCO_TDM);
-  notes.push("ACE: nhiễm khuẩn vết mổ, mảnh ghép, vật liệu nhân tạo – cân nhắc chuyển tuyến.");
-  return { headline: "Mở, dẫn lưu vết mổ; kháng sinh ngắn ngày khi có phản ứng toàn thân", blocks, avoid: [], notes };
+/* Dị ứng penicilin nặng – nhiễm khuẩn hoại tử do liên cầu, S. aureus: vancomycin, linezolid, daptomycin (đơn trị). */
+function allergyGp(age: Age, withVanco: boolean): RxItem[] {
+  const role = `${ALG} nặng – đơn trị`;
+  const out: RxItem[] = [];
+  if (withVanco) out.push(...dr(age, role, "Vancomycin", { a: "30 mg/kg/ngày tĩnh mạch, chia 2 lần", c: "15 mg/kg/lần tĩnh mạch mỗi 6 giờ" }, T4, "alt"));
+  out.push(...dr(age, role, "Linezolid", { a: "600 mg tĩnh mạch mỗi 12 giờ", c: cap(LZD_C.replace("linezolid ", "")) }, `${T4}; nhãn FDA`, "alt"));
+  out.push(...dr(age, role, "Daptomycin", { a: "4 mg/kg tĩnh mạch mỗi 24 giờ" }, `${T4}; Bảng 2`, "alt"));
+  return out;
 }
 
 /* ===================== Nhiễm khuẩn hoại tử ===================== */
@@ -523,7 +492,7 @@ function nec(i: SstiIn): SstiOut {
   const notes: string[] = [];
   const rx: RxItem[] = [];
   const p = i.pathogen;
-  const kids = "Không khuyến cáo cho trẻ em nhưng có thể cần dùng khi đe dọa tính mạng";
+  const kids = "Chỉ dùng cho trẻ em khi đe dọa tính mạng: doxycyclin 2,2 mg/kg tĩnh mạch mỗi 12 giờ (< 45 kg; ≥ 45 kg: liều người lớn)";
   let lead: string | undefined;
   if (p === "empiric") {
     for (const [partner, label] of [[PIP_T4, "Vancomycin + piperacilin-tazobactam"], [IMI_T4, "Vancomycin + imipenem-cilastatin"], [MERO_T4, "Vancomycin + meropenem"], [ERTA_T4, "Vancomycin + ertapenem"]] as const) {
@@ -531,17 +500,18 @@ function nec(i: SstiIn): SstiOut {
       if (x) rx.push(x);
     }
     rx.push(
-      r(COMBO, "Vancomycin + cefotaxim + metronidazol", a ? "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + cefotaxim 2 g tĩnh mạch mỗi 6 giờ + metronidazol 500 mg tĩnh mạch mỗi 6 giờ" : "Vancomycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ + cefotaxim 50 mg/kg/lần tĩnh mạch mỗi 6 giờ + metronidazol 7,5 mg/kg/lần tĩnh mạch mỗi 6 giờ", undefined, `IDSA tr. e30; ${T4}`, "std"),
-      r(COMBO, "Vancomycin + cefotaxim + clindamycin", a ? "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + cefotaxim 2 g tĩnh mạch mỗi 6 giờ + clindamycin 600–900 mg tĩnh mạch mỗi 8 giờ" : "Vancomycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ + cefotaxim 50 mg/kg/lần tĩnh mạch mỗi 6 giờ + clindamycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, `IDSA tr. e30; ${T4}`, "std"),
-      r(`${ALG} nặng – phối hợp`, "Clindamycin hoặc metronidazol + aminoglycosid hoặc fluoroquinolon; có hoặc nghi tụ cầu: phối hợp thêm kháng sinh có tác dụng trên tụ cầu", undefined, undefined, T4, "alt"),
+      r(COMBO, "Vancomycin + cefotaxim + metronidazol", a ? "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + cefotaxim 2 g tĩnh mạch mỗi 6 giờ + metronidazol 500 mg tĩnh mạch mỗi 6 giờ" : `Vancomycin 15 mg/kg/lần tĩnh mạch mỗi 6 giờ + ${CTX_C} + metronidazol 7,5 mg/kg/lần tĩnh mạch mỗi 6 giờ`, undefined, `IDSA tr. e30; ${T4}`, "std"),
+      r(COMBO, "Vancomycin + cefotaxim + clindamycin", a ? "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + cefotaxim 2 g tĩnh mạch mỗi 6 giờ + clindamycin 600–900 mg tĩnh mạch mỗi 8 giờ" : `Vancomycin 15 mg/kg/lần tĩnh mạch mỗi 6 giờ + ${CTX_C} + clindamycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ`, undefined, `IDSA tr. e30; ${T4}`, "std"),
+      r(`${ALG} nặng – phối hợp`, a ? "Clindamycin hoặc metronidazol + gentamicin hoặc fluoroquinolon" : "Clindamycin hoặc metronidazol + gentamicin", a ? "Clindamycin 600–900 mg tĩnh mạch mỗi 8 giờ hoặc metronidazol 500 mg tĩnh mạch mỗi 6 giờ + gentamicin 5 mg/kg tĩnh mạch mỗi 24 giờ, hoặc ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ, hoặc levofloxacin 750 mg tĩnh mạch mỗi 24 giờ" : `Clindamycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ hoặc metronidazol 7,5 mg/kg/lần tĩnh mạch mỗi 6 giờ + ${GENTA_C}`, undefined, `${T4}; Bảng 3; nhãn FDA gentamicin`, "alt"),
     );
-    lead = a ? "Có thể thay vancomycin bằng linezolid 600 mg tĩnh mạch mỗi 12 giờ." : "Có thể thay vancomycin bằng linezolid 10 mg/kg tĩnh mạch mỗi 12 giờ (trẻ < 12 tuổi).";
+    lead = a ? "Có thể thay vancomycin bằng linezolid 600 mg tĩnh mạch mỗi 12 giờ." : `Có thể thay vancomycin bằng ${LZD_C}.`;
+    notes.push("Dị ứng penicilin nặng, có hoặc nghi tụ cầu: phối hợp thêm vancomycin hoặc linezolid (IDSA).");
     notes.push("IDSA: nhiễm khuẩn đa vi khuẩn – có thể phối hợp vancomycin, linezolid hoặc daptomycin với fluoroquinolon + metronidazol. Xác định căn nguyên thì điều chỉnh kháng sinh.");
     notes.push(VANCO_TDM);
   } else if (p === "strep") {
     rx.push(
       r(COMBO, "Penicilin G + clindamycin", a ? "Penicilin G 2–4 triệu đơn vị tĩnh mạch mỗi 4–6 giờ + clindamycin 600–900 mg tĩnh mạch mỗi 8 giờ" : "Penicilin G 60 000–100 000 đơn vị/kg/lần tĩnh mạch mỗi 6 giờ + clindamycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, T4, "std"),
-      r(`${ALG} nặng – đơn trị`, "Vancomycin, linezolid, quinupristin/dalfopristin hoặc daptomycin", undefined, undefined, T4, "alt"),
+      ...allergyGp(i.age, true),
     );
     notes.push("IDSA: clindamycin ức chế sinh độc tố và cytokin của liên cầu; phối hợp penicilin vì liên cầu nhóm A có thể kháng clindamycin. Chưa đủ bằng chứng để khuyến cáo immunoglobulin tĩnh mạch trong hội chứng sốc nhiễm độc do liên cầu.");
   } else if (p === "sa") {
@@ -551,7 +521,7 @@ function nec(i: SstiIn): SstiOut {
       r("MSSA – đơn trị", "Cefazolin", a ? "1 g tĩnh mạch mỗi 8 giờ" : "33 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, T4, "std"),
       r("MRSA – đơn trị", "Vancomycin", a ? "30 mg/kg/ngày tĩnh mạch, chia 2 lần" : "15 mg/kg/lần tĩnh mạch mỗi 6 giờ", undefined, T4),
       r(MONO, "Clindamycin; kìm khuẩn, có thể kháng chéo và xuất hiện kháng ở chủng kháng erythromycin, kháng cảm ứng ở MRSA", a ? "600–900 mg tĩnh mạch mỗi 8 giờ" : "10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ", undefined, T4),
-      r(`${ALG} nặng – đơn trị`, "Vancomycin, linezolid, quinupristin/dalfopristin hoặc daptomycin", undefined, undefined, T4, "alt"),
+      ...allergyGp(i.age, false),
     );
     notes.push("IDSA: có hoặc nghi MRSA khi dùng clindamycin – phối hợp thêm vancomycin, không vượt quá liều tối đa hằng ngày của người lớn.");
     notes.push(VANCO_TDM);
@@ -559,9 +529,9 @@ function nec(i: SstiIn): SstiOut {
     rx.push(r(COMBO, "Clindamycin + penicilin G", a ? "Clindamycin 600–900 mg tĩnh mạch mỗi 8 giờ + penicilin G 2–4 triệu đơn vị tĩnh mạch mỗi 4–6 giờ" : "Clindamycin 10–13 mg/kg/lần tĩnh mạch mỗi 8 giờ + penicilin G 60 000–100 000 đơn vị/kg/lần tĩnh mạch mỗi 6 giờ", undefined, T4));
     blocks[0].items.push(r("Không khuyến cáo", "Oxy cao áp: chưa chứng minh lợi ích, có thể trì hoãn hồi sức và cắt lọc ngoại khoa", undefined, "S-L", "IDSA KC 39"));
   } else if (p === "aero") {
-    rx.push(r(COMBO, "Doxycyclin + ciprofloxacin hoặc ceftriaxon", a ? "Doxycyclin 100 mg tĩnh mạch mỗi 12 giờ + ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc ceftriaxon 1–2 g tĩnh mạch mỗi 24 giờ" : kids, undefined, `${T4}; đính chính 2015`));
+    rx.push(r(COMBO, a ? "Doxycyclin + ciprofloxacin hoặc ceftriaxon" : "Doxycyclin + ceftriaxon", a ? "Doxycyclin 100 mg tĩnh mạch mỗi 12 giờ + ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc ceftriaxon 1–2 g tĩnh mạch mỗi 24 giờ" : `${kids} + ${CRO_C}`, undefined, `${T4}; đính chính 2015`));
   } else {
-    rx.push(r(COMBO, "Doxycyclin + ceftriaxon hoặc cefotaxim", a ? "Doxycyclin 100 mg tĩnh mạch mỗi 12 giờ + ceftriaxon 1 g tĩnh mạch 1 lần/ngày hoặc cefotaxim 2 g tĩnh mạch 3 lần/ngày" : kids, undefined, `${T4}; đính chính 2015`));
+    rx.push(r(COMBO, "Doxycyclin + ceftriaxon hoặc cefotaxim", a ? "Doxycyclin 100 mg tĩnh mạch mỗi 12 giờ + ceftriaxon 1 g tĩnh mạch 1 lần/ngày hoặc cefotaxim 2 g tĩnh mạch 3 lần/ngày" : `${kids} + ${CRO_C}, hoặc ${CTX_C}`, undefined, `${T4}; đính chính 2015`));
   }
   blocks.push({ title: "Theo IDSA 2014: phác đồ theo tác nhân", lead, items: rx });
   notes.push("IDSA: hoại thư Fournier (bìu, dương vật hoặc âm hộ) – cắt lọc ngoại khoa sớm, triệt để toàn bộ mô hoại tử, bảo tồn cấu trúc sâu khi có thể.");
@@ -590,15 +560,75 @@ function pyo(i: SstiIn): SstiOut {
       const x = vancoCombo(i.age, partner, label, `IDSA tr. e32; ${T4}`);
       if (x) rx.push({ ...x, role: "Bệnh nền – phối hợp" });
     }
-    if (i.age === "adult") rx.push(r("Bệnh nền – phối hợp", "Vancomycin + ampicilin-sulbactam", "Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + ampicilin-sulbactam 3 g tĩnh mạch mỗi 6 giờ", undefined, "IDSA tr. e32; Bảng 2, 3"));
+    rx.push(r("Bệnh nền – phối hợp", "Vancomycin + ampicilin-sulbactam", i.age === "adult" ? `Vancomycin 30 mg/kg/ngày tĩnh mạch, chia 2 lần + ${SAM_A}` : `Vancomycin 15 mg/kg/lần tĩnh mạch mỗi 6 giờ + ${SAM_C}`, undefined, "IDSA tr. e32; nhãn FDA Unasyn"));
   }
   blocks.push({ title: "Theo IDSA 2014: phác đồ và liều", items: rx });
   return { headline: "Dẫn lưu sớm + vancomycin đơn trị; MSSA: cefazolin; tổng 2–3 tuần", blocks, avoid: [], notes: [VANCO_TDM] };
 }
 
+/* ===================== Nhiễm khuẩn vết mổ ===================== */
+function ssi(i: SstiIn): SstiOut {
+  const T3 = "IDSA Bảng 3";
+  const g = i.age;
+  const blocks: SstiBlock[] = [{
+    title: "Theo IDSA 2014: khuyến cáo",
+    items: [
+      r("Ngoại khoa", "Cắt chỉ, mở và dẫn lưu vết mổ", undefined, "S-L", "IDSA KC 22"),
+      r("Kháng sinh hỗ trợ", "Không thường quy; có thể có lợi khi kèm phản ứng toàn thân rõ: ban đỏ và cứng lan > 5 cm từ mép vết mổ, nhiệt độ > 38,5 °C, mạch > 110 lần/phút, hoặc bạch cầu > 12 000/µL", undefined, "W-L", "IDSA KC 23"),
+      r("Đợt ngắn", "Sau mổ sạch vùng thân, đầu – cổ, chi kèm dấu hiệu nhiễm khuẩn toàn thân: đợt kháng sinh ngắn (ví dụ 24–48 giờ)", undefined, "S-L", "IDSA KC 24; tr. e27"),
+      r("Không dùng kháng sinh", "Ban đỏ và cứng < 5 cm, dấu hiệu toàn thân tối thiểu (nhiệt độ < 38,5 °C, bạch cầu < 12 000/µL, mạch < 100 lần/phút)", undefined, undefined, "IDSA tr. e27"),
+      r("Sốt trong 48 giờ đầu", "Khám vết mổ; nhuộm Gram dịch vết mổ tìm liên cầu, Clostridium. Nếu có: mở vết mổ, cắt lọc, phối hợp penicilin và clindamycin", undefined, undefined, "IDSA Hình 2"),
+    ],
+  }];
+  const notes: string[] = [];
+  const rx: RxItem[] = [];
+  const vanco: D = { a: "15 mg/kg tĩnh mạch mỗi 12 giờ", c: "40 mg/kg/ngày tĩnh mạch, chia 4 lần" };
+  if (i.site === "clean") {
+    rx.push(r("Khuyến cáo", "MSSA: cephalosporin thế hệ 1 hoặc penicilin kháng tụ cầu, đơn trị. Nguy cơ MRSA cao (mang MRSA ở mũi, tiền sử nhiễm MRSA, mới nằm viện, mới dùng kháng sinh): vancomycin, linezolid, daptomycin, telavancin hoặc ceftarolin, đơn trị", undefined, "S-L", "IDSA KC 25"));
+    rx.push(
+      ...dr(g, MONO, "Oxacilin hoặc nafcilin", { a: "2 g tĩnh mạch mỗi 6 giờ", c: "100–150 mg/kg/ngày tĩnh mạch, chia 4 lần" }, `${T3}; Bảng 2`, "std"),
+      ...dr(g, MONO, "Cefazolin", { a: "0,5–1 g tĩnh mạch mỗi 8 giờ", c: "50 mg/kg/ngày tĩnh mạch, chia 3 lần" }, `${T3}; Bảng 2`, "std"),
+      ...dr(g, MONO, "Cefalexin", { a: "500 mg uống mỗi 6 giờ", c: "25–50 mg/kg/ngày uống, chia 4 lần" }, `${T3}; Bảng 2`, "std"),
+      ...dr(g, i.mrsa ? "Nguy cơ MRSA – đơn trị" : "Dị ứng beta-lactam type 1 – đơn trị", "Vancomycin", vanco, `${T3}; Bảng 2; Hình 2`, i.mrsa ? undefined : "alt"),
+    );
+    if (i.mrsa) {
+      rx.push(mrsaRow("Nguy cơ MRSA – đơn trị", "Linezolid", "linezolid", g));
+      if (g === "adult") rx.push(mrsaRow("Nguy cơ MRSA – đơn trị", "Daptomycin", "dapto", g), mrsaRow("Nguy cơ MRSA – đơn trị", "Ceftarolin", "ceftaroline", g));
+    }
+    notes.push("IDSA: vết mổ sạch – bắt đầu cefazolin, hoặc vancomycin (người dị ứng beta-lactam type 1: phản vệ, mày đay) cho đến khi loại trừ MRSA.");
+  } else if (i.site === "gi") {
+    rx.push(r("Khuyến cáo", "Kháng sinh có tác dụng trên vi khuẩn Gram âm và kỵ khí, ví dụ phối hợp cephalosporin hoặc fluoroquinolon với metronidazol", undefined, "S-L", "IDSA KC 26"));
+    rx.push(
+      ...dr(g, MONO, "Piperacilin-tazobactam", { a: cap(PIP_T4.a!.replace("piperacilin-tazobactam ", "")), c: cap(PIP_T4.c!.replace("piperacilin-tazobactam ", "")) }, `${T3}; Bảng 4; nhãn FDA Zosyn`, "std"),
+      ...dr(g, MONO, "Imipenem-cilastatin", { a: "500 mg tĩnh mạch mỗi 6 giờ", c: cap(IMI_T4.c!.replace("imipenem-cilastatin ", "")) }, `${T3}; nhãn FDA Primaxin`, "std"),
+      ...dr(g, MONO, "Meropenem", { a: "1 g tĩnh mạch mỗi 8 giờ", c: cap(MERO_T4.c!.replace("meropenem ", "")) }, `${T3}; Bảng 4`, "std"),
+      ...dr(g, MONO, "Ertapenem", { a: "1 g tĩnh mạch mỗi 24 giờ", c: cap(ERTA_T4.c!.replace("ertapenem ", "")) }, `${T3}; nhãn FDA Invanz`, "std"),
+      ...dr(g, MONO, "Ticarcilin-acid clavulanic", { a: "3,1 g tĩnh mạch mỗi 6 giờ" }, T3, "std"),
+      ...dr(g, COMBO, "Ceftriaxon + metronidazol", { a: "Ceftriaxon 1 g tĩnh mạch mỗi 24 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ", c: `${cap(CRO_C)} + metronidazol 7,5 mg/kg/lần tĩnh mạch mỗi 6 giờ` }, `${T3}; Bảng 4; ACE`, "std"),
+      ...dr(g, COMBO, "Ampicilin-sulbactam + gentamicin hoặc tobramycin", { a: "Ampicilin-sulbactam 3 g tĩnh mạch mỗi 6 giờ (tổng sulbactam ≤ 4 g/ngày) + gentamicin hoặc tobramycin 5 mg/kg tĩnh mạch mỗi 24 giờ", c: `${cap(SAM_C)} + ${GENTA_C}` }, `${T3}; nhãn FDA Unasyn, gentamicin`, "std"),
+      ...dr(g, COMBO, "Ciprofloxacin + metronidazol", { a: "Ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ" }, `${T3}; trả lời tác giả 2015`),
+      ...dr(g, COMBO, "Levofloxacin + metronidazol", { a: "Levofloxacin 750 mg tĩnh mạch mỗi 24 giờ + metronidazol 500 mg tĩnh mạch mỗi 8 giờ" }, T3),
+    );
+    if (i.mrsa) rx.push(...dr(g, "Nguy cơ MRSA – phối hợp thêm", "Vancomycin vào một phác đồ trên", vanco, `IDSA tr. e27; ${T3}`));
+  } else {
+    rx.push(r("Khuyến cáo", "Kháng sinh có tác dụng trên vi khuẩn Gram âm và kỵ khí, ví dụ phối hợp cephalosporin hoặc fluoroquinolon với metronidazol", undefined, "S-L", "IDSA KC 26"));
+    rx.push(
+      ...dr(g, COMBO, "Metronidazol + ceftriaxon", { a: "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + ceftriaxon 1 g tĩnh mạch mỗi 24 giờ", c: `Metronidazol 7,5 mg/kg/lần tĩnh mạch mỗi 6 giờ + ${CRO_C}` }, `${T3}; Bảng 4; ACE`, "std"),
+      ...dr(g, COMBO, "Metronidazol + ciprofloxacin", { a: "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + ciprofloxacin 400 mg tĩnh mạch mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ" }, `${T3}; trả lời tác giả 2015`),
+      ...dr(g, COMBO, "Metronidazol + levofloxacin", { a: "Metronidazol 500 mg tĩnh mạch mỗi 8 giờ + levofloxacin 750 mg tĩnh mạch hoặc uống mỗi 24 giờ" }, T3),
+    );
+    if (i.mrsa) rx.push(...dr(g, "Nguy cơ MRSA – phối hợp thêm", "Vancomycin vào một phác đồ trên", vanco, T3));
+  }
+  blocks.push({ title: "Theo IDSA 2014: phác đồ theo vị trí phẫu thuật", items: rx });
+  if (i.mrsa) notes.push(VANCO_TDM);
+  notes.push("ACE: nhiễm khuẩn vết mổ, mảnh ghép, vật liệu nhân tạo – cân nhắc chuyển tuyến.");
+  return { headline: "Mở, dẫn lưu vết mổ; kháng sinh ngắn ngày khi có phản ứng toàn thân", blocks, avoid: [], notes };
+}
+
 /* ===================== Vết cắn ===================== */
 function bite(i: SstiIn): SstiOut {
   const T5 = "IDSA Bảng 5";
+  const g = i.age;
   const blocks: SstiBlock[] = [{
     title: "Theo IDSA 2014: khuyến cáo",
     items: [
@@ -612,44 +642,41 @@ function bite(i: SstiIn): SstiOut {
   }];
   const notes: string[] = ["IDSA: vết thương bẩn – tiêm nhắc giải độc tố uốn ván nếu > 5 năm từ liều cuối; vết thương sạch – nếu > 10 năm."];
   const rx: RxItem[] = [];
-  const anaer = "metronidazol 250–500 mg uống 3 lần/ngày hoặc 500 mg tĩnh mạch mỗi 8 giờ; hoặc clindamycin 300 mg uống 3 lần/ngày hoặc 600 mg tĩnh mạch mỗi 6–8 giờ";
+  const amc: D = { a: "875 mg/125 mg uống 2 lần/ngày", c: ACE_ORAL[2].d.c };
+  const sam: D = { a: cap(SAM_A.replace("ampicilin-sulbactam ", "")), c: cap(SAM_C.replace("ampicilin-sulbactam ", "")) };
+  const doxy: D = { a: "100 mg uống 2 lần/ngày, hoặc 100 mg tĩnh mạch mỗi 12 giờ", c: MRSA.doxy.c };
+  const anaerA = "metronidazol 250–500 mg uống 3 lần/ngày hoặc 500 mg tĩnh mạch mỗi 8 giờ; hoặc clindamycin 300 mg uống 3 lần/ngày hoặc 600 mg tĩnh mạch mỗi 6–8 giờ";
   if (i.bite === "animal") {
     rx.push(
-      r(MONO, "Amoxicilin-acid clavulanic; một số trực khuẩn Gram âm kháng, không phủ MRSA", "875 mg/125 mg uống 2 lần/ngày", undefined, T5, "std"),
-      r(MONO, "Ampicilin-sulbactam; một số trực khuẩn Gram âm kháng, không phủ MRSA", "1,5–3,0 g tĩnh mạch mỗi 6–8 giờ", undefined, T5, "std"),
-      r(MONO, "Piperacilin-tazobactam; không phủ MRSA", "3,37 g tĩnh mạch mỗi 6–8 giờ", undefined, T5, "std"),
-      r(MONO, "Doxycyclin; rất tốt với Pasteurella multocida, một số liên cầu kháng", "100 mg uống 2 lần/ngày, hoặc 100 mg tĩnh mạch mỗi 12 giờ", undefined, T5),
-      r(MONO, "Moxifloxacin; phủ cả vi khuẩn kỵ khí", "400 mg uống hoặc tĩnh mạch 1 lần/ngày", undefined, T5),
-      r(MONO, "Ciprofloxacin; tốt với P. multocida, không phủ MRSA và một số vi khuẩn kỵ khí", "500–750 mg uống 2 lần/ngày, hoặc 400 mg tĩnh mạch mỗi 12 giờ", undefined, T5),
-      r(COMBO, "Penicilin V + dicloxacilin", "Penicilin V 500 mg uống 4 lần/ngày + dicloxacilin 500 mg uống 4 lần/ngày", undefined, T5, "std"),
-      r(COMBO, "Sulfamethoxazol-trimethoprim + metronidazol hoặc clindamycin", `Sulfamethoxazol-trimethoprim 160 mg/800 mg uống 2 lần/ngày, hoặc 5–10 mg/kg/ngày (tính theo trimethoprim) tĩnh mạch + ${anaer}`, undefined, `${T5}; tr. e33`),
-      r(COMBO, "Levofloxacin + metronidazol hoặc clindamycin", `Levofloxacin 750 mg uống hoặc tĩnh mạch 1 lần/ngày + ${anaer}`, undefined, `${T5}; tr. e33`),
-      r("Đơn trị hoặc phối hợp", "Cefuroxim (tốt với P. multocida, không phủ kỵ khí); phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", "Cefuroxim 500 mg uống 2 lần/ngày, hoặc 1 g tĩnh mạch mỗi 12 giờ", undefined, `${T5}; tr. e33`, "std"),
-      r("Đơn trị hoặc phối hợp", "Cefoxitin; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", "1 g tĩnh mạch mỗi 6–8 giờ", undefined, `${T5}; tr. e33`, "std"),
-      r("Đơn trị hoặc phối hợp", "Ceftriaxon; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", "1 g tĩnh mạch mỗi 12 giờ", undefined, `${T5}; tr. e33`, "std"),
-      r("Đơn trị hoặc phối hợp", "Cefotaxim; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", "1–2 g tĩnh mạch mỗi 6–8 giờ", undefined, `${T5}; tr. e33`, "std"),
+      ...dr(g, MONO, "Amoxicilin-acid clavulanic; một số trực khuẩn Gram âm kháng, không phủ MRSA", amc, `${T5}; ACE`, "std"),
+      ...dr(g, MONO, "Ampicilin-sulbactam; một số trực khuẩn Gram âm kháng, không phủ MRSA", sam, `${T5}; nhãn FDA Unasyn`, "std"),
+      ...dr(g, MONO, "Piperacilin-tazobactam; không phủ MRSA", { a: "3,375 g tĩnh mạch mỗi 6 giờ", c: cap(PIP_T4.c!.replace("piperacilin-tazobactam ", "")) }, `${T5}; Bảng 4; nhãn FDA Zosyn`, "std"),
+      ...dr(g, MONO, "Doxycyclin; rất tốt với Pasteurella multocida, một số liên cầu kháng", doxy, `${T5}; nhãn FDA doxycyclin`),
+      ...dr(g, MONO, "Moxifloxacin; phủ cả vi khuẩn kỵ khí", { a: "400 mg uống hoặc tĩnh mạch 1 lần/ngày" }, T5),
+      ...dr(g, MONO, "Ciprofloxacin; tốt với P. multocida, không phủ MRSA và một số vi khuẩn kỵ khí", { a: "500–750 mg uống 2 lần/ngày, hoặc 400 mg tĩnh mạch mỗi 12 giờ" }, T5),
+      ...dr(g, COMBO, "Penicilin V + dicloxacilin", { a: "Penicilin V 500 mg uống 4 lần/ngày + dicloxacilin 500 mg uống 4 lần/ngày" }, T5, "std"),
+      ...dr(g, COMBO, g === "adult" ? "Sulfamethoxazol-trimethoprim + metronidazol hoặc clindamycin" : "Sulfamethoxazol-trimethoprim + clindamycin", { a: `Sulfamethoxazol-trimethoprim 160 mg/800 mg uống 2 lần/ngày, hoặc 5–10 mg/kg/ngày (tính theo trimethoprim) tĩnh mạch + ${anaerA}`, c: "Sulfamethoxazol-trimethoprim 8–12 mg/kg/ngày (tính theo trimethoprim) uống, chia 2 lần + clindamycin 30–40 mg/kg/ngày uống, chia 3 lần" }, `${T5}; Bảng 2; tr. e33`),
+      ...dr(g, COMBO, "Levofloxacin + metronidazol hoặc clindamycin", { a: `Levofloxacin 750 mg uống hoặc tĩnh mạch 1 lần/ngày + ${anaerA}` }, `${T5}; tr. e33`),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Ceftriaxon; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 12 giờ", c: cap(CRO_C.replace("ceftriaxon ", "")) }, `${T5}; ACE; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefotaxim; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1–2 g tĩnh mạch mỗi 6–8 giờ", c: cap(CTX_C.replace("cefotaxim ", "")) }, `${T5}; nhãn FDA Claforan; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefuroxim (tốt với P. multocida, không phủ kỵ khí); phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "500 mg uống 2 lần/ngày, hoặc 1 g tĩnh mạch mỗi 12 giờ" }, `${T5}; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefoxitin; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 6–8 giờ" }, `${T5}; tr. e33`, "std"),
     );
     notes.push("IDSA: tránh macrolid (hoạt tính không ổn định trên P. multocida, Fusobacterium) trừ khi không có lựa chọn khác. Carbapenem cũng phù hợp, không phủ MRSA.");
   } else {
     rx.push(
-      r(MONO, "Amoxicilin-acid clavulanic; một số trực khuẩn Gram âm kháng, không phủ MRSA", "875 mg/125 mg uống 2 lần/ngày", undefined, T5, "std"),
-      r(MONO, "Ampicilin-sulbactam; một số trực khuẩn Gram âm kháng, không phủ MRSA", "1,5–3,0 g tĩnh mạch mỗi 6 giờ", undefined, T5, "std"),
-      r(MONO, "Ertapenem; không phủ MRSA", undefined, undefined, `IDSA tr. e34; ${T5}`, "std"),
-      r(MONO, "Doxycyclin; tốt với Eikenella, tụ cầu, kỵ khí; một số liên cầu kháng", "100 mg uống 2 lần/ngày", undefined, T5),
-      r("Dị ứng beta-lactam – phối hợp", "Ciprofloxacin hoặc levofloxacin + metronidazol", undefined, undefined, "IDSA tr. e34", "alt"),
-      r("Dị ứng beta-lactam – đơn trị", "Moxifloxacin", undefined, undefined, "IDSA tr. e34", "alt"),
+      ...dr(g, MONO, "Amoxicilin-acid clavulanic; một số trực khuẩn Gram âm kháng, không phủ MRSA", amc, `${T5}; ACE`, "std"),
+      ...dr(g, MONO, "Ampicilin-sulbactam; một số trực khuẩn Gram âm kháng, không phủ MRSA", sam, `${T5}; nhãn FDA Unasyn`, "std"),
+      ...dr(g, MONO, "Ertapenem; không phủ MRSA", { a: "1 g tĩnh mạch 1 lần/ngày", c: cap(ERTA_T4.c!.replace("ertapenem ", "")) }, `IDSA tr. e34; nhãn FDA Invanz`, "std"),
+      ...dr(g, MONO, "Doxycyclin; tốt với Eikenella, tụ cầu, kỵ khí; một số liên cầu kháng", doxy, `${T5}; nhãn FDA doxycyclin`),
+      ...dr(g, "Dị ứng beta-lactam – phối hợp", "Ciprofloxacin hoặc levofloxacin + metronidazol", { a: "Ciprofloxacin 500–750 mg uống 2 lần/ngày hoặc 400 mg tĩnh mạch mỗi 12 giờ, hoặc levofloxacin 750 mg uống hoặc tĩnh mạch 1 lần/ngày + metronidazol 250–500 mg uống 3 lần/ngày hoặc 500 mg tĩnh mạch mỗi 8 giờ" }, `IDSA tr. e34; ${T5}`, "alt"),
+      ...dr(g, "Dị ứng beta-lactam – đơn trị", "Moxifloxacin", { a: "400 mg uống hoặc tĩnh mạch 1 lần/ngày" }, `IDSA tr. e34; ${T5}`, "alt"),
     );
     notes.push("IDSA: Eikenella corrodens kháng cephalosporin thế hệ 1, macrolid, clindamycin và aminoglycosid.");
   }
   blocks.push({ title: `Theo IDSA 2014: phác đồ cho vết cắn ${i.bite === "animal" ? "chó, mèo" : "người"}`, lead: i.infected ? "Vết cắn đã nhiễm khuẩn." : "Kháng sinh sớm 3–5 ngày cho nhóm nguy cơ ở trên.", items: rx });
   notes.push("IDSA: thai kỳ – chống chỉ định tương đối tetracyclin và fluoroquinolon; sulfamethoxazol-trimethoprim dùng an toàn trừ 3 tháng cuối.");
   return { headline: i.infected ? "Kháng sinh phủ hiếu khí và kỵ khí, ví dụ amoxicilin-acid clavulanic đơn trị" : "Kháng sinh sớm 3–5 ngày cho nhóm nguy cơ; uốn ván, dại", blocks, avoid: [], notes };
-}
-
-/* Nhiễm khuẩn vết mổ, vết cắn: chỉ có liều người lớn -> trẻ em không hiển thị liều. */
-function stripChildDose(o: SstiOut, i: SstiIn): SstiOut {
-  if (i.age !== "child" || !(i.form === "ssi" || i.form === "bite")) return o;
-  return { ...o, blocks: o.blocks.map((b) => ({ ...b, items: b.items.map((x) => ({ ...x, dose: undefined })) })) };
 }
 
 export function sstiPlan(i: SstiIn): SstiOut {
@@ -662,7 +689,6 @@ export function sstiPlan(i: SstiIn): SstiOut {
   else if (i.form === "nec") o = nec(i);
   else if (i.form === "pyo") o = pyo(i);
   else o = bite(i);
-  o = stripChildDose(o, i);
   /* Dị ứng: ẩn dòng beta-lactam (al "std"); không dị ứng: ẩn dòng chỉ dành cho người dị ứng (al "alt"). */
   const keep = (x: RxItem) => (i.pcnAllergy ? x.al !== "std" : x.al !== "alt");
   o = { ...o, blocks: o.blocks.map((b) => ({ ...b, items: b.items.filter(keep) })).filter((b) => b.items.length > 0) };
