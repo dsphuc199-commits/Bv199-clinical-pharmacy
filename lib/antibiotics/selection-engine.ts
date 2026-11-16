@@ -33,7 +33,7 @@ import {
   HAPVAP_SCENARIOS,
   type HapVapRegimen,
 } from "@/components/antibiotics/HapVap2023";
-import { DISEASES, normalize } from "@/data/antibiotics/empiric/catalog";
+import { DISEASES, VISIBLE_DISEASES, normalize } from "@/data/antibiotics/empiric/catalog";
 import { icdOf } from "@/data/antibiotics/empiric/icd10";
 import { resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 import { getIntlEntry } from "@/data/antibiotics/empiric/international";
@@ -172,7 +172,7 @@ export function searchDiseases(query: string): Disease[] {
   const qCode = query.trim().toUpperCase().replace(/\s+/g, "");
   // Truy van dang ma ICD-10 (chu cai + so, vd. "J18", "A41.9") -> tim theo ma.
   const isCode = /^[A-Z]\d/.test(qCode);
-  return DISEASES.filter((disease) => {
+  return VISIBLE_DISEASES.filter((disease) => {
     if (isCode) {
       return icdOf(disease.id).some((code) => {
         const c = code.toUpperCase();

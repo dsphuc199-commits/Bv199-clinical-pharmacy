@@ -100,6 +100,15 @@ export const DISEASES: Disease[] = [...RAW_DISEASES].sort(
 
 export const EXPECTED_CATALOG_COUNT = 69;
 
+/*
+  Mat benh an khoi danh muc hien thi (giu ID trong du lieu de khong vo lien ket/kiem toan).
+  v8-116 "Sot giam bach cau trung tinh nguy co cao" trung voi v8-113 (cung phac do BYT,
+  cung nguon quoc te) -> an, lien ket cu chuyen sang v8-113.
+*/
+export const HIDDEN_DISEASE_ALIAS: Record<string, string> = { "v8-116": "v8-113" };
+export const VISIBLE_DISEASES: Disease[] = DISEASES.filter((d) => !(d.id in HIDDEN_DISEASE_ALIAS));
+export const resolveDiseaseId = (id: string): string => HIDDEN_DISEASE_ALIAS[id] ?? id;
+
 if (
   process.env.NODE_ENV !== "production" &&
   DISEASES.length !== EXPECTED_CATALOG_COUNT

@@ -15,7 +15,8 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
   const [fq, setFq] = useState<TbFq>("unknown");
   const [age, setAge] = useState<TbAge>("adult");
   const [severe, setSevere] = useState(false);
-  const [lt40, setLt40] = useState(false);
+  const [wt, setWt] = useState(55);
+  const [renal, setRenal] = useState(false);
   const [preg, setPreg] = useState(false);
   const [hiv, setHiv] = useState(false);
   const [cd4, setCd4] = useState(false);
@@ -24,7 +25,7 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
   const [highE, setHighE] = useState(false);
   const child = age !== "adult";
   const ds = res === "ds";
-  const o = tbPlan({ site, res, fq, age, severe: !tbm && severe, lt40, preg, hiv, cd4lt100: hiv && cd4, sam: child && sam, prior2y: child && prior2y, highE: child && highE });
+  const o = tbPlan({ site, res, fq, age, severe: !tbm && severe, wt: wt > 0 ? wt : 55, renal, preg, hiv, cd4lt100: hiv && cd4, sam: child && sam, prior2y: child && prior2y, highE: child && highE });
   const dx = `${tbm ? "Lao màng não" : "Lao phổi"} ${RES_TEXT[res]}${res === "mdr" ? (fq === "s" ? ", nhạy fluoroquinolon" : fq === "r" ? ", kháng fluoroquinolon (pre-XDR-TB)" : ", chưa rõ nhạy fluoroquinolon") : ""} – ${AGE_TEXT[age]}${hiv ? ", nhiễm HIV" : ""}${preg ? ", có thai / cho con bú" : ""}`;
 
   return (
@@ -62,13 +63,16 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
             { id: "adult", label: AGE_TEXT.adult },
           ] as const} />
         </Row>
+        <Row label="Cân nặng">
+          <label className="sa24-chk"><input type="number" min={2} max={200} step={0.5} value={wt} onChange={(e) => setWt(Number(e.target.value))} style={{ width: 80 }} aria-label="Cân nặng (kg)" /> kg</label>
+        </Row>
         <Row label="Người bệnh">
           {!tbm && (ds || res === "mdr") && (
             <Chk on={severe} set={setSevere}>{ds && child ? "Lao phổi không thuộc nhóm “không nặng” (có hang, hai bên, hình ảnh kê, nhiều thùy)" : "Bệnh lan rộng: hang hai bên hoặc tổn thương nhu mô lan rộng trên X-quang"}</Chk>
           )}
-          {!tbm && ds && age !== "lt3m" && age !== "child" && <Chk on={lt40} set={setLt40}>Cân nặng &lt; 40 kg</Chk>}
           <Chk on={preg} set={setPreg}>Có thai, cho con bú hoặc sau sinh</Chk>
           <Chk on={hiv} set={setHiv}>Nhiễm HIV</Chk>
+          <Chk on={renal} set={setRenal}>Độ thanh thải creatinin &lt; 30 mL/phút hoặc lọc máu</Chk>
           {hiv && !tbm && ds && <Chk on={cd4} set={setCd4}>CD4 &lt; 100 tế bào/mm³</Chk>}
           {!tbm && ds && child && age !== "lt3m" && (
             <>
@@ -83,7 +87,7 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
         <div className="sa24-dx">
           <p><b>Chẩn đoán</b> {dx}</p>
           <p><b>Phác đồ</b> {o.headline}</p>
-          <p><b>Hướng dẫn</b> WHO Module 4: treatment and care, 2025</p>
+          <p><b>Hướng dẫn</b> WHO Module 4 (2025) – guidelines và operational handbook</p>
         </div>
         {o.blocks.map((b) => (
           <div key={b.title}>
@@ -95,7 +99,7 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo / không áp dụng</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: WHO consolidated guidelines on tuberculosis. Module 4: treatment and care. Geneva: World Health Organization; 2025 (ISBN 978-92-4-010724-3) – phần lao nhạy cảm thuốc (KC 1.1–4.2), phần lao kháng thuốc (KC 1.1–6.1, mục lao ngoài phổi và lao màng não), bảng tóm tắt khuyến cáo lao trẻ em 2014 (KC 8–14). “KC n” là số khuyến cáo của WHO; mức GRADE giữ nguyên (mạnh/có điều kiện; độ tin cậy cao/trung bình/thấp/rất thấp). Module 4 không có bảng liều theo cân nặng cho người lớn – liều để trống, chỉ ghi liều văn bản nêu rõ (rifapentin, BPaLM, BDLLfxC, liều mg/kg trẻ em); liều chi tiết theo WHO Operational handbook và hướng dẫn BYT. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <p className="sa24-src">Nguồn: WHO consolidated guidelines on tuberculosis. Module 4: treatment and care (2025, ISBN 978-92-4-010724-3) – khuyến cáo và mức GRADE; WHO consolidated operational handbook on tuberculosis. Module 4: treatment and care (2025, ISBN 978-92-4-010814-1) – liều theo cân nặng (Annex 4), liều phác đồ BPaLM, BDLLfxC, 9 tháng, chỉnh liều suy thận (Annex 1), thời gian lao màng não. Liều trẻ em &lt; 25 kg: mg/kg theo khuyến cáo 2014. WHO không nêu liều corticoid. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

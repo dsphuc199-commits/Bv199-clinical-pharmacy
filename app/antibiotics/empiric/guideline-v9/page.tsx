@@ -30,7 +30,9 @@ import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
 import type { ModuleKey } from "../../../../lib/antibiotics/select-regimens";
 import {
   DISEASES,
+  VISIBLE_DISEASES,
   normalize,
+  resolveDiseaseId,
 } from "../../../../data/antibiotics/empiric/catalog";
 import {
   getConcreteRegimensForDisease,
@@ -126,7 +128,8 @@ function GuidelineContent() {
   const [query, setQuery] = useState("");
   /* ?disease=v8-N: mo dung mat benh khi quay lai tu module khac. */
   const [selectedId, setSelectedId] = useState(() => {
-    const fromUrl = searchParams.get("disease");
+    const raw = searchParams.get("disease");
+    const fromUrl = raw ? resolveDiseaseId(raw) : null;
     return fromUrl && DISEASES.some((disease) => disease.id === fromUrl)
       ? fromUrl
       : "v8-1";
@@ -156,14 +159,14 @@ function GuidelineContent() {
 
   const specialties = useMemo(() => {
     const names = Array.from(
-      new Set(DISEASES.map((disease) => disease.specialty))
+      new Set(VISIBLE_DISEASES.map((disease) => disease.specialty))
     );
 
     return names.sort((a, b) => VI_COLLATOR.compare(a, b));
   }, []);
 
   const filtered = useMemo(() => {
-    return DISEASES.filter((disease) => {
+    return VISIBLE_DISEASES.filter((disease) => {
       const matchesSpecialty =
         specialtyFilter === "Tất cả" ||
         disease.specialty === specialtyFilter;
