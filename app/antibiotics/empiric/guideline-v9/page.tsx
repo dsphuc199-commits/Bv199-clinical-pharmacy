@@ -130,7 +130,7 @@ function GuidelineContent() {
   const [selectedId, setSelectedId] = useState(() => {
     const raw = searchParams.get("disease");
     const fromUrl = raw ? resolveDiseaseId(raw) : null;
-    return fromUrl && DISEASES.some((disease) => disease.id === fromUrl)
+    return fromUrl && VISIBLE_DISEASES.some((disease) => disease.id === fromUrl)
       ? fromUrl
       : "v8-1";
   });

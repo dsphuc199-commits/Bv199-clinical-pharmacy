@@ -106,9 +106,12 @@ export const EXPECTED_CATALOG_COUNT = 70;
   Mat benh an khoi danh muc hien thi (giu ID trong du lieu de khong vo lien ket/kiem toan).
   v8-116 "Sot giam bach cau trung tinh nguy co cao" trung voi v8-113 (cung phac do BYT,
   cung nguon quoc te) -> an, lien ket cu chuyen sang v8-113.
+  v8-113 "Sot giam bach cau trung tinh" (Hoi suc tich cuc): bo khoi danh muc theo yeu cau 16/11/2026;
+  lien ket cu ?disease=v8-113 / v8-116 mo mat benh mac dinh.
 */
 export const HIDDEN_DISEASE_ALIAS: Record<string, string> = { "v8-116": "v8-113" };
-export const VISIBLE_DISEASES: Disease[] = DISEASES.filter((d) => !(d.id in HIDDEN_DISEASE_ALIAS));
+export const HIDDEN_DISEASE_IDS: ReadonlySet<string> = new Set(["v8-113", "v8-116"]);
+export const VISIBLE_DISEASES: Disease[] = DISEASES.filter((d) => !HIDDEN_DISEASE_IDS.has(d.id));
 export const resolveDiseaseId = (id: string): string => HIDDEN_DISEASE_ALIAS[id] ?? id;
 
 if (

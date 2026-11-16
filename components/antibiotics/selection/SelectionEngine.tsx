@@ -16,7 +16,7 @@ import { AbxLinkProvider } from "@/components/antibiotics/links/AbxLinkContext";
 import DrugActionLinks from "@/components/antibiotics/links/DrugActionLinks";
 import DoseTable from "@/components/antibiotics/treatment/DoseTable";
 import { structureForOption } from "@/lib/antibiotics/regimen-structure";
-import { DISEASES, resolveDiseaseId } from "@/data/antibiotics/empiric/catalog";
+import { DISEASES, VISIBLE_DISEASES, resolveDiseaseId } from "@/data/antibiotics/empiric/catalog";
 import { icdOf } from "@/data/antibiotics/empiric/icd10";
 import { DEFAULT_FILTERS } from "@/lib/antibiotics/clinical-filters";
 import { empiricHref, findDrugs } from "@/lib/antibiotics/drug-links";
@@ -264,7 +264,7 @@ function DiseaseDetail({ diseaseId }: { diseaseId: string }) {
 
 export default function SelectionEngine({ initialDisease }: { initialDisease?: string }) {
   const [diseaseId, setDiseaseId] = useState<string | undefined>(
-    initialDisease && DISEASES.some((d) => d.id === resolveDiseaseId(initialDisease)) ? resolveDiseaseId(initialDisease) : undefined
+    initialDisease && VISIBLE_DISEASES.some((d) => d.id === resolveDiseaseId(initialDisease)) ? resolveDiseaseId(initialDisease) : undefined
   );
   const [query, setQuery] = useState("");
   const [input, setInput] = useState<PatientInput>({});
