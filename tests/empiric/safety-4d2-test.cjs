@@ -16,7 +16,7 @@ const prev = new Map(before.regimens.map((r) => [r.id, r]));
 
 // 0. Du lieu BYT nguyen ban
 const changed = R.ALL_REGIMENS.filter((r) => { const p = prev.get(r.id); return !p || JSON.stringify([r.drugs, r.scenario, r.duration ?? null, r.source, r.role]) !== JSON.stringify([p.drugs, p.scenario, p.duration, p.source, p.role]); });
-check("Thuốc/liều/kịch bản/thời gian/nguồn BYT không đổi (300 phương án)", changed.length === 0 && R.ALL_REGIMENS.length === 300, changed.map((r) => r.id).join(","));
+check(`Thuốc/liều/kịch bản/thời gian/nguồn BYT không đổi (${before.regimens.length} phương án)`, changed.length === 0 && R.ALL_REGIMENS.length === before.regimens.length, changed.map((r) => r.id).join(","));
 check("Mọi regimenId của cảnh báo an toàn tồn tại", A.SAFETY_ALERTS.every((a) => a.regimenIds.every((id) => byId.has(id))), A.SAFETY_ALERTS.flatMap((a) => a.regimenIds.filter((id) => !byId.has(id))).join(","));
 check("Mỗi cảnh báo có tiêu đề, nội dung, nguồn", A.SAFETY_ALERTS.every((a) => a.title && a.text && a.sources.length > 0));
 

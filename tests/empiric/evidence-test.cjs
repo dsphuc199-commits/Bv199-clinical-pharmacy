@@ -11,7 +11,7 @@ const all = E.evaluateAll();
 const by = (id) => all.find((e) => e.disease.id === id);
 const s = E.summarize();
 
-check("Tổng 69 mặt bệnh, không bỏ sót", all.length === 69 && s.VERIFIED_SOURCE + s.NEEDS_REVIEW + s.MISSING_EVIDENCE === 69, JSON.stringify(s));
+check(`Tổng ${EXP.totals.total} mặt bệnh, không bỏ sót`, all.length === EXP.totals.total && s.VERIFIED_SOURCE + s.NEEDS_REVIEW + s.MISSING_EVIDENCE === EXP.totals.total, JSON.stringify(s));
 const M = load("data/antibiotics/empiric/verification/manual-checks.ts");
 check("Đối chiếu: mọi phương án lệch tự động đều đã đối chiếu thủ công", V.results.filter((r) => r.status === "mismatch").every((r) => M.manualCheckFor(r.id)), JSON.stringify(V.summary));
 

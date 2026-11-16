@@ -125,7 +125,7 @@ for (const d of K.DISEASES) {
     }
   } catch (e) { crash++; console.log("CRASH", d.id, e.message); }
 }
-check("Toàn bộ 69 mặt bệnh chạy không lỗi", crash === 0);
+check(`Toàn bộ ${K.DISEASES.length} mặt bệnh chạy không lỗi`, crash === 0);
 check("Không kết quả nào quá 3 nhóm", maxGroups <= 3, `max=${maxGroups}, ready=${readyCount}`);
 
 console.log(`\n${pass} passed, ${fail} failed`);

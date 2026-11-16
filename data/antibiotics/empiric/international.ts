@@ -88,6 +88,7 @@ const AAO_CONJ = "aao-conjunctivitis-2023";
 const WHO_CRYPTO = "who-crypto-2022";
 const IDSA_ASB = "idsa-asb-2019";
 const CDC_STI = "cdc-sti-bv-2021";
+const ACOG_UTI = "acog-uti-pregnancy-2023";
 const IDSA_DIARRHEA = "idsa-diarrhea-2017";
 const CDC_OUT = "cdc-outpatient-2024";
 
@@ -474,18 +475,29 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://www.idsociety.org/practice-guideline/asymptomatic-bacteriuria/",
     status: "extracted",
     checkedOn: CHECKED_G4,
-    checkNote: "Đọc trang IDSA, mục III – Pregnant women.",
+    checkNote: "Đọc toàn văn PDF (Clin Infect Dis 2019;68:e83–e110) người dùng cung cấp, 16/11/2026: mục I–XIV, mục III – Pregnant women.",
   },
   [CDC_STI]: {
     id: CDC_STI,
     org: "CDC",
-    title: "Sexually Transmitted Infections Treatment Guidelines, 2021 – Bacterial Vaginosis",
+    title: "Sexually Transmitted Infections Treatment Guidelines, 2021",
     citation: "Workowski KA và cs. MMWR Recomm Rep 2021;70(4):1–187",
     published: "2021 (trang xem lại 22/07/2021)",
     url: "https://www.cdc.gov/std/treatment-guidelines/bv.htm",
     status: "extracted",
     checkedOn: CHECKED_G4,
-    checkNote: "Đọc trực tiếp trang CDC.",
+    checkNote: "Đọc toàn văn PDF MMWR Recomm Rep 2021;70(4) người dùng cung cấp, 16/11/2026: các khung phác đồ Recommended/Alternative và Special Considerations (lậu, Chlamydia, viêm niệu đạo, viêm cổ tử cung, M. genitalium, viêm vùng chậu, viêm mào tinh, viêm trực tràng, giang mai, hạ cam, hột xoài, u hạt bẹn, herpes, Trichomonas, viêm âm đạo do vi khuẩn, nấm Candida âm hộ – âm đạo). CDC không xếp mức GRADE.",
+  },
+  [ACOG_UTI]: {
+    id: ACOG_UTI,
+    org: "ACOG",
+    title: "Clinical Consensus No. 4: Urinary Tract Infections in Pregnant Individuals",
+    citation: "ACOG Committee on Clinical Consensus–Obstetrics. Obstet Gynecol 2023;142(2):435–45",
+    published: "08/2023 (trực tuyến 20/07/2023)",
+    url: "https://www.acog.org/clinical/clinical-guidance/clinical-consensus/articles/2023/08/urinary-tract-infections-in-pregnant-individuals",
+    status: "extracted",
+    checkedOn: "16/11/2026",
+    checkNote: "Đọc toàn văn PDF người dùng cung cấp: tóm tắt khuyến cáo đồng thuận, Bảng 1, Bảng 3, phần Treatment. Khuyến cáo được hội đồng bỏ phiếu đạt đồng thuận ≥ 75%, không xếp mức GRADE.",
   },
   [IDSA_DIARRHEA]: {
     id: IDSA_DIARRHEA,
@@ -1258,14 +1270,14 @@ export const INTL_ENTRIES: IntlEntry[] = [
   },
   {
     diseaseId: "v8-97",
-    guidelineIds: [IDSA_ASB],
-    scope: "Nhiễm khuẩn niệu ở phụ nữ mang thai (gồm khuẩn niệu không triệu chứng).",
+    guidelineIds: [ACOG_UTI, IDSA_ASB],
+    scope: "Nhiễm khuẩn tiết niệu ở phụ nữ mang thai: khuẩn niệu không triệu chứng, viêm bàng quang cấp, viêm thận bể thận, dự phòng sau tái phát.",
     recommendations: [
       { text: "Phụ nữ mang thai: khuyến cáo sàng lọc và điều trị khuẩn niệu không triệu chứng; gợi ý cấy nước tiểu ở một trong các lần khám đầu thai kỳ.", grade: "Mạnh; chứng cứ trung bình", guidelineId: IDSA_ASB, locator: "Mục III, khuyến cáo 1" },
       { text: "Phụ nữ mang thai có khuẩn niệu không triệu chứng: gợi ý điều trị 4–7 ngày thay vì ngắn hơn; thời gian tối ưu tùy thuốc – dùng đợt ngắn nhất có hiệu quả.", grade: "Yếu; chứng cứ thấp", guidelineId: IDSA_ASB, locator: "Mục III, khuyến cáo 2" },
     ],
     regimens: [],
-    gaps: ["IDSA 2019 không nêu thuốc/liều cụ thể trong các khuyến cáo này. Viêm thận bể thận thai kỳ: chưa có guideline quốc tế đã trích."],
+    gaps: [],
   },
   {
     diseaseId: "v8-95",
@@ -1301,6 +1313,22 @@ export const INTL_ENTRIES: IntlEntry[] = [
       },
     ],
     gaps: ["Văn bản BYT ghi \"gel clindamycin 2%\"; CDC chỉ nêu dạng KEM 2% – không áp liều CDC cho dạng gel."],
+  },
+  {
+    diseaseId: "v8-96",
+    guidelineIds: [CDC_STI],
+    scope: "Nấm Candida âm hộ – âm đạo: không biến chứng, tái phát, nặng, không phải C. albicans, cơ địa suy giảm miễn dịch, thai kỳ.",
+    recommendations: [],
+    regimens: [],
+    gaps: [],
+  },
+  {
+    diseaseId: "v9-2",
+    guidelineIds: [CDC_STI],
+    scope: "Người lớn và vị thành niên: lậu, Chlamydia, viêm niệu đạo không do lậu, viêm cổ tử cung, M. genitalium, viêm vùng chậu, viêm mào tinh hoàn, viêm trực tràng, giang mai, herpes sinh dục, hạ cam, hột xoài, u hạt bẹn, Trichomonas, viêm âm đạo do vi khuẩn, nấm Candida âm hộ – âm đạo.",
+    recommendations: [],
+    regimens: [],
+    gaps: [],
   },
   {
     diseaseId: "v8-26",

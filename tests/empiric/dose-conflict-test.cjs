@@ -48,14 +48,14 @@ for (const r of R.ALL_REGIMENS) {
   const addedOk = notes.slice(p.notes.length).every((n) => n.startsWith("ĐỐI CHIẾU LIỀU – "));
   if (!same || !prefixOk || !addedOk) changed.push(r.id);
 }
-check("Không phương án BYT nào đổi thuốc/liều/kịch bản/thời gian/nguồn (300 phương án)", changed.length === 0 && R.ALL_REGIMENS.length === before.regimens.length, changed.join(", "));
+check(`Không phương án BYT nào đổi thuốc/liều/kịch bản/thời gian/nguồn (${before.regimens.length} phương án)`, changed.length === 0 && R.ALL_REGIMENS.length === before.regimens.length, changed.join(", "));
 const added = R.ALL_REGIMENS.reduce((n, r) => n + (r.notes ?? []).filter((x) => x.startsWith("ĐỐI CHIẾU LIỀU")).length, 0);
 check("Ghi chú đối chiếu chỉ được thêm vào mục Lưu ý", added === C.DOSE_CONFLICTS.reduce((n, c) => n + c.regimenIds.length, 0), `added=${added}`);
 
 // 4. Trang thai bang chung khong doi
 const now = Object.fromEntries(E.evaluateAll().map((e) => [e.disease.id, e.status]));
 const diff = Object.keys(EXP.expected).filter((k) => EXP.expected[k] !== now[k]);
-check("Trạng thái 69 mặt bệnh = baseline + thay đổi có chủ đích (fixtures/status-changes.json) – không tự nâng VERIFIED", diff.length === 0 && Object.keys(now).length === 69, diff.join(", "));
+check(`Trạng thái ${EXP.totals.total} mặt bệnh = baseline + thay đổi có chủ đích (fixtures/status-changes.json) – không tự nâng VERIFIED`, diff.length === 0 && Object.keys(now).length === EXP.totals.total, diff.join(", "));
 check("Nhóm 1 vẫn NEEDS_REVIEW", GROUP1.every((id) => now[id] === "NEEDS_REVIEW"));
 check("Nhóm 2 vẫn NEEDS_REVIEW (không tự nâng VERIFIED)", GROUP2.every((id) => now[id] === "NEEDS_REVIEW"));
 const FLAG_RE = /CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI|CHƯA XÁC MINH|không có trong bản in|thiếu tên hoạt chất/;

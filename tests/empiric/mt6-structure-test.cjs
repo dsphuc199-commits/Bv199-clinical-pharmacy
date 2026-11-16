@@ -21,7 +21,7 @@ const all = [...shown.values()].map((r) => ({ r, s: S.structureOf(r) }));
 
 /* ---------- 1. Bao toan nguyen van & khong tao so lieu ---------- */
 const before = JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "byt-regimens-baseline.json"), "utf8"));
-check("300 phương án BYT gốc vẫn còn đủ (lớp cấu trúc không sửa dữ liệu nguồn)", R.ALL_REGIMENS.length === before.regimens.length && before.regimens.length === 300);
+check(`${before.regimens.length} phương án BYT gốc vẫn còn đủ (lớp cấu trúc không sửa dữ liệu nguồn)`, R.ALL_REGIMENS.length === before.regimens.length);
 check(`Tách cấu trúc được cho toàn bộ ${shown.size} phương án đang hiển thị`, all.length === shown.size && all.every(({ s }) => s.groups.length > 0));
 const rawLost = all.filter(({ r, s }) => {
   const raws = s.groups.flatMap((g) => g.raw);

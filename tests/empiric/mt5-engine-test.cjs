@@ -73,13 +73,13 @@ check("Không xóa dữ liệu route cũ (page.tsx còn nguyên)", legacyPagesKe
 
 // 4. Ho so 20 muc
 const all = P.allProfiles();
-check("Hồ sơ 20 mục cho đủ 69 mặt bệnh", all.length === 69 && all.every((p) => p.fields.length === 20));
+check(`Hồ sơ 20 mục cho đủ ${EXP.totals.total} mặt bệnh`, all.length === EXP.totals.total && all.every((p) => p.fields.length === 20));
 check("Mục thiếu ghi \"missing\", không tự điền nội dung", all.every((p) => p.fields.filter((f) => f.status === "missing").every((f) => !f.source || /safety-alerts|formulary/.test(f.source))) && all.some((p) => p.missing.length > 0));
 check("v9-1 (không có liều trong nguồn): mục liều không được đánh dấu có đủ", P.diseaseProfile("v9-1").fields.find((f) => f.key === "dose").status !== "available");
 
 // 5. Trang thai tong
 const s = E.summarize();
-check(`69 bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === 69 && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
+check(`${EXP.totals.total} bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === EXP.totals.total && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

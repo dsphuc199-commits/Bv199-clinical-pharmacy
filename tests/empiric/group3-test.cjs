@@ -19,14 +19,14 @@ const byId = new Map(R.ALL_REGIMENS.map((r) => [r.id, r]));
 // 1. BYT goc giu nguyen
 const prev = new Map(before.regimens.map((r) => [r.id, r]));
 const changed = R.ALL_REGIMENS.filter((r) => { const p = prev.get(r.id); return !p || JSON.stringify([r.drugs, r.scenario, r.duration ?? null, r.source, r.role, r.diseaseIds]) !== JSON.stringify([p.drugs, p.scenario, p.duration, p.source, p.role, p.diseaseIds]); });
-check("300 phương án BYT giữ nguyên thuốc/liều/kịch bản/thời gian/nguồn", R.ALL_REGIMENS.length === 300 && changed.length === 0, changed.map((r) => r.id));
+check(`${before.regimens.length} phương án BYT giữ nguyên thuốc/liều/kịch bản/thời gian/nguồn`, R.ALL_REGIMENS.length === before.regimens.length && changed.length === 0, changed.map((r) => r.id));
 const PFX = "KHÔNG ÁP DỤNG MẶC ĐỊNH CHO TRẺ SƠ SINH – nguyên văn BYT (ghi chung cho viêm màng não): ";
 const notesBad = R.ALL_REGIMENS.filter((r) => { const p = prev.get(r.id); const n = r.notes ?? []; return !p.notes.every((o, i) => n[i] === o || n[i] === PFX + o) || !n.slice(p.notes.length).every((x) => x.startsWith("ĐỐI CHIẾU LIỀU – ")); });
 check("Ghi chú BYT gốc giữ nguyên; chỉ thêm ghi chú ĐỐI CHIẾU LIỀU", notesBad.length === 0, notesBad.map((r) => r.id));
 
 // 2. Trang thai
 const s = E.summarize();
-check(`69 bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === 69 && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
+check(`${EXP.totals.total} bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === EXP.totals.total && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
 check("Nhóm 3: không tự nâng VERIFIED_SOURCE (ngoài thay đổi có chủ đích); v9-1 vẫn MISSING_EVIDENCE", G3.filter((x) => x !== "v9-1").every((id) => E.evidenceFor(id).status === EXP.expected[id]) && E.evidenceFor("v9-1").status === "MISSING_EVIDENCE");
 
 // 3. Nguon quoc te

@@ -9,7 +9,8 @@ const { changes } = JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", 
 const norm = (s) => (s === "VERIFIED" ? "VERIFIED_SOURCE" : s);
 const expected = Object.fromEntries(Object.entries(baseline.status).map(([k, v]) => [k, norm(v)]));
 for (const c of changes) {
-  if (expected[c.id] !== c.from) throw new Error(`status-changes.json: ${c.id} baseline la ${expected[c.id]}, khong phai ${c.from}`);
+  // from "NEW": mat benh them moi sau anh chup baseline (chua co trong baseline.status).
+  if (c.from === "NEW" ? c.id in expected : expected[c.id] !== c.from) throw new Error(`status-changes.json: ${c.id} baseline la ${expected[c.id]}, khong phai ${c.from}`);
   if (!c.reason || !c.step) throw new Error(`status-changes.json: ${c.id} thieu ly do/buoc`);
   expected[c.id] = c.to;
 }

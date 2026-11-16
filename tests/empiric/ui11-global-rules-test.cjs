@@ -123,7 +123,7 @@ const cssFiles=['components/antibiotics/treatment/DoseTable.tsx','components/ant
 check('Không dùng overflow-wrap:anywhere (gây tách chữ giữa từ, ví dụ "Hoặ c"); cột "Hoặc" không xuống dòng',!/overflow-?[wW]rap:\s*"?anywhere/.test(cssFiles)&&/td\.tx-marker \{[^}]*white-space: nowrap/.test(cssFiles));
 /* Dong deu toan danh muc: 69/69 co tong quan + kiem soat o nhiem + theo doi; module rieng duoc boc cung bo cuc; COPD co "Vì sao" theo nhom */
 const OVA=load('data/antibiotics/empiric/overviews.ts');
-check('69/69 mặt bệnh có tổng quan và phần theo dõi/an toàn (kể cả CAP, HAP, VAP, COPD)',C.DISEASES.every(d=>!!OVA.getDiseaseOverview(d.id)));
+check(`${C.DISEASES.length}/${C.DISEASES.length} mặt bệnh có tổng quan và phần theo dõi/an toàn (kể cả CAP, HAP, VAP, COPD)`,C.DISEASES.every(d=>!!OVA.getDiseaseOverview(d.id)));
 const DOV=load('components/antibiotics/empiric/DiseaseOverview.tsx');const uniformBad=[];
 for(const d of C.DISEASES){const h=render(React.createElement(DOV.DiseaseOverviewSummary,{diseaseId:d.id}))+render(React.createElement(DOV.DiseaseMonitoring,{diseaseId:d.id}));
   if(!h.includes('class="do-cards"')||!h.includes('Cảnh báo an toàn thiết yếu')||/Văn bản không nêu|Cần thẩm định|Chưa xác minh/.test(h))uniformBad.push(d.id);}

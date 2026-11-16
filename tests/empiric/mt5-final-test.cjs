@@ -86,7 +86,7 @@ for (const d of C.DISEASES) {
     }
   }
 }
-check(`Engine chạy 69 bệnh × 2 đối tượng × 3 chế độ nhập (${paths} tình huống) không lỗi`, errors.length === 0, errors);
+check(`Engine chạy ${C.DISEASES.length} bệnh × 2 đối tượng × 3 chế độ nhập (${paths} tình huống) không lỗi`, errors.length === 0, errors);
 const withRegimens = C.DISEASES.filter((d) => !referenceOnly.has(d.id) && (R.getRegimensForDisease(d.id).length > 0 || ["v8-1", "v8-4", "v8-5"].includes(d.id)));
 check("Source-only COPD cannot enter the legacy automatic pool", [...referenceOnly].every(id => SE.evaluate(id, {}).status === "no-match" && SE.questionsFor(id, {}).length === 0));
 check(`Mọi bệnh có phác đồ đều ra ít nhất một kết quả (${readyByDisease.size}/${withRegimens.length})`, withRegimens.every((d) => readyByDisease.has(d.id)), withRegimens.filter((d) => !readyByDisease.has(d.id)).map((d) => d.id));

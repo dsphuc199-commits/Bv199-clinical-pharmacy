@@ -28,6 +28,13 @@
       "to": "VERIFIED_SOURCE",
       "step": "Giai tham chieu 'lieu nhu tren' (13/11/2026)",
       "reason": "Phuong an duy nhat thieu lieu r-sa-mssa ghi 'oxacilin; nafcilin; clindamycin (lieu nhu tren)': lieu lay bang code tu phuong an dieu tri ban dau CUNG muc 4.2.1a, tr. 164 QĐ 708 (r-sa-empiric-1, r-sa-empiric-2) – data/antibiotics/empiric/dose-references.ts. Khong con phuong an thieu lieu."
+    },
+    {
+      "id": "v9-2",
+      "from": "NEW",
+      "to": "VERIFIED_SOURCE",
+      "step": "Them mat benh Benh lay truyen qua duong tinh duc (16/11/2026)",
+      "reason": "Mat benh moi: 21 phuong an BYT QĐ 708 (giang mai tr. 192–194, lau tr. 197–198, ha cam tr. 200, viem nieu dao khong do lau tr. 245–246), doc truc tiep ban PDF; moi phuong an co lieu so. Phuong an da them vao byt-regimens-baseline.json."
     }
   ]
 }

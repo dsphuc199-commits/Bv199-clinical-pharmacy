@@ -388,9 +388,37 @@ const UTI_PREG = ov("QĐ 315/QĐ-BYT (29/01/2015) – Sốt trong khi có thai; 
   safety: [{ text: "Viêm bàng quang tái phát: có thể điều trị tiếp đến khi đẻ.", ref: "QĐ 315 tr. 73" }],
 });
 
+const STI = ov("QĐ 708/QĐ-BYT (02/03/2015) – Chương 7: Bệnh giang mai, Bệnh lậu, Bệnh hạ cam; Chương 10: Viêm niệu đạo cấp không do lậu", [
+  { label: "Tác nhân", points: [
+    { text: "Giang mai: Treponema pallidum. Lậu: Neisseria gonorrhoeae, thường phối hợp Chlamydia trachomatis, trùng roi, Ureaplasma, Mycoplasma. Hạ cam: Haemophilus ducreyi.", ref: "tr. 186, 195, 199" },
+    { text: "Viêm niệu đạo không do lậu: Chlamydia trachomatis, Mycoplasma, Trichomonas vaginalis, Candida albicans, Herpes simplex virus, Streptococcus, S. saprophyticus, E. coli.", ref: "tr. 245" },
+  ] },
+  { label: "Chẩn đoán", points: [
+    { text: "Giang mai: soi tìm xoắn khuẩn ở săng, mảng niêm mạc, sẩn, hạch; phản ứng huyết thanh RPR/VDRL, TPHA, FTA-abs.", ref: "tr. 191–192" },
+    { text: "Lậu: nhuộm Gram song cầu Gram âm trong bạch cầu đa nhân; nuôi cấy Thayer-Martin, kháng sinh đồ; PCR; xét nghiệm Chlamydia, trùng roi, giang mai, HIV.", ref: "tr. 197" },
+    { text: "Hạ cam: bệnh phẩm đáy vết loét – nhuộm Gram, nuôi cấy, PCR.", ref: "tr. 200" },
+  ] },
+  { label: "Khởi trị", points: [
+    { text: "Giang mai: penicilin là thuốc lựa chọn, phác đồ theo giai đoạn; điều trị đồng thời bạn tình.", ref: "tr. 192–193" },
+    { text: "Lậu: cefixim, ceftriaxon hoặc spectinomycin liều duy nhất, điều trị đồng thời Chlamydia và bạn tình.", ref: "tr. 197–198" },
+    { text: "Hạ cam: ceftriaxon, azithromycin, spectinomycin liều duy nhất hoặc erythromycin 7 ngày.", ref: "tr. 200" },
+  ] },
+  { label: "Tránh dùng", points: [
+    { text: "Doxycyclin, tetracyclin: không dùng cho phụ nữ có thai, cho con bú, trẻ dưới 7 tuổi.", ref: "tr. 197" },
+  ] },
+], [], {
+  efficacy: [
+    { text: "Giang mai: hiệu giá kháng thể giảm sau điều trị; xét nghiệm lại RPR tháng thứ 3, 6, 12.", ref: "tr. 193–194" },
+    { text: "Hạ cam: đỡ sau 2–3 ngày, khỏi sau khoảng 1 tuần; hạch bẹn khỏi chậm hơn.", ref: "tr. 200" },
+  ],
+  reassessment: [{ text: "Hạ cam: xét nghiệm HIV và giang mai ngay; âm tính thì xét nghiệm lại sau 3 tháng.", ref: "tr. 200" }],
+  safety: [{ text: "Hạ cam ở người nhiễm HIV: thời gian điều trị thường lâu hơn, có thể thất bại với tất cả các thuốc.", ref: "tr. 200" }],
+});
+
 export const OVERVIEWS_OTHER: Record<string, DiseaseOverviewData> = {
   "v8-97": UTI_PREG,
   "v9-1": FOOT,
+  "v9-2": STI,
   "v8-142": PULM_TB,
   "v8-141": CNS_TB,
   "v8-103": NEONATAL_SEPSIS,

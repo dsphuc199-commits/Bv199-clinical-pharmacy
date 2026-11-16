@@ -18,6 +18,7 @@ import { OPHTHALMOLOGY } from "./ophthalmology";
 import { RESPIRATORY } from "./respiratory";
 import { RESPIRATORY_ICU } from "./respiratory-icu";
 import { SKIN } from "./skin";
+import { STI_708 } from "./sti-708";
 import { TUBERCULOSIS } from "./tuberculosis";
 import { UROLOGY } from "./urology";
 import { DOCS } from "./sources";
@@ -45,6 +46,7 @@ const RAW_REGIMENS: Regimen[] = [
   ...RESPIRATORY,
   ...RESPIRATORY_ICU,
   ...SKIN,
+  ...STI_708,
   ...TUBERCULOSIS,
   ...UROLOGY,
 ];

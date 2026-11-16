@@ -19,7 +19,7 @@ const opts = (res) => (res.status === "ready" ? res.groups.flatMap((g) => g.opti
 // 1. BYT goc
 const prev = new Map(before.regimens.map((r) => [r.id, r]));
 const changed = R.ALL_REGIMENS.filter((r) => { const p = prev.get(r.id); return !p || JSON.stringify([r.drugs, r.scenario, r.duration ?? null, r.source, r.role, r.diseaseIds]) !== JSON.stringify([p.drugs, p.scenario, p.duration, p.source, p.role, p.diseaseIds]); });
-check("300 phương án BYT giữ nguyên (thuốc, liều, kịch bản, thời gian, nguồn, mặt bệnh)", R.ALL_REGIMENS.length === 300 && changed.length === 0, changed.map((r) => r.id));
+check(`${before.regimens.length} phương án BYT giữ nguyên (thuốc, liều, kịch bản, thời gian, nguồn, mặt bệnh)`, R.ALL_REGIMENS.length === before.regimens.length && changed.length === 0, changed.map((r) => r.id));
 check("Nguyên văn liều nghi sai vẫn giữ (amoxicilin-clavulanat 875/125 tiêm TM; ciprofloxacin trẻ em 20–30 mg/24 giờ)", /875\/125 mg x 2 lần\/ngày TM/.test(byId.get("r-py-iv-bl").drugs[0].dose) && /20–30 mg\/24 giờ/.test(byId.get("r-ie-native-peds").drugs.find((d) => /Ciprofloxacin/.test(d.name)).dose));
 
 // 2. Khoa de xuat tu dong – danh sach khoa
@@ -66,7 +66,7 @@ check("Bàn chân ĐTĐ: vẫn MISSING_EVIDENCE", E.evidenceFor("v9-1").status =
 
 // 7. Trang thai / phe duyet
 const s = E.summarize();
-check(`69 bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === 69 && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
+check(`${EXP.totals.total} bệnh: ${EXP.totals.VERIFIED_SOURCE} VERIFIED_SOURCE / ${EXP.totals.NEEDS_REVIEW} NEEDS_REVIEW / ${EXP.totals.MISSING_EVIDENCE} MISSING_EVIDENCE / 0 APPROVED (baseline + thay đổi có chủ đích)`, s.total === EXP.totals.total && s.VERIFIED_SOURCE === EXP.totals.VERIFIED_SOURCE && s.NEEDS_REVIEW === EXP.totals.NEEDS_REVIEW && s.MISSING_EVIDENCE === EXP.totals.MISSING_EVIDENCE && s.APPROVED_FOR_CLINICAL_USE === 0, s);
 check("Không có bản ghi phê duyệt tự tạo", P.HDTDT_APPROVALS.length === 0);
 
 console.log(`\n${pass} passed, ${fail} failed`);

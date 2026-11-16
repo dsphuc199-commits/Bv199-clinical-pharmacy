@@ -88,6 +88,8 @@ const RAW_DISEASES: Disease[] = [
     khong neu lieu -> ngoai le co chu dich cua quy tac "chi giu benh co lieu".
   */
   { id: "v9-1", title: "Nhiễm trùng bàn chân đái tháo đường", specialty: "Nội tiết – Đái tháo đường" },
+  /* Bo sung 16/11/2026: QĐ 708/QĐ-BYT Chuong 7 (giang mai, lau, ha cam) va Chuong 10 (viem nieu dao khong do lau). */
+  { id: "v9-2", title: "Bệnh lây truyền qua đường tình dục", specialty: "Sản phụ khoa" },
 ];
 
 const collator = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
@@ -98,7 +100,7 @@ export const DISEASES: Disease[] = [...RAW_DISEASES].sort(
     collator.compare(a.title, b.title)
 );
 
-export const EXPECTED_CATALOG_COUNT = 69;
+export const EXPECTED_CATALOG_COUNT = 70;
 
 /*
   Mat benh an khoi danh muc hien thi (giu ID trong du lieu de khong vo lien ket/kiem toan).
