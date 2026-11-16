@@ -167,9 +167,9 @@ function aceOralNotes(age: Age): string[] {
   return n;
 }
 const ACE_IV: { role: string; drug: string; d: D; al?: "std" | "alt" }[] = [
-  { role: "Đầu tay", drug: "Cefazolin", al: "std", d: { a: "3–6 g/ngày chia 3 lần, tùy mức độ nặng", c: "Trẻ > 1 tháng: 50–100 mg/kg/ngày chia 3–4 lần; nhiễm khuẩn nặng (UpToDate) đến 150 mg/kg/ngày (tối đa 2000 mg/lần)" } },
-  { role: "Lựa chọn", drug: "Ceftriaxon", al: "std", d: { a: "1–2 g × 1 lần/ngày", c: "15 ngày – 12 tuổi: 50–80 mg/kg × 1 lần/ngày (tối đa 2000 mg/ngày); ≥ 50 kg hoặc > 12 tuổi: liều người lớn" } },
-  { role: "Lựa chọn", drug: "Amoxicilin-acid clavulanic", al: "std", d: { a: "1000 mg/200 mg mỗi 8 giờ hoặc mỗi 6 giờ", c: "Dạng 1000 mg/200 mg, 3 tháng – 12 tuổi: 75 mg/15 mg – 100 mg/20 mg/kg/ngày chia 3–4 lần; > 12 tuổi: liều người lớn" } },
+  { role: "Đầu tay", drug: "Cefazolin – ưu tiên vì phổ hẹp hơn", al: "std", d: { a: "3–6 g/ngày chia 3 lần, tùy mức độ nặng", c: "Trẻ > 1 tháng: 50–100 mg/kg/ngày chia 3–4 lần; nhiễm khuẩn nặng (UpToDate) đến 150 mg/kg/ngày (tối đa 2000 mg/lần)" } },
+  { role: "Đầu tay", drug: "Ceftriaxon", al: "std", d: { a: "1–2 g × 1 lần/ngày", c: "15 ngày – 12 tuổi: 50–80 mg/kg × 1 lần/ngày (tối đa 2000 mg/ngày); ≥ 50 kg hoặc > 12 tuổi: liều người lớn" } },
+  { role: "Đầu tay", drug: "Amoxicilin-acid clavulanic", al: "std", d: { a: "1000 mg/200 mg mỗi 8 giờ hoặc mỗi 6 giờ", c: "Dạng 1000 mg/200 mg, 3 tháng – 12 tuổi: 75 mg/15 mg – 100 mg/20 mg/kg/ngày chia 3–4 lần; > 12 tuổi: liều người lớn" } },
   { role: "Dị ứng penicilin", drug: "Clindamycin", al: "alt", d: { a: "600 mg mỗi 8 giờ đến mỗi 6 giờ (1800–2400 mg/ngày)", c: "Trẻ > 1 tháng: 20–40 mg/kg/ngày chia 3–4 lần đều nhau (tối đa 600 mg/lần)" } },
 ];
 function aceIv(age: Age): RxItem[] {
