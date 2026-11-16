@@ -41,7 +41,9 @@ export type SstiIn = {
   impSub: ImpSub; mrsa: boolean; culture: Culture; recurrent: boolean; site: SsiSite; pathogen: Pathogen;
   bite: BiteKind; infected: boolean; immuno: boolean;
 };
-export type SstiOut = { headline: string; blocks: SstiBlock[]; avoid: RxItem[]; notes: string[] };
+export type StrategyKind = "mono" | "combo" | "mixed" | "none";
+export type Strategy = { kind: StrategyKind; title: string; rules: string[] };
+export type SstiOut = { headline: string; blocks: SstiBlock[]; avoid: RxItem[]; notes: string[]; strategy?: Strategy };
 
 type D = { a?: string; c?: string };
 const r = (role: string, text: string, dose: string | undefined, grade: string | undefined, ref: string, al?: "std" | "alt"): RxItem => ({ role, text, dose, grade, ref, al });
@@ -50,7 +52,113 @@ const MONO = "Đơn trị";
 const COMBO = "Phối hợp";
 const ALG = "Dị ứng penicilin";
 
-export const READ_HINT = "Mỗi dòng là một phác đồ, chọn một. “Đơn trị”: dùng một kháng sinh. “Phối hợp”: dùng đồng thời các kháng sinh nối bằng dấu “+”.";
+export const READ_HINT = "Nhóm “Đơn trị”: chọn 1 thuốc. Nhóm “Phối hợp”: chọn 1 phác đồ và dùng đồng thời tất cả các thuốc nối bằng dấu “+”.";
+
+/* Tách dòng trong một khối: thông tin (không phải thuốc), đơn trị, phối hợp, đơn trị hoặc phối hợp theo điều kiện. */
+export type RowGroup = { kind: "info" | "mono" | "combo" | "either"; label?: string; items: RxItem[] };
+export const GROUP_LABEL: Record<"mono" | "combo" | "either", string> = {
+  mono: "Đơn trị – chọn 1 thuốc",
+  combo: "Phối hợp – chọn 1 phác đồ, dùng đồng thời các thuốc",
+  either: "Đơn trị hoặc phối hợp – theo điều kiện ghi kèm",
+};
+export function rowKind(it: RxItem): RowGroup["kind"] {
+  if (!it.dose) return "info";
+  if (/đơn trị hoặc phối hợp/i.test(it.role)) return "either";
+  if (/phối hợp/i.test(it.role)) return "combo";
+  if (/đơn trị|^Bôi/i.test(it.role)) return "mono";
+  return "info";
+}
+/* Bỏ chữ "đơn trị"/"phối hợp" ở vai trò khi dòng đã nằm dưới tiêu đề nhóm tương ứng. */
+export function cleanRole(role: string): string {
+  const t = role.replace(/\s*–\s*(đơn trị|phối hợp)( \(uống\))?$/i, (_m, _k, u) => (u ? " (uống)" : "")).replace(/^(Đơn trị|Phối hợp)\s*–\s*/i, "").replace(/^(Đơn trị|Phối hợp)$/i, "");
+  return t ? t[0].toUpperCase() + t.slice(1) : "Lựa chọn";
+}
+export function groupRows(items: RxItem[]): RowGroup[] {
+  const order: RowGroup["kind"][] = ["info", "mono", "combo", "either"];
+  return order
+    .map((k) => ({ kind: k, label: k === "info" ? undefined : GROUP_LABEL[k], items: items.filter((x) => rowKind(x) === k).map((x) => (k === "info" ? x : { ...x, role: cleanRole(x.role) })) }))
+    .filter((g) => g.items.length > 0);
+}
+
+/* Chiến lược kháng sinh theo thể bệnh – lúc nào đơn trị, lúc nào phối hợp (theo ACE 2026, IDSA 2014). */
+function strategyOf(i: SstiIn, aceSev: boolean): Strategy {
+  const NO_DUAL = "Không phối hợp hai kháng sinh: phối hợp không tăng hiệu quả so với đơn trị trong nhiễm khuẩn da – mô mềm không biến chứng (ACE).";
+  switch (i.form) {
+    case "impetigo": {
+      const oral = aceSev || i.impSub === "ecthyma";
+      return { kind: "mono", title: oral ? "Đơn trị – một kháng sinh uống" : "Đơn trị – một kháng sinh bôi", rules: [
+        "Khu trú, nhẹ (chốc, viêm nang lông): một kháng sinh bôi.",
+        "Nặng, chốc loét, không đáp ứng thuốc bôi: một kháng sinh uống thay cho thuốc bôi.",
+        "Nghi ngờ hoặc xác định MRSA: vẫn đơn trị (doxycyclin, clindamycin hoặc sulfamethoxazol-trimethoprim).",
+        NO_DUAL,
+      ] };
+    }
+    case "purulent":
+      return { kind: !aceSev ? "none" : "mono", title: !aceSev ? "Không dùng kháng sinh – rạch dẫn lưu hoặc kiểm soát ổ nhiễm" : "Đơn trị – một kháng sinh, kèm rạch dẫn lưu", rules: [
+        "Nhẹ: rạch dẫn lưu, không dùng kháng sinh.",
+        "Vừa: rạch dẫn lưu + một kháng sinh uống (kinh nghiệm phủ MRSA: sulfamethoxazol-trimethoprim hoặc doxycyclin; MSSA: dicloxacilin hoặc cefalexin).",
+        "Nặng: rạch dẫn lưu + một kháng sinh phủ MRSA (vancomycin, linezolid, daptomycin hoặc ceftarolin); MSSA: một kháng sinh chống tụ cầu.",
+        NO_DUAL,
+      ] };
+    case "cellulitis":
+      return {
+        kind: i.sev === "severe" ? "mixed" : "mono",
+        title: i.sev === "severe" ? "ACE: đơn trị tĩnh mạch; IDSA: phối hợp vancomycin + beta-lactam phổ rộng" : i.mrsa ? "Đơn trị; phối hợp chỉ khi dùng đường uống bằng sulfamethoxazol-trimethoprim hoặc doxycyclin" : "Đơn trị – một kháng sinh có tác dụng trên liên cầu",
+        rules: [
+          "Nhẹ, vừa: một kháng sinh có tác dụng trên liên cầu (uống khi nhẹ, tĩnh mạch khi vừa).",
+          "Nguy cơ MRSA: một kháng sinh phủ cả MRSA và liên cầu (vancomycin, linezolid, clindamycin…). Đường uống có thể dùng clindamycin đơn trị, hoặc phối hợp sulfamethoxazol-trimethoprim hay doxycyclin với một beta-lactam, vì hai thuốc này chưa rõ tác dụng trên liên cầu tan huyết beta.",
+          "Nặng theo IDSA (thất bại kháng sinh uống, SIRS, suy giảm miễn dịch, dấu hiệu nhiễm khuẩn sâu): phối hợp vancomycin với piperacilin-tazobactam, imipenem-cilastatin hoặc meropenem.",
+          "Nặng theo ACE (tại tuyến cộng đồng): một kháng sinh tĩnh mạch. " + NO_DUAL.replace("Không phối hợp hai kháng sinh: phối", "Phối"),
+        ],
+      };
+    case "ssi": {
+      const kind: StrategyKind = i.site === "clean" ? "mono" : i.site === "gi" ? "mixed" : "combo";
+      const title = i.site === "clean" ? "Đơn trị – một kháng sinh chống tụ cầu" : i.site === "gi" ? "Đơn trị bằng thuốc phủ cả Gram âm và kỵ khí, hoặc phối hợp với metronidazol" : "Phối hợp – metronidazol + một kháng sinh phủ Gram âm";
+      return { kind: i.mrsa && i.site !== "clean" ? "combo" : kind, title: i.mrsa && i.site !== "clean" ? title + "; phối hợp thêm vancomycin (nguy cơ MRSA)" : title, rules: [
+        "Vết mổ sạch (thân, đầu – cổ, chi): đơn trị – cefazolin, oxacilin hoặc cefalexin; nguy cơ MRSA: vancomycin, linezolid, daptomycin hoặc ceftarolin, đơn trị.",
+        "Ống tiêu hóa, sinh dục – tiết niệu: đơn trị bằng thuốc phủ cả Gram âm và kỵ khí (piperacilin-tazobactam, carbapenem); hoặc phối hợp ceftriaxon hay fluoroquinolon với metronidazol (metronidazol phủ kỵ khí); hoặc ampicilin-sulbactam + aminoglycosid.",
+        "Nách, tầng sinh môn: phối hợp metronidazol với ciprofloxacin, levofloxacin hoặc ceftriaxon.",
+        "Nguy cơ MRSA ở vết mổ tiêu hóa, nách, tầng sinh môn: phối hợp thêm vancomycin vào phác đồ.",
+      ] };
+    }
+    case "nec": {
+      const mono = i.pathogen === "sa";
+      const titles: Record<Pathogen, string> = {
+        empiric: "Phối hợp – vancomycin (hoặc linezolid) + kháng sinh phổ rộng phủ Gram âm và kỵ khí",
+        strep: "Phối hợp – penicilin G + clindamycin",
+        clos: "Phối hợp – penicilin G + clindamycin",
+        sa: "Đơn trị – theo kháng sinh đồ",
+        aero: "Phối hợp – doxycyclin + ciprofloxacin hoặc ceftriaxon",
+        vibrio: "Phối hợp – doxycyclin + ceftriaxon hoặc cefotaxim",
+      };
+      return { kind: mono ? "mono" : "combo", title: titles[i.pathogen], rules: [
+        "Chưa rõ tác nhân: luôn phối hợp, vì căn nguyên có thể đa vi khuẩn (hiếu khí, kỵ khí) hoặc liên cầu nhóm A, MRSA – vancomycin hoặc linezolid + piperacilin-tazobactam, carbapenem, hoặc cefotaxim + metronidazol/clindamycin.",
+        "Liên cầu nhóm A: phối hợp penicilin G + clindamycin – clindamycin ức chế sinh độc tố, penicilin phòng chủng kháng clindamycin.",
+        "Clostridium: phối hợp penicilin G + clindamycin, vì khoảng 5% C. perfringens kháng clindamycin.",
+        "S. aureus: đơn trị theo kháng sinh đồ (MSSA: nafcilin, oxacilin, cefazolin; MRSA: vancomycin); dùng clindamycin mà có hoặc nghi MRSA thì phối hợp thêm vancomycin.",
+        "Aeromonas, Vibrio: phối hợp doxycyclin với ciprofloxacin, ceftriaxon hoặc cefotaxim.",
+      ] };
+    }
+    case "pyo":
+      return { kind: i.immuno ? "combo" : "mono", title: i.immuno ? "Phối hợp – vancomycin + kháng sinh phủ trực khuẩn Gram âm đường ruột" : "Đơn trị – vancomycin (kinh nghiệm); MSSA: cefazolin", rules: [
+        "Kinh nghiệm: vancomycin đơn trị (S. aureus chiếm khoảng 90%).",
+        "MSSA: cefazolin, nafcilin hoặc oxacilin đơn trị.",
+        "Suy giảm miễn dịch, bệnh nền, chấn thương hở vào cơ: phối hợp vancomycin với piperacilin-tazobactam, ampicilin-sulbactam hoặc carbapenem.",
+      ] };
+    default:
+      return i.bite === "animal"
+        ? { kind: "mixed", title: "Đơn trị là chủ yếu; phối hợp khi kháng sinh không phủ vi khuẩn kỵ khí", rules: [
+            "Đơn trị: amoxicilin-acid clavulanic, ampicilin-sulbactam, piperacilin-tazobactam, carbapenem, doxycyclin, moxifloxacin – phủ được cả hiếu khí và kỵ khí hoặc Pasteurella.",
+            "Phối hợp metronidazol hoặc clindamycin khi dùng sulfamethoxazol-trimethoprim hoặc levofloxacin (kém tác dụng trên kỵ khí).",
+            "Cephalosporin thế hệ 2, 3: đơn trị hoặc phối hợp metronidazol/clindamycin khi cần phủ kỵ khí.",
+            "Penicilin V luôn phối hợp với dicloxacilin.",
+          ] }
+        : { kind: "mono", title: "Đơn trị – amoxicilin-acid clavulanic, ampicilin-sulbactam hoặc ertapenem", rules: [
+            "Đơn trị: amoxicilin-acid clavulanic, ampicilin-sulbactam hoặc ertapenem.",
+            "Dị ứng beta-lactam: phối hợp ciprofloxacin hoặc levofloxacin với metronidazol, hoặc moxifloxacin đơn trị.",
+          ] };
+  }
+}
 
 export const FORM_OPTS: { id: Form; label: string }[] = [
   { id: "impetigo", label: "Chốc, chốc loét, viêm nang lông" },
@@ -702,5 +810,5 @@ export function sstiPlan(i: SstiIn): SstiOut {
   }
   if (i.pcnAllergy) common.push("ACE: xác minh dị ứng penicilin (đặc điểm phản ứng trước đây, tiền sử đã dung nạp penicilin) – phần lớn dị ứng do người bệnh tự khai không chính xác.");
   if (i.age === "child") common.push("IDSA: liều trẻ em không áp dụng cho sơ sinh.");
-  return { ...o, notes: [...o.notes, ...common] };
+  return { ...o, notes: [...o.notes, ...common], strategy: strategyOf(i, aceSev) };
 }

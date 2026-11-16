@@ -75,5 +75,19 @@ check("Dòng kháng sinh có liều đều ghi đơn trị, phối hợp hoặc 
 check("Mọi dòng đơn trị, phối hợp đều có liều", rows.filter((it) => /^(Đơn trị|Phối hợp)$|– (đơn trị|phối hợp)/i.test(it.role) && !/^(Kinh nghiệm|Phối hợp thêm)$/.test(it.role)).every((it) => !!it.dose));
 check("Thống nhất tên thuốc và đường dùng: không dùng “Cephalexin”, “TM”", shown.every((t) => !/Cephalexin|cephalexin|\bTM\b/.test(t)));
 
+// Chien luoc: luc nao don tri, luc nao phoi hop
+const k = (x) => plan(x).strategy.kind;
+check("Chốc, viêm nang lông: đơn trị", k({ form: "impetigo" }) === "mono" && k({ form: "impetigo", sev: "severe", mrsa: true }) === "mono");
+check("Nhọt, áp xe nhẹ: không kháng sinh; vừa, nặng: đơn trị", k({ form: "purulent" }) === "none" && k({ form: "purulent", sev: "moderate" }) === "mono" && k({ form: "purulent", sev: "severe" }) === "mono");
+check("Viêm mô tế bào nhẹ, vừa: đơn trị; nặng: ACE đơn trị, IDSA phối hợp", k({}) === "mono" && k({ sev: "moderate" }) === "mono" && k({ sev: "severe" }) === "mixed");
+check("Vết mổ sạch: đơn trị; tiêu hóa: đơn trị hoặc phối hợp; nách, tầng sinh môn: phối hợp", k({ form: "ssi" }) === "mono" && k({ form: "ssi", site: "gi" }) === "mixed" && k({ form: "ssi", site: "axilla" }) === "combo");
+check("Nhiễm khuẩn hoại tử: phối hợp, trừ S. aureus đơn trị", ["empiric", "strep", "clos", "aero", "vibrio"].every((pathogen) => k({ form: "nec", pathogen }) === "combo") && k({ form: "nec", pathogen: "sa" }) === "mono");
+check("Viêm cơ mủ: đơn trị; suy giảm miễn dịch: phối hợp", k({ form: "pyo" }) === "mono" && k({ form: "pyo", immuno: true }) === "combo");
+check("Mọi trường hợp có chiến lược và quy tắc", outs.every((x) => x.strategy && x.strategy.title && x.strategy.rules.length >= 2));
+const grouped = outs.flatMap((x) => x.blocks.flatMap((b) => M.groupRows(b.items)));
+check("Nhóm phối hợp: mọi dòng đều có “+” hoặc là thuốc thêm vào phác đồ", grouped.filter((g) => g.kind === "combo").every((g) => g.items.every((it) => it.text.includes(" + ") || /thêm/.test(it.role) || /vào một phác đồ/.test(it.text))));
+check("Nhóm đơn trị: không dòng nào chứa “+”", grouped.filter((g) => g.kind === "mono").every((g) => g.items.every((it) => !it.text.includes(" + "))));
+check("Tiêu đề nhóm rõ ràng", M.GROUP_LABEL.mono.startsWith("Đơn trị – chọn 1 thuốc") && M.GROUP_LABEL.combo.startsWith("Phối hợp – chọn 1 phác đồ"));
+
 console.log(`${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

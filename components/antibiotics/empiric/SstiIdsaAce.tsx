@@ -3,10 +3,13 @@
 import { useState } from "react";
 import {
   ACE_SEVERE, AGE_OPTS, BITE_OPTS, CULTURE_OPTS, FORM_OPTS, FORM_TIP, IMP_OPTS, PATHOGEN_OPTS, READ_HINT, RED_FLAGS, REFERRAL,
-  SEV2_OPTS, SEV3_OPTS, SEV_TIP, SIRS_IDSA, SITE_OPTS, SYSTEMIC, sstiPlan,
+  SEV2_OPTS, SEV3_OPTS, SEV_TIP, SIRS_IDSA, SITE_OPTS, SYSTEMIC, groupRows, sstiPlan,
+  type StrategyKind,
   type Age, type BiteKind, type Culture, type Form, type ImpSub, type Pathogen, type Sev, type SsiSite,
 } from "./ssti-idsa2014-ace2026";
 import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+
+const STRAT_LABEL: Record<StrategyKind, string> = { mono: "ĐƠN TRỊ", combo: "PHỐI HỢP", mixed: "ĐƠN TRỊ / PHỐI HỢP", none: "KHÔNG KHÁNG SINH" };
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -105,12 +108,24 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
           <p><b>Phác đồ</b> {o.headline}</p>
           <p><b>Hướng dẫn</b> {graded ? "ACE 2026; IDSA 2014" : "IDSA 2014"}</p>
         </div>
+        {o.strategy && (
+          <div className={`ssti-strat ssti-strat-${o.strategy.kind}`}>
+            <p className="ssti-strat-head"><span className="ssti-badge">{STRAT_LABEL[o.strategy.kind]}</span> {o.strategy.title}</p>
+            <p className="ssti-strat-sub">Lúc nào đơn trị, lúc nào phối hợp</p>
+            <ul>{o.strategy.rules.map((x) => <li key={x}>{x}</li>)}</ul>
+          </div>
+        )}
         <p className="sa24-tip">{READ_HINT}</p>
         {o.blocks.map((b) => (
           <div key={b.title}>
             <h4>{b.title}</h4>
             {b.lead && <p className="sa24-lead">{b.lead}</p>}
-            <Rx items={b.items} />
+            {groupRows(b.items).map((g) => (
+              <div key={g.kind} className="ssti-grp">
+                {g.label && <p className={`ssti-grp-h ssti-grp-${g.kind}`}>{g.label}</p>}
+                <Rx items={g.items} />
+              </div>
+            ))}
           </div>
         ))}
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
@@ -123,7 +138,17 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
       </section>
       <p className="sa24-src">Nguồn: Stevens DL và cs. Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update by the Infectious Diseases Society of America. Clin Infect Dis 2014;59(2):e10–e52; đính chính: Clin Infect Dis 2015;60(9):1448; trả lời của tác giả: Clin Infect Dis 2015;60(11):1732. Mức khuyến cáo IDSA theo GRADE (mạnh/yếu; chất lượng bằng chứng cao/trung bình/thấp). Agency for Care Effectiveness, Bộ Y tế Singapore. Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing. ACE Clinical Guideline, 21/09/2026, kèm Supplement 2 (liều theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS); ACE không xếp mức khuyến cáo. Liều đối chiếu với thông tin kê đơn được FDA phê duyệt (DailyMed): linezolid, daptomycin, ceftarolin, piperacilin-tazobactam, ampicilin-sulbactam, ertapenem, meropenem, imipenem-cilastatin, cefotaxim, metronidazol, clindamycin, vancomycin, gentamicin, doxycyclin; liều trẻ em của linezolid, ampicilin-sulbactam, imipenem-cilastatin, ertapenem, cefotaxim, gentamicin, doxycyclin theo nhãn thuốc. Đối chiếu ngày 16/11/2026. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
       <RxToolStyle />
-      <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
+      <style>{`.ssti-strat { border: 1px solid #cfdde6; border-left: 5px solid #0b3a5b; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 4px; }
+.ssti-strat-mono { border-left-color: #0b6b3a; } .ssti-strat-combo { border-left-color: #1d4f8a; } .ssti-strat-mixed { border-left-color: #8a5a00; } .ssti-strat-none { border-left-color: #6b8293; }
+.ssti-strat-head { margin: 0; font-size: 14.5px; font-weight: 800; color: #0f2236; line-height: 1.5; }
+.ssti-badge { display: inline-block; border-radius: 6px; padding: 1px 8px; margin-right: 6px; font-size: 12px; font-weight: 800; letter-spacing: .03em; color: #fff; background: #0b3a5b; }
+.ssti-strat-mono .ssti-badge { background: #0b6b3a; } .ssti-strat-combo .ssti-badge { background: #1d4f8a; } .ssti-strat-mixed .ssti-badge { background: #8a5a00; } .ssti-strat-none .ssti-badge { background: #6b8293; }
+.ssti-strat-sub { margin: 4px 0 0; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #4b6576; }
+.ssti-strat ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 13px; line-height: 1.55; color: #33505f; }
+.ssti-grp { display: grid; gap: 4px; margin-top: 6px; }
+.ssti-grp-h { margin: 4px 0 0; font-size: 13px; font-weight: 800; color: #0b6b3a; }
+.ssti-grp-combo { color: #1d4f8a; } .ssti-grp-either { color: #8a5a00; }
+.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>
   );
 }
