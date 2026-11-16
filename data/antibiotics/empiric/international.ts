@@ -265,7 +265,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
     status: "extracted",
     checkedOn: CHECKED,
-    checkNote: "Trang IDSA ghi trạng thái CURRENT. Đọc toàn văn PDF người dùng cung cấp (16/11/2026): khuyến cáo 1–44, Hình 1, 2, Bảng 2–5. Số liệu nghi lỗi in (tiêu chí bạch cầu trong SIRS, ceftriaxon 1 g qid ở Vibrio, liều penicilin trẻ em ở Clostridium, SMX-TMP mỗi 6 giờ ở Bảng 3) không đưa lên giao diện.",
+    checkNote: "Trang IDSA ghi trạng thái CURRENT. Đọc toàn văn PDF người dùng cung cấp (16/11/2026): khuyến cáo 1–44, Hình 1, 2, Bảng 2–5. Đã áp dụng đính chính Clin Infect Dis 2015;60(9):1448 (SIRS bạch cầu < 4000/µL; mupirocin 3 lần/ngày; Aeromonas ciprofloxacin 400 mg TM mỗi 12 giờ; Vibrio ceftriaxon 1 g TM mỗi ngày) và trả lời của tác giả 2015;60(11):1732 (ciprofloxacin uống 500–750 mg mỗi 12 giờ ở Bảng 3).",
   },
   "iwgdf-idsa-2023": {
     id: "iwgdf-idsa-2023",

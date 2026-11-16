@@ -10,13 +10,15 @@
     Supplement 2 (Bảng 1 thuốc bôi, Bảng 2 thuốc uống, Bảng 3 thuốc tĩnh mạch). ACE không in mức khuyến cáo.
   ref = vị trí trong văn bản (không hiển thị).
 
-  CẦN XÁC MINH – số liệu IDSA 2014 nghi lỗi in, KHÔNG đưa lên giao diện:
-  - Định nghĩa SIRS (KC 6, chú thích Hình 1): "white blood cell count >12 000 or <400 cells/µL" -> dùng định nghĩa
-    dấu hiệu toàn thân của ACE (Hình 3, chú thích ‡), không chép lại tiêu chí bạch cầu.
-  - Bảng 4, Vibrio vulnificus: "ceftriaxone 1 g qid IV" -> bỏ dòng ceftriaxon, giữ doxycyclin + cefotaxim.
-  - Bảng 4, Clostridium, liều penicilin trẻ em: "60 000–100 00 units/kg/dose" -> bỏ liều trẻ em của dòng này.
-  - Bảng 3, SMX-TMP "160–800 mg po every 6 h" (Bảng 5 ghi 2 lần/ngày) -> bỏ dòng này ở nhiễm khuẩn vết mổ.
-  - Bảng 7 mục tiêu nồng độ đáy vancomycin 15–20 µg/mL -> không hiển thị; dẫn sang ASHP/IDSA 2020 (AUC).
+  - Đính chính IDSA: Clin Infect Dis 2015;60(9):1448 (doi:10.1093/cid/civ114) – áp dụng:
+    Hình 1, SIRS: bạch cầu > 12 000 hoặc < 4000/µL; Bảng 2: mupirocin bôi 3 lần/ngày (chốc);
+    Bảng 4: Aeromonas – ciprofloxacin 400 mg TM mỗi 12 giờ; Vibrio – ceftriaxon 1 g TM mỗi ngày.
+  - Trả lời của tác giả: Clin Infect Dis 2015;60(11):1732 (doi:10.1093/cid/civ127) – Bảng 3 ciprofloxacin uống
+    500 mg hoặc 500–750 mg mỗi 12 giờ.
+  - Bảng 4, penicilin trẻ em ở dòng Clostridium in "60 000–100 00": dùng liều penicilin trẻ em ở dòng liên cầu
+    cùng bảng (60 000–100 000 đơn vị/kg/lần mỗi 6 giờ TM) – cùng thuốc, cùng đường dùng.
+  - Vancomycin: liều theo Bảng 2–4; theo dõi nồng độ theo ASHP/IDSA/PIDS/SIDP 2020 (thay mục tiêu nồng độ đáy
+    của Bảng 7).
 */
 import type { RxItem } from "./septic-arthritis-pids2023";
 
@@ -132,6 +134,8 @@ export const REFERRAL: string[] = [
   "MRSA: nhiễm khuẩn không biến chứng có thể điều trị ở tuyến ban đầu, chọn kháng sinh theo cấy và kháng sinh đồ khi có thể; chuyển tuyến khi có biến chứng, dấu hiệu toàn thân, bệnh nền đáng kể hoặc không đáp ứng sau một đợt điều trị đủ.",
 ];
 export const SYSTEMIC = "Dấu hiệu toàn thân (ACE): hội chứng đáp ứng viêm toàn thân, ví dụ nhiệt độ > 38 °C hoặc < 36 °C, thở nhanh > 20 lần/phút, mạch nhanh > 100 lần/phút, tụt huyết áp hoặc viêm bạch mạch.";
+/* IDSA KC 6, Hình 1 – đã áp dụng đính chính 2015 (bạch cầu < 4000/µL) */
+export const SIRS_IDSA = "SIRS (IDSA, đính chính 2015): nhiệt độ > 38 °C hoặc < 36 °C, thở nhanh > 24 lần/phút, mạch nhanh > 90 lần/phút, hoặc bạch cầu > 12 000 hoặc < 4000/µL.";
 
 /* ===================== ACE 2026 – Supplement 2 ===================== */
 const S1 = "ACE Suppl. 2, Bảng 1";
@@ -250,7 +254,7 @@ function impetigo(i: SstiIn, aceSev: boolean): SstiOut {
     const dose: RxItem[] = [];
     if (i.impSub === "impetigo") {
       dose.push(r("Bôi – ít tổn thương", "Retapamulin (thuốc mỡ)", "Bôi lên tổn thương 2 lần/ngày", undefined, T2));
-      dose.push(r("Bôi – ít tổn thương", "Mupirocin (thuốc mỡ)", "Bôi lên tổn thương 2 lần/ngày", undefined, T2));
+      dose.push(r("Bôi – ít tổn thương", "Mupirocin (thuốc mỡ)", "Bôi lên tổn thương 3 lần/ngày", undefined, `${T2} (đính chính 2015)`));
     }
     if (i.age === "adult") dose.push(r("Uống", "Dicloxacilin", "250 mg uống 4 lần/ngày", undefined, T2, "std"));
     dose.push(
@@ -264,6 +268,7 @@ function impetigo(i: SstiIn, aceSev: boolean): SstiOut {
       const role = i.mrsa ? "MRSA" : "Dị ứng penicilin";
       dose.push(mrsaRow(role, "Doxycyclin", "doxy", i.age, i.mrsa ? undefined : "alt"), mrsaRow(role, "Sulfamethoxazol-trimethoprim", "smx", i.age, i.mrsa ? undefined : "alt"));
     }
+    if (i.impSub === "impetigo") notes.push("IDSA: bản đính chính 2015 (Clin Infect Dis 2015;60(9):1448) sửa Bảng 2 – mupirocin bôi 3 lần/ngày thay cho 2 lần/ngày.");
     blocks.push({ title: "IDSA 2014 – liều (Bảng 2)", lead: "Thời gian điều trị 7 ngày, tùy đáp ứng lâm sàng (Bảng 2, chú thích b).", items: dose });
     if (i.pcnAllergy) notes.push("IDSA: dị ứng penicilin hoặc nhiễm MRSA – doxycyclin, clindamycin hoặc sulfamethoxazol-trimethoprim; liên cầu đơn thuần ở người dị ứng penicilin – macrolid hoặc clindamycin.");
   }
@@ -305,7 +310,7 @@ function purulent(i: SstiIn, aceSev: boolean): SstiOut {
       r("Xét nghiệm", "Nhuộm Gram, cấy mủ cụm nhọt và áp xe; điều trị không cần xét nghiệm là hợp lý ở ca điển hình", undefined, "S-M", "IDSA KC 3"),
       r("Nang thượng bì viêm", "Không nhuộm Gram, không cấy mủ", undefined, "S-M", "IDSA KC 4"),
       r("Rạch dẫn lưu", "Điều trị khuyến cáo cho nang thượng bì viêm, cụm nhọt, áp xe và nhọt lớn", undefined, "S-H", "IDSA KC 5"),
-      r("Kháng sinh kèm dẫn lưu", "Quyết định dùng kháng sinh nhắm S. aureus dựa trên có hay không có hội chứng đáp ứng viêm toàn thân (SIRS)", undefined, "S-L", "IDSA KC 6"),
+      r("Kháng sinh kèm dẫn lưu", "Quyết định dùng kháng sinh nhắm S. aureus dựa trên có hay không có hội chứng đáp ứng viêm toàn thân (SIRS): nhiệt độ > 38 °C hoặc < 36 °C, thở > 24 lần/phút, mạch > 90 lần/phút, bạch cầu > 12 000 hoặc < 4000/µL", undefined, "S-L", "IDSA KC 6"),
       r("Kháng sinh phủ MRSA", "Cụm nhọt hoặc áp xe ở người suy giảm sức đề kháng rõ, hoặc có SIRS", undefined, "S-L", "IDSA KC 6, tr. e22"),
     ],
   });
@@ -476,7 +481,7 @@ function ssi(i: SstiIn): SstiOut {
         r("Đơn trị", "Meropenem", "1 g mỗi 8 giờ, TM", undefined, T3, "std"),
         r("Đơn trị", "Ertapenem", "1 g mỗi 24 giờ, TM", undefined, T3, "std"),
         r("Phối hợp", "Ceftriaxon + metronidazol", "Ceftriaxon 1 g mỗi 24 giờ + metronidazol 500 mg mỗi 8 giờ, TM", undefined, T3, "std"),
-        r("Phối hợp", "Ciprofloxacin + metronidazol", "Ciprofloxacin 400 mg TM mỗi 12 giờ hoặc 750 mg uống mỗi 12 giờ + metronidazol 500 mg mỗi 8 giờ, TM", undefined, T3),
+        r("Phối hợp", "Ciprofloxacin + metronidazol", "Ciprofloxacin 400 mg TM mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ + metronidazol 500 mg mỗi 8 giờ, TM", undefined, `${T3}; trả lời tác giả 2015`),
         r("Phối hợp", "Levofloxacin + metronidazol", "Levofloxacin 750 mg mỗi 24 giờ TM + metronidazol 500 mg mỗi 8 giờ, TM", undefined, T3),
         r("Phối hợp", "Ampicilin-sulbactam + gentamicin hoặc tobramycin", "Ampicilin-sulbactam 3 g mỗi 6 giờ + gentamicin hoặc tobramycin 5 mg/kg mỗi 24 giờ, TM", undefined, T3, "std"),
       );
@@ -487,7 +492,7 @@ function ssi(i: SstiIn): SstiOut {
     if (adult) {
       items.push(
         r("Nền", "Metronidazol", "500 mg mỗi 8 giờ, TM", undefined, T3),
-        r("Kèm một trong", "Ciprofloxacin", "400 mg TM mỗi 12 giờ hoặc 750 mg uống mỗi 12 giờ", undefined, T3),
+        r("Kèm một trong", "Ciprofloxacin", "400 mg TM mỗi 12 giờ hoặc 500–750 mg uống mỗi 12 giờ", undefined, `${T3}; trả lời tác giả 2015`),
         r("Kèm một trong", "Levofloxacin", "750 mg mỗi 24 giờ, TM hoặc uống", undefined, T3),
         r("Kèm một trong", "Ceftriaxon", "1 g mỗi 24 giờ", undefined, T3, "std"),
       );
@@ -551,12 +556,12 @@ function nec(i: SstiIn): SstiOut {
     notes.push("IDSA Bảng 4, chú thích b: có hoặc nghi MRSA – thêm vancomycin, không vượt quá liều tối đa hằng ngày của người lớn.");
     notes.push(VANCO_TDM);
   } else if (p === "clos") {
-    items.push(r("Phối hợp", "Clindamycin + penicilin", a ? "Clindamycin 600–900 mg mỗi 8 giờ TM + penicilin 2–4 triệu đơn vị mỗi 4–6 giờ TM" : "Clindamycin 10–13 mg/kg/lần mỗi 8 giờ TM", undefined, T4));
+    items.push(r("Phối hợp", "Clindamycin + penicilin", a ? "Clindamycin 600–900 mg mỗi 8 giờ TM + penicilin 2–4 triệu đơn vị mỗi 4–6 giờ TM" : "Clindamycin 10–13 mg/kg/lần mỗi 8 giờ TM + penicilin 60 000–100 000 đơn vị/kg/lần mỗi 6 giờ TM", undefined, T4));
     blocks[0].items.push(r("Không khuyến cáo", "Oxy cao áp: chưa chứng minh lợi ích, có thể trì hoãn hồi sức và cắt lọc ngoại khoa", undefined, "S-L", "IDSA KC 39"));
   } else if (p === "aero") {
-    items.push(r("Phối hợp", "Doxycyclin + ciprofloxacin hoặc ceftriaxon", a ? "Doxycyclin 100 mg mỗi 12 giờ TM + ciprofloxacin 500 mg mỗi 12 giờ TM hoặc ceftriaxon 1–2 g mỗi 24 giờ TM" : ped("Không khuyến cáo cho trẻ em nhưng có thể cần dùng khi đe dọa tính mạng"), undefined, T4));
+    items.push(r("Phối hợp", "Doxycyclin + ciprofloxacin hoặc ceftriaxon", a ? "Doxycyclin 100 mg mỗi 12 giờ TM + ciprofloxacin 400 mg mỗi 12 giờ TM hoặc ceftriaxon 1–2 g mỗi 24 giờ TM" : ped("Không khuyến cáo cho trẻ em nhưng có thể cần dùng khi đe dọa tính mạng"), undefined, `${T4} (đính chính 2015)`));
   } else {
-    items.push(r("Phối hợp", "Doxycyclin + cefotaxim", a ? "Doxycyclin 100 mg mỗi 12 giờ TM + cefotaxim 2 g × 3 lần/ngày TM" : ped("Không khuyến cáo cho trẻ em nhưng có thể cần dùng khi đe dọa tính mạng"), undefined, T4));
+    items.push(r("Phối hợp", "Doxycyclin + ceftriaxon hoặc cefotaxim", a ? "Doxycyclin 100 mg mỗi 12 giờ TM + ceftriaxon 1 g TM mỗi ngày hoặc cefotaxim 2 g × 3 lần/ngày TM" : ped("Không khuyến cáo cho trẻ em nhưng có thể cần dùng khi đe dọa tính mạng"), undefined, `${T4} (đính chính 2015)`));
   }
   blocks.push({ title: "Kháng sinh theo tác nhân (IDSA Bảng 4)", items });
   notes.push("IDSA: hoại thư Fournier (bìu, dương vật hoặc âm hộ) – cắt lọc ngoại khoa sớm, triệt để toàn bộ mô hoại tử, bảo tồn cấu trúc sâu khi có thể.");

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   ACE_SEVERE, AGE_OPTS, BITE_OPTS, CULTURE_OPTS, FORM_OPTS, FORM_TIP, IMP_OPTS, PATHOGEN_OPTS, RED_FLAGS, REFERRAL,
-  SEV2_OPTS, SEV3_OPTS, SEV_TIP, SITE_OPTS, SYSTEMIC, sstiPlan,
+  SEV2_OPTS, SEV3_OPTS, SEV_TIP, SIRS_IDSA, SITE_OPTS, SYSTEMIC, sstiPlan,
   type Age, type BiteKind, type Culture, type Form, type ImpSub, type Pathogen, type Sev, type SsiSite,
 } from "./ssti-idsa2014-ace2026";
 import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
@@ -65,7 +65,7 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
         {graded && (
           <Row label="Mức độ">
             <Seg label="Mức độ" value={sev} onChange={setSev} options={sevOpts} />
-            {form !== "impetigo" && <p className="sa24-tip">IDSA: {SEV_TIP[form][sev]}</p>}
+            {form !== "impetigo" && <p className="sa24-tip">IDSA: {SEV_TIP[form][sev]} {SIRS_IDSA}</p>}
             <p className="sa24-tip">ACE – nặng khi có bệnh cảnh toàn thân hoặc: {ACE_SEVERE[form]}. {SYSTEMIC}</p>
           </Row>
         )}
@@ -120,7 +120,7 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
           <p className="sa24-tip">Nhiễm trùng bàn chân đái tháo đường: xem mặt bệnh riêng (IWGDF/IDSA 2023).</p>
         </details>
       </section>
-      <p className="sa24-src">Nguồn: Stevens DL và cs. Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update by the IDSA. Clin Infect Dis 2014;59(2):e10–e52 – khuyến cáo 1–44, Hình 1, 2, Bảng 2–5 (GRADE: mạnh/yếu; cao/trung bình/thấp). Agency for Care Effectiveness (Bộ Y tế Singapore). Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing. ACE Clinical Guideline, 21/09/2026 – Khuyến cáo 1–5, Hình 2, 3; Supplement 2 (Bảng 1–3; liều theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS). ACE không xếp mức khuyến cáo. Đối chiếu ngày 16/11/2026. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <p className="sa24-src">Nguồn: Stevens DL và cs. Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update by the IDSA. Clin Infect Dis 2014;59(2):e10–e52 – khuyến cáo 1–44, Hình 1, 2, Bảng 2–5 (GRADE: mạnh/yếu; cao/trung bình/thấp); đính chính Clin Infect Dis 2015;60(9):1448 và trả lời của tác giả Clin Infect Dis 2015;60(11):1732. Agency for Care Effectiveness (Bộ Y tế Singapore). Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing. ACE Clinical Guideline, 21/09/2026 – Khuyến cáo 1–5, Hình 2, 3; Supplement 2 (Bảng 1–3; liều theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS). ACE không xếp mức khuyến cáo. Đối chiếu ngày 16/11/2026. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>
