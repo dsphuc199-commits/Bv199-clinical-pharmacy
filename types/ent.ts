@@ -85,6 +85,8 @@ export interface Dose {
   route: string;
   interval?: string;
   duration?: string;
+  /** Thời gian theo đầu vào (luật đầu tiên khớp được dùng; không khớp thì dùng duration). */
+  durationBy?: { when: Cond[]; text: string }[];
   /** Liều tối đa đúng như nguồn ghi; không có -> để trống (giao diện ghi "Nguồn không nêu"). */
   max?: string;
   population: Population;

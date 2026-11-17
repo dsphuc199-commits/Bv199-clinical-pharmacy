@@ -329,7 +329,8 @@
         "sourceId": "AAP-2013-sinusitis",
         "locator": "tr. e271"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "duration": "đến 7 ngày sau khi hết triệu chứng, tối thiểu 10 ngày (đề xuất)"
     },
     {
       "id": "abrsp-amox-high",
@@ -370,7 +371,8 @@
         "sourceId": "AAP-2013-sinusitis",
         "locator": "tr. e271"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "duration": "đến 7 ngày sau khi hết triệu chứng, tối thiểu 10 ngày (đề xuất)"
     },
     {
       "id": "abrsp-amoxclav-high",
@@ -408,7 +410,8 @@
         "locator": "tr. e271"
       },
       "status": "EXTRACTED",
-      "note": "Liều tính theo amoxicillin."
+      "note": "Liều tính theo amoxicillin.",
+      "duration": "đến 7 ngày sau khi hết triệu chứng, tối thiểu 10 ngày (đề xuất)"
     },
     {
       "id": "abrsp-ceftriaxone",
@@ -433,7 +436,8 @@
         "sourceId": "AAP-2013-sinusitis",
         "locator": "tr. e271"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "caution": "Trẻ nôn, không dung nạp đường uống hoặc khó tuân thủ liều đầu; cải thiện sau 24 giờ thì chuyển kháng sinh uống"
     },
     {
       "id": "abrsp-fail-amoxclav",
@@ -468,7 +472,8 @@
           2
         ],
         "maxPerDoseMg": 2000
-      }
+      },
+      "duration": "đến 7 ngày sau khi hết triệu chứng, tối thiểu 10 ngày (đề xuất)"
     },
     {
       "id": "abrsp-fail-after-amoxclav",
@@ -514,7 +519,8 @@
         "locator": "Bảng 4, tr. e276; liều tr. e271"
       },
       "status": "EXTRACTED",
-      "interval": "chia 2 lần/ngày"
+      "interval": "chia 2 lần/ngày",
+      "duration": "đến 7 ngày sau khi hết triệu chứng, tối thiểu 10 ngày (đề xuất)"
     },
     {
       "id": "abrsp-idsa-amoxclav-dose",

@@ -475,7 +475,48 @@
         "sourceId": "AAP-2013-AOM",
         "locator": "Bảng 5, tr. e983; KAS 4A, tr. e965; thời gian tr. e985"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "durationBy": [
+        {
+          "when": [
+            {
+              "field": "severe",
+              "op": "truthy"
+            }
+          ],
+          "text": "10 ngày (triệu chứng nặng)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 24
+            }
+          ],
+          "text": "10 ngày (< 2 tuổi)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 72
+            }
+          ],
+          "text": "7 ngày (2–5 tuổi, nhẹ–vừa)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "gte",
+              "value": 72
+            }
+          ],
+          "text": "5–7 ngày (≥ 6 tuổi, nhẹ–vừa)"
+        }
+      ]
     },
     {
       "id": "aom-amoxclav",
@@ -485,7 +526,7 @@
       "dose": "amoxicillin 90 mg/kg/ngày + clavulanate 6,4 mg/kg/ngày (tỷ lệ 14:1)",
       "route": "uống",
       "interval": "chia 2 lần/ngày",
-      "duration": "như amoxicillin",
+      "duration": "< 2 tuổi hoặc triệu chứng nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày",
       "population": "child",
       "allergy": [
         "none"
@@ -511,10 +552,51 @@
       "quality": "Grade C",
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5 và chú thích a, tr. e983; KAS 4B, tr. e965"
+        "locator": "Bảng 5 và chú thích a, tr. e983; KAS 4B, tr. e965; thời gian tr. e985"
       },
       "status": "EXTRACTED",
-      "note": "Liều tính theo amoxicillin."
+      "note": "Liều tính theo amoxicillin.",
+      "durationBy": [
+        {
+          "when": [
+            {
+              "field": "severe",
+              "op": "truthy"
+            }
+          ],
+          "text": "10 ngày (triệu chứng nặng)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 24
+            }
+          ],
+          "text": "10 ngày (< 2 tuổi)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 72
+            }
+          ],
+          "text": "7 ngày (2–5 tuổi, nhẹ–vừa)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "gte",
+              "value": 72
+            }
+          ],
+          "text": "5–7 ngày (≥ 6 tuổi, nhẹ–vừa)"
+        }
+      ]
     },
     {
       "id": "aom-cefdinir",
@@ -541,9 +623,51 @@
       },
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5 (dị ứng penicillin), tr. e983; tr. e984"
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983; tr. e984; thời gian tr. e985"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "duration": "< 2 tuổi hoặc triệu chứng nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày",
+      "durationBy": [
+        {
+          "when": [
+            {
+              "field": "severe",
+              "op": "truthy"
+            }
+          ],
+          "text": "10 ngày (triệu chứng nặng)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 24
+            }
+          ],
+          "text": "10 ngày (< 2 tuổi)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 72
+            }
+          ],
+          "text": "7 ngày (2–5 tuổi, nhẹ–vừa)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "gte",
+              "value": 72
+            }
+          ],
+          "text": "5–7 ngày (≥ 6 tuổi, nhẹ–vừa)"
+        }
+      ]
     },
     {
       "id": "aom-cefuroxime",
@@ -569,9 +693,51 @@
       },
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5 (dị ứng penicillin), tr. e983"
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983; thời gian tr. e985"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "duration": "< 2 tuổi hoặc triệu chứng nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày",
+      "durationBy": [
+        {
+          "when": [
+            {
+              "field": "severe",
+              "op": "truthy"
+            }
+          ],
+          "text": "10 ngày (triệu chứng nặng)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 24
+            }
+          ],
+          "text": "10 ngày (< 2 tuổi)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 72
+            }
+          ],
+          "text": "7 ngày (2–5 tuổi, nhẹ–vừa)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "gte",
+              "value": 72
+            }
+          ],
+          "text": "5–7 ngày (≥ 6 tuổi, nhẹ–vừa)"
+        }
+      ]
     },
     {
       "id": "aom-cefpodoxime",
@@ -597,9 +763,51 @@
       },
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5 (dị ứng penicillin), tr. e983"
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983; thời gian tr. e985"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "duration": "< 2 tuổi hoặc triệu chứng nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày",
+      "durationBy": [
+        {
+          "when": [
+            {
+              "field": "severe",
+              "op": "truthy"
+            }
+          ],
+          "text": "10 ngày (triệu chứng nặng)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 24
+            }
+          ],
+          "text": "10 ngày (< 2 tuổi)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "lt",
+              "value": 72
+            }
+          ],
+          "text": "7 ngày (2–5 tuổi, nhẹ–vừa)"
+        },
+        {
+          "when": [
+            {
+              "field": "ageMonths",
+              "op": "gte",
+              "value": 72
+            }
+          ],
+          "text": "5–7 ngày (≥ 6 tuổi, nhẹ–vừa)"
+        }
+      ]
     },
     {
       "id": "aom-ceftriaxone-allergy",
@@ -626,7 +834,7 @@
       },
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5, tr. e983 (bảng in “50 mg”); liều 50 mg/kg theo văn bản tr. e984"
+        "locator": "Bảng 5, tr. e983; liều 50 mg/kg, tr. e984"
       },
       "status": "EXTRACTED",
       "note": "Bảng 5 in “50 mg IM or IV” không có “/kg”; văn bản cùng tài liệu (tr. e984) ghi 50 mg/kg."
@@ -681,7 +889,7 @@
       },
       "citation": {
         "sourceId": "AAP-2013-AOM",
-        "locator": "Bảng 5, tr. e983 (bảng in “50 mg”); liều 50 mg/kg theo văn bản tr. e984"
+        "locator": "Bảng 5, tr. e983; liều 50 mg/kg, tr. e984"
       },
       "status": "EXTRACTED",
       "note": "Bảng 5 in “50 mg” không có “/kg”; văn bản tr. e984 ghi 50 mg/kg."
