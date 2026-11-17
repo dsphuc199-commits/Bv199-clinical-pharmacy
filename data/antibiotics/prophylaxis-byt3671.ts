@@ -1,8 +1,7 @@
 // QĐ 3671/QĐ-BYT ngày 27/9/2012 – Hướng dẫn phòng ngừa nhiễm khuẩn vết mổ (bản PDF người dùng cung cấp 17/11/2026).
 // Nội dung trích: Bảng 3 "Phân loại vết mổ và nguy cơ nhiễm khuẩn vết mổ"; mục 3.2.2 "Sử dụng kháng sinh dự phòng
 // trong phẫu thuật"; Phụ lục 4 (bảng kiểm) phần "Sử dụng kháng sinh dự phòng".
-// WOUND_CLASS_BY_OP: xếp loại từng phẫu thuật trong bảng lựa chọn KSDP (QĐ 708) THEO ĐỊNH NGHĨA của Bảng 3;
-// hai văn bản không có bảng gán sẵn cho từng phẫu thuật, nên mỗi dòng ghi lý do xếp loại.
+// Hai văn bản không có bảng xếp loại cho từng phẫu thuật: giao diện chỉ hiển thị định nghĩa, người kê đơn tự xác định.
 
 export const BYT3671 = {
   title: "QĐ 3671/QĐ-BYT (2012) – Hướng dẫn phòng ngừa nhiễm khuẩn vết mổ",
@@ -49,57 +48,3 @@ export const KSDP_3671: { title: string; items: string[] }[] = [
     ],
   },
 ];
-
-export type OpClass = { cls: WoundClass | "tuy"; label: string; reason: string };
-
-const S = (reason: string): OpClass => ({ cls: "sach", label: "Sạch", reason });
-const SN = (reason: string): OpClass => ({ cls: "sach-nhiem", label: "Sạch – nhiễm", reason });
-const T = (label: string, reason: string): OpClass => ({ cls: "tuy", label, reason });
-
-const KHONG_MO = "Không mở vào đường hô hấp, tiêu hóa, sinh dục, tiết niệu.";
-
-// Khóa = id phẫu thuật trong data/antibiotics/prophylaxis-byt708.ts
-export const WOUND_CLASS_BY_OP: Record<string, OpClass> = {
-  u1: SN("Kim sinh thiết đi qua trực tràng (đường tiêu hóa)."),
-  u2: SN("Mở vào đường tiết niệu (qua niệu đạo, bàng quang, niệu quản)."),
-  u3: SN("Mở vào đường tiết niệu."),
-  u4: SN("Mở vào đường tiết niệu."),
-  u5: SN("Mở vào đường tiết niệu và đường tiêu hóa (hồi tràng)."),
-  u6: S(KHONG_MO),
-  c1: S(KHONG_MO), c2: S(KHONG_MO), c3: S(KHONG_MO), c4: S(KHONG_MO), c5: S(KHONG_MO), c6: S(KHONG_MO), c7: S(KHONG_MO),
-  v1: S(KHONG_MO), v2: S(KHONG_MO), v3: S(KHONG_MO),
-  t1: SN("Cắt thùy phổi, cắt phổi mở vào đường hô hấp (phế quản)."),
-  t2: SN("Mở vào đường tiêu hóa (thực quản)."),
-  n1: S(KHONG_MO), n2: S(KHONG_MO), n3: S(KHONG_MO), n4: S(KHONG_MO),
-  n5: SN("Đi qua hốc mũi, xoang bướm (đường hô hấp)."),
-  o1: S(KHONG_MO), o2: S(KHONG_MO), o3: S(KHONG_MO), o4: S(KHONG_MO), o5: S(KHONG_MO), o6: S(KHONG_MO), o7: S(KHONG_MO), o8: S(KHONG_MO),
-  g1: SN("Mở vào đường tiêu hóa."),
-  g2: SN("Phẫu thuật đường mật: xếp sạch – nhiễm khi không có bằng chứng nhiễm khuẩn."),
-  g3: T("Sạch – nhiễm khi mở vào đường mật", "Cắt gan có can thiệp đường mật là mở vào đường tiêu hóa – mật; không mở vào thì là sạch."),
-  g4: SN("Mở vào đường tiêu hóa và đường mật."),
-  g5: SN("Mở vào đường tiêu hóa."),
-  g6: SN("Mở vào đường tiêu hóa (dạ dày)."),
-  g7: T("Sạch – nhiễm; biến chứng: nhiễm hoặc bẩn", "Ruột thừa không biến chứng là sạch – nhiễm. Có hoại tử, thủng, mủ là nhiễm hoặc bẩn – điều trị như viêm phúc mạc thứ phát, không phải dự phòng."),
-  g8: T("Đại trực tràng: sạch – nhiễm; chấn thương bụng hở: nhiễm", "Mổ đại trực tràng có chuẩn bị mở vào đường tiêu hóa. Vết thương hở, chấn thương có vết thương mới xếp loại nhiễm."),
-  g9: S(KHONG_MO),
-  g10: T("Sạch; mở vào ruột: sạch – nhiễm", "Thoát vị không phải cắt ruột là sạch. Phải mở vào ruột (thoát vị nghẹt) là sạch – nhiễm."),
-  g11: S(KHONG_MO), g12: S(KHONG_MO),
-  ob1: SN("Mở vào đường sinh dục (tử cung)."),
-  ob2: SN("Mở vào đường sinh dục (âm đạo, tử cung)."),
-  ob3: SN("Mở vào đường sinh dục."),
-  ob4: SN("Mở vào đường sinh dục (đường âm đạo)."),
-  h1: T("Tuyến mang tai, tuyến giáp: sạch; cắt amydal: sạch – nhiễm", "Cắt amydal là phẫu thuật hầu họng (sạch – nhiễm); cắt tuyến mang tai, tuyến giáp không mở vào đường hô hấp – tiêu hóa (sạch)."),
-  h2: S(KHONG_MO),
-  h3: SN("Mở vào hầu họng, hốc mũi hoặc khoang miệng (đường hô hấp – tiêu hóa trên)."),
-  h4: T("Sạch; mở vào hầu, thanh quản: sạch – nhiễm", "Đại phẫu vùng cổ không mở vào đường thở – tiêu hóa là sạch; có mở vào hầu, thanh quản là sạch – nhiễm."),
-  p1: T("Sạch có yếu tố nguy cơ hoặc sạch – nhiễm", "Theo đúng tên dòng trong bảng lựa chọn KSDP."),
-  p2: S(KHONG_MO),
-  p3: SN("Mở vào hốc mũi (đường hô hấp)."),
-  tx1: SN("Nối tụy vào ruột hoặc bàng quang (đường tiêu hóa, tiết niệu)."),
-  tx2: SN("Nối niệu quản vào bàng quang (đường tiết niệu)."),
-  tx3: SN("Nối đường mật."),
-  ir1: SN("Thủ thuật trên đường mật, đường tiêu hóa."),
-  ir2: S("Thủ thuật qua da, không mở vào đường hô hấp, tiêu hóa, sinh dục, tiết niệu."),
-  ir3: SN("Thủ thuật trên đường tiết niệu."),
-  ir4: S(KHONG_MO), ir5: S(KHONG_MO), ir6: S(KHONG_MO),
-};
