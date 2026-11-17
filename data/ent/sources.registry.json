@@ -305,6 +305,21 @@
       "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
       "file": "guidelines/FDA-Cleocin-HCl.txt",
       "checkedOn": "17/11/2026"
+    },
+    {
+      "id": "FDA-Vancomycin",
+      "org": "FDA (DailyMed)",
+      "title": "Vancomycin hydrochloride for injection – Prescribing Information",
+      "year": 2026,
+      "tier": "LABEL",
+      "tierLabel": "Thông tin kê đơn FDA – chỉ dùng cho liều",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1bda7fa4-fdee-410a-a216-02cfbf91632f",
+      "population": "Người lớn và trẻ em theo nhãn",
+      "scope": "Mục Dosage and Administration; bản sửa đổi 10/2021, đăng DailyMed 16/11/2026",
+      "access": "downloaded",
+      "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
+      "file": "guidelines/FDA-Vancomycin.txt",
+      "checkedOn": "17/11/2026"
     }
   ]
 }

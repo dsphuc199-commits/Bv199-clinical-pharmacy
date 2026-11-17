@@ -97,6 +97,10 @@ export interface Dose {
   weight?: WeightDosing;
   /** true: thuốc phối hợp thêm vào các lựa chọn khác đang hiển thị (không phải lựa chọn độc lập). */
   addOn?: boolean;
+  /** Nguồn của việc chọn thuốc khi khác nguồn liều (ví dụ thuốc theo UCSF, liều theo nhãn FDA). */
+  choiceCitation?: Citation;
+  /** Lưu ý ngắn bắt buộc hiển thị cạnh liều (ví dụ “chỉ khi không còn lựa chọn khác”). */
+  caution?: string;
   /** Liên kết công cụ trong ứng dụng (ví dụ TDM vancomycin). */
   link?: { href: string; label: string };
   strength?: string;

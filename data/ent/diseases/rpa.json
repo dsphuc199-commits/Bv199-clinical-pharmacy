@@ -15,7 +15,8 @@
     "UCSF-peds-PTA-RPA",
     "UCSF-adult-PTA-deepneck",
     "FDA-Unasyn",
-    "FDA-Cleocin-Phosphate"
+    "FDA-Cleocin-Phosphate",
+    "FDA-Vancomycin"
   ],
   "evidenceGap": [
     "Không có hướng dẫn hội chuyên môn chuyên biệt cho áp xe sau họng trong danh mục nguồn; không có phác đồ khuyến cáo.",
@@ -140,16 +141,15 @@
         "sourceId": "UCSF-peds-PTA-RPA",
         "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy, Inpatient (ảnh chụp trang gốc tiếng Anh)"
       },
-      "status": "EXTRACTED",
-      "note": "Liều tính theo ampicillin."
+      "status": "EXTRACTED"
     },
     {
       "id": "rpa-ucsf-vanco",
       "role": "reference",
       "line": "reference",
       "drug": "Vancomycin",
-      "dose": "Liều và theo dõi theo hướng dẫn vancomycin (UCSF dẫn liên kết riêng) – dùng công cụ TDM vancomycin",
-      "route": "tĩnh mạch",
+      "dose": "10 mg/kg/lần",
+      "route": "truyền tĩnh mạch ≥ 60 phút",
       "duration": "10–14 ngày tùy mức độ và đáp ứng",
       "population": "child",
       "condition": "Tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm hay mang MRSA đã ghi nhận trong 6 tháng qua. Ngừng vancomycin nếu ổ áp xe đã dẫn lưu không phân lập được MRSA.",
@@ -173,16 +173,31 @@
         }
       ],
       "citation": {
-        "sourceId": "UCSF-peds-PTA-RPA",
-        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
+        "sourceId": "FDA-Vancomycin",
+        "locator": "Dosage and Administration – Pediatric patients"
       },
       "status": "EXTRACTED",
-      "note": "Phối hợp thêm vào ampicillin-sulbactam.",
       "addOn": true,
       "link": {
         "href": "/tdm/vancomycin",
         "label": "Tính liều vancomycin (TDM)"
-      }
+      },
+      "interval": "mỗi 6 giờ",
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          10,
+          10
+        ],
+        "dosesPerDay": [
+          4
+        ]
+      },
+      "choiceCitation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "caution": "Chức năng thận bình thường; theo dõi nồng độ và chỉnh liều (TDM); ngừng nếu ổ áp xe dẫn lưu không phân lập được MRSA"
     },
     {
       "id": "rpa-ucsf-amoxclav",
@@ -226,8 +241,7 @@
         "sourceId": "UCSF-peds-PTA-RPA",
         "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy, Outpatient/step down therapy (ảnh chụp trang gốc tiếng Anh)"
       },
-      "status": "EXTRACTED",
-      "note": "Đơn trị. Liều tính theo amoxicillin."
+      "status": "EXTRACTED"
     },
     {
       "id": "rpa-ucsf-clinda-iv",
@@ -266,8 +280,7 @@
         "sourceId": "UCSF-peds-PTA-RPA",
         "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
       },
-      "status": "EXTRACTED",
-      "note": "Đơn trị."
+      "status": "EXTRACTED"
     },
     {
       "id": "rpa-ucsf-clinda-po",
@@ -306,8 +319,7 @@
         "sourceId": "UCSF-peds-PTA-RPA",
         "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
       },
-      "status": "EXTRACTED",
-      "note": "Đơn trị."
+      "status": "EXTRACTED"
     },
     {
       "id": "rpa-adult-sam",
@@ -335,8 +347,11 @@
         "locator": "Dosage and Administration – adult dosage"
       },
       "status": "EXTRACTED",
-      "note": "Thuốc theo UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu: thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm); liều theo thông tin kê đơn FDA.",
-      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)",
+      "choiceCitation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      }
     },
     {
       "id": "rpa-adult-clinda",
@@ -362,8 +377,12 @@
         "locator": "Dosage and Administration – Adults: Parenteral"
       },
       "status": "EXTRACTED",
-      "note": "Thuốc theo UCSF người lớn; liều theo thông tin kê đơn FDA (nhãn: tiêm bắp một lần > 600 mg không được khuyến cáo).",
-      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)",
+      "choiceCitation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      },
+      "caution": "Tiêm bắp: không quá 600 mg/lần"
     },
     {
       "id": "rpa-adult-vanco",
@@ -371,10 +390,10 @@
       "line": "reference",
       "addOn": true,
       "drug": "Vancomycin",
-      "dose": "Liều nạp, liều duy trì và theo dõi nồng độ theo công cụ TDM vancomycin",
-      "route": "tĩnh mạch",
+      "dose": "2 g/ngày: 500 mg mỗi 6 giờ hoặc 1 g mỗi 12 giờ",
+      "route": "truyền tĩnh mạch ≥ 60 phút (≤ 10 mg/phút)",
       "population": "adult",
-      "condition": "Nguy cơ cao MRSA: UCSF người lớn ghi ampicillin-sulbactam hoặc clindamycin “WITH OR WITHOUT” vancomycin",
+      "condition": "Nguy cơ cao MRSA",
       "allergy": [
         "none",
         "severe"
@@ -395,10 +414,15 @@
         "label": "Tính liều vancomycin (TDM)"
       },
       "citation": {
+        "sourceId": "FDA-Vancomycin",
+        "locator": "Dosage and Administration – Patients with Normal Renal Function, Adults"
+      },
+      "status": "EXTRACTED",
+      "choiceCitation": {
         "sourceId": "UCSF-adult-PTA-deepneck",
         "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
       },
-      "status": "EXTRACTED"
+      "caution": "Chức năng thận bình thường; theo dõi nồng độ và chỉnh liều (TDM)"
     }
   ],
   "rules": [

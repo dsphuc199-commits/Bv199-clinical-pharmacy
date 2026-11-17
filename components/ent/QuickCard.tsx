@@ -22,7 +22,8 @@ export function visibleInputs(d: Disease, inp: Inputs): { shown: InputSpec[]; ef
 
 /** Một dòng tóm tắt phác đồ: đơn trị, chọn 1, hoặc phối hợp (thuốc addOn cộng vào các lựa chọn). */
 export function regimenSummary(doses: Dose[]): string {
-  const name = (d: Dose) => `${d.drug} ${d.route}`;
+  const rt = (r: string) => (/tĩnh mạch/.test(r) && /uống/.test(r) ? "uống hoặc tĩnh mạch" : /tĩnh mạch/.test(r) ? "tĩnh mạch" : /tiêm bắp/.test(r) ? "tiêm bắp" : /uống/.test(r) ? "uống" : r);
+  const name = (d: Dose) => `${d.drug} ${rt(d.route)}`;
   const base = doses.filter((d) => !d.addOn), adds = doses.filter((d) => d.addOn);
   if (!base.length) return "";
   if (adds.length) return `Phối hợp: ${base.map(name).join(" hoặc ")} + ${adds.map(name).join(" + ")}`;

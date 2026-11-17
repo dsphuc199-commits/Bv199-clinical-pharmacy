@@ -51,6 +51,7 @@ export function validateDisease(d: Disease, sources: Source[]): string[] {
   for (const x of d.doses) for (const c of x.when ?? []) if (!d.inputs.some((s) => s.field === c.field)) errs.push(`${d.id}/${x.id}: trường ${c.field} không có trong inputs`);
   for (const s of d.inputs) if (!reg.has(s.citation.sourceId)) errs.push(`${d.id}/input ${s.field}: citation sai nguồn`);
   for (const s of d.inputs) for (const c of s.showWhen ?? []) if (!d.inputs.some((x) => x.field === c.field)) errs.push(`${d.id}/input ${s.field}: showWhen dùng trường lạ ${c.field}`);
+  for (const x of d.doses) if (x.choiceCitation && !all.includes(x.choiceCitation.sourceId)) errs.push(`${d.id}/${x.id}: choiceCitation ${x.choiceCitation.sourceId} không thuộc nguồn của bệnh`);
   for (const x of d.doses) if (x.citation && reg.get(x.citation.sourceId)?.tier === "LABEL" && x.role !== "reference") errs.push(`${d.id}/${x.id}: nhãn thuốc chỉ ở vai trò reference`);
   if (d.primarySources.length === 0) {
     if (!d.evidenceGap?.length) errs.push(`${d.id}: không có nguồn chính nhưng thiếu evidenceGap`);

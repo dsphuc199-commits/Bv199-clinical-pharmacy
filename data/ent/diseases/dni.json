@@ -10,7 +10,8 @@
   "referenceSources": [
     "UCSF-adult-PTA-deepneck",
     "FDA-Unasyn",
-    "FDA-Cleocin-Phosphate"
+    "FDA-Cleocin-Phosphate",
+    "FDA-Vancomycin"
   ],
   "evidenceGap": [
     "Không có hướng dẫn hội chuyên môn cho nhiễm khuẩn khoang cổ sâu người lớn trong danh mục nguồn; không có phác đồ khuyến cáo.",
@@ -66,8 +67,11 @@
         "locator": "Dosage and Administration – adult dosage"
       },
       "status": "EXTRACTED",
-      "note": "Thuốc theo UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu: thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm); liều theo thông tin kê đơn FDA.",
-      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)",
+      "choiceCitation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      }
     },
     {
       "id": "dni-adult-clinda",
@@ -87,8 +91,12 @@
         "locator": "Dosage and Administration – Adults: Parenteral"
       },
       "status": "EXTRACTED",
-      "note": "Thuốc theo UCSF người lớn; liều theo thông tin kê đơn FDA (nhãn: tiêm bắp một lần > 600 mg không được khuyến cáo).",
-      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)",
+      "choiceCitation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      },
+      "caution": "Tiêm bắp: không quá 600 mg/lần"
     },
     {
       "id": "dni-adult-vanco",
@@ -96,10 +104,10 @@
       "line": "reference",
       "addOn": true,
       "drug": "Vancomycin",
-      "dose": "Liều nạp, liều duy trì và theo dõi nồng độ theo công cụ TDM vancomycin",
-      "route": "tĩnh mạch",
+      "dose": "2 g/ngày: 500 mg mỗi 6 giờ hoặc 1 g mỗi 12 giờ",
+      "route": "truyền tĩnh mạch ≥ 60 phút (≤ 10 mg/phút)",
       "population": "adult",
-      "condition": "Nguy cơ cao MRSA: UCSF người lớn ghi ampicillin-sulbactam hoặc clindamycin “WITH OR WITHOUT” vancomycin",
+      "condition": "Nguy cơ cao MRSA",
       "allergy": [
         "none",
         "severe"
@@ -115,10 +123,15 @@
         "label": "Tính liều vancomycin (TDM)"
       },
       "citation": {
+        "sourceId": "FDA-Vancomycin",
+        "locator": "Dosage and Administration – Patients with Normal Renal Function, Adults"
+      },
+      "status": "EXTRACTED",
+      "choiceCitation": {
         "sourceId": "UCSF-adult-PTA-deepneck",
         "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
       },
-      "status": "EXTRACTED"
+      "caution": "Chức năng thận bình thường; theo dõi nồng độ và chỉnh liều (TDM)"
     }
   ],
   "rules": [

@@ -440,7 +440,7 @@
       "role": "primary",
       "line": "failure",
       "drug": "Amoxicillin-clavulanate liều cao",
-      "dose": "Theo liều cao ở trên",
+      "dose": "amoxicillin 80–90 mg/kg/ngày + clavulanate 6,4 mg/kg/ngày",
       "route": "uống",
       "population": "child",
       "condition": "Đang dùng amoxicillin, nặng lên trong 72 giờ (hoặc không cải thiện: theo dõi thêm hoặc đổi thuốc)",
@@ -453,16 +453,29 @@
       ],
       "citation": {
         "sourceId": "AAP-2013-sinusitis",
-        "locator": "Bảng 4, tr. e276"
+        "locator": "Bảng 4, tr. e276; liều tr. e271"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "interval": "chia 2 lần/ngày",
+      "max": "2 g amoxicillin/lần",
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          80,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 2000
+      }
     },
     {
       "id": "abrsp-fail-after-amoxclav",
       "role": "primary",
       "line": "failure",
       "drug": "Clindamycin + cefixime, hoặc linezolid + cefixime, hoặc levofloxacin",
-      "dose": "Nguồn không nêu liều",
+      "dose": "AAP chỉ nêu tên thuốc; liều ở các dòng IDSA cùng bảng",
       "route": "uống",
       "population": "child",
       "condition": "Đang dùng amoxicillin-clavulanate liều cao, nặng lên trong 72 giờ; clindamycin để phủ phế cầu kháng penicillin, linezolid khi cộng đồng có tỷ lệ phế cầu kháng clindamycin cao",
@@ -477,14 +490,15 @@
         "sourceId": "AAP-2013-sinusitis",
         "locator": "Bảng 4 và chú thích a, tr. e276"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "caution": "Linezolid khi cộng đồng có tỷ lệ phế cầu kháng clindamycin cao"
     },
     {
       "id": "abrsp-fail-observe",
       "role": "primary",
       "line": "failure",
       "drug": "Amoxicillin có hoặc không kèm clavulanate",
-      "dose": "Theo liều đầu tay",
+      "dose": "amoxicillin 45 mg/kg/ngày (liều chuẩn) hoặc 80–90 mg/kg/ngày (liều cao, tối đa 2 g/lần); clavulanate 6,4 mg/kg/ngày nếu dùng",
       "route": "uống",
       "population": "child",
       "condition": "Đang theo dõi, nặng lên: bắt đầu kháng sinh; không cải thiện: theo dõi thêm hoặc bắt đầu kháng sinh",
@@ -497,9 +511,10 @@
       ],
       "citation": {
         "sourceId": "AAP-2013-sinusitis",
-        "locator": "Bảng 4, tr. e276"
+        "locator": "Bảng 4, tr. e276; liều tr. e271"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "interval": "chia 2 lần/ngày"
     },
     {
       "id": "abrsp-idsa-amoxclav-dose",
@@ -707,6 +722,35 @@
         "sourceId": "NICE-NG79",
         "locator": "Bảng 2, tr. 11"
       }
+    },
+    {
+      "id": "abrsp-idsa-fail-clinda-cef",
+      "role": "comparison",
+      "line": "failure",
+      "drug": "Clindamycin + cefixime hoặc cefpodoxime",
+      "dose": "clindamycin 30–40 mg/kg/ngày chia 3 lần + cefixime 8 mg/kg/ngày chia 2 lần hoặc cefpodoxime 10 mg/kg/ngày chia 2 lần",
+      "route": "uống",
+      "population": "child",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nguy cơ kháng thuốc hoặc thất bại điều trị ban đầu), tr. e23"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-fail-levo",
+      "role": "comparison",
+      "line": "failure",
+      "drug": "Levofloxacin",
+      "dose": "10–20 mg/kg/ngày",
+      "route": "uống",
+      "interval": "mỗi 12–24 giờ",
+      "population": "child",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nguy cơ kháng thuốc hoặc thất bại điều trị ban đầu), tr. e23"
+      },
+      "status": "EXTRACTED"
     }
   ],
   "rules": [
@@ -728,7 +772,9 @@
         "abrsp-fail-observe",
         "abrsp-fail-amoxclav",
         "abrsp-fail-after-amoxclav",
-        "abrsp-nice-coamox"
+        "abrsp-nice-coamox",
+        "abrsp-idsa-fail-clinda-cef",
+        "abrsp-idsa-fail-levo"
       ],
       "statementIds": [
         "abrsp-kas5a",
