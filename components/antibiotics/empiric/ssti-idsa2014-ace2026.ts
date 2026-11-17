@@ -82,80 +82,84 @@ export function groupRows(items: RxItem[]): RowGroup[] {
 
 /* Chiến lược kháng sinh theo thể bệnh – lúc nào đơn trị, lúc nào phối hợp (theo ACE 2026, IDSA 2014). */
 function strategyOf(i: SstiIn, aceSev: boolean): Strategy {
-  const NO_DUAL = "Không phối hợp hai kháng sinh: phối hợp không tăng hiệu quả so với đơn trị trong nhiễm khuẩn da – mô mềm không biến chứng (ACE).";
+  /* ACE, nguyên tắc 4 (nguyên văn): dual antibiotic therapy does not enhance treatment efficacy compared with monotherapy
+     when treating SSTIs; not typically required for treating uncomplicated bacterial SSTIs in the community. */
+  const ACE_P4 = "ACE (nguyên tắc chọn kháng sinh): phối hợp hai kháng sinh không tăng hiệu quả so với đơn trị trong điều trị nhiễm khuẩn da – mô mềm; vì vậy thường không cần phối hợp khi điều trị nhiễm khuẩn da – mô mềm không biến chứng tại cộng đồng.";
   switch (i.form) {
     case "impetigo": {
       const oral = aceSev || i.impSub === "ecthyma";
       return { kind: "mono", title: oral ? "Đơn trị – một kháng sinh uống" : "Đơn trị – một kháng sinh bôi", rules: [
-        "Khu trú, nhẹ (chốc, viêm nang lông): một kháng sinh bôi.",
-        "Nặng, chốc loét, không đáp ứng thuốc bôi: một kháng sinh uống thay cho thuốc bôi.",
-        "Nghi ngờ hoặc xác định MRSA: vẫn đơn trị (doxycyclin, clindamycin hoặc sulfamethoxazol-trimethoprim).",
-        NO_DUAL,
+        "Khu trú, nhẹ: kháng sinh bôi đơn trị (ACE, khuyến cáo 3a).",
+        "Nặng: kháng sinh uống đơn trị (ACE, khuyến cáo 3b). Chốc loét: kháng sinh toàn thân (ACE). Nhẹ nhưng không đáp ứng thuốc bôi: kháng sinh uống đơn trị (ACE).",
+        "Nghi ngờ hoặc xác định MRSA: doxycyclin, clindamycin hoặc sulfamethoxazol-trimethoprim (IDSA, khuyến cáo 2b).",
+        ACE_P4,
       ] };
     }
     case "purulent":
       return { kind: !aceSev ? "none" : "mono", title: !aceSev ? "Không dùng kháng sinh – rạch dẫn lưu hoặc kiểm soát ổ nhiễm" : "Đơn trị – một kháng sinh, kèm rạch dẫn lưu", rules: [
-        "Nhẹ: rạch dẫn lưu, không dùng kháng sinh.",
-        "Vừa: rạch dẫn lưu + một kháng sinh uống (kinh nghiệm phủ MRSA: sulfamethoxazol-trimethoprim hoặc doxycyclin; MSSA: dicloxacilin hoặc cefalexin).",
-        "Nặng: rạch dẫn lưu + một kháng sinh phủ MRSA (vancomycin, linezolid, daptomycin hoặc ceftarolin); MSSA: một kháng sinh chống tụ cầu.",
-        NO_DUAL,
+        "Cân nhắc can thiệp ngoại khoa theo biểu hiện lâm sàng; kháng sinh uống đơn trị dành cho nhiễm khuẩn nặng (ACE, khuyến cáo 4).",
+        "IDSA – nhẹ: rạch dẫn lưu. Vừa: rạch dẫn lưu, cấy; kinh nghiệm sulfamethoxazol-trimethoprim hoặc doxycyclin; MRSA: sulfamethoxazol-trimethoprim; MSSA: dicloxacilin hoặc cefalexin.",
+        "IDSA – nặng: rạch dẫn lưu, cấy; kinh nghiệm vancomycin, daptomycin, linezolid, telavancin hoặc ceftarolin; MSSA: nafcilin, cefazolin hoặc clindamycin.",
+        ACE_P4,
       ] };
     case "cellulitis":
       return {
         kind: i.sev === "severe" ? "mixed" : "mono",
-        title: i.sev === "severe" ? "ACE: đơn trị tĩnh mạch; IDSA: phối hợp vancomycin + beta-lactam phổ rộng" : i.mrsa ? "Đơn trị; phối hợp chỉ khi dùng đường uống bằng sulfamethoxazol-trimethoprim hoặc doxycyclin" : "Đơn trị – một kháng sinh có tác dụng trên liên cầu",
+        title: i.sev === "severe" ? "ACE: đơn trị tĩnh mạch; IDSA: phối hợp vancomycin + piperacilin-tazobactam hoặc imipenem/meropenem" : "Đơn trị – một kháng sinh có tác dụng trên liên cầu",
         rules: [
-          "Nhẹ, vừa: một kháng sinh có tác dụng trên liên cầu (uống khi nhẹ, tĩnh mạch khi vừa).",
-          "Nguy cơ MRSA: một kháng sinh phủ cả MRSA và liên cầu (vancomycin, linezolid, clindamycin…). Đường uống có thể dùng clindamycin đơn trị, hoặc phối hợp sulfamethoxazol-trimethoprim hay doxycyclin với một beta-lactam, vì hai thuốc này chưa rõ tác dụng trên liên cầu tan huyết beta.",
-          "Nặng theo IDSA (thất bại kháng sinh uống, SIRS, suy giảm miễn dịch, dấu hiệu nhiễm khuẩn sâu): phối hợp vancomycin với piperacilin-tazobactam, imipenem-cilastatin hoặc meropenem.",
-          "Nặng theo ACE (tại tuyến cộng đồng): một kháng sinh tĩnh mạch. " + NO_DUAL.replace("Không phối hợp hai kháng sinh: phối", "Phối"),
+          "Nhẹ: kháng sinh uống đơn trị; nặng: dành kháng sinh tĩnh mạch đơn trị (ACE, khuyến cáo 5).",
+          "IDSA – nhẹ: một kháng sinh có tác dụng trên liên cầu, đường uống; vừa: kháng sinh toàn thân, đường tĩnh mạch.",
+          "IDSA – nguy cơ MRSA: vancomycin hoặc kháng sinh khác có tác dụng trên cả MRSA và liên cầu. Đường uống phủ cả liên cầu và MRSA: clindamycin đơn trị, hoặc sulfamethoxazol-trimethoprim hay doxycyclin phối hợp một beta-lactam (penicilin, cefalexin, amoxicilin); hoạt tính của doxycyclin, sulfamethoxazol-trimethoprim trên liên cầu tan huyết beta chưa rõ.",
+          "IDSA – nặng: vancomycin phối hợp piperacilin-tazobactam hoặc imipenem/meropenem là phác đồ kinh nghiệm hợp lý.",
+          ACE_P4,
         ],
       };
     case "ssi": {
       const kind: StrategyKind = i.site === "clean" ? "mono" : i.site === "gi" ? "mixed" : "combo";
-      const title = i.site === "clean" ? "Đơn trị – một kháng sinh chống tụ cầu" : i.site === "gi" ? "Đơn trị bằng thuốc phủ cả Gram âm và kỵ khí, hoặc phối hợp với metronidazol" : "Phối hợp – metronidazol + một kháng sinh phủ Gram âm";
-      return { kind: i.mrsa && i.site !== "clean" ? "combo" : kind, title: i.mrsa && i.site !== "clean" ? title + "; phối hợp thêm vancomycin (nguy cơ MRSA)" : title, rules: [
-        "Vết mổ sạch (thân, đầu – cổ, chi): đơn trị – cefazolin, oxacilin hoặc cefalexin; nguy cơ MRSA: vancomycin, linezolid, daptomycin hoặc ceftarolin, đơn trị.",
-        "Ống tiêu hóa, sinh dục – tiết niệu: đơn trị bằng thuốc phủ cả Gram âm và kỵ khí (piperacilin-tazobactam, carbapenem); hoặc phối hợp ceftriaxon hay fluoroquinolon với metronidazol (metronidazol phủ kỵ khí); hoặc ampicilin-sulbactam + aminoglycosid.",
-        "Nách, tầng sinh môn: phối hợp metronidazol với ciprofloxacin, levofloxacin hoặc ceftriaxon.",
-        "Nguy cơ MRSA ở vết mổ tiêu hóa, nách, tầng sinh môn: phối hợp thêm vancomycin vào phác đồ.",
+      const title = i.site === "clean" ? "Đơn trị – cephalosporin thế hệ 1 hoặc penicilin kháng tụ cầu" : i.site === "gi" ? "Phác đồ một thuốc hoặc phác đồ phối hợp" : "Phối hợp – metronidazol + ciprofloxacin, levofloxacin hoặc ceftriaxon";
+      return { kind: i.mrsa && i.site !== "clean" ? "combo" : kind, title: i.mrsa && i.site !== "clean" ? title + "; thêm vancomycin (nguy cơ MRSA)" : title, rules: [
+        "Sau mổ sạch (thân, đầu – cổ, chi): cephalosporin thế hệ 1 hoặc penicilin kháng tụ cầu cho MSSA; nguy cơ MRSA cao: vancomycin, linezolid, daptomycin, telavancin hoặc ceftarolin (IDSA, khuyến cáo 25).",
+        "Sau mổ nách, ống tiêu hóa, tầng sinh môn, đường sinh dục nữ: kháng sinh có tác dụng trên vi khuẩn Gram âm và kỵ khí, như cephalosporin hoặc fluoroquinolon phối hợp metronidazol (IDSA, khuyến cáo 26).",
+        "Phẫu thuật ống tiêu hóa, sinh dục – tiết niệu: phác đồ một thuốc (ticarcilin-acid clavulanic, piperacilin-tazobactam, imipenem-cilastatin, meropenem, ertapenem) hoặc phác đồ phối hợp (ceftriaxon, ciprofloxacin hoặc levofloxacin + metronidazol; ampicilin-sulbactam + gentamicin hoặc tobramycin) (IDSA).",
+        "Nách, tầng sinh môn: metronidazol kèm ciprofloxacin, levofloxacin hoặc ceftriaxon; có thể cần phủ thêm MRSA bằng vancomycin (IDSA).",
+        "Phẫu thuật ống tiêu hóa ở người nguy cơ MRSA: vancomycin, linezolid, daptomycin, telavancin hoặc ceftarolin, cùng với piperacilin-tazobactam, carbapenem, hoặc ceftriaxon + metronidazol (IDSA).",
       ] };
     }
     case "nec": {
-      const mono = i.pathogen === "sa";
       const titles: Record<Pathogen, string> = {
-        empiric: "Phối hợp – vancomycin (hoặc linezolid) + kháng sinh phổ rộng phủ Gram âm và kỵ khí",
-        strep: "Phối hợp – penicilin G + clindamycin",
-        clos: "Phối hợp – penicilin G + clindamycin",
-        sa: "Đơn trị – theo kháng sinh đồ",
+        empiric: "Phối hợp – vancomycin hoặc linezolid + piperacilin-tazobactam, carbapenem, hoặc ceftriaxon và metronidazol",
+        strep: "Phối hợp – penicilin + clindamycin",
+        clos: "Phối hợp – penicilin + clindamycin",
+        sa: "Đơn trị – nafcilin, oxacilin, cefazolin, vancomycin hoặc clindamycin",
         aero: "Phối hợp – doxycyclin + ciprofloxacin hoặc ceftriaxon",
         vibrio: "Phối hợp – doxycyclin + ceftriaxon hoặc cefotaxim",
       };
-      return { kind: mono ? "mono" : "combo", title: titles[i.pathogen], rules: [
-        "Chưa rõ tác nhân: luôn phối hợp, vì căn nguyên có thể đa vi khuẩn (hiếu khí, kỵ khí) hoặc liên cầu nhóm A, MRSA – vancomycin hoặc linezolid + piperacilin-tazobactam, carbapenem, hoặc cefotaxim + metronidazol/clindamycin.",
-        "Liên cầu nhóm A: phối hợp penicilin G + clindamycin – clindamycin ức chế sinh độc tố, penicilin phòng chủng kháng clindamycin.",
-        "Clostridium: phối hợp penicilin G + clindamycin, vì khoảng 5% C. perfringens kháng clindamycin.",
-        "S. aureus: đơn trị theo kháng sinh đồ (MSSA: nafcilin, oxacilin, cefazolin; MRSA: vancomycin); dùng clindamycin mà có hoặc nghi MRSA thì phối hợp thêm vancomycin.",
-        "Aeromonas, Vibrio: phối hợp doxycyclin với ciprofloxacin, ceftriaxon hoặc cefotaxim.",
+      return { kind: i.pathogen === "sa" ? "mono" : "combo", title: titles[i.pathogen], rules: [
+        "Kinh nghiệm: phổ rộng, ví dụ vancomycin hoặc linezolid phối hợp piperacilin-tazobactam, carbapenem, hoặc ceftriaxon và metronidazol, vì căn nguyên có thể đa vi khuẩn (hiếu khí – kỵ khí) hoặc đơn vi khuẩn (liên cầu nhóm A, MRSA cộng đồng) (IDSA, khuyến cáo 28).",
+        "Liên cầu nhóm A: penicilin phối hợp clindamycin (IDSA, khuyến cáo 29). Clindamycin ức chế sinh độc tố và cytokin của liên cầu; thêm penicilin vì liên cầu nhóm A có thể kháng clindamycin (IDSA).",
+        "Clostridium: penicilin phối hợp clindamycin; 5% chủng C. perfringens kháng clindamycin (IDSA, khuyến cáo 38).",
+        "S. aureus: nafcilin, oxacilin, cefazolin, vancomycin (chủng kháng) hoặc clindamycin; có hoặc nghi MRSA khi dùng clindamycin: thêm vancomycin (IDSA).",
+        "Aeromonas hydrophila: doxycyclin phối hợp ciprofloxacin hoặc ceftriaxon. Vibrio vulnificus: doxycyclin phối hợp ceftriaxon hoặc cefotaxim (IDSA).",
       ] };
     }
     case "pyo":
-      return { kind: i.immuno ? "combo" : "mono", title: i.immuno ? "Phối hợp – vancomycin + kháng sinh phủ trực khuẩn Gram âm đường ruột" : "Đơn trị – vancomycin (kinh nghiệm); MSSA: cefazolin", rules: [
-        "Kinh nghiệm: vancomycin đơn trị (S. aureus chiếm khoảng 90%).",
-        "MSSA: cefazolin, nafcilin hoặc oxacilin đơn trị.",
-        "Suy giảm miễn dịch, bệnh nền, chấn thương hở vào cơ: phối hợp vancomycin với piperacilin-tazobactam, ampicilin-sulbactam hoặc carbapenem.",
+      return { kind: i.immuno ? "combo" : "mono", title: i.immuno ? "Phối hợp – vancomycin + piperacilin-tazobactam, ampicilin-sulbactam hoặc carbapenem" : "Đơn trị – vancomycin (kinh nghiệm); MSSA: cefazolin hoặc penicilin kháng tụ cầu", rules: [
+        "Kinh nghiệm ban đầu: vancomycin (IDSA, khuyến cáo 32).",
+        "Suy giảm miễn dịch hoặc sau chấn thương hở vào cơ: thêm kháng sinh có tác dụng trên trực khuẩn Gram âm đường ruột (IDSA, khuyến cáo 32). Người có bệnh nền: vancomycin phối hợp piperacilin-tazobactam, ampicilin-sulbactam hoặc carbapenem (IDSA).",
+        "MSSA: cefazolin hoặc penicilin kháng tụ cầu (nafcilin, oxacilin) (IDSA, khuyến cáo 33).",
       ] };
     default:
       return i.bite === "animal"
-        ? { kind: "mixed", title: "Đơn trị là chủ yếu; phối hợp khi kháng sinh không phủ vi khuẩn kỵ khí", rules: [
-            "Đơn trị: amoxicilin-acid clavulanic, ampicilin-sulbactam, piperacilin-tazobactam, carbapenem, doxycyclin, moxifloxacin – phủ được cả hiếu khí và kỵ khí hoặc Pasteurella.",
-            "Phối hợp metronidazol hoặc clindamycin khi dùng sulfamethoxazol-trimethoprim hoặc levofloxacin (kém tác dụng trên kỵ khí).",
-            "Cephalosporin thế hệ 2, 3: đơn trị hoặc phối hợp metronidazol/clindamycin khi cần phủ kỵ khí.",
-            "Penicilin V luôn phối hợp với dicloxacilin.",
+        ? { kind: "mixed", title: "Một thuốc phủ hiếu khí và kỵ khí, hoặc phối hợp thêm thuốc phủ kỵ khí", rules: [
+            "Kháng sinh có tác dụng trên cả vi khuẩn hiếu khí và kỵ khí, như amoxicilin-acid clavulanic (IDSA, khuyến cáo 42).",
+            "Carbapenem, moxifloxacin hoặc doxycyclin cũng phù hợp; moxifloxacin dùng đơn trị, phủ cả kỵ khí (IDSA).",
+            "Cephalosporin thế hệ 2, 3: thêm thuốc phủ kỵ khí (clindamycin hoặc metronidazol) nếu cần (IDSA).",
+            "Dùng sulfamethoxazol-trimethoprim hoặc levofloxacin: thêm clindamycin hoặc metronidazol để phủ kỵ khí (IDSA).",
+            "Penicilin dùng cùng dicloxacilin (IDSA).",
           ] }
         : { kind: "mono", title: "Đơn trị – amoxicilin-acid clavulanic, ampicilin-sulbactam hoặc ertapenem", rules: [
-            "Đơn trị: amoxicilin-acid clavulanic, ampicilin-sulbactam hoặc ertapenem.",
-            "Dị ứng beta-lactam: phối hợp ciprofloxacin hoặc levofloxacin với metronidazol, hoặc moxifloxacin đơn trị.",
+            "Amoxicilin-acid clavulanic, ampicilin-sulbactam hoặc ertapenem (IDSA).",
+            "Tiền sử quá mẫn với beta-lactam: fluoroquinolon (ciprofloxacin hoặc levofloxacin) phối hợp metronidazol, hoặc moxifloxacin đơn trị (IDSA).",
           ] };
   }
 }
@@ -643,7 +647,7 @@ function nec(i: SstiIn): SstiOut {
   }
   blocks.push({ title: "Theo IDSA 2014: phác đồ theo tác nhân", lead, items: rx });
   notes.push("IDSA: hoại thư Fournier (bìu, dương vật hoặc âm hộ) – cắt lọc ngoại khoa sớm, triệt để toàn bộ mô hoại tử, bảo tồn cấu trúc sâu khi có thể.");
-  const headline = p === "empiric" ? "Phẫu thuật cấp cứu + phối hợp kháng sinh phổ rộng" : p === "sa" ? "Phẫu thuật cấp cứu + một kháng sinh theo kháng sinh đồ" : "Phẫu thuật cấp cứu + phối hợp kháng sinh theo tác nhân";
+  const headline = p === "empiric" ? "Phẫu thuật cấp cứu + phối hợp kháng sinh phổ rộng" : p === "sa" ? "Phẫu thuật cấp cứu + một kháng sinh chống tụ cầu" : "Phẫu thuật cấp cứu + phối hợp kháng sinh theo tác nhân";
   return { headline, blocks, avoid: [], notes };
 }
 
@@ -761,14 +765,13 @@ function bite(i: SstiIn): SstiOut {
       ...dr(g, MONO, "Piperacilin-tazobactam; không phủ MRSA", { a: "3,375 g tĩnh mạch mỗi 6 giờ", c: cap(PIP_T4.c!.replace("piperacilin-tazobactam ", "")) }, `${T5}; Bảng 4; nhãn FDA Zosyn`, "std"),
       ...dr(g, MONO, "Doxycyclin; rất tốt với Pasteurella multocida, một số liên cầu kháng", doxy, `${T5}; nhãn FDA doxycyclin`),
       ...dr(g, MONO, "Moxifloxacin; phủ cả vi khuẩn kỵ khí", { a: "400 mg uống hoặc tĩnh mạch 1 lần/ngày" }, T5),
-      ...dr(g, MONO, "Ciprofloxacin; tốt với P. multocida, không phủ MRSA và một số vi khuẩn kỵ khí", { a: "500–750 mg uống 2 lần/ngày, hoặc 400 mg tĩnh mạch mỗi 12 giờ" }, T5),
       ...dr(g, COMBO, "Penicilin V + dicloxacilin", { a: "Penicilin V 500 mg uống 4 lần/ngày + dicloxacilin 500 mg uống 4 lần/ngày" }, T5, "std"),
       ...dr(g, COMBO, g === "adult" ? "Sulfamethoxazol-trimethoprim + metronidazol hoặc clindamycin" : "Sulfamethoxazol-trimethoprim + clindamycin", { a: `Sulfamethoxazol-trimethoprim 160 mg/800 mg uống 2 lần/ngày, hoặc 5–10 mg/kg/ngày (tính theo trimethoprim) tĩnh mạch + ${anaerA}`, c: "Sulfamethoxazol-trimethoprim 8–12 mg/kg/ngày (tính theo trimethoprim) uống, chia 2 lần + clindamycin 30–40 mg/kg/ngày uống, chia 3 lần" }, `${T5}; Bảng 2; tr. e33`),
       ...dr(g, COMBO, "Levofloxacin + metronidazol hoặc clindamycin", { a: `Levofloxacin 750 mg uống hoặc tĩnh mạch 1 lần/ngày + ${anaerA}` }, `${T5}; tr. e33`),
-      ...dr(g, "Đơn trị hoặc phối hợp", "Ceftriaxon; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 12 giờ", c: cap(CRO_C.replace("ceftriaxon ", "")) }, `${T5}; ACE; tr. e33`, "std"),
-      ...dr(g, "Đơn trị hoặc phối hợp", "Cefotaxim; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1–2 g tĩnh mạch mỗi 6–8 giờ", c: cap(CTX_C.replace("cefotaxim ", "")) }, `${T5}; nhãn FDA Claforan; tr. e33`, "std"),
-      ...dr(g, "Đơn trị hoặc phối hợp", "Cefuroxim (tốt với P. multocida, không phủ kỵ khí); phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "500 mg uống 2 lần/ngày, hoặc 1 g tĩnh mạch mỗi 12 giờ" }, `${T5}; tr. e33`, "std"),
-      ...dr(g, "Đơn trị hoặc phối hợp", "Cefoxitin; phối hợp metronidazol hoặc clindamycin khi cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 6–8 giờ" }, `${T5}; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Ceftriaxon; thêm metronidazol hoặc clindamycin nếu cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 12 giờ", c: cap(CRO_C.replace("ceftriaxon ", "")) }, `${T5}; ACE; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefotaxim; thêm metronidazol hoặc clindamycin nếu cần phủ kỵ khí", { a: "1–2 g tĩnh mạch mỗi 6–8 giờ", c: cap(CTX_C.replace("cefotaxim ", "")) }, `${T5}; nhãn FDA Claforan; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefuroxim (tốt với P. multocida, không phủ kỵ khí); thêm metronidazol hoặc clindamycin nếu cần phủ kỵ khí", { a: "500 mg uống 2 lần/ngày, hoặc 1 g tĩnh mạch mỗi 12 giờ" }, `${T5}; tr. e33`, "std"),
+      ...dr(g, "Đơn trị hoặc phối hợp", "Cefoxitin; thêm metronidazol hoặc clindamycin nếu cần phủ kỵ khí", { a: "1 g tĩnh mạch mỗi 6–8 giờ" }, `${T5}; tr. e33`, "std"),
     );
     notes.push("IDSA: tránh macrolid (hoạt tính không ổn định trên P. multocida, Fusobacterium) trừ khi không có lựa chọn khác. Carbapenem cũng phù hợp, không phủ MRSA.");
   } else {
@@ -803,7 +806,7 @@ export function sstiPlan(i: SstiIn): SstiOut {
   const common: string[] = [];
   if (["impetigo", "purulent", "cellulitis"].includes(i.form)) {
     if (i.highRisk && i.sev === "mild") common.push("ACE: nhiễm khuẩn nhẹ ở người nguy cơ biến chứng cao (suy giảm miễn dịch, đái tháo đường, bệnh da kèm theo) – xử trí như nhiễm khuẩn nặng.");
-    common.push("ACE: chọn kháng sinh phổ hẹp nhất, đợt ngắn nhất có hiệu quả, liều phù hợp; điều chỉnh thời gian theo đáp ứng lâm sàng (giảm sưng, đau, hết sốt). Dùng đơn trị – phối hợp hai kháng sinh không tăng hiệu quả trong nhiễm khuẩn da – mô mềm không biến chứng.");
+    common.push("ACE: chọn kháng sinh phổ hẹp nhất, đợt ngắn nhất có hiệu quả, liều phù hợp; điều chỉnh thời gian theo đáp ứng lâm sàng (giảm sưng, đau, hết sốt). Đơn trị: phối hợp hai kháng sinh không tăng hiệu quả so với đơn trị; thường không cần phối hợp khi điều trị nhiễm khuẩn da – mô mềm không biến chứng tại cộng đồng.");
     common.push("ACE: tờ hướng dẫn sử dụng tại Singapore của cefalexin, clindamycin, cefazolin khuyến cáo điều trị ít nhất 10 ngày với nhiễm liên cầu tan huyết beta.");
     common.push("ACE: sau điều trị, tìm và xử trí yếu tố gây tái phát (viêm da cơ địa, hăm kẽ, dụng cụ cạo râu không vệ sinh).");
     common.push("ACE: chỉnh liều khi suy thận theo tờ hướng dẫn sử dụng hoặc phác đồ của cơ sở.");

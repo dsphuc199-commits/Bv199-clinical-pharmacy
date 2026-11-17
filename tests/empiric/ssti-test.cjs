@@ -87,6 +87,11 @@ check("Mọi trường hợp có chiến lược và quy tắc", outs.every((x) 
 const grouped = outs.flatMap((x) => x.blocks.flatMap((b) => M.groupRows(b.items)));
 check("Nhóm phối hợp: mọi dòng đều có “+” hoặc là thuốc thêm vào phác đồ", grouped.filter((g) => g.kind === "combo").every((g) => g.items.every((it) => it.text.includes(" + ") || /thêm/.test(it.role) || /vào một phác đồ/.test(it.text))));
 check("Nhóm đơn trị: không dòng nào chứa “+”", grouped.filter((g) => g.kind === "mono").every((g) => g.items.every((it) => !it.text.includes(" + "))));
+const stratText = outs.flatMap((x) => [x.strategy.title, ...x.strategy.rules]);
+check("Quy tắc chiến lược đều ghi nguồn ACE hoặc IDSA", outs.every((x) => x.strategy.rules.every((t) => /\((ACE|IDSA)[,)]|^(ACE|IDSA)\b|\(IDSA\)|\(ACE\)/.test(t))));
+check("Không tự suy diễn: không có “luôn”, “vẫn đơn trị”, “theo kháng sinh đồ”, “Không phối hợp”", stratText.concat(shown).every((t) => !/\bluôn\b|vẫn đơn trị|theo kháng sinh đồ|Không phối hợp/.test(t)));
+check("Nguyên tắc ACE dịch đúng: “thường không cần phối hợp … không biến chứng tại cộng đồng”", plan({ form: "impetigo" }).strategy.rules.some((t) => t.includes("thường không cần phối hợp khi điều trị nhiễm khuẩn da – mô mềm không biến chứng tại cộng đồng")));
+check("Chốc, nhọt/áp xe: đơn trị theo ACE khuyến cáo 3, 4", plan({ form: "impetigo" }).strategy.rules.some((t) => t.includes("khuyến cáo 3a")) && plan({ form: "purulent", sev: "severe" }).strategy.rules.some((t) => t.includes("khuyến cáo 4")));
 check("Tiêu đề nhóm rõ ràng", M.GROUP_LABEL.mono.startsWith("Đơn trị – chọn 1 thuốc") && M.GROUP_LABEL.combo.startsWith("Phối hợp – chọn 1 phác đồ"));
 
 console.log(`${pass} passed, ${fail} failed`);
