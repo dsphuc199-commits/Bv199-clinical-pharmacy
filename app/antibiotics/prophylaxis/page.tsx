@@ -6,13 +6,14 @@ import {
   Search, Pill, BookOpen, ClipboardCheck,
   ChevronRight, Info, AlertTriangle,
   CheckCircle2, RotateCcw, Printer,
-  Clock3, Syringe, ShieldCheck, ListChecks
+  Clock3, Syringe, ShieldCheck, ListChecks, Globe2
 } from "lucide-react";
 import {
   KSDP_DOSES, KSDP_OPERATIONS, KSDP_FOOTNOTES, PROSTATE_BIOPSY,
   KSDP_PRINCIPLES, KSDP_OBSTETRIC, CESAREAN_CEFAZOLIN, pdfPage,
   type KsdpOperation
 } from "@/data/antibiotics/prophylaxis-byt708";
+import KsdpIntl from "@/components/antibiotics/prophylaxis/KsdpIntl";
 
 const groups = [
   "Tất cả",
@@ -84,7 +85,7 @@ export default function ProphylaxisPage() {
   const [checks, setChecks] = useState<boolean[]>(
     Array(checklistLabels.length).fill(false)
   );
-  const [tab, setTab] = useState<"guide" | "principles" | "dose" | "audit">("guide");
+  const [tab, setTab] = useState<"guide" | "principles" | "dose" | "audit" | "intl">("guide");
 
   const filtered = useMemo(() =>
     KSDP_OPERATIONS.filter(x =>
@@ -167,7 +168,7 @@ export default function ProphylaxisPage() {
           </div>
           <div>
             <h1>Kháng sinh dự phòng phẫu thuật</h1>
-            <p>QĐ 708/QĐ-BYT (2015) · Chương I mục 2 · Chương 7 · Phụ lục 2–3</p>
+            <p>Bộ Y tế: QĐ 708/QĐ-BYT (2015) · Quốc tế: ASHP/IDSA/SIS/SHEA (2013)</p>
           </div>
         </div>
 
@@ -184,7 +185,12 @@ export default function ProphylaxisPage() {
           <button className={tab === "audit" ? "active" : ""} onClick={() => setTab("audit")}>
             <ClipboardCheck size={16}/> Bảng kiểm KSDP
           </button>
+          <button className={tab === "intl" ? "active" : ""} onClick={() => setTab("intl")}>
+            <Globe2 size={16}/> Quốc tế (ASHP/IDSA 2013)
+          </button>
         </div>
+
+        {tab === "intl" && <KsdpIntl/>}
 
         {tab === "guide" && (
           <>
@@ -601,6 +607,7 @@ export default function ProphylaxisPage() {
           <span>
             Nguồn: QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh: Chương I mục 2 (tr. 39–41),
             Chương 7 (tr. 178–179), Phụ lục 2 (tr. 258), Phụ lục 3 (tr. 259–262).
+            Quốc tế: ASHP/IDSA/SIS/SHEA 2013 (Am J Health-Syst Pharm. 2013;70:195–283).
             Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.
           </span>
           <button onClick={reset}>Đặt lại</button>
@@ -845,6 +852,12 @@ export default function ProphylaxisPage() {
         .ksdp-none {color:#8a4b00;font-style:italic}
         .ksdp-footnotes {margin:0;padding-left:22px;line-height:1.6;font-size:13.5px}
         .ksdp-table a {color:#28658e}
+        .ksdp-subtabs {display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+        .ksdp-subtabs button {border:1px solid #d6e2ee;background:#fff;color:#183758;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer}
+        .ksdp-subtabs .active {background:#e2f1ff;border-color:#075985;color:#075985}
+        .ksdp-inline-check {display:flex;align-items:center;gap:8px;margin:12px 0;font-size:13.5px;font-weight:600}
+        .ksdp-notes {margin:0;padding-left:18px;line-height:1.6;font-size:13.5px}
+        .ksdp-notes a {color:#28658e;font-size:11.5px}
         @media(max-width:850px) {
           .ksdp-grid.two,.ksdp-grid.three {
             grid-template-columns:1fr;
