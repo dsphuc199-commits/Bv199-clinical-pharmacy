@@ -23,9 +23,19 @@ function lettersIn(text: string) {
   return out;
 }
 
+/** Hiển thị: ký hiệu chú thích thay bằng nội dung lâm sàng hoặc bỏ đi. */
+function clean(text: string) {
+  return text
+    .replace(/aminoglycosid \(g\)/g, "aminoglycosid (gentamicin hoặc tobramycin)")
+    .replace(/fluoroquinolon \(h, i, j\)/g, "fluoroquinolon (ciprofloxacin hoặc levofloxacin)")
+    .replace(/\s*\([a-t](,\s*[a-t])*\)/g, "");
+}
+/* Chú thích hiển thị thành Lưu ý (không ký hiệu). Bỏ c (định nghĩa mức bằng chứng), g và i (đã ghi thẳng vào phác đồ). */
+const HIDDEN_FN = new Set(["c", "g", "i"]);
+
 function regimenFootnotes(r: AshpRegimen) {
   const set = new Set<string>(["a", "b", "c", ...(r.nameFn || []), ...lettersIn(r.primary), ...lettersIn(r.alternative)]);
-  return Array.from(set).sort();
+  return Array.from(set).filter(k => !HIDDEN_FN.has(k)).sort();
 }
 
 /** Thuốc ở Bảng 1 xuất hiện trong phác đồ */
@@ -115,18 +125,18 @@ export default function KsdpIntl() {
           {chosen ? (
             <section className="ksdp-panel">
               <div className="ksdp-surgery">
-                <b>{chosen.name}{chosen.nameFn?.length ? <sup className="ksdp-fn">{chosen.nameFn.join(",")}</sup> : null}</b>
+                <b>{chosen.name}</b>
                 <small>{chosen.group} · Mức bằng chứng: {chosen.evidence}</small>
               </div>
 
               <div className="ksdp-grid two">
                 <div className={`ksdp-choice${!allergy ? " on" : ""}`}>
                   <div className="ksdp-choice-label">Thuốc khuyến cáo</div>
-                  <strong>{chosen.primary}</strong>
+                  <strong>{clean(chosen.primary)}</strong>
                 </div>
                 <div className={`ksdp-choice${allergy ? " on" : ""}`}>
                   <div className="ksdp-choice-label">Thay thế khi dị ứng beta-lactam</div>
-                  <strong>{chosen.alternative}</strong>
+                  <strong>{clean(chosen.alternative)}</strong>
                 </div>
               </div>
 
@@ -154,21 +164,21 @@ export default function KsdpIntl() {
                   <div className="ksdp-dose-list">
                     {doses.map(d => (
                       <div key={d.drug} className="ksdp-dose-card">
-                        <b>{d.drug}{d.fn?.length ? <sup className="ksdp-fn">{d.fn.join(",")}</sup> : null}</b>
+                        <b>{d.drug}</b>
                         <div><strong>Người lớn:</strong> {d.adult}</div>
                         <div><strong>Trẻ em:</strong> {d.peds}</div>
                         <div><strong>Thời gian bán thải (người lớn, thận bình thường):</strong> {d.halfLife} giờ</div>
                         <div><strong>Khoảng nhắc liều:</strong> {d.redose === "Không áp dụng" ? d.redose : `${d.redose} giờ`}</div>
-                        {d.fn?.map(f => <small key={f} className="ksdp-fn-text"><sup>{f}</sup> {ASHP_DOSE_FOOTNOTES[f]}</small>)}
+                        {d.fn?.filter(f => !HIDDEN_FN.has(f)).map(f => <small key={f} className="ksdp-fn-text">{ASHP_DOSE_FOOTNOTES[f]}</small>)}
                       </div>
                     ))}
                   </div>
                 </>
               )}
 
-              <h3 className="ksdp-subheading">Chú thích áp dụng</h3>
+              <h3 className="ksdp-subheading">Lưu ý</h3>
               <ul className="ksdp-notes">
-                {regimenFootnotes(chosen).map(f => <li key={f}><sup>{f}</sup> {ASHP_TABLE2_FOOTNOTES[f]}</li>)}
+                {regimenFootnotes(chosen).map(f => <li key={f}>{ASHP_TABLE2_FOOTNOTES[f]}</li>)}
               </ul>
 
               <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
@@ -193,9 +203,9 @@ export default function KsdpIntl() {
               <thead>
                 <tr>
                   <th>Loại phẫu thuật</th>
-                  <th>Thuốc khuyến cáo<sup>a,b</sup></th>
+                  <th>Thuốc khuyến cáo</th>
                   <th>Thay thế khi dị ứng beta-lactam</th>
-                  <th>Mức bằng chứng<sup>c</sup></th>
+                  <th>Mức bằng chứng</th>
                 </tr>
               </thead>
               <tbody>
@@ -204,9 +214,9 @@ export default function KsdpIntl() {
                     <tr className="ksdp-group-row"><td colSpan={4}>{g}</td></tr>
                     {ASHP_REGIMENS.filter(r => r.group === g).map(r => (
                       <tr key={r.id}>
-                        <td>{r.name}{r.nameFn?.length ? <sup className="ksdp-fn">{r.nameFn.join(",")}</sup> : null}</td>
-                        <td className={r.none ? "ksdp-none" : ""}>{r.primary}</td>
-                        <td className={r.none ? "ksdp-none" : ""}>{r.alternative}</td>
+                        <td>{r.name}</td>
+                        <td className={r.none ? "ksdp-none" : ""}>{clean(r.primary)}</td>
+                        <td className={r.none ? "ksdp-none" : ""}>{clean(r.alternative)}</td>
                         <td>{r.evidence}</td>
                       </tr>
                     ))}
@@ -215,9 +225,9 @@ export default function KsdpIntl() {
               </tbody>
             </table>
           </div>
-          <h3 className="ksdp-subheading">Chú thích</h3>
+          <h3 className="ksdp-subheading">Lưu ý</h3>
           <ul className="ksdp-notes">
-            {Object.entries(ASHP_TABLE2_FOOTNOTES).map(([k, v]) => <li key={k}><sup>{k}</sup> {v}</li>)}
+            {Object.entries(ASHP_TABLE2_FOOTNOTES).filter(([k]) => !HIDDEN_FN.has(k)).map(([k, v]) => <li key={k}>{v}</li>)}
           </ul>
         </section>
       )}
@@ -229,9 +239,9 @@ export default function KsdpIntl() {
             <table className="ksdp-table">
               <thead>
                 <tr>
-                  <th>Thuốc</th><th>Người lớn<sup>a</sup></th><th>Trẻ em<sup>b</sup></th>
+                  <th>Thuốc</th><th>Người lớn</th><th>Trẻ em</th>
                   <th>Thời gian bán thải người lớn, thận bình thường (giờ)</th>
-                  <th>Khoảng nhắc liều tính từ lúc bắt đầu liều trước mổ (giờ)<sup>c</sup></th>
+                  <th>Khoảng nhắc liều tính từ lúc bắt đầu liều trước mổ (giờ)</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,8 +251,8 @@ export default function KsdpIntl() {
                       <tr className="ksdp-group-row"><td colSpan={5}>Kháng sinh uống dự phòng phẫu thuật đại trực tràng (dùng cùng chuẩn bị ruột cơ học)</td></tr>
                     )}
                     <tr>
-                      <td><b>{d.drug}</b>{d.fn?.length && d.drug !== "Cefotaxime" && d.drug !== "Ceftriaxone" ? <sup className="ksdp-fn">{d.fn.join(",")}</sup> : null}</td>
-                      <td>{d.adult}{(d.drug === "Cefotaxime" || d.drug === "Ceftriaxone") && d.fn ? <sup className="ksdp-fn">{d.fn.join(",")}</sup> : null}</td>
+                      <td><b>{d.drug}</b></td>
+                      <td>{d.adult}</td>
                       <td>{d.peds}</td>
                       <td>{d.halfLife}</td>
                       <td>{d.redose}</td>
@@ -252,9 +262,9 @@ export default function KsdpIntl() {
               </tbody>
             </table>
           </div>
-          <h3 className="ksdp-subheading">Chú thích</h3>
+          <h3 className="ksdp-subheading">Lưu ý</h3>
           <ul className="ksdp-notes">
-            {Object.entries(ASHP_DOSE_FOOTNOTES).map(([k, v]) => <li key={k}><sup>{k}</sup> {v}</li>)}
+            {Object.entries(ASHP_DOSE_FOOTNOTES).map(([k, v]) => <li key={k}>{v}</li>)}
           </ul>
           <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
             <BookOpen size={16}/> Nguồn: {SRC}

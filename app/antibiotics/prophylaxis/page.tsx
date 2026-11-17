@@ -45,7 +45,7 @@ function norm(s: string) {
 
 function Fn({ n }: { n?: number[] }) {
   if (!n?.length) return null;
-  return <sup className="ksdp-fn">{n.join(",")}</sup>;
+  return null; // không hiển thị ký hiệu chú thích
 }
 
 function opFootnotes(op: KsdpOperation) {
@@ -598,15 +598,15 @@ export default function ProphylaxisPage() {
                   <tbody>
                     {groups.slice(1).map(g => (
                       <Fragment key={g}>
-                        <tr className="ksdp-group-row"><td colSpan={4}>{g}</td></tr>
+                        <tr className="ksdp-group-row"><td colSpan={3}>{g}</td></tr>
                         {KSDP_OPERATIONS.filter(o => o.group === g).map(o => (
                           <tr key={o.id}>
-                            <td>{o.name}<Fn n={o.nameFn}/></td>
+                            <td>{o.name}{opFootnotes(o).filter(n => n !== 2).map(n => <div key={n} className="ksdp-row-note">{KSDP_FOOTNOTES[n]}</div>)}</td>
                             {o.noProphylaxis
                               ? <td colSpan={2} className="ksdp-none">{o.primary}</td>
                               : <>
-                                  <td>{o.primary}<Fn n={o.primaryFn}/></td>
-                                  <td>{o.alternative}<Fn n={o.altFn}/></td>
+                                  <td>{rxText(o.primary)}</td>
+                                  <td>{rxText(o.alternative)}</td>
                                 </>}
                           </tr>
                         ))}
@@ -638,6 +638,10 @@ export default function ProphylaxisPage() {
                   </tbody>
                 </table>
               </div>
+              <ul className="ksdp-notes">
+                <li>Liều trước thủ thuật: {KSDP_FOOTNOTES[7].toLowerCase()}</li>
+                <li>{KSDP_FOOTNOTES[8]}</li>
+              </ul>
               <a className="ksdp-link" href={BYT708_URL} target="_blank" rel="noreferrer">
                 <BookOpen size={16}/> Nguồn: {SRC708}
               </a>
@@ -646,11 +650,12 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><Info size={16}/></span>
-                <h2>Chú thích bảng lựa chọn kháng sinh dự phòng</h2>
+                <h2>Lưu ý chung</h2>
               </div>
-              <ol className="ksdp-footnotes">
-                {Object.entries(KSDP_FOOTNOTES).map(([n, t]) => <li key={n} value={Number(n)}>{t}</li>)}
-              </ol>
+              <ul className="ksdp-notes">
+                <li>{KSDP_FOOTNOTES[2]}</li>
+                <li>{KSDP_FOOTNOTES[4]}</li>
+              </ul>
             </section>
           </>
         )}
@@ -933,6 +938,7 @@ export default function ProphylaxisPage() {
         .ksdp-sources li + li {margin-top:2px}
         .ksdp-sources p {margin:6px 0 0}
         .ksdp-plan .ksdp-sources {border-top:1px solid #e0e8f2;padding-top:10px;margin-top:4px}
+        .ksdp-row-note {font-size:12px;color:#5b6f8a;margin-top:3px}
         .ksdp-subtabs {display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
         .ksdp-subtabs button {border:1px solid #d6e2ee;background:#fff;color:#183758;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer}
         .ksdp-subtabs .active {background:#e2f1ff;border-color:#075985;color:#075985}

@@ -141,7 +141,7 @@ export const KSDP_OPERATIONS: KsdpOperation[] = [
   { id: "tx3", group: G.tx, name: "Ghép gan", primary: "Cefotetan", alternative: "Clindamycin VÀ ciprofloxacin", page: 261 },
 
   { id: "ir1", group: G.ir, name: "Đường mật/đường tiêu hóa; nút hóa chất/cắt gan dưới da (tiền sử phẫu thuật/đặt dụng cụ đường mật; mở thông manh tràng)", primary: "Cefotetan", alternative: "Clindamycin VÀ gentamycin", page: 261 },
-  { id: "ir2", group: G.ir, name: "Nút hóa chất; gây tắc động mạch trong u xơ tử cung; cắt gan/thận/phổi qua da⁵; nút dị dạng mạch⁶", extraFn: [5, 6], primary: NONE, alternative: NONE, noProphylaxis: true, page: 261 },
+  { id: "ir2", group: G.ir, name: "Nút hóa chất; gây tắc động mạch trong u xơ tử cung; cắt gan/thận/phổi qua da; nút dị dạng mạch", extraFn: [5, 6], primary: NONE, alternative: NONE, noProphylaxis: true, page: 261 },
   // tr. 262
   { id: "ir3", group: G.ir, name: "Thủ thuật tiết niệu (trừ cắt thận)", primary: "Cefazolin", alternative: "Gentamycin", page: 262 },
   { id: "ir4", group: G.ir, name: "Chụp/gây tắc mạch bạch huyết", primary: "Cefazolin", alternative: "Clindamycin", page: 262 },

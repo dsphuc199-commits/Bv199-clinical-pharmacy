@@ -110,7 +110,7 @@ export const ASHP_REGIMENS: AshpRegimen[] = [
 
   { id: "gd1", group: "Dạ dày – tá tràng", nameFn: ["e"], name: "Phẫu thuật vào lòng ống tiêu hóa (phẫu thuật giảm béo, cắt khối tá tụy)", primary: "Cefazolin", alternative: "Clindamycin hoặc vancomycin + " + AG + " hoặc aztreonam hoặc fluoroquinolon (h, i, j)", evidence: "A", page: 737,
     notes: [
-      { text: "Cắt khối tá tụy: cân nhắc bao phủ thêm khi đường mật nhiễm khuẩn (chú thích f).", page: 740 },
+      { text: "Cắt khối tá tụy: cân nhắc bao phủ thêm khi đường mật nhiễm khuẩn.", page: 740 },
       { text: "Liều cao hơn được khuyến cáo thống nhất ở người béo phì bệnh lý phẫu thuật giảm béo; cân nhắc liều cao hơn ở người thừa cân đáng kể phẫu thuật dạ dày – tá tràng và nội soi.", page: 752 },
     ] },
   { id: "gd2", group: "Dạ dày – tá tràng", name: "Phẫu thuật không vào lòng ống tiêu hóa (chống trào ngược, cắt thần kinh X chọn lọc cao) ở người bệnh nguy cơ cao", primary: "Cefazolin", alternative: "Clindamycin hoặc vancomycin + " + AG + " hoặc aztreonam hoặc fluoroquinolon (h, i, j)", evidence: "A", page: 737,
