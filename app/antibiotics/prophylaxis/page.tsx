@@ -1,553 +1,154 @@
-
 "use client";
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Search, Pill, BookOpen, ClipboardCheck,
   ChevronRight, Info, AlertTriangle,
   CheckCircle2, RotateCcw, Printer,
-  Clock3, Syringe, ShieldCheck
+  Clock3, Syringe, ShieldCheck, ListChecks
 } from "lucide-react";
+import {
+  KSDP_DOSES, KSDP_OPERATIONS, KSDP_FOOTNOTES, PROSTATE_BIOPSY,
+  KSDP_PRINCIPLES, KSDP_OBSTETRIC, CESAREAN_CEFAZOLIN, pdfPage,
+  type KsdpOperation
+} from "@/data/antibiotics/prophylaxis-byt708";
 
-type Operation = {
-  id: string;
-  specialty: string;
-  name: string;
-  primary: string;
-  alternative: string;
-  page: number;
-  note?: string;
-  noProphylaxis?: boolean;
-};
-
-type Dose = {
-  drug: string;
-  dose: string;
-  repeat: string;
-};
-
-// Nguồn: QĐ 708/QĐ-BYT, Phụ lục 2,
-// trang PDF 317 (trang in 316).
-// Đây là dữ liệu lịch sử trong văn bản,
-// KHÔNG tự động thay thế quy trình BV hiện hành.
-const doses: Dose[] = [
-  {
-    drug: "Cefazolin",
-    dose: "Dưới 120 kg: 2 g; từ 120 kg: 3 g",
-    repeat: "Mỗi 4 giờ; riêng phẫu thuật tim: 2 giờ"
-  },
-  {
-    drug: "Cefotetan",
-    dose: "Dưới 120 kg: 2 g; từ 120 kg: 3 g",
-    repeat: "Mỗi 6 giờ"
-  },
-  {
-    drug: "Clindamycin",
-    dose: "600 mg",
-    repeat: "Mỗi 6 giờ"
-  },
-  {
-    drug: "Ciprofloxacin",
-    dose: "400 mg",
-    repeat: "Mỗi 8 giờ"
-  },
-  {
-    drug: "Gentamicin",
-    dose: "5 mg/kg",
-    repeat: "Không nhắc liều dự phòng"
-  },
-  {
-    drug: "Metronidazol",
-    dose: "500 mg",
-    repeat: "Mỗi 12 giờ"
-  },
-  {
-    drug: "Vancomycin",
-    dose: "Dưới 70 kg: 1 g; 71–99 kg: 1,25 g; trên 100 kg: 1,5 g",
-    repeat: "Mỗi 12 giờ theo Phụ lục 2; không tự động chỉ định nhắc"
-  }
-];
-
-// Trích cấu trúc lựa chọn từ QĐ 708, Phụ lục 3,
-// trang PDF 318–321.
-// VÀ = phối hợp; HOẶC = lựa chọn một phương án.
-// Không tự chuyển các thuốc HOẶC thành phối hợp.
-const operations: Operation[] = [
-  // NGOẠI TIẾT NIỆU
-  {
-    id:"u1", specialty:"Tiết niệu",
-    name:"Sinh thiết tuyến tiền liệt qua trực tràng",
-    primary:"Cefazolin",
-    alternative:"Ciprofloxacin HOẶC gentamicin",
-    page:318,
-    note:"Có bảng dự phòng riêng theo kết quả soi trực tràng ở trang PDF 321–322. Cần đối chiếu trước khi áp dụng."
-  },
-  {
-    id:"u2", specialty:"Tiết niệu",
-    name:"Phẫu thuật qua niệu đạo: TURP, TURBT, nội soi niệu quản",
-    primary:"Cefazolin",
-    alternative:"Gentamicin",
-    page:318
-  },
-  {
-    id:"u3", specialty:"Tiết niệu",
-    name:"Tán sỏi",
-    primary:"Cefazolin",
-    alternative:"Gentamicin",
-    page:318
-  },
-  {
-    id:"u4", specialty:"Tiết niệu",
-    name:"Cắt thận hoặc cắt tuyến tiền liệt triệt căn",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:318
-  },
-  {
-    id:"u5", specialty:"Tiết niệu",
-    name:"Cắt bàng quang triệt căn, phẫu thuật hồi tràng",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:318
-  },
-  {
-    id:"u6", specialty:"Tiết niệu",
-    name:"Phẫu thuật liên quan dương vật hoặc đặt bộ phận giả",
-    primary:"(Cefazolin HOẶC vancomycin) VÀ gentamicin",
-    alternative:"(Clindamycin HOẶC vancomycin) VÀ gentamicin",
-    page:318
-  },
-
-  // TIM - MẠCH
-  {
-    id:"c1", specialty:"Tim mạch",
-    name:"Mở xương ức đường giữa, ghép tim",
-    primary:"Cefazolin",
-    alternative:"Vancomycin",
-    page:318
-  },
-  {
-    id:"c2", specialty:"Tim mạch",
-    name:"Phẫu thuật tim có tiền sử VAD hoặc có MRSA",
-    primary:"Cefazolin VÀ vancomycin",
-    alternative:"Vancomycin",
-    page:318,
-    note:"Khuyến cáo trong nguồn liên quan yếu tố VAD/MRSA, không áp dụng đại trà."
-  },
-  {
-    id:"c3", specialty:"Tim mạch",
-    name:"Đặt máy tạo nhịp hoặc máy khử rung tim",
-    primary:"Cefazolin",
-    alternative:"Clindamycin HOẶC vancomycin",
-    page:318
-  },
-  {
-    id:"c4", specialty:"Tim mạch",
-    name:"Đặt máy tạo nhịp/ICD có MRSA",
-    primary:"Cefazolin VÀ vancomycin",
-    alternative:"Vancomycin",
-    page:318
-  },
-
-  // MẠCH MÁU
-  {
-    id:"v1", specialty:"Mạch máu",
-    name:"Thủ thuật mạch cảnh, mạch cánh tay đầu không đặt graft",
-    primary:"Không khuyến cáo dự phòng",
-    alternative:"Không khuyến cáo dự phòng",
-    page:319,
-    noProphylaxis:true
-  },
-  {
-    id:"v2", specialty:"Mạch máu",
-    name:"Mạch chi trên có graft hoặc thủ thuật mạch chi dưới",
-    primary:"Cefazolin",
-    alternative:"Clindamycin HOẶC vancomycin",
-    page:319
-  },
-  {
-    id:"v3", specialty:"Mạch máu",
-    name:"Thủ thuật động mạch chủ bụng hoặc rạch da vùng bẹn",
-    primary:"Cefotetan",
-    alternative:"Vancomycin VÀ gentamicin",
-    page:319
-  },
-
-  // LỒNG NGỰC
-  {
-    id:"t1", specialty:"Lồng ngực",
-    name:"Cắt thùy phổi, cắt phổi, mở ngực, VATS",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:319
-  },
-  {
-    id:"t2", specialty:"Lồng ngực",
-    name:"Phẫu thuật thực quản",
-    primary:"Cefotetan",
-    alternative:"Clindamycin",
-    page:319
-  },
-
-  // NGOẠI THẦN KINH
-  {
-    id:"n1", specialty:"Thần kinh - Cột sống",
-    name:"Mở hộp sọ, đặt dẫn lưu dịch não tủy, cấy bơm dưới màng tủy",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:319
-  },
-  {
-    id:"n2", specialty:"Thần kinh - Cột sống",
-    name:"Mở cung sau đốt sống",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:319
-  },
-  {
-    id:"n3", specialty:"Thần kinh - Cột sống",
-    name:"Gắn đốt sống",
-    primary:"Cefazolin",
-    alternative:"Clindamycin HOẶC vancomycin",
-    page:319
-  },
-  {
-    id:"n4", specialty:"Thần kinh - Cột sống",
-    name:"Gắn đốt sống có MRSA",
-    primary:"Cefazolin VÀ vancomycin",
-    alternative:"Vancomycin",
-    page:319
-  },
-  {
-    id:"n5", specialty:"Thần kinh - Cột sống",
-    name:"Thủ thuật qua xương bướm",
-    primary:"Ceftriaxon",
-    alternative:"Moxifloxacin 400 mg trong 60 phút",
-    page:319
-  },
-
-  // CHỈNH HÌNH
-  {
-    id:"o1", specialty:"Chấn thương - Chỉnh hình",
-    name:"Phẫu thuật sạch bàn tay, gối, bàn chân hoặc nội soi khớp",
-    primary:"Không khuyến cáo dự phòng",
-    alternative:"Không khuyến cáo dự phòng",
-    page:319,
-    noProphylaxis:true
-  },
-  {
-    id:"o2", specialty:"Chấn thương - Chỉnh hình",
-    name:"Thay khớp toàn bộ",
-    primary:"Cefazolin",
-    alternative:"Vancomycin",
-    page:319
-  },
-  {
-    id:"o3", specialty:"Chấn thương - Chỉnh hình",
-    name:"Thay khớp toàn bộ có MRSA",
-    primary:"Cefazolin VÀ vancomycin",
-    alternative:"Vancomycin",
-    page:319
-  },
-  {
-    id:"o4", specialty:"Chấn thương - Chỉnh hình",
-    name:"Nắn xương gãy hoặc cố định xương bên trong",
-    primary:"Cefazolin",
-    alternative:"Clindamycin HOẶC vancomycin",
-    page:319
-  },
-  {
-    id:"o5", specialty:"Chấn thương - Chỉnh hình",
-    name:"Cắt cụt chi dưới",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:319
-  },
-
-  // NGOẠI TIÊU HÓA
-  {
-    id:"g1", specialty:"Ngoại tiêu hóa",
-    name:"Phẫu thuật đường tiêu hóa trên, cầu nối dạ dày",
-    primary:"Cefotetan",
-    alternative:"Clindamycin ± gentamicin",
-    page:320
-  },
-  {
-    id:"g2", specialty:"Ngoại tiêu hóa",
-    name:"Phẫu thuật đường mật hoặc cắt túi mật",
-    primary:"Cefotetan",
-    alternative:"Clindamycin ± gentamicin",
-    page:320,
-    note:"Đây là lựa chọn trong Phụ lục 3 năm 2015; cần phân tầng nguy cơ và cập nhật hướng dẫn cắt túi mật hiện hành."
-  },
-  {
-    id:"g3", specialty:"Ngoại tiêu hóa",
-    name:"Cắt gan",
-    primary:"Cefotetan",
-    alternative:"Clindamycin ± gentamicin",
-    page:320
-  },
-  {
-    id:"g4", specialty:"Ngoại tiêu hóa",
-    name:"Whipple hoặc cắt tụy",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ ciprofloxacin",
-    page:320
-  },
-  {
-    id:"g5", specialty:"Ngoại tiêu hóa",
-    name:"Phẫu thuật ruột non",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320
-  },
-  {
-    id:"g6", specialty:"Ngoại tiêu hóa",
-    name:"Mở dạ dày ra da qua nội soi (PEG)",
-    primary:"Cefazolin HOẶC cefotetan",
-    alternative:"Clindamycin ± gentamicin",
-    page:320
-  },
-  {
-    id:"g7", specialty:"Ngoại tiêu hóa",
-    name:"Cắt ruột thừa không biến chứng",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320,
-    note:"Ruột thừa biến chứng, hoại tử hoặc viêm phúc mạc cần phác đồ điều trị nhiễm khuẩn, không chỉ KSDP."
-  },
-  {
-    id:"g8", specialty:"Ngoại tiêu hóa",
-    name:"Phẫu thuật đại trực tràng hoặc chấn thương bụng hở",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320,
-    note:"Chấn thương có nhiễm khuẩn xác lập phải chuyển sang đánh giá điều trị nhiễm khuẩn."
-  },
-  {
-    id:"g9", specialty:"Ngoại tiêu hóa",
-    name:"Mổ thoát vị bẹn",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:320
-  },
-  {
-    id:"g10", specialty:"Ngoại tiêu hóa",
-    name:"Thoát vị bẹn biến chứng, mổ cấp cứu hoặc tái phát",
-    primary:"Cefotetan",
-    alternative:"Clindamycin ± gentamicin",
-    page:320
-  },
-
-  // NGOẠI VÚ
-  {
-    id:"b1", specialty:"Ngoại vú",
-    name:"Cắt tuyến vú không nạo vét hạch",
-    primary:"Không khuyến cáo dự phòng",
-    alternative:"Không khuyến cáo dự phòng",
-    page:320,
-    noProphylaxis:true
-  },
-  {
-    id:"b2", specialty:"Ngoại vú",
-    name:"Cắt tuyến vú có nạo vét hạch",
-    primary:"Cefazolin",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320
-  },
-
-  // SẢN PHỤ KHOA
-  {
-    id:"ob1", specialty:"Sản phụ khoa",
-    name:"Mổ lấy thai",
-    primary:"Cefazolin",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320
-  },
-  {
-    id:"ob2", specialty:"Sản phụ khoa",
-    name:"Cắt tử cung đường âm đạo hoặc đường bụng",
-    primary:"Cefazolin HOẶC cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320
-  },
-  {
-    id:"ob3", specialty:"Sản phụ khoa",
-    name:"Phẫu thuật ung thư phụ khoa",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ gentamicin",
-    page:320
-  },
-  {
-    id:"ob4", specialty:"Sản phụ khoa",
-    name:"Phẫu thuật sa bàng quang hoặc sa trực tràng",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:320
-  },
-
-  // TAI MŨI HỌNG
-  {
-    id:"ent1", specialty:"Tai Mũi Họng - Đầu mặt cổ",
-    name:"Cắt tuyến mang tai, tuyến giáp hoặc amydal",
-    primary:"Không khuyến cáo dự phòng",
-    alternative:"Không khuyến cáo dự phòng",
-    page:321,
-    noProphylaxis:true
-  },
-  {
-    id:"ent2", specialty:"Tai Mũi Họng - Đầu mặt cổ",
-    name:"Phẫu thuật tạo hình có thay thế bộ phận",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:321
-  },
-  {
-    id:"ent3", specialty:"Tai Mũi Họng - Đầu mặt cổ",
-    name:"Cắt VA, tạo hình mũi, giảm thể tích u hoặc gãy xương hàm dưới",
-    primary:"Cefotetan HOẶC clindamycin",
-    alternative:"Clindamycin",
-    page:321
-  },
-  {
-    id:"ent4", specialty:"Tai Mũi Họng - Đầu mặt cổ",
-    name:"Đại phẫu vùng cổ",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:321
-  },
-
-  // TẠO HÌNH
-  {
-    id:"p1", specialty:"Phẫu thuật tạo hình",
-    name:"Phẫu thuật sạch có nguy cơ hoặc sạch - nhiễm",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:321
-  },
-  {
-    id:"p2", specialty:"Phẫu thuật tạo hình",
-    name:"Đặt hoặc ghép vạt mô",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:321
-  },
-  {
-    id:"p3", specialty:"Phẫu thuật tạo hình",
-    name:"Tạo hình mũi",
-    primary:"Không dự phòng HOẶC cefazolin",
-    alternative:"Không dự phòng HOẶC clindamycin",
-    page:321,
-    note:"Khuyến cáo có điều kiện lựa chọn; cần đánh giá nguy cơ NKVM."
-  },
-
-  // GHÉP TẠNG
-  {
-    id:"tr1", specialty:"Ghép tạng",
-    name:"Ghép tụy hoặc tụy - thận",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ ciprofloxacin",
-    page:321
-  },
-  {
-    id:"tr2", specialty:"Ghép tạng",
-    name:"Ghép thận / người cho sống",
-    primary:"Cefazolin",
-    alternative:"Clindamycin",
-    page:321
-  },
-  {
-    id:"tr3", specialty:"Ghép tạng",
-    name:"Ghép gan",
-    primary:"Cefotetan",
-    alternative:"Clindamycin VÀ ciprofloxacin",
-    page:321
-  }
-];
-
-const specialties = [
+const groups = [
   "Tất cả",
-  ...Array.from(new Set(operations.map(x => x.specialty)))
+  ...Array.from(new Set(KSDP_OPERATIONS.map(x => x.group)))
 ];
 
 function norm(s: string) {
   return (s || "")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/đ/g, "d")
     .replace(/Đ/g, "D")
     .toLowerCase()
     .trim();
 }
 
+function Fn({ n }: { n?: number[] }) {
+  if (!n?.length) return null;
+  return <sup className="ksdp-fn">{n.join(",")}</sup>;
+}
+
+function opFootnotes(op: KsdpOperation) {
+  return Array.from(new Set([
+    ...(op.nameFn || []), ...(op.extraFn || []),
+    ...(op.primaryFn || []), ...(op.altFn || [])
+  ])).sort((a, b) => a - b);
+}
+
+const WOUND_TEXT: Record<string, string> = {
+  "Sạch": "Trong phẫu thuật sạch, liệu pháp kháng sinh dự phòng nên áp dụng với một số can thiệp ngoại khoa nặng, có thể ảnh hưởng tới sự sống còn và/hoặc chức năng sống (phẫu thuật chỉnh hình, phẫu thuật tim và mạch máu, phẫu thuật thần kinh, phẫu thuật nhãn khoa).",
+  "Sạch - nhiễm": "KSDP được chỉ định cho tất cả các can thiệp phẫu thuật thuộc phẫu thuật sạch - nhiễm.",
+  "Nhiễm": "Phẫu thuật nhiễm và phẫu thuật bẩn: kháng sinh đóng vai trò trị liệu. KSDP không ngăn ngừa nhiễm khuẩn mà ngăn ngừa nhiễm khuẩn đã xảy ra không phát triển.",
+  "Bẩn": "Phẫu thuật nhiễm và phẫu thuật bẩn: kháng sinh đóng vai trò trị liệu. KSDP không ngăn ngừa nhiễm khuẩn mà ngăn ngừa nhiễm khuẩn đã xảy ra không phát triển.",
+};
+
+// Thời điểm dùng theo Chương I mục 2e (tr. 40)
+const TIMING: Record<string, string> = {
+  Cefazolin: "Cephalosporins tiêm tĩnh mạch trong 3 - 5 phút ngay trước thủ thuật.",
+  Cefotetan: "Cephalosporins tiêm tĩnh mạch trong 3 - 5 phút ngay trước thủ thuật.",
+  Ceftriaxone: "Cephalosporins tiêm tĩnh mạch trong 3 - 5 phút ngay trước thủ thuật.",
+  Vancomycin: "Dùng trước MỘT GIỜ và HOÀN THÀNH việc truyền trước khi bắt đầu rạch da.",
+  Ciprofloxacin: "Dùng trước MỘT GIỜ và HOÀN THÀNH việc truyền trước khi bắt đầu rạch da.",
+  Clindamycin: "Truyền xong trước 10 - 20 phút.",
+  Gentamycin: "Một liều duy nhất 5 mg/kg. Nếu người bệnh lọc máu hoặc ClCr < 20 ml/phút: 2 mg/kg.",
+};
+
 const checklistLabels = [
-  "Xác định đúng loại phẫu thuật và nguy cơ nhiễm khuẩn vết mổ",
-  "Phân biệt dự phòng với điều trị nhiễm khuẩn đã xác lập",
-  "Đánh giá tiền sử dị ứng beta-lactam và phản ứng cụ thể",
-  "Kiểm tra cân nặng và liều KSDP",
-  "Xác nhận thời điểm dùng kháng sinh trước rạch da",
-  "Đánh giá thời gian mổ, mất máu và nhu cầu nhắc liều",
-  "Đánh giá chức năng thận, độc tính và các yếu tố cá thể",
-  "Xác định thời điểm ngừng KSDP theo phác đồ hiện hành",
+  "Xác định đúng loại phẫu thuật (sạch, sạch - nhiễm, nhiễm, bẩn) và chỉ định KSDP",
+  "Phân biệt dự phòng với điều trị nhiễm khuẩn đã xác lập (phẫu thuật nhiễm, bẩn)",
+  "Đánh giá tiền sử dị ứng penicillin để chọn cột kháng sinh thay thế",
+  "Kiểm tra cân nặng và liều KSDP theo Phụ lục 2",
+  "Dùng trong vòng 60 phút trước phẫu thuật, gần thời điểm rạch da (vancomycin, ciprofloxacin: truyền xong trước rạch da; clindamycin: truyền xong trước 10 - 20 phút)",
+  "Đánh giá nhắc liều: theo khoảng nhắc ở Phụ lục 2; phẫu thuật tim > 4 giờ; mất máu > 1500 ml (người lớn) hoặc > 25 ml/kg (trẻ em)",
+  "Gentamycin: liều duy nhất, chỉnh 2 mg/kg nếu lọc máu hoặc ClCr < 20 ml/phút; không kê thêm liều sau phẫu thuật",
+  "Không dùng kháng sinh dự phòng cho nhiễm khuẩn liên quan chăm sóc sau mổ",
   "Kiểm tra tính sẵn có và phê duyệt thuốc tại BV199"
 ];
 
 export default function ProphylaxisPage() {
   const [search, setSearch] = useState("");
-  const [specialty, setSpecialty] = useState("Tất cả");
+  const [group, setGroup] = useState("Tất cả");
   const [chosenId, setChosenId] = useState("");
   const [allergy, setAllergy] = useState("none");
   const [weight, setWeight] = useState("");
   const [duration, setDuration] = useState("");
   const [bloodLoss, setBloodLoss] = useState("");
+  const [ageGroup, setAgeGroup] = useState<"adult" | "child">("adult");
   const [wound, setWound] = useState("");
   const [checks, setChecks] = useState<boolean[]>(
     Array(checklistLabels.length).fill(false)
   );
-  const [tab, setTab] = useState<"guide"|"audit"|"dose">("guide");
+  const [tab, setTab] = useState<"guide" | "principles" | "dose" | "audit">("guide");
 
   const filtered = useMemo(() =>
-    operations.filter(x =>
-      (specialty === "Tất cả" || x.specialty === specialty) &&
-      norm(x.name + " " + x.specialty).includes(norm(search))
-    ), [search, specialty]);
+    KSDP_OPERATIONS.filter(x =>
+      (group === "Tất cả" || x.group === group) &&
+      norm(x.name + " " + x.group).includes(norm(search))
+    ), [search, group]);
 
-  const chosen = operations.find(x => x.id === chosenId);
+  const chosen = KSDP_OPERATIONS.find(x => x.id === chosenId);
   const completed = checks.filter(Boolean).length;
+  const wt = Number(weight) > 0 ? Number(weight) : null;
+  const hours = Number(duration) > 0 ? Number(duration) : null;
+  const ebl = Number(bloodLoss) > 0 ? Number(bloodLoss) : null;
 
   function reset() {
     setSearch("");
-    setSpecialty("Tất cả");
+    setGroup("Tất cả");
     setChosenId("");
     setAllergy("none");
     setWeight("");
     setDuration("");
     setBloodLoss("");
+    setAgeGroup("adult");
     setWound("");
     setChecks(Array(checklistLabels.length).fill(false));
   }
 
-  function getDoseInfo(text: string) {
-    const tokens = text
-      .split(/\s+VÀ\s+|\s+HOẶC\s+|[()]/i)
-      .map(t => t.trim().toLowerCase())
-      .filter(Boolean);
-
-    return doses.filter(d =>
-      tokens.some(t =>
-        norm(t) === norm(d.drug)
-      )
-    );
+  function drugsIn(text: string) {
+    const t = norm(text);
+    return KSDP_DOSES.filter(d => t.includes(norm(d.drug)));
   }
 
-  const selectedDoses = chosen
-    ? getDoseInfo(
-        allergy === "none"
-        ? chosen.primary
-        : chosen.alternative
-      )
-    : [];
+  const regimen = chosen
+    ? (allergy === "none" ? chosen.primary : chosen.alternative)
+    : "";
+  const selectedDoses = drugsIn(regimen);
+  const extraTiming = ["Ceftriaxone"].filter(n => norm(regimen).includes(norm(n)));
+  const isCardiac = chosen?.group === "Phẫu thuật tim";
+
+  // Liều theo cân nặng: chỉ áp ngưỡng ghi trong Phụ lục 2
+  function weightDose(drug: string): string | null {
+    if (!wt) return null;
+    if (drug === "Cefazolin" || drug === "Cefotetan") return wt < 120 ? "2 g" : "3 g";
+    if (drug === "Gentamycin") return `5 mg/kg × ${wt} kg = ${Math.round(wt * 5)} mg`;
+    if (drug === "Vancomycin") {
+      if (wt < 70) return "1 g";
+      if (wt >= 71 && wt <= 99) return "1,25 g";
+      if (wt > 100) return "1,5 g";
+      return null; // 70–71 kg và 99–100 kg: văn bản không ghi
+    }
+    return null;
+  }
+
+  function redoseHours(drug: string): number | null {
+    if (drug === "Cefazolin") return isCardiac ? 2 : 4;
+    if (drug === "Cefotetan" || drug === "Clindamycin") return 6;
+    if (drug === "Ciprofloxacin") return 8;
+    if (drug === "Metronidazol" || drug === "Vancomycin") return 12;
+    return null;
+  }
+
+  const bloodThreshold = ageGroup === "adult" ? 1500 : (wt ? wt * 25 : null);
+  const bloodRedose = ebl !== null && bloodThreshold !== null && ebl > bloodThreshold;
+
+  const opFns = chosen ? opFootnotes(chosen) : [];
 
   return (
     <main className="ksdp-page">
@@ -566,28 +167,22 @@ export default function ProphylaxisPage() {
           </div>
           <div>
             <h1>Kháng sinh dự phòng phẫu thuật</h1>
-            <p>Tra cứu lựa chọn kháng sinh theo loại phẫu thuật · Bộ Y tế</p>
+            <p>QĐ 708/QĐ-BYT (2015) · Chương I mục 2 · Chương 7 · Phụ lục 2–3</p>
           </div>
         </div>
 
         <div className="ksdp-tabs">
-          <button
-            className={tab==="guide"?"active":""}
-            onClick={()=>setTab("guide")}
-          >
+          <button className={tab === "guide" ? "active" : ""} onClick={() => setTab("guide")}>
             <Search size={16}/> Lựa chọn KSDP
           </button>
-          <button
-            className={tab==="audit"?"active":""}
-            onClick={()=>setTab("audit")}
-          >
-            <ClipboardCheck size={16}/> Bảng kiểm KSDP
+          <button className={tab === "principles" ? "active" : ""} onClick={() => setTab("principles")}>
+            <ListChecks size={16}/> Nguyên tắc sử dụng
           </button>
-          <button
-            className={tab==="dose"?"active":""}
-            onClick={()=>setTab("dose")}
-          >
-            <Syringe size={16}/> Liều & nhắc liều
+          <button className={tab === "dose" ? "active" : ""} onClick={() => setTab("dose")}>
+            <Syringe size={16}/> Liều & bảng đầy đủ
+          </button>
+          <button className={tab === "audit" ? "active" : ""} onClick={() => setTab("audit")}>
+            <ClipboardCheck size={16}/> Bảng kiểm KSDP
           </button>
         </div>
 
@@ -596,20 +191,15 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span>01</span>
-                <h2>Chọn chuyên khoa và phẫu thuật</h2>
+                <h2>Chọn nhóm và loại phẫu thuật</h2>
               </div>
 
               <div className="ksdp-grid two">
                 <label>
-                  <span>Chuyên khoa</span>
-                  <select value={specialty}
-                    onChange={e=>{
-                      setSpecialty(e.target.value);
-                      setChosenId("");
-                    }}>
-                    {specialties.map(s=>
-                      <option key={s} value={s}>{s}</option>
-                    )}
+                  <span>Nhóm phẫu thuật (Phụ lục 3)</span>
+                  <select value={group}
+                    onChange={e => { setGroup(e.target.value); setChosenId(""); }}>
+                    {groups.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </label>
                 <label>
@@ -618,8 +208,8 @@ export default function ProphylaxisPage() {
                     <Search size={17}/>
                     <input
                       value={search}
-                      onChange={e=>setSearch(e.target.value)}
-                      placeholder="Ví dụ: mổ lấy thai, ruột thừa, thay khớp..."
+                      onChange={e => setSearch(e.target.value)}
+                      placeholder="Ví dụ: mổ đẻ, ruột thừa, thay khớp..."
                     />
                   </div>
                 </label>
@@ -627,15 +217,10 @@ export default function ProphylaxisPage() {
 
               <label className="ksdp-select-op">
                 <span>Loại phẫu thuật / thủ thuật</span>
-                <select value={chosenId}
-                  onChange={e=>setChosenId(e.target.value)}>
-                  <option value="">
-                    -- Chọn loại phẫu thuật ({filtered.length} mục) --
-                  </option>
-                  {filtered.map(x=>
-                    <option key={x.id} value={x.id}>
-                      {x.specialty} – {x.name}
-                    </option>
+                <select value={chosenId} onChange={e => setChosenId(e.target.value)}>
+                  <option value="">-- Chọn loại phẫu thuật ({filtered.length} mục) --</option>
+                  {filtered.map(x =>
+                    <option key={x.id} value={x.id}>{x.group} – {x.name}</option>
                   )}
                 </select>
               </label>
@@ -649,45 +234,54 @@ export default function ProphylaxisPage() {
                     <h2>Lựa chọn kháng sinh dự phòng</h2>
                   </div>
                   <div className="ksdp-surgery">
-                    <b>{chosen.name}</b>
-                    <small>{chosen.specialty}</small>
+                    <b>{chosen.name}<Fn n={chosen.nameFn}/></b>
+                    <small>{chosen.group}</small>
                   </div>
 
                   <div className="ksdp-grid two">
-                    <div className="ksdp-choice">
-                      <div className="ksdp-choice-label">
-                        Kháng sinh theo Phụ lục 3
-                      </div>
-                      <strong>{chosen.primary}</strong>
+                    <div className={`ksdp-choice${allergy === "none" ? " on" : ""}`}>
+                      <div className="ksdp-choice-label">Khuyến cáo dự phòng</div>
+                      <strong>{chosen.primary}<Fn n={chosen.primaryFn}/></strong>
                     </div>
-                    <div className="ksdp-choice">
-                      <div className="ksdp-choice-label">
-                        Lựa chọn thay thế theo tài liệu
-                      </div>
-                      <strong>{chosen.alternative}</strong>
+                    <div className={`ksdp-choice${allergy !== "none" ? " on" : ""}`}>
+                      <div className="ksdp-choice-label">Kháng sinh thay thế nếu dị ứng penicillin</div>
+                      <strong>{chosen.alternative}<Fn n={chosen.altFn}/></strong>
                     </div>
                   </div>
 
-                  {chosen.note && (
+                  {opFns.length > 0 && (
                     <div className="ksdp-note">
                       <Info size={17}/>
-                      {chosen.note}
+                      <div>
+                        {opFns.map(n =>
+                          <div key={n}><sup>{n}</sup> {KSDP_FOOTNOTES[n]}</div>
+                        )}
+                      </div>
                     </div>
                   )}
 
-                  {chosen.noProphylaxis && (
+                  {chosen.id === "u1" && (
+                    <button className="ksdp-secondary" onClick={() => setTab("dose")}>
+                      Xem bảng dự phòng sinh thiết tuyến tiền liệt theo kết quả soi trực tràng
+                      <ChevronRight size={16}/>
+                    </button>
+                  )}
+
+                  {chosen.id === "ob1" && (
                     <div className="ksdp-note">
-                      Tài liệu không khuyến cáo dự phòng
-                      thường quy cho loại thủ thuật này.
-                      Cần đánh giá ngoại lệ theo người bệnh.
+                      <Info size={17}/>
+                      <div>
+                        <b>Chương 7 – Dự phòng sản khoa (tr. {CESAREAN_CEFAZOLIN.page}):</b>{" "}
+                        {CESAREAN_CEFAZOLIN.text} Cần phát hiện và điều trị các nhiễm khuẩn âm đạo như
+                        bacterial vaginosis, Chlamydia trước. KSDP có thể dùng trước khi rạch da hoặc sau khi
+                        kẹp dây rốn (Chương I, tr. 41). Phụ lục 2 (tr. 258) ghi cefazolin {"< 120 kg: 2 g; ≥ 120 kg: 3 g"}.
+                      </div>
                     </div>
                   )}
 
-                  <a className="ksdp-link"
-                    href={`/docs/ksdp-byt-708.pdf#page=${chosen.page}`}
-                    target="_blank" rel="noreferrer">
+                  <a className="ksdp-link" href={pdfPage(chosen.page)} target="_blank" rel="noreferrer">
                     <BookOpen size={16}/>
-                    Xem Phụ lục 3 – Trang PDF {chosen.page}
+                    QĐ 708/QĐ-BYT – Phụ lục 3, tr. {chosen.page}
                   </a>
                 </section>
 
@@ -695,31 +289,33 @@ export default function ProphylaxisPage() {
                   <section className="ksdp-panel">
                     <div className="ksdp-section-title">
                       <span>03</span>
-                      <h2>Kiểm tra điều kiện sử dụng</h2>
+                      <h2>Liều, thời điểm dùng và nhắc liều</h2>
                     </div>
 
                     <div className="ksdp-grid three">
                       <label>
-                        <span>Tiền sử dị ứng</span>
-                        <select value={allergy}
-                          onChange={e=>setAllergy(e.target.value)}>
-                          <option value="none">Chưa ghi nhận dị ứng</option>
-                          <option value="reported">Có tiền sử dị ứng cần xác minh</option>
+                        <span>Dị ứng penicillin</span>
+                        <select value={allergy} onChange={e => setAllergy(e.target.value)}>
+                          <option value="none">Không</option>
+                          <option value="pen">Có</option>
+                        </select>
+                      </label>
+                      <label>
+                        <span>Đối tượng</span>
+                        <select value={ageGroup} onChange={e => setAgeGroup(e.target.value as "adult" | "child")}>
+                          <option value="adult">Người lớn</option>
+                          <option value="child">Trẻ em</option>
                         </select>
                       </label>
                       <label>
                         <span>Cân nặng (kg)</span>
-                        <input type="number" min="1"
-                          value={weight}
-                          onChange={e=>setWeight(e.target.value)}
-                          placeholder="Ví dụ: 70"
-                        />
+                        <input type="number" min="1" value={weight}
+                          onChange={e => setWeight(e.target.value)} placeholder="Ví dụ: 70"/>
                       </label>
                       <label>
-                        <span>Phân loại vết mổ</span>
-                        <select value={wound}
-                          onChange={e=>setWound(e.target.value)}>
-                          <option value="">Chưa xác định</option>
+                        <span>Phân loại phẫu thuật</span>
+                        <select value={wound} onChange={e => setWound(e.target.value)}>
+                          <option value="">Chưa chọn</option>
                           <option value="Sạch">Sạch</option>
                           <option value="Sạch - nhiễm">Sạch - nhiễm</option>
                           <option value="Nhiễm">Nhiễm</option>
@@ -728,67 +324,79 @@ export default function ProphylaxisPage() {
                       </label>
                       <label>
                         <span>Thời gian mổ dự kiến (giờ)</span>
-                        <input type="number" min="0" step=".5"
-                          value={duration}
-                          onChange={e=>setDuration(e.target.value)}
-                          placeholder="Ví dụ: 3.5"
-                        />
+                        <input type="number" min="0" step=".5" value={duration}
+                          onChange={e => setDuration(e.target.value)} placeholder="Ví dụ: 3.5"/>
                       </label>
                       <label>
-                        <span>Lượng máu mất dự kiến (mL)</span>
-                        <input type="number" min="0"
-                          value={bloodLoss}
-                          onChange={e=>setBloodLoss(e.target.value)}
-                          placeholder="Nếu có dữ liệu"
-                        />
+                        <span>Lượng máu mất (ml)</span>
+                        <input type="number" min="0" value={bloodLoss}
+                          onChange={e => setBloodLoss(e.target.value)} placeholder="Nếu có"/>
                       </label>
                     </div>
 
-                    {allergy === "reported" && (
-                      <div className="ksdp-warning">
-                        <AlertTriangle size={18}/>
-                        Cần xác minh tác nhân, biểu hiện,
-                        mức độ nặng và thời điểm dị ứng.
-                        Lựa chọn thay thế trong bảng
-                        không được tự động áp dụng cho
-                        mọi loại phản ứng dị ứng.
+                    {wound && (
+                      <div className={wound === "Nhiễm" || wound === "Bẩn" ? "ksdp-warning" : "ksdp-note"}>
+                        {wound === "Nhiễm" || wound === "Bẩn" ? <AlertTriangle size={18}/> : <Info size={17}/>}
+                        <span>{WOUND_TEXT[wound]} <i>(Chương I, tr. 39–40)</i></span>
                       </div>
                     )}
 
                     <h3 className="ksdp-subheading">
-                      Liều và nhắc liều trong QĐ 708
+                      {allergy === "none" ? "Khuyến cáo dự phòng" : "Kháng sinh thay thế nếu dị ứng penicillin"}: {regimen}
                     </h3>
 
-                    {selectedDoses.length ? (
+                    {selectedDoses.length || extraTiming.length ? (
                       <div className="ksdp-dose-list">
-                        {selectedDoses.map(d=>
-                          <div key={d.drug} className="ksdp-dose-card">
-                            <b>{d.drug}</b>
-                            <div><strong>Liều:</strong> {d.dose}</div>
-                            <div><strong>Nhắc liều:</strong> {d.repeat}</div>
+                        {selectedDoses.map(d => {
+                          const wd = weightDose(d.drug);
+                          const rh = redoseHours(d.drug);
+                          const due = rh !== null && hours !== null && hours > rh;
+                          return (
+                            <div key={d.drug} className="ksdp-dose-card">
+                              <b>{d.drug}</b>
+                              <div><strong>Liều (Phụ lục 2):</strong> {d.dose.join("; ")}</div>
+                              {wd && <div className="ksdp-calc"><strong>Theo cân nặng {wt} kg:</strong> {wd}</div>}
+                              {d.drug === "Gentamycin" && (
+                                <div><strong>Lọc máu hoặc ClCr {"<"} 20 ml/phút:</strong> 2 mg/kg{wt ? ` = ${Math.round(wt * 2)} mg` : ""}</div>
+                              )}
+                              <div><strong>Điều chỉnh liều trong thủ thuật:</strong> {d.redose}<Fn n={d.fn}/></div>
+                              {TIMING[d.drug] && <div><strong>Thời điểm:</strong> {TIMING[d.drug]}</div>}
+                              {due && (
+                                <div className="ksdp-calc warn">
+                                  Thời gian mổ {hours} giờ {">"} khoảng nhắc {rh} giờ{d.drug === "Cefazolin" && isCardiac ? " (phẫu thuật tim)" : ""}: cần nhắc liều.
+                                </div>
+                              )}
+                              {d.fn?.map(n => <small key={n} className="ksdp-fn-text"><sup>{n}</sup> {KSDP_FOOTNOTES[n]}</small>)}
+                            </div>
+                          );
+                        })}
+                        {extraTiming.map(n => (
+                          <div key={n} className="ksdp-dose-card">
+                            <b>{n}</b>
+                            <div><strong>Thời điểm:</strong> {TIMING[n]}</div>
+                            <div className="ksdp-muted">Phụ lục 2 không có dòng liều cho {n.toLowerCase()}.</div>
                           </div>
-                        )}
+                        ))}
                       </div>
                     ) : (
-                      <p className="ksdp-muted">
-                        Không có thông tin liều tương ứng
-                        trong Phụ lục 2 cho lựa chọn này.
-                        Không tự suy diễn liều.
-                      </p>
+                      <p className="ksdp-muted">Phụ lục 2 không có dòng liều cho lựa chọn này.</p>
                     )}
+
 
                     <div className="ksdp-warning">
                       <Clock3 size={18}/>
-                      Thời điểm dùng trước rạch da,
-                      tốc độ truyền, nhắc liều và ngừng
-                      KSDP phải đối chiếu phác đồ BV
-                      hiện hành, dược động học, chức
-                      năng thận, thời gian mổ và mất máu.
-                      Chưa tự động ra y lệnh.
+                      <div>
+                        Dùng trong vòng 60 phút trước khi tiến hành phẫu thuật và gần thời điểm rạch da.
+                        {isCardiac && " Phẫu thuật tim kéo dài hơn 4 giờ: bổ sung thêm một liều kháng sinh."}
+                        {isCardiac && hours !== null && hours > 4 && <b> Thời gian mổ dự kiến {hours} giờ: cần bổ sung một liều.</b>}
+                        {" "}Mất máu trên 1500 ml ở người lớn, trên 25 ml/kg ở trẻ em: bổ sung liều KSDP sau khi bổ sung dịch thay thế.
+                        {bloodRedose && <b> Lượng máu mất {ebl} ml vượt ngưỡng: cần bổ sung liều.</b>}
+                        {ageGroup === "child" && ebl !== null && !wt && <b> Nhập cân nặng để tính ngưỡng 25 ml/kg.</b>}
+                        <i> (Chương I, tr. 40–41)</i>
+                      </div>
                     </div>
 
-                    <button className="ksdp-secondary"
-                      onClick={()=>setTab("audit")}>
+                    <button className="ksdp-secondary" onClick={() => setTab("audit")}>
                       Mở bảng kiểm sử dụng KSDP
                       <ChevronRight size={16}/>
                     </button>
@@ -800,12 +408,40 @@ export default function ProphylaxisPage() {
                 <Pill size={44}/>
                 <h3>Chọn phẫu thuật để xem khuyến cáo</h3>
                 <p>
-                  Hệ thống hiển thị kháng sinh ưu tiên,
-                  phương án thay thế và dữ liệu liều
-                  tương ứng với tài liệu Bộ Y tế.
+                  {KSDP_OPERATIONS.length} loại phẫu thuật, thủ thuật theo Phụ lục 3 – QĐ 708/QĐ-BYT,
+                  kèm liều Phụ lục 2 và nguyên tắc dùng ở Chương I.
                 </p>
               </div>
             )}
+          </>
+        )}
+
+        {tab === "principles" && (
+          <>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><ListChecks size={16}/></span>
+                <h2>Sử dụng kháng sinh dự phòng – Chương I, mục 2</h2>
+              </div>
+              {KSDP_PRINCIPLES.map(s => (
+                <div key={s.title} className="ksdp-principle">
+                  <h3>{s.title} <a href={pdfPage(s.page)} target="_blank" rel="noreferrer">tr. {s.page}</a></h3>
+                  <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
+                </div>
+              ))}
+            </section>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><ListChecks size={16}/></span>
+                <h2>Sử dụng kháng sinh trong dự phòng sản khoa – Chương 7</h2>
+              </div>
+              {KSDP_OBSTETRIC.map(s => (
+                <div key={s.title} className="ksdp-principle">
+                  <h3>{s.title} <a href={pdfPage(s.page)} target="_blank" rel="noreferrer">tr. {s.page}</a></h3>
+                  <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
+                </div>
+              ))}
+            </section>
           </>
         )}
 
@@ -817,36 +453,27 @@ export default function ProphylaxisPage() {
             </div>
 
             <p className="ksdp-muted">
-              Phục vụ rà soát đơn thuốc của bác sĩ
-              và dược sĩ lâm sàng. Bảng kiểm chưa
-              phải kết luận hợp lý/không hợp lý tự động.
+              Phục vụ rà soát đơn thuốc của bác sĩ và dược sĩ lâm sàng, theo Chương I mục 2 và Phụ lục 2–3
+              QĐ 708/QĐ-BYT. Bảng kiểm không tự kết luận hợp lý/không hợp lý.
             </p>
 
             {chosen && (
               <div className="ksdp-surgery">
                 <b>{chosen.name}</b>
-                <small>{chosen.specialty}</small>
+                <small>{chosen.group}</small>
               </div>
             )}
 
             <div className="ksdp-progress">
               <span>Đã đánh giá: {completed}/{checks.length}</span>
-              <div>
-                <i style={{
-                  width:`${completed/checks.length*100}%`
-                }}/>
-              </div>
+              <div><i style={{ width: `${completed / checks.length * 100}%` }}/></div>
             </div>
 
             <div className="ksdp-checks">
-              {checklistLabels.map((label,i)=>
+              {checklistLabels.map((label, i) =>
                 <label key={i}>
-                  <input type="checkbox"
-                    checked={checks[i]}
-                    onChange={e=>setChecks(old=>
-                      old.map((v,j)=>j===i?e.target.checked:v)
-                    )}
-                  />
+                  <input type="checkbox" checked={checks[i]}
+                    onChange={e => setChecks(old => old.map((v, j) => j === i ? e.target.checked : v))}/>
                   <span>{label}</span>
                   {checks[i] && <CheckCircle2 size={17}/>}
                 </label>
@@ -854,14 +481,11 @@ export default function ProphylaxisPage() {
             </div>
 
             <div className="ksdp-actions">
-              <button className="ksdp-secondary"
-                onClick={()=>window.print()}>
+              <button className="ksdp-secondary" onClick={() => window.print()}>
                 <Printer size={16}/> In bảng kiểm
               </button>
               <button className="ksdp-secondary"
-                onClick={()=>setChecks(
-                  Array(checklistLabels.length).fill(false)
-                )}>
+                onClick={() => setChecks(Array(checklistLabels.length).fill(false))}>
                 <RotateCcw size={16}/> Xóa đánh dấu
               </button>
             </div>
@@ -869,56 +493,115 @@ export default function ProphylaxisPage() {
         )}
 
         {tab === "dose" && (
-          <section className="ksdp-panel">
-            <div className="ksdp-section-title">
-              <span><Syringe size={17}/></span>
-              <h2>Liều và nhắc liều kháng sinh dự phòng</h2>
-            </div>
+          <>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><Syringe size={17}/></span>
+                <h2>Phụ lục 2 – Liều kháng sinh trong dự phòng phẫu thuật</h2>
+              </div>
+              <div className="ksdp-table-wrap">
+                <table className="ksdp-table">
+                  <thead>
+                    <tr><th>Thuốc</th><th>Liều thường dùng</th><th>Điều chỉnh liều trong thủ thuật</th></tr>
+                  </thead>
+                  <tbody>
+                    {KSDP_DOSES.map(d =>
+                      <tr key={d.drug}>
+                        <td><b>{d.drug}</b></td>
+                        <td>{d.dose.map(x => <div key={x}>{x}</div>)}</td>
+                        <td>{d.redose}<Fn n={d.fn}/></td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <a className="ksdp-link" href={pdfPage(258)} target="_blank" rel="noreferrer">
+                <BookOpen size={16}/> QĐ 708/QĐ-BYT – Phụ lục 2, tr. 258
+              </a>
+            </section>
 
-            <p className="ksdp-muted">
-              Phụ lục 2 – QĐ 708/QĐ-BYT (2015).
-              Dùng để tham khảo và đối chiếu, không tự
-              động thay thế hướng dẫn hiện hành của BV.
-            </p>
-
-            <div className="ksdp-table-wrap">
-              <table className="ksdp-table">
-                <thead>
-                  <tr>
-                    <th>Kháng sinh</th>
-                    <th>Liều trong tài liệu</th>
-                    <th>Khoảng nhắc liều</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {doses.map(d=>
-                    <tr key={d.drug}>
-                      <td><b>{d.drug}</b></td>
-                      <td>{d.dose}</td>
-                      <td>{d.repeat}</td>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><BookOpen size={16}/></span>
+                <h2>Phụ lục 3 – Lựa chọn kháng sinh dự phòng phẫu thuật</h2>
+              </div>
+              <div className="ksdp-table-wrap">
+                <table className="ksdp-table">
+                  <thead>
+                    <tr>
+                      <th>Các loại phẫu thuật – thủ thuật</th>
+                      <th>Khuyến cáo dự phòng</th>
+                      <th>Kháng sinh thay thế nếu dị ứng penicillin</th>
+                      <th>Trang</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {groups.slice(1).map(g => (
+                      <Fragment key={g}>
+                        <tr className="ksdp-group-row"><td colSpan={4}>{g}</td></tr>
+                        {KSDP_OPERATIONS.filter(o => o.group === g).map(o => (
+                          <tr key={o.id}>
+                            <td>{o.name}<Fn n={o.nameFn}/></td>
+                            {o.noProphylaxis
+                              ? <td colSpan={2} className="ksdp-none">{o.primary}</td>
+                              : <>
+                                  <td>{o.primary}<Fn n={o.primaryFn}/></td>
+                                  <td>{o.alternative}<Fn n={o.altFn}/></td>
+                                </>}
+                            <td><a href={pdfPage(o.page)} target="_blank" rel="noreferrer">{o.page}</a></td>
+                          </tr>
+                        ))}
+                      </Fragment>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
-            <a className="ksdp-link"
-              href="/docs/ksdp-byt-708.pdf#page=317"
-              target="_blank" rel="noreferrer">
-              <BookOpen size={16}/>
-              Đọc Phụ lục 2 – Trang PDF 317
-            </a>
-          </section>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><BookOpen size={16}/></span>
+                <h2>Dự phòng trong sinh thiết tuyến tiền liệt dựa vào kết quả soi trực tràng</h2>
+              </div>
+              <div className="ksdp-table-wrap">
+                <table className="ksdp-table">
+                  <thead>
+                    <tr>
+                      <th>{PROSTATE_BIOPSY.headers.case}</th>
+                      <th>{PROSTATE_BIOPSY.headers.pre}<Fn n={PROSTATE_BIOPSY.headerFn.pre}/></th>
+                      <th>{PROSTATE_BIOPSY.headers.post}<Fn n={PROSTATE_BIOPSY.headerFn.post}/></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {PROSTATE_BIOPSY.rows.map(r =>
+                      <tr key={r.case}><td><b>{r.case}</b></td><td>{r.pre}</td><td>{r.post}</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <a className="ksdp-link" href={pdfPage(PROSTATE_BIOPSY.page)} target="_blank" rel="noreferrer">
+                <BookOpen size={16}/> QĐ 708/QĐ-BYT – Phụ lục 3, tr. {PROSTATE_BIOPSY.page}
+              </a>
+            </section>
+
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><Info size={16}/></span>
+                <h2>Chú thích Phụ lục 3 (tr. 262)</h2>
+              </div>
+              <ol className="ksdp-footnotes">
+                {Object.entries(KSDP_FOOTNOTES).map(([n, t]) => <li key={n} value={Number(n)}>{t}</li>)}
+              </ol>
+            </section>
+          </>
         )}
 
         <div className="ksdp-footer-note">
           <Info size={17}/>
           <span>
-            Nguồn: QĐ 708/QĐ-BYT (Phụ lục 2–3);
-            QĐ 5631/QĐ-BYT; QĐ 2115/QĐ-BYT.
-            Nội dung đang ở chế độ tham khảo,
-            cần cập nhật và phê duyệt quy trình
-            KSDP nội bộ trước khi áp dụng điều trị.
+            Nguồn: QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh: Chương I mục 2 (tr. 39–41),
+            Chương 7 (tr. 178–179), Phụ lục 2 (tr. 258), Phụ lục 3 (tr. 259–262).
+            Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.
           </span>
           <button onClick={reset}>Đặt lại</button>
         </div>
@@ -1149,6 +832,19 @@ export default function ProphylaxisPage() {
           border-radius:8px;padding:9px 12px;
           color:#075985;cursor:pointer;
         }
+        .ksdp-fn {font-size:10px;margin-left:1px;color:#075985;font-weight:700}
+        .ksdp-fn-text {display:block;color:#5b6f8a;margin-top:4px}
+        .ksdp-choice.on {border-color:#075985;box-shadow:0 0 0 2px #07598522}
+        .ksdp-calc {background:#eef7ff;border-radius:6px;padding:4px 8px;margin:3px 0}
+        .ksdp-calc.warn {background:#fff4e5;color:#8a4b00;font-weight:700}
+        .ksdp-principle {margin-bottom:16px}
+        .ksdp-principle h3 {font-size:14px;margin:0 0 6px;color:#0b3a5c}
+        .ksdp-principle h3 a {font-size:11px;font-weight:400;color:#28658e;margin-left:6px}
+        .ksdp-principle ul {margin:0;padding-left:20px;line-height:1.6;font-size:13.5px}
+        .ksdp-group-row td {background:#eef4fa;font-weight:800;color:#0b3a5c}
+        .ksdp-none {color:#8a4b00;font-style:italic}
+        .ksdp-footnotes {margin:0;padding-left:22px;line-height:1.6;font-size:13.5px}
+        .ksdp-table a {color:#28658e}
         @media(max-width:850px) {
           .ksdp-grid.two,.ksdp-grid.three {
             grid-template-columns:1fr;
