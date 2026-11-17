@@ -52,7 +52,7 @@ export function validateDisease(d: Disease, sources: Source[]): string[] {
   for (const s of d.inputs) if (!reg.has(s.citation.sourceId)) errs.push(`${d.id}/input ${s.field}: citation sai nguồn`);
   if (d.primarySources.length === 0) {
     if (!d.evidenceGap?.length) errs.push(`${d.id}: không có nguồn chính nhưng thiếu evidenceGap`);
-    if (d.doses.length) errs.push(`${d.id}: không có nguồn chính nhưng có Dose`);
+    if (d.doses.some((x) => x.role !== "reference")) errs.push(`${d.id}: không có nguồn chính nhưng có Dose`);
     if (d.rules.some((r) => r.decision !== "no_primary")) errs.push(`${d.id}: không có nguồn chính nhưng có luật xuất lựa chọn`);
   }
   for (const c of d.conflicts) {

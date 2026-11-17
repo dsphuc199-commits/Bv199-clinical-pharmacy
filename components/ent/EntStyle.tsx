@@ -2,7 +2,17 @@
 export function EntStyle() {
   return <style>{`
 .ent-page { max-width: 920px; margin: 0 auto; padding: 16px; color: #10243e; font-size: 14px; line-height: 1.55; }
-.ent-page h1 { font-size: 21px; margin: 6px 0 2px; color: #0b3a5b; }
+.ent-page h1, .ent-page .ent-title { font-size: 21px; margin: 6px 0 2px; color: #0b3a5b; }
+.ent-sec > summary { cursor: pointer; list-style: revert; }
+.ent-sec > summary h2 { display: inline; }
+.ent-cite { display: inline-block; margin-left: 4px; font-size: 11.5px; color: #4b6576; }
+.ent-cite > summary { cursor: pointer; color: #087f89; }
+.ent-cite[open] { display: block; }
+.ent-refdose { border: 1px solid #cfe3d6; background: #f4fbf6; border-radius: 8px; padding: 8px 10px; }
+.ent-gap details > summary { cursor: pointer; }
+.ent-switch { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+.ent-switch button { min-height: 36px; border: 1px solid #b9cdd6; border-radius: 8px; padding: 4px 12px; background: #fff; font: inherit; cursor: pointer; }
+.ent-switch button[aria-pressed=true] { background: #0b6b8a; color: #fff; border-color: #0b6b8a; }
 .ent-page h2 { font-size: 16px; margin: 14px 0 6px; color: #0b3a5b; }
 .ent-page h3 { font-size: 14px; margin: 10px 0 4px; color: #0b6b3a; }
 .ent-en { font-weight: 400; color: #4b6576; font-size: 15px; }
@@ -48,6 +58,7 @@ export function EntStyle() {
   .ent-cmp[open] > *, .ent-cmp > * { display: block; }
   .ent-card { border: 0; padding: 0; }
   .ent-sec { break-inside: avoid; }
+  .ent-switch { display: none; }
   .ent-src a { color: inherit; text-decoration: none; }
   @page { size: A4; margin: 10mm; }
 }

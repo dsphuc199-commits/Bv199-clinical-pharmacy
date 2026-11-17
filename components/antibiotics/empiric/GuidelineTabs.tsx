@@ -50,6 +50,7 @@ import DfiIwgdf2023 from "./DfiIwgdf2023";
 import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
 import StiCdc2021 from "./StiCdc2021";
 import SstiIdsaAce from "./SstiIdsaAce";
+import EntIntlTool, { isEntEmpiric } from "@/components/ent/EntIntlTool";
 import IntlGuidelineView from "./IntlGuidelineView";
 import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
@@ -136,6 +137,8 @@ function RecItem({ rec }: { rec: IntlRec }) {
 
 export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; moduleContent?: ReactNode }) {
   if (diseaseId === "v8-9") return <LungAbscessInternational />;
+  /* Tai Mui Hong: module ENT co trich dan (AAO-HNSF 2025, AAP 2013, IDSA 2012, CDC 2025; doi chieu NICE, CPS, EPOS; tham khao UCSF). */
+  if (isEntEmpiric(diseaseId)) return <section className="bv199-panel gt199"><EntIntlTool key={diseaseId} diseaseId={diseaseId} /><GtStyle /></section>;
   /* Viem khop nhiem khuan: cong cu chon khang sinh (GEIO–SEIMC 2024, PIDS/IDSA 2023) thay cho phan doc khuyen cao. */
   /* Viem xuong tuy: cong cu chon khang sinh (WikiGuidelines 2022/2025 nguoi lon, PIDS/IDSA 2021 tre em). */
   /* Dot cap COPD: cong cu chon khang sinh theo GOLD 2026. */

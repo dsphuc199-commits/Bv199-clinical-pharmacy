@@ -302,15 +302,16 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
   },
   "ent-module": {
     id: "ent-module",
-    org: "CDC / NICE",
-    title: "Viêm họng liên cầu nhóm A (CDC cập nhật 18/11/2025); viêm tai giữa cấp trẻ em (NICE NG91)",
-    citation: "Theo module EntEmpiricGuidelines",
-    published: "2025 (CDC); NG91 (NICE)",
-    url: "",
+    org: "AAO-HNSF / AAP / IDSA / CDC / NICE",
+    title: "Module Nhiễm khuẩn tai mũi họng (/ent): AAO-HNSF 2025, AAP 2013, IDSA 2012, CDC 2025; đối chiếu NICE NG79/NG84/NG91, CPS, EPOS 2020; tham khảo UCSF",
+    citation: "Mỗi khuyến cáo và liều có trích dẫn nguồn, mục/trang trong module",
+    published: "2012–2025",
+    url: "/ent",
     status: "module",
-    checkedOn: "13/10/2026",
-    checkNote: "Đã đối chiếu ngày 13/10/2026 theo ghi chú trạng thái module. Lần này chưa kiểm tra lại (trang NICE chặn truy cập tự động).",
+    checkedOn: "17/11/2026",
+    checkNote: "Đối chiếu lần hai với văn bản nguồn ngày 17/11/2026 (tests/ent/verify-sources.cjs): KHỚP 217, LỆCH 0.",
   },
+
   [WHO_MEN]: {
     id: WHO_MEN,
     org: "WHO",
@@ -1162,37 +1163,23 @@ export const INTL_ENTRIES: IntlEntry[] = [
   },
 
   // ================= Module co san =================
-  ...["v8-7", "v8-58"].map<IntlEntry>((diseaseId) => ({
-    diseaseId,
-    guidelineIds: ["uptodate-abrs", CDC_OUT],
-    scope: "ABRS ngoại trú, không biến chứng, người lớn miễn dịch bình thường.",
-    recommendations: [
-      { text: "Người lớn – chẩn đoán viêm mũi xoang cấp do vi khuẩn khi: nặng (> 3–4 ngày, sốt ≥ 39 °C và chảy mũi mủ hoặc đau mặt); kéo dài (> 10 ngày không cải thiện); hoặc nặng lên (3–4 ngày sốt/ho ban ngày/chảy mũi mới hoặc nặng hơn). Khuyến khích theo dõi chờ đợi cho ca không biến chứng có thể tái khám.", guidelineId: CDC_OUT, locator: "Adult outpatient – Acute rhinosinusitis (cập nhật 16/04/2024)" },
-      { text: "Người lớn: amoxicillin hoặc amoxicillin/clavulanat là điều trị đầu tay; dị ứng penicillin: doxycyclin hoặc fluoroquinolon hô hấp (levofloxacin, moxifloxacin). CDC không nêu liều.", guidelineId: CDC_OUT, locator: "Adult outpatient – Acute rhinosinusitis" },
-      { text: "Trẻ em: kê kháng sinh khi viêm xoang cấp do vi khuẩn nặng hoặc nặng lên; triệu chứng kéo dài có thể theo dõi chờ đợi tối đa 3 ngày. Amoxicillin hoặc amoxicillin/clavulanat là đầu tay; dị ứng penicillin typ I: khuyến cáo khác nhau – xem AAP/IDSA.", guidelineId: CDC_OUT, locator: "Pediatric outpatient – Acute rhinosinusitis (cập nhật 22/04/2024)" },
-    ],
-    regimens: [],
-    module: "abrs",
-    gaps: ["Liều trong module ABRS lấy từ UpToDate (cần tài khoản) – chưa đối chiếu lại 26/10/2026."],
-  })),
-  ...["v8-8", "v8-54"].map<IntlEntry>((diseaseId) => ({
+  ...[
+    ["v8-7", "Viêm xoang cấp do vi khuẩn: người lớn theo AAO-HNSF 2025 (nguồn chính), trẻ 1–18 tuổi theo AAP 2013; đối chiếu IDSA 2012, NICE NG79, EPOS 2020."],
+    ["v8-58", "Viêm xoang cấp do vi khuẩn người lớn: AAO-HNSF 2025 (nguồn chính); đối chiếu IDSA 2012, NICE NG79, EPOS 2020."],
+    ["v8-8", "Viêm họng do liên cầu nhóm A: IDSA 2012 và CDC 2025 (nguồn chính), IDSA 2025 phần chẩn đoán; đối chiếu NICE NG84; tham khảo UCSF."],
+    ["v8-54", "Viêm họng do liên cầu nhóm A: IDSA 2012 và CDC 2025 (nguồn chính), IDSA 2025 phần chẩn đoán; đối chiếu NICE NG84; tham khảo UCSF."],
+    ["v8-60", "Viêm tai giữa cấp: trẻ em theo AAP 2013 (nguồn chính), đối chiếu CPS, NICE NG91; người lớn: không có hướng dẫn hội chuyên môn trong danh mục nguồn."],
+    ["v8-99", "Viêm tai giữa cấp trẻ em: AAP 2013 (nguồn chính); đối chiếu CPS, NICE NG91; tham khảo UCSF."],
+    ["v8-56", "Áp xe quanh amidan: không có hướng dẫn hội chuyên môn; NICE NG84 nêu chuyển viện; liều tham khảo UCSF nhi khoa."],
+    ["v8-57", "Áp xe sau họng: không có hướng dẫn hội chuyên môn; NICE NG84 nêu chuyển viện; liều tham khảo UCSF nhi khoa."],
+    ["v8-66", "Nhiễm khuẩn khoang cổ sâu: không có hướng dẫn hội chuyên môn; NICE NG84 nêu chuyển viện; UCSF người lớn (không ghi liều)."],
+  ].map<IntlEntry>(([diseaseId, scope]) => ({
     diseaseId,
     guidelineIds: ["ent-module"],
-    scope: "Nội dung CDC (viêm họng liên cầu nhóm A) và NICE NG91 (viêm tai giữa cấp trẻ em) trong module Tai Mũi Họng.",
+    scope,
     recommendations: [],
     regimens: [],
     module: "ent",
-  })),
-  ...["v8-60", "v8-99"].map<IntlEntry>((diseaseId) => ({
-    diseaseId,
-    guidelineIds: ["ent-module", CDC_OUT],
-    scope: "Viêm tai giữa cấp. Module Tai Mũi Họng dùng NICE NG91 (trẻ em).",
-    recommendations: [
-      { text: "Trẻ em: amoxicillin vẫn là đầu tay cho trẻ chưa dùng amoxicillin trong 30 ngày qua. Quá mẫn không typ I với penicillin: cefdinir, cefuroxim, cefpodoxim hoặc ceftriaxon. Theo dõi chờ đợi (quyết định chung) có thể phù hợp với ca nhẹ một bên ở trẻ 6–23 tháng và ca một/hai bên ở trẻ > 2 tuổi. CDC không nêu liều.", guidelineId: CDC_OUT, locator: "Pediatric outpatient – Acute otitis media (cập nhật 22/04/2024)" },
-    ],
-    regimens: [],
-    module: "ent",
-    gaps: ["Liều NICE NG91 trong module chưa đối chiếu lại được (trang NICE trả lỗi 403 ngày 26/10/2026). Người lớn: chưa có guideline quốc tế đã trích."],
   })),
   // ================= Master Task 5 – Nhom 4 (26/10/2026) =================
   {

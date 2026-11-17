@@ -4,7 +4,8 @@
   và kết quả tính liều theo cân nặng (giới hạn bởi liều tối đa do nguồn ghi).
   Quy tắc an toàn:
   - Dose status NOT_VERIFIED không bao giờ vào nhóm "đầu tay"/"thay thế"; chỉ vào danh sách "chưa xác minh".
-  - Bệnh không có nguồn chính: không xuất lựa chọn đầu tay; chỉ khoảng trống bằng chứng và nội dung tham khảo.
+  - Bệnh không có nguồn chính: không xuất lựa chọn đầu tay; chỉ khoảng trống bằng chứng và nội dung tham khảo
+    (liều tham khảo nguồn REF, lọc theo đầu vào, hiển thị riêng với nhãn tham khảo).
   - Dose role "comparison" chỉ vào danh sách đối chiếu.
 */
 import type { Cond, ComputedDose, DecideResult, Disease, Dose, Inputs, InputSpec } from "@/types/ent";
@@ -93,6 +94,16 @@ export function decide(d: Disease, inp: Inputs): DecideResult {
   if (d.primarySources.length === 0) {
     const r = d.rules.find((x) => x.decision === "no_primary");
     if (r) base.decision = { value: "no_primary", ruleId: r.id, citation: r.citation };
+    // Lieu tham khao (nguon REF) loc theo dau vao; khong bao gio vao nhom dau tay.
+    const wk = typeof inp.weightKg === "number" ? inp.weightKg : undefined;
+    for (const dose of d.doses) {
+      if (dose.role !== "reference") continue;
+      if (dose.status !== "EXTRACTED") { base.unverified.push(dose); continue; }
+      if (!allergyOk(dose, inp)) continue;
+      if (dose.when && !dose.when.every((x) => condTrue(x, inp))) continue;
+      base.reference.doses.push(dose);
+      if (wk !== undefined) { const cd = computeDose(dose, wk); if (cd) base.computed.push(cd); }
+    }
     return base;
   }
   const rule = d.rules.find((r) => r.when.every((c) => condTrue(c, inp)));

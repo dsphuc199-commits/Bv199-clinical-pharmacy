@@ -49,7 +49,7 @@ check("Âm tính: Dose NOT_VERIFIED không vào lựa chọn đầu tay", (() =>
 for (const id of NO_PRIMARY) {
   const d = getDisease(id);
   const r = decide(d, {});
-  check(`${id}: có evidenceGap, không có Dose, thẻ nhanh không xuất lựa chọn đầu tay`, d.evidenceGap.length > 0 && d.doses.length === 0 && r.first.length === 0 && r.alternatives.length === 0 && r.decision && r.decision.value === "no_primary");
+  check(`${id}: có evidenceGap, không có Dose, thẻ nhanh không xuất lựa chọn đầu tay`, d.evidenceGap.length > 0 && d.doses.every((x) => x.role === "reference") && r.first.length === 0 && r.alternatives.length === 0 && r.decision && r.decision.value === "no_primary");
 }
 check("aom-adult: evidenceGap ghi NICE NG91 chỉ < 18 tuổi, không ngoại suy", getDisease("aom-adult").evidenceGap.some((g) => g.includes("NICE NG91 chỉ áp dụng cho trẻ em và thanh thiếu niên < 18 tuổi; không ngoại suy")));
 check("rpa: cờ đỏ đường thở ở đầu", getDisease("rpa").redFlags[0].text.startsWith("Tắc nghẽn đường thở"));
@@ -143,6 +143,19 @@ const golden = [
 for (const [id, name, inp, ok] of golden) { const r = decide(getDisease(id), inp); check(`Ca chuẩn ${id}: ${name}`, r.ok && ok(r)); }
 const perDisease = (id) => golden.filter((g) => g[0] === id).length;
 check("Mỗi bệnh có nguồn chính đã xác minh có ≥ 3 ca chuẩn", ["aom-peds", "abrs-peds", "gas-pharyngitis", "abrs-adult"].every((id) => perDisease(id) >= 3));
+
+// ---------- Lieu tham khao UCSF cho benh khong nguon chinh; anh xa Phac do kinh nghiem ----------
+{
+  const pta = getDisease("pta"); const refIds = (inp) => decide(pta, inp).reference.doses.map((x) => x.id).sort().join(",");
+  const r1 = decide(pta, { ageGroup: "child", weightKg: 20, setting: "inpatient", mrsaCriteria: true, allergy: "none" });
+  check("PTA trẻ 20 kg nội trú + tiêu chí MRSA → ampicillin-sulbactam 1000 mg × 4 + vancomycin; không vào lựa chọn đầu tay", refIds({ ageGroup: "child", weightKg: 20, setting: "inpatient", mrsaCriteria: true, allergy: "none" }) === "pta-ucsf-sam,pta-ucsf-vanco" && r1.first.length === 0 && r1.computed.find((c) => c.doseId === "pta-ucsf-sam").text.startsWith("20 kg: 1000 mg/lần × 4"));
+  check("PTA trẻ ngoại trú → amoxicillin-clavulanate 45 mg/kg/lần, tối đa 1000 mg", refIds({ ageGroup: "child", setting: "outpatient", allergy: "none" }) === "pta-ucsf-amoxclav" && computeDose(pta.doses.find((x) => x.id === "pta-ucsf-amoxclav"), 40).text.startsWith("40 kg: 1000 mg/lần"));
+  check("PTA trẻ dị ứng nguy cơ cao → clindamycin TM (tối đa 900 mg) hoặc uống (tối đa 600 mg), không beta-lactam", refIds({ ageGroup: "child", setting: "inpatient", allergy: "severe" }) === "pta-ucsf-clinda-iv,pta-ucsf-clinda-po" && computeDose(pta.doses.find((x) => x.id === "pta-ucsf-clinda-iv"), 100).text.startsWith("100 kg: 900 mg/lần"));
+  check("PTA người lớn → không có liều tham khảo (UCSF người lớn không ghi liều)", refIds({ ageGroup: "adult", setting: "inpatient" }) === "");
+  check("RPA dùng cùng phác đồ UCSF nhi khoa", decide(getDisease("rpa"), { ageGroup: "child", setting: "outpatient", allergy: "none" }).reference.doses.map((x) => x.id).join() === "rpa-ucsf-amoxclav");
+  const { ENT_EMPIRIC_MAP } = load("data/ent/index.ts");
+  check("Phác đồ kinh nghiệm: 9 mặt bệnh Tai Mũi Họng (v8-7, 8, 54, 56, 57, 58, 60, 66, 99) ánh xạ tới trang ENT có thật", ["v8-7", "v8-8", "v8-54", "v8-56", "v8-57", "v8-58", "v8-60", "v8-66", "v8-99"].every((k) => (ENT_EMPIRIC_MAP[k] || []).length && ENT_EMPIRIC_MAP[k].every((o) => getDisease(o.id))));
+}
 
 // ---------- Doi chieu nguon (buoc 5) ----------
 if (fs.existsSync(path.join(ROOT, "guidelines"))) {

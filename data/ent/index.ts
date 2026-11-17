@@ -29,3 +29,16 @@ export function resolveDisease(id: string): { page: Disease; data: Disease } | u
 export function getSource(id: string): Source | undefined {
   return SOURCES.find((s) => s.id === id);
 }
+
+/** Mặt bệnh Tai Mũi Họng trong Phác đồ kinh nghiệm (catalog v8-*) -> trang module ENT hiển thị ở tab Quốc tế. */
+export const ENT_EMPIRIC_MAP: Record<string, { id: string; label: string }[]> = {
+  "v8-7": [{ id: "abrs-adult", label: "Người lớn (AAO-HNSF 2025)" }, { id: "abrs-peds", label: "Trẻ 1–18 tuổi (AAP 2013)" }],
+  "v8-58": [{ id: "abrs-adult", label: "Người lớn (AAO-HNSF 2025)" }],
+  "v8-8": [{ id: "gas-pharyngitis", label: "Trẻ em và người lớn (IDSA 2012, CDC 2025)" }],
+  "v8-54": [{ id: "gas-pharyngitis", label: "Trẻ em và người lớn (IDSA 2012, CDC 2025)" }],
+  "v8-60": [{ id: "aom-peds", label: "Trẻ em (AAP 2013)" }, { id: "aom-adult", label: "Người lớn" }],
+  "v8-99": [{ id: "aom-peds", label: "Trẻ em (AAP 2013)" }],
+  "v8-56": [{ id: "pta", label: "Áp xe quanh amidan" }],
+  "v8-57": [{ id: "rpa", label: "Áp xe sau họng" }],
+  "v8-66": [{ id: "dni", label: "Nhiễm khuẩn khoang cổ sâu" }],
+};

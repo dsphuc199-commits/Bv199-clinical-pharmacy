@@ -19,7 +19,8 @@
     "Không có hướng dẫn hội chuyên môn chuyên biệt cho áp xe sau họng trong danh mục nguồn; không có phác đồ khuyến cáo.",
     "CDC chỉ nêu áp xe sau họng là biến chứng mủ của viêm họng do liên cầu nhóm A, không nêu điều trị.",
     "Trang UCSF người lớn chỉ ghi áp xe quanh amidan và nhiễm khuẩn khoang cổ sâu, không ghi riêng áp xe sau họng.",
-    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh."
+    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh.",
+    "Liều hiển thị khi chọn đầu vào là phác đồ kinh nghiệm nhi khoa của UCSF (một cơ sở), chỉ để tham khảo; UCSF người lớn không ghi liều."
   ],
   "redFlags": [
     {
@@ -94,7 +95,214 @@
       "status": "EXTRACTED"
     }
   ],
-  "doses": [],
+  "doses": [
+    {
+      "id": "rpa-ucsf-sam",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Ampicillin-sulbactam",
+      "dose": "50 mg ampicillin/kg/lần",
+      "route": "tĩnh mạch",
+      "interval": "mỗi 6 giờ",
+      "duration": "10–14 ngày tùy mức độ và đáp ứng",
+      "max": "2000 mg ampicillin/lần",
+      "population": "child",
+      "condition": "Trẻ em điều trị nội trú",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        },
+        {
+          "field": "setting",
+          "op": "eq",
+          "value": "inpatient"
+        }
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          4
+        ],
+        "maxPerDoseMg": 2000
+      },
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy, Inpatient (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED",
+      "note": "Đơn trị; phối hợp thêm vancomycin khi có tiêu chí MRSA/đường thở. Liều tính theo ampicillin."
+    },
+    {
+      "id": "rpa-ucsf-vanco",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Vancomycin (phối hợp thêm vào ampicillin-sulbactam)",
+      "dose": "Liều và theo dõi theo hướng dẫn vancomycin của UCSF (liên kết trong bảng)",
+      "route": "tĩnh mạch",
+      "duration": "10–14 ngày tùy mức độ và đáp ứng",
+      "population": "child",
+      "condition": "Tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm hay mang MRSA đã ghi nhận trong 6 tháng qua. Ngừng vancomycin nếu ổ áp xe đã dẫn lưu không phân lập được MRSA.",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        },
+        {
+          "field": "setting",
+          "op": "eq",
+          "value": "inpatient"
+        },
+        {
+          "field": "mrsaCriteria",
+          "op": "truthy"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED",
+      "note": "Phối hợp."
+    },
+    {
+      "id": "rpa-ucsf-amoxclav",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Amoxicillin-clavulanate",
+      "dose": "45 mg amoxicillin/kg/lần",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "10–14 ngày tùy mức độ và đáp ứng",
+      "max": "1000 mg amoxicillin/lần",
+      "population": "child",
+      "condition": "Trẻ em điều trị ngoại trú hoặc xuống thang",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        },
+        {
+          "field": "setting",
+          "op": "eq",
+          "value": "outpatient"
+        }
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          45,
+          45
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 1000
+      },
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy, Outpatient/step down therapy (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED",
+      "note": "Đơn trị. Liều tính theo amoxicillin."
+    },
+    {
+      "id": "rpa-ucsf-clinda-iv",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Clindamycin",
+      "dose": "10 mg/kg/lần",
+      "route": "tĩnh mạch",
+      "interval": "mỗi 8 giờ",
+      "duration": "10–14 ngày tùy mức độ và đáp ứng",
+      "max": "900 mg/lần",
+      "population": "child",
+      "condition": "Dị ứng penicillin hoặc cephalosporin nguy cơ cao",
+      "allergy": [
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        }
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          10,
+          10
+        ],
+        "dosesPerDay": [
+          3
+        ],
+        "maxPerDoseMg": 900
+      },
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED",
+      "note": "Đơn trị."
+    },
+    {
+      "id": "rpa-ucsf-clinda-po",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Clindamycin",
+      "dose": "10 mg/kg/lần",
+      "route": "uống",
+      "interval": "3 lần/ngày",
+      "duration": "10–14 ngày tùy mức độ và đáp ứng",
+      "max": "600 mg/lần",
+      "population": "child",
+      "condition": "Dị ứng penicillin hoặc cephalosporin nguy cơ cao",
+      "allergy": [
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        }
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          10,
+          10
+        ],
+        "dosesPerDay": [
+          3
+        ],
+        "maxPerDoseMg": 600
+      },
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED",
+      "note": "Đơn trị."
+    }
+  ],
   "rules": [
     {
       "id": "rpa-r-noprimary",
@@ -114,7 +322,86 @@
     "Tương tác thuốc",
     "Kháng thuốc tại chỗ/antibiogram bệnh viện"
   ],
-  "inputs": [],
-  "dataVersion": "ent-data 0.2.0",
+  "inputs": [
+    {
+      "field": "ageGroup",
+      "label": "Nhóm tuổi",
+      "type": "select",
+      "options": [
+        {
+          "value": "child",
+          "label": "Trẻ em"
+        },
+        {
+          "value": "adult",
+          "label": "Người lớn"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Patient Population: Pediatric"
+      }
+    },
+    {
+      "field": "weightKg",
+      "label": "Cân nặng",
+      "type": "number",
+      "min": 1,
+      "max": 150,
+      "unit": "kg",
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Liều mg/kg/lần"
+      }
+    },
+    {
+      "field": "setting",
+      "label": "Nơi điều trị",
+      "type": "select",
+      "options": [
+        {
+          "value": "inpatient",
+          "label": "Nội trú"
+        },
+        {
+          "value": "outpatient",
+          "label": "Ngoại trú hoặc xuống thang"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy (ảnh chụp trang gốc tiếng Anh)"
+      }
+    },
+    {
+      "field": "mrsaCriteria",
+      "label": "Tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm/mang MRSA trong 6 tháng",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy (ảnh chụp trang gốc tiếng Anh)"
+      }
+    },
+    {
+      "field": "allergy",
+      "label": "Dị ứng",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "severe",
+          "label": "Dị ứng penicillin hoặc cephalosporin nguy cơ cao"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.3.0",
   "sourcesCheckedOn": "17/11/2026"
 }
