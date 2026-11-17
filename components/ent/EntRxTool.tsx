@@ -37,7 +37,6 @@ function DtqgPanel({ diseaseId, doses, inp }: { diseaseId: string; doses: Dose[]
   return (
     <details className="sa24-more ent-dtqg" open>
       <summary>Liều theo Dược thư quốc gia Việt Nam 2023 ({rows.length} thuốc)</summary>
-      <p className="ent-sub">Trích nguyên văn mục Liều lượng và cách dùng của từng chuyên luận; dùng để đối chiếu với liều của hướng dẫn ở trên.</p>
       {rows.map((r) => (
         <div key={r.k} className="ent-dtqg-drug">
           <p className="ent-dtqg-name">{r.name}</p>
@@ -47,7 +46,7 @@ function DtqgPanel({ diseaseId, doses, inp }: { diseaseId: string; doses: Dose[]
               <ul>
                 {g.items.map((e, i) => (
                   <li key={i} className={e.caution ? "ent-caution" : undefined}>
-                    <b>{e.label}:</b> {e.text} <span className="ent-dtqg-pg">tr. {e.page}</span>
+                    <b>{e.label}:</b> {e.text}
                   </li>
                 ))}
               </ul>

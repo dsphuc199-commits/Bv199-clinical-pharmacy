@@ -129,7 +129,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
       <div className="tx">
         {status === "NO_DOSE" && !hideReviewNote && <p className="tx-dur">Liều dùng theo tờ hướng dẫn sử dụng của chế phẩm.</p>}
         {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
-        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{displayRewrite(r.name)}</strong>{r.dose && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{displayRewrite(r.name)}</strong>{r.dose && clinicalText(r.dose) && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         {duration && clinicalText(duration) && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(duration)}</p>}
         <TxStyle />
       </div>

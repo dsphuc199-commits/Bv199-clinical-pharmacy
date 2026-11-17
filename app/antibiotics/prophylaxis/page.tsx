@@ -190,8 +190,7 @@ export default function ProphylaxisPage() {
       let doseSrc: string | undefined;
       // Mổ lấy thai: liều và thời điểm cefazolin theo phần dự phòng sản khoa của QĐ 708; kèm liều bảng chung để đối chiếu.
       if (chosen?.id === "ob1" && d.drug === "Cefazolin") {
-        dose = `1 g; ≥ 80 kg: 2 g${wt ? ` → ${wt >= 80 ? "2 g" : "1 g"} (${wt} kg)` : ""} · bảng liều chung: < 120 kg: 2 g; ≥ 120 kg: 3 g`;
-        doseSrc = "phần sản khoa";
+        dose = `1 g; ≥ 80 kg: 2 g${wt ? ` → ${wt >= 80 ? "2 g" : "1 g"} (${wt} kg)` : ""}`;
         timing = "Tiêm TM trước rạch da 15–30 phút";
       }
       const rh = redoseHours(d.drug);
@@ -215,7 +214,7 @@ export default function ProphylaxisPage() {
     special.push("BMI > 35: dùng liều kháng sinh gấp đôi.");
   }
   if (chosen?.id === "g8") special.push("Đại trực tràng: rửa ruột và uống kháng sinh không hấp thụ qua đường ruột (nhóm metronidazol) vào ngày trước phẫu thuật và ngày phẫu thuật, ngoài liều tiêm tĩnh mạch.");
-  if (chosen && ageGroup === "child" && !chosen.noProphylaxis) special.push("Trẻ em: bảng liều trên là liều cố định (gentamycin, ceftriaxone tính theo kg). Liều theo cân nặng cho các thuốc khác: xem tab Quốc tế.");
+  if (chosen && ageGroup === "child" && !chosen.noProphylaxis) special.push("Trẻ em: liều theo cân nặng của cefazolin, cefotetan, clindamycin, vancomycin, ciprofloxacin, metronidazol – xem tab Quốc tế.");
 
   return (
     <main className="ksdp-page">
@@ -428,7 +427,7 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><ShieldCheck size={16}/></span>
-                <h2>Phân loại phẫu thuật – {SRC3671}</h2>
+                <h2>Phân loại phẫu thuật</h2>
               </div>
               <div className="ksdp-table-wrap">
                 <table className="ksdp-table">
@@ -442,7 +441,7 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><Info size={16}/></span>
-                <h2>Phẫu thuật được văn bản nêu đích danh</h2>
+                <h2>Phân loại một số phẫu thuật</h2>
               </div>
               <ul className="ksdp-notes">
                 <li><b>Sạch – nhiễm:</b> các phẫu thuật đường mật, ruột thừa, âm đạo và hầu họng được xếp vào loại vết mổ sạch nhiễm nếu không thấy có bằng chứng nhiễm khuẩn/không phạm phải lỗi vô khuẩn trong khi mổ. <i>({SRC3671})</i></li>
@@ -461,7 +460,6 @@ export default function ProphylaxisPage() {
                 <li>Trong phẫu thuật sạch, liệu pháp kháng sinh dự phòng nên áp dụng với một số can thiệp ngoại khoa nặng, có thể ảnh hưởng tới sự sống còn và/hoặc chức năng sống (phẫu thuật chỉnh hình, phẫu thuật tim và mạch máu, phẫu thuật thần kinh, phẫu thuật nhãn khoa). <i>({SRC708})</i></li>
                 <li>Phẫu thuật nhiễm và phẫu thuật bẩn: kháng sinh đóng vai trò trị liệu. KSDP không ngăn ngừa nhiễm khuẩn mà ngăn ngừa nhiễm khuẩn đã xảy ra không phát triển. <i>({SRC708})</i></li>
               </ul>
-              <p className="ksdp-muted">Hai văn bản không có bảng xếp loại cho từng phẫu thuật; người kê đơn xác định loại phẫu thuật theo định nghĩa trên.</p>
             </section>
           </>
         )}

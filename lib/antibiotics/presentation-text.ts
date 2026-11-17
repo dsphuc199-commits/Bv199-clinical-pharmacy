@@ -94,6 +94,6 @@ export function stripReviewNotes(text: string): string {
 }
 
 export function clinicalText(text:string):string {
-  return stripInlineCitations(stripReviewNotes(text)).replace(/(?:theo\s+)?(?:Phụ lục|Mục|Bảng|Biểu đồ)\s+\d+(?:\.\d+)*(?:[a-z])?(?:,\s*tr\.\s*[\d–-]+)?/giu,'')
+  return stripInlineCitations(stripReviewNotes(text)).replace(/\s*\(?\s*Nguồn BYT không nêu liều\s*\)?/giu,'').replace(/(?:theo\s+)?(?:Phụ lục|Mục|Bảng|Biểu đồ)\s+\d+(?:\.\d+)*(?:[a-z])?(?:,\s*tr\.\s*[\d–-]+)?/giu,'')
     .replace(/,\s*một lựa chọn của\s*(?=[.;]|$)/giu,'').replace(/\(\s*[;,:]\s*/g,'(').replace(/\s*[;,:]\s*\)/g,')').replace(/\(\s*\)/g,'').replace(/;\s*:/g,';').replace(/[ \t]{2,}/g,' ').replace(/\s+([,;.])/g,'$1').trim();
 }

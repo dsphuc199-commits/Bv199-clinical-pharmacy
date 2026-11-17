@@ -47,7 +47,6 @@ export const ASHP_DOSES: AshpDose[] = [
 
 // Chú thích Bảng 1, tr. 736
 export const ASHP_DOSE_FOOTNOTES: Record<string, string> = {
-  a: "Liều người lớn lấy từ các nghiên cứu được trích dẫn ở từng mục. Khi liều khác nhau giữa các nghiên cứu, nhóm chuyên gia chọn liều được khuyến cáo nhiều nhất.",
   b: "Liều tối đa ở trẻ em không vượt quá liều thường dùng ở người lớn.",
   c: "Với kháng sinh có thời gian bán thải ngắn (vd. cefazolin, cefoxitin) dùng trước các phẫu thuật kéo dài, khuyến cáo nhắc liều trong phòng mổ với khoảng cách xấp xỉ 2 lần thời gian bán thải ở người có chức năng thận bình thường. Các khoảng nhắc liều ghi \"Không áp dụng\" dựa trên thời gian mổ thông thường; với ca mổ kéo dài bất thường có thể cần nhắc liều.",
   d: "Tờ hướng dẫn được FDA phê duyệt ghi 1 g; chuyên gia khuyến cáo 2 g cho người béo phì.",
@@ -213,7 +212,6 @@ export const ASHP_REGIMENS: AshpRegimen[] = [
     ] },
   { id: "tx5", group: "Ghép tạng", name: "Ghép thận", primary: "Cefazolin", alternative: "Clindamycin hoặc vancomycin + " + AG + " hoặc aztreonam hoặc fluoroquinolon (h, i, j)", evidence: "A", page: 740,
     notes: [
-      { text: "Trong bảng khuyến cáo gốc, dòng này nằm ngay dưới tiêu đề \"Plastic surgery\" nhưng thiếu nhãn tên; phác đồ và mức bằng chứng trùng khuyến cáo ở mục Ghép thận.", page: 783 },
       { text: "Thời gian dự phòng giới hạn ≤ 24 giờ. Tránh dùng aminoglycosid cùng thuốc độc thận khác trừ khi chống chỉ định các thuốc thay thế. Người bệnh nguy cơ cao nhiễm Candida: có thể cân nhắc fluconazole chỉnh liều theo chức năng thận.", page: 783 },
     ] },
 

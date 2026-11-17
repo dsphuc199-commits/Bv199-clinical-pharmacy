@@ -26,15 +26,14 @@ import { DTQG_ENT, DTQG_SOURCE, dtqgFor, type DtqgInd } from "@/data/ent/dtqg-do
 const POP = { adult: "người lớn", child: "trẻ em" } as const;
 function dtqgItems(keys: string[], ind: DtqgInd, pops: ("adult" | "child")[]) {
   return keys.flatMap((k) => pops.flatMap((p) => dtqgFor(k, ind, p).map((e) => ({
-    drug: `${DTQG_ENT[k].name} – ${POP[p]}: ${e.label.replace(/ – (người lớn|trẻ em).*$/i, "")} (tr. ${e.page})`,
+    drug: `${DTQG_ENT[k].name} – ${POP[p]}: ${e.label.replace(/ – (người lớn|trẻ em).*$/i, "")}`,
     dose: e.text,
   }))));
 }
 function dtqgSupplement(regimenId: string, keys: string[], ind: DtqgInd, pops: ("adult" | "child")[], stillMissing?: string[]): DoseSupplement {
   return {
     regimenId, kind: "dtqg", items: dtqgItems(keys, ind, pops),
-    scope: "Liều theo chuyên luận Dược thư quốc gia, không phải liều của văn bản BYT gốc. Chọn câu theo chỉ định; chuyên luận không có câu riêng cho chỉ định thì hiển thị liều thường dùng.",
-    source: { title: DTQG_SOURCE, locator: "Mục Liều lượng và cách dùng – " + keys.map((k) => { const pg = [...new Set(DTQG_ENT[k].entries.map((e) => e.page))].sort((x, y) => x - y); return `${DTQG_ENT[k].name} tr. ${pg.length > 1 ? pg[0] + "–" + pg[pg.length - 1] : pg[0]}`; }).join("; ") },
+    source: { title: DTQG_SOURCE, locator: "Mục Liều lượng và cách dùng, Dược thư quốc gia Việt Nam 2023" },
     checkedOn: "17/11/2026", coversAll: false, stillMissing,
   };
 }
@@ -79,9 +78,9 @@ export const DOSE_SUPPLEMENTS: DoseSupplement[] = [
   /* ---------- Tai mui hong (QĐ 5643: chi neu ten thuoc) – lieu Duoc thu quoc gia 2023 ---------- */
   dtqgSupplement("r-ent-pharyngitis", ["amox", "cefalexin", "ery", "clari"], "phar", ["adult", "child"]),
   dtqgSupplement("r-ent-sinus-moderate", ["coamox", "cefpodoxim", "cefuroxim", "cefdinir"], "abrs", ["adult", "child"]),
-  dtqgSupplement("r-ent-sinus-allergy-adult", ["doxy"], "abrs", ["adult"], ["TMP/SMX, macrolid: văn bản BYT chỉ nêu tên thuốc/nhóm thuốc."]),
-  dtqgSupplement("r-ent-sinus-recent-adult", ["levo", "moxi", "coamox"], "abrs", ["adult"], ["Ceftriaxon: chuyên luận Dược thư không có mục viêm xoang.", "Kết hợp với kháng sinh phổ rộng: văn bản BYT không nêu thuốc cụ thể."]),
-  dtqgSupplement("r-ent-sinus-recent-adult-allergy", ["levo", "moxi", "clinda"], "abrs", ["adult"], ["Rifampin: chưa trích chuyên luận."]),
+  dtqgSupplement("r-ent-sinus-allergy-adult", ["doxy"], "abrs", ["adult"]),
+  dtqgSupplement("r-ent-sinus-recent-adult", ["levo", "moxi", "coamox"], "abrs", ["adult"]),
+  dtqgSupplement("r-ent-sinus-recent-adult-allergy", ["levo", "moxi", "clinda"], "abrs", ["adult"]),
   /* ---------- Lao (cung van ban QĐ 162) ---------- */
   {
     regimenId: "r-tb-a2",

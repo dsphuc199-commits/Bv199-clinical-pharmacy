@@ -309,7 +309,7 @@ export const DTQG_ENT: Record<string, DtqgEntDrug> = {
           "abrs"
         ],
         "pop": "adult",
-        "label": "Viêm xoang hàm cấp – người lớn và trẻ em ≥ 13 tuổi (bảng liều)",
+        "label": "Viêm xoang hàm cấp – người lớn và trẻ em ≥ 13 tuổi",
         "text": "300 mg mỗi 12 giờ hoặc 600 mg mỗi 24 giờ; 10 ngày.",
         "table": true,
         "pdfPage": 390,
@@ -320,7 +320,7 @@ export const DTQG_ENT: Record<string, DtqgEntDrug> = {
           "phar"
         ],
         "pop": "adult",
-        "label": "Viêm amiđan/viêm họng – người lớn và trẻ em ≥ 13 tuổi (bảng liều)",
+        "label": "Viêm amiđan/viêm họng – người lớn và trẻ em ≥ 13 tuổi",
         "text": "300 mg mỗi 12 giờ trong 5 - 10 ngày, hoặc 600 mg mỗi 24 giờ trong 10 ngày.",
         "table": true,
         "pdfPage": 390,
@@ -341,7 +341,7 @@ export const DTQG_ENT: Record<string, DtqgEntDrug> = {
           "aom"
         ],
         "pop": "child",
-        "label": "Viêm tai giữa cấp – trẻ em 6 tháng đến 12 tuổi (bảng liều)",
+        "label": "Viêm tai giữa cấp – trẻ em 6 tháng đến 12 tuổi",
         "text": "7 mg/kg mỗi 12 giờ trong 5 - 10 ngày, hoặc 14 mg/kg mỗi 24 giờ trong 10 ngày.",
         "table": true,
         "pdfPage": 390,
@@ -352,7 +352,7 @@ export const DTQG_ENT: Record<string, DtqgEntDrug> = {
           "abrs"
         ],
         "pop": "child",
-        "label": "Viêm xoang hàm cấp – trẻ em 6 tháng đến 12 tuổi (bảng liều)",
+        "label": "Viêm xoang hàm cấp – trẻ em 6 tháng đến 12 tuổi",
         "text": "7 mg/kg mỗi 12 giờ hoặc 14 mg/kg mỗi 24 giờ; 10 ngày.",
         "table": true,
         "pdfPage": 390,
@@ -363,7 +363,7 @@ export const DTQG_ENT: Record<string, DtqgEntDrug> = {
           "phar"
         ],
         "pop": "child",
-        "label": "Viêm amiđan/viêm họng – trẻ em 6 tháng đến 12 tuổi (bảng liều)",
+        "label": "Viêm amiđan/viêm họng – trẻ em 6 tháng đến 12 tuổi",
         "text": "7 mg/kg mỗi 12 giờ trong 5 - 10 ngày, hoặc 14 mg/kg mỗi 24 giờ trong 10 ngày.",
         "table": true,
         "pdfPage": 390,
