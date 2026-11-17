@@ -213,7 +213,7 @@ export const ASHP_REGIMENS: AshpRegimen[] = [
     ] },
   { id: "tx5", group: "Ghép tạng", name: "Ghép thận", primary: "Cefazolin", alternative: "Clindamycin hoặc vancomycin + " + AG + " hoặc aztreonam hoặc fluoroquinolon (h, i, j)", evidence: "A", page: 740,
     notes: [
-      { text: "Dòng này ở Bảng 2 (tr. 740) nằm ngay dưới tiêu đề \"Plastic surgery\" nhưng thiếu nhãn tên; phác đồ và mức bằng chứng trùng khuyến cáo mục Ghép thận (tr. 783).", page: 783 },
+      { text: "Trong bảng khuyến cáo gốc, dòng này nằm ngay dưới tiêu đề \"Plastic surgery\" nhưng thiếu nhãn tên; phác đồ và mức bằng chứng trùng khuyến cáo ở mục Ghép thận.", page: 783 },
       { text: "Thời gian dự phòng giới hạn ≤ 24 giờ. Tránh dùng aminoglycosid cùng thuốc độc thận khác trừ khi chống chỉ định các thuốc thay thế. Người bệnh nguy cơ cao nhiễm Candida: có thể cân nhắc fluconazole chỉnh liều theo chức năng thận.", page: 783 },
     ] },
 
@@ -228,7 +228,7 @@ export const ASHP_REGIMENS: AshpRegimen[] = [
 
 // Chú thích Bảng 2, tr. 740
 export const ASHP_TABLE2_FOOTNOTES: Record<string, string> = {
-  a: "Bắt đầu kháng sinh trong vòng 60 phút trước rạch da (120 phút với vancomycin hoặc fluoroquinolon). Một liều thường là đủ; thời gian dự phòng cho mọi phẫu thuật nên < 24 giờ. Thuốc có thời gian bán thải ngắn (vd. cefazolin, cefoxitin) cần dùng lại nếu cuộc mổ vượt khoảng nhắc liều khuyến cáo (tính từ lúc bắt đầu liều trước mổ, Bảng 1). Có thể cần dùng lại khi chảy máu kéo dài hoặc nhiều, hoặc có yếu tố làm ngắn thời gian bán thải (vd. bỏng rộng). Có thể không cần dùng lại ở người bệnh có thời gian bán thải kéo dài (vd. suy thận).",
+  a: "Bắt đầu kháng sinh trong vòng 60 phút trước rạch da (120 phút với vancomycin hoặc fluoroquinolon). Một liều thường là đủ; thời gian dự phòng cho mọi phẫu thuật nên < 24 giờ. Thuốc có thời gian bán thải ngắn (vd. cefazolin, cefoxitin) cần dùng lại nếu cuộc mổ vượt khoảng nhắc liều khuyến cáo (tính từ lúc bắt đầu liều trước mổ, xem bảng Liều và nhắc liều). Có thể cần dùng lại khi chảy máu kéo dài hoặc nhiều, hoặc có yếu tố làm ngắn thời gian bán thải (vd. bỏng rộng). Có thể không cần dùng lại ở người bệnh có thời gian bán thải kéo dài (vd. suy thận).",
   b: "Với người bệnh đã biết mang Staphylococcus aureus kháng methicillin (MRSA), hợp lý khi thêm một liều vancomycin trước mổ vào phác đồ khuyến cáo.",
   c: "Mức bằng chứng ủng hộ dùng hay không dùng dự phòng: A (mức I–III), B (mức IV–VI), C (mức VII – ý kiến chuyên gia).",
   d: "Với phẫu thuật có khả năng gặp tác nhân ngoài tụ cầu và liên cầu, có thể cân nhắc thêm thuốc có tác dụng trên các tác nhân đó. Vd. nếu số liệu giám sát cho thấy vi khuẩn Gram âm gây NKVM, có thể phối hợp clindamycin hoặc vancomycin với thuốc khác (cefazolin nếu không dị ứng beta-lactam; aztreonam, gentamicin hoặc fluoroquinolon liều duy nhất nếu dị ứng beta-lactam).",
@@ -305,7 +305,7 @@ export const ASHP_PRINCIPLES: { title: string; page: number; items: string[] }[]
     title: "Liều theo cân nặng",
     page: 745,
     items: [
-      "Tăng liều cefazolin lên 2 g cho người > 80 kg và 3 g cho người > 120 kg là hợp lý; một số bệnh viện chuẩn hóa liều cefazolin 2 g cho mọi người lớn. (Bảng 1: 2 g; 3 g nếu ≥ 120 kg.)",
+      "Tăng liều cefazolin lên 2 g cho người > 80 kg và 3 g cho người > 120 kg là hợp lý; một số bệnh viện chuẩn hóa liều cefazolin 2 g cho mọi người lớn. (Bảng liều: 2 g; 3 g nếu ≥ 120 kg.)",
       "Gentamicin: ở người béo phì có cân nặng thực vượt cân nặng lý tưởng 20%, tính liều theo cân nặng lý tưởng + 40% phần chênh giữa cân nặng thực và cân nặng lý tưởng. Khi phối hợp với thuốc có tác dụng trên vi khuẩn kỵ khí, có thể dùng 4,5–5 mg/kg liều duy nhất.",
       "Trẻ em > 40 kg dùng liều theo cân nặng trừ khi liều hoặc tổng liều ngày vượt liều khuyến cáo người lớn; khi tính theo mg/kg vượt liều tối đa người lớn thì dùng liều người lớn.",
     ],
@@ -316,7 +316,7 @@ export const ASHP_PRINCIPLES: { title: string; page: number; items: string[] }[]
     items: [
       "Cần nhắc liều khi thời gian mổ vượt 2 lần thời gian bán thải của thuốc hoặc mất máu nhiều (> 1500 ml).",
       "Khoảng nhắc liều tính từ lúc dùng liều trước mổ, không tính từ lúc bắt đầu phẫu thuật.",
-      "Có thể cần nhắc liều khi có yếu tố làm ngắn thời gian bán thải (vd. bỏng rộng); có thể không cần khi thời gian bán thải kéo dài (vd. suy thận). Xem Bảng 1.",
+      "Có thể cần nhắc liều khi có yếu tố làm ngắn thời gian bán thải (vd. bỏng rộng); có thể không cần khi thời gian bán thải kéo dài (vd. suy thận). Xem bảng Liều và nhắc liều.",
     ],
   },
   {

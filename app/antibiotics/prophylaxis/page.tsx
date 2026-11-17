@@ -10,10 +10,14 @@ import {
 } from "lucide-react";
 import {
   KSDP_DOSES, KSDP_OPERATIONS, KSDP_FOOTNOTES, PROSTATE_BIOPSY,
-  KSDP_PRINCIPLES, KSDP_OBSTETRIC, CESAREAN_CEFAZOLIN, pdfPage,
+  KSDP_PRINCIPLES, KSDP_OBSTETRIC, CESAREAN_CEFAZOLIN, BYT708_URL,
   type KsdpOperation
 } from "@/data/antibiotics/prophylaxis-byt708";
 import KsdpIntl from "@/components/antibiotics/prophylaxis/KsdpIntl";
+import { BYT3671, WOUND_CLASSES, KSDP_3671, WOUND_CLASS_BY_OP } from "@/data/antibiotics/prophylaxis-byt3671";
+
+const SRC708 = "QĐ 708/QĐ-BYT – Hướng dẫn sử dụng kháng sinh (2015)";
+const CLS_TO_WOUND: Record<string, string> = { "sach": "Sạch", "sach-nhiem": "Sạch - nhiễm" };
 
 const groups = [
   "Tất cả",
@@ -43,13 +47,13 @@ function opFootnotes(op: KsdpOperation) {
 }
 
 const WOUND_TEXT: Record<string, string> = {
-  "Sạch": "Trong phẫu thuật sạch, liệu pháp kháng sinh dự phòng nên áp dụng với một số can thiệp ngoại khoa nặng, có thể ảnh hưởng tới sự sống còn và/hoặc chức năng sống (phẫu thuật chỉnh hình, phẫu thuật tim và mạch máu, phẫu thuật thần kinh, phẫu thuật nhãn khoa).",
-  "Sạch - nhiễm": "KSDP được chỉ định cho tất cả các can thiệp phẫu thuật thuộc phẫu thuật sạch - nhiễm.",
+  "Sạch": "QĐ 708/QĐ-BYT: Trong phẫu thuật sạch, liệu pháp kháng sinh dự phòng nên áp dụng với một số can thiệp ngoại khoa nặng, có thể ảnh hưởng tới sự sống còn và/hoặc chức năng sống (phẫu thuật chỉnh hình, phẫu thuật tim và mạch máu, phẫu thuật thần kinh, phẫu thuật nhãn khoa). QĐ 3671/QĐ-BYT: Sử dụng KSDP với các phẫu thuật sạch và sạch – nhiễm.",
+  "Sạch - nhiễm": "QĐ 708/QĐ-BYT: KSDP được chỉ định cho tất cả các can thiệp phẫu thuật thuộc phẫu thuật sạch - nhiễm. QĐ 3671/QĐ-BYT: Sử dụng KSDP với các phẫu thuật sạch và sạch – nhiễm.",
   "Nhiễm": "Phẫu thuật nhiễm và phẫu thuật bẩn: kháng sinh đóng vai trò trị liệu. KSDP không ngăn ngừa nhiễm khuẩn mà ngăn ngừa nhiễm khuẩn đã xảy ra không phát triển.",
   "Bẩn": "Phẫu thuật nhiễm và phẫu thuật bẩn: kháng sinh đóng vai trò trị liệu. KSDP không ngăn ngừa nhiễm khuẩn mà ngăn ngừa nhiễm khuẩn đã xảy ra không phát triển.",
 };
 
-// Thời điểm dùng theo Chương I mục 2e (tr. 40)
+// Thời điểm dùng theo QĐ 708/QĐ-BYT
 const TIMING: Record<string, string> = {
   Cefazolin: "Cephalosporins tiêm tĩnh mạch trong 3 - 5 phút ngay trước thủ thuật.",
   Cefotetan: "Cephalosporins tiêm tĩnh mạch trong 3 - 5 phút ngay trước thủ thuật.",
@@ -64,11 +68,13 @@ const checklistLabels = [
   "Xác định đúng loại phẫu thuật (sạch, sạch - nhiễm, nhiễm, bẩn) và chỉ định KSDP",
   "Phân biệt dự phòng với điều trị nhiễm khuẩn đã xác lập (phẫu thuật nhiễm, bẩn)",
   "Đánh giá tiền sử dị ứng penicillin để chọn cột kháng sinh thay thế",
-  "Kiểm tra cân nặng và liều KSDP theo Phụ lục 2",
+  "Kiểm tra cân nặng và liều KSDP theo bảng liều của QĐ 708/QĐ-BYT",
   "Dùng trong vòng 60 phút trước phẫu thuật, gần thời điểm rạch da (vancomycin, ciprofloxacin: truyền xong trước rạch da; clindamycin: truyền xong trước 10 - 20 phút)",
-  "Đánh giá nhắc liều: theo khoảng nhắc ở Phụ lục 2; phẫu thuật tim > 4 giờ; mất máu > 1500 ml (người lớn) hoặc > 25 ml/kg (trẻ em)",
+  "Đánh giá nhắc liều: theo khoảng nhắc trong bảng liều; phẫu thuật tim > 4 giờ; mất máu > 1500 ml (người lớn) hoặc > 25 ml/kg (trẻ em)",
   "Gentamycin: liều duy nhất, chỉnh 2 mg/kg nếu lọc máu hoặc ClCr < 20 ml/phút; không kê thêm liều sau phẫu thuật",
   "Không dùng kháng sinh dự phòng cho nhiễm khuẩn liên quan chăm sóc sau mổ",
+  "Dùng KSDP đường tĩnh mạch, trong vòng 30 phút trước rạch da, không sớm hơn 1 giờ (QĐ 3671/QĐ-BYT)",
+  "Không dùng KSDP quá 24 giờ sau phẫu thuật; mổ tim hở có thể tới 48 giờ (QĐ 3671/QĐ-BYT)",
   "Kiểm tra tính sẵn có và phê duyệt thuốc tại BV199"
 ];
 
@@ -85,7 +91,7 @@ export default function ProphylaxisPage() {
   const [checks, setChecks] = useState<boolean[]>(
     Array(checklistLabels.length).fill(false)
   );
-  const [tab, setTab] = useState<"guide" | "principles" | "dose" | "audit" | "intl">("guide");
+  const [tab, setTab] = useState<"guide" | "class" | "principles" | "dose" | "audit" | "intl">("guide");
 
   const filtered = useMemo(() =>
     KSDP_OPERATIONS.filter(x =>
@@ -124,7 +130,7 @@ export default function ProphylaxisPage() {
   const extraTiming = ["Ceftriaxone"].filter(n => norm(regimen).includes(norm(n)));
   const isCardiac = chosen?.group === "Phẫu thuật tim";
 
-  // Liều theo cân nặng: chỉ áp ngưỡng ghi trong Phụ lục 2
+  // Liều theo cân nặng: chỉ áp ngưỡng ghi trong bảng liều QĐ 708
   function weightDose(drug: string): string | null {
     if (!wt) return null;
     if (drug === "Cefazolin" || drug === "Cefotetan") return wt < 120 ? "2 g" : "3 g";
@@ -150,6 +156,7 @@ export default function ProphylaxisPage() {
   const bloodRedose = ebl !== null && bloodThreshold !== null && ebl > bloodThreshold;
 
   const opFns = chosen ? opFootnotes(chosen) : [];
+  const opClass = chosen ? WOUND_CLASS_BY_OP[chosen.id] : undefined;
 
   return (
     <main className="ksdp-page">
@@ -168,13 +175,16 @@ export default function ProphylaxisPage() {
           </div>
           <div>
             <h1>Kháng sinh dự phòng phẫu thuật</h1>
-            <p>Bộ Y tế: QĐ 708/QĐ-BYT (2015) · Quốc tế: ASHP/IDSA/SIS/SHEA (2013)</p>
+            <p>Bộ Y tế: QĐ 708/QĐ-BYT (2015), QĐ 3671/QĐ-BYT (2012) · Quốc tế: ASHP/IDSA/SIS/SHEA (2013)</p>
           </div>
         </div>
 
         <div className="ksdp-tabs">
           <button className={tab === "guide" ? "active" : ""} onClick={() => setTab("guide")}>
             <Search size={16}/> Lựa chọn KSDP
+          </button>
+          <button className={tab === "class" ? "active" : ""} onClick={() => setTab("class")}>
+            <ShieldCheck size={16}/> Phẫu thuật sạch / sạch – nhiễm
           </button>
           <button className={tab === "principles" ? "active" : ""} onClick={() => setTab("principles")}>
             <ListChecks size={16}/> Nguyên tắc sử dụng
@@ -202,7 +212,7 @@ export default function ProphylaxisPage() {
 
               <div className="ksdp-grid two">
                 <label>
-                  <span>Nhóm phẫu thuật (Phụ lục 3)</span>
+                  <span>Nhóm phẫu thuật</span>
                   <select value={group}
                     onChange={e => { setGroup(e.target.value); setChosenId(""); }}>
                     {groups.map(s => <option key={s} value={s}>{s}</option>)}
@@ -223,10 +233,10 @@ export default function ProphylaxisPage() {
 
               <label className="ksdp-select-op">
                 <span>Loại phẫu thuật / thủ thuật</span>
-                <select value={chosenId} onChange={e => setChosenId(e.target.value)}>
+                <select value={chosenId} onChange={e => { const id = e.target.value; setChosenId(id); setWound(CLS_TO_WOUND[WOUND_CLASS_BY_OP[id]?.cls ?? ""] ?? ""); }}>
                   <option value="">-- Chọn loại phẫu thuật ({filtered.length} mục) --</option>
                   {filtered.map(x =>
-                    <option key={x.id} value={x.id}>{x.group} – {x.name}</option>
+                    <option key={x.id} value={x.id}>{x.group} – {x.name} [{WOUND_CLASS_BY_OP[x.id]?.label}]</option>
                   )}
                 </select>
               </label>
@@ -243,6 +253,17 @@ export default function ProphylaxisPage() {
                     <b>{chosen.name}<Fn n={chosen.nameFn}/></b>
                     <small>{chosen.group}</small>
                   </div>
+
+                  {opClass && (
+                    <div className={`ksdp-class ksdp-class-${opClass.cls}`}>
+                      <div><span className="ksdp-class-badge">{opClass.label}</span></div>
+                      <div className="ksdp-class-why">{opClass.reason}</div>
+                      <div className="ksdp-class-src">Phân loại theo định nghĩa của QĐ 3671/QĐ-BYT – Hướng dẫn phòng ngừa nhiễm khuẩn vết mổ.</div>
+                      {chosen.noProphylaxis && opClass.cls !== "sach" && (
+                        <div className="ksdp-class-why"><b>Lưu ý:</b> bảng lựa chọn KSDP của QĐ 708/QĐ-BYT ghi "Không khuyến cáo dự phòng" cho dòng này.</div>
+                      )}
+                    </div>
+                  )}
 
                   <div className="ksdp-grid two">
                     <div className={`ksdp-choice${allergy === "none" ? " on" : ""}`}>
@@ -277,17 +298,18 @@ export default function ProphylaxisPage() {
                     <div className="ksdp-note">
                       <Info size={17}/>
                       <div>
-                        <b>Chương 7 – Dự phòng sản khoa (tr. {CESAREAN_CEFAZOLIN.page}):</b>{" "}
+                        <b>QĐ 708/QĐ-BYT – Dự phòng sản khoa:</b>{" "}
                         {CESAREAN_CEFAZOLIN.text} Cần phát hiện và điều trị các nhiễm khuẩn âm đạo như
-                        bacterial vaginosis, Chlamydia trước. KSDP có thể dùng trước khi rạch da hoặc sau khi
-                        kẹp dây rốn (Chương I, tr. 41). Phụ lục 2 (tr. 258) ghi cefazolin {"< 120 kg: 2 g; ≥ 120 kg: 3 g"}.
+                        bacterial vaginosis, Chlamydia trước. Bảng liều KSDP của QĐ 708 ghi cefazolin {"< 120 kg: 2 g; ≥ 120 kg: 3 g"}.
+                        <br/><b>Thời điểm:</b> QĐ 708/QĐ-BYT – KSDP có thể dùng trước khi rạch da hoặc sau khi kẹp dây rốn;
+                        QĐ 3671/QĐ-BYT – liều KSDP cần được tiêm ngay sau khi kẹp dây rốn.
                       </div>
                     </div>
                   )}
 
-                  <a className="ksdp-link" href={pdfPage(chosen.page)} target="_blank" rel="noreferrer">
+                  <a className="ksdp-link" href={BYT708_URL} target="_blank" rel="noreferrer">
                     <BookOpen size={16}/>
-                    QĐ 708/QĐ-BYT – Phụ lục 3, tr. {chosen.page}
+                    Nguồn: {SRC708}
                   </a>
                 </section>
 
@@ -343,7 +365,7 @@ export default function ProphylaxisPage() {
                     {wound && (
                       <div className={wound === "Nhiễm" || wound === "Bẩn" ? "ksdp-warning" : "ksdp-note"}>
                         {wound === "Nhiễm" || wound === "Bẩn" ? <AlertTriangle size={18}/> : <Info size={17}/>}
-                        <span>{WOUND_TEXT[wound]} <i>(Chương I, tr. 39–40)</i></span>
+                        <span>{WOUND_TEXT[wound]}</span>
                       </div>
                     )}
 
@@ -360,7 +382,7 @@ export default function ProphylaxisPage() {
                           return (
                             <div key={d.drug} className="ksdp-dose-card">
                               <b>{d.drug}</b>
-                              <div><strong>Liều (Phụ lục 2):</strong> {d.dose.join("; ")}</div>
+                              <div><strong>Liều (QĐ 708):</strong> {d.dose.join("; ")}</div>
                               {wd && <div className="ksdp-calc"><strong>Theo cân nặng {wt} kg:</strong> {wd}</div>}
                               {d.drug === "Gentamycin" && (
                                 <div><strong>Lọc máu hoặc ClCr {"<"} 20 ml/phút:</strong> 2 mg/kg{wt ? ` = ${Math.round(wt * 2)} mg` : ""}</div>
@@ -380,13 +402,10 @@ export default function ProphylaxisPage() {
                           <div key={n} className="ksdp-dose-card">
                             <b>{n}</b>
                             <div><strong>Thời điểm:</strong> {TIMING[n]}</div>
-                            <div className="ksdp-muted">Phụ lục 2 không có dòng liều cho {n.toLowerCase()}.</div>
                           </div>
                         ))}
                       </div>
-                    ) : (
-                      <p className="ksdp-muted">Phụ lục 2 không có dòng liều cho lựa chọn này.</p>
-                    )}
+                    ) : null}
 
 
                     <div className="ksdp-warning">
@@ -398,7 +417,8 @@ export default function ProphylaxisPage() {
                         {" "}Mất máu trên 1500 ml ở người lớn, trên 25 ml/kg ở trẻ em: bổ sung liều KSDP sau khi bổ sung dịch thay thế.
                         {bloodRedose && <b> Lượng máu mất {ebl} ml vượt ngưỡng: cần bổ sung liều.</b>}
                         {ageGroup === "child" && ebl !== null && !wt && <b> Nhập cân nặng để tính ngưỡng 25 ml/kg.</b>}
-                        <i> (Chương I, tr. 40–41)</i>
+                        <i> (QĐ 708/QĐ-BYT)</i>
+                        <br/>QĐ 3671/QĐ-BYT: tiêm KSDP trong vòng 30 phút trước rạch da, không sớm hơn 1 giờ; với hầu hết các phẫu thuật chỉ nên sử dụng 1 liều; có thể cân nhắc thêm 1 liều khi phẫu thuật kéo dài {">"} 4 giờ, mất máu nhiều hoặc người bệnh béo phì; không dùng KSDP kéo dài quá 24 giờ sau phẫu thuật (mổ tim hở có thể tới 48 giờ).
                       </div>
                     </div>
 
@@ -414,11 +434,70 @@ export default function ProphylaxisPage() {
                 <Pill size={44}/>
                 <h3>Chọn phẫu thuật để xem khuyến cáo</h3>
                 <p>
-                  {KSDP_OPERATIONS.length} loại phẫu thuật, thủ thuật theo Phụ lục 3 – QĐ 708/QĐ-BYT,
-                  kèm liều Phụ lục 2 và nguyên tắc dùng ở Chương I.
+                  {KSDP_OPERATIONS.length} loại phẫu thuật, thủ thuật theo QĐ 708/QĐ-BYT, có phân loại sạch / sạch – nhiễm
+                  theo QĐ 3671/QĐ-BYT, kèm liều và nguyên tắc sử dụng.
                 </p>
               </div>
             )}
+          </>
+        )}
+
+        {tab === "class" && (
+          <>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><ShieldCheck size={16}/></span>
+                <h2>Phân loại phẫu thuật – QĐ 3671/QĐ-BYT</h2>
+              </div>
+              <div className="ksdp-table-wrap">
+                <table className="ksdp-table">
+                  <thead><tr><th>Loại</th><th>Định nghĩa</th><th>Nguy cơ NKVM</th></tr></thead>
+                  <tbody>
+                    {WOUND_CLASSES.map(w => <tr key={w.id}><td><b>{w.name}</b></td><td>{w.definition}</td><td>{w.risk}</td></tr>)}
+                  </tbody>
+                </table>
+              </div>
+              <div className="ksdp-note" style={{ marginTop: 12 }}>
+                <Info size={17}/>
+                <div>
+                  <b>Chỉ định KSDP theo loại phẫu thuật.</b> QĐ 3671/QĐ-BYT: sử dụng KSDP với các phẫu thuật sạch và sạch – nhiễm.
+                  QĐ 708/QĐ-BYT: KSDP được chỉ định cho tất cả các can thiệp phẫu thuật thuộc phẫu thuật sạch - nhiễm; trong phẫu thuật sạch,
+                  nên áp dụng với một số can thiệp ngoại khoa nặng (phẫu thuật chỉnh hình, tim và mạch máu, thần kinh, nhãn khoa).
+                  Phẫu thuật nhiễm và bẩn: kháng sinh đóng vai trò trị liệu.
+                </div>
+              </div>
+            </section>
+            {(["sach-nhiem", "sach", "tuy"] as const).map(c => {
+              const list = KSDP_OPERATIONS.filter(o => WOUND_CLASS_BY_OP[o.id]?.cls === c);
+              const title = c === "sach" ? "Phẫu thuật sạch" : c === "sach-nhiem" ? "Phẫu thuật sạch – nhiễm" : "Phụ thuộc diễn biến phẫu thuật";
+              return (
+                <section key={c} className="ksdp-panel">
+                  <div className="ksdp-section-title">
+                    <span className={`ksdp-class-dot ksdp-class-${c}`}>{list.length}</span>
+                    <h2>{title}</h2>
+                  </div>
+                  <div className="ksdp-table-wrap">
+                    <table className="ksdp-table">
+                      <thead><tr><th>Phẫu thuật / thủ thuật</th><th>Phân loại và lý do</th><th>KSDP (QĐ 708/QĐ-BYT)</th></tr></thead>
+                      <tbody>
+                        {list.map(o => (
+                          <tr key={o.id}>
+                            <td><b>{o.name}</b><div className="ksdp-muted">{o.group}</div></td>
+                            <td>{c === "tuy" && <b>{WOUND_CLASS_BY_OP[o.id].label}. </b>}{WOUND_CLASS_BY_OP[o.id].reason}</td>
+                            <td className={o.noProphylaxis ? "ksdp-none" : ""}>{o.noProphylaxis ? o.primary : <>{o.primary}<div className="ksdp-muted">Dị ứng penicillin: {o.alternative}</div></>}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              );
+            })}
+            <p className="ksdp-muted">
+              Phân loại từng phẫu thuật được xác định theo định nghĩa sạch / sạch – nhiễm của QĐ 3671/QĐ-BYT
+              (mở hay không mở vào đường hô hấp, tiêu hóa, sinh dục, tiết niệu; phẫu thuật đường mật, ruột thừa, âm đạo, hầu họng
+              xếp sạch – nhiễm). Lựa chọn kháng sinh theo QĐ 708/QĐ-BYT.
+            </p>
           </>
         )}
 
@@ -427,11 +506,11 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><ListChecks size={16}/></span>
-                <h2>Sử dụng kháng sinh dự phòng – Chương I, mục 2</h2>
+                <h2>Sử dụng kháng sinh dự phòng trong phẫu thuật – QĐ 3671/QĐ-BYT</h2>
               </div>
-              {KSDP_PRINCIPLES.map(s => (
+              {KSDP_3671.map(s => (
                 <div key={s.title} className="ksdp-principle">
-                  <h3>{s.title} <a href={pdfPage(s.page)} target="_blank" rel="noreferrer">tr. {s.page}</a></h3>
+                  <h3>{s.title}</h3>
                   <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
                 </div>
               ))}
@@ -439,11 +518,23 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><ListChecks size={16}/></span>
-                <h2>Sử dụng kháng sinh trong dự phòng sản khoa – Chương 7</h2>
+                <h2>Sử dụng kháng sinh dự phòng – QĐ 708/QĐ-BYT</h2>
+              </div>
+              {KSDP_PRINCIPLES.map(s => (
+                <div key={s.title} className="ksdp-principle">
+                  <h3>{s.title}</h3>
+                  <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
+                </div>
+              ))}
+            </section>
+            <section className="ksdp-panel">
+              <div className="ksdp-section-title">
+                <span><ListChecks size={16}/></span>
+                <h2>Sử dụng kháng sinh trong dự phòng sản khoa – QĐ 708/QĐ-BYT</h2>
               </div>
               {KSDP_OBSTETRIC.map(s => (
                 <div key={s.title} className="ksdp-principle">
-                  <h3>{s.title} <a href={pdfPage(s.page)} target="_blank" rel="noreferrer">tr. {s.page}</a></h3>
+                  <h3>{s.title}</h3>
                   <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
                 </div>
               ))}
@@ -459,8 +550,7 @@ export default function ProphylaxisPage() {
             </div>
 
             <p className="ksdp-muted">
-              Phục vụ rà soát đơn thuốc của bác sĩ và dược sĩ lâm sàng, theo Chương I mục 2 và Phụ lục 2–3
-              QĐ 708/QĐ-BYT. Bảng kiểm không tự kết luận hợp lý/không hợp lý.
+              Phục vụ rà soát đơn thuốc của bác sĩ và dược sĩ lâm sàng, theo QĐ 708/QĐ-BYT và QĐ 3671/QĐ-BYT. Bảng kiểm không tự kết luận hợp lý/không hợp lý.
             </p>
 
             {chosen && (
@@ -503,7 +593,7 @@ export default function ProphylaxisPage() {
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><Syringe size={17}/></span>
-                <h2>Phụ lục 2 – Liều kháng sinh trong dự phòng phẫu thuật</h2>
+                <h2>Liều kháng sinh trong dự phòng phẫu thuật</h2>
               </div>
               <div className="ksdp-table-wrap">
                 <table className="ksdp-table">
@@ -521,15 +611,15 @@ export default function ProphylaxisPage() {
                   </tbody>
                 </table>
               </div>
-              <a className="ksdp-link" href={pdfPage(258)} target="_blank" rel="noreferrer">
-                <BookOpen size={16}/> QĐ 708/QĐ-BYT – Phụ lục 2, tr. 258
+              <a className="ksdp-link" href={BYT708_URL} target="_blank" rel="noreferrer">
+                <BookOpen size={16}/> Nguồn: {SRC708}
               </a>
             </section>
 
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><BookOpen size={16}/></span>
-                <h2>Phụ lục 3 – Lựa chọn kháng sinh dự phòng phẫu thuật</h2>
+                <h2>Lựa chọn kháng sinh dự phòng phẫu thuật</h2>
               </div>
               <div className="ksdp-table-wrap">
                 <table className="ksdp-table">
@@ -538,7 +628,7 @@ export default function ProphylaxisPage() {
                       <th>Các loại phẫu thuật – thủ thuật</th>
                       <th>Khuyến cáo dự phòng</th>
                       <th>Kháng sinh thay thế nếu dị ứng penicillin</th>
-                      <th>Trang</th>
+                      <th>Phân loại</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -554,7 +644,7 @@ export default function ProphylaxisPage() {
                                   <td>{o.primary}<Fn n={o.primaryFn}/></td>
                                   <td>{o.alternative}<Fn n={o.altFn}/></td>
                                 </>}
-                            <td><a href={pdfPage(o.page)} target="_blank" rel="noreferrer">{o.page}</a></td>
+                            <td>{WOUND_CLASS_BY_OP[o.id]?.label}</td>
                           </tr>
                         ))}
                       </Fragment>
@@ -585,15 +675,15 @@ export default function ProphylaxisPage() {
                   </tbody>
                 </table>
               </div>
-              <a className="ksdp-link" href={pdfPage(PROSTATE_BIOPSY.page)} target="_blank" rel="noreferrer">
-                <BookOpen size={16}/> QĐ 708/QĐ-BYT – Phụ lục 3, tr. {PROSTATE_BIOPSY.page}
+              <a className="ksdp-link" href={BYT708_URL} target="_blank" rel="noreferrer">
+                <BookOpen size={16}/> Nguồn: {SRC708}
               </a>
             </section>
 
             <section className="ksdp-panel">
               <div className="ksdp-section-title">
                 <span><Info size={16}/></span>
-                <h2>Chú thích Phụ lục 3 (tr. 262)</h2>
+                <h2>Chú thích bảng lựa chọn kháng sinh dự phòng</h2>
               </div>
               <ol className="ksdp-footnotes">
                 {Object.entries(KSDP_FOOTNOTES).map(([n, t]) => <li key={n} value={Number(n)}>{t}</li>)}
@@ -605,8 +695,7 @@ export default function ProphylaxisPage() {
         <div className="ksdp-footer-note">
           <Info size={17}/>
           <span>
-            Nguồn: QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh: Chương I mục 2 (tr. 39–41),
-            Chương 7 (tr. 178–179), Phụ lục 2 (tr. 258), Phụ lục 3 (tr. 259–262).
+            Nguồn: QĐ 708/QĐ-BYT – Hướng dẫn sử dụng kháng sinh (2015); QĐ 3671/QĐ-BYT – Hướng dẫn phòng ngừa nhiễm khuẩn vết mổ (2012).
             Quốc tế: ASHP/IDSA/SIS/SHEA 2013 (Am J Health-Syst Pharm. 2013;70:195–283).
             Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.
           </span>
@@ -852,6 +941,13 @@ export default function ProphylaxisPage() {
         .ksdp-none {color:#8a4b00;font-style:italic}
         .ksdp-footnotes {margin:0;padding-left:22px;line-height:1.6;font-size:13.5px}
         .ksdp-table a {color:#28658e}
+        .ksdp-class {border-radius:10px;padding:10px 12px;margin-bottom:14px;display:grid;gap:4px;font-size:13.5px;border:1px solid #d6e2ee}
+        .ksdp-class-badge {display:inline-block;font-weight:800;font-size:13px;padding:3px 10px;border-radius:999px;color:#fff;background:#475569}
+        .ksdp-class-sach .ksdp-class-badge, .ksdp-class-dot.ksdp-class-sach {background:#0f766e;color:#fff}
+        .ksdp-class-sach-nhiem .ksdp-class-badge, .ksdp-class-dot.ksdp-class-sach-nhiem {background:#b45309;color:#fff}
+        .ksdp-class-tuy .ksdp-class-badge, .ksdp-class-dot.ksdp-class-tuy {background:#475569;color:#fff}
+        .ksdp-class-why {color:#10223d}
+        .ksdp-class-src {font-size:12px;color:#5b6f8a}
         .ksdp-subtabs {display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
         .ksdp-subtabs button {border:1px solid #d6e2ee;background:#fff;color:#183758;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer}
         .ksdp-subtabs .active {background:#e2f1ff;border-color:#075985;color:#075985}

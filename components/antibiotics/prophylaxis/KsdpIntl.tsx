@@ -4,13 +4,15 @@ import { Fragment, useMemo, useState } from "react";
 import { BookOpen, Info, Search, Pill } from "lucide-react";
 import {
   ASHP_DOSES, ASHP_DOSE_FOOTNOTES, ASHP_REGIMENS, ASHP_TABLE2_FOOTNOTES,
-  ASHP_PRINCIPLES, ASHP_WOUND_CLASSES, ashpPage, type AshpRegimen, type AshpDose
+  ASHP_PRINCIPLES, ASHP_WOUND_CLASSES, ASHP_URL, type AshpRegimen, type AshpDose
 } from "@/data/antibiotics/prophylaxis-ashp2013";
 
 function norm(s: string) {
   return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase().trim();
 }
+
+const SRC = "ASHP/IDSA/SIS/SHEA 2013 – Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery";
 
 const groups = ["Tất cả", ...Array.from(new Set(ASHP_REGIMENS.map(r => r.group)))];
 
@@ -65,15 +67,15 @@ export default function KsdpIntl() {
         <Info size={17}/>
         <span>
           Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery – ASHP, IDSA, SIS, SHEA (2013).
-          Bratzler DW và cs. Am J Health-Syst Pharm. 2013;70:195–283. Số trang theo bản ASHP Therapeutic Guidelines (tr. 734–819).
+          Bratzler DW và cs. Am J Health-Syst Pharm. 2013;70:195–283.
         </span>
       </div>
 
       <div className="ksdp-subtabs">
         {([
           ["pick", "Tra cứu theo phẫu thuật"],
-          ["t2", "Bảng 2 – Khuyến cáo"],
-          ["t1", "Bảng 1 – Liều & nhắc liều"],
+          ["t2", "Bảng khuyến cáo"],
+          ["t1", "Liều & nhắc liều"],
           ["principles", "Nguyên tắc chung"],
         ] as const).map(([k, l]) => (
           <button key={k} className={view === k ? "active" : ""} onClick={() => setView(k)}>{l}</button>
@@ -85,7 +87,7 @@ export default function KsdpIntl() {
           <section className="ksdp-panel">
             <div className="ksdp-grid two">
               <label>
-                <span>Nhóm phẫu thuật (Bảng 2)</span>
+                <span>Nhóm phẫu thuật</span>
                 <select value={group} onChange={e => { setGroup(e.target.value); setId(""); }}>
                   {groups.map(g => <option key={g} value={g}>{g}</option>)}
                 </select>
@@ -137,7 +139,7 @@ export default function KsdpIntl() {
                   <Info size={17}/>
                   <ul className="ksdp-notes">
                     {chosen.notes.map((n, i) => (
-                      <li key={i}>{n.text} <a href={ashpPage(n.page)} target="_blank" rel="noreferrer">tr. {n.page}</a></li>
+                      <li key={i}>{n.text}</li>
                     ))}
                   </ul>
                 </div>
@@ -145,7 +147,7 @@ export default function KsdpIntl() {
 
               {doses.length > 0 && (
                 <>
-                  <h3 className="ksdp-subheading">Liều và khoảng nhắc liều (Bảng 1)</h3>
+                  <h3 className="ksdp-subheading">Liều và khoảng nhắc liều</h3>
                   <div className="ksdp-dose-list">
                     {doses.map(d => (
                       <div key={d.drug} className="ksdp-dose-card">
@@ -161,20 +163,20 @@ export default function KsdpIntl() {
                 </>
               )}
 
-              <h3 className="ksdp-subheading">Chú thích Bảng 2 áp dụng</h3>
+              <h3 className="ksdp-subheading">Chú thích áp dụng</h3>
               <ul className="ksdp-notes">
                 {regimenFootnotes(chosen).map(f => <li key={f}><sup>{f}</sup> {ASHP_TABLE2_FOOTNOTES[f]}</li>)}
               </ul>
 
-              <a className="ksdp-link" href={ashpPage(chosen.page)} target="_blank" rel="noreferrer">
-                <BookOpen size={16}/> ASHP/IDSA/SIS/SHEA 2013 – Bảng 2, tr. {chosen.page}
+              <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
+                <BookOpen size={16}/> Nguồn: {SRC}
               </a>
             </section>
           ) : (
             <div className="ksdp-empty">
               <Pill size={44}/>
               <h3>Chọn phẫu thuật để xem khuyến cáo quốc tế</h3>
-              <p>{ASHP_REGIMENS.length} dòng theo Bảng 2, kèm liều Bảng 1, chú thích và khuyến cáo ở từng mục phẫu thuật.</p>
+              <p>{ASHP_REGIMENS.length} loại phẫu thuật, kèm liều, chú thích và khuyến cáo ở từng mục phẫu thuật.</p>
             </div>
           )}
         </>
@@ -182,7 +184,7 @@ export default function KsdpIntl() {
 
       {view === "t2" && (
         <section className="ksdp-panel">
-          <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Bảng 2 – Khuyến cáo kháng sinh dự phòng phẫu thuật</h2></div>
+          <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Khuyến cáo kháng sinh dự phòng phẫu thuật</h2></div>
           <div className="ksdp-table-wrap">
             <table className="ksdp-table">
               <thead>
@@ -191,20 +193,18 @@ export default function KsdpIntl() {
                   <th>Thuốc khuyến cáo<sup>a,b</sup></th>
                   <th>Thay thế khi dị ứng beta-lactam</th>
                   <th>Mức bằng chứng<sup>c</sup></th>
-                  <th>Trang</th>
                 </tr>
               </thead>
               <tbody>
                 {groups.slice(1).map(g => (
                   <Fragment key={g}>
-                    <tr className="ksdp-group-row"><td colSpan={5}>{g}</td></tr>
+                    <tr className="ksdp-group-row"><td colSpan={4}>{g}</td></tr>
                     {ASHP_REGIMENS.filter(r => r.group === g).map(r => (
                       <tr key={r.id}>
                         <td>{r.name}{r.nameFn?.length ? <sup className="ksdp-fn">{r.nameFn.join(",")}</sup> : null}</td>
                         <td className={r.none ? "ksdp-none" : ""}>{r.primary}</td>
                         <td className={r.none ? "ksdp-none" : ""}>{r.alternative}</td>
                         <td>{r.evidence}</td>
-                        <td><a href={ashpPage(r.page)} target="_blank" rel="noreferrer">{r.page}</a></td>
                       </tr>
                     ))}
                   </Fragment>
@@ -212,7 +212,7 @@ export default function KsdpIntl() {
               </tbody>
             </table>
           </div>
-          <h3 className="ksdp-subheading">Chú thích Bảng 2 (tr. 740)</h3>
+          <h3 className="ksdp-subheading">Chú thích</h3>
           <ul className="ksdp-notes">
             {Object.entries(ASHP_TABLE2_FOOTNOTES).map(([k, v]) => <li key={k}><sup>{k}</sup> {v}</li>)}
           </ul>
@@ -221,7 +221,7 @@ export default function KsdpIntl() {
 
       {view === "t1" && (
         <section className="ksdp-panel">
-          <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Bảng 1 – Liều khuyến cáo và khoảng nhắc liều</h2></div>
+          <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Liều khuyến cáo và khoảng nhắc liều</h2></div>
           <div className="ksdp-table-wrap">
             <table className="ksdp-table">
               <thead>
@@ -249,12 +249,12 @@ export default function KsdpIntl() {
               </tbody>
             </table>
           </div>
-          <h3 className="ksdp-subheading">Chú thích Bảng 1</h3>
+          <h3 className="ksdp-subheading">Chú thích</h3>
           <ul className="ksdp-notes">
             {Object.entries(ASHP_DOSE_FOOTNOTES).map(([k, v]) => <li key={k}><sup>{k}</sup> {v}</li>)}
           </ul>
-          <a className="ksdp-link" href={ashpPage(736)} target="_blank" rel="noreferrer">
-            <BookOpen size={16}/> ASHP/IDSA/SIS/SHEA 2013 – Bảng 1, tr. 736
+          <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
+            <BookOpen size={16}/> Nguồn: {SRC}
           </a>
         </section>
       )}
@@ -265,13 +265,13 @@ export default function KsdpIntl() {
             <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Nguyên tắc chung</h2></div>
             {ASHP_PRINCIPLES.map(s => (
               <div key={s.title} className="ksdp-principle">
-                <h3>{s.title} <a href={ashpPage(s.page)} target="_blank" rel="noreferrer">tr. {s.page}</a></h3>
+                <h3>{s.title}</h3>
                 <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
               </div>
             ))}
           </section>
           <section className="ksdp-panel">
-            <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Phụ lục A – Phân loại vết mổ (NHSN)</h2></div>
+            <div className="ksdp-section-title"><span><BookOpen size={16}/></span><h2>Phân loại vết mổ (NHSN)</h2></div>
             <div className="ksdp-table-wrap">
               <table className="ksdp-table">
                 <tbody>
@@ -279,8 +279,8 @@ export default function KsdpIntl() {
                 </tbody>
               </table>
             </div>
-            <a className="ksdp-link" href={ashpPage(818)} target="_blank" rel="noreferrer">
-              <BookOpen size={16}/> ASHP/IDSA/SIS/SHEA 2013 – Phụ lục A, tr. 818
+            <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
+              <BookOpen size={16}/> Nguồn: {SRC}
             </a>
           </section>
         </>

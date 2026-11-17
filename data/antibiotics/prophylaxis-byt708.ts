@@ -225,7 +225,7 @@ export const KSDP_PRINCIPLES: { title: string; page: number; items: string[] }[]
   {
     title: "c) Liều kháng sinh dự phòng",
     page: 40,
-    items: ["Liều KSDP tương đương liều điều trị mạnh nhất của kháng sinh đó (Phụ lục 2)."],
+    items: ["Liều KSDP tương đương liều điều trị mạnh nhất của kháng sinh đó (xem bảng Liều kháng sinh dự phòng)."],
   },
   {
     title: "d) Đường dùng thuốc",
