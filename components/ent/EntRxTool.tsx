@@ -62,6 +62,27 @@ function Table({ doses, computed, inp, tag }: { doses: Dose[]; computed: { doseI
   );
 }
 
+/** Tách dòng thuốc theo từng hướng dẫn: mỗi hướng dẫn một bảng có tiêu đề, không trộn cách dùng giữa các khuyến cáo. */
+function Grouped({ doses, order, computed, inp, lead, notes }: { doses: Dose[]; order: string[]; computed: { doseId: string; text: string }[]; inp: Inputs; lead: (n: number) => string; notes?: Record<string, string> }) {
+  const ids = [...new Set(doses.map((x) => x.citation.sourceId))].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+  return (
+    <>
+      {ids.length > 1 && <p className="ent-warn-mix">{ids.length} hướng dẫn có cách dùng khác nhau: chọn theo một bảng, không dùng lẫn liều giữa các bảng.</p>}
+      {ids.map((sid) => {
+        const g = doses.filter((x) => x.citation.sourceId === sid);
+        return (
+          <div key={sid} className="ent-grp">
+            <p className="ent-grp-h">Theo {short(sid)}</p>
+            {notes?.[sid] && <p className="ent-sub">{notes[sid]}</p>}
+            <p className="ent-lead">{lead(g.length)}</p>
+            <Table doses={g} computed={computed} inp={inp} />
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 export default function EntRxTool({ id, population }: { id: string; population?: ReactNode }) {
   const res = resolveDisease(id);
   const d = res?.data as Disease;
@@ -80,7 +101,11 @@ export default function EntRxTool({ id, population }: { id: string; population?:
   const flags = r.redFlags.filter((f) => f.status === "EXTRACTED" && (f.role === "primary" || noPrimary));
   const baseIsAlg = !firsts.length && algs.length > 0;
   const lead = (n: number, base: boolean) => (base && adds.length ? (n > 1 ? "Chọn một thuốc dưới đây, dùng cùng thuốc phối hợp thêm." : "Dùng cùng thuốc phối hợp thêm bên dưới.") : n > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị.");
-  const tagSrc = (x: Dose) => (x.role === "comparison" ? short(x.citation.sourceId) : "");
+  const order = [...d.primarySources, ...(d.diagnosisSources ?? []), ...d.comparisonSources, ...d.referenceSources];
+  const leadSrc = [...main, ...inlineCmp].map((x) => x.citation.sourceId).sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99))[0];
+  const summaryRows = main.filter((x) => x.citation.sourceId === leadSrc || (x.choiceCitation && main.some((y) => y.citation.sourceId === leadSrc)));
+  const G = (doses: Dose[], ld: (n: number) => string) => <Grouped doses={doses} order={order} computed={v.computed} inp={eff} lead={ld} notes={d.sourceNotes} />;
+  const mono = (n: number) => (n > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị.");
 
   // Nguồn ở cuối: chỉ các nguồn của nội dung đang hiển thị.
   const cites: Citation[] = [
@@ -132,16 +157,16 @@ export default function EntRxTool({ id, population }: { id: string; population?:
             <div className="sa24-dx">
               <p><b>Quyết định</b> {DECISION[r.decision!.value]}</p>
               {previewLabel && <p><b>Điều trị khi</b> {previewLabel.replace(/^Nếu /, "")} – phác đồ dưới đây</p>}
-              {main.length > 0 && <p><b>Phác đồ</b> {regimenSummary(main)}</p>}
+              {main.length > 0 && <p><b>Phác đồ</b> {regimenSummary(summaryRows.length ? summaryRows : main)}{new Set(main.map((x) => x.citation.sourceId)).size > 1 && !main.some((x) => x.choiceCitation) ? ` (theo ${short(leadSrc)})` : ""}</p>}
               {durs.length === 1 && <p><b>Thời gian</b> {durs[0]}</p>}
               <p><b>Hướng dẫn</b> {noPrimary ? "Không có hướng dẫn hội chuyên môn; phác đồ tham khảo UCSF, liều người lớn theo nhãn FDA" : d.primarySources.filter((sid) => src(sid)?.access !== "paywalled").map(short).join("; ")}</p>
             </div>
-            {firsts.length > 0 && (<><h4>Lựa chọn đầu tay</h4><p className="ent-lead">{lead(firsts.length, true)}</p><Table doses={firsts} computed={v.computed} inp={eff} /></>)}
-            {baseIsAlg && (<><h4>Lựa chọn khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, true)}</p><Table doses={algs} computed={v.computed} inp={eff} /></>)}
-            {adds.length > 0 && (<><h4>Phối hợp thêm</h4><p className="ent-lead">Dùng đồng thời với thuốc đã chọn ở trên.</p><Table doses={adds} computed={v.computed} inp={eff} /></>)}
-            {!baseIsAlg && algs.length > 0 && (<><h4>Thay thế khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, false)}</p><Table doses={algs} computed={v.computed} inp={eff} /></>)}
-            {inlineCmp.length > 0 && (<><h4>Phác đồ theo hướng dẫn đối chiếu</h4><p className="ent-lead">{inlineCmp.length > 1 ? "Chọn một thuốc dưới đây; nguồn ghi ở từng dòng." : "Nguồn ghi ở dòng thuốc."}</p><Table doses={inlineCmp} computed={v.computed} inp={eff} tag={tagSrc} /></>)}
-            {fails.length > 0 && (<><h4>Thất bại điều trị</h4><p className="ent-lead">{fails.length > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị."}</p><Table doses={fails} computed={v.computed} inp={eff} tag={tagSrc} /></>)}
+            {firsts.length > 0 && (<><h4>Lựa chọn đầu tay</h4>{G(firsts, (n) => lead(n, true))}</>)}
+            {baseIsAlg && (<><h4>Lựa chọn khi dị ứng beta-lactam</h4>{G(algs, (n) => lead(n, true))}</>)}
+            {adds.length > 0 && (<><h4>Phối hợp thêm</h4>{G(adds, () => "Dùng đồng thời với thuốc đã chọn ở trên.")}</>)}
+            {!baseIsAlg && algs.length > 0 && (<><h4>Thay thế khi dị ứng beta-lactam</h4>{G(algs, (n) => lead(n, false))}</>)}
+            {inlineCmp.length > 0 && (<><h4>Phác đồ theo hướng dẫn đối chiếu</h4>{G(inlineCmp, mono)}</>)}
+            {fails.length > 0 && (<><h4>Thất bại điều trị</h4>{G(fails, mono)}</>)}
             {!main.length && !fails.length && !inlineCmp.length && r.decision && !["no_antibiotic", "test_first"].includes(r.decision.value) && <p className="sa24-tip">{noPrimary && !d.doses.length ? "Không có hướng dẫn hội chuyên môn và phác đồ tham khảo cho đối tượng này trong các nguồn đã có." : "Không có thuốc phù hợp với lựa chọn hiện tại."}</p>}
           </>
         )}
@@ -151,7 +176,7 @@ export default function EntRxTool({ id, population }: { id: string; population?:
       {cmp.length > 0 && (
         <details className="sa24-more">
           <summary>Liều theo hướng dẫn khác ({cmp.length})</summary>
-          <Table doses={cmp} computed={v.computed} inp={eff} tag={(x) => short(x.citation.sourceId)} />
+          {G(cmp, mono)}
         </details>
       )}
 
@@ -176,6 +201,10 @@ export default function EntRxTool({ id, population }: { id: string; population?:
         .ent-rx .ent-flags { border-top: 1px solid #dcebed; padding-top: 8px; font-size: 13px; color: #7c2d12; }
         .ent-rx .ent-flags ul { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; }
         .ent-rx .sa24-src a { color: #087f89; }
+        .ent-rx .ent-warn-mix { margin: 0; font-size: 12.5px; font-weight: 700; color: #9a3412; }
+        .ent-rx .ent-grp { display: grid; gap: 4px; margin-top: 4px; }
+        .ent-rx .ent-grp + .ent-grp { margin-top: 10px; }
+        .ent-rx .ent-grp-h { margin: 0; font-size: 12.5px; font-weight: 800; color: #087f89; text-transform: uppercase; letter-spacing: .02em; }
       `}</style>
     </article>
   );

@@ -178,6 +178,8 @@ export interface Disease {
   doses: Dose[];
   rules: DecisionRule[];
   conflicts: Conflict[];
+  /** Ghi chú ngắn hiển thị dưới tiêu đề bảng của từng nguồn (ví dụ “CDC 2025 ghi cùng liều…”). */
+  sourceNotes?: Record<string, string>;
   /** Nội dung nguồn không nêu – hiển thị "Nguồn không nêu – cần đánh giá lâm sàng". */
   notStated: string[];
   inputs: InputSpec[];

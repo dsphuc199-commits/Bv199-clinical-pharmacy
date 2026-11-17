@@ -632,7 +632,7 @@
       "id": "gas-azithro-idsa",
       "role": "primary",
       "line": "alternative_allergy",
-      "drug": "Azithromycin (IDSA 2012)",
+      "drug": "Azithromycin",
       "dose": "12 mg/kg",
       "route": "uống",
       "interval": "1 lần/ngày",
@@ -667,10 +667,9 @@
       "id": "gas-azithro-cdc",
       "role": "primary",
       "line": "alternative_allergy",
-      "drug": "Azithromycin (CDC 2025)",
-      "dose": "12 mg/kg một lần (tối đa 500 mg), sau đó 6 mg/kg (tối đa 250 mg) 1 lần/ngày trong 4 ngày tiếp theo",
+      "drug": "Azithromycin",
+      "dose": "12 mg/kg 1 lần (tối đa 500 mg), sau đó 6 mg/kg (tối đa 250 mg)",
       "route": "uống",
-      "max": "500 mg (liều đầu); 250 mg (các liều sau)",
       "population": "all",
       "allergy": [
         "nonsevere",
@@ -680,7 +679,8 @@
         "sourceId": "CDC-GAS",
         "locator": "Mục Treatment – penicillin allergy"
       },
-      "status": "EXTRACTED"
+      "status": "EXTRACTED",
+      "interval": "1 lần/ngày trong 4 ngày tiếp theo"
     },
     {
       "id": "gas-clarithro",
@@ -1286,5 +1286,8 @@
     }
   ],
   "dataVersion": "ent-data 0.2.0",
-  "sourcesCheckedOn": "17/11/2026"
+  "sourcesCheckedOn": "17/11/2026",
+  "sourceNotes": {
+    "IDSA-2012-GAS": "CDC 2025 ghi cùng liều cho các thuốc này, trừ azithromycin (bảng CDC riêng)."
+  }
 }
