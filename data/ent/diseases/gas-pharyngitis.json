@@ -231,15 +231,28 @@
       "status": "EXTRACTED"
     },
     {
-      "id": "gas-ucsf",
+      "id": "gas-ucsf-adult-cause",
       "kind": "reference_note",
       "role": "reference",
-      "text": "UCSF viêm họng người lớn: trang trả HTTP 403, chưa trích xuất.",
+      "text": "Người lớn: phần lớn viêm họng do virus (EBV, rhinovirus, coronavirus, adenovirus…), không nên dùng kháng sinh. Liên cầu nhóm A chiếm 5–20%; ít gặp hơn: liên cầu nhóm C và G, Arcanobacterium haemolyticum, Fusobacterium necrophorum; cân nhắc cả nhiễm khuẩn lây truyền qua đường tình dục.",
+      "population": "adult",
       "citation": {
         "sourceId": "UCSF-adult-pharyngitis",
-        "locator": "Không truy cập được"
+        "locator": "Pharyngitis (Adult) – bảng phác đồ (ảnh chụp trang gốc tiếng Anh)"
       },
-      "status": "NOT_VERIFIED"
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-ucsf-adult-treat",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Người lớn: điều trị khi liên cầu nhóm A được xác nhận bằng test kháng nguyên nhanh hoặc cấy, hoặc khi có ít nhất 3/4 tiêu chuẩn lâm sàng (tiền sử sốt, hạch cổ trước sưng đau, không ho, xuất tiết amidan). Lựa chọn đầu: penicillin VK 500 mg uống 2 lần/ngày; thay thế: clindamycin 300 mg uống 3 lần/ngày; thời gian 10 ngày. Chưa ghi nhận kháng penicillin.",
+      "population": "adult",
+      "citation": {
+        "sourceId": "UCSF-adult-pharyngitis",
+        "locator": "Pharyngitis (Adult) – bảng phác đồ (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED"
     },
     {
       "status": "EXTRACTED",
@@ -1122,6 +1135,30 @@
           "citation": {
             "sourceId": "UCSF-peds-resp-head-neck",
             "locator": "Streptococcal Pharyngitis – Alternative therapy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gas-c-clinical-adult",
+      "topic": "Người lớn: điều trị dựa trên tiêu chuẩn lâm sàng không cần xét nghiệm",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "Lấy dịch họng làm RADT và/hoặc cấy vì lâm sàng không phân biệt được với virus (strong, high).",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Khuyến cáo 1, tr. e87"
+          }
+        },
+        {
+          "sourceId": "UCSF-adult-pharyngitis",
+          "year": 2026,
+          "text": "Điều trị khi có xác nhận xét nghiệm hoặc ≥ 3/4 tiêu chuẩn lâm sàng (tài liệu tham khảo của cơ sở).",
+          "citation": {
+            "sourceId": "UCSF-adult-pharyngitis",
+            "locator": "Pharyngitis (Adult) – bảng phác đồ (ảnh chụp trang gốc tiếng Anh)"
           }
         }
       ]

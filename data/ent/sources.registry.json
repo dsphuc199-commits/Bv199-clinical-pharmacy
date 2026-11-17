@@ -241,9 +241,10 @@
       "url": "https://idmp.ucsf.edu/node/11976",
       "population": "Người lớn",
       "scope": "Phác đồ kinh nghiệm của cơ sở (UCSF)",
-      "access": "not_downloaded",
-      "accessNote": "HTTP 403 với curl, trình duyệt headless và WebFetch.",
-      "checkedOn": "17/11/2026"
+      "access": "screenshot",
+      "accessNote": "Trang trả HTTP 403 với công cụ tự động; nội dung chép nguyên văn từ ảnh chụp màn hình trang gốc tiếng Anh do người dùng cung cấp 17/11/2026. Trang không hiện ngày cập nhật; tài liệu dẫn là IDSA 2012 (CID 2012;55:e86–e102).",
+      "checkedOn": "17/11/2026",
+      "file": "guidelines/UCSF-adult-pharyngitis.txt"
     },
     {
       "id": "UCSF-peds-resp-head-neck",
