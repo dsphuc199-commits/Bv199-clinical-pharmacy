@@ -1,0 +1,1406 @@
+{
+  "id": "aom-peds",
+  "title": "Viêm tai giữa cấp trẻ em",
+  "titleEn": "acute otitis media, children",
+  "population": "Trẻ 6 tháng – 12 tuổi, khỏe mạnh, không biến chứng (phạm vi AAP 2013)",
+  "primarySources": [
+    "AAP-2013-AOM",
+    "RedBook-2024-2027"
+  ],
+  "comparisonSources": [
+    "CPS-AOM",
+    "NICE-NG91"
+  ],
+  "referenceSources": [
+    "UCSF-peds-resp-head-neck"
+  ],
+  "scopeNote": "AAP 2013 chỉ áp dụng cho trẻ 6 tháng – 12 tuổi khỏe mạnh; loại trừ ống thông khí, dị tật sọ mặt (kể cả khe hở vòm), hội chứng có bất thường sọ mặt, suy giảm miễn dịch, cấy ốc tai, viêm tai giữa ứ dịch không kèm viêm tai giữa cấp. Red Book 2024–2027 chỉ tham chiếu, không trích liều.",
+  "evidenceGap": [],
+  "redFlags": [
+    {
+      "id": "aom-rf-toxic",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ có biểu hiện nhiễm độc (toxic-appearing), đau tai kéo dài > 48 giờ, sốt ≥ 39 °C trong 48 giờ qua, hoặc khó bảo đảm tái khám: xếp vào nhóm triệu chứng nặng, chỉ định kháng sinh.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 4, chú thích b, tr. e976"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-rf-second-failure",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Thất bại kháng sinh thứ hai: chọc màng nhĩ/dẫn lưu (nếu thành thạo) hoặc hội chẩn chuyên khoa tai mũi họng; vi khuẩn đa kháng: hội chẩn chuyên khoa bệnh truyền nhiễm.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 và chú thích b, tr. e983"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-rf-cps-worse",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Triệu chứng kéo dài hoặc nặng lên sau khi bắt đầu kháng sinh: khám lại để đánh giá biến chứng hoặc viêm tai giữa cấp dai dẳng.",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Mục kháng sinh, đoạn đáp ứng điều trị"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi viêm tai giữa cấp kèm nhiễm khuẩn toàn thân nặng hoặc biến chứng cấp: viêm xương chũm, viêm màng não, áp xe nội sọ, huyết khối xoang tĩnh mạch, liệt dây thần kinh mặt.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.14, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "aom-kas1a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Chẩn đoán viêm tai giữa cấp khi màng nhĩ phồng vừa–nhiều hoặc chảy mủ tai mới xuất hiện không do viêm tai ngoài.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 1A, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas1c",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Không chẩn đoán viêm tai giữa cấp khi không có tràn dịch tai giữa (soi tai khí nén và/hoặc đo nhĩ lượng).",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 1C, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas2",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Đánh giá đau ở mọi trẻ viêm tai giữa cấp; có đau thì điều trị giảm đau.",
+      "strength": "Strong Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 2, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas3a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Kê kháng sinh cho trẻ ≥ 6 tháng có triệu chứng nặng (đau tai vừa–nặng, đau tai ≥ 48 giờ hoặc sốt ≥ 39 °C), một hoặc hai bên.",
+      "strength": "Strong Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3A, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas3b",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Kê kháng sinh cho trẻ 6–23 tháng viêm tai giữa cấp hai bên không có triệu chứng nặng.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3B, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas3c",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ 6–23 tháng viêm tai giữa cấp một bên không có triệu chứng nặng: kê kháng sinh hoặc theo dõi sát, quyết định cùng gia đình; nếu theo dõi phải có cơ chế tái khám và bắt đầu kháng sinh khi nặng lên hoặc không cải thiện sau 48–72 giờ.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3C, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas3d",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ ≥ 24 tháng viêm tai giữa cấp (một hoặc hai bên) không có triệu chứng nặng: kê kháng sinh hoặc theo dõi sát, quyết định cùng gia đình; cần cơ chế tái khám như trên.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3D, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas4a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Khi đã quyết định dùng kháng sinh: amoxicillin, nếu trẻ không dùng amoxicillin trong 30 ngày qua, không viêm kết mạc mủ kèm theo và không dị ứng penicillin.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4A, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas4b",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Dùng kháng sinh phủ thêm beta-lactamase khi trẻ đã dùng amoxicillin trong 30 ngày qua, có viêm kết mạc mủ kèm theo, hoặc có tiền sử viêm tai giữa cấp tái phát không đáp ứng amoxicillin.",
+      "strength": "Recommendation",
+      "quality": "Grade C",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4B, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas4c",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Đánh giá lại khi người chăm sóc báo triệu chứng nặng lên hoặc không đáp ứng kháng sinh ban đầu sau 48–72 giờ, quyết định có đổi thuốc hay không.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4C, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-kas5a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Không kê kháng sinh dự phòng để giảm số đợt ở trẻ viêm tai giữa cấp tái phát.",
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 5A, tr. e965"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-duration",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Thời gian kháng sinh uống: trẻ < 2 tuổi và trẻ có triệu chứng nặng – 10 ngày; 2–5 tuổi, nhẹ hoặc vừa – 7 ngày tương đương; ≥ 6 tuổi, nhẹ hoặc vừa – 5–7 ngày là đủ.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Mục Duration of Therapy, tr. e985"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-allergy-ceph",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Phản ứng chéo giữa penicillin và cephalosporin thế hệ 2, 3 không đáng kể; AAP dẫn khuyến cáo dùng cephalosporin khi không có tiền sử phản ứng dị ứng penicillin nặng và/hoặc gần đây (không có test da).",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Đoạn về dị ứng penicillin, tr. e984",
+        "quote": "without severe and/or recent penicillin allergy reaction history"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-redbook",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Red Book 2024–2027: chỉ tham chiếu; tài liệu trả phí, không trích xuất liều.",
+      "population": "child",
+      "citation": {
+        "sourceId": "RedBook-2024-2027",
+        "locator": "Không trích xuất"
+      },
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "id": "aom-cps-ww",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Trẻ ≥ 6 tháng bệnh nhẹ: theo dõi chờ đợi 48 giờ là một lựa chọn nếu bảo đảm tái khám; tái khám sau 24–48 giờ, hoặc quay lại khi không cải thiện, hoặc kê đơn dự phòng.",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Recommendations"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-treat",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Điều trị kháng sinh khi màng nhĩ phồng kèm sốt ≥ 39 °C và bệnh toàn thân vừa–nặng, hoặc đau tai nhiều, hoặc đã bệnh rõ 48 giờ.",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Recommendations"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-duration",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "5 ngày cho phần lớn trẻ ≥ 2 tuổi không biến chứng; 10 ngày cho trẻ 6–23 tháng, thủng màng nhĩ hoặc viêm tai giữa cấp tái phát.",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Recommendations"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-allergy",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Tiền sử quá mẫn với amoxicillin/penicillin: dùng cephalosporin thế hệ 2 (cefprozil, cefuroxime-axetil) hoặc thế hệ 3, trừ khi phản ứng trước đe dọa tính mạng (phù mạch, co thắt phế quản, tụt huyết áp); macrolide/azalide hoặc clindamycin là lựa chọn khác nhưng diệt khuẩn kém hơn beta-lactam.",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Mục lựa chọn kháng sinh"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-conj",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Viêm tai giữa cấp kèm viêm kết mạc mủ: ưu tiên amoxicillin-clavulanate hoặc cephalosporin thế hệ 2 (cefuroxime-axetil).",
+      "population": "child",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Mục lựa chọn kháng sinh"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-pain",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Dùng đều paracetamol hoặc ibuprofen để giảm đau, đúng liều theo tuổi hoặc cân nặng; dùng liều tối đa khi đau nhiều.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.4, tr. 5"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-drops",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Cân nhắc thuốc nhỏ tai phenazone 40 mg/g + lidocaine 10 mg/g (4 giọt, 2–3 lần/ngày, tối đa 7 ngày) để giảm đau khi không kê kháng sinh uống ngay và không thủng màng nhĩ hoặc chảy mủ tai.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.5, tr. 5; Bảng 1, tr. 9"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-118",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Trẻ không thuộc các nhóm ở khuyến cáo 1.1.11–1.1.14: cân nhắc không kê kháng sinh hoặc kê đơn dự phòng (back-up), dùng nếu không bắt đầu cải thiện trong 3 ngày hoặc nặng lên nhanh, rõ rệt.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.8, 1.1.10, tr. 6–7"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-1111",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Trẻ chảy mủ tai (mọi lứa tuổi) hoặc trẻ < 2 tuổi viêm tai giữa cấp hai bên: cân nhắc không kê kháng sinh, kê đơn dự phòng hoặc kê kháng sinh ngay.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.11, tr. 7"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-1113",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Toàn thân rất mệt, có triệu chứng và dấu hiệu bệnh nặng hơn hoặc nguy cơ cao biến chứng: kê kháng sinh ngay.",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Khuyến cáo 1.1.13, tr. 8"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-ucsf-observe",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Theo dõi ban đầu không kháng sinh 48–72 giờ ở trẻ có miễn dịch bình thường: 6 tháng–2 tuổi viêm một bên, không chảy mủ tai, triệu chứng không nặng; hoặc ≥ 2 tuổi không chảy mủ tai, triệu chứng không nặng; cần bảo đảm tái khám và bắt đầu kháng sinh khi không cải thiện. Triệu chứng nặng: đau tai vừa–nặng hoặc > 48 giờ, hoặc sốt ≥ 39 °C.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Otitis Media – First-choice therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-ucsf-amox",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Không đủ tiêu chuẩn theo dõi: amoxicillin 45 mg/kg/lần (tối đa 1000 mg/lần) uống 2 lần/ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Otitis Media – First-choice therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-ucsf-amoxclav",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Đã dùng amoxicillin trong 30 ngày, viêm kết mạc mủ, tái phát không đáp ứng amoxicillin, hoặc không đáp ứng amoxicillin sau 48–72 giờ: amoxicillin-clavulanate 45 mg amoxicillin/kg/lần (tối đa 1000 mg amoxicillin/lần) uống 2 lần/ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Otitis Media – Alternative therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-ucsf-allergy",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Dị ứng penicillin nguy cơ thấp: cephalosporin uống; nguy cơ cao: theo hướng dẫn AAP/AAFP hoặc hội chẩn nhóm quản lý kháng sinh (ASP). Không khuyến cáo azithromycin. Thất bại điều trị uống: theo hướng dẫn AAP/AAFP.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Otitis Media – Alternative therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-ucsf-duration",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Thời gian beta-lactam: < 2 tuổi hoặc triệu chứng nặng – 10 ngày; 2–5 tuổi – 7 ngày; > 5 tuổi – 5 ngày. Giảm đau cho mọi trẻ.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Otitis Media – Comments"
+      }
+    }
+  ],
+  "doses": [
+    {
+      "id": "aom-amox",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin",
+      "dose": "80–90 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "duration": "< 2 tuổi hoặc triệu chứng nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "amoxRecent",
+          "op": "falsy"
+        }
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          80,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "strength": "Recommendation",
+      "quality": "Grade B",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5, tr. e983; KAS 4A, tr. e965; thời gian tr. e985"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-amoxclav",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin-clavulanate",
+      "dose": "amoxicillin 90 mg/kg/ngày + clavulanate 6,4 mg/kg/ngày (tỷ lệ 14:1)",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "duration": "như amoxicillin",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Đã dùng amoxicillin trong 30 ngày qua, hoặc viêm kết mạc mủ kèm theo, hoặc tái phát không đáp ứng amoxicillin",
+      "when": [
+        {
+          "field": "amoxRecent",
+          "op": "truthy"
+        }
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          90,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "strength": "Recommendation",
+      "quality": "Grade C",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 và chú thích a, tr. e983; KAS 4B, tr. e965"
+      },
+      "status": "EXTRACTED",
+      "note": "Liều tính theo amoxicillin."
+    },
+    {
+      "id": "aom-cefdinir",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Cefdinir",
+      "dose": "14 mg/kg/ngày",
+      "route": "uống",
+      "interval": "1 hoặc 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          14,
+          14
+        ],
+        "dosesPerDay": [
+          1,
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983; tr. e984"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cefuroxime",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Cefuroxime",
+      "dose": "30 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          30,
+          30
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cefpodoxime",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Cefpodoxime",
+      "dose": "10 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          10,
+          10
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 (dị ứng penicillin), tr. e983"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-ceftriaxone-allergy",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg",
+      "route": "tiêm bắp hoặc tĩnh mạch",
+      "interval": "1 lần/ngày",
+      "duration": "1 hoặc 3 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          1
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5, tr. e983 (bảng in “50 mg”); liều 50 mg/kg theo văn bản tr. e984"
+      },
+      "status": "EXTRACTED",
+      "note": "Bảng 5 in “50 mg IM or IV” không có “/kg”; văn bản cùng tài liệu (tr. e984) ghi 50 mg/kg."
+    },
+    {
+      "id": "aom-fail-amoxclav",
+      "role": "primary",
+      "line": "failure",
+      "drug": "Amoxicillin-clavulanate",
+      "dose": "amoxicillin 90 mg/kg/ngày + clavulanate 6,4 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "condition": "Thất bại sau 48–72 giờ kháng sinh ban đầu",
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          90,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 (thất bại 48–72 giờ), tr. e983"
+      },
+      "status": "EXTRACTED",
+      "note": "Liều tính theo amoxicillin."
+    },
+    {
+      "id": "aom-fail-ceftriaxone",
+      "role": "primary",
+      "line": "failure",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg",
+      "route": "tiêm bắp hoặc tĩnh mạch",
+      "interval": "1 lần/ngày",
+      "duration": "3 ngày",
+      "population": "child",
+      "condition": "Thất bại sau 48–72 giờ kháng sinh ban đầu",
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          1
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5, tr. e983 (bảng in “50 mg”); liều 50 mg/kg theo văn bản tr. e984"
+      },
+      "status": "EXTRACTED",
+      "note": "Bảng 5 in “50 mg” không có “/kg”; văn bản tr. e984 ghi 50 mg/kg."
+    },
+    {
+      "id": "aom-fail-clinda",
+      "role": "primary",
+      "line": "failure_alternative",
+      "drug": "Clindamycin, có hoặc không kèm cephalosporin thế hệ 3",
+      "dose": "clindamycin 30–40 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 3 lần/ngày",
+      "population": "child",
+      "condition": "Thất bại kháng sinh ban đầu; thất bại kháng sinh thứ hai: clindamycin kèm cephalosporin thế hệ 3, chọc màng nhĩ, hội chẩn chuyên khoa",
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          30,
+          40
+        ],
+        "dosesPerDay": [
+          3
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5 (thay thế khi thất bại), tr. e983"
+      },
+      "status": "EXTRACTED",
+      "note": "Liều cephalosporin thế hệ 3 phối hợp: nguồn không nêu."
+    },
+    {
+      "id": "aom-cps-amox-bid",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Amoxicillin",
+      "dose": "75–90 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          75,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1; Recommendations"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-amox-tid",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Amoxicillin",
+      "dose": "45–60 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 3 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          45,
+          60
+        ],
+        "dosesPerDay": [
+          3
+        ]
+      },
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1; Recommendations"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-cefuroxime",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Cefuroxime-axetil",
+      "dose": "30 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 hoặc 3 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "condition": "Dị ứng penicillin, phản ứng không đe dọa tính mạng",
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          30,
+          30
+        ],
+        "dosesPerDay": [
+          2,
+          3
+        ]
+      },
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-ceftriaxone",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg",
+      "route": "tiêm bắp (hoặc tĩnh mạch)",
+      "interval": "1 lần/ngày",
+      "duration": "3 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          1
+        ]
+      },
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-fail-amoxclav",
+      "role": "comparison",
+      "line": "failure",
+      "drug": "Amoxicillin-clavulanate (công thức 7:1)",
+      "dose": "≤ 35 kg: 45–60 mg/kg/ngày; > 35 kg: viên 500 mg",
+      "route": "uống",
+      "interval": "≤ 35 kg: chia 3 lần/ngày; > 35 kg: 3 lần/ngày",
+      "duration": "10 ngày",
+      "population": "child",
+      "condition": "Thất bại điều trị ban đầu (không cải thiện sau 2–3 ngày)",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "aom-cps-fail-ceftriaxone",
+      "role": "comparison",
+      "line": "failure",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg/ngày",
+      "route": "tiêm bắp (hoặc tĩnh mạch)",
+      "interval": "1 lần/ngày",
+      "duration": "3 ngày",
+      "population": "child",
+      "condition": "Không dung nạp đường uống hoặc thất bại amoxicillin-clavulanate",
+      "citation": {
+        "sourceId": "CPS-AOM",
+        "locator": "Bảng 1"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-amox",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Amoxicillin",
+      "dose": "1–11 tháng: 125 mg; 1–4 tuổi: 250 mg; 5–17 tuổi: 500 mg",
+      "route": "uống",
+      "interval": "3 lần/ngày",
+      "duration": "5–7 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Lựa chọn đầu tay (liều theo tuổi, trẻ có kích thước trung bình)",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Bảng 1, tr. 9"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-clari",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Clarithromycin",
+      "dose": "1 tháng–11 tuổi: < 8 kg 7,5 mg/kg; 8–11 kg 62,5 mg; 12–19 kg 125 mg; 20–29 kg 187,5 mg; 30–40 kg 250 mg. 12–17 tuổi: 250–500 mg",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "5–7 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng hoặc không dung nạp penicillin, không mang thai",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Bảng 1, tr. 9"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-ery",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Erythromycin",
+      "dose": "8–17 tuổi: 250–500 mg 4 lần/ngày hoặc 500–1000 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5–7 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Bảng 1, tr. 10"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "aom-nice-coamox",
+      "role": "comparison",
+      "line": "failure",
+      "drug": "Co-amoxiclav",
+      "dose": "1–11 tháng: 0,25 ml/kg hỗn dịch 125/31; 1–5 tuổi: 5 ml hỗn dịch 125/31 hoặc 0,25 ml/kg hỗn dịch 125/31; 6–11 tuổi: 5 ml hỗn dịch 250/62 hoặc 0,15 ml/kg hỗn dịch 250/62; 12–17 tuổi: 250/125 mg hoặc 500/125 mg",
+      "route": "uống",
+      "interval": "3 lần/ngày",
+      "duration": "5–7 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Lựa chọn thứ hai: nặng lên sau ít nhất 2–3 ngày dùng thuốc đầu tay; dị ứng hoặc không dung nạp penicillin: hỏi ý kiến bác sĩ vi sinh tại chỗ",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Bảng 1, tr. 10"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "aom-r-failure",
+      "when": [
+        {
+          "field": "failure",
+          "op": "truthy"
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "aom-fail-amoxclav",
+        "aom-fail-ceftriaxone",
+        "aom-fail-clinda",
+        "aom-cps-fail-amoxclav",
+        "aom-cps-fail-ceftriaxone",
+        "aom-nice-coamox"
+      ],
+      "statementIds": [
+        "aom-kas4c"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4C, tr. e965; Bảng 5, tr. e983"
+      }
+    },
+    {
+      "id": "aom-r-otorrhea",
+      "when": [
+        {
+          "field": "otorrhea",
+          "op": "truthy"
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "aom-amox",
+        "aom-amoxclav",
+        "aom-cefdinir",
+        "aom-cefuroxime",
+        "aom-cefpodoxime",
+        "aom-ceftriaxone-allergy",
+        "aom-cps-amox-bid",
+        "aom-cps-amox-tid",
+        "aom-cps-cefuroxime",
+        "aom-cps-ceftriaxone",
+        "aom-nice-amox",
+        "aom-nice-clari",
+        "aom-nice-ery"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 4 (chảy mủ tai), tr. e976"
+      }
+    },
+    {
+      "id": "aom-r-severe",
+      "when": [
+        {
+          "field": "severe",
+          "op": "truthy"
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "aom-amox",
+        "aom-amoxclav",
+        "aom-cefdinir",
+        "aom-cefuroxime",
+        "aom-cefpodoxime",
+        "aom-ceftriaxone-allergy",
+        "aom-cps-amox-bid",
+        "aom-cps-amox-tid",
+        "aom-cps-cefuroxime",
+        "aom-cps-ceftriaxone",
+        "aom-nice-amox",
+        "aom-nice-clari",
+        "aom-nice-ery"
+      ],
+      "statementIds": [
+        "aom-kas3a"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3A, tr. e965; Bảng 4, tr. e976"
+      }
+    },
+    {
+      "id": "aom-r-young-bilateral",
+      "when": [
+        {
+          "field": "ageMonths",
+          "op": "lt",
+          "value": 24
+        },
+        {
+          "field": "laterality",
+          "op": "eq",
+          "value": "bilateral"
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "aom-amox",
+        "aom-amoxclav",
+        "aom-cefdinir",
+        "aom-cefuroxime",
+        "aom-cefpodoxime",
+        "aom-ceftriaxone-allergy",
+        "aom-cps-amox-bid",
+        "aom-cps-amox-tid",
+        "aom-cps-cefuroxime",
+        "aom-cps-ceftriaxone",
+        "aom-nice-amox",
+        "aom-nice-clari",
+        "aom-nice-ery"
+      ],
+      "statementIds": [
+        "aom-kas3b"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3B, tr. e965; Bảng 4, tr. e976"
+      }
+    },
+    {
+      "id": "aom-r-young-unilateral",
+      "when": [
+        {
+          "field": "ageMonths",
+          "op": "lt",
+          "value": 24
+        },
+        {
+          "field": "laterality",
+          "op": "eq",
+          "value": "unilateral"
+        }
+      ],
+      "decision": "antibiotic_or_observe",
+      "doseIds": [
+        "aom-amox",
+        "aom-amoxclav",
+        "aom-cefdinir",
+        "aom-cefuroxime",
+        "aom-cefpodoxime",
+        "aom-ceftriaxone-allergy",
+        "aom-cps-amox-bid",
+        "aom-cps-amox-tid",
+        "aom-cps-cefuroxime",
+        "aom-cps-ceftriaxone",
+        "aom-nice-amox",
+        "aom-nice-clari",
+        "aom-nice-ery"
+      ],
+      "statementIds": [
+        "aom-kas3c"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3C, tr. e965; Bảng 4, tr. e976"
+      }
+    },
+    {
+      "id": "aom-r-older",
+      "when": [
+        {
+          "field": "ageMonths",
+          "op": "gte",
+          "value": 24
+        },
+        {
+          "field": "laterality",
+          "op": "in",
+          "value": [
+            "unilateral",
+            "bilateral"
+          ]
+        }
+      ],
+      "decision": "antibiotic_or_observe",
+      "doseIds": [
+        "aom-amox",
+        "aom-amoxclav",
+        "aom-cefdinir",
+        "aom-cefuroxime",
+        "aom-cefpodoxime",
+        "aom-ceftriaxone-allergy",
+        "aom-cps-amox-bid",
+        "aom-cps-amox-tid",
+        "aom-cps-cefuroxime",
+        "aom-cps-ceftriaxone",
+        "aom-nice-amox",
+        "aom-nice-clari",
+        "aom-nice-ery"
+      ],
+      "statementIds": [
+        "aom-kas3d"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3D, tr. e965; Bảng 4, tr. e976"
+      }
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "aom-c-amox-dose",
+      "topic": "Liều amoxicillin",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-AOM",
+          "year": 2013,
+          "text": "80–90 mg/kg/ngày, chia 2 lần.",
+          "citation": {
+            "sourceId": "AAP-2013-AOM",
+            "locator": "Bảng 5, tr. e983"
+          }
+        },
+        {
+          "sourceId": "CPS-AOM",
+          "year": 2016,
+          "text": "75–90 mg/kg/ngày chia 2 lần, hoặc 45–60 mg/kg/ngày chia 3 lần.",
+          "citation": {
+            "sourceId": "CPS-AOM",
+            "locator": "Bảng 1"
+          }
+        },
+        {
+          "sourceId": "NICE-NG91",
+          "year": 2018,
+          "text": "Liều theo tuổi: 1–11 tháng 125 mg; 1–4 tuổi 250 mg; 5–17 tuổi 500 mg; 3 lần/ngày.",
+          "citation": {
+            "sourceId": "NICE-NG91",
+            "locator": "Bảng 1, tr. 9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "aom-c-duration",
+      "topic": "Thời gian điều trị",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-AOM",
+          "year": 2013,
+          "text": "< 2 tuổi hoặc nặng: 10 ngày; 2–5 tuổi nhẹ–vừa: 7 ngày; ≥ 6 tuổi nhẹ–vừa: 5–7 ngày.",
+          "citation": {
+            "sourceId": "AAP-2013-AOM",
+            "locator": "tr. e985"
+          }
+        },
+        {
+          "sourceId": "CPS-AOM",
+          "year": 2016,
+          "text": "≥ 2 tuổi không biến chứng: 5 ngày; 6–23 tháng, thủng màng nhĩ, tái phát: 10 ngày.",
+          "citation": {
+            "sourceId": "CPS-AOM",
+            "locator": "Recommendations"
+          }
+        },
+        {
+          "sourceId": "NICE-NG91",
+          "year": 2018,
+          "text": "5–7 ngày.",
+          "citation": {
+            "sourceId": "NICE-NG91",
+            "locator": "Bảng 1, tr. 9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "aom-c-allergy",
+      "topic": "Dị ứng penicillin và cephalosporin",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-AOM",
+          "year": 2013,
+          "text": "Cephalosporin khi không có tiền sử phản ứng nặng và/hoặc gần đây; không nêu phác đồ đầu tay riêng cho dị ứng nặng.",
+          "citation": {
+            "sourceId": "AAP-2013-AOM",
+            "locator": "tr. e984"
+          }
+        },
+        {
+          "sourceId": "CPS-AOM",
+          "year": 2016,
+          "text": "Cephalosporin thế hệ 2, 3 chấp nhận được trừ phản ứng đe dọa tính mạng; macrolide/azalide hoặc clindamycin là lựa chọn khác (không nêu liều).",
+          "citation": {
+            "sourceId": "CPS-AOM",
+            "locator": "Mục lựa chọn kháng sinh"
+          }
+        }
+      ]
+    },
+    {
+      "id": "aom-c-bilateral",
+      "topic": "Trẻ < 2 tuổi viêm tai giữa cấp hai bên, không có triệu chứng nặng",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-AOM",
+          "year": 2013,
+          "text": "Trẻ 6–23 tháng: kê kháng sinh (Recommendation, Grade B).",
+          "citation": {
+            "sourceId": "AAP-2013-AOM",
+            "locator": "KAS 3B, tr. e965"
+          }
+        },
+        {
+          "sourceId": "NICE-NG91",
+          "year": 2018,
+          "text": "Cân nhắc không kê kháng sinh, kê đơn dự phòng hoặc kê kháng sinh ngay.",
+          "citation": {
+            "sourceId": "NICE-NG91",
+            "locator": "Khuyến cáo 1.1.11, tr. 7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "aom-c-otorrhea",
+      "topic": "Viêm tai giữa cấp có chảy mủ tai",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-AOM",
+          "year": 2013,
+          "text": "Kê kháng sinh (mọi nhóm tuổi trong phạm vi).",
+          "citation": {
+            "sourceId": "AAP-2013-AOM",
+            "locator": "Bảng 4, tr. e976"
+          }
+        },
+        {
+          "sourceId": "NICE-NG91",
+          "year": 2018,
+          "text": "Cân nhắc không kê kháng sinh, kê đơn dự phòng hoặc kê kháng sinh ngay.",
+          "citation": {
+            "sourceId": "NICE-NG91",
+            "locator": "Khuyến cáo 1.1.11, tr. 7"
+          }
+        }
+      ]
+    }
+  ],
+  "notStated": [
+    "Liều tối đa amoxicillin, amoxicillin-clavulanate (AAP 2013, CPS)",
+    "Phác đồ đầu tay cho dị ứng penicillin nặng (AAP 2013)",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện",
+    "Trẻ < 6 tháng tuổi (ngoài phạm vi)"
+  ],
+  "inputs": [
+    {
+      "field": "ageMonths",
+      "label": "Tuổi",
+      "type": "number",
+      "min": 6,
+      "max": 144,
+      "unit": "tháng",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Phạm vi 6 tháng – 12 tuổi, tr. e965; Bảng 4, tr. e976"
+      }
+    },
+    {
+      "field": "weightKg",
+      "label": "Cân nặng",
+      "type": "number",
+      "min": 3,
+      "max": 80,
+      "unit": "kg",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Liều mg/kg, Bảng 5, tr. e983"
+      }
+    },
+    {
+      "field": "laterality",
+      "label": "Vị trí",
+      "type": "select",
+      "options": [
+        {
+          "value": "unilateral",
+          "label": "Một bên"
+        },
+        {
+          "value": "bilateral",
+          "label": "Hai bên"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 4, tr. e976"
+      }
+    },
+    {
+      "field": "otorrhea",
+      "label": "Chảy mủ tai",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 4, tr. e976"
+      }
+    },
+    {
+      "field": "severe",
+      "label": "Triệu chứng nặng (đau tai vừa–nặng hoặc ≥ 48 giờ, hoặc sốt ≥ 39 °C)",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 3A, tr. e965"
+      }
+    },
+    {
+      "field": "allergy",
+      "label": "Dị ứng penicillin",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "nonsevere",
+          "label": "Không nặng"
+        },
+        {
+          "value": "severe",
+          "label": "Nặng và/hoặc gần đây"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "Bảng 5, tr. e983; tr. e984"
+      }
+    },
+    {
+      "field": "amoxRecent",
+      "label": "Dùng amoxicillin trong 30 ngày, viêm kết mạc mủ, hoặc tái phát không đáp ứng amoxicillin",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4B, tr. e965"
+      }
+    },
+    {
+      "field": "failure",
+      "label": "Thất bại sau 48–72 giờ kháng sinh ban đầu",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-AOM",
+        "locator": "KAS 4C, tr. e965; Bảng 5, tr. e983"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

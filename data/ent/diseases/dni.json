@@ -1,0 +1,70 @@
+{
+  "id": "dni",
+  "title": "Nhiễm khuẩn khoang cổ sâu (người lớn)",
+  "titleEn": "deep neck infection",
+  "population": "Người lớn",
+  "primarySources": [],
+  "comparisonSources": [
+    "NICE-NG84"
+  ],
+  "referenceSources": [
+    "UCSF-adult-PTA-deepneck"
+  ],
+  "evidenceGap": [
+    "Không có hướng dẫn hội chuyên môn cho nhiễm khuẩn khoang cổ sâu người lớn trong danh mục nguồn; không có phác đồ khuyến cáo.",
+    "Nội dung UCSF là phác đồ kinh nghiệm của một cơ sở, không ghi liều, chỉ để tham khảo.",
+    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh."
+  ],
+  "redFlags": [
+    {
+      "status": "EXTRACTED",
+      "id": "dni-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi đau họng cấp kèm nhiễm khuẩn toàn thân nặng hoặc biến chứng mủ nặng: áp xe quanh amidan (quinsy) hoặc viêm mô tế bào, áp xe cạnh họng, áp xe sau họng, hội chứng Lemierre.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.13, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "dni-ucsf",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu): tác nhân thường gặp liên cầu nhóm A, vi khuẩn kỵ khí miệng, S. aureus. Lựa chọn đầu: ampicillin/sulbactam, có hoặc không kèm vancomycin (cân nhắc vancomycin khi nguy cơ MRSA cao). Dị ứng beta-lactam nặng: clindamycin, có hoặc không kèm vancomycin. Thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm.",
+      "population": "adult",
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Bảng phác đồ (ảnh chụp)",
+        "quote": "Often polymicrobial"
+      },
+      "status": "EXTRACTED"
+    }
+  ],
+  "doses": [],
+  "rules": [
+    {
+      "id": "dni-r-noprimary",
+      "when": [],
+      "decision": "no_primary",
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Bảng phác đồ (ảnh chụp)"
+      }
+    }
+  ],
+  "conflicts": [],
+  "notStated": [
+    "Phác đồ kháng sinh khuyến cáo của hội chuyên môn",
+    "Liều thuốc",
+    "Mang thai",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện"
+  ],
+  "inputs": [],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# tai lieu nguon module ENT (khong commit)
+guidelines/

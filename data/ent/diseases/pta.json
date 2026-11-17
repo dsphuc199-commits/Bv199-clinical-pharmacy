@@ -1,0 +1,109 @@
+{
+  "id": "pta",
+  "title": "Áp xe quanh amidan",
+  "titleEn": "peritonsillar abscess",
+  "population": "Người lớn và trẻ em",
+  "primarySources": [],
+  "diagnosisSources": [
+    "IDSA-2025-GAS-part1"
+  ],
+  "comparisonSources": [
+    "CDC-GAS",
+    "NICE-NG84"
+  ],
+  "referenceSources": [
+    "UCSF-adult-PTA-deepneck",
+    "UCSF-peds-PTA-RPA"
+  ],
+  "evidenceGap": [
+    "Không có hướng dẫn hội chuyên môn chuyên biệt cho áp xe quanh amidan trong danh mục nguồn; không có phác đồ khuyến cáo.",
+    "CDC chỉ nêu áp xe quanh amidan là biến chứng mủ của viêm họng do liên cầu nhóm A, không nêu điều trị.",
+    "Nội dung UCSF là phác đồ kinh nghiệm của một cơ sở, chỉ để tham khảo.",
+    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh."
+  ],
+  "redFlags": [
+    {
+      "status": "EXTRACTED",
+      "id": "pta-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi đau họng cấp kèm nhiễm khuẩn toàn thân nặng hoặc biến chứng mủ nặng: áp xe quanh amidan (quinsy) hoặc viêm mô tế bào, áp xe cạnh họng, áp xe sau họng, hội chứng Lemierre.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.13, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "pta-cdc",
+      "kind": "evidence",
+      "role": "comparison",
+      "text": "Áp xe quanh amidan là biến chứng mủ hiếm của viêm họng do liên cầu nhóm A, hay gặp hơn sau nhiễm khuẩn không được điều trị.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Complications"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "pta-idsa25",
+      "kind": "recommendation",
+      "role": "diagnosis",
+      "text": "Đau họng kèm dấu hiệu nghi áp xe quanh amidan: xếp nhóm nguy cơ cao, cân nhắc mạnh xét nghiệm liên cầu nhóm A dù điểm lâm sàng thấp.",
+      "citation": {
+        "sourceId": "IDSA-2025-GAS-part1",
+        "locator": "Recommendation – Remarks"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "pta-ucsf-adult",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu): tác nhân thường gặp liên cầu nhóm A, vi khuẩn kỵ khí miệng, S. aureus. Lựa chọn đầu: ampicillin/sulbactam, có hoặc không kèm vancomycin (cân nhắc vancomycin khi nguy cơ MRSA cao). Dị ứng beta-lactam nặng: clindamycin, có hoặc không kèm vancomycin. Thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm. Trang không ghi liều trong bảng.",
+      "population": "adult",
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Bảng phác đồ (ảnh chụp)",
+        "quote": "Ampicillin/sulbactam WITH OR WITHOUT* Vancomycin"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "pta-ucsf-peds",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF nhi khoa: nội trú ampicillin-sulbactam 50 mg ampicillin/kg/lần (tối đa 2000 mg ampicillin/lần) tĩnh mạch mỗi 6 giờ; thêm vancomycin khi tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm hay mang MRSA đã ghi nhận trong 6 tháng qua. Ngoại trú/xuống thang: amoxicillin-clavulanate 45 mg amoxicillin/kg/lần (tối đa 1000 mg amoxicillin/lần) uống 2 lần/ngày. Dị ứng penicillin hoặc cephalosporin nguy cơ cao: clindamycin 10 mg/kg/lần (tối đa 900 mg/lần) tĩnh mạch mỗi 8 giờ, hoặc clindamycin 10 mg/kg/lần (tối đa 600 mg/lần) uống 3 lần/ngày. Hội chẩn khẩn tai mũi họng–phẫu thuật đầu cổ để đánh giá nhu cầu kiểm soát ổ nhiễm. Thời gian 10–14 ngày tùy mức độ và đáp ứng; đã dùng vancomycin mà ổ áp xe dẫn lưu không phân lập được MRSA thì ngừng vancomycin. Nếu chọn điều trị không phẫu thuật ban đầu: ưu tiên phác đồ phổ hẹp (không vancomycin) để thuận lợi chuyển đường uống. Hội chẩn bệnh truyền nhiễm khi suy giảm miễn dịch, biểu hiện không điển hình, diễn biến mạn tính hoặc không đáp ứng điều trị đầu tay.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy; Alternative Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED"
+    }
+  ],
+  "doses": [],
+  "rules": [
+    {
+      "id": "pta-r-noprimary",
+      "when": [],
+      "decision": "no_primary",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Complications"
+      }
+    }
+  ],
+  "conflicts": [],
+  "notStated": [
+    "Phác đồ kháng sinh khuyến cáo của hội chuyên môn",
+    "Mang thai",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện"
+  ],
+  "inputs": [],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

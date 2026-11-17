@@ -12,7 +12,8 @@
     "validate:guidelines": "tsx scripts/validate-guidelines.ts",
     "build:intl-index": "tsx scripts/build-intl-index.ts",
     "build:intl-reference": "tsx scripts/build-intl-reference.ts",
-    "build:guideline-jobs": "tsx scripts/build-guideline-jobs.ts"
+    "build:guideline-jobs": "tsx scripts/build-guideline-jobs.ts",
+    "test:ent": "node tests/ent/ent-test.cjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",

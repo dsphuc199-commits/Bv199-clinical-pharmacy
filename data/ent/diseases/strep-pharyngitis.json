@@ -1,0 +1,22 @@
+{
+  "id": "strep-pharyngitis",
+  "title": "Viêm họng liên cầu",
+  "titleEn": "streptococcal pharyngitis",
+  "population": "Trẻ em và người lớn",
+  "primarySources": ["IDSA-2012-GAS", "CDC-GAS"],
+  "diagnosisSources": ["IDSA-2025-GAS-part1"],
+  "comparisonSources": ["NICE-NG84"],
+  "referenceSources": ["UCSF-adult-pharyngitis"],
+  "crossRef": "gas-pharyngitis",
+  "scopeNote": "Chỉ áp dụng khi xác định là liên cầu nhóm A; không sinh phác đồ cho nhóm khác. Dữ liệu dùng chung với trang Viêm họng do liên cầu nhóm A (không nhân đôi).",
+  "evidenceGap": [],
+  "redFlags": [],
+  "statements": [],
+  "doses": [],
+  "rules": [],
+  "conflicts": [],
+  "notStated": ["Viêm họng do liên cầu không thuộc nhóm A: các nguồn đã tải không nêu phác đồ"],
+  "inputs": [],
+  "dataVersion": "ent-data 0.1.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

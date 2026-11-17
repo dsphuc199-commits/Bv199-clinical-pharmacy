@@ -1,0 +1,39 @@
+{
+  "id": "aom-adult",
+  "title": "Viêm tai giữa cấp người lớn",
+  "titleEn": "acute otitis media, adults",
+  "population": "Người lớn",
+  "primarySources": [],
+  "comparisonSources": [],
+  "referenceSources": [],
+  "evidenceGap": [
+    "NICE NG91 chỉ áp dụng cho trẻ em và thanh thiếu niên < 18 tuổi; không ngoại suy cho người lớn.",
+    "AAP 2013 (6 tháng – 12 tuổi) và CPS (trẻ ≥ 6 tháng) chỉ áp dụng cho trẻ em; không dùng để suy ra phác đồ người lớn.",
+    "Danh mục nguồn không có hướng dẫn hội chuyên môn cho viêm tai giữa cấp người lớn."
+  ],
+  "redFlags": [],
+  "statements": [],
+  "doses": [],
+  "rules": [
+    {
+      "id": "aomad-r-noprimary",
+      "when": [],
+      "decision": "no_primary",
+      "citation": {
+        "sourceId": "NICE-NG91",
+        "locator": "Bảng 1 (trẻ em và thanh thiếu niên < 18 tuổi), tr. 9"
+      }
+    }
+  ],
+  "conflicts": [],
+  "notStated": [
+    "Phác đồ kháng sinh khuyến cáo",
+    "Liều thuốc",
+    "Mang thai",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc"
+  ],
+  "inputs": [],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

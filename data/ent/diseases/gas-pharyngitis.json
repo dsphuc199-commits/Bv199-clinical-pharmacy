@@ -1,0 +1,1235 @@
+{
+  "id": "gas-pharyngitis",
+  "title": "Viêm họng do liên cầu nhóm A",
+  "titleEn": "group A streptococcal pharyngitis",
+  "population": "Trẻ em và người lớn",
+  "primarySources": [
+    "IDSA-2012-GAS",
+    "CDC-GAS"
+  ],
+  "diagnosisSources": [
+    "IDSA-2025-GAS-part1"
+  ],
+  "comparisonSources": [
+    "NICE-NG84"
+  ],
+  "referenceSources": [
+    "UCSF-adult-pharyngitis",
+    "UCSF-peds-resp-head-neck"
+  ],
+  "scopeNote": "IDSA 2025 là Part 1 (đánh giá nguy cơ bằng thang điểm lâm sàng), chưa có phần điều trị; điều trị và liều theo IDSA 2012 và CDC.",
+  "evidenceGap": [],
+  "redFlags": [
+    {
+      "id": "gas-rf-suppurative",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Nghi biến chứng mủ (áp xe quanh amidan, áp xe sau họng, viêm hạch cổ mủ, viêm xương chũm): xem trang bệnh tương ứng; biến chứng hay gặp hơn sau nhiễm khuẩn không được điều trị.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Complications"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-rf-highrisk",
+      "kind": "recommendation",
+      "role": "diagnosis",
+      "text": "Người nguy cơ cao (tiếp xúc hộ gia đình với ca liên cầu nhóm A, tiền sử thấp tim, nghi nhiễm khuẩn tại chỗ hoặc toàn thân có biến chứng như áp xe quanh amidan/sau họng, tinh hồng nhiệt, hội chứng sốc nhiễm độc): cân nhắc mạnh việc xét nghiệm dù điểm lâm sàng thấp.",
+      "citation": {
+        "sourceId": "IDSA-2025-GAS-part1",
+        "locator": "Recommendation – Remarks (cập nhật 14/10/2025)"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi đau họng cấp kèm nhiễm khuẩn toàn thân nặng hoặc biến chứng mủ nặng: áp xe quanh amidan (quinsy) hoặc viêm mô tế bào, áp xe cạnh họng, áp xe sau họng, hội chứng Lemierre.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.13, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "gas-idsa25-score",
+      "kind": "recommendation",
+      "role": "diagnosis",
+      "text": "Dùng thang điểm lâm sàng để quyết định xét nghiệm liên cầu nhóm A ở trẻ em và người lớn đau họng.",
+      "strength": "conditional recommendation",
+      "quality": "very low certainty of evidence",
+      "citation": {
+        "sourceId": "IDSA-2025-GAS-part1",
+        "locator": "Recommendation: Risk Assessment Using Clinical Scoring Systems",
+        "quote": "we suggest using a clinical scoring system"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa25-part1",
+      "kind": "evidence",
+      "role": "diagnosis",
+      "text": "IDSA 2025 là Part 1 của bản cập nhật hướng dẫn 2012; các vấn đề khác (gồm điều trị) sẽ được đề cập ở các bản cập nhật sau.",
+      "citation": {
+        "sourceId": "IDSA-2025-GAS-part1",
+        "locator": "Introduction"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r1",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Lấy dịch họng làm test kháng nguyên nhanh (RADT) và/hoặc cấy, vì lâm sàng không phân biệt được liên cầu nhóm A với virus, trừ khi có biểu hiện virus rõ (sổ mũi, ho, loét miệng, khàn tiếng). Trẻ em và vị thành niên có RADT âm tính: cấy lại xác nhận.",
+      "strength": "strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 1 (mục I), tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r2",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Người lớn có RADT âm tính: không cần cấy lại thường quy.",
+      "strength": "strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 2, tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r5",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ < 3 tuổi: không chỉ định xét nghiệm liên cầu nhóm A thường quy; cân nhắc khi có yếu tố nguy cơ (ví dụ anh chị em nhiễm liên cầu nhóm A).",
+      "strength": "strong",
+      "quality": "moderate",
+      "population": "child",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 5, tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r6",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Không xét nghiệm lại thường quy sau điều trị.",
+      "strength": "strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 6, tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r8",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Điều trị viêm họng do liên cầu nhóm A bằng kháng sinh phù hợp, đủ liều, đủ thời gian diệt vi khuẩn ở họng (thường 10 ngày); penicillin hoặc amoxicillin là lựa chọn cho người không dị ứng.",
+      "strength": "strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 8 (mục III), tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r9",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Dị ứng penicillin: cephalosporin thế hệ 1 (khi không có phản vệ) 10 ngày, clindamycin hoặc clarithromycin 10 ngày, hoặc azithromycin 5 ngày.",
+      "strength": "strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 9, tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-adj",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Có thể dùng thuốc giảm đau, hạ sốt (acetaminophen hoặc NSAID) hỗ trợ khi triệu chứng vừa–nặng hoặc sốt cao; tránh aspirin ở trẻ em (strong, moderate); không khuyến cáo corticosteroid hỗ trợ (weak, moderate).",
+      "strength": "strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 10, tr. e87"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-idsa12-r13",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Không cắt amidan chỉ để giảm số đợt viêm họng do liên cầu nhóm A.",
+      "strength": "strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 13, tr. e88"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-cdc-treat",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Mọi lứa tuổi có RADT hoặc cấy họng dương tính cần kháng sinh; không dùng kháng sinh cho viêm họng do virus.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Treatment",
+        "quote": "need antibiotics. Don't treat viral pharyngitis with antibiotics"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-cdc-diag",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Có biểu hiện virus: chẩn đoán lâm sàng, không cần xét nghiệm liên cầu nhóm A. Trẻ ≥ 3 tuổi có triệu chứng và RADT âm tính: cấy họng xác nhận; các lứa tuổi khác không cần cấy lại thường quy.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Diagnosis"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-cdc-allergy",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Tránh cefalexin và cefadroxil ở người quá mẫn tức thì với penicillin.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Treatment – penicillin allergy"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-cdc-resistance",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Chưa ghi nhận liên cầu nhóm A kháng penicillin hoặc cephalosporin; kháng azithromycin, clarithromycin, clindamycin thay đổi theo địa lý và thời gian.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Treatment – resistance"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-ucsf",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF viêm họng người lớn: trang trả HTTP 403, chưa trích xuất.",
+      "citation": {
+        "sourceId": "UCSF-adult-pharyngitis",
+        "locator": "Không truy cập được"
+      },
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-scores",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Dùng thang điểm FeverPAIN hoặc Centor để xác định người có khả năng hưởng lợi từ kháng sinh. FeverPAIN 0–1 hoặc Centor 0–2: không kê kháng sinh. FeverPAIN 2–3: cân nhắc không kê hoặc kê đơn dự phòng (back-up), dùng nếu không bắt đầu cải thiện trong 3–5 ngày. FeverPAIN 4–5 hoặc Centor 3–4: cân nhắc kê ngay hoặc kê đơn dự phòng.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.3, 1.1.6–1.1.10, tr. 5–7"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-unwell",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Toàn thân rất mệt, có triệu chứng và dấu hiệu bệnh nặng hơn hoặc nguy cơ cao biến chứng: kê kháng sinh ngay.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.12, tr. 8"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-rapid",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Không khuyến cáo áp dụng thường quy test nhanh liên cầu nhóm A cho người đau họng.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Mục 1.1 (sau khuyến cáo 1.1.5), tr. 5"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-steroid",
+      "kind": "evidence",
+      "role": "comparison",
+      "text": "Hội đồng không khuyến cáo corticosteroid để điều trị đau họng cấp (bệnh tự giới hạn, lo ngại an toàn và nguy cơ điều trị lặp lại).",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Committee discussion on corticosteroids, tr. 15"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-criteria",
+      "kind": "evidence",
+      "role": "comparison",
+      "text": "FeverPAIN (mỗi tiêu chí 1 điểm, tối đa 5): sốt trong 24 giờ qua; mủ trên amidan; đến khám sớm (trong 3 ngày từ khởi phát); amidan viêm nhiều; không ho hoặc sổ mũi. Centor (tối đa 4): xuất tiết amidan; hạch cổ trước sưng đau hoặc viêm hạch; tiền sử sốt > 38 °C; không ho.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Terms used in the guideline, tr. 27"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-ucsf-amox",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Trẻ em: amoxicillin 50 mg/kg/lần (tối đa 1000 mg/lần) uống 1 lần/ngày. Dự kiến khó dung nạp hoặc khó tuân thủ đường uống: benzathine penicillin G tiêm bắp 1 liều – cân nặng < 27 kg: 600 000 đơn vị; > 27 kg: 1,2 triệu đơn vị.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Streptococcal Pharyngitis – First choice therapy"
+      },
+      "note": "UCSF ghi “< 27 kg” và “> 27 kg”; IDSA 2012 và CDC ghi ngưỡng ≥ 27 kg."
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-ucsf-allergy",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Trẻ em dị ứng penicillin nguy cơ thấp: cephalexin 25 mg/kg/lần (tối đa 500 mg/lần) uống 2 lần/ngày; nguy cơ cao: clindamycin 7 mg/kg/lần (tối đa 300 mg/lần) uống 3 lần/ngày. Không khuyến cáo azithromycin. Beta-lactam uống (không áp dụng cho benzathine penicillin): 10 ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Streptococcal Pharyngitis – Alternative therapy; Comments"
+      }
+    }
+  ],
+  "doses": [
+    {
+      "id": "gas-penv-child",
+      "role": "primary",
+      "line": "first",
+      "drug": "Penicillin V",
+      "dose": "250 mg",
+      "route": "uống",
+      "interval": "2 hoặc 3 lần/ngày",
+      "duration": "10 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "lt3",
+            "child"
+          ]
+        }
+      ],
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 (trẻ em)"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-penv-adult",
+      "role": "primary",
+      "line": "first",
+      "drug": "Penicillin V",
+      "dose": "250 mg 4 lần/ngày hoặc 500 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "10 ngày",
+      "population": "adult",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "adolescent",
+            "adult"
+          ]
+        }
+      ],
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 (vị thành niên và người lớn)"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-amox-qd",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin",
+      "dose": "50 mg/kg",
+      "route": "uống",
+      "interval": "1 lần/ngày",
+      "duration": "10 ngày",
+      "max": "1000 mg",
+      "population": "all",
+      "allergy": [
+        "none"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          1
+        ],
+        "maxPerDoseMg": 1000
+      },
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-amox-bid",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin (cách dùng thay thế)",
+      "dose": "25 mg/kg",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "10 ngày",
+      "max": "500 mg/lần",
+      "population": "all",
+      "allergy": [
+        "none"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          25,
+          25
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 500
+      },
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-bpg-lt27",
+      "role": "primary",
+      "line": "first",
+      "drug": "Benzathine penicillin G",
+      "dose": "600 000 U, 1 liều",
+      "route": "tiêm bắp",
+      "population": "all",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Cân nặng < 27 kg",
+      "when": [
+        {
+          "field": "weightKg",
+          "op": "lt",
+          "value": 27
+        }
+      ],
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-bpg-ge27",
+      "role": "primary",
+      "line": "first",
+      "drug": "Benzathine penicillin G",
+      "dose": "1 200 000 U, 1 liều",
+      "route": "tiêm bắp",
+      "population": "all",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Cân nặng ≥ 27 kg",
+      "when": [
+        {
+          "field": "weightKg",
+          "op": "gte",
+          "value": 27
+        }
+      ],
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-cefalexin",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Cefalexin",
+      "dose": "20 mg/kg/lần",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "10 ngày",
+      "max": "500 mg/lần",
+      "population": "all",
+      "allergy": [
+        "nonsevere"
+      ],
+      "condition": "Tránh ở người quá mẫn tức thì với penicillin",
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          20,
+          20
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 500
+      },
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 và chú thích b"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-cefadroxil",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Cefadroxil",
+      "dose": "30 mg/kg",
+      "route": "uống",
+      "interval": "1 lần/ngày",
+      "duration": "10 ngày",
+      "max": "1 g",
+      "population": "all",
+      "allergy": [
+        "nonsevere"
+      ],
+      "condition": "Tránh ở người quá mẫn tức thì với penicillin",
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          30,
+          30
+        ],
+        "dosesPerDay": [
+          1
+        ],
+        "maxPerDoseMg": 1000
+      },
+      "strength": "Strong",
+      "quality": "high",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 và chú thích b"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-clinda",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Clindamycin",
+      "dose": "7 mg/kg/lần",
+      "route": "uống",
+      "interval": "3 lần/ngày",
+      "duration": "10 ngày",
+      "max": "300 mg/lần",
+      "population": "all",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          7,
+          7
+        ],
+        "dosesPerDay": [
+          3
+        ],
+        "maxPerDoseMg": 300
+      },
+      "strength": "Strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều."
+    },
+    {
+      "id": "gas-azithro-idsa",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Azithromycin (IDSA 2012)",
+      "dose": "12 mg/kg",
+      "route": "uống",
+      "interval": "1 lần/ngày",
+      "duration": "5 ngày",
+      "max": "500 mg",
+      "population": "all",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          12,
+          12
+        ],
+        "dosesPerDay": [
+          1
+        ],
+        "maxPerDoseMg": 500
+      },
+      "strength": "Strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 và chú thích c"
+      },
+      "status": "EXTRACTED",
+      "note": "Kháng thuốc thay đổi theo địa lý và thời gian."
+    },
+    {
+      "id": "gas-azithro-cdc",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Azithromycin (CDC 2025)",
+      "dose": "12 mg/kg một lần (tối đa 500 mg), sau đó 6 mg/kg (tối đa 250 mg) 1 lần/ngày trong 4 ngày tiếp theo",
+      "route": "uống",
+      "max": "500 mg (liều đầu); 250 mg (các liều sau)",
+      "population": "all",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Treatment – penicillin allergy"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "gas-clarithro",
+      "role": "primary",
+      "line": "alternative_allergy",
+      "drug": "Clarithromycin",
+      "dose": "7,5 mg/kg/lần",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "10 ngày",
+      "max": "250 mg/lần",
+      "population": "all",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          7.5,
+          7.5
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 250
+      },
+      "strength": "Strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2, tr. e89 và chú thích c"
+      },
+      "status": "EXTRACTED",
+      "note": "CDC (2025) ghi cùng liều. Kháng thuốc thay đổi theo địa lý và thời gian."
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-penv-adult",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Phenoxymethylpenicillin",
+      "dose": "500 mg 4 lần/ngày hoặc 1000 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5–10 ngày",
+      "population": "adult",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Người lớn ≥ 18 tuổi",
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Bảng 1, tr. 9"
+      },
+      "note": "5 ngày có thể đủ để khỏi triệu chứng; liệu trình 10 ngày có thể tăng khả năng khỏi về vi sinh."
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-penv-child",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Phenoxymethylpenicillin",
+      "dose": "1–11 tháng: 62,5 mg 4 lần/ngày hoặc 125 mg 2 lần/ngày; 1–5 tuổi: 125 mg 4 lần/ngày hoặc 250 mg 2 lần/ngày; 6–11 tuổi: 250 mg 4 lần/ngày hoặc 500 mg 2 lần/ngày; 12–17 tuổi: 500 mg 4 lần/ngày hoặc 1000 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5–10 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Trẻ em và thanh thiếu niên < 18 tuổi (liều theo tuổi, trẻ có kích thước trung bình)",
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "lt3",
+            "child",
+            "adolescent"
+          ]
+        }
+      ],
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Bảng 2, tr. 10"
+      },
+      "note": "5 ngày có thể đủ để khỏi triệu chứng; liệu trình 10 ngày có thể tăng khả năng khỏi về vi sinh."
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-clari-adult",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Clarithromycin",
+      "dose": "250–500 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5 ngày",
+      "population": "adult",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng hoặc không dung nạp penicillin, không mang thai",
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Bảng 1, tr. 9"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-clari-child",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Clarithromycin",
+      "dose": "1 tháng–11 tuổi: < 8 kg 7,5 mg/kg; 8–11 kg 62,5 mg; 12–19 kg 125 mg; 20–29 kg 187,5 mg; 30–40 kg 250 mg. 12–17 tuổi: 250–500 mg",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "5 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng hoặc không dung nạp penicillin, không mang thai",
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "lt3",
+            "child",
+            "adolescent"
+          ]
+        }
+      ],
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Bảng 2, tr. 10"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "gas-nice-ery",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Erythromycin",
+      "dose": "Người lớn; trẻ 8–17 tuổi: 250–500 mg 4 lần/ngày hoặc 500–1000 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5 ngày",
+      "population": "all",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Bảng 1, tr. 10; Bảng 2, tr. 11"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "gas-r-viral",
+      "when": [
+        {
+          "field": "viralFeatures",
+          "op": "truthy"
+        }
+      ],
+      "decision": "no_antibiotic",
+      "statementIds": [
+        "gas-cdc-diag",
+        "gas-cdc-treat"
+      ],
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Diagnosis; mục Treatment"
+      }
+    },
+    {
+      "id": "gas-r-positive",
+      "when": [
+        {
+          "field": "testResult",
+          "op": "eq",
+          "value": "positive"
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "gas-penv-child",
+        "gas-penv-adult",
+        "gas-amox-qd",
+        "gas-amox-bid",
+        "gas-bpg-lt27",
+        "gas-bpg-ge27",
+        "gas-cefalexin",
+        "gas-cefadroxil",
+        "gas-clinda",
+        "gas-azithro-idsa",
+        "gas-azithro-cdc",
+        "gas-clarithro",
+        "gas-nice-penv-adult",
+        "gas-nice-penv-child",
+        "gas-nice-clari-adult",
+        "gas-nice-clari-child",
+        "gas-nice-ery"
+      ],
+      "statementIds": [
+        "gas-cdc-treat",
+        "gas-idsa12-r8"
+      ],
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Treatment"
+      }
+    },
+    {
+      "id": "gas-r-neg-child",
+      "when": [
+        {
+          "field": "testResult",
+          "op": "eq",
+          "value": "negative"
+        },
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "child",
+            "adolescent"
+          ]
+        }
+      ],
+      "decision": "test_first",
+      "statementIds": [
+        "gas-idsa12-r1",
+        "gas-cdc-diag"
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 1, tr. e87"
+      }
+    },
+    {
+      "id": "gas-r-neg-adult",
+      "when": [
+        {
+          "field": "testResult",
+          "op": "eq",
+          "value": "negative"
+        },
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "adult",
+            "lt3"
+          ]
+        }
+      ],
+      "decision": "no_antibiotic",
+      "statementIds": [
+        "gas-idsa12-r2",
+        "gas-cdc-treat"
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 2, tr. e87"
+      }
+    },
+    {
+      "id": "gas-r-untested-lt3",
+      "when": [
+        {
+          "field": "testResult",
+          "op": "eq",
+          "value": "not_tested"
+        },
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "lt3"
+        }
+      ],
+      "decision": "test_first",
+      "statementIds": [
+        "gas-idsa12-r5"
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 5, tr. e87"
+      }
+    },
+    {
+      "id": "gas-r-untested",
+      "when": [
+        {
+          "field": "testResult",
+          "op": "eq",
+          "value": "not_tested"
+        }
+      ],
+      "decision": "test_first",
+      "statementIds": [
+        "gas-idsa12-r1",
+        "gas-idsa25-score"
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 1, tr. e87"
+      }
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "gas-c-azithro",
+      "topic": "Phác đồ azithromycin",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "12 mg/kg 1 lần/ngày (tối đa 500 mg) × 5 ngày.",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Bảng 2, tr. e89"
+          }
+        },
+        {
+          "sourceId": "CDC-GAS",
+          "year": 2025,
+          "text": "12 mg/kg ngày 1 (tối đa 500 mg), sau đó 6 mg/kg (tối đa 250 mg) 1 lần/ngày × 4 ngày.",
+          "citation": {
+            "sourceId": "CDC-GAS",
+            "locator": "Mục Treatment – penicillin allergy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gas-c-testing",
+      "topic": "Xét nghiệm liên cầu nhóm A",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "RADT và/hoặc cấy họng vì lâm sàng không phân biệt được với virus, trừ khi có biểu hiện virus rõ (strong, high).",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Khuyến cáo 1, tr. e87"
+          }
+        },
+        {
+          "sourceId": "NICE-NG84",
+          "year": 2018,
+          "text": "Dùng FeverPAIN hoặc Centor để quyết định kháng sinh; không khuyến cáo áp dụng thường quy test nhanh liên cầu nhóm A.",
+          "citation": {
+            "sourceId": "NICE-NG84",
+            "locator": "Khuyến cáo 1.1.3; mục 1.1, tr. 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gas-c-duration",
+      "topic": "Thời gian penicillin đường uống",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "Penicillin V hoặc amoxicillin 10 ngày.",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Bảng 2, tr. e89"
+          }
+        },
+        {
+          "sourceId": "NICE-NG84",
+          "year": 2018,
+          "text": "Phenoxymethylpenicillin 5–10 ngày (5 ngày có thể đủ để khỏi triệu chứng; 10 ngày có thể tăng khả năng khỏi về vi sinh).",
+          "citation": {
+            "sourceId": "NICE-NG84",
+            "locator": "Bảng 1, tr. 9; Bảng 2, tr. 10"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gas-c-macrolide",
+      "topic": "Macrolide khi dị ứng penicillin",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "Azithromycin 12 mg/kg (tối đa 500 mg) × 5 ngày hoặc clarithromycin 7,5 mg/kg/lần (tối đa 250 mg/lần) 2 lần/ngày × 10 ngày (strong, moderate).",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Bảng 2, tr. e89"
+          }
+        },
+        {
+          "sourceId": "NICE-NG84",
+          "year": 2018,
+          "text": "Clarithromycin × 5 ngày; erythromycin khi mang thai.",
+          "citation": {
+            "sourceId": "NICE-NG84",
+            "locator": "Bảng 1, tr. 9; Bảng 2, tr. 10"
+          }
+        },
+        {
+          "sourceId": "UCSF-peds-resp-head-neck",
+          "year": 2026,
+          "text": "Trẻ em: không khuyến cáo azithromycin (tài liệu tham khảo của cơ sở).",
+          "citation": {
+            "sourceId": "UCSF-peds-resp-head-neck",
+            "locator": "Streptococcal Pharyngitis – Alternative therapy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gas-c-cefalexin",
+      "topic": "Cefalexin cho trẻ dị ứng penicillin",
+      "sides": [
+        {
+          "sourceId": "IDSA-2012-GAS",
+          "year": 2012,
+          "text": "20 mg/kg/lần 2 lần/ngày (tối đa 500 mg/lần) × 10 ngày.",
+          "citation": {
+            "sourceId": "IDSA-2012-GAS",
+            "locator": "Bảng 2, tr. e89"
+          }
+        },
+        {
+          "sourceId": "UCSF-peds-resp-head-neck",
+          "year": 2026,
+          "text": "25 mg/kg/lần (tối đa 500 mg/lần) 2 lần/ngày (tài liệu tham khảo của cơ sở).",
+          "citation": {
+            "sourceId": "UCSF-peds-resp-head-neck",
+            "locator": "Streptococcal Pharyngitis – Alternative therapy"
+          }
+        }
+      ]
+    }
+  ],
+  "notStated": [
+    "Mang thai",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện",
+    "Ngưỡng tuổi số học giữa trẻ em và vị thành niên cho liều penicillin V"
+  ],
+  "inputs": [
+    {
+      "field": "ageGroup",
+      "label": "Nhóm tuổi",
+      "type": "select",
+      "options": [
+        {
+          "value": "lt3",
+          "label": "Trẻ < 3 tuổi"
+        },
+        {
+          "value": "child",
+          "label": "Trẻ em ≥ 3 tuổi"
+        },
+        {
+          "value": "adolescent",
+          "label": "Vị thành niên"
+        },
+        {
+          "value": "adult",
+          "label": "Người lớn"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 1, 2, 5; Bảng 2"
+      }
+    },
+    {
+      "field": "weightKg",
+      "label": "Cân nặng",
+      "type": "number",
+      "min": 3,
+      "max": 200,
+      "unit": "kg",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Bảng 2 (mg/kg; ngưỡng 27 kg)"
+      }
+    },
+    {
+      "field": "viralFeatures",
+      "label": "Biểu hiện virus rõ (sổ mũi, ho, loét miệng, khàn tiếng)",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 1"
+      }
+    },
+    {
+      "field": "testResult",
+      "label": "RADT/cấy họng",
+      "type": "select",
+      "options": [
+        {
+          "value": "not_tested",
+          "label": "Chưa xét nghiệm"
+        },
+        {
+          "value": "positive",
+          "label": "Dương tính"
+        },
+        {
+          "value": "negative",
+          "label": "RADT âm tính"
+        }
+      ],
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Diagnosis; mục Treatment"
+      }
+    },
+    {
+      "field": "allergy",
+      "label": "Dị ứng penicillin",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "nonsevere",
+          "label": "Có – không phải quá mẫn tức thì"
+        },
+        {
+          "value": "severe",
+          "label": "Quá mẫn tức thì / phản vệ"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-GAS",
+        "locator": "Khuyến cáo 9; Bảng 2 chú thích b"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

@@ -1,0 +1,120 @@
+{
+  "id": "rpa",
+  "title": "Áp xe sau họng",
+  "titleEn": "retropharyngeal abscess",
+  "population": "Trẻ em (nội dung tham khảo UCSF nhi khoa)",
+  "primarySources": [],
+  "diagnosisSources": [
+    "IDSA-2025-GAS-part1"
+  ],
+  "comparisonSources": [
+    "CDC-GAS",
+    "NICE-NG84"
+  ],
+  "referenceSources": [
+    "UCSF-peds-PTA-RPA",
+    "UCSF-adult-PTA-deepneck"
+  ],
+  "evidenceGap": [
+    "Không có hướng dẫn hội chuyên môn chuyên biệt cho áp xe sau họng trong danh mục nguồn; không có phác đồ khuyến cáo.",
+    "CDC chỉ nêu áp xe sau họng là biến chứng mủ của viêm họng do liên cầu nhóm A, không nêu điều trị.",
+    "Trang UCSF người lớn chỉ ghi áp xe quanh amidan và nhiễm khuẩn khoang cổ sâu, không ghi riêng áp xe sau họng.",
+    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh."
+  ],
+  "redFlags": [
+    {
+      "id": "rpa-rf-airway",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Tắc nghẽn đường thở: UCSF nhi khoa nêu là tình huống thêm vancomycin vào phác đồ; hội chẩn khẩn tai mũi họng–phẫu thuật đầu cổ để đánh giá nhu cầu kiểm soát ổ nhiễm.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "First Choice Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "rpa-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi đau họng cấp kèm nhiễm khuẩn toàn thân nặng hoặc biến chứng mủ nặng: áp xe quanh amidan (quinsy) hoặc viêm mô tế bào, áp xe cạnh họng, áp xe sau họng, hội chứng Lemierre.",
+      "citation": {
+        "sourceId": "NICE-NG84",
+        "locator": "Khuyến cáo 1.1.13, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "rpa-cdc",
+      "kind": "evidence",
+      "role": "comparison",
+      "text": "Áp xe sau họng là biến chứng mủ hiếm của viêm họng do liên cầu nhóm A, hay gặp hơn sau nhiễm khuẩn không được điều trị.",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Complications"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "rpa-idsa25",
+      "kind": "recommendation",
+      "role": "diagnosis",
+      "text": "Đau họng kèm dấu hiệu nghi áp xe sau họng: xếp nhóm nguy cơ cao, cân nhắc mạnh xét nghiệm liên cầu nhóm A dù điểm lâm sàng thấp.",
+      "citation": {
+        "sourceId": "IDSA-2025-GAS-part1",
+        "locator": "Recommendation – Remarks"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "rpa-ucsf-peds",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF nhi khoa: nội trú ampicillin-sulbactam 50 mg ampicillin/kg/lần (tối đa 2000 mg ampicillin/lần) tĩnh mạch mỗi 6 giờ; thêm vancomycin khi tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm hay mang MRSA đã ghi nhận trong 6 tháng qua. Ngoại trú/xuống thang: amoxicillin-clavulanate 45 mg amoxicillin/kg/lần (tối đa 1000 mg amoxicillin/lần) uống 2 lần/ngày. Dị ứng penicillin hoặc cephalosporin nguy cơ cao: clindamycin 10 mg/kg/lần (tối đa 900 mg/lần) tĩnh mạch mỗi 8 giờ, hoặc clindamycin 10 mg/kg/lần (tối đa 600 mg/lần) uống 3 lần/ngày. Hội chẩn khẩn tai mũi họng–phẫu thuật đầu cổ để đánh giá nhu cầu kiểm soát ổ nhiễm. Thời gian 10–14 ngày tùy mức độ và đáp ứng; đã dùng vancomycin mà ổ áp xe dẫn lưu không phân lập được MRSA thì ngừng vancomycin. Nếu chọn điều trị không phẫu thuật ban đầu: ưu tiên phác đồ phổ hẹp (không vancomycin) để thuận lợi chuyển đường uống. Hội chẩn bệnh truyền nhiễm khi suy giảm miễn dịch, biểu hiện không điển hình, diễn biến mạn tính hoặc không đáp ứng điều trị đầu tay.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy; Alternative Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "rpa-ucsf-adult",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu): ampicillin/sulbactam, có hoặc không kèm vancomycin; dị ứng beta-lactam nặng: clindamycin, có hoặc không kèm vancomycin; khuyến nghị hội chẩn bệnh truyền nhiễm. Không ghi riêng áp xe sau họng, không ghi liều.",
+      "population": "adult",
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Bảng phác đồ (ảnh chụp)"
+      },
+      "status": "EXTRACTED"
+    }
+  ],
+  "doses": [],
+  "rules": [
+    {
+      "id": "rpa-r-noprimary",
+      "when": [],
+      "decision": "no_primary",
+      "citation": {
+        "sourceId": "CDC-GAS",
+        "locator": "Mục Complications"
+      }
+    }
+  ],
+  "conflicts": [],
+  "notStated": [
+    "Phác đồ kháng sinh khuyến cáo của hội chuyên môn",
+    "Mang thai",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện"
+  ],
+  "inputs": [],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

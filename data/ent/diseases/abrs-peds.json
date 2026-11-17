@@ -1,0 +1,1052 @@
+{
+  "id": "abrs-peds",
+  "title": "Viêm xoang cấp do vi khuẩn trẻ em",
+  "titleEn": "acute bacterial sinusitis, children",
+  "population": "Trẻ 1–18 tuổi (phạm vi AAP 2013)",
+  "primarySources": [
+    "AAP-2013-sinusitis"
+  ],
+  "comparisonSources": [
+    "EPOS-2020",
+    "IDSA-2012-ABRS",
+    "NICE-NG79"
+  ],
+  "referenceSources": [
+    "UCSF-peds-resp-head-neck"
+  ],
+  "scopeNote": "Chẩn đoán theo AAP 2013 khi trẻ có nhiễm khuẩn hô hấp trên kèm một trong ba biểu hiện: kéo dài (chảy mũi bất kỳ tính chất hoặc ho ban ngày > 10 ngày không cải thiện), diễn biến xấu đi (nặng lên hoặc xuất hiện mới chảy mũi, ho ban ngày, sốt sau khi đã cải thiện), khởi phát nặng (sốt ≥ 39 °C kèm chảy mũi mủ ≥ 3 ngày liên tiếp).",
+  "evidenceGap": [],
+  "redFlags": [
+    {
+      "id": "abrsp-rf-ct",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Nghi biến chứng hốc mắt hoặc thần kinh trung ương: chụp CT xoang có cản quang.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Tóm tắt, tr. e262; KAS 2B"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-rf-toxic",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ bệnh cấp nặng, biểu hiện nhiễm độc: hội chẩn tai mũi họng để chọc hút xoang hàm, hoặc điều trị nội trú cefotaxime/ceftriaxone tĩnh mạch và chuyển tai mũi họng nếu nặng lên hoặc không cải thiện sau 48 giờ.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e272"
+      },
+      "status": "EXTRACTED",
+      "note": "Nguồn không nêu liều cefotaxime/ceftriaxone tĩnh mạch cho tình huống này."
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-rf-nice-refer",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Chuyển viện khi: nhiễm khuẩn toàn thân nặng; biến chứng trong hoặc quanh hốc mắt (phù hoặc viêm mô tế bào quanh hốc mắt, lệch nhãn cầu, nhìn đôi, liệt vận nhãn, giảm thị lực mới xuất hiện); biến chứng nội sọ (sưng vùng xương trán, dấu hiệu viêm màng não, đau đầu vùng trán dữ dội, dấu hiệu thần kinh khu trú).",
+      "population": "child",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Khuyến cáo 1.1.9, tr. 8"
+      }
+    }
+  ],
+  "statements": [
+    {
+      "id": "abrsp-kas3a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Kê kháng sinh cho trẻ viêm xoang cấp do vi khuẩn khởi phát nặng hoặc diễn biến xấu đi.",
+      "strength": "Strong Recommendation",
+      "quality": "Evidence Quality: B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 3A, tr. e267"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-kas3b",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Trẻ bệnh kéo dài (chảy mũi hoặc ho ≥ 10 ngày không cải thiện): kê kháng sinh hoặc theo dõi ngoại trú thêm 3 ngày.",
+      "strength": "Recommendation",
+      "quality": "Evidence Quality: B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 3B, tr. e268"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-kas4",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Khi đã quyết định dùng kháng sinh: amoxicillin có hoặc không kèm clavulanate là lựa chọn đầu tay.",
+      "strength": "Recommendation",
+      "quality": "Evidence Quality: B",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 4, tr. e269"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-kas5a",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Đánh giá lại khi người chăm sóc báo nặng lên hoặc không cải thiện trong 72 giờ sau xử trí ban đầu.",
+      "strength": "Recommendation",
+      "quality": "Evidence Quality: C",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 5A, tr. e273"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-kas5b",
+      "kind": "recommendation",
+      "role": "primary",
+      "text": "Xác định viêm xoang cấp do vi khuẩn ở trẻ nặng lên hoặc không cải thiện sau 72 giờ: có thể đổi kháng sinh (trẻ đang dùng kháng sinh) hoặc bắt đầu kháng sinh (trẻ đang theo dõi).",
+      "strength": "Option",
+      "quality": "Evidence Quality: D",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 5B, tr. e273"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-duration",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Thời gian điều trị tối ưu chưa được nghiên cứu hệ thống; đề xuất được nêu: tiếp tục kháng sinh 7 ngày sau khi hết triệu chứng (tối thiểu 10 ngày).",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271, e273"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-allergy",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Dị ứng amoxicillin không type 1 (muộn, > 72 giờ) và cả tiền sử phản ứng type 1 nặng: có thể dùng cefdinir, cefuroxime hoặc cefpodoxime; có thể chuyển chuyên khoa dị ứng làm test da. Trẻ < 2 tuổi dị ứng type 1 nặng, bệnh vừa trở lên: có thể phối hợp clindamycin (hoặc linezolid) với cefixime, hoặc dùng levofloxacin.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED",
+      "note": "Nguồn không nêu liều cefdinir, cefuroxime, cefpodoxime, clindamycin, linezolid, cefixime, levofloxacin cho viêm xoang."
+    },
+    {
+      "id": "abrsp-no-tmp",
+      "kind": "evidence",
+      "role": "primary",
+      "text": "Không dùng trimethoprim-sulfamethoxazole và azithromycin cho viêm xoang cấp do vi khuẩn ở người dị ứng penicillin do tỷ lệ kháng.",
+      "population": "child",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-amoxclav",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Amoxicillin-clavulanate thay vì amoxicillin đơn thuần cho viêm xoang cấp do vi khuẩn ở trẻ em.",
+      "strength": "strong",
+      "quality": "moderate",
+      "population": "child",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Khuyến cáo 3, tr. e2"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-duration",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Trẻ em: thời gian 10–14 ngày vẫn được khuyến cáo.",
+      "strength": "weak",
+      "quality": "low-moderate",
+      "population": "child",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Khuyến cáo 15, tr. e3"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-epos",
+      "kind": "evidence",
+      "role": "comparison",
+      "text": "Dữ liệu về hiệu quả kháng sinh trong viêm xoang cấp do vi khuẩn ở trẻ em rất hạn chế: hai nghiên cứu nhỏ không cho thấy khác biệt có ý nghĩa so với giả dược nhưng tăng tác dụng bất lợi.",
+      "quality": "1a (-)",
+      "population": "child",
+      "citation": {
+        "sourceId": "EPOS-2020",
+        "locator": "Bảng 1.4.5, tr. 9"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-le10",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Triệu chứng khoảng 10 ngày hoặc ít hơn: không kê kháng sinh.",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Khuyến cáo 1.1.1, tr. 6"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-ge10",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Triệu chứng khoảng 10 ngày trở lên không cải thiện: cân nhắc không kê kháng sinh hoặc kê đơn dự phòng (back-up), dùng nếu không cải thiện trong 7 ngày hoặc nặng lên nhanh, rõ rệt; trẻ ≥ 12 tuổi: cân nhắc corticosteroid xịt mũi liều cao 14 ngày.",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Khuyến cáo 1.1.4–1.1.6, tr. 6–7"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-immediate",
+      "kind": "recommendation",
+      "role": "comparison",
+      "text": "Bất kỳ thời điểm nào, nếu toàn thân rất mệt, có triệu chứng và dấu hiệu bệnh nặng hơn hoặc nguy cơ cao biến chứng: kê kháng sinh ngay.",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Khuyến cáo 1.1.8, tr. 8"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-ucsf-observe",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Theo dõi ban đầu không kháng sinh nếu chẩn đoán chỉ dựa vào chảy mũi hoặc ho kéo dài; nhiều trẻ tự cải thiện không cần kháng sinh.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Bacterial Sinusitis – First-choice therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-ucsf-nonsevere",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Triệu chứng không nặng: amoxicillin 45 mg/kg/lần (tối đa 1000 mg/lần) uống 2 lần/ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Bacterial Sinusitis – First-choice therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-ucsf-severe",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Triệu chứng nặng lúc khởi phát (sốt ≥ 39 °C và chảy mũi mủ ít nhất 3 ngày liên tiếp): amoxicillin-clavulanate 45 mg amoxicillin/kg/lần (tối đa 2000 mg amoxicillin/lần) uống 2 lần/ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Bacterial Sinusitis – First-choice therapy"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-ucsf-allergy",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Dị ứng penicillin nguy cơ thấp: cephalosporin uống; nguy cơ cao: hội chẩn chuyên khoa bệnh truyền nhiễm hoặc nhóm quản lý kháng sinh (ID/ASP). Không khuyến cáo azithromycin. Thời gian điều trị thường 10 ngày.",
+      "population": "child",
+      "citation": {
+        "sourceId": "UCSF-peds-resp-head-neck",
+        "locator": "Acute Bacterial Sinusitis – Alternative therapy; Comments"
+      }
+    }
+  ],
+  "doses": [
+    {
+      "id": "abrsp-amox-std",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin (liều chuẩn)",
+      "dose": "45 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "≥ 2 tuổi, bệnh nhẹ–vừa, không đi nhà trẻ, không dùng kháng sinh trong 4 tuần qua",
+      "when": [
+        {
+          "field": "riskResistance",
+          "op": "falsy"
+        },
+        {
+          "field": "ageYears",
+          "op": "gte",
+          "value": 2
+        },
+        {
+          "field": "highNonsusceptible",
+          "op": "falsy"
+        }
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          45,
+          45
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-amox-high",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin (liều cao)",
+      "dose": "80–90 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "max": "2 g/lần",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Cộng đồng có tỷ lệ phế cầu không nhạy cảm cao (> 10%)",
+      "when": [
+        {
+          "field": "riskResistance",
+          "op": "falsy"
+        },
+        {
+          "field": "highNonsusceptible",
+          "op": "truthy"
+        }
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          80,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 2000
+      },
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-amoxclav-high",
+      "role": "primary",
+      "line": "first",
+      "drug": "Amoxicillin-clavulanate (liều cao)",
+      "dose": "amoxicillin 80–90 mg/kg/ngày + clavulanate 6,4 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "max": "2 g/lần",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Bệnh vừa–nặng, < 2 tuổi, đi nhà trẻ, hoặc mới dùng kháng sinh",
+      "when": [
+        {
+          "field": "riskResistance",
+          "op": "truthy"
+        }
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          80,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ],
+        "maxPerDoseMg": 2000
+      },
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED",
+      "note": "Liều tính theo amoxicillin."
+    },
+    {
+      "id": "abrsp-ceftriaxone",
+      "role": "primary",
+      "line": "severe",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg, liều duy nhất",
+      "route": "tĩnh mạch hoặc tiêm bắp",
+      "population": "child",
+      "condition": "Nôn, không dung nạp đường uống hoặc khó tuân thủ liều đầu; cải thiện sau 24 giờ thì chuyển kháng sinh uống",
+      "weight": {
+        "basis": "per_dose",
+        "mgPerKg": [
+          50,
+          50
+        ],
+        "dosesPerDay": [
+          1
+        ]
+      },
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-fail-amoxclav",
+      "role": "primary",
+      "line": "failure",
+      "drug": "Amoxicillin-clavulanate liều cao",
+      "dose": "Theo liều cao ở trên",
+      "route": "uống",
+      "population": "child",
+      "condition": "Đang dùng amoxicillin, nặng lên trong 72 giờ (hoặc không cải thiện: theo dõi thêm hoặc đổi thuốc)",
+      "when": [
+        {
+          "field": "initialTx",
+          "op": "eq",
+          "value": "amoxicillin"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Bảng 4, tr. e276"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-fail-after-amoxclav",
+      "role": "primary",
+      "line": "failure",
+      "drug": "Clindamycin + cefixime, hoặc linezolid + cefixime, hoặc levofloxacin",
+      "dose": "Nguồn không nêu liều",
+      "route": "uống",
+      "population": "child",
+      "condition": "Đang dùng amoxicillin-clavulanate liều cao, nặng lên trong 72 giờ; clindamycin để phủ phế cầu kháng penicillin, linezolid khi cộng đồng có tỷ lệ phế cầu kháng clindamycin cao",
+      "when": [
+        {
+          "field": "initialTx",
+          "op": "eq",
+          "value": "amoxclav"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Bảng 4 và chú thích a, tr. e276"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-fail-observe",
+      "role": "primary",
+      "line": "failure",
+      "drug": "Amoxicillin có hoặc không kèm clavulanate",
+      "dose": "Theo liều đầu tay",
+      "route": "uống",
+      "population": "child",
+      "condition": "Đang theo dõi, nặng lên: bắt đầu kháng sinh; không cải thiện: theo dõi thêm hoặc bắt đầu kháng sinh",
+      "when": [
+        {
+          "field": "initialTx",
+          "op": "eq",
+          "value": "observation"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Bảng 4, tr. e276"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-amoxclav-dose",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Amoxicillin-clavulanate",
+      "dose": "45 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          45,
+          45
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "strength": "strong",
+      "quality": "moderate",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (lựa chọn đầu tay), tr. e23; Khuyến cáo 3"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-amoxclav-high",
+      "role": "comparison",
+      "line": "risk_resistance",
+      "drug": "Amoxicillin-clavulanate",
+      "dose": "90 mg/kg/ngày",
+      "route": "uống",
+      "interval": "chia 2 lần/ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Lựa chọn hàng hai; nguy cơ kháng thuốc hoặc thất bại điều trị ban đầu",
+      "weight": {
+        "basis": "per_day",
+        "mgPerKg": [
+          90,
+          90
+        ],
+        "dosesPerDay": [
+          2
+        ]
+      },
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (lựa chọn hàng hai), tr. e23"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-levo",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Levofloxacin",
+      "dose": "10–20 mg/kg/ngày",
+      "route": "uống",
+      "interval": "mỗi 12–24 giờ",
+      "population": "child",
+      "allergy": [
+        "severe"
+      ],
+      "condition": "Quá mẫn type I với penicillin",
+      "strength": "weak",
+      "quality": "low",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (lựa chọn hàng hai), tr. e23; Khuyến cáo 12"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "id": "abrsp-idsa-clinda-cef",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Clindamycin + cefixime hoặc cefpodoxime",
+      "dose": "Clindamycin 30–40 mg/kg/ngày chia 3 lần + cefixime 8 mg/kg/ngày chia 2 lần hoặc cefpodoxime 10 mg/kg/ngày chia 2 lần",
+      "route": "uống",
+      "population": "child",
+      "allergy": [
+        "nonsevere"
+      ],
+      "condition": "Quá mẫn không type I với penicillin",
+      "strength": "weak",
+      "quality": "low",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (lựa chọn hàng hai), tr. e23; Khuyến cáo 12"
+      },
+      "status": "EXTRACTED"
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-penv",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Phenoxymethylpenicillin",
+      "dose": "1–11 tháng: 62,5 mg; 1–5 tuổi: 125 mg; 6–11 tuổi: 250 mg; 12–17 tuổi: 500 mg",
+      "route": "uống",
+      "interval": "4 lần/ngày",
+      "duration": "5 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Lựa chọn đầu tay (liều theo tuổi, trẻ có kích thước trung bình)",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Bảng 2, tr. 10"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-coamox",
+      "role": "comparison",
+      "line": "first",
+      "drug": "Co-amoxiclav",
+      "dose": "1–11 tháng: 0,25 ml/kg hỗn dịch 125/31; 1–5 tuổi: 5 ml hỗn dịch 125/31 hoặc 0,25 ml/kg hỗn dịch 125/31; 6–11 tuổi: 5 ml hỗn dịch 250/62 hoặc 0,15 ml/kg hỗn dịch 250/62; 12–17 tuổi: 250/125 mg hoặc 500/125 mg",
+      "route": "uống",
+      "interval": "3 lần/ngày",
+      "duration": "5 ngày",
+      "population": "child",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Đầu tay nếu toàn thân rất mệt, có dấu hiệu bệnh nặng hơn hoặc nguy cơ cao biến chứng; lựa chọn thứ hai khi nặng lên sau ít nhất 2–3 ngày dùng thuốc đầu tay",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Bảng 2, tr. 10–11"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-clari",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Clarithromycin",
+      "dose": "< 8 kg 7,5 mg/kg; 8–11 kg 62,5 mg; 12–19 kg 125 mg; 20–29 kg 187,5 mg; 30–40 kg 250 mg; 12–17 tuổi: 250 mg hoặc 500 mg",
+      "route": "uống",
+      "interval": "2 lần/ngày",
+      "duration": "5 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng hoặc không dung nạp penicillin, không mang thai",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Bảng 2, tr. 11"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-doxy",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Doxycycline",
+      "dose": "12–17 tuổi: 200 mg ngày đầu, sau đó 100 mg 1 lần/ngày trong 4 ngày (tổng 5 ngày)",
+      "route": "uống",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng hoặc không dung nạp penicillin, không mang thai; chống chỉ định ở trẻ < 12 tuổi",
+      "when": [
+        {
+          "field": "ageYears",
+          "op": "gte",
+          "value": 12
+        }
+      ],
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Bảng 2, tr. 11"
+      }
+    },
+    {
+      "status": "EXTRACTED",
+      "id": "abrsp-nice-ery",
+      "role": "comparison",
+      "line": "alternative_allergy",
+      "drug": "Erythromycin",
+      "dose": "8–17 tuổi: 250–500 mg 4 lần/ngày hoặc 500–1000 mg 2 lần/ngày",
+      "route": "uống",
+      "duration": "5 ngày",
+      "population": "child",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "NICE-NG79",
+        "locator": "Bảng 2, tr. 11"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "abrsp-r-failure",
+      "when": [
+        {
+          "field": "initialTx",
+          "op": "in",
+          "value": [
+            "observation",
+            "amoxicillin",
+            "amoxclav"
+          ]
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "abrsp-fail-observe",
+        "abrsp-fail-amoxclav",
+        "abrsp-fail-after-amoxclav",
+        "abrsp-nice-coamox"
+      ],
+      "statementIds": [
+        "abrsp-kas5a",
+        "abrsp-kas5b"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 5A, 5B, tr. e273; Bảng 4, tr. e276"
+      }
+    },
+    {
+      "id": "abrsp-r-severe-worse",
+      "when": [
+        {
+          "field": "presentation",
+          "op": "in",
+          "value": [
+            "severe",
+            "worsening"
+          ]
+        }
+      ],
+      "decision": "antibiotic",
+      "doseIds": [
+        "abrsp-amox-std",
+        "abrsp-amox-high",
+        "abrsp-amoxclav-high",
+        "abrsp-ceftriaxone",
+        "abrsp-idsa-amoxclav-dose",
+        "abrsp-idsa-amoxclav-high",
+        "abrsp-idsa-levo",
+        "abrsp-idsa-clinda-cef",
+        "abrsp-nice-penv",
+        "abrsp-nice-coamox",
+        "abrsp-nice-clari",
+        "abrsp-nice-doxy",
+        "abrsp-nice-ery"
+      ],
+      "statementIds": [
+        "abrsp-kas3a",
+        "abrsp-kas4"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 3A, tr. e267"
+      }
+    },
+    {
+      "id": "abrsp-r-persistent",
+      "when": [
+        {
+          "field": "presentation",
+          "op": "eq",
+          "value": "persistent"
+        }
+      ],
+      "decision": "antibiotic_or_observe",
+      "doseIds": [
+        "abrsp-amox-std",
+        "abrsp-amox-high",
+        "abrsp-amoxclav-high",
+        "abrsp-ceftriaxone",
+        "abrsp-idsa-amoxclav-dose",
+        "abrsp-idsa-amoxclav-high",
+        "abrsp-idsa-levo",
+        "abrsp-idsa-clinda-cef",
+        "abrsp-nice-penv",
+        "abrsp-nice-coamox",
+        "abrsp-nice-clari",
+        "abrsp-nice-doxy",
+        "abrsp-nice-ery"
+      ],
+      "statementIds": [
+        "abrsp-kas3b",
+        "abrsp-kas4"
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "KAS 3B, tr. e268"
+      }
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "abrsp-c-first",
+      "topic": "Kháng sinh đầu tay",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-sinusitis",
+          "year": 2013,
+          "text": "Amoxicillin có hoặc không kèm clavulanate; amoxicillin liều chuẩn 45 mg/kg/ngày cho bệnh nhẹ–vừa không có yếu tố nguy cơ.",
+          "citation": {
+            "sourceId": "AAP-2013-sinusitis",
+            "locator": "KAS 4, tr. e269; tr. e271"
+          }
+        },
+        {
+          "sourceId": "IDSA-2012-ABRS",
+          "year": 2012,
+          "text": "Amoxicillin-clavulanate thay vì amoxicillin đơn thuần (strong, moderate).",
+          "citation": {
+            "sourceId": "IDSA-2012-ABRS",
+            "locator": "Khuyến cáo 3, tr. e2"
+          }
+        },
+        {
+          "sourceId": "NICE-NG79",
+          "year": 2017,
+          "text": "Phenoxymethylpenicillin liều theo tuổi, 4 lần/ngày × 5 ngày; co-amoxiclav nếu toàn thân rất mệt hoặc nguy cơ cao biến chứng.",
+          "citation": {
+            "sourceId": "NICE-NG79",
+            "locator": "Bảng 2, tr. 10"
+          }
+        }
+      ]
+    },
+    {
+      "id": "abrsp-c-duration",
+      "topic": "Thời gian điều trị",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-sinusitis",
+          "year": 2013,
+          "text": "Chưa nghiên cứu hệ thống; đề xuất 7 ngày sau khi hết triệu chứng (tối thiểu 10 ngày).",
+          "citation": {
+            "sourceId": "AAP-2013-sinusitis",
+            "locator": "tr. e271, e273"
+          }
+        },
+        {
+          "sourceId": "IDSA-2012-ABRS",
+          "year": 2012,
+          "text": "10–14 ngày (weak, low-moderate).",
+          "citation": {
+            "sourceId": "IDSA-2012-ABRS",
+            "locator": "Khuyến cáo 15, tr. e3"
+          }
+        },
+        {
+          "sourceId": "NICE-NG79",
+          "year": 2017,
+          "text": "5 ngày.",
+          "citation": {
+            "sourceId": "NICE-NG79",
+            "locator": "Bảng 2, tr. 10–11"
+          }
+        }
+      ]
+    },
+    {
+      "id": "abrsp-c-benefit",
+      "topic": "Lợi ích kháng sinh",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-sinusitis",
+          "year": 2013,
+          "text": "Khởi phát nặng hoặc diễn biến xấu đi: kê kháng sinh (Strong Recommendation, B).",
+          "citation": {
+            "sourceId": "AAP-2013-sinusitis",
+            "locator": "KAS 3A, tr. e267"
+          }
+        },
+        {
+          "sourceId": "EPOS-2020",
+          "year": 2020,
+          "text": "Dữ liệu rất hạn chế; không khác biệt có ý nghĩa so với giả dược, tăng tác dụng bất lợi (1a (-)).",
+          "citation": {
+            "sourceId": "EPOS-2020",
+            "locator": "Bảng 1.4.5, tr. 9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "abrsp-c-persistent",
+      "topic": "Bệnh kéo dài (≥ 10 ngày không cải thiện)",
+      "sides": [
+        {
+          "sourceId": "AAP-2013-sinusitis",
+          "year": 2013,
+          "text": "Kê kháng sinh hoặc theo dõi ngoại trú thêm 3 ngày (Recommendation, Evidence Quality: B).",
+          "citation": {
+            "sourceId": "AAP-2013-sinusitis",
+            "locator": "KAS 3B, tr. e268"
+          }
+        },
+        {
+          "sourceId": "NICE-NG79",
+          "year": 2017,
+          "text": "Cân nhắc không kê kháng sinh hoặc kê đơn dự phòng (back-up).",
+          "citation": {
+            "sourceId": "NICE-NG79",
+            "locator": "Khuyến cáo 1.1.5, tr. 7"
+          }
+        }
+      ]
+    }
+  ],
+  "notStated": [
+    "Liều tối đa amoxicillin liều chuẩn (AAP 2013 chỉ nêu tối đa 2 g/lần cho liều cao)",
+    "Liều cephalosporin thay thế khi dị ứng (AAP 2013)",
+    "Hiệu chỉnh liều theo chức năng thận",
+    "Tương tác thuốc",
+    "Kháng thuốc tại chỗ/antibiogram bệnh viện"
+  ],
+  "inputs": [
+    {
+      "field": "ageYears",
+      "label": "Tuổi",
+      "type": "number",
+      "min": 1,
+      "max": 18,
+      "unit": "tuổi",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Phạm vi 1–18 tuổi; ngưỡng 2 tuổi, tr. e271"
+      }
+    },
+    {
+      "field": "weightKg",
+      "label": "Cân nặng",
+      "type": "number",
+      "min": 5,
+      "max": 120,
+      "unit": "kg",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Liều mg/kg, tr. e271"
+      }
+    },
+    {
+      "field": "presentation",
+      "label": "Biểu hiện",
+      "type": "select",
+      "options": [
+        {
+          "value": "persistent",
+          "label": "Kéo dài > 10 ngày không cải thiện"
+        },
+        {
+          "value": "worsening",
+          "label": "Diễn biến xấu đi"
+        },
+        {
+          "value": "severe",
+          "label": "Khởi phát nặng (sốt ≥ 39 °C + chảy mũi mủ ≥ 3 ngày)"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Tóm tắt, tr. e262; KAS 3A, 3B"
+      }
+    },
+    {
+      "field": "riskResistance",
+      "label": "Bệnh vừa–nặng, < 2 tuổi, đi nhà trẻ, hoặc mới dùng kháng sinh",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      }
+    },
+    {
+      "field": "highNonsusceptible",
+      "label": "Cộng đồng có tỷ lệ phế cầu không nhạy cảm > 10%",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      }
+    },
+    {
+      "field": "allergy",
+      "label": "Dị ứng penicillin",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "nonsevere",
+          "label": "Không type 1 (muộn)"
+        },
+        {
+          "value": "severe",
+          "label": "Type 1 nặng"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "tr. e271"
+      }
+    },
+    {
+      "field": "initialTx",
+      "label": "Nặng lên/không cải thiện sau 72 giờ – xử trí ban đầu",
+      "type": "select",
+      "options": [
+        {
+          "value": "observation",
+          "label": "Đang theo dõi"
+        },
+        {
+          "value": "amoxicillin",
+          "label": "Đang dùng amoxicillin"
+        },
+        {
+          "value": "amoxclav",
+          "label": "Đang dùng amoxicillin-clavulanate liều cao"
+        }
+      ],
+      "citation": {
+        "sourceId": "AAP-2013-sinusitis",
+        "locator": "Bảng 4, tr. e276"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.2.0",
+  "sourcesCheckedOn": "17/11/2026"
+}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   Stethoscope, Microscope, ShieldCheck, UserRound, TrendingDown,
-  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, Gauge,
+  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, Gauge, Ear,
 } from "lucide-react";
 
 /**
@@ -17,6 +17,7 @@ const PREVENT = "Dự phòng và dữ liệu";
 const modules = [
   { id: "empiric", title: "Phác đồ kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng, yếu tố nguy cơ.", href: "/antibiotics/empiric", icon: Stethoscope, group: START },
   { id: "select", title: "Chọn theo người bệnh", description: "Lọc phác đồ theo CrCl, dị ứng, tiêu chí nguy cơ.", href: "/antibiotics/empiric/select", icon: UserRound, group: START },
+  { id: "ent", title: "Nhiễm khuẩn tai mũi họng", description: "Viêm tai giữa, viêm xoang, viêm họng liên cầu, áp xe vùng cổ – có nguồn trích dẫn.", href: "/ent", icon: Ear, group: START },
   { id: "allergy", title: "Dị ứng kháng sinh", description: "Phân tầng nguy cơ, phản ứng chéo beta-lactam.", href: "/antibiotics/allergy", icon: Activity, group: START },
   { id: "organism", title: "Theo tác nhân vi sinh", description: "Điều chỉnh theo vi khuẩn, kháng sinh đồ, MIC.", href: "/antibiotics/organism", icon: Microscope, group: REVIEW },
   { id: "deescalation", title: "Xuống thang", description: "Thu hẹp phổ hoặc ngừng kháng sinh.", href: "/antibiotics/deescalation", icon: TrendingDown, group: REVIEW },

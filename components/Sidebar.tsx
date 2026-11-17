@@ -62,6 +62,7 @@ const GROUPS: Group[] = [
     items: [
       { section: "Khởi đầu điều trị", label: "Phác đồ kinh nghiệm", href: "/antibiotics/empiric", code: "KN" },
       { label: "Chọn theo người bệnh", href: "/antibiotics/empiric/select", code: "NB" },
+      { label: "Nhiễm khuẩn tai mũi họng", href: "/ent", code: "TM" },
       { label: "Dị ứng kháng sinh", href: "/antibiotics/allergy", code: "DU" },
       { section: "Đánh giá lại 48–72 giờ", label: "Theo tác nhân vi sinh", href: "/antibiotics/organism", code: "TN" },
       { label: "Xuống thang", href: "/antibiotics/deescalation", code: "XT" },
