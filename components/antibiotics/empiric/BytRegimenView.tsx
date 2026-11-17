@@ -107,14 +107,14 @@ function SupplementBox({ regimen }: { regimen: Regimen }) {
     <div className="byt199-supp" style={box}>
       {missing && <ul style={{ margin: 0, paddingLeft: 18, color: "#7c2d12" }}>
         <li><strong>Thuốc được đề cập:</strong> {clinicalText(therapyNames(regimen))}.</li>
-        <li><strong>Liều dùng:</strong> theo tờ hướng dẫn sử dụng của chế phẩm.</li>
+        <li><strong>Liều dùng:</strong> {sup?.kind === "dtqg" ? "xem liều theo Dược thư quốc gia 2023 bên dưới." : "theo tờ hướng dẫn sử dụng của chế phẩm."}</li>
       </ul>}
       {sup && (
         <details>
           <summary>Liều tham khảo bổ sung</summary>
           <p style={{ margin: 0, fontWeight: 800 }}>
             {sup.coversAll ? "Liều bổ sung có dẫn nguồn" : "Thông tin liều một phần"} ·{" "}
-            {sup.kind === "same-document" ? "cùng văn bản BYT" : "hướng dẫn quốc tế"}
+            {sup.kind === "same-document" ? "cùng văn bản BYT" : sup.kind === "dtqg" ? "Dược thư quốc gia 2023" : "hướng dẫn quốc tế"}
           </p>
           <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
             {sup.items.map((it) => (

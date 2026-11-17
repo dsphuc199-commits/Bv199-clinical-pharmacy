@@ -12,6 +12,53 @@ import { buildView } from "@/lib/ent/view";
 import { SOURCES, resolveDisease } from "@/data/ent";
 import { RxToolStyle } from "@/components/antibiotics/empiric/rx-tool";
 import { regimenSummary, visibleInputs } from "./QuickCard";
+import { DTQG_ENT, DTQG_SOURCE, DISEASE_IND, dtqgFor, dtqgKeys } from "@/data/ent/dtqg-doses";
+
+const POP_LABEL = { adult: "Người lớn", child: "Trẻ em" } as const;
+
+/** Liều theo Dược thư quốc gia 2023 cho các thuốc đang hiển thị – trích nguyên văn, kèm số trang. */
+function DtqgPanel({ diseaseId, doses, inp }: { diseaseId: string; doses: Dose[]; inp: Inputs }) {
+  const ind = DISEASE_IND[diseaseId];
+  if (!ind) return null;
+  const age = inp.ageGroup as string | undefined;
+  const popsOf = (d: Dose): ("adult" | "child")[] =>
+    d.population === "adult" ? ["adult"] : d.population === "child" ? ["child"]
+      : age === "adult" ? ["adult"] : age === "adolescent" ? ["child", "adult"] : age ? ["child"] : ["adult", "child"];
+  const want = new Map<string, Set<"adult" | "child">>();
+  for (const d of doses) for (const k of dtqgKeys(d.drug)) {
+    if (!want.has(k)) want.set(k, new Set());
+    for (const p of popsOf(d)) want.get(k)!.add(p);
+  }
+  const rows = [...want.entries()].map(([k, pops]) => ({
+    k, name: DTQG_ENT[k].name,
+    groups: (["adult", "child"] as const).filter((p) => pops.has(p)).map((p) => ({ p, items: dtqgFor(k, ind, p) })).filter((g) => g.items.length),
+  })).filter((r) => r.groups.length);
+  if (!rows.length) return null;
+  return (
+    <details className="sa24-more ent-dtqg" open>
+      <summary>Liều theo Dược thư quốc gia Việt Nam 2023 ({rows.length} thuốc)</summary>
+      <p className="ent-sub">Trích nguyên văn mục Liều lượng và cách dùng của từng chuyên luận; dùng để đối chiếu với liều của hướng dẫn ở trên.</p>
+      {rows.map((r) => (
+        <div key={r.k} className="ent-dtqg-drug">
+          <p className="ent-dtqg-name">{r.name}</p>
+          {r.groups.map((g) => (
+            <div key={g.p}>
+              {r.groups.length > 1 && <p className="ent-dtqg-pop">{POP_LABEL[g.p]}</p>}
+              <ul>
+                {g.items.map((e, i) => (
+                  <li key={i} className={e.caution ? "ent-caution" : undefined}>
+                    <b>{e.label}:</b> {e.text} <span className="ent-dtqg-pg">tr. {e.page}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ))}
+      <p className="ent-sub">Nguồn: {DTQG_SOURCE}. Hiệu chỉnh liều theo chức năng thận: module Hiệu chỉnh liều.</p>
+    </details>
+  );
+}
 
 const DECISION: Record<Decision, string> = {
   antibiotic: "Chỉ định kháng sinh",
@@ -173,6 +220,8 @@ export default function EntRxTool({ id, population }: { id: string; population?:
         {flags.length > 0 && (<div className="ent-flags"><b>Chuyển tuyến/hội chẩn khi</b><ul>{flags.map((f) => <li key={f.id}>{f.text}</li>)}</ul></div>)}
       </section>
 
+      {ready && <DtqgPanel diseaseId={res.page.id} doses={[...main, ...fails, ...inlineCmp]} inp={eff} />}
+
       {cmp.length > 0 && (
         <details className="sa24-more">
           <summary>Liều theo hướng dẫn khác ({cmp.length})</summary>
@@ -204,6 +253,11 @@ export default function EntRxTool({ id, population }: { id: string; population?:
         .ent-rx .ent-warn-mix { margin: 0; font-size: 12.5px; font-weight: 700; color: #9a3412; }
         .ent-rx .ent-grp { display: grid; gap: 4px; margin-top: 4px; }
         .ent-rx .ent-grp + .ent-grp { margin-top: 10px; }
+        .ent-rx .ent-dtqg ul { margin: 2px 0 6px; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; color: #10243e; }
+        .ent-rx .ent-dtqg-drug { margin-top: 8px; }
+        .ent-rx .ent-dtqg-name { margin: 0; font-weight: 800; font-size: 13.5px; color: #0b3a5c; }
+        .ent-rx .ent-dtqg-pop { margin: 2px 0 0; font-size: 12px; font-weight: 700; color: #087f89; }
+        .ent-rx .ent-dtqg-pg { font-size: 11.5px; color: #4b6576; white-space: nowrap; }
         .ent-rx .ent-grp-h { margin: 0; font-size: 12.5px; font-weight: 800; color: #087f89; text-transform: uppercase; letter-spacing: .02em; }
       `}</style>
     </article>

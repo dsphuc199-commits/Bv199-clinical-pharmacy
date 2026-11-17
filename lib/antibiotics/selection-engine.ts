@@ -116,7 +116,7 @@ export type Option = {
   doseEvidence?: DoseEvidence;
   /* Lieu bo sung co dan nguon (khong phai nguyen van phuong an BYT). */
   supplement?: {
-    kind: "same-document" | "international";
+    kind: "same-document" | "international" | "dtqg";
     items: { drug: string; dose: string }[];
     scope?: string;
     source: string;

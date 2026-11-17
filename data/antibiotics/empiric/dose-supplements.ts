@@ -19,12 +19,31 @@
 
 import { ALL_REGIMENS, isConcreteRegimen, type Regimen } from "./regimens";
 import { resolvedDrugs } from "./dose-references";
+import { DTQG_ENT, DTQG_SOURCE, dtqgFor, type DtqgInd } from "@/data/ent/dtqg-doses";
+
+/* Lieu theo Duoc thu quoc gia 2023 (trich nguyen van, xem data/ent/dtqg-doses.ts) cho phac do BYT chi neu ten thuoc.
+   coversAll = false: lieu chuyen luan, khong phai lieu cua van ban BYT -> trang thai bang chung giu nguyen. */
+const POP = { adult: "người lớn", child: "trẻ em" } as const;
+function dtqgItems(keys: string[], ind: DtqgInd, pops: ("adult" | "child")[]) {
+  return keys.flatMap((k) => pops.flatMap((p) => dtqgFor(k, ind, p).map((e) => ({
+    drug: `${DTQG_ENT[k].name} – ${POP[p]}: ${e.label.replace(/ – (người lớn|trẻ em).*$/i, "")} (tr. ${e.page})`,
+    dose: e.text,
+  }))));
+}
+function dtqgSupplement(regimenId: string, keys: string[], ind: DtqgInd, pops: ("adult" | "child")[], stillMissing?: string[]): DoseSupplement {
+  return {
+    regimenId, kind: "dtqg", items: dtqgItems(keys, ind, pops),
+    scope: "Liều theo chuyên luận Dược thư quốc gia, không phải liều của văn bản BYT gốc. Chọn câu theo chỉ định; chuyên luận không có câu riêng cho chỉ định thì hiển thị liều thường dùng.",
+    source: { title: DTQG_SOURCE, locator: "Mục Liều lượng và cách dùng – " + keys.map((k) => { const pg = [...new Set(DTQG_ENT[k].entries.map((e) => e.page))].sort((x, y) => x - y); return `${DTQG_ENT[k].name} tr. ${pg.length > 1 ? pg[0] + "–" + pg[pg.length - 1] : pg[0]}`; }).join("; ") },
+    checkedOn: "17/11/2026", coversAll: false, stillMissing,
+  };
+}
 
 export type DoseEvidence = "SOURCE_DOSE" | "SUPPLEMENTED" | "MISSING_DOSE_EVIDENCE";
 
 export type DoseSupplement = {
   regimenId: string;
-  kind: "same-document" | "international";
+  kind: "same-document" | "international" | "dtqg";
   /* Tung dong: thuoc (dung ten trong phuong an) -> lieu nguyen van nguon (dich tieng Viet). */
   items: { drug: string; dose: string }[];
   /* Pham vi/dieu kien ap dung cua lieu bo sung, neu nguon gioi han. */
@@ -57,6 +76,12 @@ const DEXA =
   "Tuần 1: 0,4 mg/kg tiêm tĩnh mạch × 7 ngày; tuần 2: 0,3 mg/kg × 7 ngày; tuần 3: 0,2 mg/kg × 7 ngày; tuần 4: 0,1 mg/kg × 7 ngày; từ tuần 5 chuyển uống, bắt đầu 4 mg, giảm 1 mg sau mỗi 7 ngày, trong 4 tuần";
 
 export const DOSE_SUPPLEMENTS: DoseSupplement[] = [
+  /* ---------- Tai mui hong (QĐ 5643: chi neu ten thuoc) – lieu Duoc thu quoc gia 2023 ---------- */
+  dtqgSupplement("r-ent-pharyngitis", ["amox", "cefalexin", "ery", "clari"], "phar", ["adult", "child"]),
+  dtqgSupplement("r-ent-sinus-moderate", ["coamox", "cefpodoxim", "cefuroxim", "cefdinir"], "abrs", ["adult", "child"]),
+  dtqgSupplement("r-ent-sinus-allergy-adult", ["doxy"], "abrs", ["adult"], ["TMP/SMX, macrolid: văn bản BYT chỉ nêu tên thuốc/nhóm thuốc."]),
+  dtqgSupplement("r-ent-sinus-recent-adult", ["levo", "moxi", "coamox"], "abrs", ["adult"], ["Ceftriaxon: chuyên luận Dược thư không có mục viêm xoang.", "Kết hợp với kháng sinh phổ rộng: văn bản BYT không nêu thuốc cụ thể."]),
+  dtqgSupplement("r-ent-sinus-recent-adult-allergy", ["levo", "moxi", "clinda"], "abrs", ["adult"], ["Rifampin: chưa trích chuyên luận."]),
   /* ---------- Lao (cung van ban QĐ 162) ---------- */
   {
     regimenId: "r-tb-a2",

@@ -100,7 +100,7 @@ function OptionCard({ option, sourceHref, population }: { option: Option; source
           <p className="se-supp-head">
             {option.supplement.complete ? "Liều bổ sung có dẫn nguồn" : "Thông tin liều một phần (không đủ để dùng làm liều)"}
             {" · "}
-            {option.supplement.kind === "same-document" ? "cùng văn bản BYT" : "guideline quốc tế"}
+            {option.supplement.kind === "same-document" ? "cùng văn bản BYT" : option.supplement.kind === "dtqg" ? "Dược thư quốc gia 2023" : "guideline quốc tế"}
           </p>
           <ul className="se-drugs">
             {option.supplement.items.map((it) => (

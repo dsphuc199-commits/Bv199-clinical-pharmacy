@@ -98,7 +98,7 @@ export const ALL_REGIMENS: Regimen[] = RAW_REGIMENS.map((regimen) => withDoseCon
   Phuong an chi neu ten nhom thuoc / khong neu lieu -> khong "cu the".
 */
 const NUMERIC_DOSE =
-  /\d+([.,]\d+)?\s*(–\s*\d+([.,]\d+)?\s*)?(mg|g\b|µg|mcg|triệu|đơn vị|UI|ml|mL|viên|%)/i;
+  /\d+([.,]\d+)?\s*(–\s*\d+([.,]\d+)?\s*)?(mg|g\b|µg|mcg|triệu|đơn vị|đv|UI|ml|mL|viên|%)/i;
 const REFERS_ABOVE = /(như trên|như mục|liều như|như các mục)/i;
 
 export function isConcreteRegimen(regimen: Regimen): boolean {
