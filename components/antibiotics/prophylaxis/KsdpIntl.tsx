@@ -65,10 +65,13 @@ export default function KsdpIntl() {
     <>
       <div className="ksdp-note" style={{ marginBottom: 16 }}>
         <Info size={17}/>
-        <span>
-          Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery – ASHP, IDSA, SIS, SHEA (2013).
-          Bratzler DW và cs. Am J Health-Syst Pharm. 2013;70:195–283.
-        </span>
+        <div className="ksdp-sources">
+          <b>Nguồn</b>
+          <ul>
+            <li>Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery – ASHP, IDSA, SIS, SHEA (2013)</li>
+            <li>Bratzler DW và cs. Am J Health-Syst Pharm. 2013;70:195–283</li>
+          </ul>
+        </div>
       </div>
 
       <div className="ksdp-subtabs">

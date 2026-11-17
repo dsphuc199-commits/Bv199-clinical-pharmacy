@@ -404,7 +404,14 @@ export default function ProphylaxisPage() {
                   </>
                 )}
 
-                <p className="ksdp-src">Nguồn: QĐ 708/QĐ-BYT (2015); QĐ 3671/QĐ-BYT (2012){usesCeftriaxone(chosen) ? "; Dược thư quốc gia Việt Nam 2023 (liều ceftriaxone)" : ""}.</p>
+                <div className="ksdp-sources">
+                  <b>Nguồn</b>
+                  <ul>
+                    <li>{SRC708}</li>
+                    <li>{SRC3671}</li>
+                    {usesCeftriaxone(chosen) && <li>Dược thư quốc gia Việt Nam 2023 – liều ceftriaxone</li>}
+                  </ul>
+                </div>
               </section>
             ) : (
               <div className="ksdp-empty">
@@ -650,11 +657,16 @@ export default function ProphylaxisPage() {
 
         <div className="ksdp-footer-note">
           <Info size={17}/>
-          <span>
-            Nguồn: QĐ 708/QĐ-BYT – Hướng dẫn sử dụng kháng sinh (2015); QĐ 3671/QĐ-BYT – Hướng dẫn phòng ngừa nhiễm khuẩn vết mổ (2012).
-            Quốc tế: ASHP/IDSA/SIS/SHEA 2013 (Am J Health-Syst Pharm. 2013;70:195–283).
-            Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.
-          </span>
+          <div className="ksdp-sources">
+            <b>Nguồn</b>
+            <ul>
+              <li>{SRC708}</li>
+              <li>{SRC3671}</li>
+              <li>Dược thư quốc gia Việt Nam 2023</li>
+              <li>Quốc tế: ASHP/IDSA/SIS/SHEA 2013 – Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery (Am J Health-Syst Pharm. 2013;70:195–283)</li>
+            </ul>
+            <p>Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.</p>
+          </div>
           <button onClick={reset}>Đặt lại</button>
         </div>
       </div>
@@ -873,12 +885,12 @@ export default function ProphylaxisPage() {
           vertical-align:top;
         }
         .ksdp-footer-note {
-          display:flex;align-items:center;gap:10px;
+          display:flex;align-items:flex-start;gap:10px;
           font-size:11px;color:#6c819b;
           line-height:1.7;margin-top:18px;
           border-top:1px solid #e2eaf2;padding-top:15px;
         }
-        .ksdp-footer-note span {flex:1}
+        .ksdp-footer-note span, .ksdp-footer-note .ksdp-sources {flex:1}
         .ksdp-footer-note button {
           background:white;border:1px solid #d5e2ee;
           border-radius:8px;padding:9px 12px;
@@ -915,6 +927,12 @@ export default function ProphylaxisPage() {
         .ksdp-none-box {border:1px solid #f1c48b;background:#fff8ee;border-radius:12px;padding:12px 14px;margin:12px 0}
         .ksdp-none-box b {color:#9a3412;font-size:15px}
         @media(max-width:850px){ .ksdp-grid.four {grid-template-columns:repeat(2,minmax(0,1fr))} }
+        .ksdp-sources {font-size:12.5px;color:#4b6576;line-height:1.55}
+        .ksdp-sources > b {display:block;color:#10223d;margin-bottom:2px}
+        .ksdp-sources ul {margin:0;padding-left:18px}
+        .ksdp-sources li + li {margin-top:2px}
+        .ksdp-sources p {margin:6px 0 0}
+        .ksdp-plan .ksdp-sources {border-top:1px solid #e0e8f2;padding-top:10px;margin-top:4px}
         .ksdp-subtabs {display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
         .ksdp-subtabs button {border:1px solid #d6e2ee;background:#fff;color:#183758;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer}
         .ksdp-subtabs .active {background:#e2f1ff;border-color:#075985;color:#075985}
