@@ -129,6 +129,8 @@ export interface DecisionRule {
   /** Dose id hiển thị khi luật khớp, theo nhóm. */
   doseIds?: string[];
   statementIds?: string[];
+  /** Quyết định “xét nghiệm trước”: vẫn hiện phác đồ của tình huống giả định (ví dụ xét nghiệm dương tính) kèm nhãn. */
+  preview?: { set: Record<string, string | number | boolean>; label: string };
   citation: Citation;
 }
 

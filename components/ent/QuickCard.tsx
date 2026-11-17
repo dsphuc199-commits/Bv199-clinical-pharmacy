@@ -2,33 +2,13 @@
 /* Thẻ "Chọn kháng sinh nhanh" – mọi dòng hiển thị lấy từ dữ liệu có citation qua lib/ent/decide.ts. */
 import { createContext, useContext, useMemo, useState } from "react";
 import Link from "next/link";
-import type { Citation, Decision, Disease, Dose, InputSpec, Inputs, Source } from "@/types/ent";
-import { condTrue, decide } from "@/lib/ent/decide";
+import type { Citation, Decision, Disease, Dose, Inputs, Source } from "@/types/ent";
+import { decide } from "@/lib/ent/decide";
 
 const tierText = (s: Source) => (s.tier === "REF" ? "Tham khảo" : s.tier === "LABEL" ? "Nhãn FDA" : `Tier ${s.tier}`);
 
-/** Trường đang hiển thị (showWhen) và đầu vào hiệu lực: giá trị của trường bị ẩn không được dùng. */
-export function visibleInputs(d: Disease, inp: Inputs): { shown: InputSpec[]; eff: Inputs } {
-  let eff: Inputs = { ...inp };
-  let shown: InputSpec[] = d.inputs;
-  for (let i = 0; i < 4; i++) {
-    shown = d.inputs.filter((s) => !s.showWhen || s.showWhen.every((c) => condTrue(c, eff)));
-    const next = Object.fromEntries(Object.entries(inp).filter(([k, v]) => v !== undefined && shown.some((s) => s.field === k)));
-    if (JSON.stringify(next) === JSON.stringify(eff)) break;
-    eff = next;
-  }
-  return { shown, eff };
-}
-
-/** Một dòng tóm tắt phác đồ: đơn trị, chọn 1, hoặc phối hợp (thuốc addOn cộng vào các lựa chọn). */
-export function regimenSummary(doses: Dose[]): string {
-  const rt = (r: string) => (/tĩnh mạch/.test(r) && /uống/.test(r) ? "uống hoặc tĩnh mạch" : /tĩnh mạch/.test(r) ? "tĩnh mạch" : /tiêm bắp/.test(r) ? "tiêm bắp" : /uống/.test(r) ? "uống" : r);
-  const name = (d: Dose) => `${d.drug} ${rt(d.route)}`;
-  const base = doses.filter((d) => !d.addOn), adds = doses.filter((d) => d.addOn);
-  if (!base.length) return "";
-  if (adds.length) return `Phối hợp: ${base.map(name).join(" hoặc ")} + ${adds.map(name).join(" + ")}`;
-  return base.length > 1 ? `Chọn 1: ${base.map(name).join(" hoặc ")}` : `Đơn trị: ${name(base[0])}`;
-}
+import { regimenSummary, visibleInputs } from "@/lib/ent/view";
+export { regimenSummary, visibleInputs };
 
 const DECISION_LABEL: Record<Decision, string> = {
   antibiotic: "Chỉ định kháng sinh",

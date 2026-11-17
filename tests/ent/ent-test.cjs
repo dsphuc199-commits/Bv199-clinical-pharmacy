@@ -161,6 +161,18 @@ check("Mỗi bệnh có nguồn chính đã xác minh có ≥ 3 ca chuẩn", ["a
   check("Phác đồ kinh nghiệm: 9 mặt bệnh Tai Mũi Họng (v8-7, 8, 54, 56, 57, 58, 60, 66, 99) ánh xạ tới trang ENT có thật", ["v8-7", "v8-8", "v8-54", "v8-56", "v8-57", "v8-58", "v8-60", "v8-66", "v8-99"].every((k) => (ENT_EMPIRIC_MAP[k] || []).length && ENT_EMPIRIC_MAP[k].every((o) => getDisease(o.id))));
 }
 
+// ---------- Quet moi to hop dau vao: co quyet dinh dung khang sinh thi phai co dong lieu ----------
+{
+  const { sweep } = require("./view-sweep.cjs");
+  const gaps = DISEASES.filter((d) => !d.crossRef && d.id !== "aom-adult").flatMap((d) => sweep(d).bad.map((b) => d.id + " " + b));
+  check("Mọi trạng thái đủ đầu vào có quyết định dùng kháng sinh đều hiện liều (8 bệnh có phác đồ; viêm tai giữa người lớn không có nguồn)", gaps.length === 0, gaps.slice(0, 3).join(" | "));
+  const { buildView } = load("lib/ent/view.ts");
+  const g = buildView(getDisease("gas-pharyngitis"), { ageGroup: "adult", testResult: "not_tested", allergy: "none" });
+  check("Viêm họng liên cầu chưa xét nghiệm (người lớn) → xét nghiệm trước, vẫn hiện phác đồ khi dương tính: penicillin V 250 mg × 4 hoặc 500 mg × 2, amoxicillin", g.r.decision.value === "test_first" && g.previewLabel && g.firsts.some((x) => x.id === "gas-penv-adult") && g.firsts.some((x) => x.id === "gas-amox-qd"));
+  const c = buildView(getDisease("abrs-adult"), { criteria: "met", complicated: true, allergy: "none" });
+  check("Viêm xoang người lớn nghi biến chứng → hiện phác đồ tĩnh mạch IDSA 2012 (có nhãn nguồn) ngay trong khối chính", c.inlineCmp.some((x) => x.id === "abrsa-idsa-sam"));
+}
+
 // ---------- Doi chieu nguon (buoc 5) ----------
 if (fs.existsSync(path.join(ROOT, "guidelines"))) {
   const { rows } = require("./verify-sources.cjs");

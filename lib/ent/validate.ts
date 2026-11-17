@@ -46,6 +46,7 @@ export function validateDisease(d: Disease, sources: Source[]): string[] {
     for (const id of r.doseIds ?? []) if (!doseIds.has(id)) errs.push(`${d.id}/rule ${r.id}: dose ${id} không tồn tại`);
     for (const id of r.statementIds ?? []) if (!stIds.has(id)) errs.push(`${d.id}/rule ${r.id}: statement ${id} không tồn tại`);
     if (!reg.has(r.citation.sourceId)) errs.push(`${d.id}/rule ${r.id}: citation sai nguồn`);
+    for (const k of Object.keys(r.preview?.set ?? {})) if (!d.inputs.some((s) => s.field === k)) errs.push(`${d.id}/rule ${r.id}: preview dùng trường lạ ${k}`);
     for (const c of r.when) if (!d.inputs.some((s) => s.field === c.field)) errs.push(`${d.id}/rule ${r.id}: trường ${c.field} không có trong inputs`);
   }
   for (const x of d.doses) for (const c of x.when ?? []) if (!d.inputs.some((s) => s.field === c.field)) errs.push(`${d.id}/${x.id}: trường ${c.field} không có trong inputs`);

@@ -7,7 +7,8 @@
 import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { Citation, Decision, Disease, Dose, Inputs } from "@/types/ent";
-import { condTrue, decide } from "@/lib/ent/decide";
+import { condTrue } from "@/lib/ent/decide";
+import { buildView } from "@/lib/ent/view";
 import { SOURCES, resolveDisease } from "@/data/ent";
 import { RxToolStyle } from "@/components/antibiotics/empiric/rx-tool";
 import { regimenSummary, visibleInputs } from "./QuickCard";
@@ -66,33 +67,25 @@ export default function EntRxTool({ id, population }: { id: string; population?:
   const d = res?.data as Disease;
   const [inp, setInp] = useState<Inputs>({});
   const set = (k: string, v: string | number | boolean | undefined) => setInp((p) => ({ ...p, [k]: v === "" ? undefined : v }));
+  const v = useMemo(() => buildView(d, inp), [d, inp]);
   const { shown, eff } = useMemo(() => visibleInputs(d, inp), [d, inp]);
-  const r = useMemo(() => decide(d, eff), [d, eff]);
   if (!res) return null;
 
+  const { r, missing, ready, previewLabel, firsts, adds, algs, fails, inlineCmp, cmp } = v;
   const noPrimary = d.primarySources.length === 0;
   const selects = shown.filter((s) => s.type !== "boolean");
   const checks = shown.filter((s) => s.type === "boolean");
-  const missing = shown.filter((s) => s.type === "select" && eff[s.field] === undefined).map((s) => s.label);
-  const ready = !(noPrimary && missing.length) && !!r.decision;
-  const pool = noPrimary ? r.reference.doses : [...r.first, ...r.alternatives, ...r.other];
-  const isAlg = (x: Dose) => x.line === "alternative_allergy" || (!!x.allergy && !x.allergy.includes("none"));
-  const firsts = pool.filter((x) => !x.addOn && !isAlg(x));
-  const adds = pool.filter((x) => x.addOn);
-  const algs = pool.filter((x) => !x.addOn && isAlg(x));
-  const failCmp = r.comparison.filter((x) => x.line === "failure" || x.line === "failure_alternative");
-  const fails = noPrimary ? [] : [...r.failure, ...failCmp];
-  const cmp = r.comparison.filter((x) => !failCmp.includes(x));
   const main = [...firsts, ...adds, ...algs];
-  const durs = [...new Set(main.map((x) => durationOf(x, eff)).filter(Boolean))];
+  const durs = [...new Set([...main, ...inlineCmp].map((x) => durationOf(x, eff)).filter(Boolean))];
   const flags = r.redFlags.filter((f) => f.status === "EXTRACTED" && (f.role === "primary" || noPrimary));
   const baseIsAlg = !firsts.length && algs.length > 0;
   const lead = (n: number, base: boolean) => (base && adds.length ? (n > 1 ? "Chọn một thuốc dưới đây, dùng cùng thuốc phối hợp thêm." : "Dùng cùng thuốc phối hợp thêm bên dưới.") : n > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị.");
+  const tagSrc = (x: Dose) => (x.role === "comparison" ? short(x.citation.sourceId) : "");
 
   // Nguồn ở cuối: chỉ các nguồn của nội dung đang hiển thị.
   const cites: Citation[] = [
     ...(r.decision && !noPrimary ? [r.decision.citation] : []),
-    ...[...main, ...fails].flatMap((x) => [x.citation, ...(x.choiceCitation ? [x.choiceCitation] : [])]),
+    ...[...main, ...fails, ...inlineCmp].flatMap((x) => [x.citation, ...(x.choiceCitation ? [x.choiceCitation] : [])]),
     ...flags.map((f) => f.citation),
   ];
   const bySrc = new Map<string, Set<string>>();
@@ -138,16 +131,18 @@ export default function EntRxTool({ id, population }: { id: string; population?:
           <>
             <div className="sa24-dx">
               <p><b>Quyết định</b> {DECISION[r.decision!.value]}</p>
+              {previewLabel && <p><b>Điều trị khi</b> {previewLabel.replace(/^Nếu /, "")} – phác đồ dưới đây</p>}
               {main.length > 0 && <p><b>Phác đồ</b> {regimenSummary(main)}</p>}
               {durs.length === 1 && <p><b>Thời gian</b> {durs[0]}</p>}
               <p><b>Hướng dẫn</b> {noPrimary ? "Không có hướng dẫn hội chuyên môn; phác đồ tham khảo UCSF, liều người lớn theo nhãn FDA" : d.primarySources.filter((sid) => src(sid)?.access !== "paywalled").map(short).join("; ")}</p>
             </div>
-            {firsts.length > 0 && (<><h4>Lựa chọn đầu tay</h4><p className="ent-lead">{lead(firsts.length, true)}</p><Table doses={firsts} computed={r.computed} inp={eff} /></>)}
-            {baseIsAlg && (<><h4>Lựa chọn khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, true)}</p><Table doses={algs} computed={r.computed} inp={eff} /></>)}
-            {adds.length > 0 && (<><h4>Phối hợp thêm</h4><p className="ent-lead">Dùng đồng thời với thuốc đã chọn ở trên.</p><Table doses={adds} computed={r.computed} inp={eff} /></>)}
-            {!baseIsAlg && algs.length > 0 && (<><h4>Thay thế khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, false)}</p><Table doses={algs} computed={r.computed} inp={eff} /></>)}
-            {fails.length > 0 && (<><h4>Thất bại điều trị</h4><p className="ent-lead">{fails.length > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị."}</p><Table doses={fails} computed={r.computed} inp={eff} tag={(x) => (x.role === "comparison" ? short(x.citation.sourceId) : "")} /></>)}
-            {!main.length && !fails.length && !["no_antibiotic", "test_first"].includes(r.decision!.value) && <p className="sa24-tip">Không có thuốc phù hợp với lựa chọn hiện tại.</p>}
+            {firsts.length > 0 && (<><h4>Lựa chọn đầu tay</h4><p className="ent-lead">{lead(firsts.length, true)}</p><Table doses={firsts} computed={v.computed} inp={eff} /></>)}
+            {baseIsAlg && (<><h4>Lựa chọn khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, true)}</p><Table doses={algs} computed={v.computed} inp={eff} /></>)}
+            {adds.length > 0 && (<><h4>Phối hợp thêm</h4><p className="ent-lead">Dùng đồng thời với thuốc đã chọn ở trên.</p><Table doses={adds} computed={v.computed} inp={eff} /></>)}
+            {!baseIsAlg && algs.length > 0 && (<><h4>Thay thế khi dị ứng beta-lactam</h4><p className="ent-lead">{lead(algs.length, false)}</p><Table doses={algs} computed={v.computed} inp={eff} /></>)}
+            {inlineCmp.length > 0 && (<><h4>Phác đồ theo hướng dẫn đối chiếu</h4><p className="ent-lead">{inlineCmp.length > 1 ? "Chọn một thuốc dưới đây; nguồn ghi ở từng dòng." : "Nguồn ghi ở dòng thuốc."}</p><Table doses={inlineCmp} computed={v.computed} inp={eff} tag={tagSrc} /></>)}
+            {fails.length > 0 && (<><h4>Thất bại điều trị</h4><p className="ent-lead">{fails.length > 1 ? "Đơn trị: chọn một thuốc dưới đây." : "Đơn trị."}</p><Table doses={fails} computed={v.computed} inp={eff} tag={tagSrc} /></>)}
+            {!main.length && !fails.length && !inlineCmp.length && r.decision && !["no_antibiotic", "test_first"].includes(r.decision.value) && <p className="sa24-tip">{noPrimary && !d.doses.length ? "Không có hướng dẫn hội chuyên môn và phác đồ tham khảo cho đối tượng này trong các nguồn đã có." : "Không có thuốc phù hợp với lựa chọn hiện tại."}</p>}
           </>
         )}
         {flags.length > 0 && (<div className="ent-flags"><b>Chuyển tuyến/hội chẩn khi</b><ul>{flags.map((f) => <li key={f.id}>{f.text}</li>)}</ul></div>)}
@@ -156,7 +151,7 @@ export default function EntRxTool({ id, population }: { id: string; population?:
       {cmp.length > 0 && (
         <details className="sa24-more">
           <summary>Liều theo hướng dẫn khác ({cmp.length})</summary>
-          <Table doses={cmp} computed={r.computed} inp={eff} tag={(x) => short(x.citation.sourceId)} />
+          <Table doses={cmp} computed={v.computed} inp={eff} tag={(x) => short(x.citation.sourceId)} />
         </details>
       )}
 

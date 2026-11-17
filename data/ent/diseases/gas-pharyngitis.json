@@ -937,6 +937,12 @@
       "citation": {
         "sourceId": "IDSA-2012-GAS",
         "locator": "Khuyến cáo 1, tr. e87"
+      },
+      "preview": {
+        "set": {
+          "testResult": "positive"
+        },
+        "label": "Nếu cấy họng xác nhận dương tính"
       }
     },
     {
@@ -987,6 +993,12 @@
       "citation": {
         "sourceId": "IDSA-2012-GAS",
         "locator": "Khuyến cáo 5, tr. e87"
+      },
+      "preview": {
+        "set": {
+          "testResult": "positive"
+        },
+        "label": "Nếu RADT hoặc cấy họng dương tính"
       }
     },
     {
@@ -1006,6 +1018,12 @@
       "citation": {
         "sourceId": "IDSA-2012-GAS",
         "locator": "Khuyến cáo 1, tr. e87"
+      },
+      "preview": {
+        "set": {
+          "testResult": "positive"
+        },
+        "label": "Nếu RADT hoặc cấy họng dương tính"
       }
     }
   ],
