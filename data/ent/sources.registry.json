@@ -1,5 +1,5 @@
 {
-  "version": "ent-sources-0.3.0",
+  "version": "ent-sources-0.4.0",
   "checkedOn": "17/11/2026",
   "sources": [
     {
@@ -319,6 +319,21 @@
       "access": "downloaded",
       "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
       "file": "guidelines/FDA-Vancomycin.txt",
+      "checkedOn": "17/11/2026"
+    },
+    {
+      "id": "UK-PC-2025",
+      "org": "NHS (BAAG/IMOC, Anh)",
+      "title": "Summary of antimicrobial prescribing guidance – managing common infections (2025) – Summary ADULTS",
+      "year": 2025,
+      "tier": "REF",
+      "tierLabel": "Hướng dẫn kê đơn địa phương (NHS, Anh) – tham khảo, không phải khuyến cáo hội chuyên môn",
+      "url": "https://www.nice.org.uk/guidance/published?ngt=Antimicrobial%20prescribing%20guidelines",
+      "population": "Người lớn, chăm sóc ban đầu",
+      "scope": "Bản tóm tắt chuyển thể từ hướng dẫn quốc gia (NICE/UKHSA); phê duyệt IMOC 04/2025, xem lại 04/2027",
+      "access": "user_provided",
+      "accessNote": "PDF do người dùng cung cấp 17/11/2026; trích văn bản bằng pdftotext.",
+      "file": "guidelines/UK-PC-summary-adults-2025.txt",
       "checkedOn": "17/11/2026"
     }
   ]

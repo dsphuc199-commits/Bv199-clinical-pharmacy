@@ -51,7 +51,7 @@ for (const id of NO_PRIMARY) {
   const r = decide(d, {});
   check(`${id}: có evidenceGap, không có Dose, thẻ nhanh không xuất lựa chọn đầu tay`, d.evidenceGap.length > 0 && d.doses.every((x) => x.role === "reference") && r.first.length === 0 && r.alternatives.length === 0 && r.decision && r.decision.value === "no_primary");
 }
-check("aom-adult: evidenceGap ghi NICE NG91 chỉ < 18 tuổi, không ngoại suy", getDisease("aom-adult").evidenceGap.some((g) => g.includes("NICE NG91 chỉ áp dụng cho trẻ em và thanh thiếu niên < 18 tuổi; không ngoại suy")));
+check("aom-adult: evidenceGap ghi NICE NG91 chỉ < 18 tuổi; phác đồ người lớn chỉ tham khảo (NHS Anh 2025)", getDisease("aom-adult").evidenceGap.some((g) => g.includes("NICE NG91 chỉ < 18 tuổi")) && getDisease("aom-adult").doses.every((x) => x.role === "reference" && x.citation.sourceId === "UK-PC-2025"));
 check("rpa: cờ đỏ đường thở ở đầu", getDisease("rpa").redFlags[0].text.startsWith("Tắc nghẽn đường thở"));
 check("abrs-adult: nguồn chính AAO-HNSF 2025 đã trích xuất – không còn bản ghi NOT_VERIFIED, không evidenceGap", (() => { const d = getDisease("abrs-adult"); return d.primarySources[0] === "AAOHNSF-2025" && !(d.evidenceGap ?? []).length && [...d.statements, ...d.doses, ...d.redFlags].every((x) => x.status === "EXTRACTED"); })());
 check("abrs-adult: KAS 6 ghi rõ mức khuyến cáo không thống nhất trong nguồn (Recommendation / Option)", (() => { const s = getDisease("abrs-adult").statements.find((x) => x.id === "abrsa-aao-kas6"); return s.strength === "Recommendation" && /Policy level: Option/.test(s.note); })());
@@ -164,13 +164,26 @@ check("Mỗi bệnh có nguồn chính đã xác minh có ≥ 3 ca chuẩn", ["a
 // ---------- Quet moi to hop dau vao: co quyet dinh dung khang sinh thi phai co dong lieu ----------
 {
   const { sweep } = require("./view-sweep.cjs");
-  const gaps = DISEASES.filter((d) => !d.crossRef && d.id !== "aom-adult").flatMap((d) => sweep(d).bad.map((b) => d.id + " " + b));
-  check("Mọi trạng thái đủ đầu vào có quyết định dùng kháng sinh đều hiện liều (8 bệnh có phác đồ; viêm tai giữa người lớn không có nguồn)", gaps.length === 0, gaps.slice(0, 3).join(" | "));
+  const gaps = DISEASES.filter((d) => !d.crossRef).flatMap((d) => sweep(d).bad.map((b) => d.id + " " + b));
+  check("Mọi trạng thái đủ đầu vào có quyết định dùng kháng sinh đều hiện liều (9 bệnh)", gaps.length === 0, gaps.slice(0, 3).join(" | "));
   const { buildView } = load("lib/ent/view.ts");
   const g = buildView(getDisease("gas-pharyngitis"), { ageGroup: "adult", testResult: "not_tested", allergy: "none" });
   check("Viêm họng liên cầu chưa xét nghiệm (người lớn) → xét nghiệm trước, vẫn hiện phác đồ khi dương tính: penicillin V 250 mg × 4 hoặc 500 mg × 2, amoxicillin", g.r.decision.value === "test_first" && g.previewLabel && g.firsts.some((x) => x.id === "gas-penv-adult") && g.firsts.some((x) => x.id === "gas-amox-qd"));
   const c = buildView(getDisease("abrs-adult"), { criteria: "met", complicated: true, allergy: "none" });
   check("Viêm xoang người lớn nghi biến chứng → hiện phác đồ tĩnh mạch IDSA 2012 (có nhãn nguồn) ngay trong khối chính", c.inlineCmp.some((x) => x.id === "abrsa-idsa-sam"));
+}
+
+// ---------- Viem tai giua nguoi lon (NHS Anh 2025) va levofloxacin ----------
+{
+  const { buildView } = load("lib/ent/view.ts");
+  const ids = (v) => [...v.firsts, ...v.algs].map((x) => x.id).sort().join();
+  const A = getDisease("aom-adult");
+  check("Viêm tai giữa người lớn: không dị ứng → amoxicillin 500 mg × 3 × 5 ngày; lựa chọn thứ hai → co-amoxiclav 500/125 mg × 3", ids(buildView(A, { allergy: "none" })) === "aomad-uk-amox" && ids(buildView(A, { allergy: "none", secondChoice: true })) === "aomad-uk-coamox");
+  check("Viêm tai giữa người lớn: dị ứng → clarithromycin 500 mg × 2; dị ứng + mang thai → erythromycin 500 mg × 4", ids(buildView(A, { allergy: "severe" })) === "aomad-uk-clari" && ids(buildView(A, { allergy: "severe", pregnant: true })) === "aomad-uk-ery");
+  const levo = DISEASES.flatMap((d) => d.doses).filter((x) => /Levofloxacin/.test(x.drug) && x.population !== "child");
+  check("Levofloxacin người lớn: mọi dòng là 1 lần/ngày (AAO-HNSF 2025: 500 hoặc 750 mg; IDSA 2012: 500 mg)", levo.length >= 4 && levo.every((x) => x.dose.concat(" ", x.interval ?? "").includes("1 lần/ngày") || /1 lần.ngày/.test(x.dose + " " + (x.interval ?? "")) && /500 mg/.test(x.dose)));
+  const levoC = DISEASES.flatMap((d) => d.doses).filter((x) => /Levofloxacin/.test(x.drug) && x.population === "child");
+  check("Levofloxacin trẻ em: 10–20 mg/kg/ngày mỗi 12–24 giờ (IDSA 2012 Bảng 9), gồm cả đường tĩnh mạch khi nhập viện", levoC.length >= 3 && levoC.every((x) => x.dose === "10–20 mg/kg/ngày" && x.interval === "mỗi 12–24 giờ") && levoC.some((x) => x.route === "tĩnh mạch"));
 }
 
 // ---------- Doi chieu nguon (buoc 5) ----------

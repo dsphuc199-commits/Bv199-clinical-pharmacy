@@ -159,7 +159,7 @@ export default function EntRxTool({ id, population }: { id: string; population?:
               {previewLabel && <p><b>Điều trị khi</b> {previewLabel.replace(/^Nếu /, "")} – phác đồ dưới đây</p>}
               {main.length > 0 && <p><b>Phác đồ</b> {regimenSummary(summaryRows.length ? summaryRows : main)}{new Set(main.map((x) => x.citation.sourceId)).size > 1 && !main.some((x) => x.choiceCitation) ? ` (theo ${short(leadSrc)})` : ""}</p>}
               {durs.length === 1 && <p><b>Thời gian</b> {durs[0]}</p>}
-              <p><b>Hướng dẫn</b> {noPrimary ? "Không có hướng dẫn hội chuyên môn; phác đồ tham khảo UCSF, liều người lớn theo nhãn FDA" : d.primarySources.filter((sid) => src(sid)?.access !== "paywalled").map(short).join("; ")}</p>
+              <p><b>Hướng dẫn</b> {noPrimary ? `Không có hướng dẫn hội chuyên môn; tham khảo ${[...new Set(main.flatMap((x) => [...(x.choiceCitation ? [x.choiceCitation.sourceId] : []), x.citation.sourceId]))].map(short).join(", ") || "các nguồn bên dưới"}` : d.primarySources.filter((sid) => src(sid)?.access !== "paywalled").map(short).join("; ")}</p>
             </div>
             {firsts.length > 0 && (<><h4>Lựa chọn đầu tay</h4>{G(firsts, (n) => lead(n, true))}</>)}
             {baseIsAlg && (<><h4>Lựa chọn khi dị ứng beta-lactam</h4>{G(algs, (n) => lead(n, true))}</>)}

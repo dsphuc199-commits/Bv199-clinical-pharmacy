@@ -116,7 +116,7 @@ export function decide(d: Disease, inp: Inputs): DecideResult {
     if (dose.status !== "EXTRACTED") { base.unverified.push(dose); continue; }
     if (!allergyOk(dose, inp)) continue;
     if (dose.when && !dose.when.every((c) => condTrue(c, inp))) continue;
-    if (dose.role === "comparison") base.comparison.push(dose);
+    if (dose.role === "comparison" || dose.role === "reference") base.comparison.push(dose);
     else if (dose.role !== "primary") base.other.push(dose);
     else if (dose.line === "first") base.first.push(dose);
     else if (dose.line === "alternative_allergy") base.alternatives.push(dose);

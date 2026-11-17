@@ -5,15 +5,133 @@
   "population": "Người lớn",
   "primarySources": [],
   "comparisonSources": [],
-  "referenceSources": [],
+  "referenceSources": [
+    "UK-PC-2025"
+  ],
   "evidenceGap": [
-    "NICE NG91 chỉ áp dụng cho trẻ em và thanh thiếu niên < 18 tuổi; không ngoại suy cho người lớn.",
-    "AAP 2013 (6 tháng – 12 tuổi) và CPS (trẻ ≥ 6 tháng) chỉ áp dụng cho trẻ em; không dùng để suy ra phác đồ người lớn.",
-    "Danh mục nguồn không có hướng dẫn hội chuyên môn cho viêm tai giữa cấp người lớn."
+    "Không có hướng dẫn hội chuyên môn cho viêm tai giữa cấp người lớn trong các nguồn đã có (AAP 2013, CPS chỉ cho trẻ em; NICE NG91 chỉ < 18 tuổi).",
+    "Phác đồ hiển thị là hướng dẫn kê đơn chăm sóc ban đầu địa phương của NHS (Anh) 2025, chuyển thể từ hướng dẫn quốc gia – chỉ để tham khảo."
   ],
   "redFlags": [],
-  "statements": [],
-  "doses": [],
+  "statements": [
+    {
+      "id": "aomad-uk-note",
+      "kind": "reference_note",
+      "role": "reference",
+      "text": "Tối ưu giảm đau. Kháng sinh ngay chỉ khi người bệnh rất mệt hoặc nguy cơ cao biến chứng.",
+      "population": "adult",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – Comments"
+      },
+      "status": "EXTRACTED"
+    }
+  ],
+  "doses": [
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "aomad-uk-amox",
+      "drug": "Amoxicillin",
+      "dose": "500 mg",
+      "interval": "3 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "secondChoice",
+          "op": "falsy"
+        }
+      ],
+      "caution": "Kháng sinh ngay chỉ khi rất mệt hoặc nguy cơ cao biến chứng",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – 1st choice"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "aomad-uk-clari",
+      "drug": "Clarithromycin",
+      "dose": "500 mg",
+      "interval": "2 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "pregnant",
+          "op": "falsy"
+        }
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – Pen allergy"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "aomad-uk-ery",
+      "drug": "Erythromycin",
+      "dose": "500 mg",
+      "interval": "4 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "pregnant",
+          "op": "truthy"
+        }
+      ],
+      "caution": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – Pen allergy + preg"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "aomad-uk-coamox",
+      "drug": "Co-amoxiclav (amoxicillin-clavulanate)",
+      "dose": "500/125 mg",
+      "interval": "3 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "secondChoice",
+          "op": "truthy"
+        }
+      ],
+      "caution": "Lựa chọn thứ hai",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – 2nd choice"
+      }
+    }
+  ],
   "rules": [
     {
       "id": "aomad-r-noprimary",
@@ -33,7 +151,59 @@
     "Hiệu chỉnh liều theo chức năng thận",
     "Tương tác thuốc"
   ],
-  "inputs": [],
-  "dataVersion": "ent-data 0.2.0",
+  "inputs": [
+    {
+      "field": "allergy",
+      "label": "Dị ứng penicillin",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "severe",
+          "label": "Có"
+        }
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – Pen allergy"
+      }
+    },
+    {
+      "field": "pregnant",
+      "label": "Đang mang thai",
+      "type": "boolean",
+      "showWhen": [
+        {
+          "field": "allergy",
+          "op": "eq",
+          "value": "severe"
+        }
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – Pen allergy + preg"
+      }
+    },
+    {
+      "field": "secondChoice",
+      "label": "Cần lựa chọn thứ hai",
+      "type": "boolean",
+      "showWhen": [
+        {
+          "field": "allergy",
+          "op": "eq",
+          "value": "none"
+        }
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute otitis media – 2nd choice"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.5.0",
   "sourcesCheckedOn": "17/11/2026"
 }

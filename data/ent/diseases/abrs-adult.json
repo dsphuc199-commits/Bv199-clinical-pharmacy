@@ -11,7 +11,9 @@
     "IDSA-2012-ABRS",
     "NICE-NG79"
   ],
-  "referenceSources": [],
+  "referenceSources": [
+    "UK-PC-2025"
+  ],
   "scopeNote": "AAO-HNSF 2025 áp dụng cho người lớn ≥ 18 tuổi viêm xoang không biến chứng. Biến chứng lan ngoài xoang (hốc mắt, nội sọ) hoặc nguồn gốc răng nằm ngoài phạm vi khuyến cáo theo dõi chờ đợi.",
   "redFlags": [
     {
@@ -1016,6 +1018,107 @@
         "locator": "Bảng 10 (nhập viện), tr. e24"
       },
       "status": "EXTRACTED"
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "abrsa-uk-penv",
+      "drug": "Phenoxymethylpenicillin",
+      "dose": "500 mg",
+      "interval": "4 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "none"
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Sinusitis (acute) – 1st choice"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "abrsa-uk-doxy",
+      "drug": "Doxycycline",
+      "dose": "200 mg liều đầu, sau đó 100 mg 1 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin; không dùng cho trẻ < 12 tuổi",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Sinusitis (acute) – Pen allergy"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "abrsa-uk-clari",
+      "drug": "Clarithromycin",
+      "dose": "500 mg",
+      "interval": "2 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Sinusitis (acute) – Pen allergy"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "abrsa-uk-ery",
+      "drug": "Erythromycin",
+      "dose": "500 mg",
+      "interval": "4 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "condition": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Sinusitis (acute) – Pen allergy + preg"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "abrsa-uk-coamox",
+      "drug": "Co-amoxiclav",
+      "dose": "500/125 mg",
+      "interval": "3 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "none"
+      ],
+      "condition": "Lựa chọn thứ hai hoặc người bệnh rất mệt",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Sinusitis (acute) – 2nd choice/v unwell"
+      }
     }
   ],
   "rules": [
@@ -1057,7 +1160,8 @@
         "abrsa-idsa-amoxclav-high",
         "abrsa-idsa-levo",
         "abrsa-idsa-moxi",
-        "abrsa-nice-coamox"
+        "abrsa-nice-coamox",
+        "abrsa-uk-coamox"
       ],
       "statementIds": [
         "abrsa-aao-kas6",
@@ -1095,7 +1199,12 @@
         "abrsa-idsa-amoxclav-high",
         "abrsa-idsa-doxy",
         "abrsa-idsa-levo",
-        "abrsa-idsa-moxi"
+        "abrsa-idsa-moxi",
+        "abrsa-uk-penv",
+        "abrsa-uk-doxy",
+        "abrsa-uk-clari",
+        "abrsa-uk-ery",
+        "abrsa-uk-coamox"
       ],
       "statementIds": [
         "abrsa-aao-severe",
@@ -1157,7 +1266,12 @@
         "abrsa-idsa-amoxclav-high",
         "abrsa-idsa-doxy",
         "abrsa-idsa-levo",
-        "abrsa-idsa-moxi"
+        "abrsa-idsa-moxi",
+        "abrsa-uk-penv",
+        "abrsa-uk-doxy",
+        "abrsa-uk-clari",
+        "abrsa-uk-ery",
+        "abrsa-uk-coamox"
       ],
       "statementIds": [
         "abrsa-aao-kas4",
@@ -1196,7 +1310,12 @@
         "abrsa-idsa-amoxclav-high",
         "abrsa-idsa-doxy",
         "abrsa-idsa-levo",
-        "abrsa-idsa-moxi"
+        "abrsa-idsa-moxi",
+        "abrsa-uk-penv",
+        "abrsa-uk-doxy",
+        "abrsa-uk-clari",
+        "abrsa-uk-ery",
+        "abrsa-uk-coamox"
       ],
       "statementIds": [
         "abrsa-aao-kas4",

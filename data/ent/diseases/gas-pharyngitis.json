@@ -15,7 +15,8 @@
   ],
   "referenceSources": [
     "UCSF-adult-pharyngitis",
-    "UCSF-peds-resp-head-neck"
+    "UCSF-peds-resp-head-neck",
+    "UK-PC-2025"
   ],
   "scopeNote": "IDSA 2025 là Part 1 (đánh giá nguy cơ bằng thang điểm lâm sàng), chưa có phần điều trị; điều trị và liều theo IDSA 2012 và CDC.",
   "evidenceGap": [],
@@ -853,6 +854,87 @@
         "sourceId": "NICE-NG84",
         "locator": "Bảng 1, tr. 10; Bảng 2, tr. 11"
       }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "gas-uk-penv",
+      "drug": "Phenoxymethylpenicillin",
+      "dose": "500 mg 4 lần/ngày (hoặc 1000 mg 2 lần/ngày)",
+      "duration": "5 ngày, đánh giá lại",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute sore throat – 1st choice"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "gas-uk-clari",
+      "drug": "Clarithromycin",
+      "dose": "500 mg",
+      "interval": "2 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "condition": "Dị ứng penicillin",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute sore throat – Pen allergy"
+      }
+    },
+    {
+      "role": "reference",
+      "line": "reference",
+      "route": "uống",
+      "population": "adult",
+      "status": "EXTRACTED",
+      "id": "gas-uk-ery",
+      "drug": "Erythromycin",
+      "dose": "500 mg",
+      "interval": "4 lần/ngày",
+      "duration": "5 ngày",
+      "allergy": [
+        "nonsevere",
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "condition": "Dị ứng penicillin khi mang thai",
+      "citation": {
+        "sourceId": "UK-PC-2025",
+        "locator": "Acute sore throat – Pen allergy + preg"
+      }
     }
   ],
   "rules": [
@@ -901,7 +983,10 @@
         "gas-nice-penv-child",
         "gas-nice-clari-adult",
         "gas-nice-clari-child",
-        "gas-nice-ery"
+        "gas-nice-ery",
+        "gas-uk-penv",
+        "gas-uk-clari",
+        "gas-uk-ery"
       ],
       "statementIds": [
         "gas-cdc-treat",

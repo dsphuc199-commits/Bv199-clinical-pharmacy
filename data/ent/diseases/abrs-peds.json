@@ -757,6 +757,105 @@
         "locator": "Bảng 9 (nguy cơ kháng thuốc hoặc thất bại điều trị ban đầu), tr. e23"
       },
       "status": "EXTRACTED"
+    },
+    {
+      "role": "comparison",
+      "line": "severe",
+      "population": "child",
+      "condition": "Nhiễm khuẩn nặng cần nhập viện",
+      "when": [
+        {
+          "field": "hospital",
+          "op": "truthy"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nhiễm khuẩn nặng cần nhập viện), tr. e23"
+      },
+      "status": "EXTRACTED",
+      "id": "abrsp-idsa-hosp-sam",
+      "drug": "Ampicillin-sulbactam",
+      "dose": "200–400 mg/kg/ngày",
+      "interval": "mỗi 6 giờ",
+      "route": "tĩnh mạch",
+      "allergy": [
+        "none"
+      ]
+    },
+    {
+      "role": "comparison",
+      "line": "severe",
+      "population": "child",
+      "condition": "Nhiễm khuẩn nặng cần nhập viện",
+      "when": [
+        {
+          "field": "hospital",
+          "op": "truthy"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nhiễm khuẩn nặng cần nhập viện), tr. e23"
+      },
+      "status": "EXTRACTED",
+      "id": "abrsp-idsa-hosp-cro",
+      "drug": "Ceftriaxone",
+      "dose": "50 mg/kg/ngày",
+      "interval": "mỗi 12 giờ",
+      "route": "tĩnh mạch",
+      "allergy": [
+        "none",
+        "nonsevere"
+      ]
+    },
+    {
+      "role": "comparison",
+      "line": "severe",
+      "population": "child",
+      "condition": "Nhiễm khuẩn nặng cần nhập viện",
+      "when": [
+        {
+          "field": "hospital",
+          "op": "truthy"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nhiễm khuẩn nặng cần nhập viện), tr. e23"
+      },
+      "status": "EXTRACTED",
+      "id": "abrsp-idsa-hosp-ctx",
+      "drug": "Cefotaxime",
+      "dose": "100–200 mg/kg/ngày",
+      "interval": "mỗi 6 giờ",
+      "route": "tĩnh mạch",
+      "allergy": [
+        "none",
+        "nonsevere"
+      ]
+    },
+    {
+      "role": "comparison",
+      "line": "severe",
+      "population": "child",
+      "condition": "Nhiễm khuẩn nặng cần nhập viện",
+      "when": [
+        {
+          "field": "hospital",
+          "op": "truthy"
+        }
+      ],
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nhiễm khuẩn nặng cần nhập viện), tr. e23"
+      },
+      "status": "EXTRACTED",
+      "id": "abrsp-idsa-hosp-levo",
+      "drug": "Levofloxacin",
+      "dose": "10–20 mg/kg/ngày",
+      "interval": "mỗi 12–24 giờ",
+      "route": "tĩnh mạch"
     }
   ],
   "rules": [
@@ -817,7 +916,11 @@
         "abrsp-nice-coamox",
         "abrsp-nice-clari",
         "abrsp-nice-doxy",
-        "abrsp-nice-ery"
+        "abrsp-nice-ery",
+        "abrsp-idsa-hosp-sam",
+        "abrsp-idsa-hosp-cro",
+        "abrsp-idsa-hosp-ctx",
+        "abrsp-idsa-hosp-levo"
       ],
       "statementIds": [
         "abrsp-kas3a",
@@ -851,7 +954,11 @@
         "abrsp-nice-coamox",
         "abrsp-nice-clari",
         "abrsp-nice-doxy",
-        "abrsp-nice-ery"
+        "abrsp-nice-ery",
+        "abrsp-idsa-hosp-sam",
+        "abrsp-idsa-hosp-cro",
+        "abrsp-idsa-hosp-ctx",
+        "abrsp-idsa-hosp-levo"
       ],
       "statementIds": [
         "abrsp-kas3b",
@@ -1096,6 +1203,15 @@
       "citation": {
         "sourceId": "AAP-2013-sinusitis",
         "locator": "Bảng 4, tr. e276"
+      }
+    },
+    {
+      "field": "hospital",
+      "label": "Nhiễm khuẩn nặng cần nhập viện",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "IDSA-2012-ABRS",
+        "locator": "Bảng 9 (nhiễm khuẩn nặng cần nhập viện), tr. e23"
       }
     }
   ],
