@@ -10,6 +10,9 @@ export function EntStyle() {
 .ent-cite[open] { display: block; }
 .ent-refdose { border: 1px solid #cfe3d6; background: #f4fbf6; border-radius: 8px; padding: 8px 10px; }
 .ent-gap details > summary { cursor: pointer; }
+.ent-regimen { margin: 4px 0 2px; font-weight: 700; color: #0b6b3a; }
+.ent-link { font-weight: 700; color: #087f89; }
+.ent-tier-LABEL { background: #e8f5e9; color: #1b5e20; }
 .ent-switch { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
 .ent-switch button { min-height: 36px; border: 1px solid #b9cdd6; border-radius: 8px; padding: 4px 12px; background: #fff; font: inherit; cursor: pointer; }
 .ent-switch button[aria-pressed=true] { background: #0b6b8a; color: #fff; border-color: #0b6b8a; }

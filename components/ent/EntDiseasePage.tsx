@@ -43,6 +43,7 @@ export function EntDiseaseBody({ id, embedded = false }: { id: string; embedded?
       {page.crossRef && !embedded && <p className="ent-scope">Dữ liệu dùng chung với trang <Link href={`/ent/${page.crossRef}`}>{data.title}</Link>.</p>}
       <QuickCard key={data.id} disease={data} sources={SOURCES} />
       {kinds.map((k) => {
+        if (embedded && k === "reference_note" && data.primarySources.length === 0) return null; // da co trong the
         const items = data.statements.filter((s) => s.kind === k && (!embedded || s.status === "EXTRACTED"));
         return items.length ? (
           <details key={k} className="ent-sec" open={!embedded}>
@@ -58,7 +59,7 @@ export function EntDiseaseBody({ id, embedded = false }: { id: string; embedded?
             const s = SOURCES.find((x) => x.id === sid)!;
             return (
               <li key={sid}>
-                <b>{roleOf(sid)}</b> · {s.org} ({s.year}). {s.title}. <span className={`ent-badge ent-tier-${s.tier}`}>{s.tier === "REF" ? "REF" : `Tier ${s.tier}`} – {s.tierLabel}</span>
+                <b>{roleOf(sid)}</b> · {s.org} ({s.year}). {s.title}. <span className={`ent-badge ent-tier-${s.tier}`}>{s.tier === "REF" ? "REF" : s.tier === "LABEL" ? "Nhãn FDA" : `Tier ${s.tier}`} – {s.tierLabel}</span>
                 <div className="ent-muted">{s.population}. {s.scope}.{!embedded && ` Truy cập: ${s.accessNote}`} {s.doi ? `DOI ${s.doi}. ` : ""}{s.url.startsWith("http") && <a href={s.url}>{s.url}</a>}</div>
               </li>
             );

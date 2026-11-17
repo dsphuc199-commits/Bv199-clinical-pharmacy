@@ -1,8 +1,33 @@
 "use client";
 /* Thẻ "Chọn kháng sinh nhanh" – mọi dòng hiển thị lấy từ dữ liệu có citation qua lib/ent/decide.ts. */
 import { createContext, useContext, useMemo, useState } from "react";
-import type { Citation, Decision, Disease, Dose, Inputs, Source } from "@/types/ent";
-import { decide } from "@/lib/ent/decide";
+import Link from "next/link";
+import type { Citation, Decision, Disease, Dose, InputSpec, Inputs, Source } from "@/types/ent";
+import { condTrue, decide } from "@/lib/ent/decide";
+
+const tierText = (s: Source) => (s.tier === "REF" ? "Tham khảo" : s.tier === "LABEL" ? "Nhãn FDA" : `Tier ${s.tier}`);
+
+/** Trường đang hiển thị (showWhen) và đầu vào hiệu lực: giá trị của trường bị ẩn không được dùng. */
+export function visibleInputs(d: Disease, inp: Inputs): { shown: InputSpec[]; eff: Inputs } {
+  let eff: Inputs = { ...inp };
+  let shown: InputSpec[] = d.inputs;
+  for (let i = 0; i < 4; i++) {
+    shown = d.inputs.filter((s) => !s.showWhen || s.showWhen.every((c) => condTrue(c, eff)));
+    const next = Object.fromEntries(Object.entries(inp).filter(([k, v]) => v !== undefined && shown.some((s) => s.field === k)));
+    if (JSON.stringify(next) === JSON.stringify(eff)) break;
+    eff = next;
+  }
+  return { shown, eff };
+}
+
+/** Một dòng tóm tắt phác đồ: đơn trị, chọn 1, hoặc phối hợp (thuốc addOn cộng vào các lựa chọn). */
+export function regimenSummary(doses: Dose[]): string {
+  const name = (d: Dose) => `${d.drug} ${d.route}`;
+  const base = doses.filter((d) => !d.addOn), adds = doses.filter((d) => d.addOn);
+  if (!base.length) return "";
+  if (adds.length) return `Phối hợp: ${base.map(name).join(" hoặc ")} + ${adds.map(name).join(" + ")}`;
+  return base.length > 1 ? `Chọn 1: ${base.map(name).join(" hoặc ")}` : `Đơn trị: ${name(base[0])}`;
+}
 
 const DECISION_LABEL: Record<Decision, string> = {
   antibiotic: "Chỉ định kháng sinh",
@@ -23,13 +48,13 @@ export function Badge({ c, sources }: { c: Citation; sources: Source[] }) {
   if (!s) return <span className="ent-badge ent-badge-x">nguồn?</span>;
   if (embedded) return (
     <>
-      <span className={`ent-badge ent-tier-${s.tier}`}>{s.org} {s.year} · {s.tier === "REF" ? "Tham khảo" : `Tier ${s.tier}`}</span>
+      <span className={`ent-badge ent-tier-${s.tier}`}>{s.org} {s.year} · {tierText(s)}</span>
       <details className="ent-cite"><summary>Xem chứng cứ</summary>{s.title}. {c.locator}</details>
     </>
   );
   return (
     <span className={`ent-badge ent-tier-${s.tier}`} title={`${s.title}. ${c.locator}`}>
-      {s.org} {s.year} · {s.tier === "REF" ? "Tham khảo" : `Tier ${s.tier}`} · {c.locator}
+      {s.org} {s.year} · {tierText(s)} · {c.locator}
     </span>
   );
 }
@@ -39,12 +64,13 @@ function DoseRow({ d, sources, computed }: { d: Dose; sources: Source[]; compute
   const meta = [d.max || !embedded ? `Liều tối đa: ${d.max ?? "Nguồn không nêu"}` : "", d.condition ? `Điều kiện: ${d.condition}` : ""].filter(Boolean).join(" · ");
   return (
     <li className="ent-dose">
-      <div className="ent-dose-h"><b>{d.drug}</b>{d.status !== "EXTRACTED" && <span className="ent-nv">Chưa xác minh</span>}</div>
+      <div className="ent-dose-h"><b>{d.addOn ? "+ " : ""}{d.drug}</b>{d.addOn && <span className="ent-badge">phối hợp thêm</span>}{d.status !== "EXTRACTED" && <span className="ent-nv">Chưa xác minh</span>}</div>
       <div>{d.dose}; {d.route}{d.interval ? `; ${d.interval}` : ""}{d.duration ? `; ${d.duration}` : ""}</div>
       {meta && <div className="ent-muted">{meta}</div>}
       {computed && <div className="ent-calc">Tính theo cân nặng: {computed}</div>}
       {(d.strength || d.quality) && <div className="ent-muted">Mức khuyến cáo/bằng chứng theo nguồn: {[d.strength, d.quality].filter(Boolean).join("; ")}</div>}
       {d.note && <div className="ent-muted">{d.note}</div>}
+      {d.link && <div><Link className="ent-link" href={d.link.href}>{d.link.label}</Link></div>}
       <Badge c={d.citation} sources={sources} />
     </li>
   );
@@ -53,7 +79,9 @@ function DoseRow({ d, sources, computed }: { d: Dose; sources: Source[]; compute
 export default function QuickCard({ disease, sources }: { disease: Disease; sources: Source[] }) {
   const [inp, setInp] = useState<Inputs>({});
   const set = (k: string, v: string | number | boolean | undefined) => setInp((p) => ({ ...p, [k]: v === "" ? undefined : v }));
-  const r = useMemo(() => decide(disease, inp), [disease, inp]);
+  const { shown, eff } = useMemo(() => visibleInputs(disease, inp), [disease, inp]);
+  const r = useMemo(() => decide(disease, eff), [disease, eff]);
+  const missing = shown.filter((s) => s.type === "select" && eff[s.field] === undefined).map((s) => s.label.replace(/^d+.s*/, ""));
   const calc = (id: string) => r.computed.find((c) => c.doseId === id)?.text;
   const noPrimary = disease.primarySources.length === 0 || r.decision?.value === "no_primary";
   const embedded = useContext(EntEmbedded);
@@ -69,9 +97,9 @@ export default function QuickCard({ disease, sources }: { disease: Disease; sour
           <ul>{redFlags.map((f) => <li key={f.id}>{f.text} {f.status !== "EXTRACTED" && <span className="ent-nv">Chưa xác minh</span>} <Badge c={f.citation} sources={sources} /></li>)}</ul>
         </div>
       )}
-      {disease.inputs.length > 0 && (
+      {shown.length > 0 && (
         <div className="ent-inputs">
-          {disease.inputs.map((s) => (
+          {shown.map((s) => (
             <label key={s.field} className="ent-in">
               <span>{s.label}{s.unit ? ` (${s.unit})` : ""}</span>
               {s.type === "number" && <input type="number" inputMode="decimal" min={s.min} max={s.max} value={(inp[s.field] as number | undefined) ?? ""} onChange={(e) => set(s.field, e.target.value === "" ? undefined : Number(e.target.value))} />}
@@ -91,18 +119,21 @@ export default function QuickCard({ disease, sources }: { disease: Disease; sour
       {noPrimary ? (
         <>
           {disease.doses.some((d) => d.role === "reference") && (
-            r.reference.doses.length > 0 ? (
+            r.reference.doses.length > 0 && !missing.length ? (
               <div className="ent-refdose">
-                <b>Liều tham khảo theo lựa chọn (UCSF – không phải khuyến cáo hội chuyên môn)</b>
+                <b>Phác đồ tham khảo theo lựa chọn – không phải khuyến cáo hội chuyên môn</b>
+                <p className="ent-regimen">{regimenSummary(r.reference.doses)}</p>
                 <ul className="ent-list">{r.reference.doses.map((d) => <DoseRow key={d.id} d={d} sources={sources} computed={calc(d.id)} />)}</ul>
               </div>
             ) : (
-              <p className="ent-decision">{Object.values(inp).some((v) => v !== undefined) ? "Không có liều tham khảo cho lựa chọn này; xem ghi chú tham khảo bên dưới." : "Chọn nhóm tuổi, nơi điều trị và tình trạng dị ứng để xem liều tham khảo tương ứng."}</p>
+              <p className="ent-decision">{missing.length ? `Chọn: ${missing.join(", ")} để xem phác đồ.` : "Không có phác đồ tham khảo cho lựa chọn này."}</p>
             )
           )}
           <div className="ent-gap">
-            <b>Khoảng trống bằng chứng</b>
-            <ul>{(disease.evidenceGap ?? []).map((g) => <li key={g}>{g}</li>)}</ul>
+            <details open={!embedded}>
+              <summary><b>Khoảng trống bằng chứng – vì sao chỉ là tham khảo ({(disease.evidenceGap ?? []).length})</b></summary>
+              <ul>{(disease.evidenceGap ?? []).map((g) => <li key={g}>{g}</li>)}</ul>
+            </details>
             {refStatements.length > 0 && (
               <details open={!embedded}>
                 <summary><b>Ghi chú tham khảo, không phải khuyến cáo hội chuyên môn ({refStatements.length})</b></summary>

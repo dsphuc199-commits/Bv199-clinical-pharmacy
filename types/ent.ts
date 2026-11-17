@@ -4,7 +4,8 @@
   Không có trạng thái "REVIEWED" trong dữ liệu do máy tạo (chỉ người duyệt gán).
 */
 
-export type Tier = "A" | "B" | "REF";
+/** LABEL: thông tin kê đơn được cơ quan quản lý phê duyệt (FDA/DailyMed) – chỉ dùng cho liều. */
+export type Tier = "A" | "B" | "REF" | "LABEL";
 export type Status = "EXTRACTED" | "NOT_VERIFIED";
 /** Vai trò của nguồn trong một bệnh. */
 export type SourceRole = "primary" | "diagnosis" | "comparison" | "reference";
@@ -94,6 +95,10 @@ export interface Dose {
   /** Điều kiện bổ sung theo đầu vào (tất cả phải đúng) để dòng liều được hiển thị. */
   when?: Cond[];
   weight?: WeightDosing;
+  /** true: thuốc phối hợp thêm vào các lựa chọn khác đang hiển thị (không phải lựa chọn độc lập). */
+  addOn?: boolean;
+  /** Liên kết công cụ trong ứng dụng (ví dụ TDM vancomycin). */
+  link?: { href: string; label: string };
   strength?: string;
   quality?: string;
   citation: Citation;
@@ -142,6 +147,8 @@ export interface InputSpec {
   min?: number;
   max?: number;
   unit?: string;
+  /** Chỉ hiện trường khi mọi điều kiện đúng (ví dụ cân nặng chỉ khi chọn trẻ em). */
+  showWhen?: Cond[];
   /** Nguồn dùng trường này để phân nhánh. */
   citation: Citation;
 }

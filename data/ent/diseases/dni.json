@@ -8,12 +8,14 @@
     "NICE-NG84"
   ],
   "referenceSources": [
-    "UCSF-adult-PTA-deepneck"
+    "UCSF-adult-PTA-deepneck",
+    "FDA-Unasyn",
+    "FDA-Cleocin-Phosphate"
   ],
   "evidenceGap": [
     "Không có hướng dẫn hội chuyên môn cho nhiễm khuẩn khoang cổ sâu người lớn trong danh mục nguồn; không có phác đồ khuyến cáo.",
-    "Nội dung UCSF là phác đồ kinh nghiệm của một cơ sở, không ghi liều, chỉ để tham khảo.",
-    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh."
+    "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh.",
+    "Liều hiển thị là tham khảo: thuốc theo UCSF người lớn, liều theo thông tin kê đơn FDA."
   ],
   "redFlags": [
     {
@@ -43,7 +45,82 @@
       "status": "EXTRACTED"
     }
   ],
-  "doses": [],
+  "doses": [
+    {
+      "id": "dni-adult-sam",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Ampicillin-sulbactam",
+      "dose": "1,5–3 g (ampicillin 1–2 g + sulbactam 0,5–1 g)",
+      "route": "tĩnh mạch",
+      "interval": "mỗi 6 giờ",
+      "max": "tổng sulbactam 4 g/ngày",
+      "population": "adult",
+      "condition": "Người lớn, không dị ứng beta-lactam nặng – lựa chọn đầu theo UCSF người lớn",
+      "allergy": [
+        "none"
+      ],
+      "when": [],
+      "citation": {
+        "sourceId": "FDA-Unasyn",
+        "locator": "Dosage and Administration – adult dosage"
+      },
+      "status": "EXTRACTED",
+      "note": "Thuốc theo UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu: thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm); liều theo thông tin kê đơn FDA.",
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+    },
+    {
+      "id": "dni-adult-clinda",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Clindamycin",
+      "dose": "Nhiễm khuẩn nặng: 600–1200 mg/ngày chia 2, 3 hoặc 4 lần; nhiễm khuẩn nặng hơn (nhất là nghi Bacteroides fragilis, Peptococcus): 1200–2700 mg/ngày chia 2, 3 hoặc 4 lần",
+      "route": "tĩnh mạch",
+      "population": "adult",
+      "condition": "Người lớn dị ứng beta-lactam nặng – lựa chọn thay thế theo UCSF người lớn",
+      "allergy": [
+        "severe"
+      ],
+      "when": [],
+      "citation": {
+        "sourceId": "FDA-Cleocin-Phosphate",
+        "locator": "Dosage and Administration – Adults: Parenteral"
+      },
+      "status": "EXTRACTED",
+      "note": "Thuốc theo UCSF người lớn; liều theo thông tin kê đơn FDA (nhãn: tiêm bắp một lần > 600 mg không được khuyến cáo).",
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+    },
+    {
+      "id": "dni-adult-vanco",
+      "role": "reference",
+      "line": "reference",
+      "addOn": true,
+      "drug": "Vancomycin",
+      "dose": "Liều nạp, liều duy trì và theo dõi nồng độ theo công cụ TDM vancomycin",
+      "route": "tĩnh mạch",
+      "population": "adult",
+      "condition": "Nguy cơ cao MRSA: UCSF người lớn ghi ampicillin-sulbactam hoặc clindamycin “WITH OR WITHOUT” vancomycin",
+      "allergy": [
+        "none",
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "mrsaAdult",
+          "op": "truthy"
+        }
+      ],
+      "link": {
+        "href": "/tdm/vancomycin",
+        "label": "Tính liều vancomycin (TDM)"
+      },
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      },
+      "status": "EXTRACTED"
+    }
+  ],
   "rules": [
     {
       "id": "dni-r-noprimary",
@@ -64,7 +141,36 @@
     "Tương tác thuốc",
     "Kháng thuốc tại chỗ/antibiogram bệnh viện"
   ],
-  "inputs": [],
-  "dataVersion": "ent-data 0.2.0",
+  "inputs": [
+    {
+      "field": "allergy",
+      "label": "Dị ứng beta-lactam nặng",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Không"
+        },
+        {
+          "value": "severe",
+          "label": "Có"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Alternative Drug(s)"
+      }
+    },
+    {
+      "field": "mrsaAdult",
+      "label": "Nguy cơ cao MRSA",
+      "type": "boolean",
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Comments"
+      }
+    }
+  ],
+  "dataVersion": "ent-data 0.4.0",
   "sourcesCheckedOn": "17/11/2026"
 }

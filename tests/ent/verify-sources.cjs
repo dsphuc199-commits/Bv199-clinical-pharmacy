@@ -12,8 +12,8 @@ const norm = (s) => s
   .replace(/(\d)[ ,   ](?=\d{3}(\D|$))/g, "$1")
   .replace(/(\d),(\d)/g, "$1.$2")
   .toLowerCase()
-  .replace(/\bbid\b/g, "2 times").replace(/\btid\b/g, "3 times").replace(/\bqid\b/g, "4 times").replace(/\bod\b/g, "1 time").replace(/\btwice\b/g, "2").replace(/\bthree\b/g, "3").replace(/\bfour\b/g, "4").replace(/\bfive\b/g, "5").replace(/\bten\b/g, "10").replace(/\s+/g, " ");
-const SYN = { cefalexin: ["cephalexin", "cefalexin"], "penicillin g": ["penicillin"], "amoxicillin-clavulanate": ["amoxicillin-clavulanate", "amoxicillin/clavulanate", "amoxicillin-clavulanic"], "ampicillin-sulbactam": ["ampicillin-sulbactam", "ampicillin/sulbactam"] };
+  .replace(/\bbid\b/g, "2 times").replace(/\btid\b/g, "3 times").replace(/\bqid\b/g, "4 times").replace(/\bod\b/g, "1 time").replace(/\btwice\b/g, "2").replace(/\bthree\b/g, "3").replace(/\bfour\b/g, "4").replace(/\bfive\b/g, "5").replace(/\bten\b/g, "10").replace(/\bsix\b/g, "6").replace(/\beight\b/g, "8").replace(/\s+/g, " ");
+const SYN = { cefalexin: ["cephalexin", "cefalexin"], "penicillin g": ["penicillin"], "amoxicillin-clavulanate": ["amoxicillin-clavulanate", "amoxicillin/clavulanate", "amoxicillin-clavulanic"], "ampicillin-sulbactam": ["ampicillin-sulbactam", "ampicillin/sulbactam", "unasyn"] };
 const textCache = {};
 function srcText(id) {
   if (id in textCache) return textCache[id];

@@ -1,5 +1,5 @@
 {
-  "version": "ent-sources-0.2.0",
+  "version": "ent-sources-0.3.0",
   "checkedOn": "17/11/2026",
   "sources": [
     {
@@ -260,6 +260,51 @@
       "accessNote": "Trang trả HTTP 403 với công cụ tự động; bản in PDF (dạng ảnh) do người dùng cung cấp 17/11/2026, chép nguyên văn các mục viêm xoang cấp do vi khuẩn, viêm họng do liên cầu, viêm tai giữa cấp. Trang không hiện ngày cập nhật.",
       "checkedOn": "17/11/2026",
       "file": "guidelines/UCSF-peds-resp-head-neck.txt"
+    },
+    {
+      "id": "FDA-Unasyn",
+      "org": "FDA (DailyMed)",
+      "title": "UNASYN (ampicillin sodium and sulbactam sodium) for injection – Prescribing Information",
+      "year": 2026,
+      "tier": "LABEL",
+      "tierLabel": "Thông tin kê đơn FDA – chỉ dùng cho liều",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=12eeb72a-403d-41be-bae4-4cb930862884",
+      "population": "Người lớn và trẻ em theo nhãn",
+      "scope": "Mục Dosage and Administration; bản sửa đổi 11/2025, đăng DailyMed 20/07/2026",
+      "access": "downloaded",
+      "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
+      "file": "guidelines/FDA-Unasyn.txt",
+      "checkedOn": "17/11/2026"
+    },
+    {
+      "id": "FDA-Cleocin-Phosphate",
+      "org": "FDA (DailyMed)",
+      "title": "CLEOCIN PHOSPHATE (clindamycin injection) – Prescribing Information",
+      "year": 2026,
+      "tier": "LABEL",
+      "tierLabel": "Thông tin kê đơn FDA – chỉ dùng cho liều",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=05a75685-0af5-407c-ac57-e380c882b49d",
+      "population": "Người lớn và trẻ em theo nhãn",
+      "scope": "Mục Dosage and Administration; bản sửa đổi 3/2026",
+      "access": "downloaded",
+      "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
+      "file": "guidelines/FDA-Cleocin-Phosphate.txt",
+      "checkedOn": "17/11/2026"
+    },
+    {
+      "id": "FDA-Cleocin-HCl",
+      "org": "FDA (DailyMed)",
+      "title": "CLEOCIN HCl (clindamycin hydrochloride capsules) – Prescribing Information",
+      "year": 2026,
+      "tier": "LABEL",
+      "tierLabel": "Thông tin kê đơn FDA – chỉ dùng cho liều",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=df9a2a41-b132-4f43-8940-b2d773b1369a",
+      "population": "Người lớn và trẻ em theo nhãn",
+      "scope": "Mục Dosage and Administration; bản sửa đổi 9/2026",
+      "access": "downloaded",
+      "accessNote": "Tải SPL từ DailyMed REST API (Node fetch, HTTP 200) ngày 17/11/2026.",
+      "file": "guidelines/FDA-Cleocin-HCl.txt",
+      "checkedOn": "17/11/2026"
     }
   ]
 }

@@ -13,14 +13,16 @@
   ],
   "referenceSources": [
     "UCSF-peds-PTA-RPA",
-    "UCSF-adult-PTA-deepneck"
+    "UCSF-adult-PTA-deepneck",
+    "FDA-Unasyn",
+    "FDA-Cleocin-Phosphate"
   ],
   "evidenceGap": [
     "Không có hướng dẫn hội chuyên môn chuyên biệt cho áp xe sau họng trong danh mục nguồn; không có phác đồ khuyến cáo.",
     "CDC chỉ nêu áp xe sau họng là biến chứng mủ của viêm họng do liên cầu nhóm A, không nêu điều trị.",
-    "Trang UCSF người lớn chỉ ghi áp xe quanh amidan và nhiễm khuẩn khoang cổ sâu, không ghi riêng áp xe sau họng.",
+    "UCSF người lớn ghi chung “áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu”, không ghi riêng áp xe sau họng; phác đồ người lớn hiển thị theo nhóm nhiễm khuẩn khoang cổ sâu.",
     "NICE NG84 chỉ nêu chuyển viện khi có biến chứng mủ nặng, không nêu phác đồ kháng sinh.",
-    "Liều hiển thị khi chọn đầu vào là phác đồ kinh nghiệm nhi khoa của UCSF (một cơ sở), chỉ để tham khảo; UCSF người lớn không ghi liều."
+    "Liều hiển thị là tham khảo: trẻ em theo UCSF nhi khoa; người lớn: thuốc theo UCSF người lớn, liều theo thông tin kê đơn FDA."
   ],
   "redFlags": [
     {
@@ -139,14 +141,14 @@
         "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy, Inpatient (ảnh chụp trang gốc tiếng Anh)"
       },
       "status": "EXTRACTED",
-      "note": "Đơn trị; phối hợp thêm vancomycin khi có tiêu chí MRSA/đường thở. Liều tính theo ampicillin."
+      "note": "Liều tính theo ampicillin."
     },
     {
       "id": "rpa-ucsf-vanco",
       "role": "reference",
       "line": "reference",
-      "drug": "Vancomycin (phối hợp thêm vào ampicillin-sulbactam)",
-      "dose": "Liều và theo dõi theo hướng dẫn vancomycin của UCSF (liên kết trong bảng)",
+      "drug": "Vancomycin",
+      "dose": "Liều và theo dõi theo hướng dẫn vancomycin (UCSF dẫn liên kết riêng) – dùng công cụ TDM vancomycin",
       "route": "tĩnh mạch",
       "duration": "10–14 ngày tùy mức độ và đáp ứng",
       "population": "child",
@@ -166,7 +168,7 @@
           "value": "inpatient"
         },
         {
-          "field": "mrsaCriteria",
+          "field": "mrsaChild",
           "op": "truthy"
         }
       ],
@@ -175,7 +177,12 @@
         "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy; Comments (ảnh chụp trang gốc tiếng Anh)"
       },
       "status": "EXTRACTED",
-      "note": "Phối hợp."
+      "note": "Phối hợp thêm vào ampicillin-sulbactam.",
+      "addOn": true,
+      "link": {
+        "href": "/tdm/vancomycin",
+        "label": "Tính liều vancomycin (TDM)"
+      }
     },
     {
       "id": "rpa-ucsf-amoxclav",
@@ -301,6 +308,97 @@
       },
       "status": "EXTRACTED",
       "note": "Đơn trị."
+    },
+    {
+      "id": "rpa-adult-sam",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Ampicillin-sulbactam",
+      "dose": "1,5–3 g (ampicillin 1–2 g + sulbactam 0,5–1 g)",
+      "route": "tĩnh mạch",
+      "interval": "mỗi 6 giờ",
+      "max": "tổng sulbactam 4 g/ngày",
+      "population": "adult",
+      "condition": "Người lớn, không dị ứng beta-lactam nặng – lựa chọn đầu theo UCSF người lớn",
+      "allergy": [
+        "none"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "FDA-Unasyn",
+        "locator": "Dosage and Administration – adult dosage"
+      },
+      "status": "EXTRACTED",
+      "note": "Thuốc theo UCSF người lớn (áp xe quanh amidan, nhiễm khuẩn khoang cổ sâu: thường đa vi khuẩn; khuyến nghị hội chẩn chuyên khoa bệnh truyền nhiễm); liều theo thông tin kê đơn FDA.",
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+    },
+    {
+      "id": "rpa-adult-clinda",
+      "role": "reference",
+      "line": "reference",
+      "drug": "Clindamycin",
+      "dose": "Nhiễm khuẩn nặng: 600–1200 mg/ngày chia 2, 3 hoặc 4 lần; nhiễm khuẩn nặng hơn (nhất là nghi Bacteroides fragilis, Peptococcus): 1200–2700 mg/ngày chia 2, 3 hoặc 4 lần",
+      "route": "tĩnh mạch",
+      "population": "adult",
+      "condition": "Người lớn dị ứng beta-lactam nặng – lựa chọn thay thế theo UCSF người lớn",
+      "allergy": [
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "FDA-Cleocin-Phosphate",
+        "locator": "Dosage and Administration – Adults: Parenteral"
+      },
+      "status": "EXTRACTED",
+      "note": "Thuốc theo UCSF người lớn; liều theo thông tin kê đơn FDA (nhãn: tiêm bắp một lần > 600 mg không được khuyến cáo).",
+      "duration": "theo hội chẩn chuyên khoa bệnh truyền nhiễm (UCSF người lớn)"
+    },
+    {
+      "id": "rpa-adult-vanco",
+      "role": "reference",
+      "line": "reference",
+      "addOn": true,
+      "drug": "Vancomycin",
+      "dose": "Liều nạp, liều duy trì và theo dõi nồng độ theo công cụ TDM vancomycin",
+      "route": "tĩnh mạch",
+      "population": "adult",
+      "condition": "Nguy cơ cao MRSA: UCSF người lớn ghi ampicillin-sulbactam hoặc clindamycin “WITH OR WITHOUT” vancomycin",
+      "allergy": [
+        "none",
+        "severe"
+      ],
+      "when": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        },
+        {
+          "field": "mrsaAdult",
+          "op": "truthy"
+        }
+      ],
+      "link": {
+        "href": "/tdm/vancomycin",
+        "label": "Tính liều vancomycin (TDM)"
+      },
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Drug(s) of First Choice; Alternative Drug(s); Comments (ảnh chụp)"
+      },
+      "status": "EXTRACTED"
     }
   ],
   "rules": [
@@ -339,7 +437,7 @@
       ],
       "citation": {
         "sourceId": "UCSF-peds-PTA-RPA",
-        "locator": "Patient Population: Pediatric"
+        "locator": "Patient Population: Pediatric; UCSF người lớn riêng"
       }
     },
     {
@@ -349,6 +447,13 @@
       "min": 1,
       "max": 150,
       "unit": "kg",
+      "showWhen": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        }
+      ],
       "citation": {
         "sourceId": "UCSF-peds-PTA-RPA",
         "locator": "Liều mg/kg/lần"
@@ -361,30 +466,28 @@
       "options": [
         {
           "value": "inpatient",
-          "label": "Nội trú"
+          "label": "Nội trú (tĩnh mạch)"
         },
         {
           "value": "outpatient",
-          "label": "Ngoại trú hoặc xuống thang"
+          "label": "Ngoại trú hoặc xuống thang (uống)"
+        }
+      ],
+      "showWhen": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
         }
       ],
       "citation": {
         "sourceId": "UCSF-peds-PTA-RPA",
-        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy (ảnh chụp trang gốc tiếng Anh)"
-      }
-    },
-    {
-      "field": "mrsaCriteria",
-      "label": "Tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm/mang MRSA trong 6 tháng",
-      "type": "boolean",
-      "citation": {
-        "sourceId": "UCSF-peds-PTA-RPA",
-        "locator": "Peritonsillar/Retropharyngeal Abscess – First Choice Therapy (ảnh chụp trang gốc tiếng Anh)"
+        "locator": "First Choice Therapy: Inpatient; Outpatient/step down"
       }
     },
     {
       "field": "allergy",
-      "label": "Dị ứng",
+      "label": "Dị ứng penicillin/cephalosporin nguy cơ cao",
       "type": "select",
       "options": [
         {
@@ -393,15 +496,62 @@
         },
         {
           "value": "severe",
-          "label": "Dị ứng penicillin hoặc cephalosporin nguy cơ cao"
+          "label": "Có"
+        }
+      ],
+      "showWhen": [
+        {
+          "field": "ageGroup",
+          "op": "in",
+          "value": [
+            "child",
+            "adult"
+          ]
         }
       ],
       "citation": {
         "sourceId": "UCSF-peds-PTA-RPA",
-        "locator": "Peritonsillar/Retropharyngeal Abscess – Alternative Therapy (ảnh chụp trang gốc tiếng Anh)"
+        "locator": "Alternative Therapy"
+      }
+    },
+    {
+      "field": "mrsaChild",
+      "label": "Tắc nghẽn đường thở, áp xe lan rộng sẽ dẫn lưu, hoặc tiền sử nhiễm/mang MRSA trong 6 tháng",
+      "type": "boolean",
+      "showWhen": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "child"
+        },
+        {
+          "field": "setting",
+          "op": "eq",
+          "value": "inpatient"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-peds-PTA-RPA",
+        "locator": "First Choice Therapy"
+      }
+    },
+    {
+      "field": "mrsaAdult",
+      "label": "Nguy cơ cao MRSA",
+      "type": "boolean",
+      "showWhen": [
+        {
+          "field": "ageGroup",
+          "op": "eq",
+          "value": "adult"
+        }
+      ],
+      "citation": {
+        "sourceId": "UCSF-adult-PTA-deepneck",
+        "locator": "Comments (ảnh chụp)"
       }
     }
   ],
-  "dataVersion": "ent-data 0.3.0",
+  "dataVersion": "ent-data 0.4.0",
   "sourcesCheckedOn": "17/11/2026"
 }
