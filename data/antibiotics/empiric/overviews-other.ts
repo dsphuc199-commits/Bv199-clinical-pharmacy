@@ -52,7 +52,7 @@ const PHARYNGITIS = ov(`${TMH}, Viêm họng cấp tính`, [
     { text: "Trên 3 tuổi, chưa định loại: điều trị như viêm họng do liên cầu.", ref: "tr. 157" },
   ] },
   { label: "Thời gian", points: [
-    { text: "Bài không quy định thời gian dùng kháng sinh.", ref: "tr. 157" },
+    { text: "Penicilin V hoặc erythromycin: uống đủ 10 ngày; benzathin penicilin: tiêm bắp một lần duy nhất (QĐ 708, Bảng II.13).", ref: "QĐ 708/QĐ-BYT, Bảng II.13, tr. 126" },
   ] },
 ], [
   { text: "Điều trị tại chỗ (xông, súc họng); hạ sốt, giảm đau.", ref: "tr. 157" },

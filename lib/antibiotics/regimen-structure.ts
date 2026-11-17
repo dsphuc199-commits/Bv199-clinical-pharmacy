@@ -105,7 +105,7 @@ export type StructuredRegimen = {
 
 const NUM = String.raw`\d{1,3}(?:[ .]\d{3})+(?:,\d+)?|\d+(?:[.,]\d+)?`;
 const RANGE = String.raw`(?:${NUM})(?:\s*\/\s*(?:${NUM}))?(?:\s*[–-]\s*(?:${NUM}))?`;
-const UNIT = String.raw`triệu đơn vị|triệu UI|MIU|MUI|UI|IU|đơn vị|mcg|µg|mg|g`;
+const UNIT = String.raw`triệu đơn vị|triệu UI|MIU|MUI|UI|IU|đơn vị|đv|mcg|µg|mg|g`;
 const DOSE_RE = new RegExp(
   String.raw`(${RANGE})\s*(${UNIT})(?![a-zA-Zà-ỹ])(\s*\/\s*kg)?(\s*\/\s*(?:ngày|24\s?giờ|lần))?`,
   "i"

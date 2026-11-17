@@ -41,7 +41,8 @@ check("Cryptococcus ngoài TKTW: NEEDS_REVIEW vì có phương án không nêu l
 check("Áp xe da (QĐ 4416 bản ký số): VERIFIED, QĐ 708 SUPERSEDED", by("v8-28").status === "VERIFIED_SOURCE" && by("v8-28").superseded.length > 0);
 check("Lao màng não (QĐ 162): NEEDS_REVIEW – thiếu liều streptomycin trẻ em", by("v8-141").status === "NEEDS_REVIEW" && by("v8-141").reasons.some((r) => r.includes("streptomycin")));
 check("Lao phổi (QĐ 162): VERIFIED nhờ liều Phụ lục 6 CÙNG văn bản, có ghi chú bổ sung", by("v8-142").status === "VERIFIED_SOURCE" && by("v8-142").notes.some((n) => n.includes("CÙNG văn bản")));
-check("Viêm họng liên cầu: VERIFIED theo CDC, có ghi chú liều quốc tế", ["v8-8", "v8-54"].every((id) => by(id).status === "VERIFIED_SOURCE" && by(id).notes.some((n) => n.includes("CDC"))));
+const ROWS_BY_ID = (rid) => JSON.parse(require("fs").readFileSync(require("path").resolve(__dirname, "../../data/antibiotics/empiric/verification/official-dose-check.json"), "utf8")).results.find((r) => r.id === rid)?.status;
+check("Viêm họng liên cầu: có liều BYT QĐ 708 Bảng II.13 (khớp bản chính thức); cần thẩm định vì QĐ 5643 chỉ nêu tên thuốc", ["v8-8", "v8-54"].every((id) => by(id).status === "NEEDS_REVIEW" && by(id).reasons.some((n) => n.includes("MISSING_DOSE_EVIDENCE"))) && ["r-ent-gas-708-bpg", "r-ent-gas-708-penv", "r-ent-gas-708-ery"].every((rid) => ROWS_BY_ID(rid) === "match"));
 check("Viêm xoang, viêm tai giữa (module chưa đối chiếu lại): NEEDS_REVIEW", ["v8-7", "v8-58", "v8-60", "v8-99"].every((id) => by(id).status === "NEEDS_REVIEW"));
 check("Không mặt bệnh nào ở trạng thái SUPERSEDED (chỉ áp dụng cho nội dung)", all.every((e) => e.status !== "SUPERSEDED"));
 

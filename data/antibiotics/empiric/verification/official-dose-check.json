@@ -34,7 +34,7 @@
   "byt4416": 0
  },
  "summary": {
-  "match": 285,
+  "match": 288,
   "no-dose": 44,
   "partial": 6,
   "no-official-text": 7,
@@ -4712,6 +4712,48 @@
    "missing": [],
    "unverifiable": 0,
    "elsewhere": 1,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-gas-708-bpg",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-8",
+    "v8-54"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-gas-708-penv",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-8",
+    "v8-54"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
+   "status": "match"
+  },
+  {
+   "kind": "byt",
+   "id": "r-ent-gas-708-ery",
+   "doc": "byt708",
+   "diseaseIds": [
+    "v8-8",
+    "v8-54"
+   ],
+   "tokens": 2,
+   "found": 2,
+   "missing": [],
+   "unverifiable": 0,
    "status": "match"
   }
  ]

@@ -10,13 +10,31 @@ import { NO_DOSE, d, maker } from "./helpers";
 import type { Regimen } from "./types";
 
 const r = maker("byt5643");
+const r708 = maker("byt708");
 
 export const ENT: Regimen[] = [
   // ===== Viêm họng cấp / liên cầu (v8-8, v8-54) =====
   r("Viêm họng cấp tính, mục 4.2.1", "tr. 157", "r-ent-pharyngitis", ["v8-8", "v8-54"],
     "Viêm họng đỏ cấp ở bệnh nhân > 3 tuổi (điều trị như viêm họng do liên cầu khi không có xét nghiệm định loại)", "first",
     [d("Một trong", `amoxicilin; cephalexin; erythromycin; clarithromycin (${NO_DOSE})`)],
-    { notes: ["Nguyên tắc 4.1: kháng sinh nhóm beta-lactam hoặc các nhóm khác; mọi viêm họng đỏ cấp đơn thuần > 3 tuổi đều điều trị như do liên cầu khi không có xét nghiệm.", "Liều, thời gian: dùng module Viêm họng liên cầu của app (CDC/quốc tế) và đối chiếu danh mục BV199; nguồn BYT này không nêu."] }),
+    { notes: ["Nguyên tắc 4.1: kháng sinh nhóm beta-lactam hoặc các nhóm khác; mọi viêm họng đỏ cấp đơn thuần > 3 tuổi đều điều trị như do liên cầu khi không có xét nghiệm.", "Liều kháng sinh diệt liên cầu của Bộ Y tế: QĐ 708/QĐ-BYT, Bảng II.13 (tr. 126) – xem các phác đồ penicilin dưới đây."] }),
+
+  // ===== QĐ 708/QĐ-BYT (2015), bài Thấp tim, Bảng II.13 (tr. 126): kháng sinh diệt liên cầu beta tan huyết nhóm A =====
+  // QĐ 708 không có bài viêm họng riêng; Bảng II.13 là liều kháng sinh diệt liên cầu trong bài Thấp tim.
+  r708("Thấp tim – Bảng II.13 Thuốc và cách sử dụng trong điều trị bệnh thấp tim", "tr. 125–126", "r-ent-gas-708-bpg", ["v8-8", "v8-54"],
+    "Viêm họng đỏ cấp ở bệnh nhân > 3 tuổi (điều trị như viêm họng do liên cầu khi không có xét nghiệm định loại)", "first",
+    [d("Benzathin penicilin – người bệnh < 30 kg", "600.000 đv, tiêm bắp sâu (tiêm mông), một lần duy nhất (liều duy nhất)"), d("HOẶC Benzathin penicilin – từ 30 kg trở lên", "1.200.000 đv, tiêm bắp sâu (tiêm mông), một lần duy nhất (liều duy nhất)")],
+    { duration: "Một lần duy nhất",
+      notes: ["Bảng II.13 ghi hiệu quả nhất (> 97%).", "Penicilin vẫn là thuốc hiệu quả nhất, chưa thấy liên cầu kháng penicilin (tr. 125)."] }),
+  r708("Thấp tim – Bảng II.13 Thuốc và cách sử dụng trong điều trị bệnh thấp tim", "tr. 125–126", "r-ent-gas-708-penv", ["v8-8", "v8-54"],
+    "Viêm họng đỏ cấp ở bệnh nhân > 3 tuổi (điều trị như viêm họng do liên cầu khi không có xét nghiệm định loại)", "first",
+    [d("Penicilin V – người bệnh < 30 kg", "500 mg/24 giờ, uống 2 lần/24 giờ (chia 2 lần/ngày)"), d("HOẶC Penicilin V – từ 30 kg trở lên", "1 g/24 giờ, uống 2 lần/24 giờ (chia 2 lần/ngày)")],
+    { duration: "Uống đủ 10 ngày", notes: ["Bảng II.13 ghi hiệu quả như tiêm."] }),
+  r708("Thấp tim – Bảng II.13 Thuốc và cách sử dụng trong điều trị bệnh thấp tim", "tr. 125–126", "r-ent-gas-708-ery", ["v8-8", "v8-54"],
+    "Viêm họng đỏ cấp ở bệnh nhân > 3 tuổi (điều trị như viêm họng do liên cầu khi không có xét nghiệm định loại)", "allergy",
+    [d("Erythromycin – người bệnh < 30 kg", "500 mg, uống 2 lần/24 giờ (2 lần/ngày)"), d("HOẶC Erythromycin – từ 30 kg trở lên", "1 g, uống 2 lần/24 giờ (2 lần/ngày)")],
+    { duration: "Uống đủ 10 ngày",
+      notes: ["Dùng khi dị ứng penicilin; tác dụng tốt (> 70%). Khoảng 10% liên cầu kháng erythromycin (tr. 125).", "Chọn đúng một dòng theo cân nặng. Bảng ghi “< 30kg: 500 mg; từ 30 kg trở lên: 1g; uống 2 lần/24 giờ” – không ghi “/24 giờ” sau liều như dòng penicilin V."] }),
 
   // ===== Viêm amidan cấp (v8-55) =====
   r("Viêm amiđan cấp và mạn tính, mục điều trị", "tr. 144", "r-ent-tonsillitis", ["v8-55"],

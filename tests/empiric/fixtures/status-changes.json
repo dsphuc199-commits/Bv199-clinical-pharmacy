@@ -35,6 +35,20 @@
       "to": "VERIFIED_SOURCE",
       "step": "Them mat benh Benh lay truyen qua duong tinh duc (16/11/2026)",
       "reason": "Mat benh moi: 21 phuong an BYT QĐ 708 (giang mai tr. 192–194, lau tr. 197–198, ha cam tr. 200, viem nieu dao khong do lau tr. 245–246), doc truc tiep ban PDF; moi phuong an co lieu so. Phuong an da them vao byt-regimens-baseline.json."
+    },
+    {
+      "id": "v8-8",
+      "from": "VERIFIED_SOURCE",
+      "to": "NEEDS_REVIEW",
+      "step": "ENT – QĐ 708 Bảng II.13 (17/11/2026)",
+      "reason": "Them 3 phuong an BYT co lieu (QĐ 708, bai Thap tim, Bang II.13 tr. 125–126: benzathin penicilin, penicilin V, erythromycin – doi chieu ban chinh thuc: khop 6/6 lieu). Phuong an QĐ 5643 tr. 157 chi neu ten thuoc (amoxicilin, cephalexin, erythromycin, clarithromycin) nen theo quy tac evidence-status la ly do can tham dinh (MISSING_DOSE_EVIDENCE)."
+    },
+    {
+      "id": "v8-54",
+      "from": "VERIFIED_SOURCE",
+      "to": "NEEDS_REVIEW",
+      "step": "ENT – QĐ 708 Bảng II.13 (17/11/2026)",
+      "reason": "Them 3 phuong an BYT co lieu (QĐ 708, bai Thap tim, Bang II.13 tr. 125–126: benzathin penicilin, penicilin V, erythromycin – doi chieu ban chinh thuc: khop 6/6 lieu). Phuong an QĐ 5643 tr. 157 chi neu ten thuoc (amoxicilin, cephalexin, erythromycin, clarithromycin) nen theo quy tac evidence-status la ly do can tham dinh (MISSING_DOSE_EVIDENCE)."
     }
   ]
 }

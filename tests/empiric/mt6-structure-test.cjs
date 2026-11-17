@@ -40,7 +40,7 @@ for (const { r, s } of all) {
       if (v && !full.includes(v)) invented.push(`${r.id}:${o.name}:${k}=${v}`);
     }
     // so trong don vi (mg, g, ...) cung phai co trong nguyen van
-    if (o.doseUnit && !/^(?:triệu đơn vị|triệu UI|MIU|MUI|UI|IU|đơn vị|mcg|µg|mg|g)(?:\/kg)?(?:\/ngày|\/lần)?$/i.test(o.doseUnit)) invented.push(`${r.id}:${o.name}:unit=${o.doseUnit}`);
+    if (o.doseUnit && !/^(?:triệu đơn vị|triệu UI|MIU|MUI|UI|IU|đơn vị|đv|mcg|µg|mg|g)(?:\/kg)?(?:\/ngày|\/lần)?$/i.test(o.doseUnit)) invented.push(`${r.id}:${o.name}:unit=${o.doseUnit}`);
   }
 }
 check("Không tạo số liệu: mọi liều/khoảng cách/thời gian truyền/liều tối đa đều là chuỗi con của nguyên văn", invented.length === 0, invented.slice(0, 10));
