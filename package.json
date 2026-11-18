@@ -13,7 +13,9 @@
     "build:intl-index": "tsx scripts/build-intl-index.ts",
     "build:intl-reference": "tsx scripts/build-intl-reference.ts",
     "build:guideline-jobs": "tsx scripts/build-guideline-jobs.ts",
-    "test:ent": "node tests/ent/ent-test.cjs"
+    "test:ent": "node tests/ent/ent-test.cjs",
+    "validate:uti": "tsx scripts/validate-uti-data.ts",
+    "test:uti": "tsx --test tests/uti/flow.test.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",
