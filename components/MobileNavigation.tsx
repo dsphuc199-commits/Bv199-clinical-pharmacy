@@ -1,6 +1,7 @@
 
 "use client";
 
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,7 +21,7 @@ const moreLinks = [
   { label: "Thai kỳ & cho con bú", href: "/safety/pregnancy" },
   { label: "Thay thế thuốc", href: "/safety/substitution" },
   { label: "Thuốc LASA", href: "/safety/lasa" },
-  { label: "PK/PD kháng sinh", href: "/pkpd" },
+  ...(SHOW_PKPD ? [{ label: "PK/PD kháng sinh", href: PKPD_HREF }] : []),
   { label: "Quản trị", href: "/admin" },
 ];
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -134,7 +135,7 @@ function AntibiogramContent({
             { href: "/antibiotics/empiric/guideline-v9", label: "Kinh nghiệm" },
             { href: "/antibiotics/organism", label: "KS theo vi khuẩn" },
             { href: "/antibiotics/dosing", label: "Hiệu chỉnh liều" },
-            { href: "/pkpd", label: "PK/PD" },
+            ...(SHOW_PKPD ? [{ href: PKPD_HREF, label: "PK/PD" }] : []),
           ]}
         />
 
@@ -1124,12 +1125,12 @@ function ReportSource() {
                         KS theo vi khuẩn →
                       </Link>
 
-                      <Link
-                        href="/pkpd"
+                      {SHOW_PKPD && <Link
+                        href={PKPD_HREF}
                         className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100"
                       >
                         PK/PD →
-                      </Link>
+                      </Link>}
 
                     </div>
 

@@ -1,3 +1,4 @@
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import Link from "next/link";
 import {
   Stethoscope, Microscope, ShieldCheck, UserRound, TrendingDown,
@@ -23,7 +24,7 @@ const modules = [
   { id: "iv-to-po", title: "Chuyển tĩnh mạch → uống", description: "Tiêu chí chuyển sang đường uống.", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: REVIEW },
   { id: "prophylaxis", title: "Dự phòng phẫu thuật", description: "Lựa chọn, thời điểm dùng và ngừng KSDP.", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: PREVENT },
   { id: "antibiogram", title: "Antibiogram BV199", description: "Dữ liệu vi sinh và kháng thuốc tại bệnh viện.", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: PREVENT },
-  { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC, chỉ số PK/PD, cách dùng.", href: "/pkpd", icon: Gauge, group: PREVENT },
+  { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC, chỉ số PK/PD, cách dùng.", href: PKPD_HREF, icon: Gauge, group: PREVENT },
 ] as const;
 const groups = [START, REVIEW, PREVENT] as const;
 
@@ -40,7 +41,7 @@ export default function AntibioticsPage() {
           <div key={group} className="bv199-ams-v3-group">
             <h2 className="bv199-ams-v3-heading"><span className="bv199-ams-v3-step">{groups.indexOf(group) + 1}</span>{group}</h2>
             <div className="bv199-ams-v3-grid">
-              {modules.filter(m => m.group === group).map(m => {
+              {modules.filter(m => m.group === group && (m.id !== "pkpd" || SHOW_PKPD)).map(m => {
                 const Icon = m.icon;
                 return (
                   <Link key={m.id} href={m.href} className="bv199-ams-v3-card">

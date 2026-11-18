@@ -1,3 +1,4 @@
+import { PKPD_HREF } from "@/lib/feature-flags";
 import Link from "next/link";
 import {
   notFound,
@@ -45,7 +46,7 @@ export default async function PKPDLearningPage({
       <div className="pkpd-back-row">
 
         <Link
-          href="/pkpd"
+          href={PKPD_HREF}
           className="pkpd-back-link"
         >
           ← Quay lại Học & tra cứu PK/PD

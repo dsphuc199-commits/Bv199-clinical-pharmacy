@@ -1,5 +1,6 @@
 "use client";
 
+import { PKPD_HREF } from "@/lib/feature-flags";
 import Link from "next/link";
 
 import {
@@ -180,7 +181,7 @@ export default function PkPdCalculatorPage() {
         <div className="mb-5 flex flex-wrap gap-2">
 
           <Link
-            href="/pkpd"
+            href={PKPD_HREF}
             className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             ← PK/PD

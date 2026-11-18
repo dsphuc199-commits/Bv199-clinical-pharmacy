@@ -1,3 +1,4 @@
+import { PKPD_HREF } from "@/lib/feature-flags";
 import Link from "next/link";
 
 import type {
@@ -13,7 +14,7 @@ export default function PKPDModuleCard({
 }: Props) {
   return (
     <Link
-      href={`/pkpd/learn/${module.slug}`}
+      href={`${PKPD_HREF}/learn/${module.slug}`}
       className="pkpd-module-card"
     >
       <div className="pkpd-module-icon">

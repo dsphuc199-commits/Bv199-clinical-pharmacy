@@ -13,7 +13,7 @@ export default function MobileTopBar() {
     path.startsWith("/antibiotics/empiric") ? "Kháng sinh kinh nghiệm" :
     path.startsWith("/antibiotics") ? "Kháng sinh & AMS" :
     path.startsWith("/calculators") ? "Công cụ lâm sàng" :
-    path.startsWith("/pkpd") ? "PK/PD" :
+    path.toLowerCase().startsWith("/pkpd") ? "PK/PD" :
     path.startsWith("/tdm") ? "TDM" : "BV199 Clinical Pharmacy";
   return <header className="bv199-mobile-topbar">
     {home ? <><Image src="/bv199-khoa-duoc-logo.png" width={44} height={44} alt="Logo Khoa Dược Bệnh viện 199" className="bv199-mobile-logo" />

@@ -1,6 +1,7 @@
 
 "use client";
 
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -68,7 +69,7 @@ const GROUPS: Group[] = [
       { label: "Chuyển tĩnh mạch → uống", href: "/antibiotics/iv-to-po", code: "IV" },
       { section: "Dự phòng và dữ liệu", label: "Dự phòng phẫu thuật", href: "/antibiotics/prophylaxis", code: "DP" },
       { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
-      { label: "PK/PD kháng sinh", href: "/pkpd", code: "PK" },
+      ...(SHOW_PKPD ? [{ label: "PK/PD kháng sinh", href: PKPD_HREF, code: "PK" }] : []),
     ],
   },
   {
@@ -95,7 +96,7 @@ const GROUPS: Group[] = [
 function currentGroup(path: string) {
   /* Trang chu chuyen toi Tong quan AMS (/antibiotics): coi la cung mot trang. */
   if (path === "/" || path === "/antibiotics") return "home";
-  if (path.startsWith("/antibiotics") || path.startsWith("/pkpd") || path === "/ent" || path.startsWith("/ent/")) return "antibiotics";
+  if (path.startsWith("/antibiotics") || path.toLowerCase().startsWith("/pkpd") || path === "/ent" || path.startsWith("/ent/")) return "antibiotics";
   if (path.startsWith("/calculators")) return "tools";
   if (path.startsWith("/admin")) return "admin";
   return "clinical";

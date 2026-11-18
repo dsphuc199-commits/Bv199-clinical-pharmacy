@@ -1,3 +1,4 @@
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import Link from "next/link";
 
 import {
@@ -40,12 +41,12 @@ export default function TdmOverviewPage() {
             value="5 module"
           />
 
-          <QuickCard
+          {SHOW_PKPD && <QuickCard
             title="PK/PD"
             text="Tra cứu chỉ số PK/PD liên quan."
             value="Liên kết"
-            href="/pkpd"
-          />
+            href={PKPD_HREF}
+          />}
 
           <QuickCard
             title="SmartDose AI"

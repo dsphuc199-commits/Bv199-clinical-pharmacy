@@ -1,5 +1,6 @@
 "use client";
 
+import { PKPD_HREF, SHOW_PKPD } from "@/lib/feature-flags";
 import Link from "next/link";
 
 import {
@@ -47,12 +48,12 @@ export default function TdmDrugPage({
             ← Tổng quan TDM
           </Link>
 
-          <Link
-            href="/pkpd"
+          {SHOW_PKPD && <Link
+            href={PKPD_HREF}
             className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700"
           >
             PK/PD →
-          </Link>
+          </Link>}
 
         </div>
 
