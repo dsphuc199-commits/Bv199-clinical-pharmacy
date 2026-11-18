@@ -194,7 +194,7 @@ export const P_CRITICAL: RxItem[] = [
   { role: "Nhiễm khuẩn huyết nặng – tùy chuyên gia", text: "Vancomycin ± clindamycin (ức chế tổng hợp độc tố), hoặc oxacilin/nafcilin + thuốc kháng MRSA", dose: "Liều từng thuốc theo bảng trên; chưa có dữ liệu so sánh các phối hợp", ref: "V bàn luận" },
 ];
 export const P_KINGELLA: RxItem = { role: "Trẻ tuổi mẫu giáo, nghi K. kingae (vd. viêm xương đầu xương)", text: "Thêm ampicilin, beta-lactam/chất ức chế beta-lactamase (chủng sinh beta-lactamase) hoặc cephalosporin vào phác đồ kháng MRSA; hoặc theo dõi đáp ứng 48–72 giờ với clindamycin/vancomycin rồi mới thêm nếu đáp ứng kém.", ref: "V bàn luận" };
-export const P_OTHER: RxItem = { role: "Bệnh hemoglobin, nuôi bò sát, tiêm chủng chưa đủ", text: "Cân nhắc phủ thêm Salmonella, Brucella hoặc H. influenzae typ b; hướng dẫn không nêu phác đồ cụ thể.", ref: "V.1 bình luận; V bàn luận" };
+export const P_OTHER: RxItem = { role: "Bệnh hemoglobin, nuôi bò sát, tiêm chủng chưa đủ", text: "Cân nhắc phủ thêm Salmonella, Brucella hoặc H. influenzae typ b.", ref: "V.1 bình luận; V bàn luận" };
 
 export const P_TIMING: RxItem[] = [
   { role: "Trẻ biểu hiện nặng, tiến triển nhanh", text: "Dùng kháng sinh kinh nghiệm ngay, không chờ thủ thuật xâm lấn (cấy mẫu lấy trong 24–48 giờ sau kháng sinh vẫn cho tỷ lệ dương tính tương đương).", grade: "S-M", ref: "IV.1" },

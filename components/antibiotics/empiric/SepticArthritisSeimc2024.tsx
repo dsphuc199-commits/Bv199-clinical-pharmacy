@@ -335,7 +335,7 @@ function durationItems(pop: Pop, agent: Agent | null, adultSite: AdultSite, chil
       if (d === "gc") out.push({ role: "Lậu cầu – theo thể bệnh", text: "Hội chứng viêm khớp – viêm da: 1 tuần; viêm khớp mủ: 2 tuần.", ref: "XII bàn luận" });
     }
     if (adultSite === "axial") out.push({ role: "Khớp trục", text: "6 tuần.", grade: "A-III", ref: "VII.10" });
-    if (adultSite === "osteo") out.push({ role: "Kèm viêm xương kế cận", text: "Kéo dài hơn khớp đơn thuần (hướng dẫn không nêu số tuần).", grade: "A-III", ref: "VII.10" });
+    if (adultSite === "osteo") out.push({ role: "Kèm viêm xương kế cận", text: "Kéo dài hơn khớp đơn thuần.", grade: "A-III", ref: "VII.10" });
     if (adultSite === "hand") out.push({ role: "Cổ tay, bàn tay sau dẫn lưu ngoại khoa", text: "2 tuần; có thể không áp dụng cho MRSA.", grade: "A-I", ref: "VII.10" });
     if (slow) out.push({ role: "Suy giảm miễn dịch, đáp ứng chậm", text: "Kéo dài hơn.", grade: "B-III", ref: "VII.10" });
     if (d === "neg") out.push({ role: "Cấy âm tính", text: "Một số tác giả cho rằng có thể rút ngắn còn 2 tuần.", ref: "XIII bàn luận" });
@@ -589,7 +589,7 @@ export default function SepticArthritisSeimc2024() {
 
         <h4>{stage === "empiric" ? "Phác đồ kinh nghiệm" : "Phác đồ đích – đường tĩnh mạch"}{al && s.state === "explicit" ? " · dị ứng beta-lactam" : ""}</h4>
         {principle.length > 0 && <Rx items={principle} />}
-        {s.state === "only-bl" && <p className="sa24-warn">Hướng dẫn chưa nêu thuốc thay thế cho người dị ứng beta-lactam ở tình huống này; phác đồ dưới đây có beta-lactam – đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
+        {s.state === "only-bl" && <p className="sa24-warn">Phác đồ dưới đây có beta-lactam: đánh giá loại, mức độ dị ứng và hội chẩn trước khi dùng.</p>}
         <ReadHint />
         <Rx items={s.shown} />
         {tips.map((t) => <p key={t} className="sa24-tip">{t}</p>)}

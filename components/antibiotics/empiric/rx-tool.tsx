@@ -2,6 +2,7 @@
 /* Thanh phan giao dien dung chung cho cong cu chon khang sinh theo chan doan (bang ke don, nut chon, chu giai muc khuyen cao). */
 import type { ReactNode } from "react";
 import type { RxItem } from "./septic-arthritis-pids2023";
+import { parseDose } from "./rx-dose-parts";
 
 type Item = RxItem;
 export const ALG = "Dị ứng beta-lactam";
@@ -48,17 +49,48 @@ export function Grade({ g }: { g?: string }) {
 export function Rx({ items }: { items: Item[] }) {
   if (!items.length) return null;
   const hasDose = items.some((i) => i.dose);
+  const hasGrade = items.some((i) => i.grade);
+  const parts = items.map((i) => (i.dose ? parseDose(i.dose) : null));
+  const showRoute = parts.some((p) => p?.route);
+  const showFreq = parts.some((p) => p?.freq);
+  const showDuration = parts.some((p) => p?.duration);
+  /* So cot danh cho cach dung: lieu + cac cot co du lieu. */
+  const useSpan = 1 + Number(showRoute) + Number(showFreq) + Number(showDuration);
   return (
     <table className={`sa24-rx${hasDose ? " has-dose" : ""}`}>
-      <tbody>
-        {items.map((it, i) => (
-          <tr key={it.role + it.text + i} className={it.al === "alt" || it.role.startsWith(ALG) || it.role.startsWith("Không dùng được beta") ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
-            <th scope="row">{it.role}</th>
-            <td className="sa24-drug">{it.text}</td>
-            {hasDose && <td className="sa24-dose">{it.dose ?? ""}</td>}
-            <td className="sa24-gc"><Grade g={it.grade} /></td>
+      {hasDose && (
+        <thead>
+          <tr>
+            <th scope="col">Lựa chọn</th>
+            <th scope="col">Thuốc</th>
+            <th scope="col">Liều</th>
+            {showRoute && <th scope="col">Đường dùng</th>}
+            {showFreq && <th scope="col">Số lần dùng</th>}
+            {showDuration && <th scope="col">Thời gian</th>}
+            {hasGrade && <th scope="col" className="sa24-gc">Mức KC</th>}
           </tr>
-        ))}
+        </thead>
+      )}
+      <tbody>
+        {items.map((it, i) => {
+          const p = parts[i];
+          return (
+            <tr key={it.role + it.text + i} className={it.al === "alt" || it.role.startsWith(ALG) || it.role.startsWith("Không dùng được beta") ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
+              <th scope="row">{it.role}</th>
+              {/* Dong khong co lieu (nguyen tac, ghi chu): noi dung trai het cac cot cach dung. */}
+              <td className={hasDose && !it.dose ? "sa24-note" : "sa24-drug"} colSpan={hasDose && !it.dose ? 1 + useSpan : undefined}>{it.text}</td>
+              {it.dose && p && <>
+                <td className="sa24-dose" data-label="Liều">{p.dose}</td>
+                {showRoute && <td className="sa24-dose" data-label="Đường dùng">{p.route ?? ""}</td>}
+                {showFreq && <td className="sa24-dose" data-label="Số lần dùng">{p.freq ?? ""}</td>}
+                {showDuration && <td className="sa24-dose" data-label="Thời gian">{p.duration ?? ""}</td>}
+              </>}
+              {/* Cau lieu khong tach chac chan duoc: giu nguyen trong mot o. */}
+              {it.dose && !p && <td className="sa24-dose" data-label="Cách dùng" data-whole="" colSpan={useSpan}>{it.dose}</td>}
+              {(hasGrade || !hasDose) && <td className="sa24-gc"><Grade g={it.grade} /></td>}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
@@ -129,8 +161,11 @@ export function RxToolStyle() {
         .sa24-rx th, .sa24-rx td { padding: 8px 10px; border-top: 1px solid #edf2f6; text-align: left; vertical-align: top; font-size: 14px; line-height: 1.55; }
         .sa24-rx tr:first-child th, .sa24-rx tr:first-child td { border-top: 0; }
         .sa24-rx th { width: 28%; font-weight: 700; color: #33505f; font-size: 13px; }
-        .sa24-rx.has-dose .sa24-drug { width: 22%; font-weight: 700; }
-        .sa24-rx .sa24-dose { font-size: 13px; color: #33505f; }
+        .sa24-rx thead th { width: auto; background: #f1f6f9; color: #0b3a5b; font-size: 12px; font-weight: 800; white-space: nowrap; }
+        .sa24-rx.has-dose tbody th { width: 17%; }
+        .sa24-rx.has-dose .sa24-drug { width: 21%; font-weight: 700; color: #0f2236; }
+        .sa24-rx .sa24-note { font-size: 13px; color: #33505f; }
+        .sa24-rx .sa24-dose { font-size: 13.5px; color: #10243e; }
         .sa24-rx .sa24-gc { width: 112px; text-align: right; white-space: nowrap; }
         .sa24-rx tr.is-pref th { color: #0b6b3a; }
         .sa24-rx tr.is-alg { background: #fff8f1; }
@@ -153,6 +188,17 @@ export function RxToolStyle() {
         .sa24-src b { color: #33505f; }
         .sa24-src ol { margin: 0; padding-left: 20px; display: grid; gap: 2px; }
         .sa24-src p { margin: 0; }
+        @media (max-width: 900px) {
+          .sa24-rx.has-dose, .sa24-rx.has-dose tbody, .sa24-rx.has-dose tr, .sa24-rx.has-dose th, .sa24-rx.has-dose td { display: block; width: auto !important; }
+          .sa24-rx.has-dose thead { display: none; }
+          .sa24-rx.has-dose tbody tr { display: grid; gap: 3px; border-top: 1px solid #edf2f6; padding: 8px 10px; }
+          .sa24-rx.has-dose tbody tr:first-child { border-top: 0; }
+          .sa24-rx.has-dose th, .sa24-rx.has-dose td { border: 0; padding: 0; }
+          .sa24-rx.has-dose td[data-label] { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 8px; }
+          .sa24-rx.has-dose td[data-label]::before { content: attr(data-label); font-size: 12px; font-weight: 700; color: #5a7385; }
+          .sa24-rx.has-dose td[data-label]:empty { display: none; }
+          .sa24-rx.has-dose .sa24-gc { text-align: left; }
+        }
         @media (max-width: 640px) {
           .sa24-row { grid-template-columns: 1fr; gap: 6px; }
           .sa24-lab { padding-top: 0; }

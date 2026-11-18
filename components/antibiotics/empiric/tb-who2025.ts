@@ -223,7 +223,7 @@ function dsPulmonary(i: TbIn): TbOut {
 export const TBM_STEROID: RxItem = r(
   "Corticoid bổ trợ",
   "Dexamethason hoặc prednisolon ngay từ đầu, giảm dần trong 6–8 tuần, bất kể mức độ nặng; dùng đường uống nếu không có dạng tiêm.",
-  "WHO không nêu liều",
+  undefined,
   "S-M",
   "Ch1 Rec 4.1; Handbook 7.3",
 );

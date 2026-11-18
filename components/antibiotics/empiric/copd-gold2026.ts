@@ -69,13 +69,13 @@ export function goldEmpiric(): RxItem[] {
 export const CULTURE_TRIGGERS = ["Đợt cấp thường xuyên", "Tắc nghẽn luồng khí nặng", "Đợt cấp cần thông khí cơ học"] as const;
 export const GOLD_CULTURE: RxItem = {
   role: "Cấy đờm hoặc bệnh phẩm phổi",
-  text: "Có thể có trực khuẩn Gram âm (ví dụ Pseudomonas) hoặc vi khuẩn kháng các thuốc trên – chỉnh kháng sinh theo kết quả cấy. GOLD không nêu phác đồ kháng Pseudomonas; xem tab Việt Nam (QĐ 2131, nhóm có nguy cơ P. aeruginosa).",
+  text: "Có thể có trực khuẩn Gram âm (ví dụ Pseudomonas) hoặc vi khuẩn kháng các thuốc trên – chỉnh kháng sinh theo kết quả cấy. Phác đồ kháng Pseudomonas theo QĐ 2131, nhóm có nguy cơ P. aeruginosa (tab Việt Nam).",
   ref: "Ch.4 Antibiotics",
 };
 
 export const GOLD_ROUTE: RxItem[] = [
   { role: "Đường dùng", text: "Uống hoặc tĩnh mạch tùy tình trạng người bệnh và dược động học của thuốc.", ref: "Ch.4 Antibiotics" },
-  { role: "Nội trú cần tĩnh mạch", text: "GOLD không nêu thuốc tĩnh mạch cụ thể – liều tĩnh mạch theo QĐ 2131 Bảng 3.4 (tab Việt Nam).", ref: "Ch.4 Antibiotics" },
+  { role: "Nội trú cần tĩnh mạch", text: "Thuốc và liều tĩnh mạch theo QĐ 2131 (tab Việt Nam).", ref: "Ch.4 Antibiotics" },
 ];
 
 export function goldDuration(setting: Setting): RxItem[] {

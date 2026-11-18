@@ -140,7 +140,7 @@ export function dfiPlan(i: DfiIn): DfiOut {
     title: "Nguyên tắc chọn thuốc",
     lead: "Bảng 4 là đề xuất kinh nghiệm; nhiều thuốc trong một dòng → chỉ chọn một, trừ khi ghi rõ phối hợp. Chỉnh thuốc hoặc liều khi suy thận, suy gan, béo phì.",
     items: [
-      r("Liều", "Liều thông thường cho nhiễm trùng nặng; viêm xương: liều ở mức cao của khoảng khuyến cáo. Hướng dẫn không nêu mg – theo hướng dẫn quốc gia (tab Việt Nam).", undefined, "Table 4 foot c; Rec 12, 16 rationale"),
+      r("Liều", "Liều thông thường cho nhiễm trùng nặng; viêm xương: liều ở mức cao của khoảng khuyến cáo. Liều cụ thể theo hướng dẫn quốc gia (tab Việt Nam).", undefined, "Table 4 foot c; Rec 12, 16 rationale"),
       r("Chọn thuốc", "Theo tác nhân nghi ngờ hoặc đã xác định và độ nhạy, mức độ nặng, bằng chứng hiệu quả, nguy cơ tác dụng phụ và tổn hại hệ vi khuẩn, tương tác, khả năng sẵn có, chi phí.", "GPS", "Rec 13"),
       r("Phác đồ", "Dùng phác đồ toàn thân đã chứng minh hiệu quả trong thử nghiệm ngẫu nhiên, ở liều chuẩn.", "S-H", "Rec 12a"),
       r("Xuống thang", "Khi có kết quả cấy: chuyển sang kháng sinh đích, phổ hẹp nhất, ưu tiên đường uống.", undefined, "Rec 12 rationale"),

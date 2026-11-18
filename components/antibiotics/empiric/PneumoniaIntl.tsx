@@ -124,7 +124,7 @@ function CapTool({ al }: { al: boolean }) {
         {virus && (<><h4>Xét nghiệm virus hô hấp dương tính</h4><Rx items={vr.items} /></>)}
         <h4>{noAbx ? "Kháng sinh kinh nghiệm – chỉ khi nghi đồng nhiễm vi khuẩn" : "Kháng sinh kinh nghiệm"}</h4>
         {al && <p className="sa24-warn">Dị ứng penicilin nhẹ – vừa thường dung nạp beta-lactam không phải penicilin; phản ứng tức thì có thể dung nạp cephalosporin thế hệ 3–4 hoặc carbapenem; tránh mọi beta-lactam khi từng có hội chứng Stevens-Johnson hoặc hoại tử thượng bì nhiễm độc (Lộ trình IDSA).</p>}
-        {plans.length ? <Plans plans={plans} /> : <p className="sa24-warn">Hướng dẫn không nêu phác đồ thay thế cho người dị ứng beta-lactam ở tình huống này – đánh giá loại, mức độ dị ứng trước khi chọn thuốc.</p>}
+        {plans.length ? <Plans plans={plans} /> : <p className="sa24-warn">Dị ứng beta-lactam: đánh giá loại, mức độ dị ứng trước khi chọn thuốc.</p>}
         {o.notes.map((n) => <p key={n} className="sa24-tip">{n}</p>)}
         {extra.length > 0 && (<><h4>Điều chỉnh theo nguy cơ MRSA, P. aeruginosa</h4>{extra.map((p) => <PlanCard key={p.title} p={p} />)}</>)}
         <h4>Tình huống đặc biệt</h4>
