@@ -14,7 +14,7 @@ import {
   PIDS_AGENTS, PIDS_AGES, PIDS_CONTEXTS, PIDS_DEFINITIVE_PRINCIPLE, PIDS_DOSE_NOTES, PIDS_DOSE_TABLE, PIDS_KINGELLA,
   PIDS_PRINCIPLES, PIDS_ROUTE, PIDS_TIMING, pidsDuration, type PidsAge, type RxItem,
 } from "./septic-arthritis-pids2023";
-import { ALG, ALT, PREF, GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { ALG, ALT, PREF, GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
 
 type Item = RxItem;
 type Pop = "adult" | "child";
@@ -619,7 +619,7 @@ export default function SepticArthritisSeimc2024() {
         {(pids ? PIDS_PRINCIPLES : PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <p className="sa24-src">Nguồn: {pids ? "PIDS/IDSA 2023 – Hướng dẫn chẩn đoán và điều trị viêm khớp nhiễm khuẩn cấp ở trẻ em (J Pediatric Infect Dis Soc 2024;13:1–59)" : SRC}. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={[pids ? "PIDS/IDSA 2023 – Hướng dẫn chẩn đoán và điều trị viêm khớp nhiễm khuẩn cấp ở trẻ em" : SRC]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

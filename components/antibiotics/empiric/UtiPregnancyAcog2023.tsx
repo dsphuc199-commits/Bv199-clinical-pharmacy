@@ -2,7 +2,7 @@
 /* Nhiem khuan tiet nieu thai ky – cong cu chon khang sinh theo ACOG Clinical Consensus No. 4 (2023) va IDSA 2019 (khuan nieu khong trieu chung). Du lieu: uti-preg-acog2023.ts */
 import { useState } from "react";
 import { ALLERGY_OPTS, FORM_OPTS, TRI_OPTS, utiPlan, type BlAllergy, type Trimester, type UtiForm } from "./uti-preg-acog2023";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -67,7 +67,7 @@ export default function UtiPregnancyAcog2023() {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: ACOG Clinical Consensus No. 4. Urinary tract infections in pregnant individuals. Obstet Gynecol 2023;142:435–45 – tóm tắt khuyến cáo, Bảng 1 (khuẩn niệu không triệu chứng, viêm bàng quang), Bảng 3 (viêm thận bể thận). Khuyến cáo ACOG được hội đồng bỏ phiếu đạt đồng thuận ≥ 75%, không xếp mức GRADE. Nicolle LE và cs. IDSA 2019 – Asymptomatic bacteriuria. Clin Infect Dis 2019;68:e83–e110, mục III (GRADE: mạnh/yếu; cao/trung bình/thấp). Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={["ACOG 2023 – Clinical Consensus No. 4: Urinary tract infections in pregnant individuals","IDSA 2019 – Asymptomatic bacteriuria"]} notes={["ACOG: khuyến cáo được hội đồng bỏ phiếu đạt đồng thuận từ 75%, không xếp mức GRADE.","IDSA: GRADE mạnh, yếu; bằng chứng cao, trung bình, thấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   Stethoscope, Microscope, ShieldCheck, UserRound, TrendingDown,
-  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, Gauge, Ear,
+  Activity, ArrowLeftRight, ChartNoAxesColumn, ChevronRight, Gauge,
 } from "lucide-react";
 
 /**
@@ -17,8 +17,6 @@ const PREVENT = "Dự phòng và dữ liệu";
 const modules = [
   { id: "empiric", title: "Phác đồ kinh nghiệm", description: "Theo vị trí nhiễm khuẩn, mức độ nặng, yếu tố nguy cơ.", href: "/antibiotics/empiric", icon: Stethoscope, group: START },
   { id: "select", title: "Chọn theo người bệnh", description: "Lọc phác đồ theo CrCl, dị ứng, tiêu chí nguy cơ.", href: "/antibiotics/empiric/select", icon: UserRound, group: START },
-  { id: "ent", title: "Nhiễm khuẩn tai mũi họng", description: "Viêm tai giữa, viêm xoang, viêm họng liên cầu, áp xe vùng cổ – có nguồn trích dẫn.", href: "/ent", icon: Ear, group: START },
-  { id: "uti", title: "Nhiễm khuẩn tiết niệu", description: "Viêm thận bể thận cấp, viêm bàng quang cấp, viêm niệu đạo cấp không do lậu, sỏi tiết niệu nhiễm trùng.", href: "/antibiotics/uti", icon: Ear, group: START },
   { id: "allergy", title: "Dị ứng kháng sinh", description: "Phân tầng nguy cơ, phản ứng chéo beta-lactam.", href: "/antibiotics/allergy", icon: Activity, group: START },
   { id: "organism", title: "Theo tác nhân vi sinh", description: "Điều chỉnh theo vi khuẩn, kháng sinh đồ, MIC.", href: "/antibiotics/organism", icon: Microscope, group: REVIEW },
   { id: "deescalation", title: "Xuống thang", description: "Thu hẹp phổ hoặc ngừng kháng sinh.", href: "/antibiotics/deescalation", icon: TrendingDown, group: REVIEW },
@@ -56,6 +54,7 @@ export default function AntibioticsPage() {
                 );
               })}
             </div>
+            {group === START && <p className="bv199-ams-v3-related bv199-ams-v3-specialty">Phác đồ theo chuyên khoa: <Link href="/ent">Tai mũi họng</Link> · <Link href="/antibiotics/uti">Tiết niệu</Link></p>}
           </div>
         ))}
         <p className="bv199-ams-v3-related">Tối ưu liều kháng sinh: <Link href="/hieu-chinh-lieu">Hiệu chỉnh liều</Link> · <Link href="/tdm">Theo dõi nồng độ thuốc (TDM)</Link></p>
@@ -81,6 +80,7 @@ export default function AntibioticsPage() {
         .bv199-ams-v3-desc{display:block;font-size:12.5px;line-height:1.5;color:#5a7385;}
         .bv199-ams-v3-action{display:block;font-size:12.5px;line-height:1.5;font-weight:750;color:#007e87;margin-top:4px;}
         .bv199-ams-v3-related{margin:4px 0 0;font-size:13px;color:#5a7385;}
+        .bv199-ams-v3-specialty{margin:12px 0 0;}
         .bv199-ams-v3-related a{color:#007e87;font-weight:700;text-decoration:none;}
         .bv199-ams-v3-related a:hover{text-decoration:underline;}
         .bv199-ams-v3-chevron{flex:0 0 auto;color:#8199a6;}

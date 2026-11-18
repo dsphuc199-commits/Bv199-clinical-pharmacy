@@ -3,7 +3,7 @@
    Section 4 (Question 4.1–4.7), Table 1, Table 2. */
 import { useState } from "react";
 import { PA_BREAKPOINTS, PA_DEFS, PA_GENERAL, PA_MONITOR, paDx, paPlan, type PaCarb, type PaPheno, type PaSite } from "./pa-idsa2026";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -94,7 +94,7 @@ export default function PaeruginosaIdsa2026() {
         <h4>Nguyên tắc chung</h4>
         <ul className="pa-notes">{PA_GENERAL.map((n) => <li key={n}>{n}</li>)}</ul>
       </section>
-      <p className="sa24-src">Nguồn: IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc (Tamma PD và cs., Clin Infect Dis 2026; doi:10.1093/cid/ciag481; cập nhật đến 01/03/2026), Section 4, Table 1 (liều người lớn), Table 2 (ngưỡng nhạy CLSI 2026). IDSA xếp ưu tiên/thay thế theo đồng thuận chuyên gia, không xếp mức GRADE. Thuốc không có liều trong Table 1 để trống. Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ.</p>
+      <SourceList sources={["IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc, cập nhật đến 01/03/2026","CLSI 2026 – Ngưỡng nhạy cảm kháng sinh"]} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
       <RxToolStyle />
       <style>{`.pa-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .pa-bp th { width: 60%; }`}</style>

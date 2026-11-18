@@ -7,7 +7,7 @@ import {
   type StrategyKind,
   type Age, type BiteKind, type Culture, type Form, type ImpSub, type Pathogen, type Sev, type SsiSite,
 } from "./ssti-idsa2014-ace2026";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 const STRAT_LABEL: Record<StrategyKind, string> = { mono: "ĐƠN TRỊ", combo: "PHỐI HỢP", mixed: "ĐƠN TRỊ / PHỐI HỢP", none: "KHÔNG KHÁNG SINH" };
 
@@ -139,7 +139,7 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
           <p className="sa24-tip">Nhiễm trùng bàn chân đái tháo đường: xem mặt bệnh riêng (IWGDF/IDSA 2023).</p>
         </details>
       </section>
-      <p className="sa24-src">Nguồn: Stevens DL và cs. Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update by the Infectious Diseases Society of America. Clin Infect Dis 2014;59(2):e10–e52; đính chính: Clin Infect Dis 2015;60(9):1448; trả lời của tác giả: Clin Infect Dis 2015;60(11):1732. Mức khuyến cáo IDSA theo GRADE (mạnh/yếu; chất lượng bằng chứng cao/trung bình/thấp). Agency for Care Effectiveness, Bộ Y tế Singapore. Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing. ACE Clinical Guideline, 21/09/2026, kèm Supplement 2 (liều theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS); ACE không xếp mức khuyến cáo. Liều đối chiếu với thông tin kê đơn được FDA phê duyệt (DailyMed): linezolid, daptomycin, ceftarolin, piperacilin-tazobactam, ampicilin-sulbactam, ertapenem, meropenem, imipenem-cilastatin, cefotaxim, metronidazol, clindamycin, vancomycin, gentamicin, doxycyclin; liều trẻ em của linezolid, ampicilin-sulbactam, imipenem-cilastatin, ertapenem, cefotaxim, gentamicin, doxycyclin theo nhãn thuốc. Đối chiếu ngày 16/11/2026. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={["IDSA 2014 – Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections","Agency for Care Effectiveness, Bộ Y tế Singapore 2026 – Bacterial skin and soft tissue infections: diagnosis and antibiotic prescribing","FDA (DailyMed) – Thông tin kê đơn được phê duyệt"]} notes={["IDSA: mức khuyến cáo theo GRADE (mạnh, yếu; chất lượng bằng chứng cao, trung bình, thấp). ACE không xếp mức khuyến cáo.","Liều của ACE theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS.","Liều đối chiếu với thông tin kê đơn của FDA: linezolid, daptomycin, ceftarolin, piperacilin-tazobactam, ampicilin-sulbactam, ertapenem, meropenem, imipenem-cilastatin, cefotaxim, metronidazol, clindamycin, vancomycin, gentamicin, doxycyclin.","Liều trẻ em theo nhãn thuốc: linezolid, ampicilin-sulbactam, imipenem-cilastatin, ertapenem, cefotaxim, gentamicin, doxycyclin.","Đối chiếu ngày 16/11/2026.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.ssti-strat { border: 1px solid #cfdde6; border-left: 5px solid #0b3a5b; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 4px; }
 .ssti-strat-mono { border-left-color: #0b6b3a; } .ssti-strat-combo { border-left-color: #1d4f8a; } .ssti-strat-mixed { border-left-color: #8a5a00; } .ssti-strat-none { border-left-color: #6b8293; }

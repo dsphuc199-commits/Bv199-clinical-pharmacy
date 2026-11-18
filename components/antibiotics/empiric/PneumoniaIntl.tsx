@@ -6,7 +6,7 @@ import {
   CAP_DIAG, CAP_MAJOR, CAP_MINOR, HV_COURSE, PATHOGENS,
   capDuration, capPlans, capSpecial, capVirus, hvDiagnosis, hvGrades, hvPlan, type Plan,
 } from "./pneumonia-intl";
-import { Grade, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { Grade, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
 
 type Kind = "cap" | "hap" | "vap";
 const L_GRADE: [string, string][] = [
@@ -230,10 +230,10 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
 }
 
 const TITLE: Record<Kind, string> = { cap: "Viêm phổi cộng đồng – người lớn", hap: "Viêm phổi bệnh viện – người lớn", vap: "Viêm phổi liên quan thở máy – người lớn" };
-const SRC: Record<Kind, string> = {
-  cap: "ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn (Am J Respir Crit Care Med 2019;200:e45–e67); ATS 2025 – cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST; ATS phê duyệt 05/2025, IDSA không phê duyệt); IDSA – Lộ trình lâm sàng viêm phổi cộng đồng",
-  hap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
-  vap: "IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn (Clin Infect Dis 2016;63:e61–e111); IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc",
+const SRC: Record<Kind, string[]> = {
+  cap: ["ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn", "ATS 2025 – Cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (ATS phê duyệt 05/2025, IDSA không phê duyệt)", "IDSA – Lộ trình lâm sàng viêm phổi cộng đồng"],
+  hap: ["IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn", "IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc"],
+  vap: ["IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn", "IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc"],
 };
 
 export default function PneumoniaIntl({ kind }: { kind: Kind }) {
@@ -254,7 +254,7 @@ export default function PneumoniaIntl({ kind }: { kind: Kind }) {
         <Row label="Dị ứng beta-lactam"><Seg label="Dị ứng beta-lactam" value={allergy} onChange={setAllergy} options={[{ id: "no", label: "Không" }, { id: "yes", label: "Có" }] as const} /></Row>
       </div>
       {kind === "cap" ? <CapTool al={al} /> : <HvTool kind={kind} al={al} />}
-      <p className="sa24-src">Nguồn: {SRC[kind]}. Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.</p>
+      <SourceList sources={SRC[kind]} notes={["Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ."]} />
       <RxToolStyle />
       <style>{`
         .pn-plan { border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 8px; }

@@ -16,8 +16,24 @@ export const GRADE_LEGEND: [string, string][] = [
 ];
 const CERT: Record<string, string> = { H: "cao", M: "TB", L: "thấp", VL: "rất thấp" };
 
+/* Nguồn: mỗi tài liệu một dòng, ghi chú tách riêng. */
+export function SourceList({ sources, notes = [], children }: { sources: string[]; notes?: string[]; children?: ReactNode }) {
+  return (
+    <div className="sa24-src">
+      {sources.length > 0 && <>
+        <b>Nguồn</b>
+        <ol>{sources.map((s) => <li key={s}>{s}</li>)}</ol>
+      </>}
+      {notes.map((n) => <p key={n}>{n}</p>)}
+      {children && <p>{children}</p>}
+    </div>
+  );
+}
+
 export function Grade({ g }: { g?: string }) {
   if (!g) return null;
+  if (g === "EAU-S") return <span className="sa24-g sa24-g-a" title="Mức khuyến cáo của EAU: mạnh">Mạnh</span>;
+  if (g === "EAU-W") return <span className="sa24-g sa24-g-c" title="Mức khuyến cáo của EAU: yếu">Yếu</span>;
   if (g === "CR") return <span className="sa24-g sa24-g-a" title="Khuyến cáo rõ: có bằng chứng tiến cứu, có đối chứng, lặp lại được">KC rõ</span>;
   if (g === "RV") return <span className="sa24-g sa24-g-c" title="Tổng quan lâm sàng: bằng chứng chưa đủ để đưa khuyến cáo rõ">TQ lâm sàng</span>;
   if (g === "PW") return <span className="sa24-g sa24-g-gps" title="Bổ sung thực hành của Lộ trình lâm sàng IDSA, ngoài hướng dẫn ATS/IDSA 2019">Lộ trình IDSA</span>;
@@ -133,7 +149,10 @@ export function RxToolStyle() {
         .sa24-more summary { cursor: pointer; font-weight: 700; font-size: 13.5px; color: #0b3a5b; }
         .sa24-more[open] { display: grid; gap: 10px; }
         .sa24-pblock h5 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #33505f; text-transform: uppercase; letter-spacing: .03em; }
-        .sa24-src { margin: 0; font-size: 12px; line-height: 1.5; color: #6b8293; border-top: 1px solid #edf2f6; padding-top: 8px; }
+        .sa24-src { display: grid; gap: 4px; margin: 0; font-size: 12px; line-height: 1.5; color: #6b8293; border-top: 1px solid #edf2f6; padding-top: 8px; }
+        .sa24-src b { color: #33505f; }
+        .sa24-src ol { margin: 0; padding-left: 20px; display: grid; gap: 2px; }
+        .sa24-src p { margin: 0; }
         @media (max-width: 640px) {
           .sa24-row { grid-template-columns: 1fr; gap: 6px; }
           .sa24-lab { padding-top: 0; }

@@ -3,7 +3,7 @@
    Module 4: treatment and care (2025), Chương 1–2 và Phụ lục 1. */
 import { useState } from "react";
 import { AGE_TEXT, RES_TEXT, tbPlan, type TbAge, type TbFq, type TbRes } from "./tb-who2025";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -99,7 +99,7 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo / không áp dụng</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: WHO consolidated guidelines on tuberculosis. Module 4: treatment and care (2025, ISBN 978-92-4-010724-3) – khuyến cáo và mức GRADE; WHO consolidated operational handbook on tuberculosis. Module 4: treatment and care (2025, ISBN 978-92-4-010814-1) – liều theo cân nặng (Annex 4), liều phác đồ BPaLM, BDLLfxC, 9 tháng, chỉnh liều suy thận (Annex 1), thời gian lao màng não. Liều trẻ em &lt; 25 kg: mg/kg theo khuyến cáo 2014. WHO không nêu liều corticoid. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={["WHO 2025 – Consolidated guidelines on tuberculosis. Module 4: treatment and care","WHO 2025 – Consolidated operational handbook on tuberculosis. Module 4: treatment and care"]} notes={["Liều trẻ em < 25 kg: mg/kg theo khuyến cáo 2014.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

@@ -117,7 +117,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-2",
     vn: "QĐ 708 (2015) – mục Sỏi thận tiết niệu có biến chứng nhiễm khuẩn",
-    intl: "IDSA cUTI 2025 (Bảng 1.1, 2.1, 1.2); EAU 2026 (NKTN toàn thân). ESBL (theo tác nhân): xem mặt bệnh Enterobacterales sinh ESBL",
+    intl: "IDSA cUTI 2025 (Bảng 1.1, 2.1, 1.2); EAU Urological Infections 2026 (NKTN toàn thân); EAU Urolithiasis 2026. ESBL (theo tác nhân): xem mặt bệnh Enterobacterales sinh ESBL",
     similar: [
       "Cephalosporin thế hệ 3 (cefotaxim, ceftriaxon) và fluoroquinolon có trong cả phác đồ QĐ 708 và nhóm ưu tiên IDSA 2025.",
     ],
@@ -128,8 +128,26 @@ export const COMPARISONS: Comparison[] = [
       "Thời gian: QĐ 708 10–14 ngày (beta-lactam) và 3–7 ngày, có thể tới 10 ngày (fluoroquinolon uống); IDSA 2025: 5–7 ngày fluoroquinolon hoặc 7 ngày thuốc khác.",
       "Liều: QĐ 708 ceftriaxon 1 g/ngày, cefuroxim 250 mg x 2 lần/ngày uống, ciprofloxacin 250–500 mg x 2 lần/ngày; IDSA 2025 Bảng 2.1 (liều dùng trong thử nghiệm) ceftriaxon 1–2 g/ngày, Bảng 1.2 cefuroxim 500 mg mỗi 12 giờ, ciprofloxacin 500–750 mg mỗi 12 giờ.",
       "Tắc nghẽn/người bệnh nặng: EAU 2026 – giải quyết tắc nghẽn và dùng carbapenem (imipenem 500 mg mỗi 6 giờ hoặc meropenem 1 g mỗi 8 giờ) ± thuốc chống MRSA; QĐ 708 nêu giải phóng tắc nghẽn do sỏi là điều trị nguyên nhân, không nêu phác đồ cho ca nặng.",
+      "Sỏi gây tắc nghẽn có nhiễm khuẩn: EAU Urolithiasis 2026 – giải áp khẩn bằng stent niệu quản hoặc dẫn lưu thận qua da, kháng sinh ngay, trì hoãn lấy sỏi đến khi hết nhiễm khuẩn huyết.",
       "Fluoroquinolon kinh nghiệm: EAU 2026 – không dùng cho người bệnh khoa tiết niệu hoặc đã dùng trong 6 tháng, chỉ khi kháng < 10%; IDSA 2025 – tránh nếu đã dùng trong 12 tháng; QĐ 708 cho dùng fluoroquinolon uống (gồm norfloxacin, ofloxacin) không kèm điều kiện này.",
       "Kinh nghiệm và theo tác nhân: phác đồ IDSA AMR 2026 cho ESBL-E là điều trị theo kháng sinh đồ, không dùng làm phác đồ kinh nghiệm.",
+    ],
+    conditions: [LOCAL_RULE],
+  },
+  {
+    diseaseId: "v8-16",
+    vn: "QĐ 708 (2015) – Viêm bàng quang cấp",
+    intl: "EAU Urological Infections 2026",
+    similar: [
+      "Nitrofurantoin 100 mg x 2 lần/ngày trong 5 ngày có trong cả hai nguồn.",
+      "Fluoroquinolon không phải lựa chọn đầu tay ở cả hai nguồn.",
+    ],
+    different: [
+      "Đầu tay: QĐ 708 gồm trimethoprim-sulfamethoxazol, cefalexin, nitrofurantoin, amoxicilin-clavulanat; EAU 2026 gồm fosfomycin trometamol, pivmecillinam, nitrofurantoin, nitroxolin.",
+      "Trimethoprim-sulfamethoxazol: QĐ 708 80/400 mg x 2 lần/ngày, 3–5 ngày; EAU 2026 160/800 mg x 2 lần/ngày, 3 ngày, chỉ khi E. coli kháng tại chỗ < 20%.",
+      "Amoxicilin-clavulanat: QĐ 708 là lựa chọn đầu tay; EAU 2026 không khuyến cáo dùng kinh nghiệm, chỉ dùng ở trường hợp chọn lọc.",
+      "Fluoroquinolon: QĐ 708 dùng norfloxacin khi các kháng sinh khác thất bại; EAU 2026 khuyến cáo không dùng cho viêm bàng quang.",
+      "Nam giới: QĐ 708 điều trị 14 ngày; EAU 2026 trimethoprim-sulfamethoxazol 160/800 mg x 2 lần/ngày, 7 ngày.",
     ],
     conditions: [LOCAL_RULE],
   },

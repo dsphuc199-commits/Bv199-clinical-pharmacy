@@ -2,7 +2,7 @@
 /* Nhiem trung ban chan dai thao duong – cong cu chon khang sinh theo IWGDF/IDSA 2023. Du lieu: dfi-iwgdf2023.ts */
 import { useState } from "react";
 import { BONE_OPTS, GRADE_OPTS, MILD_FACTORS, MOD_FACTORS, dfiPlan, type BoneStatus, type DfiGrade, type MildFactor, type ModFactor } from "./dfi-iwgdf2023";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -69,7 +69,7 @@ export default function DfiIwgdf2023() {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: Senneville É và cs. IWGDF/IDSA guidelines on the diagnosis and treatment of diabetes-related foot infections (IWGDF/IDSA 2023). Diabetes Metab Res Rev 2024;e3687 (đồng xuất bản Clin Infect Dis) – Bảng 1 (phân độ), Bảng 4 (phác đồ kinh nghiệm), Bảng 5 (thời gian), khuyến cáo 1–25. Mức GRADE giữ nguyên (mạnh/có điều kiện; độ tin cậy cao/trung bình/thấp; thực hành tốt nhất). Hướng dẫn không nêu liều – liều theo hướng dẫn quốc gia. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={["IWGDF/IDSA 2023 – Guidelines on the diagnosis and treatment of diabetes-related foot infections"]} notes={["Mức khuyến cáo GRADE: mạnh hoặc có điều kiện; độ tin cậy cao, trung bình, thấp; thực hành tốt nhất.","Liều theo hướng dẫn quốc gia.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

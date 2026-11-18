@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { LIKELY_TEXT, RISKS, sepsisPlan, type Culture, type Hemo, type Likely, type Phase, type RiskId } from "./sepsis-ssc2026";
 import { VANCO, VANCO_COMMON, VANCO_POP, type VancoPop } from "./sab-intl";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 import { FOCUS_TEXT, SWAB_DOSE, SWAB_DOSE_NOTE, swabPlan, type Focus, type Gcr } from "./sepsis-swab2021";
 
 const ashp = (items: typeof VANCO_COMMON) => items.map((it) => ({ ...it, text: it.text.replace(/(KC (d+))/g, "(ASHP KC $1)").replace(/(([AB]-I+), KC (d+))/g, "($1, ASHP KC $2)") }));
@@ -134,7 +134,7 @@ export default function SepsisSsc2026({ initialShock = false }: { initialShock?:
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <p className="sa24-src">Nguồn: Surviving Sepsis Campaign – International Guidelines for Management of Sepsis and Septic Shock 2026 (Prescott HC, Antonelli M và cs., Crit Care Med 2026;54:725–812), “KC n” là số khuyến cáo trong bảng 1, mức GRADE giữ nguyên của SSC; IDSA 2026 – hướng dẫn điều trị Gram âm kháng thuốc (Tamma PD và cs., Clin Infect Dis 2026; doi:10.1093/cid/ciag481), mục Empiric Therapy, Duration – không xếp mức GRADE; ASHP/IDSA/PIDS/SIDP 2020 – theo dõi vancomycin (Rybak MJ và cs., Am J Health-Syst Pharm 2020;77:835–864). SSC 2026 không nêu tên thuốc và liều cho phác đồ kinh nghiệm; lựa chọn thuốc và liều cụ thể lấy từ SWAB 2021 – hướng dẫn kháng sinh kinh nghiệm cho sepsis người lớn của Hà Lan (Sieswerda E và cs., BMC Infect Dis 2022;22:687; doi:10.1186/s12879-022-07653-3; được SSC 2026 trích dẫn), Table 5, Figure 1, sTable 1–3 – “SWAB KC n” là số khuyến cáo của SWAB, GRADE mạnh/yếu (yếu hiển thị “Có ĐK”); SWAB không áp dụng cho sốt giảm bạch cầu, nhiễm virus/nấm, vật liệu nhân tạo, catheter dài ngày, viêm xương, viêm màng não, viêm trung thất, viêm nội tâm mạc, trẻ em. Vancomycin theo ASHP 2020. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ, kháng sinh đồ và danh mục thuốc tại chỗ.</p>
+      <SourceList sources={["Surviving Sepsis Campaign 2026 – International Guidelines for Management of Sepsis and Septic Shock","SWAB 2021 – Hướng dẫn kháng sinh kinh nghiệm cho sepsis người lớn của Hà Lan","IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc","ASHP/IDSA/PIDS/SIDP 2020 – Theo dõi điều trị vancomycin trong nhiễm khuẩn MRSA nặng"]} notes={["Lựa chọn thuốc và liều cụ thể theo SWAB 2021, hướng dẫn được SSC 2026 trích dẫn. Vancomycin theo ASHP 2020.","“KC n” là số khuyến cáo của SSC. “SWAB KC n” là số khuyến cáo của SWAB, GRADE mạnh hoặc yếu (yếu hiển thị “Có ĐK”).","SWAB không áp dụng cho sốt giảm bạch cầu, nhiễm virus hoặc nấm, vật liệu nhân tạo, catheter dài ngày, viêm xương, viêm màng não, viêm trung thất, viêm nội tâm mạc, trẻ em.","IDSA 2026 không xếp mức GRADE.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ, kháng sinh đồ và danh mục thuốc tại chỗ."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

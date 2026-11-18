@@ -6,7 +6,7 @@
 import { Fragment, useMemo, useState } from "react";
 import { defaultState, effectiveState, isVisible, resolve, type AxisState, type AxisVal, type OutItem } from "@/lib/intl-rules";
 import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-guideline";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 const SHOW_DRAFT = process.env.NEXT_PUBLIC_SHOW_DRAFT_GUIDELINES !== "0";
 const POP_TEXT: Record<string, string> = { adult: "người lớn", child: "trẻ em", neonate: "sơ sinh" };
@@ -91,7 +91,7 @@ function Section({ s, g, eff, set }: { s: ReturnType<typeof resolve>["after"][nu
 function Sources({ g }: { g: IntlGuideline }) {
   return (
     <details className="igv-sources">
-      <summary>Nguồn ({g.sources.length}) – tổ chức, năm, phiên bản, ngày truy cập</summary>
+      <summary>Chi tiết nguồn ({g.sources.length})</summary>
       <ul>
         {g.sources.map((s) => (
           <li key={s.id}>
@@ -185,7 +185,13 @@ export default function IntlGuidelineView({ data }: { data: unknown }) {
               <ul className="igv-notes">{g.discordance.map((d) => <li key={d.topic}><b>{d.topic}:</b> {d.description}</li>)}</ul>
             </div>
           )}
-          <p className="sa24-src">{g.source_text}</p>
+          <SourceList
+            sources={g.sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
+            notes={[
+              ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
+              "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
+            ]}
+          />
           <Sources g={g} />
         </>
       )}

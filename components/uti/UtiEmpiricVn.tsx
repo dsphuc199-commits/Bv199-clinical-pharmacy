@@ -10,6 +10,7 @@ const yearOf = (published: string) => String(published).match(/\d{4}/)?.[0] ?? p
 
 const SOURCE_LABEL: Record<string, string> = {
   "eau-ui-2026": "Hội Tiết niệu châu Âu (EAU). Guidelines on Urological Infections",
+  "eau-urolithiasis-2026": "Hội Tiết niệu châu Âu (EAU). Guidelines on Urolithiasis",
   "idsa-cuti-2025": "Hiệp hội Bệnh truyền nhiễm Hoa Kỳ (IDSA). Guideline on Complicated Urinary Tract Infections",
 };
 

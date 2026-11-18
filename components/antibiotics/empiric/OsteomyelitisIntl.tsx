@@ -8,7 +8,7 @@ import {
   type AdultType, type MrsaRate, type Severity,
 } from "./osteomyelitis-intl";
 import type { RxItem } from "./septic-arthritis-pids2023";
-import { GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
 
 type Src = "wiki" | "pids";
 type Stage = "empiric" | "directed";
@@ -192,9 +192,7 @@ export default function OsteomyelitisIntl() {
         {(wiki ? W_PRINCIPLES : P_PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <p className="sa24-src">Nguồn: {wiki
-        ? "WikiGuidelines – Spellberg B và cs. JAMA Netw Open 2022;5(5):e2211321; cập nhật 2025: Am J Med 2026;139(4):395–398"
-        : "PIDS/IDSA 2021 – Hướng dẫn chẩn đoán và điều trị viêm xương tủy cấp đường máu ở trẻ em (J Pediatric Infect Dis Soc 2021;10(8):801–844)"}. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={[wiki ? "WikiGuidelines 2022, cập nhật 2025 – Viêm xương tủy" : "PIDS/IDSA 2021 – Hướng dẫn chẩn đoán và điều trị viêm xương tủy cấp đường máu ở trẻ em"]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

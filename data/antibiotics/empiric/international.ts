@@ -75,6 +75,7 @@ const IPFN = "ipfn-2023";
 const CHECKED_G3 = "26/10/2026";
 const ESC_IE = "esc-ie-2023";
 const EAU_UI = "eau-ui-2026";
+const EAU_URO = "eau-urolithiasis-2026";
 const PIDS_ABA = "pids-idsa-aba-2023";
 const CUTI = "idsa-cuti-2025";
 
@@ -153,7 +154,7 @@ const EAU_PYELO: IntlRegimen[] = [
       "Hàng 2: cefepim 1 g x 3 lần/ngày hoặc 2 g x 2 lần/ngày (liều cao 2 g x 3 lần/ngày); piperacillin-tazobactam 4,5 g x 3 lần/ngày (liều cao 4,5 g x 4 lần/ngày truyền kéo dài); gentamicin 6–7 mg/kg x 1 lần/ngày; amikacin 25–30 mg/kg x 1 lần/ngày",
       "Lựa chọn cuối (chỉ khi cấy sớm cho thấy vi khuẩn đa kháng): imipenem-cilastatin 0,5 g x 4 lần/ngày (liều cao 1 g x 4) truyền 30 phút; meropenem 1 g x 3 lần/ngày; ceftolozane-tazobactam 1,5 g x 3; ceftazidime-avibactam 2,5 g x 3; cefiderocol 2 g x 3; meropenem-vaborbactam 2 g x 3; plazomicin 15 mg/kg x 1 lần/ngày",
     ],
-    note: "Cefotaxim, gentamicin: chưa nghiên cứu đơn trị trong viêm thận bể thận cấp. Ceftriaxon, cefepim: liều thấp đã được nghiên cứu nhưng khuyến cáo liều cao hơn.",
+    note: "Cefotaxim, gentamicin, amikacin: chưa nghiên cứu đơn trị trong viêm thận bể thận cấp. Ceftriaxon, cefepim, piperacillin-tazobactam: liều thấp đã được nghiên cứu nhưng khuyến cáo liều cao hơn.",
     guidelineId: EAU_UI,
     locator: "Bảng 6, PDF tr. 28–29",
   },
@@ -387,8 +388,19 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     published: "03/2026",
     url: "https://uroweb.org/guidelines/urological-infections",
     status: "extracted",
-    checkedOn: CHECKED_G3,
-    checkNote: "PDF chính thức tải từ liên kết trên uroweb.org. Đọc mục 3.6.3 (viêm thận bể thận, Bảng 5–6, PDF tr. 28–29) và 3.7 (NKTN toàn thân, PDF tr. 30–32). Bảng 6 ghi levofloxacin ở dòng tĩnh mạch là \"500mg oral\" – nguyên văn, nghi lỗi in.",
+    checkedOn: "18/11/2026",
+    checkNote: "Đối chiếu toàn văn PDF người dùng cung cấp ngày 18/11/2026: viêm bàng quang, tái phát, khuẩn niệu không triệu chứng, viêm thận bể thận, NKTN toàn thân, ống thông, viêm tuyến tiền liệt cấp, nấm tiết niệu, dự phòng thủ thuật. Bảng 6 ghi levofloxacin ở dòng tĩnh mạch là \"500mg oral\", nghi lỗi in. Bảng nấm khu trú ghi amphotericin B bơm bàng quang \"200 ml/L\", nghi lỗi đơn vị, không đưa vào công cụ.",
+  },
+  [EAU_URO]: {
+    id: EAU_URO,
+    org: "EAU (Hội Tiết niệu châu Âu)",
+    title: "EAU Guidelines on Urolithiasis – Limited Update March 2026",
+    citation: "European Association of Urology, 2026. ISBN 978-94-92671-32-5",
+    published: "03/2026",
+    url: "https://uroweb.org/guidelines/urolithiasis",
+    status: "extracted",
+    checkedOn: "18/11/2026",
+    checkNote: "Đối chiếu toàn văn PDF người dùng cung cấp ngày 18/11/2026: nhiễm khuẩn huyết hoặc vô niệu do thận tắc nghẽn, dự phòng kháng sinh khi can thiệp sỏi, sỏi struvite và sỏi nhiễm khuẩn.",
   },
   [PIDS_ABA]: {
     id: PIDS_ABA,
@@ -713,8 +725,8 @@ export const INTL_ENTRIES: IntlEntry[] = [
   // ================= NKTN phuc tap / ESBL =================
   {
     diseaseId: "v8-2",
-    guidelineIds: ["idsa-cuti-2025", EAU_UI],
-    scope: "Người lớn, HỘI CHỨNG NKTN phức tạp (gồm viêm thận – bể thận) – điều trị kinh nghiệm. Vi khuẩn sinh ESBL là kiểu hình kháng thuốc, điều trị theo tác nhân/kháng sinh đồ: xem mặt bệnh \"Enterobacterales sinh ESBL\" (v8-43).",
+    guidelineIds: ["idsa-cuti-2025", EAU_URO, EAU_UI],
+    scope: "Người lớn, hội chứng nhiễm khuẩn tiết niệu phức tạp (gồm viêm thận bể thận), điều trị kinh nghiệm. Vi khuẩn sinh ESBL điều trị theo tác nhân và kháng sinh đồ tại mặt bệnh \"Enterobacterales sinh ESBL\".",
     recommendations: [
       { text: "Có sepsis: chọn ban đầu trong số cephalosporin thế hệ 3 hoặc 4, carbapenem, piperacillin-tazobactam hoặc fluoroquinolon (không ưu tiên thuốc mới, aminoglycosid cũ).", grade: "Có điều kiện; rất thấp–trung bình", guidelineId: "idsa-cuti-2025", locator: "CQ 1A, khuyến cáo a" },
       { text: "Không sepsis: cephalosporin thế hệ 3 hoặc 4, piperacillin-tazobactam hoặc fluoroquinolon (không đưa carbapenem vào nhóm ưu tiên).", grade: "Có điều kiện; rất thấp–trung bình", guidelineId: "idsa-cuti-2025", locator: "CQ 1A, khuyến cáo b" },
@@ -743,6 +755,14 @@ export const INTL_ENTRIES: IntlEntry[] = [
       { text: "Thai kỳ: có thể điều trị ngoại trú bằng kháng sinh tiêm phù hợp nếu nhẹ và theo dõi sát; tổng 7–10 ngày. Nam giới bị NKTN có sốt/viêm thận bể thận: tối thiểu 2 tuần, ưu tiên fluoroquinolon.", guidelineId: EAU_UI, locator: "Mục 3.6.3, PDF tr. 29" },
     ],
     regimens: [...EAU_PYELO, ...CUTI_TABLES],
+  },
+  /* Noi dung lam sang nam trong cong cu components/antibiotics/empiric/urology-eau2026.ts. */
+  {
+    diseaseId: "v8-16",
+    guidelineIds: [EAU_UI],
+    scope: "Viêm bàng quang khu trú ở người lớn, không có dấu hiệu nhiễm khuẩn toàn thân; gồm phụ nữ có thai, nam giới, viêm bàng quang tái phát, khuẩn niệu không triệu chứng và nhiễm nấm tại bàng quang.",
+    recommendations: [],
+    regimens: [],
   },
 
   // ================= Da – mo mem =================

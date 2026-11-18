@@ -5,7 +5,7 @@ import {
   CULTURE_TRIGGERS, GOLD_BIOMARKER, GOLD_CULTURE, GOLD_PRINCIPLE, GOLD_PREVENTION, GOLD_ROUTE, NO_INDICATION_HINT, ROME, SYMPTOMS,
   goldCotherapy, goldDuration, goldEmpiric, goldIndication, type Setting, type Severity, type Sym,
 } from "./copd-gold2026";
-import { ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy } from "./rx-tool";
+import { ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
 
 export default function CopdGold2026() {
   const [sym, setSym] = useState<Record<Sym, boolean>>({ dyspnea: false, fever: false, volume: false, purulence: false });
@@ -101,7 +101,7 @@ export default function CopdGold2026() {
         <Rx items={GOLD_PREVENTION} />
       </details>
 
-      <p className="sa24-src">Nguồn: GOLD 2026 – Global Strategy for Prevention, Diagnosis and Management of COPD, v1.3 (08/12/2025): quản lý đợt cấp và dự phòng đợt cấp. GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt.</p>
+      <SourceList sources={["GOLD 2026 – Global Strategy for Prevention, Diagnosis and Management of COPD, phiên bản 1.3"]} notes={["GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

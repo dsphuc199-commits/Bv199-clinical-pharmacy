@@ -48,6 +48,8 @@ import SepsisSsc2026 from "./SepsisSsc2026";
 import TbWho2025 from "./TbWho2025";
 import DfiIwgdf2023 from "./DfiIwgdf2023";
 import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
+import UrologyEau2026 from "./UrologyEau2026";
+import { isEauUrology } from "./urology-eau2026";
 import StiCdc2021 from "./StiCdc2021";
 import SstiIdsaAce from "./SstiIdsaAce";
 import EntIntlTool, { isEntEmpiric } from "@/components/ent/EntIntlTool";
@@ -186,8 +188,10 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn khớp tự nhiên: GEIO–SEIMC/SEIP/SECOT 2024 cho người lớn và trẻ em; PIDS/IDSA 2023 cho trẻ từ 1 tháng đến 17 tuổi." : clinicalText(entry.scope)}</p>
       {/* v8-33: nhanh Gram am GEIO–SEIMC da nam trong cong cu chon khang sinh – khong lap lai. */}
       <InternationalDoseReview diseaseId={diseaseId} exclude={diseaseId === "v8-33" ? ["arthritis-seimc-adult-gramnegative"] : []} />
+      {/* Tiet nieu: noi dung EAU 2026 nam trong cong cu chon khang sinh, khong lap lai o phan doc khuyen cao. */}
+      {isEauUrology(diseaseId) && <UrologyEau2026 key={diseaseId} diseaseId={diseaseId} />}
 
-      {entry.guidelineIds.map((gid) => {
+      {entry.guidelineIds.filter((gid) => !(isEauUrology(diseaseId) && gid.startsWith("eau-"))).map((gid) => {
         const g = INTL_GUIDELINES[gid];
         const recs = entry.recommendations.filter((r) => r.guidelineId === gid);
         /* Thu tu: kinh nghiem -> dieu tri dich -> lieu thu nghiem (thu gon, van hien nhan). */

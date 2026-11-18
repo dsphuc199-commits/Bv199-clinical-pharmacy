@@ -2,7 +2,7 @@
 /* Enterobacterales sinh ESBL – cong cu chon khang sinh theo IDSA 2026 (Section 1, Table 1). */
 import { useState } from "react";
 import { ESBL_PRINCIPLES, esblPlan, type EsblSite } from "./esbl-idsa2026";
-import { Row, Rx, RxToolStyle, Seg } from "./rx-tool";
+import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 
 const SITE_LABEL: Record<EsblSite, string> = {
   uuti: "Viêm bàng quang không biến chứng",
@@ -67,7 +67,7 @@ export default function EsblIdsa2026() {
         <h4>Nguyên tắc chung</h4>
         <ul className="sa24-notes">{ESBL_PRINCIPLES.map((n) => <li key={n}>{n}</li>)}</ul>
       </section>
-      <p className="sa24-src">Nguồn: IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc (Tamma PD và cs., Clin Infect Dis 2026; doi:10.1093/cid/ciag481), Section 1 và Table 1. IDSA xếp ưu tiên/thay thế theo đồng thuận chuyên gia, không xếp mức GRADE; hướng dẫn không đưa ra khuyến cáo cụ thể về thời gian điều trị. Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ.</p>
+      <SourceList sources={["IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc"]} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
       <RxToolStyle />
       <style>{`.sa24-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

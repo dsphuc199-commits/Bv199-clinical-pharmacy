@@ -10,7 +10,7 @@ import type { Citation, Decision, Disease, Dose, Inputs } from "@/types/ent";
 import { condTrue } from "@/lib/ent/decide";
 import { buildView } from "@/lib/ent/view";
 import { SOURCES, resolveDisease } from "@/data/ent";
-import { RxToolStyle } from "@/components/antibiotics/empiric/rx-tool";
+import { RxToolStyle, SourceList } from "@/components/antibiotics/empiric/rx-tool";
 import { regimenSummary, visibleInputs } from "./QuickCard";
 import { DTQG_ENT, DTQG_SOURCE, DISEASE_IND, dtqgFor, dtqgKeys } from "@/data/ent/dtqg-doses";
 
@@ -79,7 +79,6 @@ function gradeText(d: Dose): string {
 }
 const durationOf = (d: Dose, inp: Inputs) => d.durationBy?.find((b) => b.when.every((c) => condTrue(c, inp)))?.text ?? d.duration;
 /** Vị trí trong nguồn, bỏ số trang (đã có trong trang đầy đủ). */
-const loc = (l: string) => l.replace(/,?\s*tr\.\s*[A-Za-z]?\d+(–[A-Za-z]?\d+)?/g, "").replace(/\s*\(ảnh chụp[^)]*\)/g, "").replace(/;\s*;/g, ";").replace(/\s*;\s*$/, "").trim();
 
 function Table({ doses, computed, inp, tag }: { doses: Dose[]; computed: { doseId: string; text: string }[]; inp: Inputs; tag?: (d: Dose) => string }) {
   return (
@@ -159,8 +158,7 @@ export default function EntRxTool({ id, population }: { id: string; population?:
     ...[...main, ...fails, ...inlineCmp].flatMap((x) => [x.citation, ...(x.choiceCitation ? [x.choiceCitation] : [])]),
     ...flags.map((f) => f.citation),
   ];
-  const bySrc = new Map<string, Set<string>>();
-  for (const c of cites) { if (!bySrc.has(c.sourceId)) bySrc.set(c.sourceId, new Set()); for (const part of loc(c.locator).split(/;s*/)) if (part.trim()) bySrc.get(c.sourceId)!.add(part.trim()); }
+  const sourceIds = [...new Set(cites.map((c) => c.sourceId))];
 
   return (
     <article className="sa24 ent-rx">
@@ -228,10 +226,9 @@ export default function EntRxTool({ id, population }: { id: string; population?:
         </details>
       )}
 
-      <p className="sa24-src">
-        Nguồn: {[...bySrc.entries()].map(([sid, ls]) => `${src(sid)?.title} (${short(sid)})${ls.size ? ` – ${[...ls].join("; ")}` : ""}`).join(". ")}{bySrc.size ? ". " : ""}
-        Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt. <Link href={`/ent/${res.page.id}`}>Khuyến cáo đầy đủ</Link>
-      </p>
+      <SourceList sources={sourceIds.map((sid) => `${src(sid)?.title} (${short(sid)})`)} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]}>
+        <Link href={`/ent/${res.page.id}`}>Khuyến cáo đầy đủ</Link>
+      </SourceList>
       <RxToolStyle />
       <style>{`
         .ent-rx h3 { margin: 0; }
