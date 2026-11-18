@@ -10,7 +10,7 @@ export default function ClinicalSources({ sources, extra }: { sources:string[]; 
   const citations = citeSources(sources);
   if (citations.length === 0 && !extra) return null;
   return <details className="tp-card-source"><summary>Nguồn và đối chiếu</summary>
-    <ul>{citations.map(c=><li key={c.key}>{c.url?<a href={c.url} target="_blank" rel="noreferrer">{c.label}</a>:c.label}</li>)}</ul>
+    <ol style={{margin:"6px 0 0",paddingLeft:20,listStyle:"decimal"}}>{citations.map(c=><li key={c.key} style={{display:"list-item",marginBottom:4}}>{c.url?<a href={c.url} target="_blank" rel="noreferrer">{c.label}</a>:c.label}</li>)}</ol>
     {extra}
   </details>;
 }

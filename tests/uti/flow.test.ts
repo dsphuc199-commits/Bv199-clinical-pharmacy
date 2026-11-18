@@ -1,7 +1,7 @@
 /* Kiểm thử luồng chọn module nhiễm khuẩn tiết niệu. Chạy: npm run test:uti */
 import assert from "node:assert/strict";
 import test from "node:test";
-import { CONDITIONS, REGIMENS, publicRegimens } from "../../data/uti-antibiotics";
+import { CONDITIONS, REGIMENS, UTI_BRIEFS, publicRegimens } from "../../data/uti-antibiotics";
 import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } from "../../lib/uti/flow";
 
 function allPaths() {
@@ -44,6 +44,10 @@ test("tìm theo kháng sinh và thể bệnh, không phân biệt dấu", () => 
   assert.deepEqual(ids.sort(), ["cystitis-common", "cystitis-pregnancy", "stone-uti-oral"]);
   assert.ok(searchConditions(CONDITIONS, REGIMENS, "viem than be than").length > 0);
   assert.deepEqual(searchConditions(CONDITIONS, REGIMENS, "   "), []);
+});
+
+test("mỗi vị trí nhiễm khuẩn đều có tổng quan", () => {
+  for (const site of sitesOf(CONDITIONS)) assert.ok(UTI_BRIEFS[site]?.length, site);
 });
 
 test("dữ liệu gửi xuống trình duyệt không chứa sourceText", () => {

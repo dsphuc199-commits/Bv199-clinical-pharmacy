@@ -2,6 +2,7 @@
 /* Công cụ chọn kháng sinh điều trị nhiễm khuẩn tiết niệu: chọn tuần tự, kết quả trên một thẻ. */
 import { useMemo, useState } from "react";
 import { RotateCcw, Search, Printer } from "lucide-react";
+import { UTI_BRIEFS } from "@/data/uti-antibiotics/briefs";
 import { TIER_LABEL } from "@/data/uti-antibiotics/config";
 import type { Condition, PublicRegimen } from "@/data/uti-antibiotics/types";
 import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } from "@/lib/uti/flow";
@@ -9,7 +10,11 @@ import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } f
 type Props = {
   conditions: Condition[];
   regimens: PublicRegimen[];
-  config: { sourceLine: string; effectiveStatus: string; disclaimer: string };
+  config: { sources: readonly string[]; effectiveStatus: string; disclaimer: string };
+  /* Nhúng vào tab Hướng dẫn Việt Nam của trang phác đồ kinh nghiệm. */
+  embedded?: boolean;
+  initial?: { site: string; form?: string };
+  scopeNote?: string;
 };
 
 function Choice({ step, title, options, value, onPick }: { step: number; title: string; options: string[]; value: string | null; onPick: (v: string) => void }) {
@@ -25,9 +30,10 @@ function Choice({ step, title, options, value, onPick }: { step: number; title: 
   );
 }
 
-export default function UtiTool({ conditions, regimens, config }: Props) {
-  const [site, setSite] = useState<string | null>(null);
-  const [form, setForm] = useState<string | null>(null);
+export default function UtiTool({ conditions, regimens, config, embedded = false, initial, scopeNote }: Props) {
+  const Root = embedded ? "div" : "main";
+  const [site, setSite] = useState<string | null>(initial?.site ?? null);
+  const [form, setForm] = useState<string | null>(initial?.form ?? null);
   const [population, setPopulation] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
@@ -37,13 +43,15 @@ export default function UtiTool({ conditions, regimens, config }: Props) {
   const rows = condition ? regimens.filter((r) => r.conditionId === condition.id) : [];
   const hits = useMemo(() => searchConditions(conditions, regimens, query), [conditions, regimens, query]);
 
-  const reset = () => { setSite(null); setForm(null); setPopulation(null); setQuery(""); };
+  const briefs = site ? UTI_BRIEFS[site] ?? [] : [];
+
+  const reset = () => { setSite(initial?.site ?? null); setForm(initial?.form ?? null); setPopulation(null); setQuery(""); };
   const open = (c: Condition) => { setSite(c.group); setForm(c.form); setPopulation(c.population); setQuery(""); };
 
   return (
-    <main className="uti-page">
+    <Root className={`uti-page${embedded ? " uti-embedded" : ""}`}>
       <header className="uti-head">
-        <h1>Kháng sinh điều trị nhiễm khuẩn tiết niệu</h1>
+        {!embedded && <h1>Kháng sinh điều trị nhiễm khuẩn tiết niệu</h1>}
         <div className="uti-tools">
           <label className="uti-search">
             <Search size={16} aria-hidden />
@@ -60,6 +68,8 @@ export default function UtiTool({ conditions, regimens, config }: Props) {
           {!hits.length && <li className="uti-empty">Không tìm thấy kháng sinh hoặc thể bệnh phù hợp.</li>}
         </ul>
       )}
+
+      {scopeNote && <p className="uti-scope">{scopeNote}</p>}
 
       <section className="uti-flow">
         <Choice step={1} title="Vị trí nhiễm khuẩn" options={sitesOf(conditions)} value={site} onPick={(v) => { setSite(v); setForm(null); setPopulation(null); }} />
@@ -111,8 +121,20 @@ export default function UtiTool({ conditions, regimens, config }: Props) {
         </article>
       )}
 
+      {briefs.length > 0 && (
+        <section className="uti-briefs" aria-label="Tổng quan">
+          {briefs.map((b) => (
+            <div key={b.label} className="uti-brief">
+              <h3>{b.label}</h3>
+              <ul>{b.points.map((p) => <li key={p}>{p}</li>)}</ul>
+            </div>
+          ))}
+        </section>
+      )}
+
       <footer className="uti-foot">
-        <p>{config.sourceLine}</p>
+        <h3>Nguồn và đối chiếu</h3>
+        <ol>{config.sources.map((s) => <li key={s}>{s}</li>)}</ol>
         <p>{config.effectiveStatus}</p>
       </footer>
 
@@ -154,7 +176,20 @@ export default function UtiTool({ conditions, regimens, config }: Props) {
         .uti-notes ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
         .uti-warn { margin: 0; padding: 8px 10px; border: 1px solid #f6cfb5; border-radius: 8px; background: #fff4ed; color: #7c2d12; font-size: 13px; }
         .uti-foot { border-top: 1px solid #e3eaf0; padding-top: 8px; font-size: 12.5px; color: #4b6576; }
+        .uti-foot h3 { margin: 0 0 4px; font-size: 13px; color: #0b3a5b; }
+        .uti-foot ol { margin: 0 0 6px; padding-left: 20px; list-style: decimal; }
+        .uti-foot li { display: list-item; margin-bottom: 3px; }
         .uti-foot p { margin: 0; }
+        .uti-embedded { max-width: none; padding: 0; }
+        .uti-embedded .uti-head { justify-content: flex-end; }
+        .uti-scope { margin: 0; padding: 8px 10px; border-left: 3px solid #0b6b8a; border-radius: 6px; background: #eef6fa; color: #0b3a5b; font-weight: 600; }
+        .uti-briefs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        .uti-brief { min-width: 0; border: 1px solid #cfdde6; border-top: 3px solid #0b6b8a; border-radius: 10px; padding: 10px 12px; background: #fff; }
+        .uti-brief h3 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #0b3a5b; }
+        .uti-brief ul { margin: 0; padding-left: 17px; display: grid; gap: 4px; font-size: 13px; list-style: disc; }
+        .uti-brief li, .uti-notes li { display: list-item; }
+        .uti-notes h3, .uti-foot h3 { font-weight: 800; }
+        .uti-notes ul { list-style: disc; }
         @media (max-width: 720px) {
           .uti-table thead { display: none; }
           .uti-table table, .uti-table tbody, .uti-table tr, .uti-table td { display: block; width: 100%; }
@@ -170,6 +205,6 @@ export default function UtiTool({ conditions, regimens, config }: Props) {
           @page { size: A4; margin: 10mm; }
         }
       `}</style>
-    </main>
+    </Root>
   );
 }

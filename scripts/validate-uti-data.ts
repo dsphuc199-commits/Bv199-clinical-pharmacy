@@ -7,6 +7,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { z } from "zod";
 import { CONDITIONS } from "../data/uti-antibiotics/conditions";
 import { REGIMENS } from "../data/uti-antibiotics/regimens";
+import { UTI_BRIEFS } from "../data/uti-antibiotics/briefs";
 import { UTI_CONFIG } from "../data/uti-antibiotics/config";
 import { ConditionSchema, RegimenSchema } from "../data/uti-antibiotics/types";
 
@@ -40,7 +41,11 @@ for (const c of CONDITIONS) {
 for (const r of REGIMENS) {
   for (const k of ["antibiotic", "dose", "route", "interval", "duration", "applicability", "note"] as const) scan(`${r.id}.${k}`, r[k]);
 }
-for (const [k, v] of Object.entries(UTI_CONFIG)) scan(`config.${k}`, v);
+for (const [k, v] of Object.entries(UTI_CONFIG)) for (const s of typeof v === "string" ? [v] : v) scan(`config.${k}`, s);
+const briefPoints = Object.entries(UTI_BRIEFS).flatMap(([site, list]) => list.flatMap((b) => b.points.map((p) => ({ site, label: b.label, p }))));
+for (const b of briefPoints) { scan(`brief.${b.site}.${b.label}`, b.label); scan(`brief.${b.site}.${b.label}`, b.p); }
+for (const site of new Set(CONDITIONS.map((c) => c.group))) if (!UTI_BRIEFS[site]?.length) fail(`Thiếu tổng quan: ${site}`);
+for (const site of Object.keys(UTI_BRIEFS)) if (!CONDITIONS.some((c) => c.group === site)) fail(`Tổng quan mồ côi: ${site}`);
 
 /* Mọi con số trong liều, thời gian, khoảng cách liều phải có trong đoạn nguồn. */
 const nums = (s: string) => s.match(/\d+(?:[.,]\d+)?/g) ?? [];
@@ -50,7 +55,9 @@ for (const r of REGIMENS) {
 }
 
 /* Đối chiếu đoạn nguồn với văn bản trích (không bắt buộc). */
-const squash = (s: string) => s.normalize("NFC").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+/* Chuẩn hóa ký hiệu độ C và lỗi chính tả tên vi khuẩn của bản trích trước khi so khớp. */
+const canon = (s: string) => s.replace(/°\s*C/g, "oC").replace(/(\d\d)0C\b/g, "$1oC").replace(/Staphylococus/g, "Staphylococcus").replace(/Pseudomoras/g, "Pseudomonas");
+const squash = (s: string) => canon(s).normalize("NFC").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 const srcPath = process.env.UTI_SOURCE_TXT;
 let matched: number | null = null;
 if (srcPath && existsSync(srcPath)) {
@@ -61,6 +68,7 @@ if (srcPath && existsSync(srcPath)) {
     if (hay.includes(squash(text))) matched++;
     else fail(`Đoạn nguồn không khớp: ${text.slice(0, 90)}`);
   }
+  for (const b of briefPoints) if (!hay.includes(squash(b.p))) fail(`Tổng quan không khớp nguồn: ${b.p.slice(0, 90)}`);
 }
 
 if (errors.length) { console.error(errors.join("\n")); console.error(`\nFAIL: ${errors.length} lỗi`); process.exit(1); }

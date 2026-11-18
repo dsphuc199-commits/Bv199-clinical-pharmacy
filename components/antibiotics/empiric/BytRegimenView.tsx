@@ -39,6 +39,7 @@ import { DOSE_CONFLICTS } from "@/data/antibiotics/empiric/dose-conflicts";
 import { findDrugs } from "@/lib/antibiotics/drug-links";
 import DoseConflictComparison from "./DoseConflictComparison";
 import CopdByt2026 from "../CopdByt2026";
+import UtiEmpiricVn, { isUtiEmpiric } from "@/components/uti/UtiEmpiricVn";
 import { DiseaseMonitoring, DiseaseOverviewSummary, hasDiseaseOverview } from "./DiseaseOverview";
 import { getRationale } from "../../../data/antibiotics/empiric/rationale";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
@@ -66,19 +67,17 @@ export function ReconciliationBox({ diseaseId }: { diseaseId: string }) {
           <li key={point}>{point}</li>
         ))}
       </ul>
-      <div>
-        Nguồn:{" "}
-        {note.sources.map((source, index) => (
-          <span key={source.label}>
-            {index > 0 ? " · " : ""}
+      <ol style={{ margin: "6px 0 0", paddingLeft: 20, listStyle: "decimal" }}>
+        {note.sources.map((source) => (
+          <li key={source.label} style={{ display: "list-item", marginBottom: 3 }}>
             {source.url ? (
               <a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>
             ) : (
               source.label
             )}
-          </span>
+          </li>
         ))}
-      </div>
+      </ol>
     </details>
   );
 }
@@ -206,6 +205,8 @@ export function sectionsFor(items: Regimen[]): { sections: TxSection[]; regimenO
 
 export default function BytRegimenView(props: Props) {
   if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 /><DiseaseMonitoring diseaseId="v8-6" /></>;
+  /* Tiet nieu: cong cu chon khang sinh theo QD 708, Chuong X. */
+  if (isUtiEmpiric(props.diseaseId)) return <UtiEmpiricVn diseaseId={props.diseaseId} />;
   /* Template chung: Tong quan (tang 1) – Phac do (tang 2, 3) – Theo doi (tang 4); tu dong khi co du lieu overview. */
   if (hasDiseaseOverview(props.diseaseId)) {
     return (

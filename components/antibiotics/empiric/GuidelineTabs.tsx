@@ -260,7 +260,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       {/* Mot khoi nguon duy nhat: to chuc, ten huong dan, nam (moi nhat truoc). */}
       <details className="gt199-cite">
         <summary>Nguồn và đối chiếu</summary>
-        <ul>
+        <ol>
           {entry.guidelineIds
             .map((gid) => INTL_GUIDELINES[gid])
             .filter((g): g is NonNullable<typeof g> => !!g)
@@ -269,7 +269,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
               const label = `${g.org}. ${g.title} (${String(g.published).match(/\d{4}/)?.[0] ?? g.published})`;
               return <li key={g.title}>{g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer">{label}</a> : label}</li>;
             })}
-        </ul>
+        </ol>
       </details>
       <GtStyle />
     </section>
@@ -277,6 +277,14 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 }
 
 /* ---------------- Tab 3 ---------------- */
+
+/* Moi nguon mot dong; bo vi tri bang, muc, trang va cau dieu huong. */
+function sourceLines(text: string): string[] {
+  return clinicalText(text)
+    .split(/;\s+|\.\s+(?=\p{Lu})/u)
+    .map((line) => line.replace(/\s*\((?:Bảng|Mục|mục|tr\.)[^)]*\)/gu, "").replace(/\.$/, "").trim())
+    .filter((line) => line && !/xem mặt bệnh/iu.test(line));
+}
 
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p></section>;
@@ -319,8 +327,9 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
       {/* Quy tac chung: vi tri nguon (muc, bang, trang) gom vao "Nguon va can cu", mac dinh dong. */}
       <details className="gt199-cite">
         <summary>Nguồn và căn cứ</summary>
-        <p><strong>Việt Nam:</strong> {clinicalText(c.vn)}</p>
-        <p><strong>Quốc tế:</strong> {clinicalText(c.intl)}</p>
+        <ol>
+          {[...new Set([...sourceLines(c.vn), ...sourceLines(c.intl)])].map((line) => <li key={line}>{line}</li>)}
+        </ol>
       </details>
       <GtStyle />
     </section>
@@ -487,6 +496,8 @@ function GtStyle() {
       .gt199-gaps > summary, .gt199-cite > summary { cursor: pointer; }
       .gt199-cite > summary { font-weight: 700; color: #1e3a5f; font-size: 12px; }
       details.gt199-cite[open] { padding: 8px 10px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; }
+      .gt199-cite ol { margin: 6px 0 0; padding-left: 20px; list-style: decimal; }
+      .gt199-cite ol li { display: list-item; margin-bottom: 4px; }
       .gt199 :is(summary):focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .gt199-cmp-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
       .gt199-cmp { border-radius: 10px; padding: 10px 12px; border: 1px solid #dbe6ed; }
