@@ -278,11 +278,11 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 
 /* ---------------- Tab 3 ---------------- */
 
-/* Moi nguon mot dong; bo vi tri bang, muc, trang va cau dieu huong. */
+/* Moi nguon mot dong, chi ghi ten tai lieu; bo chuong, muc, bang, trang va cau dieu huong. */
 function sourceLines(text: string): string[] {
   return clinicalText(text)
     .split(/;\s+|\.\s+(?=\p{Lu})/u)
-    .map((line) => line.replace(/\s*\((?:Bảng|Mục|mục|tr\.)[^)]*\)/gu, "").replace(/\.$/, "").trim())
+    .map((line) => line.replace(/\s*\((?!\d{4}\))[^)]*\)/gu, "").replace(/^(QĐ\s*\d+[^–]*?)\s+–\s+.*$/u, "$1").replace(/\.$/, "").trim())
     .filter((line) => line && !/xem mặt bệnh/iu.test(line));
 }
 

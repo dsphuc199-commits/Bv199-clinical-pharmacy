@@ -47,6 +47,11 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
 
   const briefs = site ? UTI_BRIEFS[site] ?? [] : [];
 
+  /* Mỗi tổ chức một dòng; cùng tổ chức thì giữ bản mới nhất. */
+  const sourceMap = new Map<string, { label: string; url?: string }>();
+  for (const s of [...[...config.sources, ...config.citedSources].map((label) => ({ label })), ...intlSources]) sourceMap.set(s.label.split(".")[0], s);
+  const sourceList = [...sourceMap.values()];
+
   const reset = () => { setSite(initial?.site ?? null); setForm(initial?.form ?? null); setPopulation(null); setQuery(""); };
   const open = (c: Condition) => { setSite(c.group); setForm(c.form); setPopulation(c.population); setQuery(""); };
 
@@ -136,18 +141,9 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
 
       <footer className="uti-foot">
         <h3>Nguồn và đối chiếu</h3>
-        <h4>Bộ Y tế</h4>
-        <ol>{config.sources.map((s) => <li key={s}>{s}</li>)}</ol>
-        <h4>Hiệp hội chuyên ngành trong tài liệu tham khảo của Quyết định 708/QĐ-BYT</h4>
-        <ol start={config.sources.length + 1}>{config.citedSources.map((s) => <li key={s}>{s}</li>)}</ol>
-        {intlSources.length > 0 && (
-          <>
-            <h4>Hiệp hội quốc tế (tab Quốc tế và Đối chiếu)</h4>
-            <ol start={config.sources.length + config.citedSources.length + 1}>
-              {intlSources.map((s) => <li key={s.label}>{s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a> : s.label}</li>)}
-            </ol>
-          </>
-        )}
+        <ol>
+          {sourceList.map((s) => <li key={s.label}>{s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a> : s.label}</li>)}
+        </ol>
         <p>{config.effectiveStatus}</p>
       </footer>
 

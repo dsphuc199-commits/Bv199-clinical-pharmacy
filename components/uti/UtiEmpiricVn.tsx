@@ -8,13 +8,18 @@ import { INTL_GUIDELINES, getIntlEntry } from "@/data/antibiotics/empiric/intern
 
 const yearOf = (published: string) => String(published).match(/\d{4}/)?.[0] ?? published;
 
+const SOURCE_LABEL: Record<string, string> = {
+  "eau-ui-2026": "Hội Tiết niệu châu Âu (EAU). Guidelines on Urological Infections",
+  "idsa-cuti-2025": "Hiệp hội Bệnh truyền nhiễm Hoa Kỳ (IDSA). Guideline on Complicated Urinary Tract Infections",
+};
+
 /* Hướng dẫn quốc tế của mặt bệnh, mới nhất trước. */
 function intlSourcesOf(diseaseId: string) {
   return (getIntlEntry(diseaseId)?.guidelineIds ?? [])
     .map((id) => INTL_GUIDELINES[id])
     .filter((g): g is NonNullable<typeof g> => !!g)
     .sort((a, b) => Number(yearOf(b.published)) - Number(yearOf(a.published)))
-    .map((g) => ({ label: `${g.org}. ${g.title} (${yearOf(g.published)})`, url: g.url }));
+    .map((g) => ({ label: `${SOURCE_LABEL[g.id] ?? `${g.org}. ${g.title}`} (${yearOf(g.published)})`, url: g.url }));
 }
 
 const PRESET: Record<string, { site: string; form?: string; scopeNote?: string }> = {
