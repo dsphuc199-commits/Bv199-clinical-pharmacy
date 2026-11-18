@@ -11,12 +11,6 @@ export default function GlobalFooter() {
           Khoa Dược · Bệnh viện 199 · Bộ Công an
         </p>
 
-        <p className="m-0 text-[8px] leading-3 text-slate-500">
-          Phát triển bởi:{" "}
-          <strong>DSCKII Nguyễn Đức Cường</strong>
-          {" · "}
-          <strong>DS. Phan Văn Phúc</strong>
-        </p>
       </div>
 
       {/* DESKTOP: Footer đầy đủ */}
@@ -31,12 +25,6 @@ export default function GlobalFooter() {
           </p>
         </div>
 
-        <p className="m-0 text-right text-[10px] text-slate-600">
-          Phát triển bởi:{" "}
-          <strong>DSCKII Nguyễn Đức Cường</strong>
-          {" · "}
-          <strong>DS. Phan Văn Phúc</strong>
-        </p>
       </div>
     </footer>
   );

@@ -4,15 +4,14 @@ import { Fragment, useMemo, useState } from "react";
 import { BookOpen, Info, Search, Pill } from "lucide-react";
 import {
   ASHP_DOSES, ASHP_DOSE_FOOTNOTES, ASHP_REGIMENS, ASHP_TABLE2_FOOTNOTES,
-  ASHP_PRINCIPLES, ASHP_WOUND_CLASSES, ASHP_URL, type AshpRegimen, type AshpDose
+  ASHP_PRINCIPLES, ASHP_WOUND_CLASSES, type AshpRegimen, type AshpDose
 } from "@/data/antibiotics/prophylaxis-ashp2013";
+import ColonText from "./ColonText";
 
 function norm(s: string) {
   return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase().trim();
 }
-
-const SRC = "ASHP/IDSA/SIS/SHEA 2013 – Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery";
 
 const groups = ["Tất cả", ...Array.from(new Set(ASHP_REGIMENS.map(r => r.group)))];
 
@@ -73,17 +72,6 @@ export default function KsdpIntl() {
 
   return (
     <>
-      <div className="ksdp-note" style={{ marginBottom: 16 }}>
-        <Info size={17}/>
-        <div className="ksdp-sources">
-          <b>Nguồn</b>
-          <ul>
-            <li>Clinical Practice Guidelines for Antimicrobial Prophylaxis in Surgery – ASHP, IDSA, SIS, SHEA (2013)</li>
-            <li>Bratzler DW và cs. Am J Health-Syst Pharm. 2013;70:195–283</li>
-          </ul>
-        </div>
-      </div>
-
       <div className="ksdp-subtabs">
         {([
           ["pick", "Tra cứu theo phẫu thuật"],
@@ -152,7 +140,7 @@ export default function KsdpIntl() {
                   <Info size={17}/>
                   <ul className="ksdp-notes">
                     {chosen.notes.map((n, i) => (
-                      <li key={i}>{n.text}</li>
+                      <li key={i}><ColonText text={n.text}/></li>
                     ))}
                   </ul>
                 </div>
@@ -169,7 +157,7 @@ export default function KsdpIntl() {
                         <div><strong>Trẻ em:</strong> {d.peds}</div>
                         <div><strong>Thời gian bán thải (người lớn, thận bình thường):</strong> {d.halfLife} giờ</div>
                         <div><strong>Khoảng nhắc liều:</strong> {d.redose === "Không áp dụng" ? d.redose : `${d.redose} giờ`}</div>
-                        {d.fn?.filter(f => !HIDDEN_FN.has(f)).map(f => <small key={f} className="ksdp-fn-text">{ASHP_DOSE_FOOTNOTES[f]}</small>)}
+                        {d.fn?.filter(f => !HIDDEN_FN.has(f)).map(f => <small key={f} className="ksdp-fn-text"><ColonText text={ASHP_DOSE_FOOTNOTES[f]}/></small>)}
                       </div>
                     ))}
                   </div>
@@ -178,12 +166,8 @@ export default function KsdpIntl() {
 
               <h3 className="ksdp-subheading">Lưu ý</h3>
               <ul className="ksdp-notes">
-                {regimenFootnotes(chosen).map(f => <li key={f}>{ASHP_TABLE2_FOOTNOTES[f]}</li>)}
+                {regimenFootnotes(chosen).map(f => <li key={f}><ColonText text={ASHP_TABLE2_FOOTNOTES[f]}/></li>)}
               </ul>
-
-              <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
-                <BookOpen size={16}/> Nguồn: {SRC}
-              </a>
             </section>
           ) : (
             <div className="ksdp-empty">
@@ -227,7 +211,7 @@ export default function KsdpIntl() {
           </div>
           <h3 className="ksdp-subheading">Lưu ý</h3>
           <ul className="ksdp-notes">
-            {Object.entries(ASHP_TABLE2_FOOTNOTES).filter(([k]) => !HIDDEN_FN.has(k)).map(([k, v]) => <li key={k}>{v}</li>)}
+            {Object.entries(ASHP_TABLE2_FOOTNOTES).filter(([k]) => !HIDDEN_FN.has(k)).map(([k, v]) => <li key={k}><ColonText text={v}/></li>)}
           </ul>
         </section>
       )}
@@ -264,11 +248,8 @@ export default function KsdpIntl() {
           </div>
           <h3 className="ksdp-subheading">Lưu ý</h3>
           <ul className="ksdp-notes">
-            {Object.entries(ASHP_DOSE_FOOTNOTES).map(([k, v]) => <li key={k}>{v}</li>)}
+            {Object.entries(ASHP_DOSE_FOOTNOTES).map(([k, v]) => <li key={k}><ColonText text={v}/></li>)}
           </ul>
-          <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
-            <BookOpen size={16}/> Nguồn: {SRC}
-          </a>
         </section>
       )}
 
@@ -279,7 +260,7 @@ export default function KsdpIntl() {
             {ASHP_PRINCIPLES.map(s => (
               <div key={s.title} className="ksdp-principle">
                 <h3>{s.title}</h3>
-                <ul>{s.items.map((t, i) => <li key={i}>{t}</li>)}</ul>
+                <ul>{s.items.map((t, i) => <li key={i}><ColonText text={t}/></li>)}</ul>
               </div>
             ))}
           </section>
@@ -292,9 +273,6 @@ export default function KsdpIntl() {
                 </tbody>
               </table>
             </div>
-            <a className="ksdp-link" href={ASHP_URL} target="_blank" rel="noreferrer">
-              <BookOpen size={16}/> Nguồn: {SRC}
-            </a>
           </section>
         </>
       )}

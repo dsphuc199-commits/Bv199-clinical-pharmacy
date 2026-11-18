@@ -672,8 +672,6 @@ export default function PkpdPage() {
         >
           Bệnh viện 199 - Khoa Dược
           <br />
-          Phát triển bởi Dược sĩ Phan Phúc
-          <br />
           Tài liệu hỗ trợ chuyên môn, không thay thế
           đánh giá và quyết định điều trị của bác sĩ.
         </footer>
