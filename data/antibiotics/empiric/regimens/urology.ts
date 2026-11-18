@@ -56,8 +56,8 @@ export const UROLOGY: Regimen[] = [
     [d("Amoxicilin hoặc ampicilin", "1 g x 6 lần/ngày tiêm TM; có thể kết hợp aminoglycosid trong khi chờ kết quả cấy máu, nước tiểu")]),
   r("Viêm thận bể thận cấp, mục 4.5", "tr. 238", "r-py-preg", ["v8-17"],
     "Viêm thận bể thận cấp ở người có thai (thường gặp 3 tháng cuối)", "first",
-    [d("Một trong", "nhóm sulfamid; penicilin (amoxicilin)")],
-    { notes: ["Văn bản chỉ nêu 'có thể dùng nhóm sulfamid, penicilin (amoxicilin)' và 'thận trọng khi dùng kháng sinh', không nêu liều. Fluoroquinolon chống chỉ định."] }),
+    [d("Penicilin", "amoxicilin")],
+    { notes: ["Thận trọng khi dùng kháng sinh. Fluoroquinolon, sulfamid chống chỉ định ở phụ nữ có thai."] }),
 
   // ===== Viêm bàng quang không biến chứng (v8-16) =====
   r(CY, "tr. 249", "r-cy-tmp", ["v8-16"],

@@ -6,7 +6,7 @@ Tài liệu nội bộ cho dược sĩ rà soát. Nguồn: Quyết định 708/Q
 
 | # | Nội dung | Cách xử lý trong dữ liệu | Cần quyết định |
 |---|---|---|---|
-| 1 | Viêm thận bể thận cấp ở người có thai ghi "có thể dùng nhóm sulfamid", trong khi phần viêm bàng quang cấp ghi sulfamid chống chỉ định ở phụ nữ có thai. | Không đưa sulfamid vào phác đồ người có thai. | Xác nhận loại trừ sulfamid. |
+| 1 | Viêm thận bể thận cấp ở người có thai ghi "có thể dùng nhóm sulfamid", trong khi phần viêm bàng quang cấp ghi sulfamid chống chỉ định ở phụ nữ có thai. | Không đưa sulfamid vào phác đồ người có thai. | Đã xác nhận loại trừ sulfamid ngày 18/11/2026. |
 | 2 | Thời gian điều trị viêm thận bể thận cấp: đường tiêm 10 - 14 ngày; chuyển đường uống "từ ngày thứ 10 đến ngày thứ 14"; "kháng sinh duy trì trong 3 tuần"; đường uống 7 - 14 ngày. | Giữ thời gian gắn trực tiếp với từng thuốc, không hiển thị giai đoạn duy trì. | Chọn cách diễn giải tổng thời gian điều trị. |
 | 3 | Cấy nước tiểu kiểm tra: "sau một tuần ngừng thuốc" và "sau 5 ngày ngừng thuốc". | Không hiển thị. | Chọn mốc cấy lại. |
 | 4 | Người có thai: "Không chỉ định chụp X-quang" nhưng có trường hợp "cần xem xét chụp UIV". | Không hiển thị. | Xác nhận nội dung cần đưa vào. |

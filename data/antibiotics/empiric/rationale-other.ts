@@ -619,7 +619,7 @@ const UTI_PREG_315: DiseaseRationale = {
     ],
     "Viêm thận – bể thận cấp trong thai kỳ": [
       { condition: "Thai phụ viêm thận – bể thận cấp: sốt cao rét run, đau thắt lưng; cấy nước tiểu.", treatmentImplication: "Chống choáng; kháng sinh theo kháng sinh đồ: ampicilin-sulbactam tiêm + metronidazol truyền đến khi hết sốt 48 giờ, rồi amoxicilin uống 12 ngày.", sources: [SPK("Sốt trong khi có thai, mục 2.1.2; tr. 74")] },
-      { condition: "CẦN THẨM ĐỊNH – khác biệt với QĐ 708.", clinicalMeaning: "QĐ 708 (bài viêm thận bể thận) ghi có thể dùng sulfamid, penicilin cho thai phụ; QĐ 315 dùng ampicilin-sulbactam + metronidazol.", sources: [SPK("tr. 74"), "QĐ 708/QĐ-BYT (2015) – Viêm thận bể thận cấp, mục 4.5; tr. 238"] },
+      { condition: "CẦN THẨM ĐỊNH – khác biệt với QĐ 708.", clinicalMeaning: "QĐ 708 (bài viêm thận bể thận) dùng penicilin (amoxicilin) cho thai phụ; QĐ 315 dùng ampicilin-sulbactam + metronidazol.", sources: [SPK("tr. 74"), "QĐ 708/QĐ-BYT (2015) – Viêm thận bể thận cấp, mục 4.5; tr. 238"] },
     ],
   },
 };

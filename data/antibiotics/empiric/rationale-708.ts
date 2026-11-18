@@ -396,12 +396,8 @@ const PYELO: DiseaseRationale = {
     "Viêm thận bể thận cấp ở người có thai (thường gặp 3 tháng cuối)": [
       { condition: "Người bệnh có thai (thường gặp 3 tháng cuối).",
         clinicalMeaning: "Thận trọng khi dùng kháng sinh; không chụp X-quang; thăm dò hình thái khác chỉ làm sau đẻ.",
-        treatmentImplication: "Nguồn ghi có thể dùng nhóm sulfamid, penicilin (amoxicilin). Không dùng fluoroquinolon.",
+        treatmentImplication: "Penicilin (amoxicilin). Không dùng fluoroquinolon, sulfamid.",
         sources: [VTBT("mục 4.5; tr. 238")] },
-      { condition: "CẦN THẨM ĐỊNH – mâu thuẫn trong cùng văn bản.",
-        clinicalMeaning: "Bài Viêm bàng quang cấp (mục 3.2e) chống chỉ định nhóm sulfamid ở phụ nữ có thai, trái với mục 4.5 bài Viêm thận bể thận cấp.",
-        treatmentImplication: "Cần dược lâm sàng và bác sĩ điều trị thống nhất trước khi dùng sulfamid cho thai phụ.",
-        sources: [VTBT("mục 4.5; tr. 238"), Q("Viêm bàng quang cấp, mục 3.2e; tr. 250")] },
     ],
   },
 };
