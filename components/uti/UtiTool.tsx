@@ -10,7 +10,9 @@ import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } f
 type Props = {
   conditions: Condition[];
   regimens: PublicRegimen[];
-  config: { sources: readonly string[]; effectiveStatus: string; disclaimer: string };
+  config: { sources: readonly string[]; citedSources: readonly string[]; effectiveStatus: string; disclaimer: string };
+  /* Hướng dẫn hiệp hội quốc tế dùng ở tab Quốc tế và Đối chiếu của mặt bệnh. */
+  intlSources?: { label: string; url?: string }[];
   /* Nhúng vào tab Hướng dẫn Việt Nam của trang phác đồ kinh nghiệm. */
   embedded?: boolean;
   initial?: { site: string; form?: string };
@@ -30,7 +32,7 @@ function Choice({ step, title, options, value, onPick }: { step: number; title: 
   );
 }
 
-export default function UtiTool({ conditions, regimens, config, embedded = false, initial, scopeNote }: Props) {
+export default function UtiTool({ conditions, regimens, config, intlSources = [], embedded = false, initial, scopeNote }: Props) {
   const Root = embedded ? "div" : "main";
   const [site, setSite] = useState<string | null>(initial?.site ?? null);
   const [form, setForm] = useState<string | null>(initial?.form ?? null);
@@ -134,7 +136,18 @@ export default function UtiTool({ conditions, regimens, config, embedded = false
 
       <footer className="uti-foot">
         <h3>Nguồn và đối chiếu</h3>
+        <h4>Bộ Y tế</h4>
         <ol>{config.sources.map((s) => <li key={s}>{s}</li>)}</ol>
+        <h4>Hiệp hội chuyên ngành trong tài liệu tham khảo của Quyết định 708/QĐ-BYT</h4>
+        <ol start={config.sources.length + 1}>{config.citedSources.map((s) => <li key={s}>{s}</li>)}</ol>
+        {intlSources.length > 0 && (
+          <>
+            <h4>Hiệp hội quốc tế (tab Quốc tế và Đối chiếu)</h4>
+            <ol start={config.sources.length + config.citedSources.length + 1}>
+              {intlSources.map((s) => <li key={s.label}>{s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a> : s.label}</li>)}
+            </ol>
+          </>
+        )}
         <p>{config.effectiveStatus}</p>
       </footer>
 
@@ -177,6 +190,7 @@ export default function UtiTool({ conditions, regimens, config, embedded = false
         .uti-warn { margin: 0; padding: 8px 10px; border: 1px solid #f6cfb5; border-radius: 8px; background: #fff4ed; color: #7c2d12; font-size: 13px; }
         .uti-foot { border-top: 1px solid #e3eaf0; padding-top: 8px; font-size: 12.5px; color: #4b6576; }
         .uti-foot h3 { margin: 0 0 4px; font-size: 13px; color: #0b3a5b; }
+        .uti-foot h4 { margin: 8px 0 3px; font-size: 12.5px; font-weight: 700; color: #17364b; }
         .uti-foot ol { margin: 0 0 6px; padding-left: 20px; list-style: decimal; }
         .uti-foot li { display: list-item; margin-bottom: 3px; }
         .uti-foot p { margin: 0; }

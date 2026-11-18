@@ -6,6 +6,11 @@ export const UTI_CONFIG = {
     "Bộ Y tế. Quyết định 708/QĐ-BYT ngày 02/03/2015 – Hướng dẫn sử dụng kháng sinh, Chương X: Viêm niệu đạo cấp không do lậu",
     "Bộ Y tế. Quyết định 708/QĐ-BYT ngày 02/03/2015 – Hướng dẫn sử dụng kháng sinh, Chương X: Viêm bàng quang cấp",
   ],
+  /* Hiệp hội chuyên ngành có trong tài liệu tham khảo của Chương X. */
+  citedSources: [
+    "Hội Thận học Việt Nam. Hướng dẫn điều trị nhiễm khuẩn đường tiết niệu ở Việt Nam (2013)",
+    "European Association of Urology. Grabe M., Bjerklund-Johansen T.E., Botto H. et al. Guidelines on Urological Infections (2012)",
+  ],
   effectiveStatus: "Cần xác minh hiệu lực hiện hành",
   disclaimer: "Công cụ hỗ trợ tham khảo. Quyết định điều trị thuộc về bác sĩ, cần cá thể hóa theo chức năng thận, dị ứng, tương tác, tình hình kháng thuốc tại cơ sở.",
 } as const;
