@@ -38,7 +38,8 @@ check("CAP trẻ em: mở IDSA 2011 trước và chờ chọn bệnh cảnh", ()
   const landing = resolve(guideline, { ...severeIv, source: "idsa" });
   assert.equal(landing.primary.id, "pids-archive");
   assert.deepEqual(landing.primary.source_ids, ["pids2011"]);
-  assert.match(landing.blocks[0].items.at(-1).ref, /KC 69–71/);
+  assert.deepEqual(landing.blocks, []);
+  assert.deepEqual(landing.summary, []);
   assert.deepEqual(dosesIn({}), []);
   assert.deepEqual(guideline.axes.find(({ id }) => id === "idsa_version").options.map(({ id }) => id), ["archive", "effusion"]);
 });
@@ -121,7 +122,7 @@ check("IDSA/PIDS: Phần 1 năm 2026 không hiện liều và tài liệu lưu t
   assert.deepEqual(dosesIn(effusion), []);
   const current = resolve(guideline, effusion);
   assert.deepEqual(current.primary.source_ids, ["pids2026"]);
-  assert.ok(current.summary.some(({ text }) => text.includes("không quy định lựa chọn kháng sinh, liều hoặc số ngày")));
+  assert.ok(current.summary.some(({ text }) => text.includes("Chưa có khuyến cáo liều kháng sinh")));
   const archive = { source: "idsa", idsa_version: "archive" };
   assert.deepEqual(dosesIn(archive), []);
   const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_age: "five-to-seven" });
@@ -149,6 +150,7 @@ check("IDSA/PIDS 2011: đúng giới hạn tuổi doxycycline và phác đồ tr
   const pleural = itemsIn({ source: "idsa", idsa_case: "pleural-antibiotics" });
   assert.match(pleural.at(-1).text, /2–4 tuần/);
   assert.ok(pleural.every((row) => row.source_ids[0] === "pids2011"));
+  assert.match(pleural.at(-1).ref, /KC 71/);
 });
 
 console.log(`${passed} passed, ${failed} failed`);

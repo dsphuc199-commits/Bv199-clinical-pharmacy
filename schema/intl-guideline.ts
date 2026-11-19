@@ -115,14 +115,14 @@ export const rule = z.object({
   id,
   kind: z.enum(["primary", "addon"]),
   when,
-  summary: z.array(summaryRow).optional(),       // khối Chẩn đoán / Phác đồ / Hướng dẫn (primary)
+  summary: z.array(summaryRow).optional(),       // khối tóm tắt, dùng [] khi không cần lặp nội dung
   blocks: z.array(block).default([]),
   avoid: z.array(rxItem).default([]),            // bảng "Không dùng"
   notes: z.array(note).default([]),              // danh sách "Lưu ý"
   antibiogram_reminder: z.string().min(1).optional(), // UI nhắc "Đối chiếu Antibiogram BV199: …" – chỉ nhắc, không tính toán
   source_ids: sourceIds,
 }).strict().superRefine((r, ctx) => {
-  if (r.kind === "primary" && !r.summary?.length) ctx.addIssue({ code: "custom", message: "luật primary cần summary", path: ["summary"] });
+  if (r.kind === "primary" && !r.summary) ctx.addIssue({ code: "custom", message: "luật primary cần khai báo summary", path: ["summary"] });
 });
 
 /** Khối cố định hiển thị theo điều kiện (vd. "Quy trình 4 bước", "Thời gian, chuyển đường uống"). */
@@ -143,6 +143,7 @@ export const source = z.object({
   id,
   org: z.string().min(1),
   title: z.string().min(1),
+  short_title: z.string().min(1).optional(),
   year: z.number().int().min(1900),
   version: z.string().min(1),                    // phiên bản/ngày công bố; NEED nếu không rõ
   url: z.string().url(),

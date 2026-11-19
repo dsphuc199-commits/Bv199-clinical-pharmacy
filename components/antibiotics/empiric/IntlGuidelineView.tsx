@@ -103,21 +103,27 @@ function Sources({ sources }: { sources: IntlGuideline["sources"] }) {
   );
 }
 
-function References({ g, sources, isolated }: { g: IntlGuideline; sources: IntlGuideline["sources"]; isolated: boolean }) {
+function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlGuideline["sources"]; clinical: boolean }) {
   if (!sources.length) return null;
+  if (clinical)
+    return (
+      <div className="igv-source-line">
+        <b>Nguồn</b>
+        {sources.map((s) => <a key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.short_title ?? s.org}</a>)}
+      </div>
+    );
   return (
     <>
-      {!isolated && g.discordance.length > 0 && (
+      {g.discordance.length > 0 && (
         <div className="igv-disc">
           <h4>Khác biệt giữa các hướng dẫn</h4>
           <ul className="igv-notes">{g.discordance.map((d) => <li key={d.topic}><b>{d.topic}:</b> {d.description}</li>)}</ul>
         </div>
       )}
       <SourceList
-        sources={isolated ? [] : sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
+        sources={sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
         notes={[
           ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
-          ...(isolated ? ["Hàm lượng tham khảo từ hướng dẫn hoặc danh mục BV199. Kiểm tra nhãn và tình trạng có thuốc tại nơi cấp."] : []),
           "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
         ]}
       />
@@ -151,7 +157,10 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
   const sources = sourceControl
     ? g.sources.filter((s) => r.primary?.source_ids.includes(s.id))
     : g.sources;
-  const references = <References g={g} sources={sources} isolated={Boolean(sourceControl)} />;
+  const references = <References g={g} sources={sources} clinical={clinical} />;
+  const hasOutput = !r.primary || [
+    r.summary, r.antibiogram, r.before, r.blocks, r.avoid, r.notes, r.after,
+  ].some((entries) => entries.length > 0);
 
   if (g.status !== "extracted")
     return (
@@ -166,19 +175,19 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
   return (
     <>
       <Form g={g} raw={raw} eff={eff} set={set} />
-      <section className="sa24-out" aria-live="polite">
+      <section className={hasOutput ? "sa24-out" : "igv-empty-output"} aria-live="polite">
         {!r.primary ? (
           <p className="sa24-warn">Dữ liệu lỗi: {r.conflicts.length ? `nhiều luật cùng khớp (${r.conflicts.join(", ")})` : "không có luật khớp tổ hợp đã chọn"}. Không hiển thị khuyến cáo.</p>
         ) : (
           <>
-            <div className="sa24-dx">{r.summary.map((s) => <p key={s.label}><b>{s.label}</b> {s.text}</p>)}</div>
+            {r.summary.length > 0 && <div className="sa24-dx">{r.summary.map((s) => <p key={s.label}><b>{s.label}</b> {s.text}</p>)}</div>}
             {r.antibiogram.map((t) => <p key={t} className="igv-abg">Đối chiếu Antibiogram BV199: {t}</p>)}
             {r.before.map((s) => <Section key={s.id} s={s} g={g} eff={eff} set={set} />)}
             {r.blocks.map((b, i) => (
               <div key={`${b.title}-${i}`}>
                 <h4>{b.title}</h4>
                 {b.lead && <p className="sa24-lead">{b.lead}</p>}
-                <Rx items={b.items} showReferences={clinical} />
+                <Rx items={b.items} />
               </div>
             ))}
             {r.avoid.length > 0 && (<><h4>Không dùng</h4><Rx items={r.avoid} /></>)}
@@ -226,6 +235,10 @@ export default function IntlGuidelineView({ data, sourceAxis, clinical = false }
         .igv-draft b { font-size: 14px; letter-spacing: .02em; text-transform: uppercase; }
         .igv-verified { background: #eef8f2; border: 1px solid #b7e0c6; color: #0b6b3a; }
         .igv-abg { margin: 0; font-size: 13px; line-height: 1.55; color: #1d4f8a; background: #e6f0fb; border-radius: 8px; padding: 6px 10px; }
+        .igv .sa24-tip { white-space: pre-line; }
+        .igv-empty-output { position: absolute; }
+        .igv-source-line { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; line-height: 1.5; color: #33505f; }
+        .igv-source-line a { color: #09627e; text-decoration: underline; text-underline-offset: 2px; }
         .igv-sources { font-size: 12px; color: #4b6576; }
         .igv-sources summary { cursor: pointer; font-weight: 700; color: #0b3a5b; }
         .igv-sources ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; line-height: 1.5; overflow-wrap: anywhere; }

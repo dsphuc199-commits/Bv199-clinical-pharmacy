@@ -51,7 +51,7 @@
       "options": [
         {
           "id": "archive",
-          "label": "2011 · Kháng sinh (lưu trữ)"
+          "label": "2011 · Kháng sinh"
         },
         {
           "id": "effusion",
@@ -64,7 +64,7 @@
     },
     {
       "id": "idsa_case",
-      "label": "Bệnh cảnh · tài liệu 2011",
+      "label": "Bệnh cảnh",
       "type": "select",
       "default": "unset",
       "options": [
@@ -96,11 +96,12 @@
       "visible_when": {
         "source": "idsa",
         "idsa_version": "archive"
-      }
+      },
+      "tip": "Áp dụng cho trẻ trên 3 tháng, trước đó khỏe mạnh.\nNhẹ, có thể ngoại trú · Trẻ ổn định, uống được, không gắng sức hô hấp, không thiếu oxy và bảo đảm theo dõi.\nVừa–nặng, đánh giá nội trú · Gắng sức hô hấp (rút lõm ngực, thở rên, phập phồng cánh mũi) hoặc SpO₂ <90% kéo dài khi thở khí phòng ở mực nước biển.\nCần đánh giá nhập viện cả khi chưa có dấu hiệu trên nếu trẻ dưới 6 tháng nghi CAP do vi khuẩn, nghi CA-MRSA hoặc khó bảo đảm theo dõi.\nĐánh giá cấp cứu nếu có ngừng thở, suy hô hấp tiến triển, sốc hoặc giảm tri giác."
     },
     {
       "id": "idsa_age",
-      "label": "Tuổi theo Bảng 7",
+      "label": "Tuổi",
       "type": "seg",
       "default": "unset",
       "options": [
@@ -251,7 +252,7 @@
         },
         {
           "id": "standard",
-          "label": "Không nặng · không biến chứng"
+          "label": "Không nặng · không bệnh nền, không biến chứng"
         },
         {
           "id": "alternative",
@@ -280,7 +281,8 @@
           "child-older",
           "teen"
         ]
-      }
+      },
+      "tip": "Không nặng · Trẻ ổn định, uống được, không có dấu hiệu nặng. Chọn nhánh uống này khi không có bệnh nền hoặc biến chứng.\nNặng · Dấu hiệu gợi ý khi bác sĩ đánh giá gồm khó thở, thở rên, rút lõm ngực nặng, SpO₂ <90%, nhịp tim nhanh, không bú/uống được hoặc giảm tri giác. Đánh giá tại viện.\nNghi sepsis, suy hô hấp hoặc biến chứng · Đánh giá ngay."
     },
     {
       "id": "nice_pregnant",
@@ -397,7 +399,7 @@
       "visible_when": {
         "source": "who"
       },
-      "tip": "Dấu nguy hiểm gồm không uống hoặc bú được, nôn mọi thứ, co giật, lừ đừ hoặc bất tỉnh, thở rít hoặc thiếu oxy."
+      "tip": "Trẻ 2–59 tháng có ho hoặc khó thở. Đếm nhịp thở đủ 1 phút khi trẻ yên.\nThở nhanh · 2–11 tháng ≥50 lần/phút, 12–59 tháng ≥40 lần/phút.\nRút lõm thành ngực dưới · Có thể kèm thở nhanh. Nếu không có dấu nguy hiểm, chọn nhánh rút lõm.\nĐánh giá khẩn nếu không bú/uống được, nôn mọi thứ, co giật, lừ đừ/bất tỉnh, thở rít hoặc thiếu oxy."
     },
     {
       "id": "who_low_hiv",
@@ -417,25 +419,19 @@
       "position": "after",
       "bullets": [
         {
-          "text": "Kiểm tra dị ứng, chức năng thận/gan, thuốc đang dùng và hàm lượng chế phẩm trước khi kê.",
+          "text": "Liều cố định theo tuổi dành cho trẻ có kích thước trung bình. Cân nhắc cân nặng, chức năng thận/gan và chế phẩm.",
           "source_ids": [
             "nice250"
           ]
         },
         {
-          "text": "Liều cố định theo tuổi áp dụng cho trẻ có kích thước trung bình. Cân nhắc cân nặng, mức độ nặng, chức năng thận/gan và tính phù hợp của chế phẩm.",
+          "text": "Sau khi xác định CAP, bắt đầu kháng sinh sớm. Tại viện, bắt đầu trong 4 giờ từ khi trẻ đến viện.",
           "source_ids": [
             "nice250"
           ]
         },
         {
-          "text": "Khi đã xác định CAP, bắt đầu kháng sinh sớm. Tại bệnh viện, NICE nêu trong 4 giờ từ lúc đến viện (§1.5.1). Nếu nghi sepsis, áp dụng quy trình sepsis.",
-          "source_ids": [
-            "nice250"
-          ]
-        },
-        {
-          "text": "Khi có kết quả vi sinh, xem lại lựa chọn và thu hẹp phổ nếu phù hợp (§1.5.6).",
+          "text": "Thu hẹp phổ kháng sinh khi kết quả vi sinh cho phép.",
           "source_ids": [
             "nice250"
           ]
@@ -475,16 +471,7 @@
         ],
         "nice_case": "unset"
       },
-      "summary": [
-        {
-          "label": "Nguồn",
-          "text": "NICE NG250 · §1.5–1.6 và Bảng 2."
-        },
-        {
-          "label": "Chọn bệnh cảnh",
-          "text": "Xác nhận CAP, khả năng uống, biến chứng và dị ứng. Bác sĩ đánh giá mức độ nặng dựa vào các dấu hiệu như SpO₂ dưới 90%, thở rên, rút lõm ngực nặng, bỏ bú hoặc không uống được, lơ mơ."
-        }
-      ],
+      "summary": [],
       "blocks": [],
       "notes": [],
       "source_ids": [
@@ -498,16 +485,7 @@
         "source": "nice",
         "nice_age": "unset"
       },
-      "summary": [
-        {
-          "label": "Nguồn",
-          "text": "NICE NG250 · §1.5–1.6 và Bảng 2."
-        },
-        {
-          "label": "Bắt đầu",
-          "text": "Chọn tuổi và bệnh cảnh trước khi xem liều."
-        }
-      ],
+      "summary": [],
       "blocks": [],
       "notes": [],
       "source_ids": [
@@ -524,7 +502,7 @@
       "summary": [
         {
           "label": "Ngoài phạm vi công cụ",
-          "text": "NICE có liều riêng cho trẻ 1–2 tháng trong Bảng 2. Mô-đun tra liều từ 3 tháng tuổi hiệu chỉnh. Với trẻ dưới 3 tháng, đánh giá theo chuyên khoa nhi. Từ 18 tuổi, dùng mặt bệnh CAP người lớn."
+          "text": "Dưới 3 tháng tuổi hiệu chỉnh, đánh giá theo chuyên khoa nhi. Từ 18 tuổi, tra mục viêm phổi cộng đồng người lớn."
         }
       ],
       "blocks": [],
@@ -548,16 +526,7 @@
         ],
         "nice_case": "standard"
       },
-      "summary": [
-        {
-          "label": "Áp dụng",
-          "text": "CAP không nặng, không biến chứng, không bệnh nền và dùng được amoxicillin đường uống."
-        },
-        {
-          "label": "Nguồn",
-          "text": "NICE NG250 · Bảng 2, §1.6.4–1.6.6."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Ưu tiên · amoxicillin uống",
@@ -640,7 +609,7 @@
           ]
         },
         {
-          "text": "Với liệu trình 3 ngày, cân nhắc kéo dài nếu trẻ chưa ổn định, ví dụ còn suy hô hấp hoặc SpO₂ cải thiện kém hơn dự kiến (§1.6.5).",
+          "text": "Với liệu trình 3 ngày, cân nhắc kéo dài nếu trẻ chưa ổn định, ví dụ còn suy hô hấp hoặc SpO₂ cải thiện kém hơn dự kiến.",
           "source_ids": [
             "nice250"
           ],
@@ -655,7 +624,7 @@
           }
         },
         {
-          "text": "Bảng 2 cho phép dùng liều amoxicillin cao hơn ở mọi nhóm tuổi khi phù hợp. Tra liều trong BNF dành cho trẻ em.",
+          "text": "Nếu cần liều amoxicillin cao hơn, tra BNF dành cho trẻ em.",
           "source_ids": [
             "nice250"
           ]
@@ -680,16 +649,7 @@
         ],
         "nice_case": "alternative"
       },
-      "summary": [
-        {
-          "label": "Áp dụng",
-          "text": "CAP không nặng, không biến chứng và không bệnh nền, khi amoxicillin không phù hợp, ví dụ dị ứng penicillin hoặc nghi tác nhân không điển hình."
-        },
-        {
-          "label": "Nguồn",
-          "text": "NICE NG250 · Bảng 2, §1.6.4–1.6.6."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Thay thế · chọn một kháng sinh",
@@ -890,7 +850,7 @@
       ],
       "notes": [
         {
-          "text": "Dùng đúng nhóm cân nặng ghi trong bảng clarithromycin. Nếu cân nặng nằm ngoài nhóm được nêu, đối chiếu hướng dẫn liều nhi khoa và hội chẩn dược lâm sàng.",
+          "text": "Với clarithromycin, đối chiếu liều nhi khoa nếu cân nặng ngoài các nhóm hiển thị.",
           "show_when": {
             "nice_pregnant": false,
             "nice_age": [
@@ -912,7 +872,7 @@
           ]
         },
         {
-          "text": "Với liệu trình 3 ngày, cân nhắc kéo dài nếu trẻ chưa ổn định, ví dụ còn suy hô hấp hoặc SpO₂ cải thiện kém hơn dự kiến (§1.6.5).",
+          "text": "Với liệu trình 3 ngày, cân nhắc kéo dài nếu trẻ chưa ổn định, ví dụ còn suy hô hấp hoặc SpO₂ cải thiện kém hơn dự kiến.",
           "source_ids": [
             "nice250"
           ],
@@ -971,16 +931,7 @@
         ],
         "nice_case": "severe"
       },
-      "summary": [
-        {
-          "label": "Áp dụng",
-          "text": "Có dấu hiệu nặng, đã đánh giá tại bệnh viện và dùng được penicillin. Nếu nghi sepsis hoặc biến chứng, chuyển sang quy trình cấp cứu hoặc đánh giá chuyên khoa."
-        },
-        {
-          "label": "Nguồn",
-          "text": "NICE NG250 · Bảng 2, §1.5.4–1.5.5 và §1.6.6."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Ưu tiên · amoxicillin/clavulanat uống",
@@ -1002,7 +953,7 @@
               "source_ids": [
                 "nice250"
               ],
-              "preparation": "NICE · hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
+              "preparation": "Hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
             },
             {
               "role": "Ưu tiên",
@@ -1018,7 +969,7 @@
               "source_ids": [
                 "nice250"
               ],
-              "preparation": "NICE · hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
+              "preparation": "Hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
             },
             {
               "role": "Hàm lượng khác",
@@ -1028,7 +979,7 @@
               "source_ids": [
                 "nice250"
               ],
-              "preparation": "NICE · hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL",
+              "preparation": "Hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL",
               "show_when": {
                 "nice_age": [
                   "young",
@@ -1051,7 +1002,7 @@
               "source_ids": [
                 "nice250"
               ],
-              "preparation": "NICE · hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL"
+              "preparation": "Hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL"
             },
             {
               "role": "Ưu tiên",
@@ -1072,7 +1023,7 @@
         },
         {
           "title": "Ưu tiên · amoxicillin/clavulanat tĩnh mạch",
-          "lead": "Liều tính trên tổng hai thành phần. Đánh giá đường tĩnh mạch trong 48 giờ và chuyển uống khi phù hợp.",
+          "lead": "Liều tính trên tổng hai thành phần.",
           "show_when": {
             "nice_route": "iv"
           },
@@ -1299,46 +1250,7 @@
       ],
       "notes": [
         {
-          "text": "Chọn đường dùng để xem liều theo tuổi.",
-          "show_when": {
-            "nice_route": "unset"
-          },
-          "source_ids": [
-            "nice250"
-          ]
-        },
-        {
-          "text": "Đánh giá lại amoxicillin/clavulanat tĩnh mạch trong 48 giờ và chuyển uống khi phù hợp.",
-          "source_ids": [
-            "nice250"
-          ],
-          "show_when": {
-            "nice_route": "iv"
-          }
-        },
-        {
-          "text": "Đánh giá lại clarithromycin tĩnh mạch trong 48 giờ và chuyển uống khi phù hợp.",
-          "source_ids": [
-            "nice250"
-          ],
-          "show_when": {
-            "nice_macrolide_route": "iv"
-          }
-        },
-        {
-          "text": "NICE dùng mốc 5 ngày cho tổng đợt CAP nếu đã ổn định và vi sinh không đòi hỏi kéo dài.",
-          "show_when": {
-            "nice_route": [
-              "oral",
-              "iv"
-            ]
-          },
-          "source_ids": [
-            "nice250"
-          ]
-        },
-        {
-          "text": "Dùng đúng nhóm cân nặng của clarithromycin uống. Nếu ngoài nhóm được liệt kê, đối chiếu hướng dẫn liều nhi khoa.",
+          "text": "Với clarithromycin, đối chiếu liều nhi khoa nếu cân nặng ngoài các nhóm hiển thị.",
           "show_when": {
             "nice_pregnant": false,
             "nice_age": [
@@ -1354,17 +1266,6 @@
           "source_ids": [
             "nice250"
           ]
-        },
-        {
-          "text": "Chọn riêng đường dùng clarithromycin để xem liều phối hợp.",
-          "source_ids": [
-            "nice250"
-          ],
-          "show_when": {
-            "nice_atypical": true,
-            "nice_pregnant": false,
-            "nice_macrolide_route": "unset"
-          }
         },
         {
           "text": "Hỗn dịch Klacid tham chiếu có dữ liệu và liều trên nhãn từ 6 tháng tuổi. Ở trẻ từ 3 đến dưới 6 tháng, xác nhận chế phẩm và cách dùng với nhi khoa hoặc dược lâm sàng trước khi áp dụng liều NICE.",
@@ -1399,7 +1300,7 @@
       "summary": [
         {
           "label": "Hội chẩn",
-          "text": "NICE NG250 Bảng 2 yêu cầu tư vấn vi sinh tại chỗ để chọn kháng sinh khi CAP nặng và dị ứng penicillin."
+          "text": "Hội chẩn vi sinh để chọn kháng sinh khi CAP nặng và dị ứng penicillin."
         }
       ],
       "blocks": [],
@@ -1442,12 +1343,7 @@
         "source": "who",
         "who_case": "unset"
       },
-      "summary": [
-        {
-          "label": "Phạm vi",
-          "text": "WHO 2024 · Khuyến cáo 1 và 2a cho trẻ 2–59 tháng. Chọn dấu hiệu đã xác định khi khám."
-        }
-      ],
+      "summary": [],
       "blocks": [],
       "notes": [],
       "source_ids": [
@@ -1461,16 +1357,7 @@
         "source": "who",
         "who_case": "fast"
       },
-      "summary": [
-        {
-          "label": "Áp dụng",
-          "text": "Trẻ 2–59 tháng được xác định viêm phổi theo WHO do thở nhanh, không rút lõm thành ngực dưới và không có dấu nguy hiểm."
-        },
-        {
-          "label": "Nguồn",
-          "text": "WHO 2024 · Phần Viêm phổi, Khuyến cáo 1."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Ưu tiên · amoxicillin uống",
@@ -1530,12 +1417,8 @@
       },
       "summary": [
         {
-          "label": "Áp dụng",
-          "text": "Điều trị ngoại trú sau đánh giá tại cơ sở y tế cho trẻ 2–59 tháng có rút lõm thành ngực dưới, có hoặc không thở nhanh, không dấu nguy hiểm."
-        },
-        {
-          "label": "Nguồn",
-          "text": "WHO 2024 · Phần Viêm phổi, Khuyến cáo 2a."
+          "label": "Ngoại trú",
+          "text": "Điều trị sau khi đã đánh giá trẻ tại cơ sở y tế."
         }
       ],
       "blocks": [
@@ -1564,12 +1447,6 @@
           "source_ids": [
             "who2024"
           ]
-        },
-        {
-          "text": "Khuyến cáo 2b đề cập điều trị tại cộng đồng kèm theo dõi trong chương trình nhân viên y tế cộng đồng đang hoạt động. Nhánh này trình bày điều trị ngoại trú theo 2a.",
-          "source_ids": [
-            "who2024"
-          ]
         }
       ],
       "source_ids": [
@@ -1586,7 +1463,7 @@
       "summary": [
         {
           "label": "Đánh giá và chuyển tuyến",
-          "text": "Dấu nguy hiểm hoặc thiếu oxy cần đánh giá khẩn. Khuyến cáo 1 và 2a dùng cho 2–59 tháng. WHO ghi nhận khoảng trống bằng chứng về lựa chọn kháng sinh tối ưu cho trẻ 5–9 tuổi."
+          "text": "Đánh giá khẩn khi có dấu nguy hiểm hoặc thiếu oxy. Liều trong mục này áp dụng cho trẻ 2–59 tháng."
         }
       ],
       "blocks": [],
@@ -1605,11 +1482,7 @@
       "summary": [
         {
           "label": "Phạm vi",
-          "text": "IDSA/PIDS công bố Phần 1 ngày 24/02/2026. Sáu khuyến cáo tập trung vào chẩn đoán và can thiệp tràn dịch cạnh viêm phổi hoặc mủ màng phổi ở trẻ trên 3 tháng."
-        },
-        {
-          "label": "Điều trị kháng sinh",
-          "text": "Phần 1 không quy định lựa chọn kháng sinh, liều hoặc số ngày điều trị. Với ca có biến chứng, bác sĩ chọn kháng sinh theo mức độ nặng, kết quả vi sinh và phác đồ tại cơ sở. Muốn tra bảng kháng sinh cũ của IDSA/PIDS, chọn mục 2011 lưu trữ."
+          "text": "Xử trí tràn dịch cạnh viêm phổi và mủ màng phổi ở trẻ trên 3 tháng. Chưa có khuyến cáo liều kháng sinh trong phần này."
         }
       ],
       "blocks": [
@@ -1636,7 +1509,7 @@
             },
             {
               "role": "Dịch vừa kèm dấu hiệu gắng sức hô hấp, dịch nhiều hoặc có mủ",
-              "text": "Dẫn lưu màng phổi. Khuyến cáo tiếp nối năm 2011, chưa có bằng chứng mới.",
+              "text": "Dẫn lưu màng phổi.",
               "ref": "Pleural Fluid Drainage versus Observation, KC 2",
               "source_ids": [
                 "pids2026"
@@ -1697,55 +1570,8 @@
         "idsa_version": "archive",
         "idsa_case": "unset"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "IDSA đã lưu trữ bản 2011. Bảng dưới đây giúp định vị nội dung cần tra cho trẻ trên 3 tháng vốn khỏe mạnh."
-        },
-        {
-          "label": "Tra cứu",
-          "text": "Chọn bệnh cảnh để xem thuốc ưu tiên, thay thế và liều ghi trong tài liệu 2011."
-        }
-      ],
-      "blocks": [
-        {
-          "title": "Nội dung kháng sinh trong tài liệu 2011",
-          "items": [
-            {
-              "role": "Ngoại trú · nghi vi khuẩn điển hình",
-              "text": "Amoxicillin là lựa chọn đầu tay trong tài liệu. Bảng 7 ghi amoxicillin/clavulanat là lựa chọn thay thế.",
-              "ref": "PIDS/IDSA 2011 · Bảng 7 và khuyến cáo 42–43",
-              "source_ids": [
-                "pids2011"
-              ]
-            },
-            {
-              "role": "Ngoại trú · nghi tác nhân không điển hình",
-              "text": "Bảng 7 liệt kê azithromycin theo ngày điều trị và các lựa chọn thay thế có điều kiện về tuổi.",
-              "ref": "PIDS/IDSA 2011 · Bảng 7 và khuyến cáo 44",
-              "source_ids": [
-                "pids2011"
-              ]
-            },
-            {
-              "role": "Nội trú",
-              "text": "Tra lựa chọn kinh nghiệm theo tiêm chủng, đề kháng tại chỗ và mức độ nặng. Khi đã xác định phế cầu, chọn nhóm MIC để tra liều theo Bảng 5.",
-              "ref": "PIDS/IDSA 2011 · Bảng 5, Bảng 7 và khuyến cáo 46–49",
-              "source_ids": [
-                "pids2011"
-              ]
-            },
-            {
-              "role": "Tràn dịch hoặc mủ màng phổi",
-              "text": "Chọn bệnh cảnh tương ứng để tra căn cứ chọn thuốc và thời gian trong khuyến cáo lưu trữ.",
-              "ref": "PIDS/IDSA 2011 · KC 69–71",
-              "source_ids": [
-                "pids2011"
-              ]
-            }
-          ]
-        }
-      ],
+      "summary": [],
+      "blocks": [],
       "notes": [],
       "source_ids": [
         "pids2011"
@@ -1759,20 +1585,7 @@
         "idsa_version": "archive",
         "idsa_case": "typical"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
-        },
-        {
-          "label": "Áp dụng",
-          "text": "CAP nhẹ đến vừa nghi vi khuẩn ở trẻ vốn khỏe mạnh, đã tiêm chủng phù hợp."
-        },
-        {
-          "label": "Thời gian theo KC 54",
-          "text": "Tài liệu 2011 ghi 10 ngày là thời gian được nghiên cứu nhiều nhất. Có thể ngắn hơn ở CAP nhẹ ngoại trú."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Điều trị kinh nghiệm · chọn một",
@@ -1836,7 +1649,6 @@
               }
             }
           ],
-          "lead": "Bảng 7 nêu giới hạn 4 g amoxicillin/ngày ở nhóm từ 5 tuổi. Ghi chú Bảng 7 cho biết liều tối đa này dựa trên đồng thuận của nhóm soạn thảo, chưa được đánh giá tiến cứu.",
           "show_when": {
             "idsa_age": [
               "under-five",
@@ -1847,7 +1659,7 @@
         },
         {
           "title": "Có thể phối hợp khi chưa phân biệt được tác nhân",
-          "lead": "Ở trẻ từ 5 tuổi, Bảng 7 cho phép thêm macrolid vào beta-lactam nếu các dấu hiệu lâm sàng, xét nghiệm và hình ảnh chưa đủ phân biệt CAP do vi khuẩn điển hình với CAP không điển hình. Hai dòng là cùng một liệu trình azithromycin.",
+          "lead": "Từ 5 tuổi, cân nhắc thêm macrolid vào beta-lactam khi lâm sàng, xét nghiệm và hình ảnh chưa phân biệt được nguyên nhân điển hình với không điển hình. Hai dòng azithromycin là cùng một đợt.",
           "show_when": {
             "idsa_age": [
               "five-to-seven",
@@ -1881,22 +1693,7 @@
       ],
       "notes": [
         {
-          "text": "Chọn tuổi để xem các dòng phù hợp.",
-          "source_ids": [
-            "pids2011"
-          ],
-          "show_when": {
-            "idsa_age": "unset"
-          }
-        },
-        {
-          "text": "Theo KC 56, đánh giá lại nếu không cải thiện trong 48–72 giờ.",
-          "source_ids": [
-            "pids2011"
-          ]
-        },
-        {
-          "text": "Ở trẻ trước tuổi đi học, KC 41 không khuyến cáo kháng sinh thường quy. Nhánh này chỉ áp dụng khi có căn cứ nghi viêm phổi do vi khuẩn.",
+          "text": "Trẻ trước tuổi đi học chỉ dùng kháng sinh ở nhánh này khi có căn cứ nghi vi khuẩn.",
           "source_ids": [
             "pids2011"
           ],
@@ -1905,16 +1702,7 @@
           }
         },
         {
-          "text": "Ở trẻ dưới 3–6 tháng nghi CAP do vi khuẩn, KC 2 hướng tới điều trị nội trú. Đánh giá nơi điều trị trước khi áp dụng liều ngoại trú.",
-          "source_ids": [
-            "pids2011"
-          ],
-          "show_when": {
-            "idsa_age": "under-five"
-          }
-        },
-        {
-          "text": "Theo ghi chú Bảng 7, lịch ngày 2 lần cần xét độ nhạy phế cầu tại chỗ.",
+          "text": "Khi dùng amoxicillin chia 2 lần/ngày, cân nhắc độ nhạy phế cầu tại chỗ.",
           "source_ids": [
             "pids2011"
           ],
@@ -1939,16 +1727,7 @@
         "idsa_version": "archive",
         "idsa_case": "atypical"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
-        },
-        {
-          "label": "Áp dụng",
-          "text": "Nghi tác nhân không điển hình, chủ yếu ở trẻ tuổi đi học và vị thành niên theo KC 44."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Ưu tiên · azithromycin trong 5 ngày",
@@ -2048,7 +1827,6 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · hỗn dịch 125 mg/5 mL; viên 250 hoặc 500 mg giải phóng thông thường",
-              "course": "Dòng tuổi này của Bảng 7 không ghi số ngày",
               "show_when": {
                 "idsa_age": [
                   "five-to-seven",
@@ -2065,7 +1843,6 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · viên 500 mg",
-              "course": "Bảng 7 không ghi số ngày",
               "show_when": {
                 "idsa_age": "under-five"
               }
@@ -2079,7 +1856,6 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · viên 500 mg",
-              "course": "Bảng 7 không ghi số ngày",
               "show_when": {
                 "idsa_age": [
                   "five-to-seven",
@@ -2096,13 +1872,11 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · viên nang 100 mg",
-              "course": "Bảng 7 không ghi số ngày",
               "show_when": {
                 "idsa_age": "over-seven"
               }
             }
           ],
-          "lead": "Áp dụng đúng tuổi của từng thuốc theo tài liệu lưu trữ.",
           "show_when": {
             "idsa_age": [
               "under-five",
@@ -2112,29 +1886,7 @@
           }
         }
       ],
-      "notes": [
-        {
-          "text": "Chọn tuổi để xem các dòng phù hợp.",
-          "source_ids": [
-            "pids2011"
-          ],
-          "show_when": {
-            "idsa_age": "unset"
-          }
-        },
-        {
-          "text": "Từ 5 tuổi, nếu chưa phân biệt được điển hình và không điển hình, Bảng 7 cho phép thêm macrolid vào beta-lactam.",
-          "source_ids": [
-            "pids2011"
-          ],
-          "show_when": {
-            "idsa_age": [
-              "five-to-seven",
-              "over-seven"
-            ]
-          }
-        }
-      ],
+      "notes": [],
       "source_ids": [
         "pids2011"
       ]
@@ -2147,16 +1899,7 @@
         "idsa_version": "archive",
         "idsa_case": "inpatient"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
-        },
-        {
-          "label": "Phạm vi",
-          "text": "Bảng 7 và KC 46–49 hướng dẫn lựa chọn kinh nghiệm. Bảng 5 ghi liều theo tác nhân nghi ngờ hoặc đã xác định."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Ưu tiên · chọn một",
@@ -2195,7 +1938,7 @@
             },
             {
               "role": "Thay thế",
-              "text": "Levofloxacin · lựa chọn lưu trữ. Đối chiếu đường dùng và liều theo tác nhân ở Bảng 5.",
+              "text": "Levofloxacin · xác định đường dùng và liều theo tác nhân, hội chẩn chuyên khoa.",
               "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 47",
               "source_ids": [
                 "pids2011"
@@ -2242,29 +1985,17 @@
             },
             {
               "role": "Thay thế",
-              "text": "Clarithromycin hoặc erythromycin. Bảng 7 cũng nêu doxycycline ở trẻ trên 7 tuổi và levofloxacin ở trẻ đã trưởng thành về xương hoặc không dung nạp macrolid. Tra liều, đường dùng và thời gian theo tác nhân ở Bảng 5.",
+              "text": "Clarithromycin hoặc erythromycin. Cân nhắc doxycycline ở trẻ trên 7 tuổi. Levofloxacin là lựa chọn khi đã trưởng thành về xương hoặc không dung nạp macrolid.",
               "ref": "PIDS/IDSA 2011 · Bảng 7 và KC 48",
               "source_ids": [
                 "pids2011"
               ]
             }
-          ]
-        }
-      ],
-      "notes": [
-        {
-          "text": "Theo KC 48, thêm macrolid uống hoặc đường tiêm vào beta-lactam khi M. pneumoniae hoặc C. pneumoniae là tác nhân đáng nghi. Xét nghiệm nếu có thể trả kết quả kịp thời để định hướng điều trị.",
-          "source_ids": [
-            "pids2011"
           ],
-          "show_when": {
-            "idsa_inpatient": [
-              "standard",
-              "broad"
-            ]
-          }
+          "lead": "Phối hợp beta-lactam khi nghi M. pneumoniae hoặc C. pneumoniae. Xét nghiệm nếu có thể trả kết quả kịp thời để định hướng điều trị."
         }
       ],
+      "notes": [],
       "source_ids": [
         "pids2011"
       ]
@@ -2277,20 +2008,7 @@
         "idsa_version": "archive",
         "idsa_case": "pneumo"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
-        },
-        {
-          "label": "Áp dụng",
-          "text": "Liều điều trị đích theo phế cầu và MIC penicillin từ Bảng 5. Chọn đúng nhóm vi sinh."
-        },
-        {
-          "label": "Thời gian",
-          "text": "Bảng 5 ghi liều theo tác nhân. Thời gian tùy đáp ứng và biến chứng."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
           "title": "Phế cầu MIC penicillin ≤2 µg/mL · tĩnh mạch",
@@ -2314,7 +2032,7 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · lọ 1.000.000 IU",
-              "administration": "Tổng liều ngày, chia theo khoảng cách ghi trong bảng."
+              "administration": "Tổng liều ngày, chia theo khoảng cách đã nêu."
             },
             {
               "role": "Thay thế",
@@ -2325,7 +2043,7 @@
                 "pids2011"
               ],
               "preparation": "Danh mục BV199 · lọ 1 g hoặc 2 g",
-              "administration": "Tổng liều ngày, chia theo lịch đã chọn. Bảng 5 ưu tiên ceftriaxone khi cần điều trị đường tiêm ngoại trú."
+              "administration": "Tổng liều ngày, chia theo lịch đã chọn. Ưu tiên ceftriaxone nếu cần điều trị đường tiêm ngoại trú."
             },
             {
               "role": "Thay thế",
@@ -2364,7 +2082,7 @@
         },
         {
           "title": "Phế cầu MIC penicillin ≤2 µg/mL · chuyển uống",
-          "lead": "Khi phù hợp chuyển uống, chọn một trong hai lịch amoxicillin của Bảng 5.",
+          "lead": "Khi đủ điều kiện chuyển uống, chọn một trong hai lịch amoxicillin.",
           "show_when": {
             "idsa_mic": "low"
           },
@@ -2403,7 +2121,7 @@
           }
         },
         {
-          "text": "Khi tra liều uống theo Bảng 5, lưu ý giới hạn liều tối đa người lớn trong ghi chú của bảng.",
+          "text": "Liều uống tối đa bằng liều người lớn.",
           "source_ids": [
             "pids2011"
           ],
@@ -2424,15 +2142,10 @@
         "idsa_version": "archive",
         "idsa_case": "pleural-antibiotics"
       },
-      "summary": [
-        {
-          "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 · Khuyến cáo 69–71 về kháng sinh cho tràn dịch cạnh viêm phổi hoặc mủ màng phổi."
-        }
-      ],
+      "summary": [],
       "blocks": [
         {
-          "title": "Chọn thuốc và thời gian theo tài liệu 2011",
+          "title": "Kháng sinh khi có tràn dịch hoặc mủ màng phổi",
           "items": [
             {
               "role": "Cấy máu hoặc dịch màng phổi dương tính",
@@ -2452,7 +2165,7 @@
             },
             {
               "role": "Thời gian",
-              "text": "Tài liệu 2011 nêu 2–4 tuần phù hợp cho đa số trẻ. Cá thể hóa theo mức độ dẫn lưu và đáp ứng lâm sàng.",
+              "text": "Thường 2–4 tuần, tùy mức độ dẫn lưu và đáp ứng lâm sàng.",
               "ref": "PIDS/IDSA 2011 · KC 71",
               "source_ids": [
                 "pids2011"
@@ -2505,7 +2218,8 @@
         "child"
       ],
       "evidence_system": "Cách diễn đạt mức khuyến cáo của NICE",
-      "grade_system": "none"
+      "grade_system": "none",
+      "short_title": "NICE NG250"
     },
     {
       "id": "who2024",
@@ -2519,7 +2233,8 @@
         "child"
       ],
       "evidence_system": "GRADE",
-      "grade_system": "GRADE"
+      "grade_system": "GRADE",
+      "short_title": "WHO 2024"
     },
     {
       "id": "pids2026",
@@ -2533,7 +2248,8 @@
         "child"
       ],
       "evidence_system": "GRADE",
-      "grade_system": "GRADE"
+      "grade_system": "GRADE",
+      "short_title": "IDSA/PIDS 2026"
     },
     {
       "id": "pids2011",
@@ -2547,7 +2263,8 @@
         "child"
       ],
       "evidence_system": "Sức mạnh khuyến cáo và chất lượng bằng chứng",
-      "grade_system": "GRADE"
+      "grade_system": "GRADE",
+      "short_title": "IDSA/PIDS 2011"
     }
   ],
   "review": {

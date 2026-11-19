@@ -46,7 +46,7 @@ export function Grade({ g }: { g?: string }) {
   if (m) return <span className={`sa24-g ${m[1] === "S" ? "sa24-g-a" : "sa24-g-c"}`} title="Sức mạnh khuyến cáo · độ tin cậy bằng chứng (GRADE)">{m[1] === "S" ? "Mạnh" : m[1] === "W" ? "Yếu" : "Có ĐK"} · {CERT[m[2]]}</span>;
   return <span className={`sa24-g sa24-g-${g[0].toLowerCase()}`} title="Mức khuyến cáo – chất lượng bằng chứng">{g}</span>;
 }
-export function Rx({ items, showReferences = false }: { items: Item[]; showReferences?: boolean }) {
+export function Rx({ items }: { items: Item[] }) {
   if (!items.length) return null;
   const hasDose = items.some((i) => i.dose);
   const hasGrade = items.some((i) => i.grade);
@@ -81,7 +81,6 @@ export function Rx({ items, showReferences = false }: { items: Item[]; showRefer
               <td className={hasDose && !it.dose ? "sa24-note" : "sa24-drug"} colSpan={hasDose && !it.dose ? 1 + useSpan : undefined}>
                 {it.text}
                 {it.preparation && <span className="sa24-rx-detail">{it.preparation}</span>}
-                {showReferences && <span className="sa24-rx-ref">{it.ref}</span>}
               </td>
               {it.dose && p && <>
                 <td className="sa24-dose" data-label="Liều"><span>{p.dose}{it.administration && <span className="sa24-rx-detail">{it.administration}</span>}</span></td>
@@ -172,8 +171,7 @@ export function RxToolStyle() {
         .sa24-rx.has-dose .sa24-drug { width: 21%; font-weight: 700; color: #0f2236; }
         .sa24-rx .sa24-note { font-size: 13px; color: #33505f; }
         .sa24-rx .sa24-dose { font-size: 13.5px; color: #10243e; }
-        .sa24-rx-detail, .sa24-rx-ref { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; line-height: 1.45; color: #405b71; overflow-wrap: anywhere; }
-        .sa24-rx-ref { font-size: 11.5px; color: #516d80; }
+        .sa24-rx-detail { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; line-height: 1.45; color: #405b71; overflow-wrap: anywhere; }
         .sa24-rx .sa24-gc { width: 112px; text-align: right; white-space: nowrap; }
         .sa24-rx tr.is-pref th { color: #0b6b3a; }
         .sa24-rx tr.is-alg { background: #fff8f1; }
