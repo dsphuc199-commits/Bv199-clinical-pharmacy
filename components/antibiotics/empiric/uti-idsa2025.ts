@@ -62,7 +62,8 @@ export const ORAL_PK: [string, string, string][] = [
 ];
 
 export const OTHER_DRUGS: RxItem[] = [
-  r("Fosfomycin tĩnh mạch", "Không phải lựa chọn đầu tay; thay thế khi có thuốc và không có nguy cơ kháng. Thận trọng khi suy tim: tải natri cao, hạ kali máu.", undefined, "CQ1 10", "6 g TM mỗi 8 giờ"),
+  r("Thay thế, không đầu tay", "Fosfomycin tĩnh mạch", undefined, "CQ1 10; Table 2.1", "6 g TM mỗi 8 giờ"),
+  r("Lưu ý fosfomycin", "Chỉ dùng khi không có nguy cơ kháng fosfomycin. Thận trọng khi suy tim: tải natri cao, hạ kali máu.", undefined, "CQ1 10"),
   r("Colistin", "Hiếm khi dùng kinh nghiệm vì độc thận.", undefined, "CQ1 10"),
   r("Polymyxin B", "Không dùng cho nhiễm khuẩn tiết niệu vì thải trừ chủ yếu ngoài thận.", undefined, "CQ1 10"),
   r("Beta-lactam uống khác", "Amoxicilin, cefadroxil, cefaclor, cefdinir: chỉ cân nhắc cùng dược sĩ chuyên về bệnh nhiễm khi không có lựa chọn khác.", undefined, "Table 3.1"),
