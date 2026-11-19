@@ -865,7 +865,7 @@ function GuidelineContent() {
           <summary>Công cụ</summary>
           <div className="bv199-tools-pop">
             <nav className="bv199-quicklinks" aria-label="Module liên quan">
-              <Link href={`/antibiotics/empiric/select?disease=${encodeURIComponent(selected.id)}`}>Chọn theo người bệnh</Link>
+              <Link href={`/antibiotics/empiric/select?disease=${encodeURIComponent(selected.id)}`}>Cá thể hóa phác đồ</Link>
               <Link href={organismHref(organismLink?.organismQuery, { from: backPath, fromLabel: selected.title })}>Theo tác nhân</Link>
               <Link href={antibiogramHref({ organismId: organismLink?.antibiogramId }, { from: backPath, fromLabel: selected.title })}>Kháng sinh đồ BV199</Link>
               <Link href={`/antibiotics/dosing?from=${encodeURIComponent(backPath)}&fromLabel=${encodeURIComponent(selected.title)}`}>Điều chỉnh liều theo chức năng thận</Link>
