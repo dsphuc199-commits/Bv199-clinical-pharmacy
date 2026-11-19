@@ -62,6 +62,9 @@ export const rxItem = z.object({
   role: z.string().min(1),                      // cột 1 – vai trò/nhóm thuốc; "Ưu tiên" được tô nổi
   text: z.string().min(1),                      // cột 2 – thuốc hoặc nội dung khuyến cáo
   dose: z.union([z.string().min(1), z.literal(NEED)]).optional(), // cột liều; bỏ trống khi nguồn không có liều
+  preparation: z.string().min(1).optional(),     // dạng và hàm lượng theo hướng dẫn hoặc danh mục đã đối chiếu
+  administration: z.string().min(1).optional(),  // điều kiện pha, quy đổi hoặc sử dụng của đúng chế phẩm
+  course: z.string().min(1).optional(),          // tổng đợt hoặc các giai đoạn dùng thuốc khi có điều kiện riêng
   grade: grade.optional(),                      // cột chip; bỏ trống khi nguồn không xếp mức cho dòng này
   ref: z.string().min(1),                       // vị trí trong nguồn (không hiển thị), ví dụ "Table 2.1", "KC 9"
   al: z.enum(["std", "alt"]).optional(),        // lọc dị ứng beta-lactam (byAllergy) – không dùng ở 2 bệnh mẫu

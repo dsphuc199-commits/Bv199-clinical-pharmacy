@@ -9,6 +9,7 @@ Mỗi lần chạy nối một mục: ngày, bệnh, nguồn, kết quả valida
 - Xác thực 58 tổ hợp lựa chọn và 14 luật chính. Năm phép hồi quy riêng về liều, độ tuổi và phạm vi nguồn đạt. Kiểm tra thực tế ở 390 px và 1440 px đạt, gồm đổi nguồn, chọn đường tĩnh mạch, phối hợp và các nhánh cần hội chẩn.
 - Trạng thái `draft_ai`, hàng đợi `drafted`. Chờ thẩm định chuyên môn theo quy trình của BV199.
 - Chọn tổ chức trước khi xem nội dung. Hiện trích dẫn của tổ chức và phiên bản đã chọn. IDSA/PIDS mở mục 2026 về biến chứng màng phổi và cho chuyển sang mục kháng sinh 2011 lưu trữ. Xác thực lại 59 tổ hợp và 15 luật chính.
+- Chuẩn hóa bảng theo cách trình bày của các module thuốc hiện có. Ghi riêng hàm lượng, cách dùng, tổng liệu trình và vị trí trích dẫn. Đối chiếu hàm lượng BV199 với dạng bào chế. Bổ sung lựa chọn hỗn dịch 4:1 và erythromycin trong thai kỳ theo NICE, điều kiện 3 ngày theo WHO và các nhánh tra cứu IDSA/PIDS 2011. Ghi chú về phê duyệt đặt ở cuối cùng với nguồn.
 
 ## 2026-11-14 – Sốt giảm bạch cầu trung tính (v8-113) và Sốt giảm bạch cầu trung tính nguy cơ cao (v8-116)
 - Nguồn: ECIL-10 – bộ slide khuyến cáo cuối cùng nhóm vi khuẩn (ECIL, 2025; https://ecil-leukaemia.com/images/ecil-10/ECIL_10_-_bacterial_group_final_recommendations.pdf), người lớn; IPFN 2023 (Lehrnbecher T và cs., J Clin Oncol 2023; https://doi.org/10.1200/JCO.22.02224), trẻ em.

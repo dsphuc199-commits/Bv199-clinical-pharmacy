@@ -67,6 +67,131 @@
       }
     },
     {
+      "id": "idsa_case",
+      "label": "Bệnh cảnh · tài liệu 2011",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "typical",
+          "label": "Ngoại trú · nghi vi khuẩn điển hình"
+        },
+        {
+          "id": "atypical",
+          "label": "Ngoại trú · nghi tác nhân không điển hình"
+        },
+        {
+          "id": "inpatient",
+          "label": "Nội trú · lựa chọn kinh nghiệm"
+        },
+        {
+          "id": "pneumo",
+          "label": "Nội trú · đã xác định phế cầu"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive"
+      }
+    },
+    {
+      "id": "idsa_age",
+      "label": "Tuổi theo Bảng 7",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tuổi"
+        },
+        {
+          "id": "under-five",
+          "label": "Trên 3 tháng đến dưới 5 tuổi"
+        },
+        {
+          "id": "five-plus",
+          "label": "Từ 5 tuổi"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": [
+          "typical",
+          "atypical"
+        ]
+      }
+    },
+    {
+      "id": "idsa_inpatient",
+      "label": "Nhóm người bệnh",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn nhóm"
+        },
+        {
+          "id": "standard",
+          "label": "Tiêm đủ Hib và phế cầu, đề kháng penicillin mức cao tại chỗ thấp"
+        },
+        {
+          "id": "broad",
+          "label": "Tiêm chưa đủ, đề kháng mức cao hoặc nhiễm khuẩn đe dọa tính mạng"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "inpatient"
+      }
+    },
+    {
+      "id": "idsa_suspect_staph",
+      "label": "Nghi thêm tụ cầu",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "inpatient",
+        "idsa_inpatient": [
+          "standard",
+          "broad"
+        ]
+      }
+    },
+    {
+      "id": "idsa_mic",
+      "label": "MIC penicillin của phế cầu",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chưa xác định hoặc ngoài hai ngưỡng"
+        },
+        {
+          "id": "low",
+          "label": "≤2 µg/mL"
+        },
+        {
+          "id": "high",
+          "label": "≥4 µg/mL"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "pneumo"
+      }
+    },
+    {
       "id": "nice_age",
       "label": "Tuổi",
       "type": "select",
@@ -90,7 +215,11 @@
         },
         {
           "id": "child",
-          "label": "6–11 tuổi"
+          "label": "6–7 tuổi"
+        },
+        {
+          "id": "child-older",
+          "label": "8–11 tuổi"
         },
         {
           "id": "teen",
@@ -118,15 +247,15 @@
         },
         {
           "id": "standard",
-          "label": "Không nặng, không biến chứng, không bệnh nền"
+          "label": "Không nặng · không biến chứng"
         },
         {
           "id": "alternative",
-          "label": "Không nặng, amoxicillin không phù hợp"
+          "label": "Không nặng · cần thuốc thay thế"
         },
         {
           "id": "severe",
-          "label": "Có dấu hiệu nặng, đã đánh giá tại bệnh viện"
+          "label": "Nặng · đã đánh giá tại viện"
         },
         {
           "id": "allergy",
@@ -144,9 +273,28 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ]
       }
+    },
+    {
+      "id": "nice_pregnant",
+      "label": "Thai kỳ đã xác nhận",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "source": "nice",
+        "nice_age": [
+          "child-older",
+          "teen"
+        ],
+        "nice_case": [
+          "alternative",
+          "severe"
+        ]
+      },
+      "tip": "Chỉ dùng lựa chọn thai kỳ trong phạm vi tuổi NICE nêu."
     },
     {
       "id": "nice_route",
@@ -185,7 +333,8 @@
           "oral",
           "iv"
         ]
-      }
+      },
+      "tip": "Chỉ phối hợp macrolid khi bác sĩ nghi tác nhân không điển hình."
     },
     {
       "id": "who_case",
@@ -212,7 +361,19 @@
       ],
       "visible_when": {
         "source": "who"
-      }
+      },
+      "tip": "Dấu nguy hiểm gồm không uống hoặc bú được, nôn mọi thứ, co giật, lừ đừ hoặc bất tỉnh, thở rít hoặc thiếu oxy."
+    },
+    {
+      "id": "who_low_hiv",
+      "label": "Bối cảnh lưu hành HIV thấp đã xác nhận",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "source": "who",
+        "who_case": "fast"
+      },
+      "tip": "WHO cho phép 3 ngày ở bối cảnh này khi trẻ chỉ thở nhanh và không có dấu nguy hiểm."
     }
   ],
   "sections": [
@@ -225,6 +386,12 @@
           "source_ids": [
             "nice250"
           ]
+        },
+        {
+          "text": "Liều cố định theo tuổi áp dụng cho trẻ có kích thước trung bình. Cân nhắc cân nặng, mức độ nặng, chức năng thận/gan và tính phù hợp của chế phẩm.",
+          "source_ids": [
+            "nice250"
+          ]
         }
       ],
       "show_when": {
@@ -234,6 +401,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": [
@@ -273,6 +441,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "unset"
@@ -345,6 +514,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "standard"
@@ -361,13 +531,13 @@
       ],
       "blocks": [
         {
-          "title": "Điều trị ban đầu",
+          "title": "Ưu tiên · amoxicillin uống",
           "items": [
             {
               "role": "Ưu tiên",
               "text": "Amoxicillin",
               "dose": "125 mg/liều, uống, mỗi 8 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2, §1.6.4–1.6.6",
               "show_when": {
                 "nice_age": [
                   "infant"
@@ -375,13 +545,15 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 250 mg/5 mL",
+              "administration": "2,5 mL/liều với đúng hỗn dịch 250 mg/5 mL."
             },
             {
               "role": "Ưu tiên",
               "text": "Amoxicillin",
               "dose": "250 mg/liều, uống, mỗi 8 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2, §1.6.4–1.6.6",
               "show_when": {
                 "nice_age": [
                   "young"
@@ -389,28 +561,33 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 250 mg/5 mL",
+              "administration": "5 mL/liều với đúng hỗn dịch 250 mg/5 mL."
             },
             {
               "role": "Ưu tiên",
               "text": "Amoxicillin",
               "dose": "500 mg/liều, uống, mỗi 8 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2, §1.6.4–1.6.6",
               "show_when": {
                 "nice_age": [
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
+              "administration": "10 mL/liều với đúng hỗn dịch 250 mg/5 mL."
             },
             {
               "role": "Ưu tiên",
               "text": "Amoxicillin",
               "dose": "500 mg/liều, uống, mỗi 8 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2, §1.6.4–1.6.6",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -418,9 +595,12 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
+              "administration": "10 mL/liều với đúng hỗn dịch 250 mg/5 mL."
             }
-          ]
+          ],
+          "lead": "Khi amoxicillin không phù hợp, chọn bệnh cảnh cần thuốc thay thế."
         }
       ],
       "notes": [
@@ -445,6 +625,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "alternative"
@@ -461,99 +642,114 @@
       ],
       "blocks": [
         {
-          "title": "Thay thế đường uống",
-          "lead": "Chọn một thuốc phù hợp. Hai dòng doxycycline là hai giai đoạn của một liệu trình. Tránh doxycycline trong thai kỳ. Nếu có thai, xem lựa chọn erythromycin theo NICE Bảng 2.",
+          "title": "Thay thế · chọn một kháng sinh",
+          "lead": "Clarithromycin hoặc doxycycline khi đủ điều kiện tuổi. Hai dòng doxycycline thuộc cùng một liệu trình 5 ngày.",
           "items": [
             {
               "role": "Thay thế",
               "text": "Clarithromycin · Dưới 8 kg",
               "dose": "7,5 mg/kg/liều, uống, mỗi 12 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "0,3 mL/kg/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Thay thế",
               "text": "Clarithromycin · 8–11 kg",
               "dose": "62,5 mg/liều, uống, mỗi 12 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "2,5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Thay thế",
               "text": "Clarithromycin · 12–19 kg",
               "dose": "125 mg/liều, uống, mỗi 12 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Thay thế",
               "text": "Clarithromycin · 20–29 kg",
               "dose": "187,5 mg/liều, uống, mỗi 12 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "7,5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Thay thế",
               "text": "Clarithromycin · 30–40 kg",
               "dose": "250 mg/liều, uống, mỗi 12 giờ, 3 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "10 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Thay thế",
               "text": "Clarithromycin",
               "dose": "250–500 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -561,13 +757,15 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · viên giải phóng thông thường 250 hoặc 500 mg",
+              "administration": "Chọn liều trong khoảng theo bác sĩ. Tránh dùng viên giải phóng biến đổi cho lịch 2 lần/ngày."
             },
             {
               "role": "Thay thế · ngày 1",
               "text": "Doxycycline",
               "dose": "200 mg/liều, uống, 1 liều",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -575,13 +773,16 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · viên nang 100 mg",
+              "administration": "2 viên 100 mg cho liều ngày 1.",
+              "course": "Ngày 1"
             },
             {
               "role": "Cùng liệu trình · ngày 2–5",
               "text": "Doxycycline",
               "dose": "100 mg/liều, uống, mỗi ngày, 4 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -589,20 +790,65 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · viên nang 100 mg",
+              "administration": "1 viên 100 mg mỗi lần, ngày 2 đến hết ngày 5.",
+              "course": "Ngày 2–5 · 4 ngày"
             }
-          ]
+          ],
+          "show_when": {
+            "nice_pregnant": false
+          }
+        },
+        {
+          "title": "Thay thế · thai kỳ",
+          "items": [
+            {
+              "role": "Thay thế",
+              "text": "Erythromycin",
+              "dose": "250–500 mg/liều, uống, mỗi 6 giờ, 3 ngày",
+              "ref": "NICE NG250 · Bảng 2",
+              "source_ids": [
+                "nice250"
+              ],
+              "preparation": "Danh mục BV199 · viên 500 mg",
+              "administration": "Chọn hàm lượng phù hợp với liều kê. Xác nhận dạng thuốc trước khi chia.",
+              "show_when": {
+                "nice_age": "child-older"
+              }
+            },
+            {
+              "role": "Thay thế",
+              "text": "Erythromycin",
+              "dose": "250–500 mg/liều, uống, mỗi 6 giờ, 5 ngày",
+              "ref": "NICE NG250 · Bảng 2",
+              "source_ids": [
+                "nice250"
+              ],
+              "preparation": "Danh mục BV199 · viên 500 mg",
+              "administration": "Chọn hàm lượng phù hợp với liều kê. Xác nhận dạng thuốc trước khi chia.",
+              "show_when": {
+                "nice_age": "teen"
+              }
+            }
+          ],
+          "lead": "Áp dụng khi thai kỳ đã xác nhận và cần thuốc thay thế theo NICE.",
+          "show_when": {
+            "nice_pregnant": true
+          }
         }
       ],
       "notes": [
         {
           "text": "Dùng đúng nhóm cân nặng ghi trong bảng clarithromycin. Nếu cân nặng nằm ngoài nhóm được nêu, đối chiếu hướng dẫn liều nhi khoa và hội chẩn dược lâm sàng.",
           "show_when": {
+            "nice_pregnant": false,
             "nice_age": [
               "infant",
               "young",
               "five",
-              "child"
+              "child",
+              "child-older"
             ]
           },
           "source_ids": [
@@ -630,6 +876,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "severe"
@@ -646,17 +893,17 @@
       ],
       "blocks": [
         {
-          "title": "Kháng sinh nền",
-          "lead": "Chọn liều theo đúng nồng độ hỗn dịch ghi trên nhãn. Bảng 2 của NICE làm tròn hàm lượng clavulanat thành 31 hoặc 62 mg trong 5 mL.",
+          "title": "Ưu tiên · amoxicillin/clavulanat uống",
+          "lead": "Chọn một liều theo tuổi và đúng nồng độ sau pha. Dạng gói tính bằng mg/gói cần kiểm tra riêng trước khi quy đổi sang mL.",
           "show_when": {
             "nice_route": "oral"
           },
           "items": [
             {
               "role": "Ưu tiên",
-              "text": "Amoxicillin/clavulanat · 125/31 mg trong 5 mL",
+              "text": "Amoxicillin/clavulanat",
               "dose": "0,5 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant"
@@ -664,13 +911,14 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "NICE · hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
             },
             {
               "role": "Ưu tiên",
-              "text": "Amoxicillin/clavulanat · 125/31 mg trong 5 mL",
+              "text": "Amoxicillin/clavulanat",
               "dose": "10 mL hoặc 0,5 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "young",
@@ -679,27 +927,47 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "NICE · hỗn dịch 125 mg amoxicillin + 31,25 mg clavulanat/5 mL"
+            },
+            {
+              "role": "Hàm lượng khác",
+              "text": "Amoxicillin/clavulanat",
+              "dose": "5 mL/liều, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "NICE NG250 · Bảng 2",
+              "source_ids": [
+                "nice250"
+              ],
+              "preparation": "NICE · hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL",
+              "show_when": {
+                "nice_age": [
+                  "young",
+                  "five"
+                ]
+              },
+              "administration": "Tương đương liều 10 mL của hỗn dịch 125/31,25 mg/5 mL. Chọn một hàm lượng."
             },
             {
               "role": "Ưu tiên",
-              "text": "Amoxicillin/clavulanat · 250/62 mg trong 5 mL",
+              "text": "Amoxicillin/clavulanat",
               "dose": "10 mL hoặc 0,3 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
-                  "child"
+                  "child",
+                  "child-older"
                 ]
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "NICE · hỗn dịch 250 mg amoxicillin + 62,5 mg clavulanat/5 mL"
             },
             {
               "role": "Ưu tiên",
               "text": "Amoxicillin/clavulanat",
               "dose": "500 mg/125 mg, uống, mỗi 8 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -707,13 +975,14 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · 500 mg amoxicillin + 125 mg clavulanat/đơn vị"
             }
           ]
         },
         {
-          "title": "Kháng sinh nền",
-          "lead": "Liều 30 mg/kg tương ứng 25 mg amoxicillin + 5 mg clavulanat/kg với chế phẩm tiêm tỷ lệ 5:1 (SmPC 1000/200 mg, mục 4.2). Tra cách pha và thời gian tiêm hoặc truyền theo chế phẩm BV199.",
+          "title": "Ưu tiên · amoxicillin/clavulanat tĩnh mạch",
+          "lead": "Liều tính trên tổng hai thành phần. Đánh giá đường tĩnh mạch trong 48 giờ và chuyển uống khi phù hợp.",
           "show_when": {
             "nice_route": "iv"
           },
@@ -722,10 +991,13 @@
               "role": "Ưu tiên",
               "text": "Amoxicillin/clavulanat",
               "dose": "30 mg/kg/liều (tổng hai thành phần), tối đa 1,2 g/liều, tĩnh mạch, mỗi 8 giờ",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2, §1.5.5 và §1.6.6",
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Lọ bột pha tiêm tỷ lệ 5:1 · 500 mg/100 mg hoặc 1.000 mg/200 mg.",
+              "administration": "30 mg/kg/liều = 25 mg amoxicillin + 5 mg clavulanat/kg. Tối đa 1.000 mg + 200 mg/liều. Trẻ dưới 4 kg hoặc suy thận cần đối chiếu nhãn. Claminat 1,2 g không phù hợp với liều dưới 1.000 mg + 200 mg.",
+              "course": "Tổng đợt 5 ngày nếu ổn định và vi sinh không đòi hỏi dài hơn"
             }
           ]
         },
@@ -737,104 +1009,120 @@
             "nice_route": [
               "oral",
               "iv"
-            ]
+            ],
+            "nice_pregnant": false
           },
           "items": [
             {
               "role": "Phối hợp",
               "text": "Clarithromycin · Dưới 8 kg",
               "dose": "7,5 mg/kg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "oral"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "0,3 mL/kg/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin · 8–11 kg",
               "dose": "62,5 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "oral"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "2,5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin · 12–19 kg",
               "dose": "125 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "oral"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin · 20–29 kg",
               "dose": "187,5 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "oral"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "7,5 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin · 30–40 kg",
               "dose": "250 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "oral"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 125 mg/5 mL",
+              "administration": "10 mL/liều với đúng hỗn dịch 125 mg/5 mL. Kiểm tra độ tuổi được phép trên nhãn chế phẩm."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin",
               "dose": "250–500 mg/liều, uống, mỗi 12 giờ, 5 ngày",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -843,31 +1131,37 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · viên giải phóng thông thường 250 hoặc 500 mg",
+              "administration": "Chọn liều trong khoảng theo bác sĩ. Tránh dùng viên giải phóng biến đổi cho lịch 2 lần/ngày."
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin",
               "dose": "7,5 mg/kg/liều, tối đa 500 mg/liều, tĩnh mạch, mỗi 12 giờ",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2 và §1.5.5, §1.6.6",
               "show_when": {
                 "nice_age": [
                   "infant",
                   "young",
                   "five",
-                  "child"
+                  "child",
+                  "child-older"
                 ],
                 "nice_route": "iv"
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Chế phẩm truyền tham chiếu 500 mg/lọ · chưa xác nhận tại BV199.",
+              "administration": "NICE nêu liều dưới 12 tuổi. Nhãn chế phẩm tham chiếu không khuyến cáo tuổi này. Xác nhận nhi khoa và dược lâm sàng trước khi dùng.",
+              "course": "Tổng đợt 5 ngày nếu ổn định và vi sinh không đòi hỏi dài hơn"
             },
             {
               "role": "Phối hợp",
               "text": "Clarithromycin",
               "dose": "500 mg/liều, tĩnh mạch, mỗi 12 giờ",
-              "ref": "Bảng 2",
+              "ref": "NICE NG250 · Bảng 2 và §1.5.5, §1.6.6",
               "show_when": {
                 "nice_age": [
                   "teen"
@@ -876,9 +1170,37 @@
               },
               "source_ids": [
                 "nice250"
-              ]
+              ],
+              "preparation": "Chế phẩm truyền tham chiếu 500 mg/lọ · chưa xác nhận tại BV199.",
+              "administration": "Xác nhận chế phẩm và cách pha truyền theo nhãn. Chế phẩm tham chiếu truyền 60 phút.",
+              "course": "Tổng đợt 5 ngày nếu ổn định và vi sinh không đòi hỏi dài hơn"
             }
           ]
+        },
+        {
+          "title": "Phối hợp · thai kỳ và nghi tác nhân không điển hình",
+          "items": [
+            {
+              "role": "Phối hợp",
+              "text": "Erythromycin",
+              "dose": "250–500 mg/liều, uống, mỗi 6 giờ, 5 ngày",
+              "ref": "NICE NG250 · Bảng 2",
+              "source_ids": [
+                "nice250"
+              ],
+              "preparation": "Danh mục BV199 · viên 500 mg",
+              "administration": "Đường uống. Nếu trẻ không uống được, hội chẩn để xác định lựa chọn phù hợp."
+            }
+          ],
+          "lead": "Phối hợp cùng kháng sinh nền khi có chỉ định.",
+          "show_when": {
+            "nice_atypical": true,
+            "nice_route": [
+              "oral",
+              "iv"
+            ],
+            "nice_pregnant": true
+          }
         }
       ],
       "notes": [
@@ -915,11 +1237,13 @@
         {
           "text": "Dùng đúng nhóm cân nặng của clarithromycin uống. Nếu ngoài nhóm được liệt kê, đối chiếu hướng dẫn liều nhi khoa.",
           "show_when": {
+            "nice_pregnant": false,
             "nice_age": [
               "infant",
               "young",
               "five",
-              "child"
+              "child",
+              "child-older"
             ],
             "nice_atypical": true,
             "nice_route": "oral"
@@ -943,6 +1267,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "allergy"
@@ -969,6 +1294,7 @@
           "young",
           "five",
           "child",
+          "child-older",
           "teen"
         ],
         "nice_case": "urgent"
@@ -1023,7 +1349,7 @@
       ],
       "blocks": [
         {
-          "title": "Kháng sinh uống",
+          "title": "Ưu tiên · amoxicillin uống",
           "items": [
             {
               "role": "Ưu tiên",
@@ -1033,14 +1359,35 @@
               "ref": "Khuyến cáo 1, Remarks",
               "source_ids": [
                 "who2024"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 250 mg/5 mL",
+              "administration": "Tại mốc 40 mg/kg/liều, tương đương 0,8 mL/kg/liều nếu đúng 250 mg/5 mL.",
+              "show_when": {
+                "who_low_hiv": false
+              }
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "40 mg/kg/liều (liều tối thiểu), uống, mỗi 12 giờ, 3 ngày",
+              "grade": "S-M",
+              "ref": "Khuyến cáo 1, Remarks",
+              "source_ids": [
+                "who2024"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 250 mg/5 mL",
+              "administration": "Tại mốc 40 mg/kg/liều, tương đương 0,8 mL/kg/liều nếu đúng 250 mg/5 mL.",
+              "show_when": {
+                "who_low_hiv": true
+              }
             }
-          ]
+          ],
+          "lead": "WHO không chỉ định một thuốc thay thế trong khuyến cáo này. Nếu dị ứng amoxicillin, chọn theo phác đồ tại cơ sở."
         }
       ],
       "notes": [
         {
-          "text": "WHO cho phép 3 ngày tại bối cảnh có tỷ lệ lưu hành HIV thấp. Áp dụng thời gian theo bối cảnh được chương trình điều trị xác nhận.",
+          "text": "Phương án 3 ngày chỉ áp dụng cho trẻ chỉ thở nhanh, không rút lõm ngực, không dấu nguy hiểm ở bối cảnh có tỷ lệ lưu hành HIV thấp.",
           "source_ids": [
             "who2024"
           ]
@@ -1069,7 +1416,7 @@
       ],
       "blocks": [
         {
-          "title": "Kháng sinh uống",
+          "title": "Ưu tiên · amoxicillin uống",
           "items": [
             {
               "role": "Ưu tiên",
@@ -1079,9 +1426,12 @@
               "ref": "Khuyến cáo 2a, Remarks",
               "source_ids": [
                 "who2024"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 250 mg/5 mL",
+              "administration": "Tại mốc 40 mg/kg/liều, tương đương 0,8 mL/kg/liều nếu đúng 250 mg/5 mL."
             }
-          ]
+          ],
+          "lead": "WHO không chỉ định một thuốc thay thế trong khuyến cáo này. Nếu dị ứng amoxicillin, chọn theo phác đồ tại cơ sở."
         }
       ],
       "notes": [
@@ -1207,59 +1557,516 @@
       "kind": "primary",
       "when": {
         "source": "idsa",
-        "idsa_version": "archive"
+        "idsa_version": "archive",
+        "idsa_case": "unset"
       },
       "summary": [
         {
-          "label": "Nguồn lưu trữ",
-          "text": "IDSA ghi hướng dẫn năm 2011 đã ngừng hoạt động. Các liều dưới đây trích từ Bảng 7 để đối chiếu tài liệu lưu trữ."
+          "label": "Tài liệu lưu trữ",
+          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+        },
+        {
+          "label": "Tra cứu",
+          "text": "Chọn bệnh cảnh để xem thuốc ưu tiên, thay thế và liều ghi trong tài liệu 2011."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "pids2011"
+      ]
+    },
+    {
+      "id": "pids-outpatient-typical",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "typical"
+      },
+      "summary": [
+        {
+          "label": "Tài liệu lưu trữ",
+          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+        },
+        {
+          "label": "Áp dụng",
+          "text": "CAP nhẹ đến vừa nghi vi khuẩn ở trẻ vốn khỏe mạnh, đã tiêm chủng phù hợp."
+        },
+        {
+          "label": "Thời gian theo KC 54",
+          "text": "Tài liệu 2011 ghi 10 ngày là thời gian được nghiên cứu nhiều nhất. Có thể ngắn hơn ở CAP nhẹ ngoại trú."
         }
       ],
       "blocks": [
         {
-          "title": "Liều trong bảng năm 2011",
-          "lead": "Bảng 7 ghi mức tối đa 4 g/ngày cho nhóm từ 5 tuổi.",
+          "title": "Điều trị kinh nghiệm · chọn một",
           "items": [
             {
-              "role": "Ngoại trú nghi vi khuẩn điển hình",
-              "text": "Amoxicillin · trẻ dưới 5 tuổi",
-              "dose": "90 mg/kg/ngày, uống, chia 2 lần",
-              "ref": "Bảng 7, PDF trang 10",
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "45 mg/kg/liều (90 mg/kg/ngày), uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
               "source_ids": [
                 "pids2011"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
+              "show_when": {
+                "idsa_age": "under-five"
+              }
             },
             {
-              "role": "Ngoại trú nghi vi khuẩn điển hình",
-              "text": "Amoxicillin · trẻ từ 5 tuổi",
-              "dose": "90 mg/kg/ngày, tối đa 4 g/ngày, uống, chia 2 lần",
-              "ref": "Bảng 7, PDF trang 10",
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "45 mg/kg/liều (90 mg/kg/ngày), tối đa 4 g/ngày, uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
               "source_ids": [
                 "pids2011"
-              ]
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
             },
             {
-              "role": "Nghi tác nhân không điển hình · ngày 1",
-              "text": "Azithromycin · trẻ từ 5 tuổi",
+              "role": "Thay thế",
+              "text": "Amoxicillin/clavulanat",
+              "dose": "45 mg/kg/liều (tính theo amoxicillin), uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Liều tính theo amoxicillin. Chọn tỷ lệ amoxicillin/clavulanat và dạng uống phù hợp theo nhãn.",
+              "show_when": {
+                "idsa_age": "under-five"
+              }
+            },
+            {
+              "role": "Thay thế",
+              "text": "Amoxicillin/clavulanat",
+              "dose": "45 mg/kg/liều (tính theo amoxicillin), tối đa 4 g/ngày, uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Liều tính theo amoxicillin. Chọn tỷ lệ amoxicillin/clavulanat và dạng uống phù hợp theo nhãn.",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
+            }
+          ],
+          "lead": "Bảng 7 nêu tối đa 4 g amoxicillin/ngày ở nhóm từ 5 tuổi.",
+          "show_when": {
+            "idsa_age": [
+              "under-five",
+              "five-plus"
+            ]
+          }
+        }
+      ],
+      "notes": [
+        {
+          "text": "Chọn tuổi để xem các dòng phù hợp.",
+          "source_ids": [
+            "pids2011"
+          ],
+          "show_when": {
+            "idsa_age": "unset"
+          }
+        },
+        {
+          "text": "Theo KC 56, đánh giá lại nếu không cải thiện trong 48–72 giờ.",
+          "source_ids": [
+            "pids2011"
+          ]
+        }
+      ],
+      "source_ids": [
+        "pids2011"
+      ]
+    },
+    {
+      "id": "pids-outpatient-atypical",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "atypical"
+      },
+      "summary": [
+        {
+          "label": "Tài liệu lưu trữ",
+          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+        },
+        {
+          "label": "Áp dụng",
+          "text": "Nghi tác nhân không điển hình, chủ yếu ở trẻ tuổi đi học và vị thành niên theo KC 44."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ưu tiên · azithromycin trong 5 ngày",
+          "items": [
+            {
+              "role": "Ngày 1",
+              "text": "Azithromycin",
+              "dose": "10 mg/kg/liều, uống, 1 liều",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 200 mg/5 mL; viên 250 hoặc 500 mg",
+              "course": "Ngày 1",
+              "show_when": {
+                "idsa_age": "under-five"
+              }
+            },
+            {
+              "role": "Ngày 2–5",
+              "text": "Azithromycin",
+              "dose": "5 mg/kg/liều, uống, mỗi ngày, 4 ngày",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 200 mg/5 mL; viên 250 hoặc 500 mg",
+              "show_when": {
+                "idsa_age": "under-five"
+              }
+            },
+            {
+              "role": "Ngày 1",
+              "text": "Azithromycin",
               "dose": "10 mg/kg/liều, tối đa 500 mg/liều, uống, 1 liều",
-              "ref": "Bảng 7, PDF trang 10",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 200 mg/5 mL; viên 250 hoặc 500 mg",
+              "course": "Ngày 1",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
+            },
+            {
+              "role": "Ngày 2–5",
+              "text": "Azithromycin",
+              "dose": "5 mg/kg/liều, tối đa 250 mg/liều, uống, mỗi ngày, 4 ngày",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch uống 200 mg/5 mL; viên 250 hoặc 500 mg",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
+            }
+          ],
+          "lead": "Hai dòng kế tiếp là cùng một liệu trình.",
+          "show_when": {
+            "idsa_age": [
+              "under-five",
+              "five-plus"
+            ]
+          }
+        },
+        {
+          "title": "Thay thế · chọn một",
+          "items": [
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin",
+              "dose": "7,5 mg/kg/liều (15 mg/kg/ngày), uống, mỗi 12 giờ, 7–14 ngày",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 125 mg/5 mL; viên 250 hoặc 500 mg giải phóng thông thường",
+              "show_when": {
+                "idsa_age": "under-five"
+              }
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin",
+              "dose": "7,5 mg/kg/liều (15 mg/kg/ngày), tối đa 1 g/ngày, uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · hỗn dịch 125 mg/5 mL; viên 250 hoặc 500 mg giải phóng thông thường",
+              "course": "Dòng tuổi này của Bảng 7 không ghi số ngày",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
+            },
+            {
+              "role": "Thay thế",
+              "text": "Erythromycin",
+              "dose": "10 mg/kg/liều (40 mg/kg/ngày), uống, mỗi 6 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · viên 500 mg",
+              "course": "Bảng 7 không ghi số ngày"
+            },
+            {
+              "role": "Thay thế · chỉ trên 7 tuổi",
+              "text": "Doxycycline",
+              "dose": "1–2 mg/kg/liều (2–4 mg/kg/ngày), uống, mỗi 12 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8 và Bảng 7",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · viên nang 100 mg",
+              "course": "Bảng 7 không ghi số ngày",
+              "show_when": {
+                "idsa_age": "five-plus"
+              }
+            }
+          ],
+          "lead": "Áp dụng đúng tuổi của từng thuốc theo tài liệu lưu trữ.",
+          "show_when": {
+            "idsa_age": [
+              "under-five",
+              "five-plus"
+            ]
+          }
+        }
+      ],
+      "notes": [
+        {
+          "text": "Chọn tuổi để xem các dòng phù hợp.",
+          "source_ids": [
+            "pids2011"
+          ],
+          "show_when": {
+            "idsa_age": "unset"
+          }
+        },
+        {
+          "text": "Từ 5 tuổi, nếu chưa phân biệt được điển hình và không điển hình, Bảng 7 cho phép thêm macrolid vào beta-lactam.",
+          "source_ids": [
+            "pids2011"
+          ],
+          "show_when": {
+            "idsa_age": "five-plus"
+          }
+        }
+      ],
+      "source_ids": [
+        "pids2011"
+      ]
+    },
+    {
+      "id": "pids-inpatient-empirical",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "inpatient"
+      },
+      "summary": [
+        {
+          "label": "Tài liệu lưu trữ",
+          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+        },
+        {
+          "label": "Phạm vi",
+          "text": "Bảng 7 và KC 46–49 nêu cách chọn thuốc kinh nghiệm. Để tra liều tĩnh mạch theo phế cầu, chọn bệnh cảnh đã xác định phế cầu."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ưu tiên · chọn một",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ampicillin hoặc benzylpenicillin natri (penicillin G)",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 46",
               "source_ids": [
                 "pids2011"
               ]
             },
             {
-              "role": "Cùng liệu trình · ngày 2–5",
-              "text": "Azithromycin · trẻ từ 5 tuổi",
-              "dose": "5 mg/kg/liều, tối đa 250 mg/liều, uống, mỗi ngày, 4 ngày",
-              "ref": "Bảng 7, PDF trang 10",
+              "role": "Thay thế",
+              "text": "Ceftriaxone hoặc cefotaxime",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 46",
               "source_ids": [
                 "pids2011"
               ]
             }
-          ]
+          ],
+          "show_when": {
+            "idsa_inpatient": "standard"
+          }
+        },
+        {
+          "title": "Ưu tiên · chọn một",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftriaxone hoặc cefotaxime",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 47",
+              "source_ids": [
+                "pids2011"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Levofloxacin · lựa chọn lưu trữ, cần đánh giá chuyên khoa",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 47",
+              "source_ids": [
+                "pids2011"
+              ]
+            }
+          ],
+          "show_when": {
+            "idsa_inpatient": "broad"
+          }
+        },
+        {
+          "title": "Phối hợp nếu nghi tụ cầu",
+          "items": [
+            {
+              "role": "Phối hợp · chọn một",
+              "text": "Vancomycin hoặc clindamycin. Chọn theo độ nhạy tại chỗ và xác định liều theo phác đồ chuyên khoa.",
+              "ref": "PIDS/IDSA 2011 · Bảng 7, PDF tr. 10 và KC 49",
+              "source_ids": [
+                "pids2011"
+              ]
+            }
+          ],
+          "lead": "Thêm vào kháng sinh nền khi nghi tụ cầu. Dùng TDM phù hợp nếu chọn vancomycin.",
+          "show_when": {
+            "idsa_suspect_staph": true
+          }
         }
       ],
-      "notes": [],
+      "notes": [
+        {
+          "text": "Nếu nghi tác nhân không điển hình là đáng kể, KC 48 cho phép thêm macrolid vào beta-lactam.",
+          "source_ids": [
+            "pids2011"
+          ],
+          "show_when": {
+            "idsa_inpatient": [
+              "standard",
+              "broad"
+            ]
+          }
+        }
+      ],
+      "source_ids": [
+        "pids2011"
+      ]
+    },
+    {
+      "id": "pids-inpatient-pneumo",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "pneumo"
+      },
+      "summary": [
+        {
+          "label": "Tài liệu lưu trữ",
+          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+        },
+        {
+          "label": "Áp dụng",
+          "text": "Liều điều trị đích theo phế cầu và MIC penicillin từ Bảng 5. Chọn đúng nhóm vi sinh."
+        },
+        {
+          "label": "Thời gian",
+          "text": "Bảng 5 ghi liều theo tác nhân. Thời gian tùy đáp ứng và biến chứng."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Phế cầu MIC penicillin ≤2 µg/mL",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ampicillin",
+              "dose": "37,5–50 mg/kg/liều (150–200 mg/kg/ngày), tĩnh mạch, mỗi 6 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · lọ 1 g"
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Benzylpenicillin natri (penicillin G)",
+              "dose": "200.000–250.000 đơn vị/kg/ngày, tĩnh mạch, mỗi 4–6 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · lọ 1.000.000 IU",
+              "administration": "Tổng liều ngày, chia theo khoảng cách ghi trong bảng."
+            },
+            {
+              "role": "Thay thế",
+              "text": "Ceftriaxone",
+              "dose": "50–100 mg/kg/ngày, tĩnh mạch, mỗi 12–24 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · lọ 1 g hoặc 2 g",
+              "administration": "Tổng liều ngày, chia theo lịch đã chọn."
+            },
+            {
+              "role": "Thay thế",
+              "text": "Cefotaxime",
+              "dose": "50 mg/kg/liều (150 mg/kg/ngày), tĩnh mạch, mỗi 8 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · lọ 1 g hoặc 2 g"
+            }
+          ],
+          "lead": "Chọn một kháng sinh theo kết quả vi sinh.",
+          "show_when": {
+            "idsa_mic": "low"
+          }
+        },
+        {
+          "title": "Phế cầu MIC penicillin ≥4 µg/mL",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ceftriaxone",
+              "dose": "100 mg/kg/ngày, tĩnh mạch, mỗi 12–24 giờ",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, PDF tr. 7–8",
+              "source_ids": [
+                "pids2011"
+              ],
+              "preparation": "Danh mục BV199 · lọ 1 g hoặc 2 g",
+              "administration": "Tổng liều ngày, chia theo lịch đã chọn. Kiểm tra độ nhạy với ceftriaxone."
+            }
+          ],
+          "show_when": {
+            "idsa_mic": "high"
+          }
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu MIC chưa rõ hoặc ngoài hai ngưỡng, dùng kết quả vi sinh và hội chẩn để chọn thuốc.",
+          "source_ids": [
+            "pids2011"
+          ],
+          "show_when": {
+            "idsa_mic": "unset"
+          }
+        }
+      ],
       "source_ids": [
         "pids2011"
       ]
@@ -1269,7 +2076,11 @@
   "gaps": [
     "Mô-đun NICE trình bày liều cho trẻ từ 3 tháng đến 17 tuổi. Trẻ dưới 3 tháng, trẻ có bệnh nền hoặc đợt CAP có biến chứng cần đánh giá theo quy trình phù hợp.",
     "Chưa xây bảng liều cá thể hóa ở suy thận, suy gan, hoặc liều ngoài các nhóm cân nặng của NICE.",
-    "Đối chiếu quy đổi amoxicillin/clavulanat tiêm 5:1 với SmPC mục 4.2 (https://www.medicines.org.uk/emc/product/8753/smpc)."
+    "Đối chiếu quy đổi amoxicillin/clavulanat tiêm 5:1 với SmPC mục 4.2 (https://www.medicines.org.uk/emc/product/8753/smpc).",
+    "Dạng và hàm lượng BV199 lấy từ chỉ mục bv199-formulary-antimicrobials.json. Cần đối chiếu nhãn chế phẩm và tình trạng có thuốc.",
+    "Đối chiếu dạng hỗn dịch 4:1 với https://www.medicines.org.uk/emc/product/278/smpc và https://www.medicines.org.uk/emc/product/279/smpc. Dạng gói không đủ xác nhận nồng độ sau pha.",
+    "Claminat 1,2 g, hướng dẫn sử dụng Imexpharm, mục Liều lượng và cách dùng: https://www.imexpharm.com/Data/Sites/1/media/content/Claminat-12-g-TBPT-1.pdf.",
+    "Clarithromycin IV tham chiếu nhãn https://www.medicines.org.uk/emc/product/9235/smpc, mục 4.1, 4.2 và 6.6."
   ],
   "discordance": [
     {
@@ -1331,7 +2142,7 @@
       "org": "PIDS/IDSA",
       "title": "Management of CAP in infants and children older than 3 months of age",
       "year": 2011,
-      "version": "Lưu trữ · DOI 10.1093/cid/cir531 · Bảng 7",
+      "version": "Lưu trữ · DOI 10.1093/cid/cir531 · Bảng 5, Bảng 7 và khuyến cáo 44–56",
       "url": "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-infants-and-children/",
       "accessed": "2026-11-19",
       "population": [

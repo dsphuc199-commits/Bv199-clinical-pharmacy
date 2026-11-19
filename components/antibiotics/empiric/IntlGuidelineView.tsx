@@ -118,6 +118,7 @@ function References({ g, sources, isolated }: { g: IntlGuideline; sources: IntlG
         sources={isolated ? [] : sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
         notes={[
           ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
+          ...(isolated ? ["Hàm lượng ghi theo nguồn hoặc danh mục tra cứu BV199. Đối chiếu nhãn và tình trạng có thuốc tại nơi cấp."] : []),
           "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
         ]}
       />
@@ -137,7 +138,7 @@ function ReviewBadge({ g }: { g: IntlGuideline }) {
   return <div className="igv-verified" role="note"><b>{REVIEW_TEXT[g.review.state]}</b><span>{g.review.verified_by} · {g.review.verified_date}</span></div>;
 }
 
-function Body({ g, sourceAxis }: { g: IntlGuideline; sourceAxis?: string }) {
+function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: string; clinical: boolean }) {
   const [raw, setRaw] = useState<AxisState>(() => defaultState(g.axes));
   const eff = useMemo(() => effectiveState(g.axes, raw), [g.axes, raw]);
   const r = useMemo(() => resolve(g, eff), [g, eff]);
@@ -173,7 +174,7 @@ function Body({ g, sourceAxis }: { g: IntlGuideline; sourceAxis?: string }) {
               <div key={`${b.title}-${i}`}>
                 <h4>{b.title}</h4>
                 {b.lead && <p className="sa24-lead">{b.lead}</p>}
-                <Rx items={b.items} />
+                <Rx items={b.items} showReferences={clinical} />
               </div>
             ))}
             {r.avoid.length > 0 && (<><h4>Không dùng</h4><Rx items={r.avoid} /></>)}
@@ -187,7 +188,7 @@ function Body({ g, sourceAxis }: { g: IntlGuideline; sourceAxis?: string }) {
   );
 }
 
-export default function IntlGuidelineView({ data, sourceAxis }: { data: unknown; sourceAxis?: string }) {
+export default function IntlGuidelineView({ data, sourceAxis, clinical = false }: { data: unknown; sourceAxis?: string; clinical?: boolean }) {
   const parsed = useMemo(() => intlGuideline.safeParse(data), [data]);
   if (!parsed.success)
     return (
@@ -200,17 +201,17 @@ export default function IntlGuidelineView({ data, sourceAxis }: { data: unknown;
   const hidden = g.review.state === "draft_ai" && !SHOW_DRAFT;
   return (
     <article className="sa24 igv" data-intl-guideline={g.slug} data-review={g.review.state}>
-      <header>
+      {!clinical && <header>
         <p className="sa24-eyebrow">{g.header.eyebrow}</p>
         <h3>{g.header.title}</h3>
         <ol className="sa24-flow" aria-label="Trình tự lựa chọn">{g.header.flow.map((f) => <li key={f}>{f}</li>)}</ol>
-      </header>
+      </header>}
       {hidden ? (
         <p className="sa24-warn" data-intl-pending="">Đang chờ thẩm định.</p>
       ) : (
         <>
-          <ReviewBadge g={g} />
-          <Body g={g} sourceAxis={sourceAxis} />
+          {(!clinical || g.review.state !== "draft_ai") && <ReviewBadge g={g} />}
+          <Body g={g} sourceAxis={sourceAxis} clinical={clinical} />
         </>
       )}
       <RxToolStyle />

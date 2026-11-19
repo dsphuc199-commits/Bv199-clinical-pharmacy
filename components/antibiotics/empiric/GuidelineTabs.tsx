@@ -169,7 +169,10 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-33") return <section className="bv199-panel gt199"><SepticArthritisSeimc2024 /><GtStyle /></section>;
   /* JSON huong dan quoc te (data/guidelines/intl, lenh /guideline-live): xep sau cong cu viet tay; khong ap cho mat benh co module rieng. */
   const intlJson = INTL_GUIDELINE_JSON[diseaseId];
-  if (intlJson && !getIntlEntry(diseaseId)?.module) return <section className="bv199-panel gt199"><IntlGuidelineView key={diseaseId} data={intlJson} sourceAxis={diseaseId === "v8-101" ? "source" : undefined} /><GtStyle /></section>;
+  if (intlJson && !getIntlEntry(diseaseId)?.module) {
+    const pediatricCap = diseaseId === "v8-101";
+    return <section className="bv199-panel gt199"><IntlGuidelineView key={diseaseId} data={intlJson} sourceAxis={pediatricCap ? "source" : undefined} clinical={pediatricCap} /><GtStyle /></section>;
+  }
   const entry = getIntlEntry(diseaseId);
 
   if (!entry) {

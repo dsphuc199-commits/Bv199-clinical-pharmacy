@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import type { RxItem } from "./septic-arthritis-pids2023";
 import { parseDose } from "./rx-dose-parts";
 
-type Item = RxItem;
+type Item = RxItem & { preparation?: string; administration?: string; course?: string };
 export const ALG = "Dị ứng beta-lactam";
 export const PREF = "Ưu tiên";
 export const ALT = "Thay thế";
@@ -46,14 +46,14 @@ export function Grade({ g }: { g?: string }) {
   if (m) return <span className={`sa24-g ${m[1] === "S" ? "sa24-g-a" : "sa24-g-c"}`} title="Sức mạnh khuyến cáo · độ tin cậy bằng chứng (GRADE)">{m[1] === "S" ? "Mạnh" : m[1] === "W" ? "Yếu" : "Có ĐK"} · {CERT[m[2]]}</span>;
   return <span className={`sa24-g sa24-g-${g[0].toLowerCase()}`} title="Mức khuyến cáo – chất lượng bằng chứng">{g}</span>;
 }
-export function Rx({ items }: { items: Item[] }) {
+export function Rx({ items, showReferences = false }: { items: Item[]; showReferences?: boolean }) {
   if (!items.length) return null;
   const hasDose = items.some((i) => i.dose);
   const hasGrade = items.some((i) => i.grade);
   const parts = items.map((i) => (i.dose ? parseDose(i.dose) : null));
   const showRoute = parts.some((p) => p?.route);
   const showFreq = parts.some((p) => p?.freq);
-  const showDuration = parts.some((p) => p?.duration);
+  const showDuration = items.some((item, index) => item.course || parts[index]?.duration);
   /* So cot danh cho cach dung: lieu + cac cot co du lieu. */
   const useSpan = 1 + Number(showRoute) + Number(showFreq) + Number(showDuration);
   return (
@@ -78,15 +78,21 @@ export function Rx({ items }: { items: Item[] }) {
             <tr key={it.role + it.text + i} className={it.al === "alt" || it.role.startsWith(ALG) || it.role.startsWith("Không dùng được beta") ? "is-alg" : it.role === PREF ? "is-pref" : undefined}>
               <th scope="row">{it.role}</th>
               {/* Dong khong co lieu (nguyen tac, ghi chu): noi dung trai het cac cot cach dung. */}
-              <td className={hasDose && !it.dose ? "sa24-note" : "sa24-drug"} colSpan={hasDose && !it.dose ? 1 + useSpan : undefined}>{it.text}</td>
+              <td className={hasDose && !it.dose ? "sa24-note" : "sa24-drug"} colSpan={hasDose && !it.dose ? 1 + useSpan : undefined}>
+                {it.text}
+                {it.preparation && <span className="sa24-rx-detail">{it.preparation}</span>}
+                {showReferences && <span className="sa24-rx-ref">{it.ref}</span>}
+              </td>
               {it.dose && p && <>
-                <td className="sa24-dose" data-label="Liều">{p.dose}</td>
+                <td className="sa24-dose" data-label="Liều"><span>{p.dose}{it.administration && <span className="sa24-rx-detail">{it.administration}</span>}</span></td>
                 {showRoute && <td className="sa24-dose" data-label="Đường dùng">{p.route ?? ""}</td>}
                 {showFreq && <td className="sa24-dose" data-label="Số lần dùng">{p.freq ?? ""}</td>}
-                {showDuration && <td className="sa24-dose" data-label="Thời gian">{p.duration ?? ""}</td>}
+                {showDuration && <td className="sa24-dose" data-label="Thời gian">{it.course ?? p.duration ?? ""}</td>}
               </>}
               {/* Cau lieu khong tach chac chan duoc: giu nguyen trong mot o. */}
-              {it.dose && !p && <td className="sa24-dose" data-label="Cách dùng" data-whole="" colSpan={useSpan}>{it.dose}</td>}
+              {it.dose && !p && <td className="sa24-dose" data-label="Cách dùng" data-whole="" colSpan={useSpan}>
+                <span>{it.dose}{it.administration && <span className="sa24-rx-detail">{it.administration}</span>}{it.course && <span className="sa24-rx-detail">{it.course}</span>}</span>
+              </td>}
               {(hasGrade || !hasDose) && <td className="sa24-gc"><Grade g={it.grade} /></td>}
             </tr>
           );
@@ -166,6 +172,8 @@ export function RxToolStyle() {
         .sa24-rx.has-dose .sa24-drug { width: 21%; font-weight: 700; color: #0f2236; }
         .sa24-rx .sa24-note { font-size: 13px; color: #33505f; }
         .sa24-rx .sa24-dose { font-size: 13.5px; color: #10243e; }
+        .sa24-rx-detail, .sa24-rx-ref { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; line-height: 1.45; color: #405b71; overflow-wrap: anywhere; }
+        .sa24-rx-ref { font-size: 11.5px; color: #516d80; }
         .sa24-rx .sa24-gc { width: 112px; text-align: right; white-space: nowrap; }
         .sa24-rx tr.is-pref th { color: #0b6b3a; }
         .sa24-rx tr.is-alg { background: #fff8f1; }
