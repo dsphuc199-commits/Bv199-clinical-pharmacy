@@ -44,4 +44,4 @@ next-env.d.ts
 .env*
 
 # tai lieu nguon module ENT (khong commit)
-guidelines/
+/guidelines/

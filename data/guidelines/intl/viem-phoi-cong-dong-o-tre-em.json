@@ -1,0 +1,1350 @@
+{
+  "schema_version": 1,
+  "slug": "viem-phoi-cong-dong-o-tre-em",
+  "disease_id": "v8-101",
+  "name_vi": "Viêm phổi cộng đồng ở trẻ em",
+  "name_en": "Community-acquired pneumonia in children",
+  "icd10": [
+    "J13",
+    "J14",
+    "J15",
+    "J18"
+  ],
+  "population": [
+    "child"
+  ],
+  "status": "extracted",
+  "header": {
+    "eyebrow": "Lựa chọn kháng sinh theo chẩn đoán",
+    "title": "Viêm phổi cộng đồng ở trẻ em",
+    "flow": [
+      "Chọn tổ chức",
+      "Chọn phiên bản hoặc bệnh cảnh"
+    ]
+  },
+  "axes": [
+    {
+      "id": "source",
+      "label": "Tổ chức ban hành",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tổ chức"
+        },
+        {
+          "id": "idsa",
+          "label": "IDSA/PIDS"
+        },
+        {
+          "id": "nice",
+          "label": "NICE NG250"
+        },
+        {
+          "id": "who",
+          "label": "WHO 2024"
+        }
+      ]
+    },
+    {
+      "id": "idsa_version",
+      "label": "Phiên bản IDSA/PIDS",
+      "type": "seg",
+      "default": "effusion",
+      "options": [
+        {
+          "id": "effusion",
+          "label": "2026 · Biến chứng màng phổi"
+        },
+        {
+          "id": "archive",
+          "label": "2011 · Kháng sinh (lưu trữ)"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa"
+      }
+    },
+    {
+      "id": "nice_age",
+      "label": "Tuổi",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tuổi"
+        },
+        {
+          "id": "infant",
+          "label": "3–11 tháng"
+        },
+        {
+          "id": "young",
+          "label": "1–4 tuổi"
+        },
+        {
+          "id": "five",
+          "label": "5 tuổi"
+        },
+        {
+          "id": "child",
+          "label": "6–11 tuổi"
+        },
+        {
+          "id": "teen",
+          "label": "12–17 tuổi"
+        },
+        {
+          "id": "outside",
+          "label": "Dưới 3 tháng / từ 18 tuổi"
+        }
+      ],
+      "visible_when": {
+        "source": "nice"
+      },
+      "tip": "Với trẻ sinh non, xác nhận đã đủ 3 tháng tuổi hiệu chỉnh trước khi áp dụng nhánh 3 ngày."
+    },
+    {
+      "id": "nice_case",
+      "label": "Bệnh cảnh",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "standard",
+          "label": "Không nặng, không biến chứng, không bệnh nền"
+        },
+        {
+          "id": "alternative",
+          "label": "Không nặng, amoxicillin không phù hợp"
+        },
+        {
+          "id": "severe",
+          "label": "Có dấu hiệu nặng, đã đánh giá tại bệnh viện"
+        },
+        {
+          "id": "allergy",
+          "label": "Có dấu hiệu nặng, dị ứng penicillin"
+        },
+        {
+          "id": "urgent",
+          "label": "Nghi sepsis, biến chứng hoặc cần đánh giá ngay"
+        }
+      ],
+      "visible_when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ]
+      }
+    },
+    {
+      "id": "nice_route",
+      "label": "Đường dùng",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn đường dùng"
+        },
+        {
+          "id": "oral",
+          "label": "Uống"
+        },
+        {
+          "id": "iv",
+          "label": "Tĩnh mạch"
+        }
+      ],
+      "visible_when": {
+        "source": "nice",
+        "nice_case": "severe"
+      },
+      "tip": "Chọn uống khi trẻ uống được và mức độ nặng chưa đòi hỏi dùng tĩnh mạch. Đánh giá lại thuốc tĩnh mạch trong 48 giờ."
+    },
+    {
+      "id": "nice_atypical",
+      "label": "Nghi tác nhân không điển hình",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "source": "nice",
+        "nice_case": "severe",
+        "nice_route": [
+          "oral",
+          "iv"
+        ]
+      }
+    },
+    {
+      "id": "who_case",
+      "label": "Trẻ 2–59 tháng",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "fast",
+          "label": "Chỉ thở nhanh, không rút lõm ngực, không dấu nguy hiểm"
+        },
+        {
+          "id": "indrawing",
+          "label": "Rút lõm lồng ngực, có thể thở nhanh, không dấu nguy hiểm"
+        },
+        {
+          "id": "other",
+          "label": "Có dấu nguy hiểm, thiếu oxy hoặc ngoài nhóm tuổi"
+        }
+      ],
+      "visible_when": {
+        "source": "who"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "dosing-check",
+      "position": "after",
+      "bullets": [
+        {
+          "text": "Kiểm tra dị ứng, chức năng thận/gan, thuốc đang dùng và hàm lượng chế phẩm trước khi kê.",
+          "source_ids": [
+            "nice250"
+          ]
+        }
+      ],
+      "show_when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": [
+          "standard",
+          "alternative",
+          "severe"
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "choose-organization",
+      "kind": "primary",
+      "when": {
+        "source": "unset"
+      },
+      "summary": [
+        {
+          "label": "Nguồn",
+          "text": "Chọn IDSA/PIDS, NICE hoặc WHO để xem hướng dẫn của tổ chức đó."
+        }
+      ],
+      "source_ids": [
+        "pids2026",
+        "nice250",
+        "who2024"
+      ]
+    },
+    {
+      "id": "nice-assess",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "unset"
+      },
+      "summary": [
+        {
+          "label": "Nguồn",
+          "text": "NICE NG250 · §1.5–1.6 và Bảng 2."
+        },
+        {
+          "label": "Chọn bệnh cảnh",
+          "text": "Xác nhận CAP, khả năng uống, biến chứng và dị ứng. Bác sĩ đánh giá mức độ nặng dựa vào các dấu hiệu như SpO₂ dưới 90%, thở rên, rút lõm ngực nặng, bỏ bú hoặc không uống được, lơ mơ."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-start",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": "unset"
+      },
+      "summary": [
+        {
+          "label": "Nguồn",
+          "text": "NICE NG250 · §1.5–1.6 và Bảng 2."
+        },
+        {
+          "label": "Bắt đầu",
+          "text": "Chọn tuổi và bệnh cảnh trước khi xem liều."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-outside",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": "outside"
+      },
+      "summary": [
+        {
+          "label": "Ngoài phạm vi công cụ",
+          "text": "Trẻ dưới 3 tháng cần đánh giá chuyên khoa theo nhóm tuổi. Từ 18 tuổi, dùng mặt bệnh CAP người lớn."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-amoxicillin",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "standard"
+      },
+      "summary": [
+        {
+          "label": "Áp dụng",
+          "text": "CAP không nặng, không biến chứng, không bệnh nền và dùng được amoxicillin đường uống."
+        },
+        {
+          "label": "Nguồn",
+          "text": "NICE NG250 · Bảng 2, §1.6.4–1.6.6."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Điều trị ban đầu",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "125 mg/liều, uống, mỗi 8 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "250 mg/liều, uống, mỗi 8 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "young"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "500 mg/liều, uống, mỗi 8 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "500 mg/liều, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Đánh giá lại nếu diễn tiến xấu hoặc không bắt đầu cải thiện sau 3 ngày. Xem lại thời gian điều trị theo ổn định lâm sàng và kết quả vi sinh.",
+          "source_ids": [
+            "nice250"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-alternative",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "alternative"
+      },
+      "summary": [
+        {
+          "label": "Áp dụng",
+          "text": "CAP không nặng, không biến chứng và không bệnh nền, khi amoxicillin không phù hợp, ví dụ dị ứng penicillin hoặc nghi tác nhân không điển hình."
+        },
+        {
+          "label": "Nguồn",
+          "text": "NICE NG250 · Bảng 2, §1.6.4–1.6.6."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Thay thế đường uống",
+          "lead": "Chọn một thuốc phù hợp. Hai dòng doxycycline là hai giai đoạn của một liệu trình. Tránh doxycycline trong thai kỳ. Nếu có thai, xem lựa chọn erythromycin theo NICE Bảng 2.",
+          "items": [
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin · Dưới 8 kg",
+              "dose": "7,5 mg/kg/liều, uống, mỗi 12 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin · 8–11 kg",
+              "dose": "62,5 mg/liều, uống, mỗi 12 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin · 12–19 kg",
+              "dose": "125 mg/liều, uống, mỗi 12 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin · 20–29 kg",
+              "dose": "187,5 mg/liều, uống, mỗi 12 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin · 30–40 kg",
+              "dose": "250 mg/liều, uống, mỗi 12 giờ, 3 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế",
+              "text": "Clarithromycin",
+              "dose": "250–500 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Thay thế · ngày 1",
+              "text": "Doxycycline",
+              "dose": "200 mg/liều, uống, 1 liều",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Cùng liệu trình · ngày 2–5",
+              "text": "Doxycycline",
+              "dose": "100 mg/liều, uống, mỗi ngày, 4 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Dùng đúng nhóm cân nặng ghi trong bảng clarithromycin. Nếu cân nặng nằm ngoài nhóm được nêu, đối chiếu hướng dẫn liều nhi khoa và hội chẩn dược lâm sàng.",
+          "show_when": {
+            "nice_age": [
+              "infant",
+              "young",
+              "five",
+              "child"
+            ]
+          },
+          "source_ids": [
+            "nice250"
+          ]
+        },
+        {
+          "text": "Đánh giá lại nếu diễn tiến xấu hoặc không bắt đầu cải thiện sau 3 ngày. Xem lại thời gian điều trị theo ổn định lâm sàng và kết quả vi sinh.",
+          "source_ids": [
+            "nice250"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-severe",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "severe"
+      },
+      "summary": [
+        {
+          "label": "Áp dụng",
+          "text": "Có dấu hiệu nặng, đã đánh giá tại bệnh viện và dùng được penicillin. Nếu nghi sepsis hoặc biến chứng, chuyển sang quy trình cấp cứu hoặc đánh giá chuyên khoa."
+        },
+        {
+          "label": "Nguồn",
+          "text": "NICE NG250 · Bảng 2, §1.5.4–1.5.5 và §1.6.6."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Kháng sinh nền",
+          "lead": "Chọn liều theo đúng nồng độ hỗn dịch ghi trên nhãn. Bảng 2 của NICE làm tròn hàm lượng clavulanat thành 31 hoặc 62 mg trong 5 mL.",
+          "show_when": {
+            "nice_route": "oral"
+          },
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin/clavulanat · 125/31 mg trong 5 mL",
+              "dose": "0,5 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin/clavulanat · 125/31 mg trong 5 mL",
+              "dose": "10 mL hoặc 0,5 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "young",
+                  "five"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin/clavulanat · 250/62 mg trong 5 mL",
+              "dose": "10 mL hoặc 0,3 mL/kg/liều, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "child"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin/clavulanat",
+              "dose": "500 mg/125 mg, uống, mỗi 8 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ]
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kháng sinh nền",
+          "lead": "Liều 30 mg/kg tương ứng 25 mg amoxicillin + 5 mg clavulanat/kg với chế phẩm tiêm tỷ lệ 5:1 (SmPC 1000/200 mg, mục 4.2). Tra cách pha và thời gian tiêm hoặc truyền theo chế phẩm BV199.",
+          "show_when": {
+            "nice_route": "iv"
+          },
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin/clavulanat",
+              "dose": "30 mg/kg/liều (tổng hai thành phần), tối đa 1,2 g/liều, tĩnh mạch, mỗi 8 giờ",
+              "ref": "Bảng 2",
+              "source_ids": [
+                "nice250"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phối hợp khi nghi tác nhân không điển hình",
+          "lead": "Dùng cùng kháng sinh nền khi có chỉ định. Kiểm tra tương tác của clarithromycin và nguy cơ kéo dài QT.",
+          "show_when": {
+            "nice_atypical": true,
+            "nice_route": [
+              "oral",
+              "iv"
+            ]
+          },
+          "items": [
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin · Dưới 8 kg",
+              "dose": "7,5 mg/kg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin · 8–11 kg",
+              "dose": "62,5 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin · 12–19 kg",
+              "dose": "125 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin · 20–29 kg",
+              "dose": "187,5 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin · 30–40 kg",
+              "dose": "250 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin",
+              "dose": "250–500 mg/liều, uống, mỗi 12 giờ, 5 ngày",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ],
+                "nice_route": "oral"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin",
+              "dose": "7,5 mg/kg/liều, tối đa 500 mg/liều, tĩnh mạch, mỗi 12 giờ",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "infant",
+                  "young",
+                  "five",
+                  "child"
+                ],
+                "nice_route": "iv"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Clarithromycin",
+              "dose": "500 mg/liều, tĩnh mạch, mỗi 12 giờ",
+              "ref": "Bảng 2",
+              "show_when": {
+                "nice_age": [
+                  "teen"
+                ],
+                "nice_route": "iv"
+              },
+              "source_ids": [
+                "nice250"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Chọn đường dùng để xem liều theo tuổi.",
+          "show_when": {
+            "nice_route": "unset"
+          },
+          "source_ids": [
+            "nice250"
+          ]
+        },
+        {
+          "text": "Đánh giá lại điều trị tĩnh mạch trong 48 giờ và chuyển uống khi phù hợp.",
+          "show_when": {
+            "nice_route": "iv"
+          },
+          "source_ids": [
+            "nice250"
+          ]
+        },
+        {
+          "text": "NICE dùng mốc 5 ngày cho tổng đợt CAP nếu đã ổn định và vi sinh không đòi hỏi kéo dài.",
+          "show_when": {
+            "nice_route": [
+              "oral",
+              "iv"
+            ]
+          },
+          "source_ids": [
+            "nice250"
+          ]
+        },
+        {
+          "text": "Dùng đúng nhóm cân nặng của clarithromycin uống. Nếu ngoài nhóm được liệt kê, đối chiếu hướng dẫn liều nhi khoa.",
+          "show_when": {
+            "nice_age": [
+              "infant",
+              "young",
+              "five",
+              "child"
+            ],
+            "nice_atypical": true,
+            "nice_route": "oral"
+          },
+          "source_ids": [
+            "nice250"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-severe-allergy",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "allergy"
+      },
+      "summary": [
+        {
+          "label": "Hội chẩn",
+          "text": "NICE NG250 Bảng 2 yêu cầu tư vấn vi sinh tại chỗ để chọn kháng sinh khi CAP nặng và dị ứng penicillin."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "nice-urgent",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_age": [
+          "infant",
+          "young",
+          "five",
+          "child",
+          "teen"
+        ],
+        "nice_case": "urgent"
+      },
+      "summary": [
+        {
+          "label": "Đánh giá ngay",
+          "text": "Kích hoạt quy trình đánh giá sepsis trẻ em nếu nghi ngờ. Hội chẩn khi suy hô hấp, giảm oxy máu hoặc nghi biến chứng để xác định xử trí và kháng sinh theo bệnh cảnh."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice250"
+      ]
+    },
+    {
+      "id": "who-start",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_case": "unset"
+      },
+      "summary": [
+        {
+          "label": "Phạm vi",
+          "text": "WHO 2024 · Khuyến cáo 1 và 2a cho trẻ 2–59 tháng. Chọn dấu hiệu đã xác định khi khám."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-fast",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_case": "fast"
+      },
+      "summary": [
+        {
+          "label": "Áp dụng",
+          "text": "Trẻ 2–59 tháng chỉ thở nhanh, không rút lõm lồng ngực, không có dấu nguy hiểm."
+        },
+        {
+          "label": "Nguồn",
+          "text": "WHO 2024 · Phần Viêm phổi, Khuyến cáo 1."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Kháng sinh uống",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "40 mg/kg/liều (liều tối thiểu), uống, mỗi 12 giờ, 5 ngày",
+              "grade": "S-M",
+              "ref": "Khuyến cáo 1, Remarks",
+              "source_ids": [
+                "who2024"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "WHO cho phép 3 ngày tại bối cảnh có tỷ lệ lưu hành HIV thấp. Áp dụng thời gian theo bối cảnh được chương trình điều trị xác nhận.",
+          "source_ids": [
+            "who2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-indrawing",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_case": "indrawing"
+      },
+      "summary": [
+        {
+          "label": "Áp dụng",
+          "text": "Trẻ 2–59 tháng có rút lõm lồng ngực, có hoặc không thở nhanh, không dấu nguy hiểm, được đánh giá tại cơ sở y tế."
+        },
+        {
+          "label": "Nguồn",
+          "text": "WHO 2024 · Phần Viêm phổi, Khuyến cáo 2a."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Kháng sinh uống",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin",
+              "dose": "40 mg/kg/liều (liều tối thiểu), uống, mỗi 12 giờ, 5 ngày",
+              "grade": "S-M",
+              "ref": "Khuyến cáo 2a, Remarks",
+              "source_ids": [
+                "who2024"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Theo dõi diễn tiến và đánh giá lại ngay khi xuất hiện dấu nguy hiểm hoặc giảm oxy máu.",
+          "source_ids": [
+            "who2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-outside",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_case": "other"
+      },
+      "summary": [
+        {
+          "label": "Đánh giá và chuyển tuyến",
+          "text": "Dấu nguy hiểm hoặc thiếu oxy cần đánh giá khẩn. Khuyến cáo 1 và 2a dùng cho 2–59 tháng. WHO ghi nhận khoảng trống bằng chứng về lựa chọn kháng sinh tối ưu cho trẻ 5–9 tuổi."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "pids-effusion",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "effusion"
+      },
+      "summary": [
+        {
+          "label": "Phạm vi",
+          "text": "IDSA/PIDS 2026 · Phần 1 về tràn dịch cạnh viêm phổi hoặc mủ màng phổi ở trẻ trên 3 tháng."
+        },
+        {
+          "label": "Điều trị kháng sinh",
+          "text": "Bản cập nhật tập trung vào đánh giá và xử trí dịch màng phổi. Liều kháng sinh cần xây dựng theo vi sinh, mức độ nặng và quy trình nhiễm khuẩn có biến chứng."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Đánh giá dịch màng phổi và chỉ định dẫn lưu",
+          "items": [
+            {
+              "role": "Dịch vừa hoặc nhiều trên X-quang",
+              "text": "Ưu tiên siêu âm ngực để đánh giá kích thước và tính chất dịch. Có thể dùng CT hoặc MRI khi thiếu siêu âm.",
+              "grade": "C-VL",
+              "ref": "The Use of Chest Ultrasound",
+              "source_ids": [
+                "pids2026"
+              ]
+            },
+            {
+              "role": "Dịch ít, không biến chứng",
+              "text": "Theo dõi thay cho dẫn lưu thường quy.",
+              "grade": "C-VL",
+              "ref": "Pleural Fluid Drainage versus Observation, KC 1",
+              "source_ids": [
+                "pids2026"
+              ]
+            },
+            {
+              "role": "Dịch vừa kèm dấu hiệu gắng sức hô hấp, dịch nhiều hoặc có mủ",
+              "text": "Dẫn lưu màng phổi. Khuyến cáo tiếp nối năm 2011, chưa có bằng chứng mới.",
+              "ref": "Pleural Fluid Drainage versus Observation, KC 2",
+              "source_ids": [
+                "pids2026"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Phương án khi cần dẫn lưu",
+          "items": [
+            {
+              "role": "Phương án đầu tay ở đa số ca mủ màng phổi",
+              "text": "Ống dẫn lưu phối hợp tiêu sợi huyết nội màng phổi. Cân nhắc nội soi lồng ngực khi nhiều vách hóa hoặc thất bại.",
+              "grade": "C-VL",
+              "ref": "Pleural Fluid Drainage compared to Surgical Debridement",
+              "source_ids": [
+                "pids2026"
+              ]
+            },
+            {
+              "role": "Kích cỡ ống dẫn lưu",
+              "text": "Ưu tiên ống nhỏ ≤12 Fr.",
+              "grade": "C-VL",
+              "ref": "Choice of Chest Tube Size",
+              "source_ids": [
+                "pids2026"
+              ]
+            },
+            {
+              "role": "Tiêu sợi huyết theo chuyên khoa",
+              "text": "Ưu tiên tPA đơn độc thay cho tPA phối hợp DNase. Chọn liều theo quy trình chuyên khoa.",
+              "grade": "C-L",
+              "ref": "Use of tPA and DNase or tPA Alone for Fibrinolysis",
+              "source_ids": [
+                "pids2026"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "pids2026"
+      ]
+    },
+    {
+      "id": "pids-archive",
+      "kind": "primary",
+      "when": {
+        "source": "idsa",
+        "idsa_version": "archive"
+      },
+      "summary": [
+        {
+          "label": "Nguồn lưu trữ",
+          "text": "IDSA ghi hướng dẫn năm 2011 đã ngừng hoạt động. Các liều dưới đây trích từ Bảng 7 để đối chiếu tài liệu lưu trữ."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Liều trong bảng năm 2011",
+          "lead": "Bảng 7 ghi mức tối đa 4 g/ngày cho nhóm từ 5 tuổi.",
+          "items": [
+            {
+              "role": "Ngoại trú nghi vi khuẩn điển hình",
+              "text": "Amoxicillin · trẻ dưới 5 tuổi",
+              "dose": "90 mg/kg/ngày, uống, chia 2 lần",
+              "ref": "Bảng 7, PDF trang 10",
+              "source_ids": [
+                "pids2011"
+              ]
+            },
+            {
+              "role": "Ngoại trú nghi vi khuẩn điển hình",
+              "text": "Amoxicillin · trẻ từ 5 tuổi",
+              "dose": "90 mg/kg/ngày, tối đa 4 g/ngày, uống, chia 2 lần",
+              "ref": "Bảng 7, PDF trang 10",
+              "source_ids": [
+                "pids2011"
+              ]
+            },
+            {
+              "role": "Nghi tác nhân không điển hình · ngày 1",
+              "text": "Azithromycin · trẻ từ 5 tuổi",
+              "dose": "10 mg/kg/liều, tối đa 500 mg/liều, uống, 1 liều",
+              "ref": "Bảng 7, PDF trang 10",
+              "source_ids": [
+                "pids2011"
+              ]
+            },
+            {
+              "role": "Cùng liệu trình · ngày 2–5",
+              "text": "Azithromycin · trẻ từ 5 tuổi",
+              "dose": "5 mg/kg/liều, tối đa 250 mg/liều, uống, mỗi ngày, 4 ngày",
+              "ref": "Bảng 7, PDF trang 10",
+              "source_ids": [
+                "pids2011"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [],
+      "source_ids": [
+        "pids2011"
+      ]
+    }
+  ],
+  "source_text": "Nguồn: NICE NG250, WHO 2024, IDSA/PIDS 2026 và tài liệu lưu trữ PIDS/IDSA 2011.",
+  "gaps": [
+    "Mô-đun NICE trình bày liều cho trẻ từ 3 tháng đến 17 tuổi. Trẻ dưới 3 tháng, trẻ có bệnh nền hoặc đợt CAP có biến chứng cần đánh giá theo quy trình phù hợp.",
+    "Chưa xây bảng liều cá thể hóa ở suy thận, suy gan, hoặc liều ngoài các nhóm cân nặng của NICE.",
+    "Đối chiếu quy đổi amoxicillin/clavulanat tiêm 5:1 với SmPC mục 4.2 (https://www.medicines.org.uk/emc/product/8753/smpc)."
+  ],
+  "discordance": [
+    {
+      "topic": "Liều amoxicillin",
+      "primary_source_id": "nice250",
+      "other_source_id": "who2024",
+      "description": "NICE NG250 dùng mức liều theo tuổi cho CAP không nặng. WHO 2024 dùng mức liều tối thiểu theo cân nặng cho trẻ 2–59 tháng, với tiêu chí thở nhanh hoặc rút lõm lồng ngực và không có dấu nguy hiểm."
+    }
+  ],
+  "selection_rationale": {
+    "chosen": "Người đọc chủ động chọn tổ chức. NICE NG250 cung cấp bảng liều theo tuổi và bệnh cảnh. WHO 2024 áp dụng cho nhóm tuổi và tiêu chí riêng. IDSA/PIDS có mục 2026 về biến chứng màng phổi và mục kháng sinh 2011 lưu trữ.",
+    "current_version_check": "Đối chiếu Bảng 2 trong bản PDF NICE NG250 hiện hành và trang WHO. So sánh hai PDF người dùng cung cấp với trang công bố và lịch cập nhật IDSA ngày 19/11/2026."
+  },
+  "sources": [
+    {
+      "id": "nice250",
+      "org": "NICE",
+      "title": "Pneumonia: diagnosis and management (NG250)",
+      "year": 2025,
+      "version": "02/09/2025 · §1.5–1.6, Bảng 2, tr. 21–24 trong bản PDF được đối chiếu",
+      "url": "https://www.nice.org.uk/guidance/ng250/resources/pneumonia-diagnosis-and-management-pdf-66144010347205",
+      "accessed": "2026-11-19",
+      "population": [
+        "child"
+      ],
+      "evidence_system": "Cách diễn đạt mức khuyến cáo của NICE",
+      "grade_system": "none"
+    },
+    {
+      "id": "who2024",
+      "org": "WHO",
+      "title": "Guideline on management of pneumonia and diarrhoea in children up to 10 years of age",
+      "year": 2024,
+      "version": "31/12/2024 · Phần Viêm phổi, Khuyến cáo 1 và 2a",
+      "url": "https://www.who.int/publications/i/item/9789240103412",
+      "accessed": "2026-11-19",
+      "population": [
+        "child"
+      ],
+      "evidence_system": "GRADE",
+      "grade_system": "GRADE"
+    },
+    {
+      "id": "pids2026",
+      "org": "IDSA/PIDS",
+      "title": "2026 guideline update: CAP in infants and children older than 3 months of age",
+      "year": 2026,
+      "version": "24/02/2026 · Phần 1, tràn dịch cạnh viêm phổi và mủ màng phổi",
+      "url": "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-in-infants-and-children/",
+      "accessed": "2026-11-19",
+      "population": [
+        "child"
+      ],
+      "evidence_system": "GRADE",
+      "grade_system": "GRADE"
+    },
+    {
+      "id": "pids2011",
+      "org": "PIDS/IDSA",
+      "title": "Management of CAP in infants and children older than 3 months of age",
+      "year": 2011,
+      "version": "Lưu trữ · DOI 10.1093/cid/cir531 · Bảng 7",
+      "url": "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-infants-and-children/",
+      "accessed": "2026-11-19",
+      "population": [
+        "child"
+      ],
+      "evidence_system": "Sức mạnh khuyến cáo và chất lượng bằng chứng",
+      "grade_system": "GRADE"
+    }
+  ],
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
+}

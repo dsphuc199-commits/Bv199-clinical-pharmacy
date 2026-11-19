@@ -2,6 +2,14 @@
 
 Mỗi lần chạy nối một mục: ngày, bệnh, nguồn, kết quả validate, kết quả auditor (lỗi tìm thấy / đã sửa / còn lại), số CẦN XÁC MINH, kết quả kiểm tra trang thật.
 
+## 2026-11-19 – Viêm phổi cộng đồng ở trẻ em (v8-101)
+
+- Thêm tab Quốc tế theo NICE NG250 Bảng 2, WHO 2024 Khuyến cáo 1 và 2a và IDSA/PIDS 2026 Phần 1. Đối chiếu hai PDF người dùng cung cấp. Giữ PIDS/IDSA 2011 Bảng 7 ở mục lưu trữ.
+- Kiểm tra độc lập liều, đường dùng, thời gian và phạm vi nguồn. Làm rõ tiêu chí dẫn lưu khi dịch vừa kèm gắng sức hô hấp, điều kiện lựa chọn đường uống và ngoại lệ thai kỳ với doxycycline.
+- Xác thực 58 tổ hợp lựa chọn và 14 luật chính. Năm phép hồi quy riêng về liều, độ tuổi và phạm vi nguồn đạt. Kiểm tra thực tế ở 390 px và 1440 px đạt, gồm đổi nguồn, chọn đường tĩnh mạch, phối hợp và các nhánh cần hội chẩn.
+- Trạng thái `draft_ai`, hàng đợi `drafted`. Chờ thẩm định chuyên môn theo quy trình của BV199.
+- Chọn tổ chức trước khi xem nội dung. Hiện trích dẫn của tổ chức và phiên bản đã chọn. IDSA/PIDS mở mục 2026 về biến chứng màng phổi và cho chuyển sang mục kháng sinh 2011 lưu trữ. Xác thực lại 59 tổ hợp và 15 luật chính.
+
 ## 2026-11-14 – Sốt giảm bạch cầu trung tính (v8-113) và Sốt giảm bạch cầu trung tính nguy cơ cao (v8-116)
 - Nguồn: ECIL-10 – bộ slide khuyến cáo cuối cùng nhóm vi khuẩn (ECIL, 2025; https://ecil-leukaemia.com/images/ecil-10/ECIL_10_-_bacterial_group_final_recommendations.pdf), người lớn; IPFN 2023 (Lehrnbecher T và cs., J Clin Oncol 2023; https://doi.org/10.1200/JCO.22.02224), trẻ em.
 - Toàn văn: tải được slide ECIL-10 (44 trang) và IPFN 2023 (Europe PMC, PMC10022858). Bài báo ECIL-10 trên Lancet Infect Dis cần thuê bao – không đọc được.

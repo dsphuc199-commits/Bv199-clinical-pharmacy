@@ -27,7 +27,7 @@ function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; ch
 }
 
 /** Vẽ các trục placement "form": gom checkbox liền nhau cùng group vào một hàng; multi tách hàng theo option.group. */
-function Form({ g, raw, eff, set }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void }) {
+function Form({ g, raw, eff, set, sourceAxis }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void; sourceAxis?: string }) {
   const rows: React.ReactNode[] = [];
   const axes = g.axes.filter((a) => a.placement === "form" && isVisible(g.axes, eff, a.id));
   for (let i = 0; i < axes.length; i++) {
@@ -62,9 +62,10 @@ function Form({ g, raw, eff, set }: { g: IntlGuideline; raw: AxisState; eff: Axi
       );
       continue;
     }
+    const control = a.id === sourceAxis ? { ...a, options: a.options?.filter((o) => o.id !== a.default) } : a;
     rows.push(
       <Row key={a.id} label={a.label}>
-        <AxisControl a={a} value={raw[a.id] ?? eff[a.id]} set={(v) => set(a.id, v)} />
+        <AxisControl a={control} value={raw[a.id] ?? eff[a.id]} set={(v) => set(a.id, v)} />
         {a.tip && <p className="sa24-tip">{a.tip}</p>}
       </Row>,
     );
@@ -88,18 +89,40 @@ function Section({ s, g, eff, set }: { s: ReturnType<typeof resolve>["after"][nu
   );
 }
 
-function Sources({ g }: { g: IntlGuideline }) {
+function Sources({ sources }: { sources: IntlGuideline["sources"] }) {
   return (
     <details className="igv-sources">
-      <summary>Chi tiết nguồn ({g.sources.length})</summary>
+      <summary>Chi tiết nguồn ({sources.length})</summary>
       <ul>
-        {g.sources.map((s) => (
+        {sources.map((s) => (
           <li key={s.id}>
             <b>{s.org}</b> ({s.year}). {s.title}. {s.version}. <a href={s.url} target="_blank" rel="noreferrer">{s.url}</a>. Truy cập {s.accessed}. Quần thể: {s.population.map((p) => POP_TEXT[p] ?? p).join(", ")}. Hệ phân mức: {s.evidence_system}.
           </li>
         ))}
       </ul>
     </details>
+  );
+}
+
+function References({ g, sources, isolated }: { g: IntlGuideline; sources: IntlGuideline["sources"]; isolated: boolean }) {
+  if (!sources.length) return null;
+  return (
+    <>
+      {!isolated && g.discordance.length > 0 && (
+        <div className="igv-disc">
+          <h4>Khác biệt giữa các hướng dẫn</h4>
+          <ul className="igv-notes">{g.discordance.map((d) => <li key={d.topic}><b>{d.topic}:</b> {d.description}</li>)}</ul>
+        </div>
+      )}
+      <SourceList
+        sources={isolated ? [] : sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
+        notes={[
+          ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
+          "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
+        ]}
+      />
+      <Sources sources={sources} />
+    </>
   );
 }
 
@@ -114,22 +137,30 @@ function ReviewBadge({ g }: { g: IntlGuideline }) {
   return <div className="igv-verified" role="note"><b>{REVIEW_TEXT[g.review.state]}</b><span>{g.review.verified_by} · {g.review.verified_date}</span></div>;
 }
 
-function Body({ g }: { g: IntlGuideline }) {
+function Body({ g, sourceAxis }: { g: IntlGuideline; sourceAxis?: string }) {
   const [raw, setRaw] = useState<AxisState>(() => defaultState(g.axes));
   const eff = useMemo(() => effectiveState(g.axes, raw), [g.axes, raw]);
   const r = useMemo(() => resolve(g, eff), [g, eff]);
-  const set = (id: string, v: AxisVal) => setRaw((s) => ({ ...s, [id]: v }));
+  const set = (id: string, v: AxisVal) => setRaw((s) => ({ ...(id === sourceAxis ? defaultState(g.axes) : s), [id]: v }));
+  const sourceControl = g.axes.find((a) => a.id === sourceAxis);
+  const sources = sourceControl
+    ? g.sources.filter((s) => eff[sourceControl.id] !== sourceControl.default && r.primary?.source_ids.includes(s.id))
+    : g.sources;
+  const references = <References g={g} sources={sources} isolated={Boolean(sourceControl)} />;
 
   if (g.status !== "extracted")
     return (
-      <section className="sa24-out">
-        <p className="sa24-warn">{g.status === "no_specific_guideline" ? "Chưa có hướng dẫn quốc tế riêng cho quần thể này – xem tab Việt Nam." : "Đã xác định nguồn quốc tế nhưng chưa trích khuyến cáo."}</p>
-        {g.status_note && <p className="sa24-tip">{g.status_note}</p>}
-      </section>
+      <>
+        <section className="sa24-out">
+          <p className="sa24-warn">{g.status === "no_specific_guideline" ? "Chưa có hướng dẫn quốc tế riêng cho quần thể này – xem tab Việt Nam." : "Đã xác định nguồn quốc tế nhưng chưa trích khuyến cáo."}</p>
+          {g.status_note && <p className="sa24-tip">{g.status_note}</p>}
+        </section>
+        {references}
+      </>
     );
   return (
     <>
-      <Form g={g} raw={raw} eff={eff} set={set} />
+      <Form g={g} raw={raw} eff={eff} set={set} sourceAxis={sourceControl?.id} />
       <section className="sa24-out" aria-live="polite">
         {!r.primary ? (
           <p className="sa24-warn">Dữ liệu lỗi: {r.conflicts.length ? `nhiều luật cùng khớp (${r.conflicts.join(", ")})` : "không có luật khớp tổ hợp đã chọn"}. Không hiển thị khuyến cáo.</p>
@@ -151,11 +182,12 @@ function Body({ g }: { g: IntlGuideline }) {
           </>
         )}
       </section>
+      {references}
     </>
   );
 }
 
-export default function IntlGuidelineView({ data }: { data: unknown }) {
+export default function IntlGuidelineView({ data, sourceAxis }: { data: unknown; sourceAxis?: string }) {
   const parsed = useMemo(() => intlGuideline.safeParse(data), [data]);
   if (!parsed.success)
     return (
@@ -178,21 +210,7 @@ export default function IntlGuidelineView({ data }: { data: unknown }) {
       ) : (
         <>
           <ReviewBadge g={g} />
-          <Body g={g} />
-          {g.discordance.length > 0 && (
-            <div className="igv-disc">
-              <h4>Khác biệt giữa các hướng dẫn</h4>
-              <ul className="igv-notes">{g.discordance.map((d) => <li key={d.topic}><b>{d.topic}:</b> {d.description}</li>)}</ul>
-            </div>
-          )}
-          <SourceList
-            sources={g.sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
-            notes={[
-              ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
-              "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
-            ]}
-          />
-          <Sources g={g} />
+          <Body g={g} sourceAxis={sourceAxis} />
         </>
       )}
       <RxToolStyle />

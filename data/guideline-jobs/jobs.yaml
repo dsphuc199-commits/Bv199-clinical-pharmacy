@@ -162,7 +162,7 @@ jobs:
   - id: viem-phoi-cong-dong-o-tre-em
     disease_id: v8-101
     disease_vi: Viêm phổi cộng đồng ở trẻ em
-    disease_en: null
+    disease_en: Community-acquired pneumonia in children
     icd10:
       - J13
       - J14
@@ -172,11 +172,11 @@ jobs:
     population: child
     class: antibacterial
     priority: 3
-    preferred_orgs: []
-    status: todo
-    last_checked: null
+    preferred_orgs: [NICE, WHO, IDSA, PIDS]
+    status: drafted
+    last_checked: 2026-11-19
     published_at: null
-    notes: population từ getPopulationHint ("Trẻ em"); class từ getStream ("empiric")
+    notes: Chọn riêng IDSA/PIDS, NICE NG250 hoặc WHO 2024. IDSA/PIDS 2026 về biến chứng màng phổi và 2011 để đối chiếu lưu trữ. Chờ thẩm định lâm sàng.
   - id: viem-phoi-lien-quan-tho-may
     disease_id: v8-5
     disease_vi: Viêm phổi liên quan thở máy
