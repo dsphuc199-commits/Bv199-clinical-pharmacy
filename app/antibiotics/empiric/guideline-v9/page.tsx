@@ -112,6 +112,10 @@ function isAdultABRS(disease: Disease): boolean {
 
 const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
 
+function defaultTabForDisease(diseaseId: string): TabKey {
+  return diseaseId === "v8-101" ? "intl" : "vn";
+}
+
 /* Nhan ngan muc do bang chung (chi tiet: muc Nguon / trang Bang chung). */
 
 /* useSearchParams can Suspense khi build tinh (Next 16). */
@@ -145,9 +149,10 @@ function GuidelineContent() {
 
   /* Buoc 4A: tab nguon va bo loc lam sang. */
   const [tab, setTab] = useState<TabKey>(() => {
-    /* ?tab=intl|compare|sources: mo dung tab (vd. tu trang Chon khang sinh). */
+    /* ?tab=vn|intl|compare: mo dung tab. Lien ket sources cu mo tab Viet Nam. */
     const fromUrl = searchParams.get("tab");
-    return fromUrl && fromUrl in TAB_LABELS ? (fromUrl as TabKey) : "vn";
+    if (fromUrl === "sources") return "vn";
+    return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
   });
   /* ?tab=sources (lien ket cu) -> mo accordion Nguon. */
   const [filters, setFilters] = useState<ClinicalFilterState>(DEFAULT_FILTERS);
@@ -220,7 +225,7 @@ function GuidelineContent() {
     setPickedScenario(null);
     setSelectedId(disease.id);
     setAbrsSetting("outpatient");
-    setTab("vn");
+    setTab(defaultTabForDisease(disease.id));
 
     /* Ghi mat benh vao URL (khong tai lai trang) de nut "Quay lai" o module khac
        va nut Back cua trinh duyet tro ve dung mat benh. */

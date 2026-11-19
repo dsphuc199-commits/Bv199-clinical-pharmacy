@@ -27,12 +27,8 @@
       "id": "source",
       "label": "Tổ chức ban hành",
       "type": "seg",
-      "default": "unset",
+      "default": "idsa",
       "options": [
-        {
-          "id": "unset",
-          "label": "Chọn tổ chức"
-        },
         {
           "id": "idsa",
           "label": "IDSA/PIDS"
@@ -51,15 +47,15 @@
       "id": "idsa_version",
       "label": "Phiên bản IDSA/PIDS",
       "type": "seg",
-      "default": "effusion",
+      "default": "archive",
       "options": [
-        {
-          "id": "effusion",
-          "label": "2026 · Biến chứng màng phổi"
-        },
         {
           "id": "archive",
           "label": "2011 · Kháng sinh (lưu trữ)"
+        },
+        {
+          "id": "effusion",
+          "label": "2026 · Biến chứng màng phổi"
         }
       ],
       "visible_when": {
@@ -413,24 +409,6 @@
     }
   ],
   "rules": [
-    {
-      "id": "choose-organization",
-      "kind": "primary",
-      "when": {
-        "source": "unset"
-      },
-      "summary": [
-        {
-          "label": "Nguồn",
-          "text": "Chọn IDSA/PIDS, NICE hoặc WHO để xem hướng dẫn của tổ chức đó."
-        }
-      ],
-      "source_ids": [
-        "pids2026",
-        "nice250",
-        "who2024"
-      ]
-    },
     {
       "id": "nice-assess",
       "kind": "primary",
@@ -1475,11 +1453,11 @@
       "summary": [
         {
           "label": "Phạm vi",
-          "text": "IDSA/PIDS 2026 · Phần 1 về tràn dịch cạnh viêm phổi hoặc mủ màng phổi ở trẻ trên 3 tháng."
+          "text": "IDSA/PIDS công bố Phần 1 ngày 24/02/2026. Sáu khuyến cáo tập trung vào chẩn đoán và can thiệp tràn dịch cạnh viêm phổi hoặc mủ màng phổi ở trẻ trên 3 tháng."
         },
         {
           "label": "Điều trị kháng sinh",
-          "text": "Bản cập nhật tập trung vào đánh giá và xử trí dịch màng phổi. Liều kháng sinh cần xây dựng theo vi sinh, mức độ nặng và quy trình nhiễm khuẩn có biến chứng."
+          "text": "Phần 1 không quy định lựa chọn kháng sinh, liều hoặc số ngày điều trị. Với ca có biến chứng, bác sĩ chọn kháng sinh theo mức độ nặng, kết quả vi sinh và phác đồ tại cơ sở. Muốn tra bảng kháng sinh cũ của IDSA/PIDS, chọn mục 2011 lưu trữ."
         }
       ],
       "blocks": [
@@ -1563,14 +1541,38 @@
       "summary": [
         {
           "label": "Tài liệu lưu trữ",
-          "text": "PIDS/IDSA 2011 cho trẻ trên 3 tháng vốn khỏe mạnh. Tra cứu liều theo đúng bệnh cảnh và phiên bản."
+          "text": "IDSA đã lưu trữ bản 2011. Bảng dưới đây giúp định vị nội dung cần tra cho trẻ trên 3 tháng vốn khỏe mạnh."
         },
         {
           "label": "Tra cứu",
           "text": "Chọn bệnh cảnh để xem thuốc ưu tiên, thay thế và liều ghi trong tài liệu 2011."
         }
       ],
-      "blocks": [],
+      "blocks": [
+        {
+          "title": "Nội dung kháng sinh trong tài liệu 2011",
+          "items": [
+            {
+              "role": "Ngoại trú · nghi vi khuẩn điển hình",
+              "text": "Amoxicillin là lựa chọn đầu tay trong tài liệu. Bảng 7 ghi amoxicillin/clavulanat là lựa chọn thay thế.",
+              "ref": "PIDS/IDSA 2011 · Bảng 7 và khuyến cáo 42–43",
+              "source_ids": ["pids2011"]
+            },
+            {
+              "role": "Ngoại trú · nghi tác nhân không điển hình",
+              "text": "Bảng 7 liệt kê azithromycin theo ngày điều trị và các lựa chọn thay thế có điều kiện về tuổi.",
+              "ref": "PIDS/IDSA 2011 · Bảng 7 và khuyến cáo 44",
+              "source_ids": ["pids2011"]
+            },
+            {
+              "role": "Nội trú",
+              "text": "Tra lựa chọn kinh nghiệm theo tiêm chủng, đề kháng tại chỗ và mức độ nặng. Khi đã xác định phế cầu, chọn nhóm MIC để tra liều theo Bảng 5.",
+              "ref": "PIDS/IDSA 2011 · Bảng 5, Bảng 7 và khuyến cáo 46–49",
+              "source_ids": ["pids2011"]
+            }
+          ]
+        }
+      ],
       "notes": [],
       "source_ids": [
         "pids2011"
@@ -2091,7 +2093,7 @@
     }
   ],
   "selection_rationale": {
-    "chosen": "Người đọc chủ động chọn tổ chức. NICE NG250 cung cấp bảng liều theo tuổi và bệnh cảnh. WHO 2024 áp dụng cho nhóm tuổi và tiêu chí riêng. IDSA/PIDS có mục 2026 về biến chứng màng phổi và mục kháng sinh 2011 lưu trữ.",
+    "chosen": "Tab mở ở IDSA/PIDS và hiển thị mục 2011 lưu trữ trước mục 2026 về biến chứng màng phổi. NICE NG250 cung cấp bảng liều theo tuổi và bệnh cảnh. WHO 2024 áp dụng cho nhóm tuổi và tiêu chí riêng.",
     "current_version_check": "Đối chiếu Bảng 2 trong bản PDF NICE NG250 hiện hành và trang WHO. So sánh hai PDF người dùng cung cấp với trang công bố và lịch cập nhật IDSA ngày 19/11/2026."
   },
   "sources": [

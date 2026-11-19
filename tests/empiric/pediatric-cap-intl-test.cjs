@@ -34,10 +34,13 @@ check("CAP trẻ em: chưa biết tuổi, ngoài tuổi và chuyển đánh giá
   ]) assert.deepEqual(dosesIn(state), []);
 });
 
-check("CAP trẻ em: chưa chọn tổ chức và chọn IDSA không lấy liều NICE", () => {
-  assert.equal(resolve(guideline, {}).primary.id, "choose-organization");
-  assert.deepEqual(dosesIn({ ...severeIv, source: "unset" }), []);
-  assert.equal(resolve(guideline, { ...severeIv, source: "idsa" }).primary.id, "pids-effusion");
+check("CAP trẻ em: mở IDSA 2011 trước và chờ chọn bệnh cảnh", () => {
+  const landing = resolve(guideline, { ...severeIv, source: "idsa" });
+  assert.equal(landing.primary.id, "pids-archive");
+  assert.deepEqual(landing.primary.source_ids, ["pids2011"]);
+  assert.equal(landing.blocks[0].items.length, 3);
+  assert.deepEqual(dosesIn({}), []);
+  assert.deepEqual(guideline.axes.find(({ id }) => id === "idsa_version").options.map(({ id }) => id), ["archive", "effusion"]);
 });
 
 check("NICE: đúng liều mỗi lần và mốc 3 hoặc 5 ngày theo tuổi", () => {
@@ -106,7 +109,11 @@ check("WHO: liều tối thiểu 40 mg/kg/lần, chỉ cho hai bệnh cảnh đ�
 });
 
 check("IDSA/PIDS: Phần 1 năm 2026 không hiện liều và tài liệu lưu trữ tách riêng", () => {
-  assert.deepEqual(dosesIn({ ...severeIv, source: "idsa" }), []);
+  const effusion = { ...severeIv, source: "idsa", idsa_version: "effusion" };
+  assert.deepEqual(dosesIn(effusion), []);
+  const current = resolve(guideline, effusion);
+  assert.deepEqual(current.primary.source_ids, ["pids2026"]);
+  assert.ok(current.summary.some(({ text }) => text.includes("không quy định lựa chọn kháng sinh, liều hoặc số ngày")));
   const archive = { source: "idsa", idsa_version: "archive" };
   assert.deepEqual(dosesIn(archive), []);
   const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_age: "five-plus" });

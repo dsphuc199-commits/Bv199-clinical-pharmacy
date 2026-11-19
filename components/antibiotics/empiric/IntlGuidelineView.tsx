@@ -27,7 +27,7 @@ function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; ch
 }
 
 /** Vẽ các trục placement "form": gom checkbox liền nhau cùng group vào một hàng; multi tách hàng theo option.group. */
-function Form({ g, raw, eff, set, sourceAxis }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void; sourceAxis?: string }) {
+function Form({ g, raw, eff, set }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void }) {
   const rows: React.ReactNode[] = [];
   const axes = g.axes.filter((a) => a.placement === "form" && isVisible(g.axes, eff, a.id));
   for (let i = 0; i < axes.length; i++) {
@@ -62,10 +62,9 @@ function Form({ g, raw, eff, set, sourceAxis }: { g: IntlGuideline; raw: AxisSta
       );
       continue;
     }
-    const control = a.id === sourceAxis ? { ...a, options: a.options?.filter((o) => o.id !== a.default) } : a;
     rows.push(
       <Row key={a.id} label={a.label}>
-        <AxisControl a={control} value={raw[a.id] ?? eff[a.id]} set={(v) => set(a.id, v)} />
+        <AxisControl a={a} value={raw[a.id] ?? eff[a.id]} set={(v) => set(a.id, v)} />
         {a.tip && <p className="sa24-tip">{a.tip}</p>}
       </Row>,
     );
@@ -118,7 +117,7 @@ function References({ g, sources, isolated }: { g: IntlGuideline; sources: IntlG
         sources={isolated ? [] : sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
         notes={[
           ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
-          ...(isolated ? ["Hàm lượng ghi theo nguồn hoặc danh mục tra cứu BV199. Đối chiếu nhãn và tình trạng có thuốc tại nơi cấp."] : []),
+          ...(isolated ? ["Hàm lượng tham khảo từ hướng dẫn hoặc danh mục BV199. Kiểm tra nhãn và tình trạng có thuốc tại nơi cấp."] : []),
           "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
         ]}
       />
@@ -145,7 +144,7 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
   const set = (id: string, v: AxisVal) => setRaw((s) => ({ ...(id === sourceAxis ? defaultState(g.axes) : s), [id]: v }));
   const sourceControl = g.axes.find((a) => a.id === sourceAxis);
   const sources = sourceControl
-    ? g.sources.filter((s) => eff[sourceControl.id] !== sourceControl.default && r.primary?.source_ids.includes(s.id))
+    ? g.sources.filter((s) => r.primary?.source_ids.includes(s.id))
     : g.sources;
   const references = <References g={g} sources={sources} isolated={Boolean(sourceControl)} />;
 
@@ -161,7 +160,7 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
     );
   return (
     <>
-      <Form g={g} raw={raw} eff={eff} set={set} sourceAxis={sourceControl?.id} />
+      <Form g={g} raw={raw} eff={eff} set={set} />
       <section className="sa24-out" aria-live="polite">
         {!r.primary ? (
           <p className="sa24-warn">Dữ liệu lỗi: {r.conflicts.length ? `nhiều luật cùng khớp (${r.conflicts.join(", ")})` : "không có luật khớp tổ hợp đã chọn"}. Không hiển thị khuyến cáo.</p>
