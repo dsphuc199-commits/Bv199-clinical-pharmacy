@@ -100,6 +100,31 @@
       "tip": "Áp dụng cho trẻ trên 3 tháng, trước đó khỏe mạnh.\nNhẹ, có thể ngoại trú · Trẻ ổn định, uống được, không gắng sức hô hấp, không thiếu oxy và bảo đảm theo dõi.\nVừa–nặng, đánh giá nội trú · Gắng sức hô hấp (rút lõm ngực, thở rên, phập phồng cánh mũi) hoặc SpO₂ <90% kéo dài khi thở khí phòng ở mực nước biển.\nCần đánh giá nhập viện cả khi chưa có dấu hiệu trên nếu trẻ dưới 6 tháng nghi CAP do vi khuẩn, nghi CA-MRSA hoặc khó bảo đảm theo dõi.\nĐánh giá cấp cứu nếu có ngừng thở, suy hô hấp tiến triển, sốc hoặc giảm tri giác."
     },
     {
+      "id": "idsa_typical_age",
+      "label": "Tuổi",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tuổi"
+        },
+        {
+          "id": "under-five",
+          "label": "Trên 3 tháng đến dưới 5 tuổi"
+        },
+        {
+          "id": "five-plus",
+          "label": "Từ 5 tuổi"
+        }
+      ],
+      "visible_when": {
+        "source": "idsa",
+        "idsa_version": "archive",
+        "idsa_case": "typical"
+      }
+    },
+    {
       "id": "idsa_age",
       "label": "Tuổi",
       "type": "seg",
@@ -125,10 +150,7 @@
       "visible_when": {
         "source": "idsa",
         "idsa_version": "archive",
-        "idsa_case": [
-          "typical",
-          "atypical"
-        ]
+        "idsa_case": "atypical"
       }
     },
     {
@@ -1600,7 +1622,7 @@
               ],
               "preparation": "Hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
               "show_when": {
-                "idsa_age": "under-five"
+                "idsa_typical_age": "under-five"
               }
             },
             {
@@ -1613,10 +1635,7 @@
               ],
               "preparation": "Hỗn dịch 250 mg/5 mL hoặc viên 500 mg",
               "show_when": {
-                "idsa_age": [
-                  "five-to-seven",
-                  "over-seven"
-                ]
+                "idsa_typical_age": "five-plus"
               }
             },
             {
@@ -1629,7 +1648,7 @@
               ],
               "preparation": "Liều tính theo amoxicillin. Chọn tỷ lệ amoxicillin/clavulanat và dạng uống phù hợp theo nhãn.",
               "show_when": {
-                "idsa_age": "under-five"
+                "idsa_typical_age": "under-five"
               }
             },
             {
@@ -1642,18 +1661,14 @@
               ],
               "preparation": "Liều tính theo amoxicillin. Chọn tỷ lệ amoxicillin/clavulanat và dạng uống phù hợp theo nhãn.",
               "show_when": {
-                "idsa_age": [
-                  "five-to-seven",
-                  "over-seven"
-                ]
+                "idsa_typical_age": "five-plus"
               }
             }
           ],
           "show_when": {
-            "idsa_age": [
+            "idsa_typical_age": [
               "under-five",
-              "five-to-seven",
-              "over-seven"
+              "five-plus"
             ]
           }
         },
@@ -1661,10 +1676,7 @@
           "title": "Có thể phối hợp khi chưa phân biệt được tác nhân",
           "lead": "Từ 5 tuổi, cân nhắc thêm macrolid vào beta-lactam khi lâm sàng, xét nghiệm và hình ảnh chưa phân biệt được nguyên nhân điển hình với không điển hình. Hai dòng azithromycin là cùng một đợt.",
           "show_when": {
-            "idsa_age": [
-              "five-to-seven",
-              "over-seven"
-            ]
+            "idsa_typical_age": "five-plus"
           },
           "items": [
             {
@@ -1698,7 +1710,7 @@
             "pids2011"
           ],
           "show_when": {
-            "idsa_age": "under-five"
+            "idsa_typical_age": "under-five"
           }
         },
         {
@@ -1707,10 +1719,9 @@
             "pids2011"
           ],
           "show_when": {
-            "idsa_age": [
+            "idsa_typical_age": [
               "under-five",
-              "five-to-seven",
-              "over-seven"
+              "five-plus"
             ]
           }
         }

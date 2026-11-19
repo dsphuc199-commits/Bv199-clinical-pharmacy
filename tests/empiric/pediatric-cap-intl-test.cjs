@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 const load = require("./tsrun.cjs");
 const guideline = require("../../data/guidelines/intl/viem-phoi-cong-dong-o-tre-em.json");
-const { resolve } = load("lib/intl-rules.ts");
+const { effectiveState, isVisible, resolve } = load("lib/intl-rules.ts");
 const { parseDose } = load("components/antibiotics/empiric/rx-dose-parts.ts");
 
 const itemsIn = (selection) => resolve(guideline, selection).blocks.flatMap((block) => block.items);
@@ -125,15 +125,31 @@ check("IDSA/PIDS: Phần 1 năm 2026 không hiện liều và tài liệu lưu t
   assert.ok(current.summary.some(({ text }) => text.includes("Chưa có khuyến cáo liều kháng sinh")));
   const archive = { source: "idsa", idsa_version: "archive" };
   assert.deepEqual(dosesIn(archive), []);
-  const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_age: "five-to-seven" });
+  const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_typical_age: "five-plus" });
   assert.deepEqual(typical.map(({ drug }) => drug), ["Amoxicillin", "Amoxicillin/clavulanat", "Azithromycin", "Azithromycin"]);
   assert.ok(typical.slice(0, 2).every(({ source, dose }) => source === "pids2011" && dose.includes("tối đa 4 g/ngày")));
-  assert.equal(dosesIn({ ...archive, idsa_case: "typical", idsa_age: "under-five" }).length, 2);
+  assert.equal(dosesIn({ ...archive, idsa_case: "typical", idsa_typical_age: "under-five" }).length, 2);
   const empiric = { ...archive, idsa_case: "inpatient", idsa_inpatient: "standard", idsa_suspect_staph: true };
   assert.deepEqual(dosesIn(empiric), []);
   assert.match(itemsIn(empiric)[2].text, /Vancomycin hoặc clindamycin/);
   const targeted = dosesIn({ ...archive, idsa_case: "pneumo", idsa_mic: "high" });
   assert.deepEqual(targeted.map(({ drug, dose, freq }) => [drug, dose, freq]), [["Ceftriaxone", "100 mg/kg/ngày", "chia mỗi 12–24 giờ"]]);
+});
+
+check("IDSA/PIDS 2011: gộp từ 5 tuổi ở nhánh điển hình và chọn lại tuổi khi đổi bệnh cảnh", () => {
+  const archive = { source: "idsa", idsa_version: "archive" };
+  const typical = { ...archive, idsa_case: "typical", idsa_age: "over-seven" };
+  const atypical = { ...archive, idsa_case: "atypical", idsa_typical_age: "five-plus" };
+  assert.deepEqual(dosesIn(typical), []);
+  assert.deepEqual(dosesIn(atypical), []);
+  const visibleAgeOptions = (state) => {
+    const effective = effectiveState(guideline.axes, state);
+    return guideline.axes
+      .filter(({ id }) => id.startsWith("idsa_") && id.endsWith("age") && isVisible(guideline.axes, effective, id))
+      .flatMap(({ options }) => options.map(({ label }) => label));
+  };
+  assert.deepEqual(visibleAgeOptions(typical), ["Chọn tuổi", "Trên 3 tháng đến dưới 5 tuổi", "Từ 5 tuổi"]);
+  assert.deepEqual(visibleAgeOptions(atypical), ["Chọn tuổi", "Trên 3 tháng đến dưới 5 tuổi", "Từ 5 đến 7 tuổi", "Trên 7 tuổi"]);
 });
 
 check("IDSA/PIDS 2011: đúng giới hạn tuổi doxycycline và phác đồ tràn dịch lưu trữ", () => {
