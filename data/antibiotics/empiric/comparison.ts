@@ -125,7 +125,7 @@ export const COMPARISONS: Comparison[] = [
       "Phác đồ BYT gắn với mặt bệnh này là mục sỏi thận tiết niệu có biến chứng nhiễm khuẩn; QĐ 708 không có mục NKTN phức tạp riêng. Kiểu hình ESBL đã tách sang mặt bệnh \"Enterobacterales sinh ESBL\" (theo tác nhân).",
       "QĐ 708 có amoxicilin/ampicilin, cefuroxim, norfloxacin, ofloxacin; IDSA 2025 không đưa các thuốc này vào nhóm ưu tiên ban đầu.",
       "IDSA 2025 phân theo có/không sepsis (carbapenem chỉ ưu tiên khi có sepsis), tránh fluoroquinolon nếu đã dùng trong 12 tháng.",
-      "Thời gian: QĐ 708 10–14 ngày (beta-lactam) và 3–7 ngày, có thể tới 10 ngày (fluoroquinolon uống); IDSA 2025: 5–7 ngày fluoroquinolon hoặc 7 ngày thuốc khác.",
+      "Thời gian: QĐ 708 10–14 ngày (beta-lactam) và 3–7 ngày, có thể tới 10 ngày (fluoroquinolon uống); IDSA 2025: 5–7 ngày fluoroquinolon hoặc 7 ngày thuốc khác; nam giới nghi viêm tuyến tiền liệt cấp có thể cần 10–14 ngày.",
       "Liều: QĐ 708 ceftriaxon 1 g/ngày, cefuroxim 250 mg x 2 lần/ngày uống, ciprofloxacin 250–500 mg x 2 lần/ngày; IDSA 2025 Bảng 2.1 (liều dùng trong thử nghiệm) ceftriaxon 1–2 g/ngày, Bảng 1.2 cefuroxim 500 mg mỗi 12 giờ, ciprofloxacin 500–750 mg mỗi 12 giờ.",
       "Tắc nghẽn/người bệnh nặng: EAU 2026 – giải quyết tắc nghẽn và dùng carbapenem (imipenem 500 mg mỗi 6 giờ hoặc meropenem 1 g mỗi 8 giờ) ± thuốc chống MRSA; QĐ 708 nêu giải phóng tắc nghẽn do sỏi là điều trị nguyên nhân, không nêu phác đồ cho ca nặng.",
       "Sỏi gây tắc nghẽn có nhiễm khuẩn: EAU Urolithiasis 2026 – giải áp khẩn bằng stent niệu quản hoặc dẫn lưu thận qua da, kháng sinh ngay, trì hoãn lấy sỏi đến khi hết nhiễm khuẩn huyết.",
@@ -161,7 +161,7 @@ export const COMPARISONS: Comparison[] = [
     different: [
       "QĐ 708 có amoxicilin, amoxicilin-clavulanat, norfloxacin, ofloxacin đường uống; các thuốc này không thuộc nhóm ưu tiên ban đầu của IDSA 2025.",
       "IDSA 2025 dành carbapenem cho ca có sepsis; QĐ 708 liệt kê carbapenem không phân theo sepsis.",
-      "Thời gian: QĐ 708 7–14 hoặc 10–14 ngày; IDSA 2025: 5–7 ngày fluoroquinolon hoặc 7 ngày thuốc khác, 7 ngày nếu có nhiễm khuẩn huyết Gram âm.",
+      "Thời gian: QĐ 708 7–14 hoặc 10–14 ngày; IDSA 2025: 5–7 ngày fluoroquinolon hoặc 7 ngày thuốc khác, 7 ngày nếu có nhiễm khuẩn huyết Gram âm; nam giới nghi viêm tuyến tiền liệt cấp có thể cần 10–14 ngày.",
       "QĐ 708 còn ghi “kháng sinh duy trì 3 tuần kể cả khi lâm sàng cải thiện nhanh”; EAU 2026: thai kỳ tổng 7–10 ngày, beta-lactam 7–10 ngày, fluoroquinolon 5–7 ngày; nam giới có sốt tối thiểu 2 tuần.",
       "Đường uống: QĐ 708 có amoxicilin 500 mg x 3 lần/ngày, amoxicilin-clavulanat 500/62,5 mg x 3, cefuroxim 250 mg x 2 lần/ngày; EAU 2026 chỉ khuyến cáo fluoroquinolon và cephalosporin (cefpodoxim 200 mg x 2, ceftibuten 400 mg x 1) hoặc TMP-SMX; IDSA 2025 Bảng 1.2 ghi kết quả kém hơn khi chuyển sang beta-lactam uống, cefuroxim 500 mg mỗi 12 giờ.",
       "Đường tiêm: QĐ 708 ceftriaxon 1–2 g/ngày, cefotaxim 1 g x 3; EAU 2026 ceftriaxon 2 g/ngày (liều cao 2 g x 2), cefotaxim 2 g x 3.",

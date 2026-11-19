@@ -244,7 +244,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     url: "https://www.idsociety.org/practice-guideline/complicated-urinary-tract-infections/",
     status: "extracted",
     checkedOn: CHECKED,
-    checkNote: "Khuyến cáo đọc trên trang IDSA. Bước 4D Nhóm 3 (26/10/2026): đã đọc ảnh Bảng 1.1 (thuốc kinh nghiệm), 2.1 (liều tĩnh mạch – LIỀU DÙNG TRONG THỬ NGHIỆM LÂM SÀNG, không phải bảng liều khuyến cáo) và 1.2 (liều uống) từ tệp chính thức trên idsociety.org.",
+    checkNote: "Đối chiếu toàn văn 4 tệp IDSA (Introduction and Methods, CQ1, CQ2, CQ3) ngày 19/11/2026. Bảng 2.1 là liều tĩnh mạch dùng trong thử nghiệm lâm sàng, không phải bảng liều khuyến cáo. Nội dung lâm sàng nằm trong công cụ components/antibiotics/empiric/UtiIdsa2025.tsx.",
   },
   "idsa-amr-2026": {
     id: "idsa-amr-2026",

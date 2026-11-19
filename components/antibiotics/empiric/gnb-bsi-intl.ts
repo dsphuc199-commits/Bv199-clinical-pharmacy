@@ -15,7 +15,7 @@ const r = (role: string, text: string, dose: string | undefined, ref: string, gr
 
 /* ======================= KINH NGHIEM – NGUON TIET NIEU (IDSA 2025 cUTI) ======================= */
 export type Sev = "shock" | "sepsis" | "none";
-export type EmpIn = { sev: Sev; oral: boolean; priorEsbl: boolean; priorFqR: boolean; fq12m: boolean; priorPtzR: boolean };
+export type EmpIn = { sev: Sev; oral: boolean; priorEsbl: boolean; priorFqR: boolean; fq12m: boolean; priorPtzR: boolean; priorTmpR?: boolean };
 
 /* Bang 2.1 – lieu TM dung trong thu nghiem lam sang (chuc nang than binh thuong). */
 const T21 = {
@@ -63,6 +63,7 @@ export function empPlan(i: EmpIn): { headline: string; blocks: Block[]; avoid: R
   if (noCeph) avoid.push(r("Loại ở bước 2", "Cephalosporin thế hệ 3–4: cấy nước tiểu gần đây có vi khuẩn sinh ESBL (IDSA 2025 nêu ví dụ ceftriaxon; ESBL bất hoạt phần lớn cephalosporin và IDSA 2026 khuyên tránh cefepim cho ESBL)", undefined, "1) Rationale"));
   if (noFq) avoid.push(r("Loại ở bước 2", i.fq12m ? "Fluoroquinolon: đã dùng fluoroquinolon trong 12 tháng qua" : "Fluoroquinolon: cấy nước tiểu gần đây kháng fluoroquinolon", undefined, "Step 2"));
   if (noPtz) avoid.push(r("Loại ở bước 2", "Piperacilin-tazobactam: cấy nước tiểu gần đây kháng thuốc này", undefined, "2) Rationale"));
+  if (i.priorTmpR) avoid.push(r("Loại ở bước 2", "Cotrimoxazol: cấy nước tiểu trước đây kháng thuốc này", undefined, "Step 2"));
   avoid.push(r("Không phù hợp", "Nitrofurantoin và fosfomycin uống – không đạt nồng độ đủ trong nhu mô thận và máu", undefined, "Table 1.1"));
 
   const ceph: RxItem[] = noCeph ? [] : [
@@ -103,8 +104,9 @@ export function empPlan(i: EmpIn): { headline: string; blocks: Block[]; avoid: R
     blocks.push({ title: "Ưu tiên – chọn một", lead: "Khuyến cáo có điều kiện; bằng chứng rất thấp đến trung bình. Ưu tiên quản lý kháng sinh vì nguy cơ tử vong thấp.", items: [...ceph, ...ptz, ...fq] });
     blocks.push({ title: "Thay thế – chọn một", items: [...carb, ...novel] });
   } else {
-    headline = "Không sepsis, đường uống: fluoroquinolon hoặc cotrimoxazol; beta-lactam uống là lựa chọn thay thế.";
-    blocks.push({ title: "Ưu tiên – chọn một", items: [...fq, r("Sulfonamid", "Cotrimoxazol (trimethoprim-sulfamethoxazol)", T31.tmp, "Table 3.1")] });
+    const preferred = [noFq ? "" : "fluoroquinolon", i.priorTmpR ? "" : "cotrimoxazol"].filter(Boolean).join(" hoặc ");
+    headline = preferred ? `Không sepsis, đường uống: ${preferred}; beta-lactam uống là lựa chọn thay thế.` : "Không sepsis, đường uống: beta-lactam uống còn nhạy theo cấy nước tiểu trước đây.";
+    blocks.push({ title: "Ưu tiên – chọn một", items: [...fq, ...(i.priorTmpR ? [] : [r("Sulfonamid", "Cotrimoxazol (trimethoprim-sulfamethoxazol)", T31.tmp, "Table 3.1")])] });
     blocks.push({ title: "Thay thế – chọn một", lead: "Hiệu quả kém hơn fluoroquinolon hoặc cotrimoxazol trong đa số nghiên cứu (nhất là amoxicilin-acid clavulanic, cephalexin); tốt nhất khi cấy nước tiểu trước đây cho thấy nhạy với thuốc chọn.", items: [
       r("Penicilin + ức chế beta-lactamase", "Amoxicilin-acid clavulanic", T31.amc, "Table 3.1"),
       r("Cephalosporin uống", "Cefpodoxim", T31.cpd, "Table 3.1"),
@@ -115,8 +117,9 @@ export function empPlan(i: EmpIn): { headline: string; blocks: Block[]; avoid: R
     ] });
     notes.push("Fluoroquinolon có sinh khả dụng đường uống cao; thời điểm chuyển uống phụ thuộc khả năng uống của người bệnh.");
   }
+  if (!i.oral && fq.length) notes.push("Liều fluoroquinolon trong bảng là liều đường uống.");
   if (!noFq && fq.length) notes.push("Fluoroquinolon chỉ nên dùng khi không dự kiến kháng thuốc; nếu tỷ lệ kháng tại chỗ > 10% (sốc) hoặc > 20% (sepsis) thì không dùng làm kinh nghiệm. Nếu tỷ lệ E. coli niệu kháng fluoroquinolon > 45%, việc chưa từng dùng fluoroquinolon không bảo đảm chủng còn nhạy.");
-  notes.push("Bảng 2.1 là liều dùng trong các thử nghiệm lâm sàng (chức năng thận bình thường), không phải bảng liều khuyến cáo; hiệu chỉnh theo chức năng thận.");
+  notes.push("Liều tĩnh mạch là liều dùng trong các thử nghiệm lâm sàng ở người có chức năng thận bình thường, không phải liều khuyến cáo; hiệu chỉnh theo chức năng thận.");
   notes.push("Có kết quả cấy (định danh và kháng sinh đồ): chuyển sớm sang kháng sinh hiệu quả phổ hẹp phù hợp thay vì tiếp tục kháng sinh phổ rộng suốt đợt (có điều kiện; bằng chứng thấp).");
   return { headline, blocks, avoid, notes };
 }
