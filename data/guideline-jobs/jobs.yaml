@@ -418,33 +418,33 @@ jobs:
   - id: nhiem-khuan-huyet-so-sinh
     disease_id: v8-103
     disease_vi: Nhiễm khuẩn huyết sơ sinh
-    disease_en: null
+    disease_en: Neonatal sepsis
     icd10:
       - P36
     category: Nhi khoa – Sơ sinh
     population: neonate
     class: antibacterial
     priority: 3
-    preferred_orgs: []
-    status: todo
-    last_checked: null
+    preferred_orgs: [WHO, NICE]
+    status: drafted
+    last_checked: 2026-11-19
     published_at: null
-    notes: population từ getPopulationHint ("Sơ sinh"); class từ getStream ("empiric")
+    notes: WHO 2024 cho điều trị tại viện. NICE NG195 cho nhiễm khuẩn khởi phát sớm và muộn. Chờ thẩm định lâm sàng.
   - id: viem-phoi-so-sinh
     disease_id: v8-102
     disease_vi: Viêm phổi sơ sinh
-    disease_en: null
+    disease_en: Neonatal pneumonia
     icd10:
       - P23
     category: Nhi khoa – Sơ sinh
     population: neonate
     class: antibacterial
     priority: 3
-    preferred_orgs: []
-    status: todo
-    last_checked: null
+    preferred_orgs: [WHO]
+    status: drafted
+    last_checked: 2026-11-19
     published_at: null
-    notes: population từ getPopulationHint ("Sơ sinh"); class từ getStream ("empiric")
+    notes: WHO 2024 có đính chính 25/03/2025, phác đồ tại viện cho trẻ 0–59 ngày. Chờ thẩm định lâm sàng.
   - id: aspergillosis-xoang-xam-lan
     disease_id: v8-126
     disease_vi: Aspergillosis xoang xâm lấn

@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "slug": "viem-phoi-so-sinh",
+  "disease_id": "v8-102",
+  "name_vi": "Viêm phổi sơ sinh",
+  "name_en": "Pneumonia in newborns and infants aged 0–59 days",
+  "icd10": [
+    "P23"
+  ],
+  "population": [
+    "neonate",
+    "child"
+  ],
+  "status": "extracted",
+  "header": {
+    "eyebrow": "Lựa chọn kháng sinh theo chẩn đoán",
+    "title": "Viêm phổi sơ sinh",
+    "flow": [
+      "Chọn tuổi sau sinh",
+      "Chọn bệnh cảnh nội trú",
+      "Chọn nhóm trẻ"
+    ]
+  },
+  "axes": [
+    {
+      "id": "source",
+      "label": "Tổ chức ban hành",
+      "type": "seg",
+      "default": "who",
+      "options": [
+        {
+          "id": "who",
+          "label": "WHO 2024"
+        }
+      ]
+    },
+    {
+      "id": "who_age",
+      "label": "Tuổi sau sinh",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tuổi"
+        },
+        {
+          "id": "week-one",
+          "label": "0–6 ngày"
+        },
+        {
+          "id": "after-week-one",
+          "label": "7–59 ngày"
+        },
+        {
+          "id": "outside",
+          "label": "Từ 60 ngày"
+        }
+      ],
+      "tip": "Phạm vi WHO là 0–59 ngày sau sinh, gồm trẻ sơ sinh và trẻ lớn hơn trong nhóm này."
+    },
+    {
+      "id": "who_case",
+      "label": "Bệnh cảnh",
+      "type": "select",
+      "default": "unset",
+      "visible_when": {
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ]
+      },
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "pneumonia",
+          "label": "Nội trú · nghi viêm phổi"
+        },
+        {
+          "id": "staph",
+          "label": "Nội trú · nghi viêm phổi do tụ cầu"
+        },
+        {
+          "id": "invasive",
+          "label": "Nghi nhiễm khuẩn huyết hoặc viêm màng não"
+        },
+        {
+          "id": "referral",
+          "label": "Chưa nhập viện · đánh giá chuyển viện"
+        }
+      ],
+      "tip": "Gợi ý viêm phổi ở trẻ nhập viện: nhịp thở ≥60 lần/phút, rút lõm lồng ngực, thở rên, tím trung ương hoặc thiếu oxy. Nghi tụ cầu nếu kèm nhiễm khuẩn da, mụn mủ, viêm rốn hoặc áp xe."
+    },
+    {
+      "id": "who_profile",
+      "label": "Nhóm trẻ",
+      "type": "select",
+      "default": "unset",
+      "visible_when": {
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": [
+          "pneumonia",
+          "staph"
+        ]
+      },
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn nhóm trẻ"
+        },
+        {
+          "id": "standard",
+          "label": "Đủ tháng, cân nặng lúc sinh ≥2.500 g, chức năng thận phù hợp"
+        },
+        {
+          "id": "special",
+          "label": "Sinh non, nhẹ cân lúc sinh, suy thận hoặc nghi kháng thuốc"
+        }
+      ],
+      "tip": "Chọn nhóm cần cá thể hóa nếu nghi nhiễm khuẩn liên quan chăm sóc y tế, có nguy cơ kháng thuốc hoặc có chống chỉ định với thuốc trong phác đồ."
+    }
+  ],
+  "sections": [],
+  "rules": [
+    {
+      "id": "who-age",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-outside",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "outside"
+      },
+      "summary": [
+        {
+          "label": "Đánh giá theo tuổi",
+          "text": "Trẻ từ 60 ngày cần hướng dẫn viêm phổi theo nhóm tuổi và bệnh cảnh hiện tại."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-choose-case",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-choose-profile",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": [
+          "pneumonia",
+          "staph"
+        ],
+        "who_profile": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-special",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": [
+          "pneumonia",
+          "staph"
+        ],
+        "who_profile": "special"
+      },
+      "summary": [
+        {
+          "label": "Cá thể hóa",
+          "text": "Hội chẩn sơ sinh để chọn thuốc, liều và khoảng cách theo tuổi thai, tuổi sau sinh, chức năng thận, nguy cơ đề kháng và kế hoạch theo dõi nồng độ thuốc."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-invasive",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": "invasive"
+      },
+      "summary": [
+        {
+          "label": "Đánh giá ngay",
+          "text": "Tra mô-đun Nhiễm khuẩn huyết sơ sinh. Nếu nghi viêm màng não, xử trí theo phác đồ viêm màng não ở nhóm tuổi này."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-referral-week-one",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "week-one",
+        "who_case": "referral"
+      },
+      "summary": [
+        {
+          "label": "Chuyển đánh giá tại bệnh viện",
+          "text": "WHO khuyến cáo chuyển viện với trẻ 0–6 ngày nghi nhiễm khuẩn nặng hoặc có thở nhanh đơn độc."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-referral-after-week-one",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "after-week-one",
+        "who_case": "referral"
+      },
+      "summary": [
+        {
+          "label": "Đánh giá tại cơ sở y tế",
+          "text": "Chuyển viện khi có dấu hiệu nghi nhiễm khuẩn nặng hoặc cần điều trị nội trú. Thở nhanh đơn độc cần phân loại riêng theo WHO."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-pneumonia",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": "pneumonia",
+        "who_profile": "standard"
+      },
+      "summary": [
+        {
+          "label": "Bệnh cảnh",
+          "text": "Nghi viêm phổi ở trẻ đã nhập viện, không có dấu hiệu gợi ý tụ cầu."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ưu tiên · Ampicillin + gentamicin",
+          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh.",
+          "items": [
+            {
+              "role": "Phối hợp",
+              "text": "Ampicillin",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
+              "preparation": "Bột pha tiêm 1 g/lọ (ampicillin natri)",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
+              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Ampicillin",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
+              "preparation": "Bột pha tiêm 1 g/lọ (ampicillin natri)",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "after-week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
+              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "after-week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng.",
+          "source_ids": [
+            "who-sbi-2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    },
+    {
+      "id": "who-staph",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "week-one",
+          "after-week-one"
+        ],
+        "who_case": "staph",
+        "who_profile": "standard"
+      },
+      "summary": [
+        {
+          "label": "Bệnh cảnh",
+          "text": "Nghi viêm phổi do tụ cầu ở trẻ đã nhập viện."
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Ưu tiên · Cloxacillin + gentamicin",
+          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh.",
+          "items": [
+            {
+              "role": "Phối hợp",
+              "text": "Cloxacillin",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "administration": "Với lọ 1 g Imexpharm, dùng tĩnh mạch theo nhãn. Xác nhận dùng dưới 1 tháng tuổi với dược sĩ sơ sinh. Chỉ tiêm bắp nếu chế phẩm cho phép. Dùng riêng với gentamicin.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
+              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Cloxacillin",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "administration": "Với lọ 1 g Imexpharm, dùng tĩnh mạch theo nhãn. Xác nhận dùng dưới 1 tháng tuổi với dược sĩ sơ sinh. Chỉ tiêm bắp nếu chế phẩm cho phép. Dùng riêng với gentamicin.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "after-week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
+              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "course": "Ít nhất 7 ngày",
+              "grade": "S-VL",
+              "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
+              "show_when": {
+                "who_age": "after-week-one"
+              },
+              "source_ids": [
+                "who-sbi-2024"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng.",
+          "source_ids": [
+            "who-sbi-2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who-sbi-2024"
+      ]
+    }
+  ],
+  "source_text": "WHO 2024",
+  "gaps": [
+    "Chỉ trích phác đồ viêm phổi nội trú B.5 và B.6. Không trích phác đồ ngoài bệnh viện của A.4 và A.5 cho trẻ thở nhanh đơn độc.",
+    "WHO không đưa liều riêng cho trẻ sinh non, cân nặng lúc sinh thấp, hoặc các nhóm nguy cơ khác do hạn chế dữ liệu. Mô-đun chuyển các trường hợp này và trường hợp cần hiệu chỉnh chức năng thận sang đánh giá cá thể hóa.",
+    "Điều trị nhiễm khuẩn huyết, viêm màng não và nhiễm khuẩn bệnh viện cần lựa chọn theo bệnh cảnh tương ứng.",
+    "Hàm lượng ampicillin và cloxacillin được đối chiếu với dữ liệu danh mục thuốc. Nồng độ gentamicin và cách pha, thể tích tiêm cần xác minh theo chế phẩm phù hợp cho nhóm tuổi.",
+    "Nhãn cloxacillin 1 g Imexpharm hướng dẫn tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch. https://www.imexpharm.com/Data/Sites/1/media/content/Cloxacillin%201%20g%20TBPT%20%281%29.pdf"
+  ],
+  "discordance": [],
+  "selection_rationale": {
+    "chosen": "Khuyến cáo WHO B.5 và B.6 phù hợp điều trị nội trú khi nghi viêm phổi ở trẻ 0–59 ngày.",
+    "current_version_check": "Đối chiếu tài liệu ISBN 9789240102903, đính chính WHO ngày 25/03/2025 và trang công bố WHO."
+  },
+  "sources": [
+    {
+      "id": "who-sbi-2024",
+      "org": "WHO",
+      "title": "WHO recommendations for management of serious bacterial infections in infants aged 0–59 days",
+      "short_title": "WHO 2024",
+      "year": 2024,
+      "version": "08/12/2024 · đính chính 25/03/2025 · B.5, B.6 và Bảng 3.1",
+      "url": "https://www.who.int/publications/i/item/9789240102903",
+      "accessed": "2026-11-19",
+      "population": [
+        "neonate",
+        "child"
+      ],
+      "evidence_system": "GRADE",
+      "grade_system": "GRADE"
+    }
+  ],
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
+}

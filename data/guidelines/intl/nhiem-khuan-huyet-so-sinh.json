@@ -1,0 +1,932 @@
+{
+  "schema_version": 1,
+  "slug": "nhiem-khuan-huyet-so-sinh",
+  "disease_id": "v8-103",
+  "name_vi": "Nhiễm khuẩn huyết sơ sinh",
+  "name_en": "Neonatal sepsis",
+  "icd10": [
+    "P36"
+  ],
+  "population": [
+    "neonate"
+  ],
+  "status": "extracted",
+  "header": {
+    "eyebrow": "Lựa chọn kháng sinh theo chẩn đoán",
+    "title": "Nhiễm khuẩn huyết sơ sinh",
+    "flow": [
+      "Chọn hướng dẫn",
+      "Chọn tuổi và bệnh cảnh"
+    ]
+  },
+  "axes": [
+    {
+      "id": "source",
+      "label": "Tổ chức ban hành",
+      "type": "seg",
+      "default": "who",
+      "options": [
+        {
+          "id": "who",
+          "label": "WHO 2024"
+        },
+        {
+          "id": "nice",
+          "label": "NICE NG195"
+        }
+      ]
+    },
+    {
+      "id": "who_age",
+      "label": "Tuổi sau sinh",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn tuổi"
+        },
+        {
+          "id": "first-week",
+          "label": "0–6 ngày"
+        },
+        {
+          "id": "later",
+          "label": "7–27 ngày"
+        },
+        {
+          "id": "outside",
+          "label": "Từ 28 ngày trở lên"
+        }
+      ],
+      "visible_when": {
+        "source": "who"
+      }
+    },
+    {
+      "id": "who_case",
+      "label": "Bệnh cảnh",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "sepsis",
+          "label": "Nội trú · nghi nhiễm khuẩn huyết"
+        },
+        {
+          "id": "staph",
+          "label": "Nội trú · nghi nhiễm khuẩn huyết do tụ cầu"
+        },
+        {
+          "id": "meningitis",
+          "label": "Nghi viêm màng não"
+        },
+        {
+          "id": "referral",
+          "label": "Chưa nhập viện · cần chuyển viện"
+        }
+      ],
+      "visible_when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ]
+      },
+      "tip": "Chọn nhánh nội trú sau đánh giá lâm sàng. Gợi ý nhiễm khuẩn huyết gồm bú kém, giảm đáp ứng, sốt từ 38 °C, hạ thân nhiệt dưới 35,5 °C hoặc co giật. Nghi tụ cầu khi kèm nhiễm trùng da, mụn mủ, viêm rốn hoặc áp xe."
+    },
+    {
+      "id": "who_profile",
+      "label": "Điều kiện dùng liều",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn nhóm"
+        },
+        {
+          "id": "standard",
+          "label": "Dùng liều chuẩn theo WHO"
+        },
+        {
+          "id": "special",
+          "label": "Cần cá thể hóa"
+        }
+      ],
+      "visible_when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": [
+          "sepsis",
+          "staph"
+        ]
+      },
+      "tip": "Chọn cá thể hóa khi trẻ sinh non, nhẹ cân, suy thận hoặc có nguy cơ nhiễm khuẩn bệnh viện hay vi khuẩn kháng thuốc."
+    },
+    {
+      "id": "nice_scope",
+      "label": "Tuổi hiệu chỉnh",
+      "type": "seg",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn phạm vi tuổi"
+        },
+        {
+          "id": "within",
+          "label": "Đến hết 28 ngày"
+        },
+        {
+          "id": "outside",
+          "label": "Trên 28 ngày"
+        }
+      ],
+      "visible_when": {
+        "source": "nice"
+      }
+    },
+    {
+      "id": "nice_case",
+      "label": "Bệnh cảnh",
+      "type": "select",
+      "default": "unset",
+      "options": [
+        {
+          "id": "unset",
+          "label": "Chọn bệnh cảnh"
+        },
+        {
+          "id": "early",
+          "label": "Khởi phát sớm · bắt đầu điều trị tĩnh mạch"
+        },
+        {
+          "id": "early-oral",
+          "label": "Khởi phát sớm · cân nhắc chuyển uống từ 36 giờ"
+        },
+        {
+          "id": "late-unit",
+          "label": "Khởi phát muộn · đang điều trị tại khoa sơ sinh"
+        },
+        {
+          "id": "late-home",
+          "label": "Khởi phát muộn · nhập viện từ nhà"
+        },
+        {
+          "id": "meningitis",
+          "label": "Nghi viêm màng não"
+        },
+        {
+          "id": "special",
+          "label": "Cần cá thể hóa liều hoặc lựa chọn thuốc"
+        }
+      ],
+      "visible_when": {
+        "source": "nice",
+        "nice_scope": "within"
+      },
+      "tip": "Tính thời điểm khởi phát từ lúc sinh. Khởi phát sớm dưới 72 giờ. Khởi phát muộn từ 72 giờ trở lên."
+    },
+    {
+      "id": "nice_switch",
+      "label": "Đã xác nhận đủ điều kiện cân nhắc chuyển uống",
+      "group": "Điều kiện chuyển uống",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "early-oral"
+      },
+      "tip": "Tuổi thai lúc sinh từ 35 tuần 0 ngày. Đã dùng kháng sinh tĩnh mạch ít nhất 36 giờ, cấy máu âm tính nhưng vẫn cần điều trị vì ban đầu nghi nhiễm khuẩn mạnh. Hiện trẻ ổn định, không còn dấu hiệu nhiễm khuẩn, CRP và xu hướng CRP yên tâm, dung nạp ăn qua đường miệng. Bác sĩ sơ sinh hoặc nhi khoa phụ trách đồng ý."
+    }
+  ],
+  "sections": [],
+  "rules": [
+    {
+      "id": "who-start",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "unset"
+      },
+      "summary": [
+        {
+          "label": "Phạm vi",
+          "text": "Trẻ sơ sinh 0–27 ngày tuổi sau sinh, đã được đánh giá tại viện."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-outside",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": "outside"
+      },
+      "summary": [
+        {
+          "label": "Tuổi sau sinh",
+          "text": "WHO còn hướng dẫn đến 59 ngày tuổi. Mục này dành cho trẻ sơ sinh 0–27 ngày. Chọn hướng dẫn phù hợp với tuổi của trẻ."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-assess",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-meningitis",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": "meningitis"
+      },
+      "summary": [
+        {
+          "label": "Xử trí chuyên khoa",
+          "text": "Nghi viêm màng não cần đánh giá khẩn và dùng phác đồ sơ sinh dành riêng cho viêm màng não."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-profile-assess",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": [
+          "sepsis",
+          "staph"
+        ],
+        "who_profile": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-special",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": [
+          "sepsis",
+          "staph"
+        ],
+        "who_profile": "special"
+      },
+      "summary": [
+        {
+          "label": "Cá thể hóa",
+          "text": "Hội chẩn sơ sinh, vi sinh và dược lâm sàng. Chọn thuốc, liều và khoảng cách liều theo tuổi thai, cân nặng, chức năng thận và kháng thuốc tại cơ sở."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-referral",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": "referral"
+      },
+      "summary": [
+        {
+          "label": "Chuyển viện khẩn",
+          "text": "Trẻ nghi nhiễm khuẩn huyết cần được đánh giá và điều trị tại bệnh viện. Nếu không thể chuyển viện, xin ý kiến chuyên khoa và áp dụng hướng dẫn riêng cho chăm sóc ngoài bệnh viện."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-sepsis",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": "sepsis",
+        "who_profile": "standard"
+      },
+      "summary": [],
+      "blocks": [
+        {
+          "title": "Phác đồ kháng sinh kinh nghiệm",
+          "lead": "Dùng phối hợp hai thuốc. Pha từng thuốc riêng.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Ampicillin",
+              "ref": "WHO 2024, bảng 3.1, B.2",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "first-week"
+              },
+              "course": "Ít nhất 10 ngày",
+              "grade": "S-M",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ"
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "ref": "WHO 2024, bảng 3.1, B.2",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "first-week"
+              },
+              "course": "Ít nhất 10 ngày",
+              "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Ampicillin",
+              "ref": "WHO 2024, bảng 3.1, B.2",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "later"
+              },
+              "course": "Ít nhất 10 ngày",
+              "grade": "S-M",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ"
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "ref": "WHO 2024, bảng 3.1, B.2",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "later"
+              },
+              "course": "Ít nhất 10 ngày",
+              "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Đánh giá lại đáp ứng và kết quả vi sinh. Điều chỉnh thuốc theo tác nhân và kháng sinh đồ khi có kết quả. Khi cân nhắc ngừng sớm, dùng quy trình phân tầng nguy cơ lâm sàng và xét nghiệm đã được kiểm định.",
+          "source_ids": [
+            "who2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "who-staph",
+      "kind": "primary",
+      "when": {
+        "source": "who",
+        "who_age": [
+          "first-week",
+          "later"
+        ],
+        "who_case": "staph",
+        "who_profile": "standard"
+      },
+      "summary": [],
+      "blocks": [
+        {
+          "title": "Phác đồ kháng sinh kinh nghiệm",
+          "lead": "Dùng phối hợp hai thuốc. Pha từng thuốc riêng.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Cloxacillin",
+              "ref": "WHO 2024, bảng 3.1, B.3",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "first-week"
+              },
+              "course": "Ít nhất 10 ngày",
+              "grade": "S-VL",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
+              "administration": "Nhãn tham chiếu cloxacillin 1 g Imexpharm dùng tĩnh mạch. Chỉ tiêm bắp khi nhãn đúng chế phẩm cho phép. Xác nhận liều sơ sinh theo hướng dẫn WHO với khoa Dược. Pha riêng với gentamicin."
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "ref": "WHO 2024, bảng 3.1, B.3",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "first-week"
+              },
+              "course": "Ít nhất 10 ngày",
+              "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+            },
+            {
+              "role": "Ưu tiên",
+              "text": "Cloxacillin",
+              "ref": "WHO 2024, bảng 3.1, B.3",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "later"
+              },
+              "course": "Ít nhất 10 ngày",
+              "grade": "S-VL",
+              "preparation": "Bột pha tiêm 1 g/lọ",
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
+              "administration": "Nhãn tham chiếu cloxacillin 1 g Imexpharm dùng tĩnh mạch. Chỉ tiêm bắp khi nhãn đúng chế phẩm cho phép. Xác nhận liều sơ sinh theo hướng dẫn WHO với khoa Dược. Pha riêng với gentamicin."
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "ref": "WHO 2024, bảng 3.1, B.3",
+              "source_ids": [
+                "who2024"
+              ],
+              "show_when": {
+                "who_age": "later"
+              },
+              "course": "Ít nhất 10 ngày",
+              "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
+              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Đánh giá lại đáp ứng và kết quả vi sinh. Điều chỉnh thuốc theo tác nhân và kháng sinh đồ khi có kết quả. Khi cân nhắc ngừng sớm, dùng quy trình phân tầng nguy cơ lâm sàng và xét nghiệm đã được kiểm định.",
+          "source_ids": [
+            "who2024"
+          ]
+        }
+      ],
+      "source_ids": [
+        "who2024"
+      ]
+    },
+    {
+      "id": "nice-start",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "unset"
+      },
+      "summary": [
+        {
+          "label": "Phạm vi",
+          "text": "Trẻ đến hết 28 ngày tuổi hiệu chỉnh có nhiễm khuẩn nghi ngờ hoặc xác định."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-outside",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "outside"
+      },
+      "summary": [
+        {
+          "label": "Tuổi hiệu chỉnh",
+          "text": "Đánh giá theo hướng dẫn nhi khoa phù hợp với tuổi và bệnh cảnh."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-assess",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "unset"
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-special",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "special"
+      },
+      "summary": [
+        {
+          "label": "Cá thể hóa",
+          "text": "Hội chẩn nếu có suy thận, dị ứng cần đổi thuốc hoặc nguy cơ kháng thuốc. Hiệu chỉnh liều theo tuổi thai, cân nặng, chức năng thận và theo dõi nồng độ gentamicin khi phù hợp."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-meningitis",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "meningitis"
+      },
+      "summary": [
+        {
+          "label": "Xử trí chuyên khoa",
+          "text": "Nghi viêm màng não cần đánh giá khẩn và dùng phác đồ NICE dành riêng cho viêm màng não sơ sinh. Với trẻ nhập viện từ nhà, theo hướng dẫn nghi sepsis ở trẻ dưới 16 tuổi của NICE."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-late-home",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "late-home"
+      },
+      "summary": [
+        {
+          "label": "Nhập viện từ nhà",
+          "text": "Đánh giá và xử trí theo NICE NG254 về nghi sepsis ở trẻ dưới 16 tuổi. Tuổi thai và chỉ định dùng thuốc tĩnh mạch ảnh hưởng đến lựa chọn kháng sinh."
+        }
+      ],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-early",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "early"
+      },
+      "summary": [],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi phát sớm",
+          "lead": "Phối hợp hai thuốc khi đã xác định chỉ định kháng sinh kinh nghiệm và dữ liệu đề kháng tại chỗ phù hợp.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Benzylpenicillin natri",
+              "ref": "NICE NG195 §1.20.1–1.20.7",
+              "source_ids": [
+                "nice195"
+              ],
+              "dose": "25 mg/kg/liều, tĩnh mạch, mỗi 12 giờ",
+              "preparation": "Bột pha tiêm 1.000.000 IU/lọ",
+              "administration": "Liều được ghi theo mg. Đối chiếu quy đổi IU trên nhãn đúng chế phẩm benzylpenicillin natri. Có thể rút khoảng cách xuống mỗi 8 giờ nếu rất nặng."
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin",
+              "ref": "NICE NG195 §1.20.1–1.20.7",
+              "source_ids": [
+                "nice195"
+              ],
+              "dose": "5 mg/kg/liều (khởi đầu), tĩnh mạch, 1 liều",
+              "administration": "Nếu còn chỉ định, liều thứ hai thường sau 36 giờ. Cân nhắc khoảng cách ngắn hơn nếu trẻ rất nặng hoặc cấy máu có vi khuẩn Gram âm. Điều chỉnh các liều tiếp theo theo nồng độ và chức năng thận. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Khởi trị khi có dấu hiệu báo động như ngừng thở, co giật, cần hồi sức tim phổi, thở máy hoặc sốc, hay có ít nhất hai yếu tố nguy cơ hoặc dấu hiệu lâm sàng khác. Một dấu hiệu hoặc yếu tố nguy cơ đơn độc cần đánh giá lâm sàng.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Lấy cấy máu trước liều đầu và đo CRP ban đầu. Bắt đầu kháng sinh trong vòng một giờ kể từ quyết định điều trị, không chờ kết quả xét nghiệm.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Nếu dùng liều gentamicin thứ hai, lấy mẫu đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Mục tiêu nồng độ đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Khi có bằng chứng vi sinh gợi ý nhiễm khuẩn huyết Gram âm, bổ sung thuốc có hoạt tính phù hợp, ví dụ cefotaxime. Ngừng benzylpenicillin natri khi xác định nhiễm Gram âm.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Ngừng ở 36 giờ nếu đủ cả bốn tiêu chí. Cấy máu âm tính, mức nghi ngờ ban đầu thấp, trẻ ổn định và không còn dấu hiệu nhiễm khuẩn, CRP và xu hướng CRP yên tâm.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Điều trị tĩnh mạch tổng 7 ngày nếu cấy máu dương tính hoặc ban đầu nghi nhiễm khuẩn huyết mạnh dù cấy âm tính. Kéo dài theo mức độ hồi phục hoặc tác nhân. Nếu tiếp tục sau 36 giờ khi cấy âm tính, đánh giá lại ít nhất mỗi 24 giờ.",
+          "source_ids": [
+            "nice195"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-switch-assess",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "early-oral",
+        "nice_switch": false
+      },
+      "summary": [],
+      "blocks": [],
+      "notes": [],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-switch-ready",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "early-oral",
+        "nice_switch": true
+      },
+      "summary": [],
+      "blocks": [
+        {
+          "title": "Chuyển tĩnh mạch sang uống",
+          "lead": "Cân nhắc chuyển từ 36 giờ trở đi. Tổng thời gian tiêm và uống tối đa 7 ngày trong nhánh này.",
+          "items": [
+            {
+              "role": "Ưu tiên",
+              "text": "Amoxicillin uống nếu kháng thuốc tại chỗ không đòi hỏi lựa chọn khác. Xác nhận liều sơ sinh với bác sĩ và dược lâm sàng.",
+              "ref": "NICE NG195 §1.22.1–1.22.2",
+              "source_ids": [
+                "nice195"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu tiếp tục tại nhà, liều uống đầu dùng dưới giám sát tại viện. Hướng dẫn người chăm sóc cách cho thuốc và khi nào liên hệ đội sơ sinh. Hẹn ít nhất hai lần theo dõi, gồm một lần cuối đợt.",
+          "source_ids": [
+            "nice195"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice195"
+      ]
+    },
+    {
+      "id": "nice-late-unit",
+      "kind": "primary",
+      "when": {
+        "source": "nice",
+        "nice_scope": "within",
+        "nice_case": "late-unit"
+      },
+      "summary": [],
+      "blocks": [
+        {
+          "title": "Phác đồ khởi phát muộn tại khoa sơ sinh",
+          "lead": "Phối hợp thuốc phổ hẹp có hoạt tính trên Gram dương và Gram âm theo dữ liệu đề kháng tại cơ sở. Liều và khoảng cách liều cần xác định theo phác đồ sơ sinh của khoa.",
+          "items": [
+            {
+              "role": "Ví dụ ưu tiên",
+              "text": "Flucloxacillin tĩnh mạch",
+              "ref": "NICE NG195 §1.23.1",
+              "source_ids": [
+                "nice195"
+              ]
+            },
+            {
+              "role": "Phối hợp",
+              "text": "Gentamicin tĩnh mạch",
+              "ref": "NICE NG195 §1.23.1, §1.23.3",
+              "source_ids": [
+                "nice195"
+              ]
+            },
+            {
+              "role": "Khi nghi viêm ruột hoại tử",
+              "text": "Thêm thuốc có hoạt tính trên vi khuẩn kỵ khí, ví dụ metronidazole.",
+              "ref": "NICE NG195 §1.23.1",
+              "source_ids": [
+                "nice195"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "text": "Nếu dùng liều gentamicin thứ hai, lấy mẫu đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Mục tiêu nồng độ đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Cân nhắc ngừng ở 48 giờ nếu cấy máu âm tính, mức nghi ngờ ban đầu thấp, trẻ ổn định không còn chỉ điểm nhiễm khuẩn và CRP cùng xu hướng yên tâm. Nếu tiếp tục dù cấy âm, đánh giá lại ít nhất mỗi 24 giờ.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Cấy máu dương tính thường điều trị 7 ngày. Kéo dài nếu chưa hồi phục, hoặc do tác nhân hay ổ nhiễm. Có thể dùng dưới 7 ngày khi hồi phục nhanh và không tìm thấy tác nhân hoặc chỉ phân lập vi khuẩn thường trú.",
+          "source_ids": [
+            "nice195"
+          ]
+        }
+      ],
+      "source_ids": [
+        "nice195"
+      ]
+    }
+  ],
+  "source_text": "WHO 2024, NICE NG195",
+  "gaps": [
+    "WHO 2024 nghiên cứu trẻ 0–59 ngày tuổi sau sinh. Mục sơ sinh theo WHO hiển thị 0–27 ngày và chỉ trình bày phác đồ nội trú cho B.2 và B.3.",
+    "WHO chưa đưa ra khuyến cáo riêng theo nhóm sinh non, tuổi thai, cân nặng lúc sinh và mô hình kháng thuốc. Phác đồ WHO trong mô-đun không được dùng làm phác đồ mặc định cho nhóm cần chỉnh liều hoặc nhiễm khuẩn liên quan chăm sóc y tế.",
+    "NICE NG195 bao gồm trẻ đến hết 28 ngày tuổi hiệu chỉnh. NICE chưa ấn định liều trong ví dụ phác đồ khởi phát muộn hoặc liều amoxicillin chuyển uống khởi phát sớm.",
+    "Dạng và hàm lượng tiêm có trong chỉ mục bv199-formulary-antimicrobials.json, đối chiếu nhãn chế phẩm thực tế. Không suy ra thể tích tiêm sơ sinh từ hàm lượng bao bì.",
+    "Điều trị viêm màng não, nhiễm khuẩn đa kháng, theo tác nhân đã xác định và phác đồ tại nơi không chuyển viện được cần đánh giá riêng.",
+    "Nhãn cloxacillin 1 g Imexpharm chỉ có liều định lượng theo tuổi cho nhóm từ 1 tháng. Đối chiếu đường dùng, tương hợp và kỹ thuật pha cho sơ sinh với khoa Dược theo nhãn https://www.imexpharm.com/Data/Sites/1/media/content/Cloxacillin%201%20g%20TBPT%20%281%29.pdf.",
+    "Chỉ mục thuốc xác nhận hàm lượng dung dịch gentamicin nhưng không đủ để xác nhận chế phẩm phù hợp cho trẻ sơ sinh. Giao diện không gắn một ống thuốc cụ thể với liều WHO hoặc NICE."
+  ],
+  "discordance": [
+    {
+      "topic": "Phạm vi và phác đồ kinh nghiệm",
+      "primary_source_id": "who2024",
+      "other_source_id": "nice195",
+      "description": "WHO chọn phác đồ theo bệnh cảnh nội trú và tuổi sau sinh. NICE phân theo thời điểm khởi phát, nơi đang chăm sóc và kết quả theo dõi. Hai lịch gentamicin thuộc hai khuyến cáo khác nhau."
+    }
+  ],
+  "selection_rationale": {
+    "chosen": "WHO 2024 là hướng dẫn điều trị nhiễm khuẩn nặng ở trẻ 0–59 ngày gồm phác đồ nội trú B.2/B.3. NICE NG195 trình bày xử trí nhiễm khuẩn sơ sinh khởi phát sớm và muộn cùng điều kiện đánh giá lại điều trị.",
+    "current_version_check": "Đối chiếu tài liệu WHO ISBN 9789240102903 và trang NICE NG195, cập nhật 13/05/2026.",
+    "excluded": [
+      {
+        "source": "WHO A.2–A.5",
+        "reason": "Phác đồ ngoài bệnh viện theo điều kiện chuyển tuyến và dấu hiệu riêng, không ghép vào điều trị nội trú."
+      },
+      {
+        "source": "WHO B.4 và NICE NG195 §1.27",
+        "reason": "Viêm màng não cần phác đồ sơ sinh riêng."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "who2024",
+      "org": "WHO",
+      "short_title": "WHO 2024",
+      "title": "WHO recommendations for management of serious bacterial infections in infants aged 0–59 days",
+      "year": 2024,
+      "version": "2024 · ISBN 9789240102903",
+      "url": "https://www.who.int/publications/i/item/9789240102903",
+      "accessed": "2026-11-19",
+      "population": [
+        "neonate"
+      ],
+      "evidence_system": "GRADE",
+      "grade_system": "GRADE"
+    },
+    {
+      "id": "nice195",
+      "org": "NICE",
+      "short_title": "NICE NG195",
+      "title": "Neonatal infection: antibiotics for prevention and treatment",
+      "year": 2026,
+      "version": "Cập nhật 13/05/2026",
+      "url": "https://www.nice.org.uk/guidance/ng195",
+      "accessed": "2026-11-19",
+      "population": [
+        "neonate"
+      ],
+      "evidence_system": "Khuyến cáo NICE",
+      "grade_system": "none"
+    }
+  ],
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
+}
