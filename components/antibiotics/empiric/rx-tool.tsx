@@ -80,7 +80,7 @@ export function Rx({ items }: { items: Item[] }) {
               {/* Dong khong co lieu (nguyen tac, ghi chu): noi dung trai het cac cot cach dung. */}
               <td className={hasDose && !it.dose ? "sa24-note" : "sa24-drug"} colSpan={hasDose && !it.dose ? 1 + useSpan : undefined}>
                 {it.text}
-                {it.preparation && <span className="sa24-rx-detail">{it.preparation}</span>}
+                {it.preparation && <span className="sa24-rx-detail sa24-rx-preparation">{it.preparation}</span>}
               </td>
               {it.dose && p && <>
                 <td className="sa24-dose" data-label="Liều"><span>{p.dose}{it.administration && <span className="sa24-rx-detail">{it.administration}</span>}</span></td>
@@ -162,6 +162,10 @@ export function RxToolStyle() {
         .sa24-legend dt { font-weight: 800; color: #0b3a5b; }
         .sa24-legend dd { margin: 0; }
         .sa24-out h4 { margin: 8px 0 0; font-size: 15px; font-weight: 800; color: #0b3a5b; }
+        .pn-plan { min-width: 0; border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 8px; }
+        .sa24-out .pn-plan-h { margin: 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; color: #0b3a5b; font-size: 14.5px; }
+        .pn-plan .sa24-rx { border: 0; border-top: 1px solid #edf2f6; border-radius: 0; }
+        .pn-lead { margin: 0; font-size: 13.5px; font-weight: 700; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
         .sa24-rx { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e3eaf0; border-radius: 10px; overflow: hidden; }
         .sa24-rx th, .sa24-rx td { padding: 8px 10px; border-top: 1px solid #edf2f6; text-align: left; vertical-align: top; font-size: 14px; line-height: 1.55; }
         .sa24-rx tr:first-child th, .sa24-rx tr:first-child td { border-top: 0; }

@@ -184,9 +184,9 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
             {r.antibiogram.map((t) => <p key={t} className="igv-abg">Đối chiếu Antibiogram BV199: {t}</p>)}
             {r.before.map((s) => <Section key={s.id} s={s} g={g} eff={eff} set={set} />)}
             {r.blocks.map((b, i) => (
-              <div key={`${b.title}-${i}`}>
-                <h4>{b.title}</h4>
-                {b.lead && <p className="sa24-lead">{b.lead}</p>}
+              <div key={`${b.title}-${i}`} className={clinical ? "pn-plan" : undefined}>
+                <h4 className={clinical ? "pn-plan-h" : undefined}>{b.title}</h4>
+                {b.lead && <p className={clinical ? "pn-lead" : "sa24-lead"}>{b.lead}</p>}
                 <Rx items={b.items} />
               </div>
             ))}
@@ -236,6 +236,7 @@ export default function IntlGuidelineView({ data, sourceAxis, clinical = false }
         .igv-verified { background: #eef8f2; border: 1px solid #b7e0c6; color: #0b6b3a; }
         .igv-abg { margin: 0; font-size: 13px; line-height: 1.55; color: #1d4f8a; background: #e6f0fb; border-radius: 8px; padding: 6px 10px; }
         .igv .sa24-tip { white-space: pre-line; }
+        .igv .pn-plan .sa24-rx-preparation { color: #33505f; font-size: 13px; }
         .igv-empty-output { position: absolute; }
         .igv-source-line { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; line-height: 1.5; color: #33505f; }
         .igv-source-line a { color: #09627e; text-decoration: underline; text-underline-offset: 2px; }

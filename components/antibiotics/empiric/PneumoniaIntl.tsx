@@ -257,12 +257,8 @@ export default function PneumoniaIntl({ kind }: { kind: Kind }) {
       <SourceList sources={SRC[kind]} notes={["Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ."]} />
       <RxToolStyle />
       <style>{`
-        .pn-plan { border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 8px; }
-        .pn-plan-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; color: #0b3a5b; font-size: 14.5px; }
         .pn-block { display: grid; gap: 4px; }
         .pn-block-t { margin: 0; font-size: 13px; font-weight: 800; color: #0b3a5b; }
-        .pn-plan .sa24-rx { border: 0; border-top: 1px solid #edf2f6; border-radius: 0; }
-        .pn-lead { margin: 0; font-size: 13.5px; font-weight: 700; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
         .pn-plus { text-align: center; font-size: 20px; font-weight: 800; color: #087f89; line-height: 1; margin: 2px 0; }
         .pn-num { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 6px; border-radius: 50%; background: #087f89; color: #fff; font-size: 11px; }
         .pn-or { display: flex; align-items: center; gap: 8px; margin: 6px 0; color: #6b8293; font-size: 12px; font-weight: 700; text-transform: uppercase; }
