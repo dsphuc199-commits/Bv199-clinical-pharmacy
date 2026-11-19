@@ -297,6 +297,7 @@ function sourceLines(text: string): string[] {
 
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p></section>;
+  if (diseaseId === "v8-101") return <section className="bv199-panel gt199"><p className="gt199-note">Chưa có bảng đối chiếu cho viêm phổi cộng đồng ở trẻ em. Mở tab Quốc tế để tra riêng IDSA/PIDS, NICE NG250 hoặc WHO 2024.</p></section>;
   const c = getComparison(diseaseId);
   if (!c) {
     return (

@@ -38,7 +38,7 @@ check("CAP trẻ em: mở IDSA 2011 trước và chờ chọn bệnh cảnh", ()
   const landing = resolve(guideline, { ...severeIv, source: "idsa" });
   assert.equal(landing.primary.id, "pids-archive");
   assert.deepEqual(landing.primary.source_ids, ["pids2011"]);
-  assert.equal(landing.blocks[0].items.length, 3);
+  assert.match(landing.blocks[0].items.at(-1).ref, /KC 69–71/);
   assert.deepEqual(dosesIn({}), []);
   assert.deepEqual(guideline.axes.find(({ id }) => id === "idsa_version").options.map(({ id }) => id), ["archive", "effusion"]);
 });
@@ -53,7 +53,7 @@ check("NICE: đúng liều mỗi lần và mốc 3 hoặc 5 ngày theo tuổi", 
   ];
   for (const [nice_age, dose, duration] of expected) {
     assert.deepEqual(dosesIn({ ...standard, nice_age }), [
-      { drug: "Amoxicillin", source: "nice250", dose, route: "uống", freq: "mỗi 8 giờ", duration },
+      { drug: "Amoxicillin", source: "nice250", dose, route: "uống", freq: "3 lần/ngày", duration },
     ]);
   }
   const infant = itemsIn({ ...standard, nice_age: "infant" })[0];
@@ -66,14 +66,22 @@ check("NICE: chờ chọn đường, giữ tổng liều 5:1 và chỉ phối h�
   assert.deepEqual(dosesIn(severeIv).map(({ dose, route }) => [dose, route]), [
     ["30 mg/kg/liều (tổng hai thành phần), tối đa 1,2 g/liều", "tĩnh mạch"],
   ]);
-  const combined = dosesIn({ ...severeIv, nice_age: "young", nice_atypical: true });
+  const atypicalIv = { ...severeIv, nice_age: "young", nice_atypical: true };
+  assert.deepEqual(dosesIn(atypicalIv), dosesIn(severeIv));
+  const combined = dosesIn({ ...atypicalIv, nice_macrolide_route: "iv" });
   assert.equal(combined.length, 2);
   assert.equal(combined[1].dose, "7,5 mg/kg/liều, tối đa 500 mg/liều");
   assert.equal(combined[1].route, "tĩnh mạch");
+  const oralMacrolide = dosesIn({ ...atypicalIv, nice_macrolide_route: "oral" });
+  assert.equal(oralMacrolide[0].route, "tĩnh mạch");
+  assert.ok(oralMacrolide.slice(1).every(({ route, freq }) => route === "uống" && freq === "2 lần/ngày"));
+  assert.equal(oralMacrolide.length, 6);
+  assert.equal(dosesIn({ ...severeIv, nice_macrolide_route: "oral" }).length, 1);
   const ivItem = itemsIn(severeIv)[0];
   assert.match(ivItem.course, /^Tổng đợt 5 ngày/);
   assert.match(ivItem.administration, /25 mg amoxicillin \+ 5 mg clavulanat\/kg/);
-  assert.match(ivItem.administration, /Claminat/);
+  assert.match(ivItem.administration, /Claminat 600.*dưới 3 tuổi/);
+  assert.match(ivItem.administration, /Claminat 1,2 g.*dưới 40 kg.*dưới 1.000 mg \+ 200 mg/);
 });
 
 check("NICE: dạng hỗn dịch thay thế 4:1 giữ đúng định lượng và nhóm tuổi", () => {
@@ -99,7 +107,7 @@ check("WHO: liều tối thiểu 40 mg/kg/lần, chỉ cho hai bệnh cảnh đ�
     assert.deepEqual(dosesIn({ ...severeIv, source: "who", who_case }), [
       {
         drug: "Amoxicillin", source: "who2024",
-        dose: "40 mg/kg/liều (liều tối thiểu)", route: "uống", freq: "mỗi 12 giờ", duration: "5 ngày",
+        dose: "40 mg/kg/liều (liều tối thiểu)", route: "uống", freq: "2 lần/ngày", duration: "5 ngày",
       },
     ]);
   }
@@ -116,14 +124,31 @@ check("IDSA/PIDS: Phần 1 năm 2026 không hiện liều và tài liệu lưu t
   assert.ok(current.summary.some(({ text }) => text.includes("không quy định lựa chọn kháng sinh, liều hoặc số ngày")));
   const archive = { source: "idsa", idsa_version: "archive" };
   assert.deepEqual(dosesIn(archive), []);
-  const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_age: "five-plus" });
-  assert.equal(typical.length, 2);
-  assert.ok(typical.every(({ source, dose }) => source === "pids2011" && dose.includes("tối đa 4 g/ngày")));
+  const typical = dosesIn({ ...archive, idsa_case: "typical", idsa_age: "five-to-seven" });
+  assert.deepEqual(typical.map(({ drug }) => drug), ["Amoxicillin", "Amoxicillin/clavulanat", "Azithromycin", "Azithromycin"]);
+  assert.ok(typical.slice(0, 2).every(({ source, dose }) => source === "pids2011" && dose.includes("tối đa 4 g/ngày")));
+  assert.equal(dosesIn({ ...archive, idsa_case: "typical", idsa_age: "under-five" }).length, 2);
   const empiric = { ...archive, idsa_case: "inpatient", idsa_inpatient: "standard", idsa_suspect_staph: true };
   assert.deepEqual(dosesIn(empiric), []);
   assert.match(itemsIn(empiric)[2].text, /Vancomycin hoặc clindamycin/);
   const targeted = dosesIn({ ...archive, idsa_case: "pneumo", idsa_mic: "high" });
-  assert.deepEqual(targeted.map(({ drug, dose }) => [drug, dose]), [["Ceftriaxone", "100 mg/kg/ngày"]]);
+  assert.deepEqual(targeted.map(({ drug, dose, freq }) => [drug, dose, freq]), [["Ceftriaxone", "100 mg/kg/ngày", "chia mỗi 12–24 giờ"]]);
+});
+
+check("IDSA/PIDS 2011: đúng giới hạn tuổi doxycycline và phác đồ tràn dịch lưu trữ", () => {
+  const atypical = { source: "idsa", idsa_case: "atypical" };
+  for (const idsa_age of ["under-five", "five-to-seven"]) {
+    assert.ok(dosesIn({ ...atypical, idsa_age }).every(({ drug }) => drug !== "Doxycycline"));
+  }
+  assert.ok(dosesIn({ ...atypical, idsa_age: "over-seven" }).some(({ drug }) => drug === "Doxycycline"));
+  const pneumococcus = { source: "idsa", idsa_case: "pneumo", idsa_mic: "low" };
+  assert.deepEqual(dosesIn(pneumococcus).filter(({ route }) => route === "uống").map(({ dose, freq }) => [dose, freq]), [
+    ["45 mg/kg/liều (90 mg/kg/ngày)", "2 lần/ngày"],
+    ["15 mg/kg/liều (45 mg/kg/ngày)", "3 lần/ngày"],
+  ]);
+  const pleural = itemsIn({ source: "idsa", idsa_case: "pleural-antibiotics" });
+  assert.match(pleural.at(-1).text, /2–4 tuần/);
+  assert.ok(pleural.every((row) => row.source_ids[0] === "pids2011"));
 });
 
 console.log(`${passed} passed, ${failed} failed`);

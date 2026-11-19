@@ -141,7 +141,12 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
   const [raw, setRaw] = useState<AxisState>(() => defaultState(g.axes));
   const eff = useMemo(() => effectiveState(g.axes, raw), [g.axes, raw]);
   const r = useMemo(() => resolve(g, eff), [g, eff]);
-  const set = (id: string, v: AxisVal) => setRaw((s) => ({ ...(id === sourceAxis ? defaultState(g.axes) : s), [id]: v }));
+  const set = (id: string, v: AxisVal) => setRaw((s) => {
+    const next = { ...(id === sourceAxis ? defaultState(g.axes) : s), [id]: v };
+    if (!clinical) return next;
+    const effective = effectiveState(g.axes, next);
+    return Object.fromEntries(Object.entries(next).filter(([key]) => isVisible(g.axes, effective, key)));
+  });
   const sourceControl = g.axes.find((a) => a.id === sourceAxis);
   const sources = sourceControl
     ? g.sources.filter((s) => r.primary?.source_ids.includes(s.id))
