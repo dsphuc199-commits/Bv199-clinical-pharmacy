@@ -312,7 +312,7 @@
       "blocks": [
         {
           "title": "Ưu tiên · Ampicillin + gentamicin",
-          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh.",
+          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh. Pha từng thuốc riêng.",
           "items": [
             {
               "role": "Phối hợp",
@@ -327,14 +327,15 @@
               },
               "source_ids": [
                 "who-sbi-2024"
-              ]
+              ],
+              "administration": "Đối chiếu đường dùng và cách pha theo nhãn chế phẩm phù hợp cho trẻ sơ sinh."
             },
             {
               "role": "Phối hợp",
               "text": "Gentamicin",
               "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
               "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
-              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
@@ -358,14 +359,15 @@
               },
               "source_ids": [
                 "who-sbi-2024"
-              ]
+              ],
+              "administration": "Đối chiếu đường dùng và cách pha theo nhãn chế phẩm phù hợp cho trẻ sơ sinh."
             },
             {
               "role": "Phối hợp",
               "text": "Gentamicin",
               "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
               "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
-              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.5, tr. 53, Bảng 3.1 tr. 62",
@@ -381,7 +383,7 @@
       ],
       "notes": [
         {
-          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng.",
+          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng. Khi cân nhắc ngừng sớm, dùng quy trình phân tầng nguy cơ lâm sàng và xét nghiệm đã được kiểm định.",
           "source_ids": [
             "who-sbi-2024"
           ]
@@ -412,14 +414,14 @@
       "blocks": [
         {
           "title": "Ưu tiên · Cloxacillin + gentamicin",
-          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh.",
+          "lead": "Dùng cả hai thuốc. Chọn đường tiêm và xác nhận cách pha, thể tích rút thuốc theo chế phẩm và quy trình khoa sơ sinh. Pha từng thuốc riêng.",
           "items": [
             {
               "role": "Phối hợp",
               "text": "Cloxacillin",
               "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
               "preparation": "Bột pha tiêm 1 g/lọ",
-              "administration": "Với lọ 1 g Imexpharm, dùng tĩnh mạch theo nhãn. Xác nhận dùng dưới 1 tháng tuổi với dược sĩ sơ sinh. Chỉ tiêm bắp nếu chế phẩm cho phép. Dùng riêng với gentamicin.",
+              "administration": "Nhãn lọ Imexpharm 1 g hướng dẫn dùng tĩnh mạch và nêu liều từ 1 tháng tuổi. Xác nhận khi dùng dưới 1 tháng với khoa Dược. Chỉ tiêm bắp khi nhãn chế phẩm đang dùng cho phép. Với lọ Imexpharm, pha riêng và dùng khác vị trí, cách gentamicin ít nhất 1 giờ.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
@@ -435,7 +437,7 @@
               "text": "Gentamicin",
               "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
               "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
-              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
@@ -451,7 +453,7 @@
               "text": "Cloxacillin",
               "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
               "preparation": "Bột pha tiêm 1 g/lọ",
-              "administration": "Với lọ 1 g Imexpharm, dùng tĩnh mạch theo nhãn. Xác nhận dùng dưới 1 tháng tuổi với dược sĩ sơ sinh. Chỉ tiêm bắp nếu chế phẩm cho phép. Dùng riêng với gentamicin.",
+              "administration": "Nhãn lọ Imexpharm 1 g hướng dẫn dùng tĩnh mạch và nêu liều từ 1 tháng tuổi. Xác nhận khi dùng dưới 1 tháng với khoa Dược. Chỉ tiêm bắp khi nhãn chế phẩm đang dùng cho phép. Với lọ Imexpharm, pha riêng và dùng khác vị trí, cách gentamicin ít nhất 1 giờ.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
@@ -467,7 +469,7 @@
               "text": "Gentamicin",
               "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
               "preparation": "Dung dịch tiêm phù hợp cho nhóm tuổi theo nhãn",
-              "administration": "Kiểm tra chức năng thận và theo dõi nồng độ thuốc theo quy trình sơ sinh.",
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin.",
               "course": "Ít nhất 7 ngày",
               "grade": "S-VL",
               "ref": "WHO 2024 · B.6, tr. 56, Bảng 3.1 tr. 62",
@@ -483,7 +485,7 @@
       ],
       "notes": [
         {
-          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng.",
+          "text": "Đánh giá lại kháng sinh khi có diễn biến lâm sàng hoặc kết quả vi sinh. Điều chỉnh theo tác nhân, kháng sinh đồ và đáp ứng. Khi cân nhắc ngừng sớm, dùng quy trình phân tầng nguy cơ lâm sàng và xét nghiệm đã được kiểm định.",
           "source_ids": [
             "who-sbi-2024"
           ]
@@ -500,7 +502,8 @@
     "WHO không đưa liều riêng cho trẻ sinh non, cân nặng lúc sinh thấp, hoặc các nhóm nguy cơ khác do hạn chế dữ liệu. Mô-đun chuyển các trường hợp này và trường hợp cần hiệu chỉnh chức năng thận sang đánh giá cá thể hóa.",
     "Điều trị nhiễm khuẩn huyết, viêm màng não và nhiễm khuẩn bệnh viện cần lựa chọn theo bệnh cảnh tương ứng.",
     "Hàm lượng ampicillin và cloxacillin được đối chiếu với dữ liệu danh mục thuốc. Nồng độ gentamicin và cách pha, thể tích tiêm cần xác minh theo chế phẩm phù hợp cho nhóm tuổi.",
-    "Nhãn cloxacillin 1 g Imexpharm hướng dẫn tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch. https://www.imexpharm.com/Data/Sites/1/media/content/Cloxacillin%201%20g%20TBPT%20%281%29.pdf"
+    "Nhãn cloxacillin 1 g Imexpharm hướng dẫn tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch. https://www.imexpharm.com/Data/Sites/1/media/content/Cloxacillin%201%20g%20TBPT%20%281%29.pdf",
+    "Một số nhãn gentamicin nhi khoa quy định giới hạn riêng theo tuổi và chỉ dùng tĩnh mạch với lịch một lần/ngày. Đối chiếu chế phẩm thực tế. SmPC tham chiếu mục 4.2 và 6.2: https://www.medicines.org.uk/emc/product/4186/smpc."
   ],
   "discordance": [],
   "selection_rationale": {

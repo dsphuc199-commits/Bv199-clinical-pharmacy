@@ -42,7 +42,11 @@ check("WHO: đúng hai thuốc, liều, đường dùng và thời gian theo tu�
           [betaLactam, "50 mg/kg/liều", route, index === 0 ? "mỗi 12 giờ" : "mỗi 8 giờ", `Ít nhất ${days} ngày`],
           ["Gentamicin", index === 0 ? "5 mg/kg/liều" : "7,5 mg/kg/liều", route, "1 lần/ngày", `Ít nhất ${days} ngày`],
         ]);
-        assert.match(items(guideline, state).find(({ text }) => text === "Gentamicin").administration, /nồng độ/i);
+        const [firstDrug, gentamicin] = items(guideline, state);
+        assert.match(gentamicin.administration, /1 lần\/ngày.*tĩnh mạch.*nồng độ/i);
+        if (betaLactam === "Cloxacillin") {
+          assert.match(firstDrug.administration, /Imexpharm.*tĩnh mạch.*khác vị trí.*cách gentamicin ít nhất 1 giờ/i);
+        }
       }
     }
   }
@@ -73,6 +77,7 @@ check("NICE: liều tĩnh mạch khởi phát sớm và đánh giá lại sau 36
   const [penicillin, gentamicin] = items(sepsis, state);
   assert.match(penicillin.administration, /mỗi 8 giờ/);
   assert.match(gentamicin.administration, /liều thứ hai thường sau 36 giờ/i);
+  assert.match(gentamicin.administration, /5 mg\/kg mỗi 36 giờ.*ngoài nhãn/);
   const notes = resolve(sepsis, state).notes.map(({ text }) => text).join(" ");
   assert.match(notes, /Ngừng ở 36 giờ.*bốn tiêu chí/);
   assert.match(notes, /tổng 7 ngày.*cấy máu dương tính/);
@@ -86,11 +91,22 @@ check("NICE: chuyển uống cần xác nhận và khởi phát muộn có mốc
   const late = { ...nice, nice_case: "late-unit" };
   assert.deepEqual(doses(sepsis, late), []);
   assert.match(items(sepsis, late)[0].text, /Flucloxacillin tĩnh mạch/);
-  assert.match(resolve(sepsis, late).notes.map(({ text }) => text).join(" "), /48 giờ/);
+  const lateNotes = resolve(sepsis, late).notes.map(({ text }) => text).join(" ");
+  assert.match(lateNotes, /48 giờ/);
+  assert.match(lateNotes, /lấy cấy máu trước liều đầu.*trong vòng một giờ/i);
   for (const nice_case of ["late-home", "meningitis", "special"]) {
     assert.deepEqual(doses(sepsis, { ...nice, nice_case, nice_switch: true }), []);
   }
   assert.deepEqual(doses(sepsis, { ...nice, nice_scope: "outside", nice_case: "early" }), []);
+});
+
+check("NICE: lịch lấy lại nồng độ đáy gentamicin có ở cả nhánh sớm và muộn", () => {
+  for (const nice_case of ["early", "late-unit"]) {
+    const notes = resolve(sepsis, { ...nice, nice_case }).notes.map(({ text }) => text).join(" ");
+    assert.match(notes, /ngay trước liều.*quyết định liều thứ ba.*trước mỗi liều thứ ba tiếp theo/);
+    assert.match(notes, /dưới 2 mg\/L.*dưới 1 mg\/L nếu dùng quá 3 liều/);
+    assert.match(notes, /chậm kết quả nồng độ đáy.*chức năng thận.*dấu hiệu suy thận/);
+  }
 });
 
 check("Hai mô-đun sơ sinh: tất cả tổ hợp hợp lệ tách đúng nguồn khuyến cáo", () => {

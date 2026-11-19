@@ -393,7 +393,8 @@
               "course": "Ít nhất 10 ngày",
               "grade": "S-M",
               "preparation": "Bột pha tiêm 1 g/lọ",
-              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ"
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
+              "administration": "Đối chiếu đường dùng và cách pha theo nhãn chế phẩm phù hợp cho trẻ sơ sinh."
             },
             {
               "role": "Phối hợp",
@@ -407,7 +408,7 @@
               },
               "course": "Ít nhất 10 ngày",
               "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
-              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin."
             },
             {
               "role": "Ưu tiên",
@@ -422,7 +423,8 @@
               "course": "Ít nhất 10 ngày",
               "grade": "S-M",
               "preparation": "Bột pha tiêm 1 g/lọ",
-              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ"
+              "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
+              "administration": "Đối chiếu đường dùng và cách pha theo nhãn chế phẩm phù hợp cho trẻ sơ sinh."
             },
             {
               "role": "Phối hợp",
@@ -436,7 +438,7 @@
               },
               "course": "Ít nhất 10 ngày",
               "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
-              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin."
             }
           ]
         }
@@ -485,7 +487,7 @@
               "grade": "S-VL",
               "preparation": "Bột pha tiêm 1 g/lọ",
               "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 12 giờ",
-              "administration": "Nhãn tham chiếu cloxacillin 1 g Imexpharm dùng tĩnh mạch. Chỉ tiêm bắp khi nhãn đúng chế phẩm cho phép. Xác nhận liều sơ sinh theo hướng dẫn WHO với khoa Dược. Pha riêng với gentamicin."
+              "administration": "Nhãn lọ Imexpharm 1 g hướng dẫn dùng tĩnh mạch và nêu liều từ 1 tháng tuổi. Xác nhận khi dùng dưới 1 tháng với khoa Dược. Chỉ tiêm bắp khi nhãn chế phẩm đang dùng cho phép. Với lọ Imexpharm, pha riêng và dùng khác vị trí, cách gentamicin ít nhất 1 giờ."
             },
             {
               "role": "Phối hợp",
@@ -499,7 +501,7 @@
               },
               "course": "Ít nhất 10 ngày",
               "dose": "5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
-              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin."
             },
             {
               "role": "Ưu tiên",
@@ -515,7 +517,7 @@
               "grade": "S-VL",
               "preparation": "Bột pha tiêm 1 g/lọ",
               "dose": "50 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, mỗi 8 giờ",
-              "administration": "Nhãn tham chiếu cloxacillin 1 g Imexpharm dùng tĩnh mạch. Chỉ tiêm bắp khi nhãn đúng chế phẩm cho phép. Xác nhận liều sơ sinh theo hướng dẫn WHO với khoa Dược. Pha riêng với gentamicin."
+              "administration": "Nhãn lọ Imexpharm 1 g hướng dẫn dùng tĩnh mạch và nêu liều từ 1 tháng tuổi. Xác nhận khi dùng dưới 1 tháng với khoa Dược. Chỉ tiêm bắp khi nhãn chế phẩm đang dùng cho phép. Với lọ Imexpharm, pha riêng và dùng khác vị trí, cách gentamicin ít nhất 1 giờ."
             },
             {
               "role": "Phối hợp",
@@ -529,7 +531,7 @@
               },
               "course": "Ít nhất 10 ngày",
               "dose": "7,5 mg/kg/liều, tiêm bắp hoặc tĩnh mạch, 1 lần/ngày",
-              "administration": "Theo dõi chức năng thận và nồng độ gentamicin theo quy trình sơ sinh. Pha theo đúng nhãn chế phẩm. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+              "administration": "Chọn chế phẩm phù hợp sơ sinh và kiểm tra liều, đường dùng theo nhãn. Khi dùng 1 lần/ngày, một số chế phẩm chỉ cho phép đường tĩnh mạch. Theo dõi chức năng thận và nồng độ gentamicin."
             }
           ]
         }
@@ -671,7 +673,7 @@
       "blocks": [
         {
           "title": "Phác đồ khởi phát sớm",
-          "lead": "Phối hợp hai thuốc khi đã xác định chỉ định kháng sinh kinh nghiệm và dữ liệu đề kháng tại chỗ phù hợp.",
+          "lead": "Phối hợp hai thuốc khi đã xác định chỉ định kháng sinh kinh nghiệm và dữ liệu đề kháng tại chỗ phù hợp. Pha riêng từng thuốc và dùng gentamicin tách riêng penicillin.",
           "items": [
             {
               "role": "Ưu tiên",
@@ -692,7 +694,7 @@
                 "nice195"
               ],
               "dose": "5 mg/kg/liều (khởi đầu), tĩnh mạch, 1 liều",
-              "administration": "Nếu còn chỉ định, liều thứ hai thường sau 36 giờ. Cân nhắc khoảng cách ngắn hơn nếu trẻ rất nặng hoặc cấy máu có vi khuẩn Gram âm. Điều chỉnh các liều tiếp theo theo nồng độ và chức năng thận. Chọn chế phẩm theo nhãn dùng cho sơ sinh."
+              "administration": "Nếu còn chỉ định, liều thứ hai thường sau 36 giờ kể từ liều đầu. Lịch 5 mg/kg mỗi 36 giờ được NICE ghi là ngoài nhãn. Cân nhắc khoảng cách ngắn hơn nếu trẻ rất nặng hoặc cấy máu có vi khuẩn Gram âm. Điều chỉnh các liều tiếp theo theo nồng độ và chức năng thận. Chọn chế phẩm phù hợp sơ sinh theo nhãn."
             }
           ]
         }
@@ -711,7 +713,13 @@
           ]
         },
         {
-          "text": "Nếu dùng liều gentamicin thứ hai, lấy mẫu đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Mục tiêu nồng độ đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "text": "Nếu dùng liều gentamicin thứ hai, đo nồng độ đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Đo lại ngay trước mỗi liều thứ ba tiếp theo, hoặc sớm hơn nếu lo ngại về nồng độ trước đó hay chức năng thận. Mục tiêu đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Khi chỉ chậm kết quả nồng độ đáy, NICE tiếp tục liều theo kế hoạch nếu chức năng thận không có dấu hiệu suy giảm. Nếu có dấu hiệu suy thận, đánh giá trước liều tiếp theo.",
           "source_ids": [
             "nice195"
           ]
@@ -805,7 +813,7 @@
       "blocks": [
         {
           "title": "Phác đồ khởi phát muộn tại khoa sơ sinh",
-          "lead": "Phối hợp thuốc phổ hẹp có hoạt tính trên Gram dương và Gram âm theo dữ liệu đề kháng tại cơ sở. Liều và khoảng cách liều cần xác định theo phác đồ sơ sinh của khoa.",
+          "lead": "Phối hợp thuốc phổ hẹp có hoạt tính trên Gram dương và Gram âm theo dữ liệu đề kháng tại cơ sở. Liều và khoảng cách liều cần xác định theo phác đồ sơ sinh của khoa. Pha riêng từng thuốc và dùng gentamicin tách riêng penicillin.",
           "items": [
             {
               "role": "Ví dụ ưu tiên",
@@ -836,7 +844,19 @@
       ],
       "notes": [
         {
-          "text": "Nếu dùng liều gentamicin thứ hai, lấy mẫu đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Mục tiêu nồng độ đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "text": "Lấy cấy máu trước liều đầu và đo CRP ban đầu. Bắt đầu kháng sinh trong vòng một giờ kể từ quyết định điều trị.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Nếu dùng liều gentamicin thứ hai, đo nồng độ đáy ngay trước liều và dùng kết quả để quyết định liều thứ ba. Đo lại ngay trước mỗi liều thứ ba tiếp theo, hoặc sớm hơn nếu lo ngại về nồng độ trước đó hay chức năng thận. Mục tiêu đáy dưới 2 mg/L, hoặc dưới 1 mg/L nếu dùng quá 3 liều.",
+          "source_ids": [
+            "nice195"
+          ]
+        },
+        {
+          "text": "Khi chỉ chậm kết quả nồng độ đáy, NICE tiếp tục liều theo kế hoạch nếu chức năng thận không có dấu hiệu suy giảm. Nếu có dấu hiệu suy thận, đánh giá trước liều tiếp theo.",
           "source_ids": [
             "nice195"
           ]
@@ -867,7 +887,8 @@
     "Dạng và hàm lượng tiêm có trong chỉ mục bv199-formulary-antimicrobials.json, đối chiếu nhãn chế phẩm thực tế. Không suy ra thể tích tiêm sơ sinh từ hàm lượng bao bì.",
     "Điều trị viêm màng não, nhiễm khuẩn đa kháng, theo tác nhân đã xác định và phác đồ tại nơi không chuyển viện được cần đánh giá riêng.",
     "Nhãn cloxacillin 1 g Imexpharm chỉ có liều định lượng theo tuổi cho nhóm từ 1 tháng. Đối chiếu đường dùng, tương hợp và kỹ thuật pha cho sơ sinh với khoa Dược theo nhãn https://www.imexpharm.com/Data/Sites/1/media/content/Cloxacillin%201%20g%20TBPT%20%281%29.pdf.",
-    "Chỉ mục thuốc xác nhận hàm lượng dung dịch gentamicin nhưng không đủ để xác nhận chế phẩm phù hợp cho trẻ sơ sinh. Giao diện không gắn một ống thuốc cụ thể với liều WHO hoặc NICE."
+    "Chỉ mục thuốc xác nhận hàm lượng dung dịch gentamicin nhưng không đủ để xác nhận chế phẩm phù hợp cho trẻ sơ sinh. Giao diện không gắn một ống thuốc cụ thể với liều WHO hoặc NICE.",
+    "Một số nhãn gentamicin nhi khoa quy định giới hạn riêng theo tuổi và chỉ dùng tĩnh mạch với lịch một lần/ngày. Đối chiếu chế phẩm thực tế. SmPC tham chiếu mục 4.2 và 6.2: https://www.medicines.org.uk/emc/product/4186/smpc."
   ],
   "discordance": [
     {
