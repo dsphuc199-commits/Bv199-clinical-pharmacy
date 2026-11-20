@@ -89,7 +89,13 @@ check('CAP: tên đầy đủ, số thứ tự, liên kết và năm tăng dần
   ['Community-Acquired Pneumonia Clinical Pathway',2023],
   ['Diagnosis and Management of Community-acquired Pneumonia',2025],
 ].every(([title,year],index)=>capSourceRows[index]?.includes(title)&&capSourceRows[index].includes('href="https://')&&capSourceRows[index].includes(`<td>${index+1}.</td>`)&&capSourceRows[index].includes(`<td>${year}</td>`))&&capSources.includes('số tạp chí 01/2026'));
-check('CAP: ghi chú ATS/IDSA thuộc tài liệu năm 2025 và có hướng dẫn áp dụng tại BV199',capSourceRows[2]?.includes('ATS phê duyệt tháng 5/2025. IDSA không tán thành bản cập nhật.')&&capIntl.includes('Áp dụng tại BV199')&&capIntl.includes('kháng sinh đồ của bệnh viện'));
+check('CAP: ghi chú ATS/IDSA nêu phạm vi đồng thuận, hai nhóm bất đồng và hướng dẫn áp dụng tại BV199',[
+  'ATS phê duyệt bản cập nhật tháng 5/2025',
+  'IDSA đồng thuận với 8/10 khuyến cáo',
+  'hai khuyến cáo khởi trị kháng sinh kinh nghiệm khi xét nghiệm virus hô hấp dương tính',
+  'ngoại trú có bệnh đồng mắc',
+  'nhập viện vì viêm phổi cộng đồng không nặng',
+].every(text=>capSourceRows[2]?.includes(text))&&capIntl.includes('Áp dụng tại BV199')&&capIntl.includes('kháng sinh đồ của bệnh viện'));
 const {COMPARISONS}=load('data/antibiotics/empiric/comparison.ts');
 const {INTL_GUIDELINES}=load('data/antibiotics/empiric/international.ts');
 check('Mọi nguồn quốc tế ở tab Đối chiếu có bản ghi tên tài liệu và năm',COMPARISONS.every(c=>c.intl.every(id=>INTL_GUIDELINES[id]?.title&&/\b(?:19|20)\d{2}\b/.test(INTL_GUIDELINES[id].published))));

@@ -187,7 +187,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     title: "Diagnosis and Management of Community-acquired Pneumonia. An Official American Thoracic Society Clinical Practice Guideline",
     citation: "Jones BE và cs. Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST",
     published: "Công bố trực tuyến 18/07/2025 (số tạp chí 01/2026)",
-    sourceNote: "ATS phê duyệt tháng 5/2025. IDSA không tán thành bản cập nhật.",
+    sourceNote: "ATS phê duyệt bản cập nhật tháng 5/2025. IDSA đồng thuận với 8/10 khuyến cáo và không thông qua toàn bộ hướng dẫn do bất đồng về hai khuyến cáo khởi trị kháng sinh kinh nghiệm khi xét nghiệm virus hô hấp dương tính. Hai khuyến cáo này áp dụng cho người lớn điều trị ngoại trú có bệnh đồng mắc và người lớn nhập viện vì viêm phổi cộng đồng không nặng.",
     url: "https://doi.org/10.1164/rccm.202507-1692ST",
     status: "extracted",
     checkedOn: "14/11/2026",
