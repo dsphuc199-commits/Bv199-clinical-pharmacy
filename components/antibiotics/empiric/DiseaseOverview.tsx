@@ -61,7 +61,7 @@ export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
         {o.monitoring.reassessment.length > 0 && <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="" /></div>}
       </div>
       <details className="do-safety">
-        <summary>Cảnh báo an toàn thiết yếu ({o.monitoring.safety.length})</summary>
+        <summary>Cảnh báo an toàn trong điều trị</summary>
         <List points={o.monitoring.safety} empty="" />
         {!RULES.showDoseAdjustmentTables && (
           <p className="do-link">Hiệu chỉnh liều theo chức năng thận, gan: xem module <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a>.</p>

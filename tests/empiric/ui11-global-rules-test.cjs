@@ -126,7 +126,7 @@ const OVA=load('data/antibiotics/empiric/overviews.ts');
 check(`${C.DISEASES.length}/${C.DISEASES.length} mặt bệnh có tổng quan và phần theo dõi/an toàn (kể cả CAP, HAP, VAP, COPD)`,C.DISEASES.every(d=>!!OVA.getDiseaseOverview(d.id)));
 const DOV=load('components/antibiotics/empiric/DiseaseOverview.tsx');const uniformBad=[];
 for(const d of C.DISEASES){const h=render(React.createElement(DOV.DiseaseOverviewSummary,{diseaseId:d.id}))+render(React.createElement(DOV.DiseaseMonitoring,{diseaseId:d.id}));
-  if(!h.includes('class="do-cards"')||!h.includes('Cảnh báo an toàn thiết yếu')||/Văn bản không nêu|Cần thẩm định|Chưa xác minh/.test(h))uniformBad.push(d.id);}
+  if(!h.includes('class="do-cards"')||!h.includes('<summary>Cảnh báo an toàn trong điều trị</summary>')||/Văn bản không nêu|Cần thẩm định|Chưa xác minh/.test(h))uniformBad.push(d.id);}
 check('Mọi mặt bệnh có khung tổng quan/theo dõi; mục trống được ẩn, không hiện câu "Văn bản không nêu"',uniformBad.length===0,uniformBad);
 const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
 check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan + theo dõi như khung chung',/selected\.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" \/><CopdByt2026 \/><DiseaseMonitoring diseaseId="v8-6" \/><\/>/.test(pageSrc)&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.includes('<DiseaseMonitoring diseaseId={selected.id} />'));
