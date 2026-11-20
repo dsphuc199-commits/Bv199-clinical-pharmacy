@@ -51,6 +51,8 @@ import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
 import UrologyEau2026 from "./UrologyEau2026";
 import { isEauUrology } from "./urology-eau2026";
 import UtiIntlTools from "./UtiIntlTools";
+import CandidaEcmm2025 from "./CandidaEcmm2025";
+import { isCandidaDisease } from "./candida-ecmm2025";
 import { isIdsaCuti } from "./uti-idsa2025";
 import StiCdc2021 from "./StiCdc2021";
 import SstiIdsaAce from "./SstiIdsaAce";
@@ -163,6 +165,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-27" || diseaseId === "v8-28" || diseaseId === "v8-107") return <section className="bv199-panel gt199"><SstiIdsaAce key={diseaseId} initialForm={diseaseId === "v8-28" ? "purulent" : "cellulitis"} initialAge={diseaseId === "v8-107" ? "child" : "adult"} /><GtStyle /></section>;
   if (diseaseId === "v8-97") return <section className="bv199-panel gt199"><UtiPregnancyAcog2023 /><GtStyle /></section>;
   if (diseaseId === "v8-95" || diseaseId === "v8-96" || diseaseId === "v9-2") return <section className="bv199-panel gt199"><StiCdc2021 key={diseaseId} initial={diseaseId === "v8-95" ? "bv" : diseaseId === "v8-96" ? "vvc" : "gc"} /><GtStyle /></section>;
+  /* Nhiem Candida xam lan: cong cu theo ECMM/ISHAM/ASM 2025. */
+  if (isCandidaDisease(diseaseId)) return <section className="bv199-panel gt199"><CandidaEcmm2025 key={diseaseId} diseaseId={diseaseId} /><GtStyle /></section>;
   if (diseaseId === "v8-43") return <section className="bv199-panel gt199"><EsblIdsa2026 /><GtStyle /></section>;
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><CopdGold2026 /><GtStyle /></section>;
   if (diseaseId === "v8-32") return <section className="bv199-panel gt199"><OsteomyelitisIntl /><GtStyle /></section>;

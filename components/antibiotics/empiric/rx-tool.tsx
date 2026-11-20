@@ -33,6 +33,10 @@ export function SourceList({ sources, notes = [], children }: { sources: string[
 
 export function Grade({ g }: { g?: string }) {
   if (!g) return null;
+  if (g === "ECMM-S") return <span className="sa24-g sa24-g-a" title="ECMM 2025: khuyến cáo mạnh">Mạnh</span>;
+  if (g === "ECMM-M") return <span className="sa24-g sa24-g-b" title="ECMM 2025: khuyến cáo mức vừa">Vừa</span>;
+  if (g === "ECMM-W") return <span className="sa24-g sa24-g-c" title="ECMM 2025: khuyến cáo mức yếu">Yếu</span>;
+  if (g === "ECMM-X") return <span className="sa24-g sa24-g-d" title="ECMM 2025: khuyến cáo không dùng">Không KC</span>;
   if (g === "EAU-S") return <span className="sa24-g sa24-g-a" title="Mức khuyến cáo của EAU: mạnh">Mạnh</span>;
   if (g === "EAU-W") return <span className="sa24-g sa24-g-c" title="Mức khuyến cáo của EAU: yếu">Yếu</span>;
   if (g === "CR") return <span className="sa24-g sa24-g-a" title="Khuyến cáo rõ: có bằng chứng tiến cứu, có đối chứng, lặp lại được">KC rõ</span>;
