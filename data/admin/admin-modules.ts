@@ -259,7 +259,7 @@ export const adminModules:
         "Phác đồ",
 
       description:
-        "Soạn bản nháp, đối chiếu nguồn và duyệt phác đồ Viêm đường mật cấp.",
+        "Mở phác đồ theo bệnh cảnh. Thí điểm soạn và duyệt cho Viêm đường mật cấp.",
 
       icon:
         "PĐ",
@@ -271,6 +271,7 @@ export const adminModules:
         "ready",
 
       features: [
+        "Chọn bệnh cảnh",
         "Bản nháp",
         "So sánh trước–sau",
         "Lịch sử phát hành",

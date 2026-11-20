@@ -1,13 +1,17 @@
 import Link from "next/link";
+import { DISEASES } from "@/data/antibiotics/empiric/catalog";
 import { currentAdmin } from "@/lib/auth/admin";
 import { adminStorageConfigured } from "@/lib/admin/private-json-store";
 import { readBiliaryHistory } from "@/lib/admin/biliary-protocol-store";
-import { BILIARY_BASE_CONTENT, BILIARY_BASE_REVISION, BILIARY_EDIT_GROUPS, biliaryChanges } from "@/lib/antibiotics/biliary-protocol";
+import { BILIARY_BASE_CONTENT, BILIARY_BASE_REVISION, BILIARY_DISEASE_ID, BILIARY_EDIT_GROUPS, biliaryChanges } from "@/lib/antibiotics/biliary-protocol";
 import { ProtocolForm, ProtocolReview } from "./ProtocolForm";
+import ProtocolPicker from "./ProtocolPicker";
 
 const box = "rounded-2xl border border-slate-200 bg-white p-5";
 const link = "font-semibold text-teal-800 hover:underline";
 const formatDate = new Intl.DateTimeFormat("vi-VN", { dateStyle: "short", timeStyle: "short", timeZone: "Asia/Ho_Chi_Minh" });
+const protocolDiseases = DISEASES.map(({ id, title, specialty }) => ({ id, title, specialty }));
+const protocolById = new Map(protocolDiseases.map((disease) => [disease.id, disease]));
 
 function Changes({ entries }: { entries: ReturnType<typeof biliaryChanges> }) {
   return (
@@ -25,18 +29,46 @@ function Changes({ entries }: { entries: ReturnType<typeof biliaryChanges> }) {
   );
 }
 
-export default async function AdminProtocolsPage() {
+export default async function AdminProtocolsPage({ searchParams }: { searchParams: Promise<{ disease?: string | string[] }> }) {
   if (!await currentAdmin()) return null;
+  const { disease } = await searchParams;
+  const selected = protocolById.get(typeof disease === "string" ? disease : disease === undefined ? BILIARY_DISEASE_ID : "");
+  const pilot = selected?.id === BILIARY_DISEASE_ID;
+  const header = (
+    <>
+      <header className="grid gap-3">
+        <Link href="/admin" className={link}>← Quản trị hệ thống</Link>
+        <h1 className="text-3xl font-bold text-slate-900">Quản trị phác đồ</h1>
+      </header>
+      <section className={box} aria-label="Chọn phác đồ">
+        <ProtocolPicker key={selected?.id} diseases={protocolDiseases} currentId={selected?.id ?? ""} />
+        {!selected && <p role="status" className="mt-3 text-sm text-amber-900">Không tìm thấy bệnh cảnh đã chọn. Hãy chọn lại trong danh sách.</p>}
+      </section>
+      {selected && (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-xl font-semibold">{selected.title}</h2>
+            <p className="text-sm text-slate-600">{selected.specialty} · {pilot ? "Thí điểm soạn và duyệt" : "Tra cứu"}</p>
+          </div>
+          <Link href={`/antibiotics/empiric/guideline-v9?disease=${encodeURIComponent(selected.id)}${pilot ? "&tab=vn" : ""}`} className={link}>
+            Mở phác đồ đang hiển thị
+          </Link>
+        </div>
+      )}
+    </>
+  );
+  if (!pilot) return (
+    <main className="mx-auto grid max-w-5xl gap-5 p-6">
+      {header}
+      {selected && <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+        Quy trình soạn và duyệt đang thí điểm ở Viêm đường mật cấp.{" "}
+        <Link href="/admin/protocols?disease=v8-24" className={link}>Mở phần thí điểm</Link>
+      </p>}
+    </main>
+  );
+
   const configured = adminStorageConfigured();
   const snapshot = configured ? await readBiliaryHistory().catch(() => null) : null;
-  const header = (
-    <header className="grid gap-3">
-      <Link href="/admin" className={link}>← Quản trị hệ thống</Link>
-      <h1 className="text-3xl font-bold text-slate-900">Quản trị phác đồ</h1>
-      <h2 className="text-xl font-semibold">Viêm đường mật cấp</h2>
-      <Link href="/antibiotics/empiric/guideline-v9?disease=v8-24&tab=vn" className={link}>Mở phác đồ đang hiển thị</Link>
-    </header>
-  );
   if (!snapshot) return (
     <main className="mx-auto grid max-w-5xl gap-5 p-6">
       {header}
