@@ -268,31 +268,38 @@ const BILIARY: DiseaseOverviewData = {
   docLabel: `${Q} – Chương 5, Nhiễm khuẩn đường mật (Bảng II.14, II.15)`,
   cards: [
     { label: "Tác nhân thường gặp", points: [
-      { text: "Cộng đồng: E. coli, Klebsiella, Enterococcus. Thể nặng: đa vi khuẩn, có kỵ khí (Clostridium, Bacteroides).", ref: "tr. 148" },
-      { text: "Bệnh viện: MRSA, Enterococcus kháng vancomycin, Pseudomonas.", ref: "tr. 148" },
+      { text: "Cộng đồng: E. coli, Klebsiella, Enterococcus. Thể nặng: đa vi khuẩn, có kỵ khí (Clostridium, Bacteroides).", ref: "tr. 181" },
+      { text: "Bệnh viện: MRSA, Enterococcus kháng vancomycin, Pseudomonas.", ref: "tr. 181" },
     ] },
     { label: "Mức độ nặng", points: [
-      { text: "Nặng (III): có suy tạng – vận mạch, rối loạn ý thức, PaO2/FiO2 < 300, INR > 1,5, creatinin > 2 mg/dl, tiểu cầu < 100.000.", ref: "tr. 149" },
-      { text: "Trung bình (II): không suy tạng nhưng không đáp ứng điều trị ban đầu.", ref: "tr. 149" },
+      { text: "Nhẹ (I): không suy tạng, có đáp ứng điều trị ban đầu.", ref: "Bảng II.14, tr. 182" },
+      { text: "Trung bình (II): không suy tạng, không đáp ứng điều trị ban đầu.", ref: "Bảng II.14, tr. 182" },
+      { text: "Nặng (III): có suy tạng, không đáp ứng điều trị ban đầu.", ref: "Bảng II.14, tr. 182" },
+      { text: "Điều trị ban đầu gồm kháng sinh và điều trị hỗ trợ.", ref: "mục 3c, tr. 182" },
     ] },
     { label: "Khởi trị", points: [
-      { text: "Kháng sinh bài tiết tốt vào đường mật; theo Bảng II.15 trong khi chờ kháng sinh đồ.", ref: "tr. 149–150" },
-      { text: "Thể nặng: phối hợp thuốc điều trị kỵ khí (metronidazol).", ref: "tr. 149–150" },
+      { text: "Chọn kháng sinh bài tiết tốt vào đường mật. Có thể điều trị theo kinh nghiệm trong khi chờ kháng sinh đồ.", ref: "mục 4a, tr. 182–183" },
+      { text: "Thể nhẹ: thường dùng ampicilin–sulbactam. Có thể dùng cephalosporin thế hệ 1 (cefazolin), thế hệ 2 (cefmetazol, cefotiam, oxacephem như flomoxef) hoặc thế hệ 3.", ref: "mục 4b, tr. 183" },
+      { text: "Thể nặng: phối hợp kháng sinh điều trị vi khuẩn kỵ khí.", ref: "mục 4a, tr. 183" },
     ] },
     { label: "Thời gian", points: [
-      { text: "Thể nhẹ: 5–7 ngày. Trung bình và nặng: 7–14 ngày, có thể dài hơn tùy đáp ứng.", ref: "tr. 150" },
+      { text: "Thể nhẹ: 5–7 ngày.", ref: "mục 4b, tr. 183" },
+      { text: "Thể trung bình và nặng: 7–14 ngày, có thể dài hơn tùy đáp ứng lâm sàng.", ref: "mục 4b, tr. 183" },
     ] },
   ],
   sourceControl: [
-    { text: "Tắc nghẽn đường mật: dẫn lưu qua da, đặt stent qua ERCP hoặc phẫu thuật.", ref: "tr. 149" },
-    { text: "Điều trị sỏi mật, nguyên nhân tắc nghẽn; tẩy giun định kỳ nếu do giun.", ref: "tr. 150" },
+    { text: "Khi tắc nghẽn, phải đảm bảo lưu thông đường mật bằng dẫn lưu qua da, đặt stent qua ERCP hoặc phẫu thuật.", ref: "mục 4a, tr. 183" },
+  ],
+  prevention: [
+    { text: "Điều trị sỏi mật và nguyên nhân gây tắc nghẽn đường mật.", ref: "mục 5, tr. 183" },
+    { text: "Tẩy giun định kỳ đối với trường hợp do giun.", ref: "mục 5, tr. 183" },
   ],
   monitoring: {
     efficacy: [
-      { text: "Sốt, đau, vàng da; bạch cầu, CRP, procalcitonin, bilirubin.", ref: "tr. 148–149" },
-      { text: "Dấu hiệu suy tạng (Bảng II.14).", ref: "tr. 149" },
+      { text: "Sốt, đau, vàng da; bạch cầu, CRP, procalcitonin, bilirubin.", ref: "tr. 181–182" },
+      { text: "Đánh giá suy tạng theo mục 3c, gồm huyết áp và nhu cầu vận mạch, ý thức, PaO2/FiO2, INR, creatinin và số lượng tiểu cầu.", ref: "mục 3c, tr. 182" },
     ],
-    reassessment: [{ text: "Có kháng sinh đồ: điều trị theo kháng sinh đồ.", ref: "tr. 150" }],
+    reassessment: [{ text: "Có kháng sinh đồ: điều trị theo kháng sinh đồ.", ref: "mục 4a, tr. 183" }],
     safety: [AG_SAFETY],
   },
 };

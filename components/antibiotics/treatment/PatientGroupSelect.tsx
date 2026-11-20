@@ -7,11 +7,11 @@ import { clinicalText } from "@/lib/antibiotics/presentation-text";
   Chon nhom nguoi benh: chi o chon. Khong hien "tieu chi phan nhom" (ten nhom da du nghia).
   Giu duy nhat canh bao "Cần thẩm định" cua nhom dang chon (an toan lam sang).
 */
-export default function PatientGroupSelect({ groups,value,onChange }:{groups:PatientGroup[];value?:string;onChange:(value:string)=>void}) {
+export default function PatientGroupSelect({ groups,value,onChange,label="Nhóm người bệnh",placeholder="Chọn nhóm người bệnh" }:{groups:PatientGroup[];value?:string;onChange:(value:string)=>void;label?:string;placeholder?:string}) {
   const uid=useId();const group=groups.find(item=>item.id===value);
   return <div className="patient-group-control clinical-scenario-select">
-    <label htmlFor={uid}>Nhóm người bệnh</label>
-    <select id={uid} value={group?.id??''} onChange={event=>onChange(event.target.value)}><option value="">Chọn nhóm người bệnh</option>{groups.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select>
+    <label htmlFor={uid}>{label}</label>
+    <select id={uid} value={group?.id??''} onChange={event=>onChange(event.target.value)}><option value="">{placeholder}</option>{groups.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select>
     {group&&clinicalText(group.reviewNotes.join(' '))&&<p className="patient-group-review" data-selected-group={group.id}><strong>Lưu ý:</strong> {clinicalText(group.reviewNotes.join(' '))}</p>}
     <style>{`
       .patient-group-control { display:grid; gap:8px; min-width:0; margin:18px 0; color:#152b40; }.patient-group-control > label { font-weight:700; font-size:15px; }

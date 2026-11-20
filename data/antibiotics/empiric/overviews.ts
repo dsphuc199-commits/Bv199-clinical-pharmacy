@@ -19,6 +19,7 @@ export type DiseaseOverviewData = {
   /** 3–4 the tom tat. */
   cards: { label: string; points: Point[] }[];
   sourceControl: Point[];
+  prevention?: Point[];
   monitoring: { efficacy: Point[]; reassessment: Point[]; safety: Point[] };
 };
 

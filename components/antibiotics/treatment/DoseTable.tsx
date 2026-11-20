@@ -36,6 +36,7 @@ type Props = {
   durationColumn?: boolean;
   hideRegimenDuration?: boolean;
   sourceDoseAbsent?: boolean;
+  showSourceDose?: boolean;
   /* The chua da co canh bao "Cần thẩm định" cua tinh trang lieu: khong nhac lai trong bang. */
   hideReviewNote?: boolean;
 };
@@ -84,11 +85,11 @@ function ruleText(g: DrugGroup, n: number): string | undefined {
   return undefined;
 }
 
-function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean }) {
+function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation, showSourceDose }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean; showSourceDose?: boolean }) {
   const critical = o.flags.filter((f) => f.startsWith("KIỂM TRA"));
-  const dose = doseText(o);
-  const showRoute = !routeAlreadyStated(dose, o.route);
-  const showInterval = !intervalAlreadyStated(dose, o.interval);
+  const dose = showSourceDose ? clinicalText(o.raw) : doseText(o);
+  const showRoute = !showSourceDose && !routeAlreadyStated(dose, o.route);
+  const showInterval = !showSourceDose && !intervalAlreadyStated(dose, o.interval);
   return (
     <tr className={critical.length ? "tx-row tx-row-warn" : "tx-row"}>
       {showRelation && <td className="tx-marker" data-label="Quan hệ lựa chọn">{marker}</td>}
@@ -103,11 +104,11 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
       <td data-label="Cách dùng">
         <div>
           <span data-dose="">{dose}</span>{showRoute && o.route && <><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route)}</span></>}{showInterval && o.interval && <><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval)}</span></>}
-          {o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
-          {o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
-          {o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
+          {!showSourceDose && o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
+          {!showSourceDose && o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
+          {!showSourceDose && o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
           {/* Ghi chu can doc cau nguon (giai doan, muc do, phoi hop...): hien cau nguon ngay trong o, thay cho khoi chi tiet rieng. */}
-          {needsSourceWording(o) && <span className="tx-sub tx-source-line">{sourceExtra(o)}</span>}
+          {!showSourceDose && needsSourceWording(o) && <span className="tx-sub tx-source-line">{sourceExtra(o)}</span>}
           {o.flags.filter((f) => f.startsWith("Ghi chú kèm")).map((f) => <span key={f} className="tx-sub">{clinicalText(f.replace(/^Ghi chú kèm:\s*/u, ""))}</span>)}
         </div>
       </td>
@@ -123,7 +124,7 @@ function hidesCombination(groups: DrugGroup[]): boolean {
   return groups.some((g) => g.rule === "one-of" && g.raw.some((r) => MID_COMBINATION.test(`${r.name} ${r.dose ?? ""}`)));
 }
 
-export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, hideReviewNote }: Props) {
+export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, hideReviewNote, showSourceDose }: Props) {
   if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE" || hidesCombination(groups)) {
     return (
       <div className="tx">
@@ -171,7 +172,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
               </thead>
               <tbody>
                 {opts.map((o, j) => <Fragment key={`${o.name}-${j}`}>
-                  <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
+                  <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} showSourceDose={showSourceDose} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
                   {EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <tr className="tx-tools-row"><td colSpan={2+Number(showRelation)+Number(showCourse)}><RegimenDrugTools name={o.name} texts={[o.raw]} /></td></tr>}
                 </Fragment>)}
               </tbody>

@@ -11,13 +11,30 @@ const audit=path.resolve(__dirname,'../../audit-69-2026/codex-review/UI8_ALL');
 let pass=0,fail=0;function check(name,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${name}`);}
 const baseline=JSON.parse(fs.readFileSync(path.join(audit,'baseline.json'),'utf8'));
 check('Actual catalog IDs are unique and unchanged',new Set(C.DISEASES.map(d=>d.id)).size===C.DISEASES.length&&JSON.stringify(C.DISEASES)===JSON.stringify(baseline.catalog));
-check('All original regimen source dose notes and duration values preserved',JSON.stringify(R.ALL_REGIMENS)===JSON.stringify(baseline.regimens));
-check('Structured clinical AND OR phase and population records unchanged',JSON.stringify(R.ALL_REGIMENS.map(r=>S.structureOf(r)))===JSON.stringify(baseline.structures));
+// The UI8 audit predates the source correction for the biliary chapter.
+// Its unchanged records are checked here, and the corrected data use byt-regimens-baseline.json.
+const outsideBiliary = r => !r.diseaseIds.includes('v8-24');
+const unchangedRegimens = R.ALL_REGIMENS.filter(outsideBiliary);
+check('Regimen source, dose, notes and duration preserved outside the biliary source correction',JSON.stringify(unchangedRegimens)===JSON.stringify(baseline.regimens.filter(outsideBiliary)));
+check('Structured clinical records unchanged outside the biliary source correction',JSON.stringify(unchangedRegimens.map(r=>S.structureOf(r)))===JSON.stringify(baseline.structures.filter((_,i)=>outsideBiliary(baseline.regimens[i]))));
 const declarationBaseline=JSON.parse(fs.readFileSync(path.join(audit,'module-declarations-baseline.json'),'utf8'));
 for(const [file,expected]of Object.entries(declarationBaseline)){const text=fs.readFileSync(path.resolve(__dirname,'../..',file),'utf8');const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const actual=source.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations.filter(d=>d.initializer&&/^[A-Z][A-Z0-9_]*$/.test(d.name.getText(source))).map(d=>[d.name.getText(source),d.initializer.getText(source)]));check(`Original clinical declarations unchanged: ${path.basename(file)}`,JSON.stringify(actual)===JSON.stringify(expected));}
 check('Severity alone does not invent an inpatient branch',Picker.settingInSourceLabel('Bệnh cảnh nặng')===undefined&&Picker.settingInSourceLabel('Điều trị ngoại trú')==='outpatient'&&Picker.settingInSourceLabel('Điều trị nội trú')==='inpatient');
 const picker=render(React.createElement(Picker.default,{scenarios:[{value:'out',label:'Ngoại trú'},{value:'in',label:'Nội trú'}],onChange:()=>{}}));
 check('Setting tabs expose one context without assigning a patient group', (picker.match(/role="tab"/g)||[]).length===2&&(picker.match(/aria-selected="true"/g)||[]).length===1&&picker.includes('Ngoại trú')&&picker.includes('Nội trú')&&picker.includes('Chọn nhóm người bệnh')&&!picker.includes('data-selected-group='));
+const BytRegimenView=load('components/antibiotics/empiric/BytRegimenView.tsx').default;
+const biliary=render(React.createElement(BytRegimenView,{diseaseId:'v8-24'}));
+const biliaryOptions=Array.from(biliary.matchAll(/<option\b[^>]*>([^<]*)<\/option>/g), match=>match[1]);
+check('Biliary picker lists the six antibiotic groups with metronidazole excluded as a standalone choice',
+  biliary.includes('>Lựa chọn kháng sinh</label>')&&biliaryOptions.length===7&&
+  biliaryOptions.filter(option=>option.startsWith('Lựa chọn số 1:')).length===4&&
+  biliaryOptions.filter(option=>option.startsWith('Lựa chọn số 2:')).length===2);
+check('Biliary overview shows all three degrees of severity, mild options and prevention',
+  ['Nhẹ (I)','Trung bình (II)','Nặng (III)','cefazolin','5–7 ngày','7–14 ngày','Dự phòng'].every(label=>biliary.includes(label)));
+const biliaryAdjunct=R.getRegimensForDisease('v8-24').find(regimen=>regimen.id==='r-bil-anaer');
+const biliaryDose=S.structureOf(biliaryAdjunct);
+const biliaryDoseMarkup=render(React.createElement(Table,{groups:biliaryDose.groups,status:biliaryDose.status,showSourceDose:true}));
+check('Biliary adjunct keeps the source dose, route and slash interval',biliaryAdjunct.role==='adjunct'&&biliaryDoseMarkup.includes('TM 500 mg/8 giờ'));
 const routeText=fs.readFileSync(path.resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
 check('ABRS wrapper uses source-scoped horizontal context tabs',routeText.includes('<SettingTabs items=')&&routeText.includes('value={abrsSetting}')&&!routeText.includes('<DecisionDisclosure'));
 check('ABRS inpatient scope and warnings remain unchanged',routeText.includes(fs.readFileSync(path.join(audit,'abrs-inpatient-baseline.txt'),'utf8')));

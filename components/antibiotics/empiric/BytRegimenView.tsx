@@ -46,6 +46,7 @@ import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { citeSourceLabel } from "@/lib/antibiotics/source-citation";
 import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
+import { BILIARY_ANAEROBIC_BASE_IDS, BILIARY_ANAEROBIC_REGIMEN_ID } from "@/data/antibiotics/empiric/regimens/gastro";
 
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
@@ -217,6 +218,7 @@ export default function BytRegimenView(props: Props) {
 
 function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: Props & { afterTreatment?: ReactNode }) {
   const allRegimens = useMemo(() => getRegimensForDisease(diseaseId), [diseaseId]);
+  const isBiliary = diseaseId === "v8-24";
   // Listing an activity is distinct from supplying a verified prescribing dose.
   // Keep all source groups reachable; DoseTable marks missing/unverified fields.
   void showAllByDefault;
@@ -230,6 +232,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
     const order: string[] = [];
     const map = new Map<string, Regimen[]>();
     for (const r of regimens) {
+      if (r.id === BILIARY_ANAEROBIC_REGIMEN_ID) continue;
       if (!map.has(r.scenario)) {
         order.push(r.scenario);
         map.set(r.scenario, []);
@@ -272,7 +275,19 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
 
   const [activeName, setActiveName] = useState<string | null>(null);
   const active = visible.find((s) => s.name === activeName) ?? visible[0] ?? null;
-  const { sections, regimenOf } = useMemo(() => sectionsFor(active?.items ?? []), [active]);
+  const biliaryAdjunct = allRegimens.find((r) => r.id === BILIARY_ANAEROBIC_REGIMEN_ID);
+  const { sections, regimenOf } = useMemo(() => {
+    if (!isBiliary || !active) return sectionsFor(active?.items ?? []);
+    // The slash intervals and full administration wording in Table II.15 are preserved in the dose cell.
+    const biliaryCard = (regimen: Regimen): TxCard => ({ ...toCard(regimen), showSourceDose: true });
+    const sections: TxSection[] = [
+      { key: "biliary-choice", title: active.name, itemLabel: "Lựa chọn", cards: active.items.map(biliaryCard) },
+    ];
+    if (biliaryAdjunct && active.items.some((r) => BILIARY_ANAEROBIC_BASE_IDS.includes(r.id))) {
+      sections.push({ key: "adjunct", title: "Phối hợp khi có nhiễm khuẩn kỵ khí", itemLabel: "Phác đồ", cards: [biliaryCard(biliaryAdjunct)] });
+    }
+    return { sections, regimenOf: new Map(active.items.map((r) => [r.id, r])) };
+  }, [active, biliaryAdjunct, isBiliary]);
 
   /* Luu y lam sang: chi cua phac do dang xem; gan nhan "Phac do N". */
   const notes: string[] = [];
@@ -307,6 +322,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
           return { value:s.name,label:lockedScenario(s.items)?`${label} · có phương án bị khóa`:label,criteria:informative?[s.name]:[],regimenIds:s.items.map(r=>r.id),sources:[...new Set(s.items.map(r=>`QĐ ${DOCS[r.source.doc].number} — ${r.source.section}, ${r.source.page}`))] };
         })}
         scenario={active?.name}
+        scenarioLabels={isBiliary ? { label: "Lựa chọn kháng sinh", placeholder: "Chọn nhóm kháng sinh" } : undefined}
         onScenario={setActiveName}
         scenarioHint={clin && filteredOut > 0 ? `Bộ lọc đang ẩn ${filteredOut} phương án.` : undefined}
         sourceTag={allRegimens.length > 0 ? `Bộ Y tế · ${docTag}` : undefined}

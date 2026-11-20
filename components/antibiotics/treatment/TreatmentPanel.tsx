@@ -50,6 +50,7 @@ export type TxCard = {
   duration?: string;
   hideDailyDose?: boolean;
   sourceDoseAbsent?: boolean;
+  showSourceDose?: boolean;
   alerts?: TxAlert[];
   /* Nhan an toan ngan (vd. "Khóa đề xuất tự động"). */
   flags?: { text: string; title?: string; tone: "lock" | "warn" | "info" }[];
@@ -78,6 +79,7 @@ type Props = {
   scenario?: string;
   initialChoice?: string;
   onScenario?: (value: string) => void;
+  scenarioLabels?: { label: string; placeholder: string };
   scenarioHint?: ReactNode;
   /* Nguồn chung trước khi chọn bệnh cảnh. */
   sourceTag?: string;
@@ -134,7 +136,7 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
           </div>
         ))}
 
-        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent} hideReviewNote/>
+        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent} showSourceDose={card.showSourceDose} hideReviewNote/>
         {card.extra}
         {/* Nguon cua the gop vao mot khoi "Nguồn và đối chiếu" cuoi khung phac do. */}
 
@@ -195,6 +197,7 @@ export default function TreatmentPanel({
   scenario,
   initialChoice,
   onScenario,
+  scenarioLabels,
   scenarioHint,
   sourceTag,
   sections,
@@ -226,10 +229,10 @@ export default function TreatmentPanel({
   return (
     <div className="tp">
       {/* (2) Benh canh lam sang – mot hang: nhan | danh sach chon */}
-      {scenarios && scenarios.length > 1 && <ClinicalScenarioPicker scenarios={scenarios} value={picked} onChange={value=>{setPicked(value);onScenario?.(value);}} />}
+      {scenarios && scenarios.length > 1 && <ClinicalScenarioPicker scenarios={scenarios} value={picked} onChange={value=>{setPicked(value);onScenario?.(value);}} labels={scenarioLabels} />}
       {scenarios && scenarios.length === 1 && ((scenarios[0].criteria?.length ?? 1) > 0 || !!scenarioHint) && (
         <div className="tp-box tp-scn">
-          <strong className="tp-scn-label">Tiêu chí áp dụng</strong>
+          <strong className="tp-scn-label">{scenarioLabels?.label ?? "Tiêu chí áp dụng"}</strong>
           {(
             <span className="tp-scn-single">{scenarios[0].label}</span>
           )}

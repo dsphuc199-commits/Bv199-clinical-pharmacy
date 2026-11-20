@@ -2,7 +2,7 @@
   FILE: data/antibiotics/empiric/regimens/gastro.ts
   Nguon: BYT QD 708/QD-BYT (02/03/2015), Chuong 5 Nhiem khuan tieu hoa.
   - Tieu chay do vi khuan: tr. 142-143 (v8-25, v8-26, v8-135)
-  - Nhiem khuan duong mat: tr. 149-150, Bang II.14, II.15 (v8-24)
+  - Nhiem khuan duong mat: tr. in 182–184, Bang II.14, II.15 (v8-24)
   - Viem phuc mac: tr. 159-160, Bang II.18 (v8-21)
 */
 
@@ -11,43 +11,43 @@ import type { Regimen } from "./types";
 
 const r = maker("byt708");
 
-const BILIARY = "Nhiễm khuẩn đường mật, mục 4 và Bảng II.15";
-const BIL_NOTE =
-  "Chọn kháng sinh bài tiết tốt vào đường mật; thêm kháng sinh kỵ khí khi nhiễm khuẩn đường mật nặng; bắt buộc đảm bảo lưu thông đường mật (dẫn lưu qua da, stent qua ERCP hoặc phẫu thuật) khi có tắc nghẽn.";
+const BILIARY = "Nhiễm khuẩn đường mật, Bảng II.15";
+export const BILIARY_ANAEROBIC_REGIMEN_ID = "r-bil-anaer";
+export const BILIARY_ANAEROBIC_BASE_IDS = [
+  "r-bil-1-bli", "r-bil-1-pip", "r-bil-1-aminoglyc", "r-bil-1-ceph", "r-bil-1-azt", "r-bil-2-fq",
+];
 
 export const GASTRO: Regimen[] = [
   // ===== Nhiễm khuẩn đường mật (v8-24) =====
-  r(BILIARY, "tr. 150", "r-bil-1-bli", ["v8-24"],
+  r(BILIARY, "tr. 184", "r-bil-1-bli", ["v8-24"],
     "Lựa chọn số 1: penicillin phổ rộng + chất ức chế beta-lactamase", "first",
-    [d("Ampicilin-sulbactam", "TM 1,5–3 g/6 giờ")],
-    { duration: "Thể nhẹ 5–7 ngày; thể trung bình và nặng 7–14 ngày, có thể dài hơn tùy đáp ứng", notes: [BIL_NOTE, "Thể nhẹ: hay dùng ampicilin-sulbactam; cũng có thể cephalosporin thế hệ 1 (cefazolin), thế hệ 2 (cefmetazol, cefotiam, flomoxef) và thế hệ 3."] }),
-  r(BILIARY, "tr. 150", "r-bil-1-pip", ["v8-24"],
+    [d("Ampicilin-sulbactam", "TM 1,5–3 g/6 giờ")]),
+  r(BILIARY, "tr. 184", "r-bil-1-pip", ["v8-24"],
     "Lựa chọn số 1: penicillin phổ rộng + chất ức chế beta-lactamase", "first",
-    [d("Piperacilin-tazobactam", "TM 4,5 g/6 giờ")],
-    { duration: "Thể trung bình và nặng 7–14 ngày", notes: [BIL_NOTE] }),
-  r(BILIARY, "tr. 150", "r-bil-1-aminoglyc", ["v8-24"],
+    [d("Piperacilin-tazobactam", "TM 4,5 g/6 giờ")]),
+  r(BILIARY, "tr. 184", "r-bil-1-aminoglyc", ["v8-24"],
     "Lựa chọn số 1: aminoglycosid", "alternative",
-    [d("Một trong", "gentamycin TB hoặc pha loãng tiêm TM 80 mg/8 giờ; amikacin TB hoặc TM 5 mg/kg/8 giờ; tobramycin TB hoặc TM 1 mg/kg/8 giờ")],
-    { notes: [BIL_NOTE] }),
-  r(BILIARY, "tr. 150", "r-bil-1-ceph", ["v8-24"],
+    [
+      d("Gentamicin", "TB hoặc pha loãng tiêm TM 80 mg/8 giờ"),
+      d("Hoặc Amikacin", "TB hoặc TM 5 mg/kg/8 giờ"),
+      d("Hoặc Tobramycin", "TB hoặc TM 1 mg/kg/8 giờ"),
+    ]),
+  r(BILIARY, "tr. 184", "r-bil-1-ceph", ["v8-24"],
     "Lựa chọn số 1: cephalosporin thế hệ 3, 4", "first",
-    [d("Một trong", "cefoperazon-sulbactam TM 2 g/12 giờ; ceftriaxon TM 2–4 g/1 lần/24 giờ; ceftazidim TM 1–2 g/12 giờ; cefepim TM 1–2 g/12 giờ")],
-    { notes: [BIL_NOTE] }),
-  r(BILIARY, "tr. 150", "r-bil-1-azt", ["v8-24"],
+    [d("Một trong", "cefoperazon-sulbactam TM 2 g/12 giờ; ceftriaxon TM 2–4 g/1 lần/24 giờ; ceftazidim TM 1–2 g/12 giờ; cefepim TM 1–2 g/12 giờ")]),
+  r(BILIARY, "tr. 184", "r-bil-1-azt", ["v8-24"],
     "Lựa chọn số 1: monobactam", "alternative",
-    [d("Aztreonam", "1–2 g/12 giờ")],
-    { notes: [BIL_NOTE] }),
-  r(BILIARY, "tr. 150", "r-bil-anaer", ["v8-24"],
-    "Có nhiễm khuẩn kỵ khí: thêm vào một trong bốn nhóm lựa chọn số 1 (hoặc một trong ba fluoroquinolon của lựa chọn số 2)", "pathogen",
-    [d("Metronidazol", "TM 500 mg/8 giờ")]),
-  r(BILIARY, "tr. 150", "r-bil-2-fq", ["v8-24"],
+    [d("Aztreonam", "1–2 g/12 giờ")]),
+  r(BILIARY, "tr. 184", BILIARY_ANAEROBIC_REGIMEN_ID, ["v8-24"],
+    "Phối hợp khi có nhiễm khuẩn kỵ khí", "adjunct",
+    [d("Metronidazol", "TM 500 mg/8 giờ")],
+    { condition: "Nếu có nhiễm khuẩn kỵ khí, thêm metronidazol vào kháng sinh đã chọn ở trên." }),
+  r(BILIARY, "tr. 184", "r-bil-2-fq", ["v8-24"],
     "Lựa chọn số 2: fluoroquinolon", "alternative",
-    [d("Một trong", "ciprofloxacin 500 mg uống hoặc TM/12 giờ; levofloxacin 500 mg uống hoặc TM/24 giờ; moxifloxacin uống hoặc TM 400 mg/24 giờ")],
-    { notes: [BIL_NOTE] }),
-  r(BILIARY, "tr. 150", "r-bil-2-carba", ["v8-24"],
+    [d("Một trong", "ciprofloxacin 500 mg uống hoặc TM/12 giờ; levofloxacin 500 mg uống hoặc TM/24 giờ; moxifloxacin uống hoặc TM 400 mg/24 giờ")]),
+  r(BILIARY, "tr. 184", "r-bil-2-carba", ["v8-24"],
     "Lựa chọn số 2: carbapenem", "alternative",
-    [d("Một trong", "meropenem TM 1 g/8 giờ; imipenem-cilastatin TM 1–2 g/12 giờ; doripenem TM 0,5 g/8 giờ")],
-    { notes: [BIL_NOTE] }),
+    [d("Một trong", "meropenem TM 1 g/8 giờ; imipenem-cilastatin TM 1–2 g/12 giờ; doripenem TM 0,5 g/8 giờ")]),
 
   // ===== Viêm phúc mạc thứ phát (v8-21) =====
   r("Viêm phúc mạc, mục 4.2", "tr. 160", "r-peri-sec-1", ["v8-21"],

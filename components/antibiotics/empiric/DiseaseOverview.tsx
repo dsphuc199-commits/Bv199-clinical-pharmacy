@@ -45,6 +45,12 @@ export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
           <List points={o.sourceControl} empty="" />
         </div>
       )}
+      {!!o.prevention?.length && (
+        <div>
+          <h4>Dự phòng</h4>
+          <List points={o.prevention} empty="" />
+        </div>
+      )}
       <DiseaseOverviewStyle />
     </section>
   );

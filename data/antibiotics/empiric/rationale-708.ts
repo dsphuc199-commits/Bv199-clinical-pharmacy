@@ -473,18 +473,18 @@ const UTI_PREGNANCY: DiseaseRationale = {
   branches: { "Viêm bàng quang cấp ở phụ nữ có thai": CYST_PREG },
 };
 
-/* ---------- Nhiem khuan duong mat (Chuong 5, tr. 148–150) ---------- */
+/* ---------- Nhiem khuan duong mat (Chuong 5, tr. in 181–184) ---------- */
 const NKDM = (loc: string) => Q(`Nhiễm khuẩn đường mật, ${loc}`);
-const B215 = NKDM("mục 4b, Bảng II.15; tr. 150");
+const B215 = NKDM("Bảng II.15; tr. 184");
 const BILIARY: DiseaseRationale = {
   common: [
     { condition: "Đau, sốt, vàng da ở người có tắc nghẽn đường mật (sỏi, giun, u, sau nối mật ruột).",
       clinicalMeaning: "Hay gặp Gram âm đường ruột (E. coli, Klebsiella, Enterobacter) và Enterococcus; thể nặng thường đa vi khuẩn có kỵ khí. Nhiễm khuẩn bệnh viện: MRSA, Enterococcus kháng vancomycin, Pseudomonas.",
       treatmentImplication: "Chọn kháng sinh bài tiết tốt vào đường mật; điều trị kinh nghiệm theo Bảng II.15 trong khi chờ kháng sinh đồ.",
-      sources: [NKDM("mục 1a, 4a; tr. 148–150")] },
+      sources: [NKDM("mục 1a, 4a; tr. 181–183")] },
     { condition: "Có tắc nghẽn đường mật.",
       treatmentImplication: "Phải đảm bảo lưu thông đường mật: dẫn lưu qua da, đặt stent qua ERCP hoặc phẫu thuật.",
-      sources: [NKDM("mục 4a; tr. 149")] },
+      sources: [NKDM("mục 4a; tr. 183")] },
   ],
   reassessment: [
     "Thể nhẹ: 5–7 ngày. Thể trung bình và nặng: 7–14 ngày, có thể dài hơn tùy đáp ứng.",
@@ -494,28 +494,22 @@ const BILIARY: DiseaseRationale = {
     "Lựa chọn số 1: penicillin phổ rộng + chất ức chế beta-lactamase": [
       { condition: "Lựa chọn số 1 – penicilin phối hợp chất ức chế beta-lactamase.",
         treatmentImplication: "Ampicilin-sulbactam (hay dùng ở thể nhẹ) hoặc piperacilin-tazobactam.",
-        sources: [B215] },
+        sources: [B215, NKDM("mục 4b; tr. 183")] },
     ],
     "Lựa chọn số 1: aminoglycosid": [
       { condition: "Lựa chọn số 1 – aminoglycosid.",
         clinicalMeaning: "Aminoglycosid có tác dụng tốt với vi khuẩn Gram âm.",
-        treatmentImplication: "Gentamycin, amikacin hoặc tobramycin.",
-        sources: [B215, NKDM("mục 4a; tr. 150")] },
+        treatmentImplication: "Gentamicin, amikacin hoặc tobramycin.",
+        sources: [B215, NKDM("mục 4a; tr. 183")] },
     ],
     "Lựa chọn số 1: cephalosporin thế hệ 3, 4": [
       { condition: "Lựa chọn số 1 – cephalosporin thế hệ 3, 4.",
         clinicalMeaning: "Cephalosporin thế hệ 3 có tác dụng tốt với vi khuẩn Gram âm.",
         treatmentImplication: "Cefoperazon-sulbactam, ceftriaxon, ceftazidim hoặc cefepim.",
-        sources: [B215, NKDM("mục 4a; tr. 150")] },
+        sources: [B215, NKDM("mục 4a; tr. 183")] },
     ],
     "Lựa chọn số 1: monobactam": [
       { condition: "Lựa chọn số 1 – monobactam.", treatmentImplication: "Aztreonam.", sources: [B215] },
-    ],
-    "Có nhiễm khuẩn kỵ khí: thêm vào một trong bốn nhóm lựa chọn số 1 (hoặc một trong ba fluoroquinolon của lựa chọn số 2)": [
-      { condition: "Có nhiễm khuẩn kỵ khí, hoặc nhiễm khuẩn đường mật nặng.",
-        clinicalMeaning: "Thể nặng thường nhiễm nhiều loại vi khuẩn, trong đó có kỵ khí (Clostridium, Bacteroides).",
-        treatmentImplication: "Thêm metronidazol vào một nhóm của lựa chọn số 1 hoặc một fluoroquinolon của lựa chọn số 2.",
-        sources: [B215, NKDM("mục 1a, 4a; tr. 148–149")] },
     ],
     "Lựa chọn số 2: fluoroquinolon": [
       { condition: "Lựa chọn số 2 – fluoroquinolon.",
