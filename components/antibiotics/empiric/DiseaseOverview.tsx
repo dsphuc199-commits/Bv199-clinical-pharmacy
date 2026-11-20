@@ -26,7 +26,7 @@ function Item({ p }: { p: Point }) {
   return <li>{t}{RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
 }
 
-export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
+export function DiseaseOverviewSummary({ diseaseId, durationPoints }: { diseaseId: string; durationPoints?: Point[] }) {
   const o = getDiseaseOverview(diseaseId);
   if (!o) return null;
   return (
@@ -35,7 +35,7 @@ export function DiseaseOverviewSummary({ diseaseId }: { diseaseId: string }) {
         {o.cards.slice(0, 4).map((c) => (
           <div key={c.label} className="do-card">
             <h4>{c.label}</h4>
-            <ul>{c.points.map((p) => <Item key={p.text} p={p} />)}</ul>
+            <ul>{(c.label === "Thời gian" && durationPoints ? durationPoints : c.points).map((p) => <Item key={p.text} p={p} />)}</ul>
           </div>
         ))}
       </div>

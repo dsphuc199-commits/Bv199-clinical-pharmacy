@@ -250,6 +250,35 @@ export const adminModules:
 
     {
       id:
+        "protocols",
+
+      title:
+        "Quản trị phác đồ",
+
+      shortTitle:
+        "Phác đồ",
+
+      description:
+        "Soạn bản nháp, đối chiếu nguồn và duyệt phác đồ Viêm đường mật cấp.",
+
+      icon:
+        "PĐ",
+
+      href:
+        "/admin/protocols",
+
+      status:
+        "ready",
+
+      features: [
+        "Bản nháp",
+        "So sánh trước–sau",
+        "Lịch sử phát hành",
+      ],
+    },
+
+    {
+      id:
         "references",
 
       title:

@@ -47,6 +47,8 @@ import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { citeSourceLabel } from "@/lib/antibiotics/source-citation";
 import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
 import { BILIARY_ANAEROBIC_BASE_IDS, BILIARY_ANAEROBIC_REGIMEN_ID } from "@/data/antibiotics/empiric/regimens/gastro";
+import { BILIARY_DISEASE_ID, biliaryDurationText, biliaryPublishedGroups, type BiliaryPublication } from "@/lib/antibiotics/biliary-protocol";
+import { useBiliaryProtocol } from "./BiliaryProtocolContext";
 
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
@@ -201,6 +203,10 @@ export function sectionsFor(items: Regimen[]): { sections: TxSection[]; regimenO
 }
 
 export default function BytRegimenView(props: Props) {
+  const protocol = useBiliaryProtocol();
+  const publication = props.diseaseId === BILIARY_DISEASE_ID ? protocol : null;
+  if (publication === "unavailable") return <p role="status" className="rounded-xl border border-slate-200 bg-white p-4">Tạm thời chưa tải được bản phác đồ đang dùng. Hãy tải lại trang.</p>;
+  const durationPoints = publication && biliaryDurationText(publication.content).map((text) => ({ text, ref: publication.content.source.locator }));
   if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} /></>;
   /* Tiet nieu: cong cu chon khang sinh theo QD 708, Chuong X. */
   if (isUtiEmpiric(props.diseaseId)) return <UtiEmpiricVn diseaseId={props.diseaseId} />;
@@ -208,17 +214,17 @@ export default function BytRegimenView(props: Props) {
   if (hasDiseaseOverview(props.diseaseId)) {
     return (
       <>
-        <DiseaseOverviewSummary diseaseId={props.diseaseId} />
-        <GenericBytRegimenView {...props} afterTreatment={<DiseaseMonitoring diseaseId={props.diseaseId} />} />
+        <DiseaseOverviewSummary diseaseId={props.diseaseId} durationPoints={durationPoints ?? undefined} />
+        <GenericBytRegimenView key={publication?.revision} publication={publication ?? undefined} {...props} afterTreatment={<DiseaseMonitoring diseaseId={props.diseaseId} />} />
       </>
     );
   }
   return <GenericBytRegimenView {...props} />;
 }
 
-function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: Props & { afterTreatment?: ReactNode }) {
+function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, afterTreatment }: Props & { afterTreatment?: ReactNode } & { publication?: BiliaryPublication }) {
   const allRegimens = useMemo(() => getRegimensForDisease(diseaseId), [diseaseId]);
-  const isBiliary = diseaseId === "v8-24";
+  const isBiliary = diseaseId === BILIARY_DISEASE_ID;
   // Listing an activity is distinct from supplying a verified prescribing dose.
   // Keep all source groups reachable; DoseTable marks missing/unverified fields.
   void showAllByDefault;
@@ -279,7 +285,17 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
   const { sections, regimenOf } = useMemo(() => {
     if (!isBiliary || !active) return sectionsFor(active?.items ?? []);
     // The slash intervals and full administration wording in Table II.15 are preserved in the dose cell.
-    const biliaryCard = (regimen: Regimen): TxCard => ({ ...toCard(regimen), showSourceDose: true });
+    const biliaryCard = (regimen: Regimen): TxCard => {
+      const card: TxCard = { ...toCard(regimen), showSourceDose: true };
+      if (!publication) return card;
+      const groups = biliaryPublishedGroups(regimen.id, card.groups, publication.content);
+      return {
+        ...card,
+        groups,
+        linkTexts: groups.flatMap((group) => group.options.map((option) => option.name + ": " + option.raw)),
+        sources: [publication.content.source.title + " · " + publication.content.source.locator],
+      };
+    };
     const sections: TxSection[] = [
       { key: "biliary-choice", title: active.name, itemLabel: "Lựa chọn", cards: active.items.map(biliaryCard) },
     ];
@@ -287,7 +303,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
       sections.push({ key: "adjunct", title: "Phối hợp khi có nhiễm khuẩn kỵ khí", itemLabel: "Phác đồ", cards: [biliaryCard(biliaryAdjunct)] });
     }
     return { sections, regimenOf: new Map(active.items.map((r) => [r.id, r])) };
-  }, [active, biliaryAdjunct, isBiliary]);
+  }, [active, biliaryAdjunct, isBiliary, publication]);
 
   /* Luu y lam sang: chi cua phac do dang xem; gan nhan "Phac do N". */
   const notes: string[] = [];
@@ -310,10 +326,18 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
   );
   const docTag = Array.from(new Set(allRegimens.map((r) => `QĐ ${DOCS[r.source.doc].number}`))).join("; ");
 
+  const rationale = active ? getRationale(diseaseId, active.name, active.items) : undefined;
   const lockedScenario = (items: Regimen[]) => items.some((r) => safetyAlertsFor(r.id).some((a) => a.autoRecommend === "block"));
 
   return (
     <div className="byt199" data-disease={diseaseId}>
+      {publication && (
+        <section className="mb-4 grid gap-1 rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm text-slate-800">
+          <strong>Phiên bản Khoa Dược duyệt · {new Intl.DateTimeFormat("vi-VN", { dateStyle: "short", timeZone: "Asia/Ho_Chi_Minh" }).format(new Date(publication.timestamp))}</strong>
+          <span>{publication.content.source.title} · {publication.content.source.locator}</span>
+          <a className="font-semibold text-teal-800 underline" href={publication.content.source.url} target="_blank" rel="noreferrer">Mở tài liệu đối chiếu</a>
+        </section>
+      )}
       <TreatmentPanel
         scenarios={visible.map((s) => {
           const label = diseaseId === "v8-9" && s.name === "Áp xe phổi: phối hợp beta-lactam + aminoglycosid" ? "Áp xe phổi" : s.name;
@@ -325,7 +349,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
         scenarioLabels={isBiliary ? { label: "Lựa chọn kháng sinh", placeholder: "Chọn nhóm kháng sinh" } : undefined}
         onScenario={setActiveName}
         scenarioHint={clin && filteredOut > 0 ? `Bộ lọc đang ẩn ${filteredOut} phương án.` : undefined}
-        sourceTag={allRegimens.length > 0 ? `Bộ Y tế · ${docTag}` : undefined}
+        sourceTag={publication ? "Phiên bản Khoa Dược duyệt" : allRegimens.length > 0 ? `Bộ Y tế · ${docTag}` : undefined}
         sections={sections}
         emptyText={
           allRegimens.length === 0
@@ -336,9 +360,12 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: 
         }
         notes={notes}
         comparison={<DoseConflictComparison conflicts={DOSE_CONFLICTS.filter(c => (active?.items ?? []).some(r => c.regimenIds.includes(r.id)))} />}
-        sources={sources}
+        sources={publication ? [publication.content.source.title + " · " + publication.content.source.locator] : sources}
         afterTreatment={afterTreatment}
-        rationale={active ? getRationale(diseaseId, active.name, active.items) : undefined}
+        rationale={rationale && publication ? {
+          ...rationale,
+          reassessment: [...biliaryDurationText(publication.content), ...(rationale.reassessment ?? []).filter((text) => !text.startsWith("Thể nhẹ:"))],
+        } : rationale}
       />
       <style>{`
         .byt199 { min-width: 0; }

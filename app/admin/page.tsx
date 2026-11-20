@@ -5,7 +5,7 @@ import {
 } from "@/data/admin/admin-modules";
 import { accountStorageConfigured } from "@/lib/auth/account-store";
 
-const storageModules = new Set(["users", "audit-log", "drugs", "references", "guidelines"]);
+const storageModules = new Set(["users", "audit-log", "drugs", "references", "guidelines", "protocols"]);
 
 export default function AdminPage() {
   const hasAccountStorage = accountStorageConfigured();
