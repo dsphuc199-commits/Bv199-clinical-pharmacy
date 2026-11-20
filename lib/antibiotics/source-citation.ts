@@ -10,13 +10,14 @@ import { DOCS } from "@/data/antibiotics/empiric/regimens/sources";
 import { INTL_GUIDELINES, type IntlGuideline } from "@/data/antibiotics/empiric/international";
 import { ARCHIVED_SOURCE_LINKS } from "@/lib/antibiotics/presentation-source-links";
 
-export type Citation = { key: string; label: string; title?: string; detail?: string; year?: number; url?: string };
+export type Citation = { key: string; label: string; title?: string; detail?: string; note?: string; year?: number; url?: string };
 
-export function citeIntlGuideline(guideline: Pick<IntlGuideline, "id" | "org" | "title" | "published" | "url">): Citation {
+export function citeIntlGuideline(guideline: Pick<IntlGuideline, "id" | "org" | "title" | "published" | "sourceNote" | "url">): Citation {
   return {
     key: guideline.id,
     label: guideline.title,
     detail: [guideline.org, guideline.published].filter(Boolean).join(" · "),
+    note: guideline.sourceNote,
     year: Number(guideline.published.match(/\b(?:19|20)\d{2}\b/)?.[0]) || undefined,
     url: guideline.url,
   };

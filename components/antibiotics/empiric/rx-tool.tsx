@@ -1,7 +1,7 @@
 "use client";
 /* Thanh phan giao dien dung chung cho cong cu chon khang sinh theo chan doan (bang ke don, nut chon, chu giai muc khuyen cao). */
 import type { ReactNode } from "react";
-import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
+import ClinicalSourceRows, { InternationalSourceUse, type InternationalSourceUseProps } from "../treatment/ClinicalSourceRows";
 import type { Citation } from "@/lib/antibiotics/source-citation";
 import type { RxItem } from "./septic-arthritis-pids2023";
 import { parseDose } from "./rx-dose-parts";
@@ -20,14 +20,20 @@ export const GRADE_LEGEND: [string, string][] = [
 const CERT: Record<string, string> = { H: "cao", M: "TB", L: "thấp", VL: "rất thấp" };
 
 /* Nguồn: mỗi tài liệu một dòng, ghi chú tách riêng. */
-export function SourceList({ sources, notes = [], children }: { sources: readonly Citation[]; notes?: string[]; children?: ReactNode }) {
+export function SourceList({ sources, notes = [], application, children }: {
+  sources: readonly Citation[];
+  notes?: string[];
+  application?: InternationalSourceUseProps;
+  children?: ReactNode;
+}) {
   return (
     <div className="sa24-src">
       {sources.length > 0 && <>
         <b>Nguồn và đối chiếu</b>
         <ClinicalSourceRows sources={sources} />
       </>}
-      {notes.map((n) => <p key={n}>{n}</p>)}
+      {notes.length > 0 && <div className="clinical-source-notes">{notes.map((n) => <p key={n}>{n}</p>)}</div>}
+      {sources.length > 0 && <InternationalSourceUse {...application} />}
       {children && <p>{children}</p>}
     </div>
   );

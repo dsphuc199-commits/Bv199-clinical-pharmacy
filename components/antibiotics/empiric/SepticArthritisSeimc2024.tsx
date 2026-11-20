@@ -626,7 +626,7 @@ export default function SepticArthritisSeimc2024() {
         {(pids ? PIDS_PRINCIPLES : PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <SourceList sources={pids ? citeIntlSources(["pids-idsa-aba-2023"]) : [SRC]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={pids ? citeIntlSources(["pids-idsa-aba-2023"]) : [SRC]} />
 
       <RxToolStyle />
     </article>

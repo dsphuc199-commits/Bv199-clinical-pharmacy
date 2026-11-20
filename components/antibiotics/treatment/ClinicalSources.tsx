@@ -3,7 +3,7 @@ import { citeSources } from "@/lib/antibiotics/source-citation";
 import ClinicalSourceRows from "./ClinicalSourceRows";
 
 /*
-  "Nguồn và đối chiếu": chi ghi co quan ban hanh, so quyet dinh, ten van ban, nam (moi nhat truoc).
+  "Nguồn và đối chiếu": co quan ban hanh, so quyet dinh, ten van ban va nam.
   Vi tri muc/bang/trang va ho so doi chieu noi bo khong hien o day (van giu trong du lieu).
   `diseaseId`, `originalNotes` giu trong chu ky de tuong thich noi goi.
 */

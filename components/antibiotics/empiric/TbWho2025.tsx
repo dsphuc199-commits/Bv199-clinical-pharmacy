@@ -100,7 +100,7 @@ export default function TbWho2025({ site }: { site: "ptb" | "tbm" }) {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo / không áp dụng</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <SourceList sources={citeIntlSources(["who-tb-module4-2025", "who-tb-handbook-module4-2025"])} notes={["Liều trẻ em < 25 kg: mg/kg theo khuyến cáo 2014.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["who-tb-module4-2025", "who-tb-handbook-module4-2025"])} notes={["Liều trẻ em < 25 kg: mg/kg theo khuyến cáo 2014."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

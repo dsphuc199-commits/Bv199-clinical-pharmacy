@@ -20,6 +20,7 @@ export type IntlGuideline = {
   title: string;
   citation: string;
   published: string;
+  sourceNote?: string;
   url: string;
   status: IntlStatus;
   checkedOn: string;
@@ -186,6 +187,7 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     title: "Diagnosis and Management of Community-acquired Pneumonia. An Official American Thoracic Society Clinical Practice Guideline",
     citation: "Jones BE và cs. Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST",
     published: "Công bố trực tuyến 18/07/2025 (số tạp chí 01/2026)",
+    sourceNote: "ATS phê duyệt tháng 5/2025. IDSA không tán thành bản cập nhật.",
     url: "https://doi.org/10.1164/rccm.202507-1692ST",
     status: "extracted",
     checkedOn: "14/11/2026",

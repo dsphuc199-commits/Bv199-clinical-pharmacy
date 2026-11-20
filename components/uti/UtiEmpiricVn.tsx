@@ -7,9 +7,9 @@ import { PUBLIC_REGIMENS } from "@/data/uti-antibiotics/public-regimens";
 import { getIntlEntry } from "@/data/antibiotics/empiric/international";
 import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
-/* Hướng dẫn quốc tế của mặt bệnh, mới nhất trước. */
+/* Hướng dẫn quốc tế của mặt bệnh. */
 function intlSourcesOf(diseaseId: string) {
-  return citeIntlSources(getIntlEntry(diseaseId)?.guidelineIds ?? []).sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+  return citeIntlSources(getIntlEntry(diseaseId)?.guidelineIds ?? []);
 }
 
 const PRESET: Record<string, { site: string; form?: string; scopeNote?: string }> = {

@@ -8,7 +8,7 @@
 import ClinicalReferenceDose from "../treatment/ClinicalReferenceDose";
 import RegimenDrugTools from "../treatment/RegimenDrugTools";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
-import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
+import ClinicalSourceRows, { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
 
 export default function LungAbscessInternational() {
   return <section className="bv199-panel la-intl" aria-label="Khuyến cáo quốc tế về áp xe phổi người lớn">
@@ -110,6 +110,7 @@ export default function LungAbscessInternational() {
         year: 2023,
         url: "https://www.uptodate.com/contents/lung-abscess-in-adults",
       }]} />
+      <InternationalSourceUse />
     </details>
     <style>{`
       .la-intl { color: #17364b; font-size: 13px; line-height: 1.75; min-width: 0; }

@@ -81,12 +81,15 @@ for(const d of C.DISEASES){for(const [k,El] of [['Quốc tế',GT.IntlTab],['So 
   if(k==='So sánh'&&/Điểm giống/.test(html)&&!/<details class="gt199-cite"><summary>Nguồn và căn cứ<\/summary><table class="clinical-source-rows"/.test(html))cmpSrc.push(d.id);}}
 check('Tab Quốc tế và So sánh: không số trang/chương inline, không tổng liều/ngày tính toán',tabBad.length===0,tabBad.slice(0,5));
 check('Tab So sánh: nguồn đối chiếu nằm trong "Nguồn và căn cứ" (mặc định đóng)',cmpSrc.length===0,cmpSrc);
-const capSources=render(React.createElement(GT.IntlTab,{diseaseId:'v8-1'})).match(/<table class="clinical-source-rows"[^>]*>[\s\S]*?<\/table>/)?.[0]??'';
-check('CAP: tên đầy đủ, liên kết và năm riêng cho ba tài liệu',[
+const capIntl=render(React.createElement(GT.IntlTab,{diseaseId:'v8-1'}));
+const capSources=capIntl.match(/<table class="clinical-source-rows"[^>]*>[\s\S]*?<\/table>/)?.[0]??'';
+const capSourceRows=Array.from(capSources.matchAll(/<tr><td>[\s\S]*?<\/tr>/g),([row])=>row);
+check('CAP: tên đầy đủ, số thứ tự, liên kết và năm tăng dần',[
   ['Diagnosis and Treatment of Adults with Community-acquired Pneumonia',2019],
-  ['Diagnosis and Management of Community-acquired Pneumonia',2025],
   ['Community-Acquired Pneumonia Clinical Pathway',2023],
-].every(([title,year])=>Array.from(capSources.matchAll(/<tr>[\s\S]*?<\/tr>/g)).some(([row])=>row.includes(title)&&row.includes('href="https://')&&row.includes(`<td>${year}</td>`)))&&capSources.includes('số tạp chí 01/2026'));
+  ['Diagnosis and Management of Community-acquired Pneumonia',2025],
+].every(([title,year],index)=>capSourceRows[index]?.includes(title)&&capSourceRows[index].includes('href="https://')&&capSourceRows[index].includes(`<td>${index+1}.</td>`)&&capSourceRows[index].includes(`<td>${year}</td>`))&&capSources.includes('số tạp chí 01/2026'));
+check('CAP: ghi chú ATS/IDSA thuộc tài liệu năm 2025 và có hướng dẫn áp dụng tại BV199',capSourceRows[2]?.includes('ATS phê duyệt tháng 5/2025. IDSA không tán thành bản cập nhật.')&&capIntl.includes('Áp dụng tại BV199')&&capIntl.includes('kháng sinh đồ của bệnh viện'));
 const {COMPARISONS}=load('data/antibiotics/empiric/comparison.ts');
 const {INTL_GUIDELINES}=load('data/antibiotics/empiric/international.ts');
 check('Mọi nguồn quốc tế ở tab Đối chiếu có bản ghi tên tài liệu và năm',COMPARISONS.every(c=>c.intl.every(id=>INTL_GUIDELINES[id]?.title&&/\b(?:19|20)\d{2}\b/.test(INTL_GUIDELINES[id].published))));

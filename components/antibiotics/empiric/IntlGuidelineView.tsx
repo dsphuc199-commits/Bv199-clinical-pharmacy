@@ -121,10 +121,8 @@ function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlG
       )}
       <SourceList
         sources={references}
-        notes={[
-          ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
-          "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
-        ]}
+        notes={g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []}
+        application={{ localReferences: "kháng sinh đồ của bệnh viện" }}
       />
       <Sources sources={sources} />
     </>

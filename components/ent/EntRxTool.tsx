@@ -229,7 +229,7 @@ export default function EntRxTool({ id, population }: { id: string; population?:
       <SourceList sources={sourceIds.flatMap((id) => {
         const source = src(id);
         return source ? [{ key: id, label: source.title, detail: source.org, year: source.year, url: source.url }] : [];
-      })} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]}>
+      })}>
         <Link href={`/ent/${res.page.id}`}>Khuyến cáo đầy đủ</Link>
       </SourceList>
       <RxToolStyle />

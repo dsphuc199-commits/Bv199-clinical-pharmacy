@@ -38,7 +38,8 @@ export default function CandidaEcmm2025({ diseaseId }: { diseaseId: string }) {
       </section>
       <SourceList
         sources={citeIntlSources(["ecmm-candida-2025"])}
-        notes={["Mức khuyến cáo: mạnh, vừa, yếu, không khuyến cáo.", "Liều cho người lớn. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ và kháng nấm đồ tại chỗ."]}
+        notes={["Mức khuyến cáo: mạnh, vừa, yếu, không khuyến cáo.", "Liều trong bảng áp dụng cho người lớn."]}
+        application={{ localReferences: "dịch tễ địa phương và kháng nấm đồ của bệnh viện" }}
       />
       <RxToolStyle />
       <style>{`.cand-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>

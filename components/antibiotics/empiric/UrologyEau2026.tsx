@@ -44,7 +44,7 @@ export default function UrologyEau2026({ diseaseId }: { diseaseId: string }) {
         {f.avoid.length > 0 && (<div><h4>Không khuyến cáo</h4><Rx items={f.avoid} /></div>)}
         {f.notes.length > 0 && (<div><h4>Lưu ý</h4><ul className="eau26-notes">{f.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>)}
       </section>
-      <SourceList sources={citeIntlSources(["eau-ui-2026", "eau-urolithiasis-2026"])} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["eau-ui-2026", "eau-urolithiasis-2026"])} />
       <RxToolStyle />
       <style>{`.eau26-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

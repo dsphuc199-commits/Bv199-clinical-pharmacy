@@ -105,7 +105,7 @@ export default function GnbBsiIntl() {
         <h4>Thời gian, chuyển đường uống</h4>
         <Rx items={COURSE} />
       </section>
-      <SourceList sources={citeIntlSources(["idsa-cuti-2025", "idsa-amr-2026"])} notes={["Liều của IDSA 2025 là liều dùng trong thử nghiệm lâm sàng.","IDSA 2026 không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
+      <SourceList sources={citeIntlSources(["idsa-cuti-2025", "idsa-amr-2026"])} notes={["Liều của IDSA 2025 là liều dùng trong thử nghiệm lâm sàng.","IDSA 2026 không xếp mức GRADE."]} application={{ setting: "Hoa Kỳ", localReferences: "kháng sinh đồ và danh mục thuốc của bệnh viện" }} />
       <RxToolStyle />
       <style>{`.gb-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .gb-sel { width: 100%; max-width: 520px; padding: 7px 10px; border: 1px solid #cfdde6; border-radius: 8px; font-size: 13.5px; background: #fff; color: #10243e; }`}</style>

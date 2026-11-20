@@ -68,7 +68,7 @@ export default function UtiPregnancyAcog2023() {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <SourceList sources={citeIntlSources(["acog-uti-pregnancy-2023", "idsa-asb-2019"])} notes={["ACOG: khuyến cáo được hội đồng bỏ phiếu đạt đồng thuận từ 75%, không xếp mức GRADE.","IDSA: GRADE mạnh, yếu; bằng chứng cao, trung bình, thấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["acog-uti-pregnancy-2023", "idsa-asb-2019"])} notes={["ACOG: khuyến cáo được hội đồng bỏ phiếu đạt đồng thuận từ 75%, không xếp mức GRADE.","IDSA: GRADE mạnh, yếu; bằng chứng cao, trung bình, thấp."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

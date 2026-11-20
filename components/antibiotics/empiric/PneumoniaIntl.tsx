@@ -255,10 +255,7 @@ export default function PneumoniaIntl({ kind }: { kind: Kind }) {
         <Row label="Dị ứng beta-lactam"><Seg label="Dị ứng beta-lactam" value={allergy} onChange={setAllergy} options={[{ id: "no", label: "Không" }, { id: "yes", label: "Có" }] as const} /></Row>
       </div>
       {kind === "cap" ? <CapTool al={al} /> : <HvTool kind={kind} al={al} />}
-      <SourceList sources={citeIntlSources(SRC[kind])} notes={[
-        ...(kind === "cap" ? ["ATS phê duyệt bản cập nhật năm 2025 vào tháng 5/2025. IDSA không phê duyệt bản cập nhật này."] : []),
-        "Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
-      ]} />
+      <SourceList sources={citeIntlSources(SRC[kind])} application={{ setting: "Hoa Kỳ", localReferences: "kháng sinh đồ của bệnh viện" }} />
       <RxToolStyle />
       <style>{`
         .pn-block { display: grid; gap: 4px; }

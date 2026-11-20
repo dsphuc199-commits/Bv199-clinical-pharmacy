@@ -21,7 +21,7 @@ import {
 import { structureOptionLines } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
 import ClinicalNotes from "../treatment/ClinicalNotes";
-import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
+import ClinicalSourceRows, { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
 import { citeIntlSources, citeSources } from "@/lib/antibiotics/source-citation";
 import {
   DOCS,
@@ -277,10 +277,11 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       {moduleContent}
 
       {/* Khong hien danh sach "noi dung chua trich xuat" (ghi chu quy trinh, khong phai van phong dieu tri). */}
-      {/* Mot khoi nguon duy nhat: to chuc, ten huong dan, nam (moi nhat truoc). */}
+      {/* Mot khoi nguon duy nhat: to chuc, ten huong dan va nam. */}
       <details className="gt199-cite">
         <summary>Nguồn và đối chiếu</summary>
-        <ClinicalSourceRows sources={citeIntlSources(entry.guidelineIds).sort((a, b) => (b.year ?? 0) - (a.year ?? 0))} />
+        <ClinicalSourceRows sources={citeIntlSources(entry.guidelineIds)} />
+        {!isEauUrology(diseaseId) && !isIdsaCuti(diseaseId) && <InternationalSourceUse />}
       </details>
       <GtStyle />
     </section>

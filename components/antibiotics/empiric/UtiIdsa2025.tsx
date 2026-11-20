@@ -92,7 +92,7 @@ export default function UtiIdsa2025({ title }: { title: string }) {
         </details>
         <div><h4>Lưu ý</h4><ul className="cuti-notes">{plan.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>
       </section>
-      <SourceList sources={citeIntlSources(["idsa-cuti-2025"])} notes={[CUTI_SCOPE, "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["idsa-cuti-2025"])} notes={[CUTI_SCOPE]} />
       <RxToolStyle />
       <style>{`.cuti-notes { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .cuti-pk thead th { background: #f1f6f9; color: #0b3a5b; font-size: 12px; }

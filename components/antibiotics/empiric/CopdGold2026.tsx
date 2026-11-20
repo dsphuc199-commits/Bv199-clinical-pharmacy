@@ -102,7 +102,7 @@ export default function CopdGold2026() {
         <Rx items={GOLD_PREVENTION} />
       </details>
 
-      <SourceList sources={citeIntlSources(["gold-2026"])} notes={["GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["gold-2026"])} notes={["GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp."]} />
 
       <RxToolStyle />
     </article>
