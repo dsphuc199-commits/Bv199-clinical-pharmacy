@@ -235,6 +235,17 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
     checkedOn: "15/11/2026",
     checkNote: "Toàn văn Europe PMC (PMC9373543) và Additional file 1 (sTable 1–3), Figure 1. Được SSC 2026 trích dẫn (tài liệu 290). Xây dựng cho dịch tễ Hà Lan.",
   },
+  "ecmm-candida-2025": {
+    id: "ecmm-candida-2025",
+    org: "ECMM/ISHAM/ASM",
+    title: "Global guideline for the diagnosis and management of candidiasis",
+    citation: "Cornely OA và cs. Lancet Infect Dis 2025;25:e280–93",
+    published: "13/02/2025 (bản sửa 15/10/2025)",
+    url: "https://doi.org/10.1016/S1473-3099(24)00749-7",
+    status: "extracted",
+    checkedOn: "20/11/2026",
+    checkNote: "Đọc toàn văn bài chính (CC BY 4.0) do người dùng cung cấp; chưa có phụ lục. Nội dung lâm sàng nằm trong công cụ components/antibiotics/empiric/CandidaEcmm2025.tsx.",
+  },
   "idsa-cuti-2025": {
     id: "idsa-cuti-2025",
     org: "IDSA",
@@ -755,6 +766,42 @@ export const INTL_ENTRIES: IntlEntry[] = [
       { text: "Thai kỳ: có thể điều trị ngoại trú bằng kháng sinh tiêm phù hợp nếu nhẹ và theo dõi sát; tổng 7–10 ngày. Nam giới bị NKTN có sốt/viêm thận bể thận: tối thiểu 2 tuần, ưu tiên fluoroquinolon.", guidelineId: EAU_UI, locator: "Mục 3.6.3, PDF tr. 29" },
     ],
     regimens: [...EAU_PYELO, ...CUTI_TABLES],
+  },
+  /* Nhiem Candida xam lan: noi dung lam sang trong cong cu components/antibiotics/empiric/candida-ecmm2025.ts. */
+  {
+    diseaseId: "v8-3",
+    guidelineIds: ["ecmm-candida-2025"],
+    scope: "Nấm huyết do Candida ở người lớn, chưa có tổn thương cơ quan.",
+    recommendations: [],
+    regimens: [],
+  },
+  {
+    diseaseId: "v8-121",
+    guidelineIds: ["ecmm-candida-2025"],
+    scope: "Nấm huyết do Candida ở người bệnh giảm bạch cầu trung tính, ung thư huyết học; gồm dự phòng.",
+    recommendations: [],
+    regimens: [],
+  },
+  {
+    diseaseId: "v8-122",
+    guidelineIds: ["ecmm-candida-2025"],
+    scope: "Viêm nội tâm mạc do Candida ở người lớn, gồm van nhân tạo và thiết bị tim cấy ghép.",
+    recommendations: [],
+    regimens: [],
+  },
+  {
+    diseaseId: "v8-48",
+    guidelineIds: ["ecmm-candida-2025"],
+    scope: "Nhiễm Candida ổ bụng ở người lớn; gồm dự phòng sau phẫu thuật bụng.",
+    recommendations: [],
+    regimens: [],
+  },
+  {
+    diseaseId: "v8-124",
+    guidelineIds: ["ecmm-candida-2025"],
+    scope: "Nhiễm Candida xương khớp ở người lớn.",
+    recommendations: [],
+    regimens: [],
   },
   /* Noi dung lam sang nam trong cong cu components/antibiotics/empiric/urology-eau2026.ts. */
   {
