@@ -4,23 +4,12 @@ import UtiTool from "./UtiTool";
 import { CONDITIONS } from "@/data/uti-antibiotics/conditions";
 import { UTI_CONFIG } from "@/data/uti-antibiotics/config";
 import { PUBLIC_REGIMENS } from "@/data/uti-antibiotics/public-regimens";
-import { INTL_GUIDELINES, getIntlEntry } from "@/data/antibiotics/empiric/international";
-
-const yearOf = (published: string) => String(published).match(/\d{4}/)?.[0] ?? published;
-
-const SOURCE_LABEL: Record<string, string> = {
-  "eau-ui-2026": "Hội Tiết niệu châu Âu (EAU). Guidelines on Urological Infections",
-  "eau-urolithiasis-2026": "Hội Tiết niệu châu Âu (EAU). Guidelines on Urolithiasis",
-  "idsa-cuti-2025": "Hiệp hội Bệnh truyền nhiễm Hoa Kỳ (IDSA). Guideline on Complicated Urinary Tract Infections",
-};
+import { getIntlEntry } from "@/data/antibiotics/empiric/international";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 /* Hướng dẫn quốc tế của mặt bệnh, mới nhất trước. */
 function intlSourcesOf(diseaseId: string) {
-  return (getIntlEntry(diseaseId)?.guidelineIds ?? [])
-    .map((id) => INTL_GUIDELINES[id])
-    .filter((g): g is NonNullable<typeof g> => !!g)
-    .sort((a, b) => Number(yearOf(b.published)) - Number(yearOf(a.published)))
-    .map((g) => ({ label: `${SOURCE_LABEL[g.id] ?? `${g.org}. ${g.title}`} (${yearOf(g.published)})`, url: g.url }));
+  return citeIntlSources(getIntlEntry(diseaseId)?.guidelineIds ?? []).sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 }
 
 const PRESET: Record<string, { site: string; form?: string; scopeNote?: string }> = {

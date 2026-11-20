@@ -7,6 +7,7 @@ import {
   capDuration, capPlans, capSpecial, capVirus, hvDiagnosis, hvGrades, hvPlan, type Plan,
 } from "./pneumonia-intl";
 import { Grade, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 type Kind = "cap" | "hap" | "vap";
 const L_GRADE: [string, string][] = [
@@ -231,9 +232,9 @@ function HvTool({ kind, al }: { kind: "hap" | "vap"; al: boolean }) {
 
 const TITLE: Record<Kind, string> = { cap: "Viêm phổi cộng đồng – người lớn", hap: "Viêm phổi bệnh viện – người lớn", vap: "Viêm phổi liên quan thở máy – người lớn" };
 const SRC: Record<Kind, string[]> = {
-  cap: ["ATS/IDSA 2019 – Chẩn đoán và điều trị viêm phổi cộng đồng ở người lớn", "ATS 2025 – Cập nhật siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid (ATS phê duyệt 05/2025, IDSA không phê duyệt)", "IDSA – Lộ trình lâm sàng viêm phổi cộng đồng"],
-  hap: ["IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn", "IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc"],
-  vap: ["IDSA/ATS 2016 – Điều trị viêm phổi bệnh viện và viêm phổi liên quan thở máy ở người lớn", "IDSA 2026 – Điều trị nhiễm khuẩn Gram âm kháng thuốc"],
+  cap: ["ats-cap-2025", "idsa-cap-pathway-2023", "atsidsa-cap-2019"],
+  hap: ["idsa-amr-2026", "atsidsa-hapvap-2016"],
+  vap: ["idsa-amr-2026", "atsidsa-hapvap-2016"],
 };
 
 export default function PneumoniaIntl({ kind }: { kind: Kind }) {
@@ -254,7 +255,10 @@ export default function PneumoniaIntl({ kind }: { kind: Kind }) {
         <Row label="Dị ứng beta-lactam"><Seg label="Dị ứng beta-lactam" value={allergy} onChange={setAllergy} options={[{ id: "no", label: "Không" }, { id: "yes", label: "Có" }] as const} /></Row>
       </div>
       {kind === "cap" ? <CapTool al={al} /> : <HvTool kind={kind} al={al} />}
-      <SourceList sources={SRC[kind]} notes={["Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ."]} />
+      <SourceList sources={citeIntlSources(SRC[kind])} notes={[
+        ...(kind === "cap" ? ["ATS phê duyệt bản cập nhật năm 2025 vào tháng 5/2025. IDSA không phê duyệt bản cập nhật này."] : []),
+        "Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
+      ]} />
       <RxToolStyle />
       <style>{`
         .pn-block { display: grid; gap: 4px; }

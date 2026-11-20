@@ -14,15 +14,16 @@ import PatientGroupSelect from "./treatment/PatientGroupSelect";
 import { patientGroupsFor } from "@/lib/antibiotics/patient-groups";
 import { TxStyle } from "./treatment/DoseTable";
 import ClinicalNotes from "./treatment/ClinicalNotes";
+import ClinicalSourceRows from "./treatment/ClinicalSourceRows";
 
 /* Nguon chi ghi quyet dinh (co quan, so, ten, nam); vi tri muc/bang giu trong du lieu COPD_SOURCES. */
-const COPD_CITATION = citeSource("QĐ 2131/QĐ-BYT").label;
+const COPD_CITATION = { ...citeSource("QĐ 2131/QĐ-BYT"), url: COPD_SOURCE_URL };
 /* Mot khoi "Nguồn và đối chiếu" duy nhat (cuoi nhanh, `cite`); cac vi tri khac chi hien "Chi tiết cần thẩm định" khi co.
    Lieu duy tri theo Clcr cua colistin: xem module Hieu chinh lieu (khong lap bang o day). */
 function Sources({ reviews = [], cite = false }: { ids: SourceId[]; reviews?: ReviewId[]; cite?: boolean }) {
   if (!cite && !reviews.includes("colistin")) return null;
   return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Colistin – liều nạp và liều duy trì"}</summary>
-    {cite && <p><a href={COPD_SOURCE_URL} download>{COPD_CITATION}</a></p>}
+    {cite && <ClinicalSourceRows sources={[COPD_CITATION]} />}
     {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — liều theo QĐ 2131/QĐ-BYT</strong>
       <p>{clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
       <p>Liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>

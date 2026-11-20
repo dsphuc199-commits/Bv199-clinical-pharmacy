@@ -6,13 +6,15 @@ import { UTI_BRIEFS } from "@/data/uti-antibiotics/briefs";
 import { TIER_LABEL } from "@/data/uti-antibiotics/config";
 import type { Condition, PublicRegimen } from "@/data/uti-antibiotics/types";
 import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } from "@/lib/uti/flow";
+import { citeSourceLabel, type Citation } from "@/lib/antibiotics/source-citation";
+import ClinicalSourceRows from "@/components/antibiotics/treatment/ClinicalSourceRows";
 
 type Props = {
   conditions: Condition[];
   regimens: PublicRegimen[];
   config: { sources: readonly string[]; citedSources: readonly string[]; effectiveStatus: string; disclaimer: string };
   /* Hướng dẫn hiệp hội quốc tế dùng ở tab Quốc tế và Đối chiếu của mặt bệnh. */
-  intlSources?: { label: string; url?: string }[];
+  intlSources?: Citation[];
   /* Nhúng vào tab Hướng dẫn Việt Nam của trang phác đồ kinh nghiệm. */
   embedded?: boolean;
   initial?: { site: string; form?: string };
@@ -47,9 +49,8 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
 
   const briefs = site ? UTI_BRIEFS[site] ?? [] : [];
 
-  /* Mỗi tổ chức một dòng; cùng tổ chức thì giữ bản mới nhất. */
-  const sourceMap = new Map<string, { label: string; url?: string }>();
-  for (const s of [...[...config.sources, ...config.citedSources].map((label) => ({ label })), ...intlSources]) sourceMap.set(s.label.split(".")[0], s);
+  const localSources = [...config.sources, ...config.citedSources].map(citeSourceLabel);
+  const sourceMap = new Map([...localSources, ...intlSources].map((source) => [source.key, source]));
   const sourceList = [...sourceMap.values()];
 
   const reset = () => { setSite(initial?.site ?? null); setForm(initial?.form ?? null); setPopulation(null); setQuery(""); };
@@ -141,9 +142,7 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
 
       <footer className="uti-foot">
         <h3>Nguồn và đối chiếu</h3>
-        <ol>
-          {sourceList.map((s) => <li key={s.label}>{s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a> : s.label}</li>)}
-        </ol>
+        <ClinicalSourceRows sources={sourceList} />
         <p>{config.effectiveStatus}</p>
       </footer>
 

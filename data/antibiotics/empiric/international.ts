@@ -171,8 +171,8 @@ const EAU_SYSTEMIC_RECS: IntlRec[] = [
 export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
   "atsidsa-cap-2019": {
     id: "atsidsa-cap-2019",
-    org: "ATS/IDSA",
-    title: "Diagnosis and Treatment of Adults with Community-acquired Pneumonia",
+    org: "American Thoracic Society (ATS) và Infectious Diseases Society of America (IDSA)",
+    title: "Diagnosis and Treatment of Adults with Community-acquired Pneumonia: An Official Clinical Practice Guideline of the American Thoracic Society and Infectious Diseases Society of America",
     citation: "Metlay JP và cs. Am J Respir Crit Care Med 2019;200(7):e45–e67. PMCID: PMC6812437",
     published: "01/10/2019",
     url: "https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-adults/",
@@ -182,14 +182,25 @@ export const INTL_GUIDELINES: Record<string, IntlGuideline> = {
   },
   "ats-cap-2025": {
     id: "ats-cap-2025",
-    org: "ATS",
+    org: "American Thoracic Society (ATS)",
     title: "Diagnosis and Management of Community-acquired Pneumonia. An Official American Thoracic Society Clinical Practice Guideline",
     citation: "Jones BE và cs. Am J Respir Crit Care Med 212(1):24–44; DOI 10.1164/rccm.202507-1692ST",
-    published: "18/07/2025",
+    published: "Công bố trực tuyến 18/07/2025 (số tạp chí 01/2026)",
     url: "https://doi.org/10.1164/rccm.202507-1692ST",
     status: "extracted",
     checkedOn: "14/11/2026",
     checkNote: "Đọc toàn văn PDF do người dùng cung cấp. Cập nhật 4 câu hỏi (siêu âm phổi; kháng sinh khi xét nghiệm virus hô hấp dương tính; thời gian kháng sinh; corticoid toàn thân). ATS phê duyệt 05/2025; IDSA không phê duyệt. Phác đồ kháng sinh kinh nghiệm vẫn theo ATS/IDSA 2019.",
+  },
+  "idsa-cap-pathway-2023": {
+    id: "idsa-cap-pathway-2023",
+    org: "Infectious Diseases Society of America (IDSA)",
+    title: "Community-Acquired Pneumonia Clinical Pathway",
+    citation: "Infectious Diseases Society of America. Community-Acquired Pneumonia Clinical Pathway.",
+    published: "2023",
+    url: "https://www.idsociety.org/globalassets/idsa/practice-guidelines/community-acquired-pneumonia-in-adults/cap-clinical-pathway-final-online.pdf",
+    status: "module",
+    checkedOn: "20/11/2026",
+    checkNote: "Lộ trình của IDSA dựa trên hướng dẫn ATS/IDSA 2019, đã được dùng trong công cụ viêm phổi cộng đồng ở người lớn.",
   },
   "atsidsa-hapvap-2016": {
     id: "atsidsa-hapvap-2016",
@@ -563,7 +574,7 @@ export const INTL_ENTRIES: IntlEntry[] = [
   // ================= CAP =================
   {
     diseaseId: "v8-1",
-    guidelineIds: ["atsidsa-cap-2019", "ats-cap-2025"],
+    guidelineIds: ["atsidsa-cap-2019", "ats-cap-2025", "idsa-cap-pathway-2023"],
     scope: "Người lớn, viêm phổi cộng đồng, miễn dịch bình thường (Hoa Kỳ). Phác đồ kháng sinh theo ATS/IDSA 2019; siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh và corticoid theo ATS 2025 (thay khuyến cáo 2019 tương ứng).",
     recommendations: [
       { text: "Macrolid đơn trị ngoại trú chỉ dùng ở khu vực có tỷ lệ phế cầu kháng macrolid < 25%.", guidelineId: "atsidsa-cap-2019", locator: "Question 8; Table 3 chú thích †" },

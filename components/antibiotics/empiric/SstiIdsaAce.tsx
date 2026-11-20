@@ -8,6 +8,7 @@ import {
   type Age, type BiteKind, type Culture, type Form, type ImpSub, type Pathogen, type Sev, type SsiSite,
 } from "./ssti-idsa2014-ace2026";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 const STRAT_LABEL: Record<StrategyKind, string> = { mono: "ĐƠN TRỊ", combo: "PHỐI HỢP", mixed: "ĐƠN TRỊ / PHỐI HỢP", none: "KHÔNG KHÁNG SINH" };
 
@@ -139,7 +140,7 @@ export default function SstiIdsaAce({ initialForm = "cellulitis", initialAge = "
           <p className="sa24-tip">Nhiễm trùng bàn chân đái tháo đường: xem mặt bệnh riêng (IWGDF/IDSA 2023).</p>
         </details>
       </section>
-      <SourceList sources={["IDSA 2014 – Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections","Agency for Care Effectiveness, Bộ Y tế Singapore 2026 – Bacterial skin and soft tissue infections: diagnosis and antibiotic prescribing","FDA (DailyMed) – Thông tin kê đơn được phê duyệt"]} notes={["IDSA: mức khuyến cáo theo GRADE (mạnh, yếu; chất lượng bằng chứng cao, trung bình, thấp). ACE không xếp mức khuyến cáo.","Liều của ACE theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS.","Liều đối chiếu với thông tin kê đơn của FDA: linezolid, daptomycin, ceftarolin, piperacilin-tazobactam, ampicilin-sulbactam, ertapenem, meropenem, imipenem-cilastatin, cefotaxim, metronidazol, clindamycin, vancomycin, gentamicin, doxycyclin.","Liều trẻ em theo nhãn thuốc: linezolid, ampicilin-sulbactam, imipenem-cilastatin, ertapenem, cefotaxim, gentamicin, doxycyclin.","Đối chiếu ngày 16/11/2026.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={[...citeIntlSources(["idsa-ssti-2014", "ace-ssti-2026"]), { key: "dailymed-labels", label: "Thông tin kê đơn theo từng chế phẩm", detail: "DailyMed · Thư viện Y khoa Quốc gia Hoa Kỳ", url: "https://dailymed.nlm.nih.gov/dailymed/" }]} notes={["IDSA: mức khuyến cáo theo GRADE (mạnh, yếu; chất lượng bằng chứng cao, trung bình, thấp). ACE không xếp mức khuyến cáo.","Liều của ACE theo tờ hướng dẫn sử dụng được HSA Singapore phê duyệt, đối chiếu UpToDate, MIMS.","Liều đối chiếu với thông tin kê đơn của FDA: linezolid, daptomycin, ceftarolin, piperacilin-tazobactam, ampicilin-sulbactam, ertapenem, meropenem, imipenem-cilastatin, cefotaxim, metronidazol, clindamycin, vancomycin, gentamicin, doxycyclin.","Liều trẻ em theo nhãn thuốc: linezolid, ampicilin-sulbactam, imipenem-cilastatin, ertapenem, cefotaxim, gentamicin, doxycyclin.","Đối chiếu ngày 16/11/2026.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.ssti-strat { border: 1px solid #cfdde6; border-left: 5px solid #0b3a5b; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 4px; }
 .ssti-strat-mono { border-left-color: #0b6b3a; } .ssti-strat-combo { border-left-color: #1d4f8a; } .ssti-strat-mixed { border-left-color: #8a5a00; } .ssti-strat-none { border-left-color: #6b8293; }

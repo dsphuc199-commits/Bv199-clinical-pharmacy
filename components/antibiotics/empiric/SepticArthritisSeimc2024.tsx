@@ -15,12 +15,19 @@ import {
   PIDS_PRINCIPLES, PIDS_ROUTE, PIDS_TIMING, pidsDuration, type PidsAge, type RxItem,
 } from "./septic-arthritis-pids2023";
 import { ALG, ALT, PREF, GRADE_LEGEND, Legend, ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 type Item = RxItem;
 type Pop = "adult" | "child";
 type Stage = "empiric" | "directed";
 
-const SRC = "GEIO–SEIMC/SEIP/SECOT 2024 – Hướng dẫn chẩn đoán và điều trị viêm khớp nhiễm khuẩn ở người lớn và trẻ em";
+const SRC = {
+  key: "seimc-seip-secot-2024",
+  label: "Guidelines for the diagnosis and treatment of septic arthritis in adults and children, developed by the GEIO (SEIMC), SEIP and SECOT",
+  detail: "Số tạp chí 04/2024",
+  year: 2024,
+  url: "https://seimc.org/wp-content/uploads/2025/05/seimc-geio-gc-2024-Artritis_Septica.pdf",
+};
 
 /* ================= Kinh nghiem ================= */
 const CHILD_AGES = [
@@ -619,7 +626,7 @@ export default function SepticArthritisSeimc2024() {
         {(pids ? PIDS_PRINCIPLES : PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <SourceList sources={[pids ? "PIDS/IDSA 2023 – Hướng dẫn chẩn đoán và điều trị viêm khớp nhiễm khuẩn cấp ở trẻ em" : SRC]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={pids ? citeIntlSources(["pids-idsa-aba-2023"]) : [SRC]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

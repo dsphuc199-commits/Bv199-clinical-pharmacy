@@ -9,7 +9,7 @@
 export type Comparison = {
   diseaseId: string;
   vn: string;
-  intl: string;
+  intl: string[];
   similar: string[];
   different: string[];
   conditions: string[];
@@ -22,7 +22,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-1",
     vn: "QĐ 2147/QĐ-BYT (2026) – module CAP",
-    intl: "ATS/IDSA 2019 (phác đồ kháng sinh); ATS 2025 (siêu âm phổi, kháng sinh khi virus dương tính, thời gian kháng sinh, corticoid – IDSA không phê duyệt)",
+    intl: ["atsidsa-cap-2019", "ats-cap-2025"],
     similar: [
       "Cùng phân tầng: ngoại trú nguy cơ thấp, ngoại trú có bệnh đồng mắc/nguy cơ, nội trú không ICU, CAP nặng/ICU.",
       "Ngoại trú nguy cơ thấp: amoxicillin 1 g mỗi 8 giờ, doxycyclin 100 mg mỗi 12 giờ; macrolid đơn trị có điều kiện về tỷ lệ phế cầu kháng macrolid.",
@@ -51,7 +51,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-4",
     vn: "QĐ 708 Bảng II.6 (2015); khuyến cáo Hội Hô hấp VN & Hội HSCC-CĐ VN 2023 (module)",
-    intl: "ATS/IDSA 2016",
+    intl: ["atsidsa-hapvap-2016"],
     similar: [
       "Piperacillin-tazobactam, cefepim, levofloxacin, imipenem, meropenem có trong cả QĐ 708 (VPBV sớm – thay thế; VPBV muộn) và danh sách ATS/IDSA cho ca không nguy cơ tử vong cao.",
       "Nghi MRSA: vancomycin hoặc linezolid ở cả hai.",
@@ -74,7 +74,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-5",
     vn: "QĐ 708 (2015) mục 4.3 + Bảng II.9; khuyến cáo Hội 2023 (module)",
-    intl: "ATS/IDSA 2016",
+    intl: ["atsidsa-hapvap-2016"],
     similar: [
       "Có nguy cơ đa kháng: QĐ 708 phối hợp Nhóm A (beta-lactam chống Pseudomonas) + Nhóm B (fluoroquinolon hoặc aminoglycosid); ATS/IDSA dùng hai thuốc chống P. aeruginosa khác nhóm.",
       "Nghi MRSA: linezolid hoặc vancomycin ở cả hai (QĐ 708 có thêm teicoplanin).",
@@ -96,7 +96,7 @@ export const COMPARISONS: Comparison[] = [
   ...["v8-11", "v8-12"].map<Comparison>((diseaseId) => ({
     diseaseId,
     vn: "QĐ 708 (2015) mục 4.1.2 + Bảng II.10, II.11",
-    intl: "Surviving Sepsis Campaign 2026; đồng thuận vancomycin ASHP/IDSA 2020",
+    intl: ["ssc-2026", "ashp-idsa-vanco-2020"],
     similar: [
       "Dùng kháng sinh sớm: QĐ 708 \"ngay trong giờ đầu\"; SSC 2026 dùng ngay, lý tưởng trong 1 giờ khi có thể sốc hoặc sepsis có khả năng.",
       "Xuống thang khi có kết quả vi sinh ở cả hai.",
@@ -117,7 +117,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-2",
     vn: "QĐ 708 (2015) – mục Sỏi thận tiết niệu có biến chứng nhiễm khuẩn",
-    intl: "IDSA cUTI 2025 (Bảng 1.1, 2.1, 1.2); EAU Urological Infections 2026 (NKTN toàn thân); EAU Urolithiasis 2026. ESBL (theo tác nhân): xem mặt bệnh Enterobacterales sinh ESBL",
+    intl: ["idsa-cuti-2025", "eau-ui-2026", "eau-urolithiasis-2026"],
     similar: [
       "Cephalosporin thế hệ 3 (cefotaxim, ceftriaxon) và fluoroquinolon có trong cả phác đồ QĐ 708 và nhóm ưu tiên IDSA 2025.",
     ],
@@ -137,7 +137,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-16",
     vn: "QĐ 708 (2015) – Viêm bàng quang cấp",
-    intl: "EAU Urological Infections 2026",
+    intl: ["eau-ui-2026"],
     similar: [
       "Nitrofurantoin 100 mg x 2 lần/ngày trong 5 ngày có trong cả hai nguồn.",
       "Fluoroquinolon không phải lựa chọn đầu tay ở cả hai nguồn.",
@@ -154,7 +154,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-17",
     vn: "QĐ 708 (2015) – Viêm thận bể thận cấp",
-    intl: "IDSA cUTI 2025 (Bảng 1.1, 2.1, 1.2); EAU 2026 (Bảng 5–6)",
+    intl: ["idsa-cuti-2025", "eau-ui-2026"],
     similar: [
       "Cephalosporin thế hệ 3, carbapenem, fluoroquinolon có trong cả QĐ 708 và nhóm ưu tiên IDSA 2025.",
     ],
@@ -174,7 +174,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-27",
     vn: "QĐ 708 (2015) – Viêm mô bào",
-    intl: "IDSA SSTI 2014",
+    intl: ["idsa-ssti-2014"],
     similar: [
       "Nhắm liên cầu là chính (penicilin G, amoxicilin-clavulanat, ceftriaxon trong QĐ 708; IDSA: thuốc có tác dụng trên liên cầu).",
     ],
@@ -187,7 +187,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-28",
     vn: "QĐ 4416/QĐ-BYT (2023) – Nhọt, áp xe da",
-    intl: "IDSA SSTI 2014",
+    intl: ["idsa-ssti-2014"],
     similar: [
       "Trích rạch dẫn lưu ổ áp xe là nền tảng ở cả hai.",
       "Thuốc chống MRSA (vancomycin, trimethoprim/sulfamethoxazol, linezolid) có trong QĐ 4416 cho áp xe do tụ cầu kháng methicilin.",
@@ -200,7 +200,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v9-1",
     vn: "QĐ 1530/QĐ-BYT (2023) – Phụ lục 02",
-    intl: "IWGDF/IDSA 2023",
+    intl: ["iwgdf-idsa-2023"],
     similar: [
       "Chọn kháng sinh theo mức độ nhiễm trùng, tác nhân nghi ngờ và việc đã dùng kháng sinh gần đây.",
       "Nhiễm trùng nhẹ không yếu tố phức tạp: chỉ nhắm cầu khuẩn Gram dương (QĐ 1530) – tương tự khuyến cáo 14 của IWGDF/IDSA (vùng ôn đới, chưa dùng kháng sinh gần đây).",
@@ -219,7 +219,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-43",
     vn: "QĐ 708 (2015) Bảng II.10",
-    intl: "IDSA AMR 2026",
+    intl: ["idsa-amr-2026"],
     similar: [
       "Ngoài đường tiết niệu: carbapenem (ertapenem, imipenem, meropenem) là lựa chọn ở cả hai.",
     ],
@@ -232,7 +232,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-46",
     vn: "QĐ 708 (2015) Bảng II.10 – Pseudomonas aeruginosa",
-    intl: "IDSA AMR 2026 – mục 4 (DTR P. aeruginosa)",
+    intl: ["idsa-amr-2026"],
     similar: [
       "Không có điểm trùng về thuốc cho chủng DTR: hai nguồn áp dụng cho hai kiểu hình khác nhau.",
     ],
@@ -251,7 +251,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-39",
     vn: "QĐ 708 (2015) – Viêm nội tâm mạc nhiễm khuẩn, mục 4.2 (tr. 129–130)",
-    intl: "ESC 2023 – Bảng khuyến cáo 10 (điều trị kinh nghiệm); đồng thuận vancomycin 2020",
+    intl: ["esc-ie-2023", "ashp-idsa-vanco-2020"],
     similar: [
       "Cấy máu nhiều lần (QĐ 708: 3 lần; ESC: 3 bộ cách 30 phút) trước kháng sinh; điều trị sớm, diệt khuẩn, đường tĩnh mạch.",
       "Van nhân tạo sớm: vancomycin 30 mg/kg/ngày chia 2 lần + gentamicin 3 mg/kg/ngày + rifampin 900 mg/ngày (QĐ 708) – ESC 2023 cũng dùng vancomycin + gentamicin + rifampin 900–1200 mg.",
@@ -274,7 +274,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-33",
     vn: "QĐ 708 (2015) – Viêm khớp nhiễm khuẩn, mục 4.2.1 (tr. 164–165)",
-    intl: "PIDS/IDSA 2023 (CHỈ TRẺ EM)",
+    intl: ["pids-idsa-aba-2023"],
     similar: [
       "Kinh nghiệm nhắm S. aureus (QĐ 708: oxacilin/nafcilin hoặc clindamycin; PIDS/IDSA: thuốc có tác dụng trên S. aureus, cân nhắc MRSA theo dữ liệu tại chỗ).",
       "Cấy máu, cấy dịch khớp trước kháng sinh; dẫn lưu/rửa khớp khi có mủ hoặc không đáp ứng.",
@@ -296,7 +296,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-36",
     vn: "QĐ 708 (2015) Bảng II.19–II.20; QĐ 5642 (2015) tr. 18–20 – hai văn bản cùng hiển thị",
-    intl: "WHO 2025 (hướng dẫn) và sổ tay thực hành WHO 2026 (liều)",
+    intl: ["who-meningitis-2025", "who-meningitis-manual-2026"],
     similar: [
       "Kinh nghiệm: ceftriaxon hoặc cefotaxim; thêm ampicilin khi nghi Listeria; thêm vancomycin khi nghi phế cầu kháng thuốc (BYT ở cột thay thế, WHO theo tỷ lệ kháng tại chỗ).",
       "Liều người lớn QĐ 708 (ceftriaxon 4 g/ngày, cefotaxim 8–12 g/ngày, ampicilin 12 g/ngày) gần với WHO (ceftriaxon 2 g mỗi 12 giờ, cefotaxim/ampicilin tối đa 12 g/ngày).",
@@ -320,7 +320,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-104",
     vn: "QĐ 708 (2015) Bảng II.19–II.20; QĐ 5642 (2015) tr. 19",
-    intl: "WHO 2025 (trẻ > 1 tháng) và sổ tay thực hành WHO 2026 (trẻ > 1 tháng và sơ sinh)",
+    intl: ["who-meningitis-2025", "who-meningitis-manual-2026"],
     similar: [
       "Sơ sinh: ampicilin + cefotaxim hoặc ampicilin + aminoglycosid ở cả hai nguồn (WHO có thêm ceftriaxon 100 mg/kg/ngày).",
       "Trẻ > 1 tháng: ceftriaxon hoặc cefotaxim; ceftriaxon 80–100 (BYT) và 100 mg/kg/ngày (WHO).",
@@ -343,7 +343,7 @@ export const COMPARISONS: Comparison[] = [
   ...["v8-113", "v8-116"].map<Comparison>((diseaseId) => ({
     diseaseId,
     vn: "QĐ 708 (2015) chương Suy giảm miễn dịch, tr. 252–254 (dẫn theo IDSA 2010 – nay ARCHIVED)",
-    intl: "ECIL-10 (2025, người lớn huyết học); IPFN 2023 (trẻ em)",
+    intl: ["ecil10-2025", "ipfn-2023"],
     similar: [
       "Kháng sinh sớm (QĐ 708: lý tưởng trong 60 phút; IPFN: càng sớm càng tốt khi không ổn định).",
       "Đơn trị beta-lactam chống Pseudomonas khởi đầu: cefepim, ceftazidim, piperacilin-tazobactam, carbapenem có ở cả ba nguồn.",
@@ -366,7 +366,7 @@ export const COMPARISONS: Comparison[] = [
   {
     diseaseId: "v8-13",
     vn: "QĐ 708 (2015) Bảng II.10 (tr. 121–122) và mục 4.1.2 (MSSA/MRSA)",
-    intl: "IDSA/ESCMID 2026 Part 1; đồng thuận vancomycin ASHP/IDSA 2020",
+    intl: ["idsa-escmid-sab-2026", "ashp-idsa-vanco-2020"],
     similar: [
       "Vancomycin là lựa chọn cho MRSA ở cả hai nguồn.",
     ],

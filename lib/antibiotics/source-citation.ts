@@ -7,9 +7,27 @@
 */
 
 import { DOCS } from "@/data/antibiotics/empiric/regimens/sources";
+import { INTL_GUIDELINES, type IntlGuideline } from "@/data/antibiotics/empiric/international";
 import { ARCHIVED_SOURCE_LINKS } from "@/lib/antibiotics/presentation-source-links";
 
-export type Citation = { key: string; label: string; year?: number; url?: string };
+export type Citation = { key: string; label: string; title?: string; detail?: string; year?: number; url?: string };
+
+export function citeIntlGuideline(guideline: Pick<IntlGuideline, "id" | "org" | "title" | "published" | "url">): Citation {
+  return {
+    key: guideline.id,
+    label: guideline.title,
+    detail: [guideline.org, guideline.published].filter(Boolean).join(" · "),
+    year: Number(guideline.published.match(/\b(?:19|20)\d{2}\b/)?.[0]) || undefined,
+    url: guideline.url,
+  };
+}
+
+export function citeIntlSources(ids: readonly string[]): Citation[] {
+  return ids.flatMap((id) => {
+    const guideline = INTL_GUIDELINES[id];
+    return guideline ? [citeIntlGuideline(guideline)] : [];
+  });
+}
 
 type DecisionInfo = { number: string; issuer: string; title: string; date: string };
 
@@ -44,16 +62,29 @@ export function citeSource(text: string): Citation {
     return {
       key: info.number,
       label: `${info.issuer}. Quyết định ${info.number} – ${info.title}${year ? ` (${year})` : ""}`,
+      title: `Quyết định ${info.number} – ${info.title}`,
+      detail: `${info.issuer} · ${info.date}`,
       year,
       url: link?.url,
     };
   }
-  if (/^(?:HAP|VAP) 2023\b|Khuyến cáo VPBV\/VPLQTM 2023|Hội Hô hấp VN & Hội HSCC-CĐ VN/u.test(text)) {
-    const label = "Hội Hô hấp Việt Nam, Hội Hồi sức cấp cứu và Chống độc Việt Nam. Khuyến cáo chẩn đoán và điều trị viêm phổi bệnh viện, viêm phổi liên quan thở máy (2023)";
-    return { key: "VNRS-HAP-VAP-2023", label, year: 2023 };
+  if (/^(?:HAP|VAP) 2023\b|Khuyến cáo VPBV\/VPLQTM 2023|Hội Hô hấp VN & Hội HSCC-CĐ VN|khuyến cáo Hội 2023/iu.test(text)) {
+    const detail = "Hội Hô hấp Việt Nam và Hội Hồi sức cấp cứu và Chống độc Việt Nam";
+    const title = "Khuyến cáo chẩn đoán và điều trị viêm phổi bệnh viện, viêm phổi liên quan thở máy";
+    return { key: "VNRS-HAP-VAP-2023", label: `${detail}. ${title} (2023)`, title, detail, year: 2023 };
   }
   const label = stripLocation(text);
   return { key: label, label, year: Number(label.match(/\b(19|20)\d{2}\b/)?.[0]) || undefined };
+}
+
+export function citeSourceLabel(label: string): Citation {
+  const citation = citeSource(label);
+  if (citation.title) return citation;
+  const match = /^(.*?)\s+[–—]\s+(.+)$/u.exec(label);
+  if (!match || !/[\p{Lu}\d]/u.test(match[1])) return citation;
+  const [, attribution, title] = match;
+  const year = attribution.match(/\b(?:19|20)\d{2}\b/g)?.at(-1);
+  return { ...citation, title, detail: attribution, year: year ? Number(year) : citation.year };
 }
 
 /** Danh sach trich dan khong trung lap, van ban moi nhat truoc. */

@@ -7,6 +7,7 @@ import { Fragment, useMemo, useState } from "react";
 import { defaultState, effectiveState, isVisible, resolve, type AxisState, type AxisVal, type OutItem } from "@/lib/intl-rules";
 import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-guideline";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlGuideline } from "@/lib/antibiotics/source-citation";
 
 const SHOW_DRAFT = process.env.NEXT_PUBLIC_SHOW_DRAFT_GUIDELINES !== "0";
 const POP_TEXT: Record<string, string> = { adult: "người lớn", child: "trẻ em", neonate: "sơ sinh" };
@@ -105,13 +106,11 @@ function Sources({ sources }: { sources: IntlGuideline["sources"] }) {
 
 function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlGuideline["sources"]; clinical: boolean }) {
   if (!sources.length) return null;
-  if (clinical)
-    return (
-      <div className="igv-source-line">
-        <b>Nguồn</b>
-        {sources.map((s) => <a key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.short_title ?? s.org}</a>)}
-      </div>
-    );
+  const references = sources.map((s) => ({
+    ...citeIntlGuideline({ ...s, published: s.version }),
+    year: s.year,
+  }));
+  if (clinical) return <SourceList sources={references} />;
   return (
     <>
       {g.discordance.length > 0 && (
@@ -121,7 +120,7 @@ function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlG
         </div>
       )}
       <SourceList
-        sources={sources.map((s) => `${s.org} ${s.year} – ${s.title}`)}
+        sources={references}
         notes={[
           ...(g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []),
           "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ tại chỗ.",
@@ -238,8 +237,6 @@ export default function IntlGuidelineView({ data, sourceAxis, clinical = false }
         .igv .sa24-tip { white-space: pre-line; }
         .igv .pn-plan .sa24-rx-preparation { color: #33505f; font-size: 13px; }
         .igv-empty-output { position: absolute; }
-        .igv-source-line { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; line-height: 1.5; color: #33505f; }
-        .igv-source-line a { color: #09627e; text-decoration: underline; text-underline-offset: 2px; }
         .igv-sources { font-size: 12px; color: #4b6576; }
         .igv-sources summary { cursor: pointer; font-weight: 700; color: #0b3a5b; }
         .igv-sources ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; line-height: 1.5; overflow-wrap: anywhere; }

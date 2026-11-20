@@ -6,6 +6,7 @@ import {
   goldCotherapy, goldDuration, goldEmpiric, goldIndication, type Setting, type Severity, type Sym,
 } from "./copd-gold2026";
 import { ReadHint, Row, Rx, RxToolStyle, Seg, byAllergy, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 export default function CopdGold2026() {
   const [sym, setSym] = useState<Record<Sym, boolean>>({ dyspnea: false, fever: false, volume: false, purulence: false });
@@ -101,7 +102,7 @@ export default function CopdGold2026() {
         <Rx items={GOLD_PREVENTION} />
       </details>
 
-      <SourceList sources={["GOLD 2026 – Global Strategy for Prevention, Diagnosis and Management of COPD, phiên bản 1.3"]} notes={["GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["gold-2026"])} notes={["GOLD không gán mức bằng chứng cho các khuyến cáo kháng sinh trong đợt cấp.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

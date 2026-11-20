@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { ADULT_INITIAL, NEO_NOTE, PED_BARRIERS, PED_INITIAL, RISKS, VANCO, VANCO_COMMON, VANCO_POP, sabPlan, type Final, type RiskId, type VancoPop } from "./sab-intl";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 type Age = "adult" | "child" | "neo";
 
@@ -86,7 +87,7 @@ export default function SabIntl() {
         <h4>Nguyên tắc chung vancomycin</h4>
         <Rx items={VANCO_COMMON} />
       </section>
-      <SourceList sources={["IDSA/ESCMID 2026 – Consensus Statement 1: Risk Stratification of Patients with S. aureus Bacteremia","ASHP/IDSA/PIDS/SIDP 2020 – Theo dõi điều trị vancomycin trong nhiễm khuẩn MRSA nặng"]} notes={["IDSA/ESCMID: đồng thuận trên 75% hội đồng, không xếp mức bằng chứng.","ASHP/IDSA/PIDS/SIDP: mức khuyến cáo A, B, C; chất lượng bằng chứng I, II, III.","CS = Consensus Statement; KC = khuyến cáo.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["idsa-escmid-sab-2026", "ashp-idsa-vanco-2020"])} notes={["IDSA/ESCMID: đồng thuận trên 75% hội đồng, không xếp mức bằng chứng.","ASHP/IDSA/PIDS/SIDP: mức khuyến cáo A, B, C; chất lượng bằng chứng I, II, III.","CS = Consensus Statement; KC = khuyến cáo.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sab-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

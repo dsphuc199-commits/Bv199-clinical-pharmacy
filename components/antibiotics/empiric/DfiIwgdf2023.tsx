@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BONE_OPTS, GRADE_OPTS, MILD_FACTORS, MOD_FACTORS, dfiPlan, type BoneStatus, type DfiGrade, type MildFactor, type ModFactor } from "./dfi-iwgdf2023";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -69,7 +70,7 @@ export default function DfiIwgdf2023() {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <SourceList sources={["IWGDF/IDSA 2023 – Guidelines on the diagnosis and treatment of diabetes-related foot infections"]} notes={["Mức khuyến cáo GRADE: mạnh hoặc có điều kiện; độ tin cậy cao, trung bình, thấp; thực hành tốt nhất.","Liều theo hướng dẫn quốc gia.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["iwgdf-idsa-2023"])} notes={["Mức khuyến cáo GRADE: mạnh hoặc có điều kiện; độ tin cậy cao, trung bình, thấp; thực hành tốt nhất.","Liều theo hướng dẫn quốc gia.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

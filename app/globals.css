@@ -5634,3 +5634,44 @@ body {
     width: 100%;
   }
 }
+/* Khối tài liệu đối chiếu của hướng dẫn điều trị. */
+table.clinical-source-rows {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 4px 0;
+  color: #274659;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.clinical-source-rows :is(th, td) {
+  padding: 6px 8px;
+  border-bottom: 1px solid #dce6ed;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+.clinical-source-rows th {
+  background: #f0f5f8;
+  color: #33505f;
+}
+
+.clinical-source-rows :is(th, td):last-child {
+  width: 4rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.clinical-source-rows td:first-child > span {
+  display: block;
+  margin-top: 2px;
+  color: #526c7c;
+}
+
+.clinical-source-rows a {
+  color: #09627e;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

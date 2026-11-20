@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CANDIDA_FORMS, initialCandidaForm } from "./candida-ecmm2025";
 import { ReadHint, Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 export default function CandidaEcmm2025({ diseaseId }: { diseaseId: string }) {
   const [id, setId] = useState(initialCandidaForm(diseaseId));
@@ -36,7 +37,7 @@ export default function CandidaEcmm2025({ diseaseId }: { diseaseId: string }) {
         {f.notes.length > 0 && <div><h4>Lưu ý</h4><ul className="cand-notes">{f.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>}
       </section>
       <SourceList
-        sources={["ECMM/ISHAM/ASM 2025 – Global guideline for the diagnosis and management of candidiasis"]}
+        sources={citeIntlSources(["ecmm-candida-2025"])}
         notes={["Mức khuyến cáo: mạnh, vừa, yếu, không khuyến cáo.", "Liều cho người lớn. Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt; đối chiếu dịch tễ và kháng nấm đồ tại chỗ."]}
       />
       <RxToolStyle />

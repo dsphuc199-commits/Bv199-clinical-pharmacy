@@ -4,6 +4,7 @@ import { useState } from "react";
 import { empPlan, type Sev } from "./gnb-bsi-intl";
 import { CUTI_CRITERIA, CUTI_SCOPE, DURATION_NOTES, ORAL_HIGH_DOSE, ORAL_PK, OTHER_DRUGS, SWITCH_ROWS, durationRows } from "./uti-idsa2025";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -91,7 +92,7 @@ export default function UtiIdsa2025({ title }: { title: string }) {
         </details>
         <div><h4>Lưu ý</h4><ul className="cuti-notes">{plan.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>
       </section>
-      <SourceList sources={["IDSA 2025 – Guideline on Management and Treatment of Complicated Urinary Tract Infections"]} notes={[CUTI_SCOPE, "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["idsa-cuti-2025"])} notes={[CUTI_SCOPE, "Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.cuti-notes { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .cuti-pk thead th { background: #f1f6f9; color: #0b3a5b; font-size: 12px; }

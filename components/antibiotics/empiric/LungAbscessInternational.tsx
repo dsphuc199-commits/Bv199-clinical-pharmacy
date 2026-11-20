@@ -8,12 +8,12 @@
 import ClinicalReferenceDose from "../treatment/ClinicalReferenceDose";
 import RegimenDrugTools from "../treatment/RegimenDrugTools";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
+import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
 
 export default function LungAbscessInternational() {
   return <section className="bv199-panel la-intl" aria-label="Khuyến cáo quốc tế về áp xe phổi người lớn">
     <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
     <h3>Áp xe phổi do vi khuẩn ở người lớn</h3>
-    <p className="la-origin">UpToDate 2026</p>
     <details className="la-treatment" open>
       <summary>Điều trị kháng sinh ban đầu</summary>
       <p>Lựa chọn kháng sinh theo bệnh cảnh lâm sàng và nguy cơ tác nhân gây bệnh. Các phác đồ dưới đây là lựa chọn thay thế; dấu “+” biểu thị các thuốc cần phối hợp.</p>
@@ -101,11 +101,20 @@ export default function LungAbscessInternational() {
         </ul>
       </li>
     </ul>
+    <details>
+      <summary>Nguồn và đối chiếu</summary>
+      <ClinicalSourceRows sources={[{
+        key: "uptodate-lung-abscess",
+        label: "Lung abscess in adults",
+        detail: "UpToDate · Mục cập nhật 11/09/2023 · Rà soát y văn đến 06/2026",
+        year: 2023,
+        url: "https://www.uptodate.com/contents/lung-abscess-in-adults",
+      }]} />
+    </details>
     <style>{`
       .la-intl { color: #17364b; font-size: 13px; line-height: 1.75; min-width: 0; }
       .la-intl h3 { font-size: 17px; margin: 10px 0; }
       .la-intl h4 { margin: 18px 0 8px; font-size: 14px; }
-      .la-origin { background: #fffbeb; border-left: 3px solid #d97706; padding: 10px 12px; }
       .la-intl ul { padding-left: 22px; margin: 10px 0; }
       .la-intl .la-notes, .la-intl .la-notes ul { list-style: none; padding-left: 0; }
       .la-intl .la-notes li { position: relative; padding-left: 20px; }
@@ -116,10 +125,10 @@ export default function LungAbscessInternational() {
       .la-intl details { margin: 12px 0; }
       .la-intl summary { cursor: pointer; font-weight: 700; color: #0b6b8a; }
       .la-scroll { max-width: 100%; overflow-x: auto; }
-      .la-intl table { width: 100%; min-width: 700px; border-collapse: collapse; font-size: 13px; }
+      .la-intl table:not(.clinical-source-rows) { width: 100%; min-width: 700px; border-collapse: collapse; font-size: 13px; }
       .la-intl table.tx-table { min-width:0; }
-      .la-intl th, .la-intl td { text-align: left; padding: 10px; border-bottom: 1px solid #dfe8ee; vertical-align: top; }
-      .la-intl thead { background: #eef6f8; }
+      .la-intl table:not(.clinical-source-rows) :is(th, td) { text-align: left; padding: 10px; border-bottom: 1px solid #dfe8ee; vertical-align: top; }
+      .la-intl table:not(.clinical-source-rows) thead { background: #eef6f8; }
       .la-intl tbody th { width: 25%; font-weight: 600; }
       .la-intl caption { text-align: left; margin: 8px 0; font-size: 12px; color: #526c7c; }
       .la-intl summary:focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }

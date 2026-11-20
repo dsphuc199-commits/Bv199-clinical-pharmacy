@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { PA_BREAKPOINTS, PA_DEFS, PA_GENERAL, PA_MONITOR, paDx, paPlan, type PaCarb, type PaPheno, type PaSite } from "./pa-idsa2026";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -94,7 +95,7 @@ export default function PaeruginosaIdsa2026() {
         <h4>Nguyên tắc chung</h4>
         <ul className="pa-notes">{PA_GENERAL.map((n) => <li key={n}>{n}</li>)}</ul>
       </section>
-      <SourceList sources={["IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc, cập nhật đến 01/03/2026","CLSI 2026 – Ngưỡng nhạy cảm kháng sinh"]} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
+      <SourceList sources={[...citeIntlSources(["idsa-amr-2026"]), { key: "clsi-m100-2026", label: "M100: Performance Standards for Antimicrobial Susceptibility Testing", detail: "Clinical and Laboratory Standards Institute · Ấn bản 36", year: 2026, url: "https://clsi.org/shop/standards/m100/" }]} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
       <RxToolStyle />
       <style>{`.pa-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .pa-bp th { width: 60%; }`}</style>

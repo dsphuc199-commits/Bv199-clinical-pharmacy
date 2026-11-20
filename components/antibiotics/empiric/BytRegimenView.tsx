@@ -44,6 +44,8 @@ import { DiseaseMonitoring, DiseaseOverviewSummary, hasDiseaseOverview } from ".
 import { getRationale } from "../../../data/antibiotics/empiric/rationale";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { citeSourceLabel } from "@/lib/antibiotics/source-citation";
+import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
 
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
@@ -67,17 +69,11 @@ export function ReconciliationBox({ diseaseId }: { diseaseId: string }) {
           <li key={point}>{point}</li>
         ))}
       </ul>
-      <ol style={{ margin: "6px 0 0", paddingLeft: 20, listStyle: "decimal" }}>
-        {note.sources.map((source) => (
-          <li key={source.label} style={{ display: "list-item", marginBottom: 3 }}>
-            {source.url ? (
-              <a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>
-            ) : (
-              source.label
-            )}
-          </li>
-        ))}
-      </ol>
+      <ClinicalSourceRows sources={note.sources.map((source) => ({
+        ...citeSourceLabel(source.label),
+        key: source.label,
+        url: source.url,
+      }))} />
     </details>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 /* Thanh phan giao dien dung chung cho cong cu chon khang sinh theo chan doan (bang ke don, nut chon, chu giai muc khuyen cao). */
 import type { ReactNode } from "react";
+import ClinicalSourceRows from "../treatment/ClinicalSourceRows";
+import type { Citation } from "@/lib/antibiotics/source-citation";
 import type { RxItem } from "./septic-arthritis-pids2023";
 import { parseDose } from "./rx-dose-parts";
 
@@ -18,12 +20,12 @@ export const GRADE_LEGEND: [string, string][] = [
 const CERT: Record<string, string> = { H: "cao", M: "TB", L: "thấp", VL: "rất thấp" };
 
 /* Nguồn: mỗi tài liệu một dòng, ghi chú tách riêng. */
-export function SourceList({ sources, notes = [], children }: { sources: string[]; notes?: string[]; children?: ReactNode }) {
+export function SourceList({ sources, notes = [], children }: { sources: readonly Citation[]; notes?: string[]; children?: ReactNode }) {
   return (
     <div className="sa24-src">
       {sources.length > 0 && <>
-        <b>Nguồn</b>
-        <ol>{sources.map((s) => <li key={s}>{s}</li>)}</ol>
+        <b>Nguồn và đối chiếu</b>
+        <ClinicalSourceRows sources={sources} />
       </>}
       {notes.map((n) => <p key={n}>{n}</p>)}
       {children && <p>{children}</p>}
@@ -200,7 +202,6 @@ export function RxToolStyle() {
         .sa24-pblock h5 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #33505f; text-transform: uppercase; letter-spacing: .03em; }
         .sa24-src { display: grid; gap: 4px; margin: 0; font-size: 12px; line-height: 1.5; color: #6b8293; border-top: 1px solid #edf2f6; padding-top: 8px; }
         .sa24-src b { color: #33505f; }
-        .sa24-src ol { margin: 0; padding-left: 20px; display: grid; gap: 2px; }
         .sa24-src p { margin: 0; }
         @media (max-width: 900px) {
           .sa24-rx.has-dose, .sa24-rx.has-dose tbody, .sa24-rx.has-dose tr, .sa24-rx.has-dose th, .sa24-rx.has-dose td { display: block; width: auto !important; }

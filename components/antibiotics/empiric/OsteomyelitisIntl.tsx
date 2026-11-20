@@ -192,7 +192,12 @@ export default function OsteomyelitisIntl() {
         {(wiki ? W_PRINCIPLES : P_PRINCIPLES).map((p) => (<div key={p.title} className="sa24-pblock"><h5>{p.title}</h5><Rx items={p.items} /></div>))}
       </details>
 
-      <SourceList sources={[wiki ? "WikiGuidelines 2022, cập nhật 2025 – Viêm xương tủy" : "PIDS/IDSA 2021 – Hướng dẫn chẩn đoán và điều trị viêm xương tủy cấp đường máu ở trẻ em"]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={wiki ? [
+        { key: "wiki-2025", label: "2025 Update to WikiGuidelines for the management of pyogenic osteomyelitis in adults", year: 2025, url: "https://pubmed.ncbi.nlm.nih.gov/41270851/" },
+        { key: "wiki-2022", label: "Use of Novel Strategies to Develop Guidelines for Management of Pyogenic Osteomyelitis in Adults: A WikiGuidelines Group Consensus Statement", year: 2022, url: "https://doi.org/10.1001/jamanetworkopen.2022.11321" },
+      ] : [
+        { key: "pids-idsa-2021", label: "Guideline on Diagnosis and Management of Acute Hematogenous Osteomyelitis in Pediatrics", detail: "Pediatric Infectious Diseases Society và Infectious Diseases Society of America", year: 2021, url: "https://www.idsociety.org/practice-guideline/bone-and-joint-infections---osteomyelitis/" },
+      ]} notes={["Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
 
       <RxToolStyle />
     </article>

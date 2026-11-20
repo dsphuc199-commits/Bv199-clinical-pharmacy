@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ESBL_PRINCIPLES, esblPlan, type EsblSite } from "./esbl-idsa2026";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 const SITE_LABEL: Record<EsblSite, string> = {
   uuti: "Viêm bàng quang không biến chứng",
@@ -67,7 +68,7 @@ export default function EsblIdsa2026() {
         <h4>Nguyên tắc chung</h4>
         <ul className="sa24-notes">{ESBL_PRINCIPLES.map((n) => <li key={n}>{n}</li>)}</ul>
       </section>
-      <SourceList sources={["IDSA 2026 – Hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc"]} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
+      <SourceList sources={citeIntlSources(["idsa-amr-2026"])} notes={["IDSA xếp ưu tiên, thay thế theo đồng thuận chuyên gia, không xếp mức GRADE.","Hướng dẫn quốc tế (bối cảnh Hoa Kỳ), chưa phải phác đồ BV199 phê duyệt; đối chiếu kháng sinh đồ và danh mục thuốc tại chỗ."]} />
       <RxToolStyle />
       <style>{`.sa24-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

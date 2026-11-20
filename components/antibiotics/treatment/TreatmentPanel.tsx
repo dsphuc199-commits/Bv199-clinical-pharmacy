@@ -27,6 +27,7 @@ import ClinicalScenarioPicker from "./ClinicalScenarioPicker";
 import { useAbxLinkContext } from "../links/AbxLinkContext";
 import { DISEASES, getStream } from "@/data/antibiotics/empiric/catalog";
 import ClinicalSources from "./ClinicalSources";
+import ClinicalSourceRows from "./ClinicalSourceRows";
 import { citeSources } from "@/lib/antibiotics/source-citation";
 import type { ScenarioChoice } from "@/lib/antibiotics/patient-groups";
 import type { Rationale } from "@/data/antibiotics/empiric/rationale";
@@ -270,7 +271,7 @@ export default function TreatmentPanel({
       )}
 
       {/* (3) Phac do khang sinh kinh nghiem */}
-      {!hasSelection && <ClinicalSources sources={sourceTag?[sourceTag]:[]} diseaseId={context.diseaseId} />}
+      {!hasSelection && <ClinicalSources sources={sourceTag?.split(/;\s*/) ?? []} diseaseId={context.diseaseId} />}
       {hasSelection && scenarioHint && scenarios && scenarios.length > 1 && !scenarios.find(s=>s.value===picked)?.criteria?.includes(typeof scenarioHint==='string'?scenarioHint:'') && <p className="tp-selected-context">{typeof scenarioHint==='string'?clinicalText(scenarioHint):scenarioHint}</p>}
       {hasSelection && <><section className="tp-box tp-regimens">
         <div className="tp-box-head">
@@ -325,7 +326,7 @@ export default function TreatmentPanel({
       {allCitations.length > 0 && (
         <details className="tp-box tp-sources">
           <summary>Nguồn tham khảo ({allCitations.length})</summary>
-          <ul>{allCitations.map((c) => <li key={c.key}>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> : c.label}</li>)}</ul>
+          <ClinicalSourceRows sources={allCitations} />
         </details>
       )}
       </>}

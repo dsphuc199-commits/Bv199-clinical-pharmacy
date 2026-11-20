@@ -78,9 +78,18 @@ check('Tiêu chí đã soạn (QĐ 708 và văn bản khác): mọi khóa nhánh
 const GT=load('components/antibiotics/empiric/GuidelineTabs.tsx');const tabBad=[],cmpSrc=[];
 for(const d of C.DISEASES){for(const [k,El] of [['Quốc tế',GT.IntlTab],['So sánh',GT.CompareTab]]){const html=render(React.createElement(El,{diseaseId:d.id}));const t=mainLayer(html);
   if(PAGE.test(t))tabBad.push(`${d.id} ${k}: ${t.match(new RegExp(`.{0,40}${PAGE.source}.{0,20}`))?.[0]}`);if(/class="tx-sub">= /.test(html))tabBad.push(`${d.id} ${k}: tổng liều/ngày`);
-  if(k==='So sánh'&&/Điểm giống/.test(html)&&!/<details class="gt199-cite"><summary>Nguồn và căn cứ<\/summary>/.test(html))cmpSrc.push(d.id);}}
+  if(k==='So sánh'&&/Điểm giống/.test(html)&&!/<details class="gt199-cite"><summary>Nguồn và căn cứ<\/summary><table class="clinical-source-rows"/.test(html))cmpSrc.push(d.id);}}
 check('Tab Quốc tế và So sánh: không số trang/chương inline, không tổng liều/ngày tính toán',tabBad.length===0,tabBad.slice(0,5));
 check('Tab So sánh: nguồn đối chiếu nằm trong "Nguồn và căn cứ" (mặc định đóng)',cmpSrc.length===0,cmpSrc);
+const capSources=render(React.createElement(GT.IntlTab,{diseaseId:'v8-1'})).match(/<table class="clinical-source-rows"[^>]*>[\s\S]*?<\/table>/)?.[0]??'';
+check('CAP: tên đầy đủ, liên kết và năm riêng cho ba tài liệu',[
+  ['Diagnosis and Treatment of Adults with Community-acquired Pneumonia',2019],
+  ['Diagnosis and Management of Community-acquired Pneumonia',2025],
+  ['Community-Acquired Pneumonia Clinical Pathway',2023],
+].every(([title,year])=>Array.from(capSources.matchAll(/<tr>[\s\S]*?<\/tr>/g)).some(([row])=>row.includes(title)&&row.includes('href="https://')&&row.includes(`<td>${year}</td>`)))&&capSources.includes('số tạp chí 01/2026'));
+const {COMPARISONS}=load('data/antibiotics/empiric/comparison.ts');
+const {INTL_GUIDELINES}=load('data/antibiotics/empiric/international.ts');
+check('Mọi nguồn quốc tế ở tab Đối chiếu có bản ghi tên tài liệu và năm',COMPARISONS.every(c=>c.intl.every(id=>INTL_GUIDELINES[id]?.title&&/\b(?:19|20)\d{2}\b/.test(INTL_GUIDELINES[id].published))));
 /* Module rieng (CAP QĐ 2147, HAP/VAP 2023): moi kich ban co khoi tieu chi dong, co can cu */
 const MR=load('data/antibiotics/empiric/rationale-modules.ts');const CAPM=load('components/antibiotics/CapByt2026.tsx');const HVM=load('components/antibiotics/HapVap2023.tsx');const modBad=[];
 for(const s of CAPM.CAP_SCENARIOS){const r=MR.getModuleRationale('cap',s.id);const h=render(React.createElement(CAPM.default,{initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||!/<details class="tp-rationale"(?![^>]*open)/.test(h)||PAGE.test(mainLayer(h)))modBad.push('cap '+s.id);}

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { citeSources } from "@/lib/antibiotics/source-citation";
+import ClinicalSourceRows from "./ClinicalSourceRows";
 
 /*
   "Nguồn và đối chiếu": chi ghi co quan ban hanh, so quyet dinh, ten van ban, nam (moi nhat truoc).
@@ -10,7 +11,7 @@ export default function ClinicalSources({ sources, extra }: { sources:string[]; 
   const citations = citeSources(sources);
   if (citations.length === 0 && !extra) return null;
   return <details className="tp-card-source"><summary>Nguồn và đối chiếu</summary>
-    <ol style={{margin:"6px 0 0",paddingLeft:20,listStyle:"decimal"}}>{citations.map(c=><li key={c.key} style={{display:"list-item",marginBottom:4}}>{c.url?<a href={c.url} target="_blank" rel="noreferrer">{c.label}</a>:c.label}</li>)}</ol>
+    <ClinicalSourceRows sources={citations} />
     {extra}
   </details>;
 }

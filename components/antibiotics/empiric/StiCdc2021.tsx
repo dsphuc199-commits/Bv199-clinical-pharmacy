@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SUB_OPTS, SYN_GROUPS, SYN_LABEL, defaultSub, stiPlan, type Syn } from "./sti-cdc2021";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import { citeIntlSources } from "@/lib/antibiotics/source-citation";
 
 function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; children: string }) {
   return <label className="sa24-chk"><input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} /> {children}</label>;
@@ -79,7 +80,7 @@ export default function StiCdc2021({ initial = "gc" }: { initial?: Syn }) {
         {o.avoid.length > 0 && (<><h4>Không khuyến cáo</h4><Rx items={o.avoid} /></>)}
         {o.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="sp-notes">{o.notes.map((n) => <li key={n}>{n}</li>)}</ul></>)}
       </section>
-      <SourceList sources={["CDC 2021 – Sexually Transmitted Infections Treatment Guidelines"]} notes={["CDC không xếp mức GRADE cho từng khuyến cáo.","Phạm vi người lớn và vị thành niên.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
+      <SourceList sources={citeIntlSources(["cdc-sti-bv-2021"])} notes={["CDC không xếp mức GRADE cho từng khuyến cáo.","Phạm vi người lớn và vị thành niên.","Hướng dẫn quốc tế, chưa phải phác đồ BV199 phê duyệt."]} />
       <RxToolStyle />
       <style>{`.sp-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
 .sti-sel { width: 100%; max-width: 560px; min-height: 40px; padding: 8px 10px; border: 1px solid #b9cdd6; border-radius: 8px; background: #fff; color: #17323f; font: inherit; font-size: 14px; }`}</style>
