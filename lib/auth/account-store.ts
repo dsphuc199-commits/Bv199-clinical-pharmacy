@@ -1,5 +1,5 @@
-import { get, put } from "@vercel/blob";
 import { z } from "zod";
+import { adminStorageConfigured, readPrivateJson, writePrivateJson, type PrivateSnapshot } from "../admin/private-json-store";
 
 export const AccountRole = z.enum(["viewer", "pharmacy-admin"]);
 export type AccountRole = z.infer<typeof AccountRole>;
@@ -43,37 +43,16 @@ const registry = z.object({
 export type ManagedAccount = z.infer<typeof account>;
 export type AccountAuditEvent = z.infer<typeof auditEvent>;
 export type AccountRegistry = z.infer<typeof registry>;
-export type AccountSnapshot = { data: AccountRegistry; etag?: string };
+export type AccountSnapshot = PrivateSnapshot<AccountRegistry>;
 
 const PATH = "bv199-admin/accounts-v1.json";
 
-function storageToken(): string | undefined {
-  return process.env.AUTH_ACCOUNTS_BLOB_TOKEN ||
-    (process.env.AUTH_ACCOUNTS_USE_PROJECT_BLOB === "1" ? process.env.BLOB_READ_WRITE_TOKEN : undefined);
+export const accountStorageConfigured = adminStorageConfigured;
+
+export function readAccountRegistry(): Promise<AccountSnapshot> {
+  return readPrivateJson(PATH, (value) => registry.parse(value), { accounts: [], audit: [] });
 }
 
-export function accountStorageConfigured(): boolean {
-  return !!storageToken();
-}
-
-export async function readAccountRegistry(): Promise<AccountSnapshot> {
-  const token = storageToken();
-  if (!token) throw new Error("Account storage is not configured");
-  const result = await get(PATH, { access: "private", token, useCache: false });
-  if (!result) return { data: { accounts: [], audit: [] } };
-  if (result.statusCode !== 200) throw new Error("Unexpected account storage response");
-  return { data: registry.parse(await new Response(result.stream).json()), etag: result.blob.etag };
-}
-
-export async function writeAccountRegistry(snapshot: AccountSnapshot): Promise<void> {
-  const token = storageToken();
-  if (!token) throw new Error("Account storage is not configured");
-  await put(PATH, JSON.stringify(snapshot.data), {
-    access: "private",
-    token,
-    contentType: "application/json",
-    addRandomSuffix: false,
-    allowOverwrite: !!snapshot.etag,
-    ifMatch: snapshot.etag,
-  });
+export function writeAccountRegistry(snapshot: AccountSnapshot): Promise<void> {
+  return writePrivateJson(PATH, snapshot);
 }

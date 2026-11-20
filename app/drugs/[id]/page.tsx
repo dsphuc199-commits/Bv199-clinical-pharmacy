@@ -2,29 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ArrowLeft, FileText, Tag } from "lucide-react";
-import drugData from "@/data/drug-products.json";
+import { getCatalogProduct, type DrugProduct } from "@/lib/drugs/catalog";
+import { loadDrugPublications } from "@/lib/drugs/catalog-store";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getLeafletSibling, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
 import { LEAFLET_GROUPS, LEAFLET_SECTIONS, getIntlReferences, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
 import { formatLeaflet } from "@/lib/drugs/format-leaflet";
 import LeafletSections from "@/components/drugs/LeafletSections";
 
-type DrugProduct = {
-  id: string;
-  drugCode: string;
-  brandName: string;
-  ingredientName: string;
-  ingredientId: string;
-  strength: string;
-  route: string;
-  dosageForm: string;
-  packageSize: string;
-  registrationNumber: string;
-  manufacturer: string;
-  country: string;
-  unit: string;
-  sourceSheet: string;
-};
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -42,25 +28,27 @@ const METHOD_LABEL = { text: "đọc trực tiếp từ PDF", ocr: "nhận dạn
 
 export default async function DrugDetailPage({ params }: Props) {
   const { id } = await params;
-  const drug = (drugData as DrugProduct[]).find((item) => String(item.id) === decodeURIComponent(id));
+  const publications = await loadDrugPublications().catch(() => null);
+  if (!publications) return <p role="status" className="p-6">Tạm thời chưa tải được danh mục thuốc. Hãy tải lại trang.</p>;
+  const drug = getCatalogProduct(id, publications.find((item) => item.id === id));
   if (!drug) notFound();
 
   const monograph = clinicalMonographs[drug.ingredientId?.toLowerCase()] ?? null;
-  const reg = getRegistry(drug.id);
-  const status = registryStatus(drug.id);
+  const reg = drug.registryMatches ? getRegistry(drug.id) : null;
+  const status = drug.registryMatches ? registryStatus(drug.id) : "chua-dong-bo";
   const leaflet = await getLeaflet(reg?.davId);
   const davOk = !!leaflet && !leaflet.failed;
   const stored = getStoredFiles(reg?.davId);
   // Thu tu nguon: HDSD Cuc QLD -> trang web (khop SDK hoac ten + nha san xuat) -> thuoc cung hoat chat trong danh muc.
-  const web = davOk ? null : await getWebLeaflet(drug.id);
-  const sibling = davOk || web ? null : getLeafletSibling(drug.id);
+  const web = davOk || !drug.registryMatches ? null : await getWebLeaflet(drug.id);
+  const sibling = davOk || web || !drug.registryMatches ? null : getLeafletSibling(drug.id);
   const ref = sibling ? (sibling.src === "dav" ? await getLeaflet(getRegistry(sibling.id)?.davId) : await getWebLeaflet(sibling.id)) : null;
   const shown = davOk ? leaflet : web ?? (ref && !ref.failed ? ref : null);
   const kind: "dav" | "web" | "ref" | null = !shown ? null : shown === leaflet ? "dav" : shown === web ? "web" : "ref";
   const sections = shown?.sections ?? {};
   const shownSections = LEAFLET_SECTIONS.filter((s) => sections[s.key]);
   const sourceLabel = { dav: "HDSD Cục QLD", web: "HDSD tham khảo (web)", ref: "HDSD thuốc cùng hoạt chất" } as const;
-  const intl = getIntlReferences(drug.id);
+  const intl = drug.registryMatches ? getIntlReferences(drug.id) : [];
 
   return (
     <main className="dt">
@@ -76,6 +64,7 @@ export default async function DrugDetailPage({ params }: Props) {
           <h1>{drug.brandName}</h1>
           <p className="dt-sub">{[drug.ingredientName, drug.strength].filter(Boolean).join(" · ")}</p>
           <div className="dt-tags">
+            {!drug.active && <span className="dt-tag dt-bad">Ngừng sử dụng tại BV199</span>}
             {drug.dosageForm && <span className="dt-tag">{drug.dosageForm}</span>}
             {drug.route && <span className="dt-tag">{drug.route}</span>}
             <span className={`dt-tag ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</span>

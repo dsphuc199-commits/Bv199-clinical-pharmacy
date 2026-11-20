@@ -106,7 +106,7 @@ export const adminModules:
         "/admin/drugs",
 
       status:
-        "developing",
+        "ready",
 
       features: [
         "Biệt dược",

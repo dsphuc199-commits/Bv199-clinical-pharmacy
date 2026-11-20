@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ChevronRight } from "lucide-react";
-import drugData from "@/data/drug-products.json";
+import { catalogProducts, drugMatches, type DrugPublication } from "@/lib/drugs/catalog";
 import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
 type RegistryMap = Record<string, { s: RegistryStatus; h: LeafletSource }>;
@@ -42,39 +42,13 @@ function StatusBadges({ r }: { r?: { s: RegistryStatus; h: LeafletSource } }) {
   </>;
 }
 
-type Drug = {
-  id: string;
-  drugCode?: string;
-  brandName?: string;
-  ingredientName?: string;
-  ingredientId?: string;
-  strength?: string;
-  route?: string;
-  dosageForm?: string;
-  packageSize?: string;
-  registrationNumber?: string;
-  manufacturer?: string;
-  country?: string;
-  unit?: string;
-  sourceSheet?: string;
-};
-
-const drugs = drugData as Drug[];
-
-function normalizeText(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d");
-}
-
-export default function DrugsClient({ registry, syncedAt }: { registry: RegistryMap; syncedAt: string }) {
+export default function DrugsClient({ registry, syncedAt, publications }: { registry: RegistryMap; syncedAt: string; publications: DrugPublication[] }) {
   const [keyword, setKeyword] = useState("");
   const [selectedRoute, setSelectedRoute] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const statusTest = (STATUS_FILTERS.find((f) => f.value === statusFilter) ?? STATUS_FILTERS[0]).test;
   const [expandedDrug, setExpandedDrug] = useState<string | null>(null);
+  const drugs = useMemo(() => catalogProducts(publications).filter((drug) => drug.active), [publications]);
 
   const routes = useMemo(() => {
     return Array.from(
@@ -87,11 +61,9 @@ export default function DrugsClient({ registry, syncedAt }: { registry: Registry
           )
       )
     ).sort((a, b) => a.localeCompare(b, "vi"));
-  }, []);
+  }, [drugs]);
 
   const results = useMemo(() => {
-    const q = normalizeText(keyword.trim());
-
     return drugs.filter((drug) => {
       if (
         selectedRoute &&
@@ -100,31 +72,10 @@ export default function DrugsClient({ registry, syncedAt }: { registry: Registry
         return false;
       }
 
-      if (!statusTest(registry[drug.id])) return false;
-
-      if (!q) return true;
-
-      const text = normalizeText(
-        [
-          drug.drugCode,
-          drug.brandName,
-          drug.ingredientName,
-          drug.ingredientId,
-          drug.strength,
-          drug.route,
-          drug.dosageForm,
-          drug.packageSize,
-          drug.registrationNumber,
-          drug.manufacturer,
-          drug.country,
-        ]
-          .filter(Boolean)
-          .join(" ")
-      );
-
-      return text.includes(q);
+      if (!statusTest(drug.registryMatches ? registry[drug.id] : undefined)) return false;
+      return !keyword.trim() || drugMatches(drug, keyword);
     });
-  }, [keyword, selectedRoute, statusTest, registry]);
+  }, [drugs, keyword, selectedRoute, statusTest, registry]);
 
   return (
     <main className="bv199-drugs-page min-h-screen bg-slate-50 p-6">
@@ -240,7 +191,7 @@ export default function DrugsClient({ registry, syncedAt }: { registry: Registry
                 {drug.strength && <span>{drug.strength}</span>}
                 {drug.route && <span>{drug.route}</span>}
                 {drug.dosageForm && <span>{drug.dosageForm}</span>}
-                <StatusBadges r={registry[drug.id]} />
+                <StatusBadges r={drug.registryMatches ? registry[drug.id] : undefined} />
               </div>
               {expanded && <Link href={`/drugs/${encodeURIComponent(drug.id)}`} className="mt-3 inline-block text-sm font-bold text-[#087f89]">Xem chi tiết, SĐK và HDSD →</Link>}
               {expanded && <div className="bv199-compact-details">
@@ -300,7 +251,7 @@ export default function DrugsClient({ registry, syncedAt }: { registry: Registry
                           {drug.dosageForm}
                         </Badge>
                       )}
-                      <span className="bv199-status-badges contents"><StatusBadges r={registry[drug.id]} /></span>
+                      <span className="bv199-status-badges contents"><StatusBadges r={drug.registryMatches ? registry[drug.id] : undefined} /></span>
                     </div>
                   </div>
 

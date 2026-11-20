@@ -92,7 +92,7 @@ export default function AdminPage() {
 
                     <StatusBadge
                       status={
-                        !hasAccountStorage && (module.id === "users" || module.id === "audit-log")
+                        !hasAccountStorage && (module.id === "users" || module.id === "audit-log" || module.id === "drugs")
                           ? "developing"
                           : module.status
                       }
