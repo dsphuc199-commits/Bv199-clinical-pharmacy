@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { ReactNode } from "react";
+import { ACCOUNT_PASSWORD_MAX_LENGTH, ACCOUNT_PASSWORD_MIN_LENGTH } from "@/lib/auth/password-policy";
 import { saveAccount } from "./actions";
 
 export type AccountView = {
@@ -55,8 +56,8 @@ export function AccountForm({ account, self = false }: { account?: AccountView; 
             </select>
           </Field>
         ) : (
-          <Field label="Mật khẩu (ít nhất 12 ký tự)">
-            <input className={inputClass} name="password" type="password" autoComplete="new-password" required minLength={12} maxLength={128} />
+          <Field label={`Mật khẩu (ít nhất ${ACCOUNT_PASSWORD_MIN_LENGTH} ký tự)`}>
+            <input className={inputClass} name="password" type="password" autoComplete="new-password" required minLength={ACCOUNT_PASSWORD_MIN_LENGTH} maxLength={ACCOUNT_PASSWORD_MAX_LENGTH} />
           </Field>
         )}
       </fieldset>
@@ -79,8 +80,8 @@ export function ResetAccountPassword({ username, revision }: { username: string;
         <input type="hidden" name="username" value={username} />
         <input type="hidden" name="expectedRevision" value={revision} />
         <input type="hidden" name="intent" value="passwordReset" />
-        <Field label="Mật khẩu mới (ít nhất 12 ký tự)">
-          <input className={inputClass} name="password" type="password" autoComplete="new-password" required minLength={12} maxLength={128} />
+        <Field label={`Mật khẩu mới (ít nhất ${ACCOUNT_PASSWORD_MIN_LENGTH} ký tự)`}>
+          <input className={inputClass} name="password" type="password" autoComplete="new-password" required minLength={ACCOUNT_PASSWORD_MIN_LENGTH} maxLength={ACCOUNT_PASSWORD_MAX_LENGTH} />
         </Field>
         <button className="justify-self-start rounded-lg border border-teal-700 px-3 py-2 font-semibold text-teal-800 disabled:opacity-60" disabled={pending}>
           {pending ? "Đang lưu…" : "Đặt lại mật khẩu"}

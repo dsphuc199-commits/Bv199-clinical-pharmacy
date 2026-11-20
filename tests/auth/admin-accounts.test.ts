@@ -53,12 +53,15 @@ test("creation, role changes, account locks and password resets enforce access a
   process.env.AUTH_ADMIN_USERS = "bootstrap";
 
   const operator = sign("bootstrap", { admin: true });
-  const creation = change({ ...profile, username: " NV.THU ", intent: "created", password: "Fixture-user-password" });
+  const newAccount = { ...profile, username: " NV.THU ", intent: "created" };
+  const firstPassword = "T6v!aX";
+  assert.throws(() => change({ ...newAccount, password: firstPassword.slice(1) }), /6 ký tự/);
+  const creation = change({ ...newAccount, password: firstPassword });
   assert.throws(() => applyAccountChange(base, config, sign("existing"), creation), /Phiên quản trị/);
   const created = applyAccountChange(base, config, operator, creation);
   const [viewer] = created.accounts;
   assert.equal(viewer.username, "nv.thu");
-  assert.equal(verifyPassword("Fixture-user-password", viewer.passwordHash), true);
+  assert.equal(verifyPassword(firstPassword, viewer.passwordHash), true);
   assert.equal(created.audit[0].actor, "bootstrap");
   assert.equal(JSON.stringify(created.audit).includes("passwordHash"), false);
   assert.throws(() => applyAccountChange(created, config, operator, creation), /đã được sử dụng/);
@@ -80,11 +83,14 @@ test("creation, role changes, account locks and password resets enforce access a
   const locked = applyAccountChange(promoted, config, operator, lock);
   assert.equal(resolveSession(adminClaims, config, locked), null);
   assert.throws(() => applyAccountChange(locked, config, adminClaims, creation), /Phiên quản trị/);
-  const reset = change({ username: viewer.username, intent: "passwordReset", password: "Fixture-new-password", expectedRevision: locked.accounts[0].revision });
+  const resetFields = { username: viewer.username, intent: "passwordReset", expectedRevision: locked.accounts[0].revision };
+  const replacementPassword = "Qj6!3n";
+  assert.throws(() => change({ ...resetFields, password: replacementPassword.slice(1) }), /6 ký tự/);
+  const reset = change({ ...resetFields, password: replacementPassword });
   const final = applyAccountChange(locked, config, operator, reset);
   assert.equal(final.accounts[0].enabled, false);
-  assert.equal(verifyPassword("Fixture-user-password", final.accounts[0].passwordHash), false);
-  assert.equal(verifyPassword("Fixture-new-password", final.accounts[0].passwordHash), true);
+  assert.equal(verifyPassword(firstPassword, final.accounts[0].passwordHash), false);
+  assert.equal(verifyPassword(replacementPassword, final.accounts[0].passwordHash), true);
   assert.equal(final.audit.length, 4);
   assert.equal(final.audit[0].action, "passwordReset");
 });

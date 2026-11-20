@@ -3,9 +3,11 @@ import { z } from "zod";
 import { AccountRole, type AccountAuditEvent, type AccountRegistry } from "./account-store";
 import { hashPassword, normalizeUsername, type AuthConfig, type SessionClaims } from "./session";
 import { resolveSession } from "./access";
+import { ACCOUNT_PASSWORD_MAX_LENGTH, ACCOUNT_PASSWORD_MIN_LENGTH } from "./password-policy";
 
 const username = z.string().transform(normalizeUsername).pipe(z.string().regex(/^[a-z0-9][a-z0-9._-]{2,47}$/));
-const password = z.string().min(12).max(128).refine((value) => value === value.normalize("NFC").trim());
+const password = z.string().min(ACCOUNT_PASSWORD_MIN_LENGTH).max(ACCOUNT_PASSWORD_MAX_LENGTH)
+  .refine((value) => value === value.normalize("NFC").trim());
 const expectedRevision = z.uuid();
 const profile = {
   username,
@@ -24,7 +26,7 @@ export class AccountChangeError extends Error {}
 
 export function parseAccountChange(form: FormData) {
   const result = accountChange.safeParse(Object.fromEntries(form));
-  if (!result.success) throw new AccountChangeError("Kiểm tra tên đăng nhập, họ tên, vai trò và mật khẩu. Mật khẩu cần từ 12 ký tự.");
+  if (!result.success) throw new AccountChangeError(`Kiểm tra tên đăng nhập, họ tên, vai trò và mật khẩu. Mật khẩu cần từ ${ACCOUNT_PASSWORD_MIN_LENGTH} ký tự.`);
   return result.data;
 }
 
