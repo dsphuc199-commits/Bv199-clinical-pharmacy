@@ -7,23 +7,27 @@
 */
 
 import { NextResponse, type NextRequest } from "next/server";
-import { authConfig, createSession, readSession, SESSION_COOKIE, SESSION_RENEW_AFTER_SECONDS, SESSION_TTL_SECONDS } from "@/lib/auth/session";
+import { getAccountSession } from "@/lib/auth/access";
+import { authConfig, createSession, SESSION_COOKIE, SESSION_RENEW_AFTER_SECONDS, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
 /* Cong khai: dang nhap + trang huong dan cai ung dung (PWA) va tep khai bao ung dung. */
 const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/tai-app", "/manifest.webmanifest", "/sw.js"];
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   if (PUBLIC_PATHS.includes(pathname)) return NextResponse.next();
 
   const config = authConfig();
-  const session = readSession(request.cookies.get(SESSION_COOKIE)?.value, config);
+  const session = await getAccountSession(request.cookies.get(SESSION_COOKIE)?.value, config);
   if (session) {
     const res = NextResponse.next();
+    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+      res.headers.set("Cache-Control", "private, no-store");
+    }
     // Tu gia han phien (toi da 1 lan/ngay) de dang nhap "khong het han" khi con su dung.
     const nowSec = Math.floor(Date.now() / 1000);
-    if (session.exp - nowSec < SESSION_TTL_SECONDS - SESSION_RENEW_AFTER_SECONDS) {
-      res.cookies.set(SESSION_COOKIE, createSession(session.user, config.secret), {
+    if (!session.admin && session.exp - nowSec < SESSION_TTL_SECONDS - SESSION_RENEW_AFTER_SECONDS) {
+      res.cookies.set(SESSION_COOKIE, createSession(session.user, config.secret, Date.now(), session), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",

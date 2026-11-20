@@ -46,7 +46,7 @@ export const adminModules:
         "/admin/users",
 
       status:
-        "developing",
+        "ready",
 
       features: [
         "Tài khoản",
@@ -69,7 +69,7 @@ export const adminModules:
         "Vai trò",
 
       description:
-        "Thiết lập role-based access control (RBAC) cho bác sĩ, dược sĩ, điều dưỡng, vi sinh và quản trị.",
+        "Phân quyền sử dụng công cụ lâm sàng và quản trị tài khoản.",
 
       icon:
         "VT",
@@ -78,16 +78,11 @@ export const adminModules:
         "/admin/roles",
 
       status:
-        "developing",
+        "ready",
 
       features: [
-        "Super Admin",
         "Quản trị Khoa Dược",
-        "Dược sĩ lâm sàng",
-        "Bác sĩ",
-        "Điều dưỡng",
-        "Vi sinh",
-        "Viewer",
+        "Người dùng",
       ],
     },
 
@@ -326,7 +321,7 @@ export const adminModules:
         "Audit log",
 
       description:
-        "Theo dõi lịch sử thay đổi dữ liệu và cấu hình quan trọng.",
+        "Theo dõi các thao tác tạo, sửa, khóa tài khoản và đặt lại mật khẩu.",
 
       icon:
         "NK",
@@ -335,7 +330,7 @@ export const adminModules:
         "/admin/audit-log",
 
       status:
-        "planned",
+        "ready",
 
       features: [
         "Người thay đổi",

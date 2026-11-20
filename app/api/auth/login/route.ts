@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { authConfig, checkCredentials, createSession, safeNextPath, SESSION_COOKIE, SESSION_TTL_SECONDS } from "@/lib/auth/session";
+import { authenticateAccount } from "@/lib/auth/access";
+import { ADMIN_SESSION_TTL_SECONDS, authConfig, createSession, safeNextPath, SESSION_COOKIE, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
 /* POST /api/auth/login – form dang nhap (username, password, next). */
 export async function POST(request: NextRequest) {
@@ -17,19 +18,21 @@ export async function POST(request: NextRequest) {
   };
 
   if (!config.configured) return back("config");
-  const user = username && password ? checkCredentials(config, username, password) : null;
-  if (!user) {
+  const account = username && password
+    ? await authenticateAccount(config, username, password).catch(() => null)
+    : null;
+  if (!account) {
     await new Promise((r) => setTimeout(r, 700)); // lam cham do mat khau
     return back("invalid");
   }
 
   const res = NextResponse.redirect(new URL(next, request.url), 303);
-  res.cookies.set(SESSION_COOKIE, createSession(user, config.secret), {
+  res.cookies.set(SESSION_COOKIE, createSession(account.user, config.secret, Date.now(), account), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: SESSION_TTL_SECONDS,
+    maxAge: account.admin ? ADMIN_SESSION_TTL_SECONDS : SESSION_TTL_SECONDS,
   });
   return res;
 }

@@ -3,8 +3,10 @@ import Link from "next/link";
 import {
   adminModules,
 } from "@/data/admin/admin-modules";
+import { accountStorageConfigured } from "@/lib/auth/account-store";
 
 export default function AdminPage() {
+  const hasAccountStorage = accountStorageConfigured();
   return (
     <main className="min-h-screen bg-slate-50 p-6">
 
@@ -48,7 +50,7 @@ export default function AdminPage() {
 
           <SummaryCard
             label="Audit"
-            value="Planned"
+            value={hasAccountStorage ? "Tài khoản" : "Chưa cấu hình"}
           />
 
         </section>
@@ -90,7 +92,9 @@ export default function AdminPage() {
 
                     <StatusBadge
                       status={
-                        module.status
+                        !hasAccountStorage && (module.id === "users" || module.id === "audit-log")
+                          ? "developing"
+                          : module.status
                       }
                     />
 

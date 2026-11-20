@@ -17,10 +17,15 @@ export const SESSION_COOKIE = "bv199_session";
    Ket thuc khi bam "Đăng xuất", xoa tai khoan khoi AUTH_USERS, hoac doi AUTH_SECRET (thu hoi moi phien). */
 export const SESSION_TTL_SECONDS = 400 * 24 * 60 * 60;
 export const SESSION_RENEW_AFTER_SECONDS = 24 * 60 * 60;
+export const ADMIN_SESSION_TTL_SECONDS = 8 * 60 * 60;
 
 const SCRYPT = { N: 16384, r: 8, p: 1, keylen: 32 };
 
 export type AuthConfig = { configured: boolean; secret: string; users: Map<string, string> };
+
+export function normalizeUsername(value: string): string {
+  return value.normalize("NFC").trim().toLowerCase();
+}
 
 export function authConfig(): AuthConfig {
   const secret = process.env.AUTH_SECRET ?? "";
@@ -28,7 +33,7 @@ export function authConfig(): AuthConfig {
   for (const entry of (process.env.AUTH_USERS ?? "").split(",")) {
     const i = entry.indexOf(":");
     if (i <= 0) continue;
-    const name = entry.slice(0, i).trim().toLowerCase();
+    const name = normalizeUsername(entry.slice(0, i));
     const hash = entry.slice(i + 1).trim();
     if (name && hash.startsWith("scrypt.")) users.set(name, hash);
   }
@@ -54,7 +59,7 @@ export function verifyPassword(password: string, stored: string): boolean {
 
 /** Kiem tra dang nhap; luon chay scrypt ke ca khi sai ten de khong lo ten tai khoan qua thoi gian phan hoi. */
 export function checkCredentials(config: AuthConfig, username: string, password: string): string | null {
-  const name = username.normalize("NFC").trim().toLowerCase();
+  const name = normalizeUsername(username);
   const stored = config.users.get(name);
   const hash = stored ?? "scrypt.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
   // Dung sai do ban phim dien thoai: bo khoang trang dau/cuoi; chu dau bi tu dong viet hoa.
@@ -69,12 +74,17 @@ function sign(data: string, secret: string): string {
   return createHmac("sha256", secret).update(data).digest("base64url");
 }
 
-export function createSession(username: string, secret: string, now = Date.now()): string {
-  const payload = b64url(Buffer.from(JSON.stringify({ u: username, exp: Math.floor(now / 1000) + SESSION_TTL_SECONDS })));
+export type SessionClaims = { user: string; exp: number; revision?: string; admin: boolean };
+
+export function createSession(
+  username: string, secret: string, now = Date.now(), scope: { revision?: string; admin?: boolean } = {}
+): string {
+  const ttl = scope.admin ? ADMIN_SESSION_TTL_SECONDS : SESSION_TTL_SECONDS;
+  const payload = b64url(Buffer.from(JSON.stringify({ u: username, exp: Math.floor(now / 1000) + ttl, r: scope.revision, a: scope.admin || undefined })));
   return `${payload}.${sign(payload, secret)}`;
 }
 
-export function readSession(token: string | undefined, config: AuthConfig, now = Date.now()): { user: string; exp: number } | null {
+export function readSignedSession(token: string | undefined, config: AuthConfig, now = Date.now()): SessionClaims | null {
   if (!token || !config.configured) return null;
   const dot = token.lastIndexOf(".");
   if (dot <= 0) return null;
@@ -83,9 +93,10 @@ export function readSession(token: string | undefined, config: AuthConfig, now =
   const expected = Buffer.from(sign(payload, config.secret));
   if (given.length !== expected.length || !timingSafeEqual(given, expected)) return null;
   try {
-    const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { u?: string; exp?: number };
-    if (!data.u || !data.exp || data.exp * 1000 < now || !config.users.has(data.u)) return null;
-    return { user: data.u, exp: data.exp };
+    const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { u?: string; exp?: number; r?: string; a?: boolean };
+    if (typeof data.u !== "string" || !data.u || typeof data.exp !== "number" || !Number.isSafeInteger(data.exp) || data.exp * 1000 <= now) return null;
+    if (data.r !== undefined && typeof data.r !== "string") return null;
+    return { user: data.u, exp: data.exp, revision: data.r, admin: data.a === true };
   } catch {
     return null;
   }
