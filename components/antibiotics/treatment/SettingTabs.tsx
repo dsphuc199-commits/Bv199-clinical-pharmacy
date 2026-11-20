@@ -11,7 +11,7 @@ export default function SettingTabs({ items,value,onChange,children }:{items:{va
     </div>
     <div id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-${items.findIndex(item=>item.value===value)}`} className="treatment-context-body">{children}</div>
     <style>{`
-      .treatment-context { min-width:0; }.treatment-context-tabs { display:flex; gap:24px; border-bottom:1px solid #d9e4e9; margin-bottom:20px; }
+      .treatment-context { min-width:0; }.treatment-context-tabs { display:flex; gap:24px; border-bottom:1px solid #d9e4e9; margin-bottom:var(--clinical-section-gap, 20px); }
       .treatment-context-tabs > button { border:0; border-bottom:3px solid transparent; background:white; color:#344b5d; padding:12px 10px; font:inherit; font-weight:600; cursor:pointer; min-width:0; }
       .treatment-context-tabs > button[aria-selected=true] { color:#007f86; border-bottom-color:#009f98; }
       .treatment-context-tabs > button:focus-visible { outline:3px solid #087f89; outline-offset:2px; }.treatment-context-body { min-width:0; }

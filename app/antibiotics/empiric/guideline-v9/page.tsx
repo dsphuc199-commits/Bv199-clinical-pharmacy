@@ -564,11 +564,14 @@ function GuidelineContent() {
         }
 
         .bv199-treatment {
+          --clinical-section-gap: 14px;
+          --clinical-group-gap: 10px;
           display: grid;
-          gap: 12px;
+          gap: var(--clinical-section-gap);
           min-width: 0;
           align-content: start;
         }
+        .bv199-treatment > .do, .bv199-treatment .patient-group-control { margin-block: 0; }
 
         .bv199-disease-heading h2 {
           font-size: 21px;
@@ -804,7 +807,6 @@ function GuidelineContent() {
         .bv199-disease-list { padding: 0 0 4px; gap: 0; }
         .bv199-disease { padding: 6px 10px; border: 0; border-left: 3px solid transparent; border-radius: 0; font-size: 13px; line-height: 1.4; }
         .bv199-disease.selected { border-left-color: #0b6b8a; background: #eaf5f8; color: #0b4f66; }
-        .bv199-treatment { gap: 12px; }
         .bv199-disease-heading { background: transparent; border: 0; padding: 0; }
         .bv199-disease-heading h2 { font-size: 24px; }
         .bv199-tabs { display: flex; gap: 22px; padding: 0; background: transparent; border-radius: 0; border-bottom: 1px solid #dce6ed; position: static; }
@@ -845,8 +847,6 @@ function GuidelineContent() {
         }
         /* UI9: preserve BV199 navigation, one white clinical content column. */
         .bv199-empiric { background:#fff; font-family:"Segoe UI",Arial,sans-serif; }
-        .bv199-treatment { --clinical-section-gap:18px; --clinical-group-gap:12px; display:grid; gap:var(--clinical-section-gap); min-width:0; }
-        .bv199-treatment > .do { margin-block:0; }
         .bv199-disease-heading h2 { color:#10243e; font-size:26px; }
         .bv199-catalog { border-radius:6px; border-color:#e0e8ed; }.bv199-disease.selected { background:#ddf3ef; border-left-color:#009b91; }
         .bv199-tab-short { display:none; }.bv199-tab-long { display:inline; }.bv199-tabs { gap:0; }
@@ -858,7 +858,7 @@ function GuidelineContent() {
         #bv199-tabpanel .gt199-cmp { border-radius:0; border:0; border-bottom:1px solid #dfe8ee; padding:12px 0; }
         #bv199-tabpanel .dtr-guidance>div:not(.bv199-warning) { border:0!important; border-bottom:1px solid #dfe8ee!important; border-radius:0!important; padding:12px 0!important; }
         @media(max-width:760px) {
-          .bv199-treatment { --clinical-section-gap:14px; --clinical-group-gap:10px; }
+          .bv199-treatment { --clinical-section-gap:12px; --clinical-group-gap:8px; }
           .bv199-catalog-desktop { display:none; }.bv199-catalog-mobile { display:inline-block; }
           .bv199-layout .bv199-catalog { display:none; }.bv199-layout.bv199-mobile-catalog-open .bv199-catalog { display:block; order:-1; }
           .bv199-disease-heading h2 { font-size:22px; }.bv199-tabs { width:100%; gap:0; }.bv199-tabs button { flex:1; padding:7px 5px; font-size:11.5px; }
