@@ -268,7 +268,7 @@ export const adminModules:
         "/admin/references",
 
       status:
-        "developing",
+        "ready",
 
       features: [
         "Tên tài liệu",
@@ -284,7 +284,7 @@ export const adminModules:
         "guidelines",
 
       title:
-        "Phiên bản guideline",
+        "Phiên bản hướng dẫn",
 
       shortTitle:
         "Guideline",
@@ -299,7 +299,7 @@ export const adminModules:
         "/admin/guidelines",
 
       status:
-        "developing",
+        "ready",
 
       features: [
         "Tên guideline",

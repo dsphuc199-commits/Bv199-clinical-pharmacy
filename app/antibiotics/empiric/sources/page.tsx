@@ -47,9 +47,14 @@ export default function GuidelineSourcesPage() {
                 Bạch Mai 2023 và Xanh Pôn 2025 là bản scan; app chỉ mở trang PDF gốc để tránh biến lỗi OCR thành phác đồ lâm sàng.
               </p>
             </div>
-            <Link href="/antibiotics/empiric" className="rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-bold text-white">
-              ← Điều trị kinh nghiệm
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/antibiotics/empiric/sources/approved" className="rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-bold text-white">
+                Thư viện tài liệu Khoa Dược
+              </Link>
+              <Link href="/antibiotics/empiric" className="rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-800">
+                ← Điều trị kinh nghiệm
+              </Link>
+            </div>
           </div>
         </section>
 

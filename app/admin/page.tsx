@@ -5,6 +5,8 @@ import {
 } from "@/data/admin/admin-modules";
 import { accountStorageConfigured } from "@/lib/auth/account-store";
 
+const storageModules = new Set(["users", "audit-log", "drugs", "references", "guidelines"]);
+
 export default function AdminPage() {
   const hasAccountStorage = accountStorageConfigured();
   return (
@@ -92,7 +94,7 @@ export default function AdminPage() {
 
                     <StatusBadge
                       status={
-                        !hasAccountStorage && (module.id === "users" || module.id === "audit-log" || module.id === "drugs")
+                        !hasAccountStorage && storageModules.has(module.id)
                           ? "developing"
                           : module.status
                       }
