@@ -41,8 +41,6 @@ export const EMPIRIC_TREATMENT_UI_RULES = {
   showReferenceDrawer: true,
 
   // Tieu chi
-  showCriteriaByDefault: false,
-  explainClinicalRationale: true,
   preserveCriteriaSourceLinks: true,
 
   // Bo cuc

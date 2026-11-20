@@ -147,7 +147,7 @@ export function ReadHint() {
 }
 export function RxToolStyle() {
   return <style>{`
-        .sa24 { border: 1px solid #dbe6ed; border-radius: 16px; padding: 16px; margin: 12px 0; background: #fff; display: grid; gap: 14px; min-width: 0; }
+        .sa24 { border: 1px solid #dbe6ed; border-radius: 16px; padding: 16px; margin: 12px 0; background: #fff; display: grid; gap: var(--clinical-section-gap, 16px); min-width: 0; }
         .sa24-eyebrow { margin: 0; font-size: 11.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #087f89; }
         .sa24 h3 { margin: 2px 0 0; font-size: 18px; font-weight: 800; color: #0f2236; }
         .sa24-flow { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; counter-reset: f; }
@@ -163,16 +163,16 @@ export function RxToolStyle() {
         .sa24-seg button.on { background: #0b3a5b; border-color: #0b3a5b; color: #fff; font-weight: 700; }
         .sa24 select { width: 100%; max-width: 100%; border: 1px solid #cfdde6; border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 13.5px; background: #fff; }
         .sa24-chk { display: flex; gap: 6px; align-items: center; font-size: 13px; color: #33505f; }
-        .sa24-out { border: 1px solid #cfe3e6; background: #f8fcfc; border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; min-width: 0; }
-        .sa24-dx { display: grid; gap: 3px; padding-bottom: 8px; border-bottom: 1px solid #dcebed; }
+        .sa24-out { border: 1px solid #cfe3e6; background: #f8fcfc; border-radius: 12px; padding: 14px; display: grid; gap: var(--clinical-group-gap, 12px); min-width: 0; }
+        .sa24-dx { display: grid; gap: 5px; padding-bottom: 10px; border-bottom: 1px solid #dcebed; }
         .sa24-dx p { margin: 0; display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 8px; font-size: 13.5px; line-height: 1.5; color: #10243e; }
         .sa24-dx b { color: #0b3a5b; font-size: 12.5px; }
         .sa24-legend { margin: 0; display: grid; gap: 6px; font-size: 12.5px; line-height: 1.75; color: #4b6576; background: #fff; border: 1px solid #e3eaf0; border-radius: 8px; padding: 8px 12px; }
         .sa24-legend > div { display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 10px; }
         .sa24-legend dt { font-weight: 800; color: #0b3a5b; }
         .sa24-legend dd { margin: 0; }
-        .sa24-out h4 { margin: 8px 0 0; font-size: 15px; font-weight: 800; color: #0b3a5b; }
-        .pn-plan { min-width: 0; border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 10px 12px; display: grid; gap: 8px; }
+        .sa24-out h4 { margin: 0 0 6px; font-size: 15px; line-height: 1.4; font-weight: 800; color: #0b3a5b; }
+        .pn-plan { min-width: 0; border: 1px solid #d6e6ea; border-radius: 10px; background: #fff; padding: 12px; display: grid; gap: 8px; }
         .sa24-out .pn-plan-h { margin: 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; color: #0b3a5b; font-size: 14.5px; }
         .pn-plan .sa24-rx { border: 0; border-top: 1px solid #edf2f6; border-radius: 0; }
         .pn-lead { margin: 0; font-size: 13.5px; font-weight: 700; color: #0b6b3a; background: #eef8f2; border-radius: 8px; padding: 6px 10px; }
@@ -204,8 +204,9 @@ export function RxToolStyle() {
         .sa24-more summary { cursor: pointer; font-weight: 700; font-size: 13.5px; color: #0b3a5b; }
         .sa24-more[open] { display: grid; gap: 10px; }
         .sa24-pblock h5 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #33505f; text-transform: uppercase; letter-spacing: .03em; }
-        .sa24-src { display: grid; gap: 4px; margin: 0; font-size: 12px; line-height: 1.5; color: #6b8293; border-top: 1px solid #edf2f6; padding-top: 8px; }
+        .sa24-src { display: grid; gap: 8px; margin: 0; font-size: 12px; line-height: 1.6; color: #6b8293; }
         .sa24-src p { margin: 0; }
+        .sa24-src > .clinical-references { margin-block-start: 0; }
         @media (max-width: 900px) {
           .sa24-rx.has-dose, .sa24-rx.has-dose tbody, .sa24-rx.has-dose tr, .sa24-rx.has-dose th, .sa24-rx.has-dose td { display: block; width: auto !important; }
           .sa24-rx.has-dose thead { display: none; }
@@ -218,6 +219,7 @@ export function RxToolStyle() {
           .sa24-rx.has-dose .sa24-gc { text-align: left; }
         }
         @media (max-width: 640px) {
+          .sa24, .sa24-out { padding: 12px; }
           .sa24-row { grid-template-columns: 1fr; gap: 6px; }
           .sa24-lab { padding-top: 0; }
           .sa24-dx p, .sa24-legend > div { grid-template-columns: 1fr; gap: 0; }

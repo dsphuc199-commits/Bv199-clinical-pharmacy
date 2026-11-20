@@ -488,8 +488,8 @@ function GtStyle() {
       .gt199 h3 { font-size: 14px; margin: 0 0 4px; line-height: 1.5; }
       .gt199 h4 { font-size: 13px; margin: 14px 0 6px; color: #17364b; }
       .gt199-banner { margin: 8px 0; padding: 10px 12px; border-radius: 10px; background: #eef4ff; border: 1px solid #c7d7fe; color: #1e3a8a; font-size: 12px; line-height: 1.6; }
-      .gt199-scope { font-size: 12px; color: #33505f; line-height: 1.7; margin: 6px 0 10px; }
-      .gt199-guide { border: 1px solid #dbe6ed; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+      .gt199-scope { font-size: 12.5px; color: #33505f; line-height: 1.65; margin: 8px 0 var(--clinical-group-gap, 12px); }
+      .gt199-guide { border: 1px solid #dbe6ed; border-radius: 10px; padding: 12px; margin-bottom: var(--clinical-group-gap, 12px); }
       .gt199-status { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; vertical-align: middle; }
       .gt199-status-extracted { background: #dcfce7; color: #166534; }
       .gt199-status-identified { background: #fef3c7; color: #92400e; }
@@ -503,7 +503,7 @@ function GtStyle() {
       .gt199-kind-trial-dosing { background: #fee2e2; color: #991b1b; }
       .gt199-role { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 700; color: #087f89; }
       .gt199-reg { margin-top: 10px; padding: 10px; border-radius: 9px; background: #f5f9fb; font-size: 13px; }
-      .gt199-note { font-size: 11px; color: #647b8c; line-height: 1.6; margin: 6px 0 0; }
+      .gt199-note { font-size: 12px; color: #526c7c; line-height: 1.6; margin: 8px 0 0; }
       details.gt199-reg > summary { cursor: pointer; list-style: revert; }
       .gt199-more { margin-top: 6px; font-size: 12.5px; }
       .gt199-more > summary, .gt199-links > summary { cursor: pointer; color: #087f89; font-weight: 700; font-size: 12px; }
@@ -511,7 +511,7 @@ function GtStyle() {
       .gt199-gap { color: #92400e; }
       .gt199-gaps > summary { cursor: pointer; }
       .gt199 :is(summary):focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
-      .gt199-cmp-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .gt199-cmp-grid { display: grid; gap: var(--clinical-group-gap, 12px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
       .gt199-cmp { border-radius: 10px; padding: 10px 12px; border: 1px solid #dbe6ed; }
       .gt199-cmp h4 { margin: 0 0 6px; }
       .gt199-cmp-same { background: #f0fdf4; border-color: #bbf7d0; }

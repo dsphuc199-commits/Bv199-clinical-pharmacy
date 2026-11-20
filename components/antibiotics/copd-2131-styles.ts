@@ -10,7 +10,7 @@ export const copdStyles = `
 .copd26 [hidden] { display:none!important; }
 .c26-indication { background:#eef7f8; border:1px solid #c8e3e8; border-radius:10px; padding:12px 16px; }
 .c26-indication h3 { margin-top:0; }
-.c26-branches { display:grid; gap:12px; margin-top:18px; }
+.c26-branches { display:grid; gap:var(--clinical-group-gap, 12px); margin-top:var(--clinical-section-gap, 18px); }
 .c26-branch-button { display:grid; grid-template-columns:minmax(0,1fr) 24px; align-items:center; gap:10px; width:100%; text-align:left; padding:15px 16px; background:#f5f9fb; border:1px solid #c5dce4; border-radius:9px; color:#17364b; font-weight:700!important; }
 .c26-branch-button[aria-expanded="true"] { background:#e5f3f5; border-color:#087f89; }
 .c26-branch-button>span:last-child { text-align:center; }
@@ -45,7 +45,7 @@ export const copdStyles = `
 .copd26 .c26-notes ul { list-style:disc; padding-left:20px; margin:5px 0; }
 .copd26 .c26-notes>li { position:relative; padding-left:20px; margin:7px 0; }
 .copd26 .c26-notes>li::before { content:"−"; position:absolute; left:0; }
-.c26-followup { border-top:1px solid #dce8ed; margin-top:18px; }
+.c26-followup { border-top:1px solid #dce8ed; margin-top:var(--clinical-section-gap, 18px); }
 .c26-base-picker { display:grid; gap:7px; margin:12px 0; }
 .c26-base-picker select { width:100%; min-width:0; padding:10px; border:1px solid #b9d4de; border-radius:7px; background:white; color:inherit; }
 .c26-symptoms { font-size:12px; }.copd26 fieldset { border:0; margin:8px 0; padding:0; }
@@ -63,10 +63,11 @@ export const copdStyles = `
 }
 /* UI9: source-specific logic, same flat layout and two-column dose table. */
 .copd26 { background:white; border:0; border-radius:0; padding:0; }
-.copd26 .c26-indication { background:transparent; border:0; border-radius:0; padding:0; margin:0 0 20px; }
+.copd26 .c26-indication { background:transparent; border:0; border-radius:0; padding:0; margin:0; }
 .copd26 .c26-card { border:0; border-radius:0; border-bottom:1px solid #dce8ed; padding:12px 0; }
 .copd26 .c26-duration,.copd26 .c26-condition,.copd26 .c26-card>.c26-source,.copd26 .c26-card>.c26-review { margin:10px 0!important; }
 .copd26 .c26-tools { margin:8px 0 14px!important; }.copd26 .c26-dose-note { margin:8px 0!important; }
-.copd26 .c26-group>h4 { border-top:1px solid #d9e4e9; margin-top:20px; padding-top:20px; font-size:20px; color:#10243e; }
+.copd26 .c26-group>h4 { border-top:1px solid #d9e4e9; margin-block:var(--clinical-group-gap, 12px) 8px; padding-top:12px; font-size:20px; color:#10243e; }
+.copd26 > .do-monitor { margin-block:0; }
 .copd26 h3 { color:#10243e; font-weight:700; }.copd26 .patient-group-selected h3 { font-size:15px; }
 `;

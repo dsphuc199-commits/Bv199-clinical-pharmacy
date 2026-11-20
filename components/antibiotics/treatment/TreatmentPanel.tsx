@@ -91,44 +91,9 @@ type Props = {
   sources: string[];
   footer?: ReactNode;
   afterTreatment?: ReactNode;
-  /* Tang 3 – tieu chi lua chon cua nhanh dang xem (mac dinh dong). */
+  /* Căn cứ của bệnh cảnh dùng để gộp tài liệu tham khảo. */
   rationale?: Rationale;
 };
-
-/* Tieu chi -> Y nghia lam sang -> Anh huong den lua chon khang sinh (mac dinh dong, nguon tung tieu chi). */
-export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
-  const open = EMPIRIC_TREATMENT_UI_RULES.showCriteriaByDefault;
-  return (
-    <details className="tp-rationale" open={open || undefined}>
-      <summary>Vì sao chọn phác đồ này?</summary>
-      {rationale.status === "requires_review" && <p className="tp-rationale-review">Điều kiện áp dụng:</p>}
-      <dl className="tp-rationale-list">
-        {/* Chi giu tieu chi dan toi lua chon thuoc (co "Anh huong den lua chon") hoac canh bao CAN THAM DINH. */}
-        {rationale.items.filter((c) => rationale.status !== "authored" || !!c.treatmentImplication || /CẦN THẨM ĐỊNH/u.test(`${c.condition} ${c.clinicalMeaning ?? ""}`)).filter((c) => clinicalText(c.condition)).map((c, i) => (
-          <div key={i} className="tp-rationale-item">
-            <dt>{rationale.status === "authored" && <span className="tp-rationale-k">Tiêu chí</span>}{clinicalText(c.condition)}</dt>
-            {c.clinicalMeaning && <dd><span className="tp-rationale-k">Ý nghĩa lâm sàng</span>{clinicalText(c.clinicalMeaning)}</dd>}
-            {c.treatmentImplication && <dd><span className="tp-rationale-k">Ảnh hưởng đến lựa chọn</span>{clinicalText(c.treatmentImplication)}</dd>}
-          </div>
-        ))}
-      </dl>
-      {rationale.reassessment && rationale.reassessment.length > 0 && <p className="tp-rationale-re"><strong>Đánh giá lại:</strong> {rationale.reassessment.map((r) => clinicalText(r)).join(" ")}</p>}
-      {/* CSS di kem khoi de hien thi giong nhau o moi noi dung (khung chung, module COPD). */}
-      <style>{`
-      .tp-rationale { margin-top: 14px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; padding: 10px 14px; }
-      .tp-rationale > summary { font-size: 13px; font-weight: 700; color: #1e3a5f; }
-      .tp-rationale-review { margin: 8px 0 0; font-size: 12.5px; color: #92400e; }
-      .tp-rationale-list { margin: 8px 0 0; display: grid; gap: 10px; }
-      .tp-rationale-item { display: grid; gap: 3px; padding-left: 10px; border-left: 3px solid #2f7d5b; }
-      .tp-rationale-item dt { font-size: 13px; font-weight: 600; color: #12283c; }
-      .tp-rationale-item dd { margin: 0; font-size: 13px; line-height: 1.55; color: #33505f; }
-      .tp-rationale-k { display: inline-block; min-width: 150px; margin-right: 6px; font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #557080; }
-      .tp-rationale-re { margin: 10px 0 0; font-size: 13px; }
-      @media (max-width: 640px) { .tp-rationale-k { display: block; min-width: 0; } }
-      `}</style>
-    </details>
-  );
-}
 
 const NOTE_LIMIT = 5;
 
@@ -317,8 +282,7 @@ export default function TreatmentPanel({
           )}
         </section>
       )}
-      {/* (5) Co so lua chon (thu gon) -> lien ket module -> nguon (cuoi khung) */}
-      {rationale && EMPIRIC_TREATMENT_UI_RULES.explainClinicalRationale && <RationaleAccordion rationale={rationale} />}
+      {/* Liên kết công cụ chuyên biệt đặt trước tài liệu tham khảo. */}
       {!EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && sections.length > 0 && (
         <p className="tp-module-links">Hiệu chỉnh liều theo chức năng thận, gan và kiểm tra tương tác thuốc: xem module{" "}
           <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a> và{" "}
@@ -335,31 +299,32 @@ export default function TreatmentPanel({
 function TpStyle() {
   return (
     <style>{`
-      .tp { display: grid; gap: 12px; min-width: 0; color: #17364b; }
+      .tp { display: grid; gap: var(--clinical-section-gap, 18px); min-width: 0; color: #12283c; }
       .tp summary { cursor: pointer; color: #0b6b8a; font-weight: 600; }
       .tp :is(a, button, select, summary):focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .tp-cond, .tp-alert, .tp-card-label { overflow-wrap: break-word; }
       .tp-review-status { margin: 6px 0 12px; padding: 7px 10px; border-left: 3px solid #d97706; background: #fffbeb; color: #78350f; font-size: 12px; line-height: 1.6; }
       .tp-box { background: #fff; border: 1px solid #dfe8ee; border-radius: 10px; padding: 14px 18px; min-width: 0; }
-      .tp-scn { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 6px 14px; align-items: center; }
+      .tp-scn { display: grid; grid-template-columns: minmax(0, 132px) minmax(0, 1fr); gap: 6px 14px; align-items: baseline; }
       .tp-scn-label { font-size: 13px; font-weight: 700; }
       .tp-scn-select { width: 100%; min-width: 0; padding: 8px 10px; border: 1px solid #c9d8e2; border-radius: 7px; background: #fff; font-size: 13.5px; color: #17364b; }
       .tp-scn-single { font-size: 13.5px; }
       .tp-scn-hint { grid-column: 2; font-size: 12px; color: #5b7384; }
-      .tp-box-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; padding-bottom: 10px; margin: 0 -18px 4px; padding-left: 18px; padding-right: 18px; border-bottom: 1px solid #edf2f6; }
+      .tp-regimens { display: grid; gap: var(--clinical-group-gap, 12px); }
+      .tp-box-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid #d8e4ea; }
       .tp-box h3 { margin: 0; font-size: 15px; font-weight: 800; }
       .tp-source-tag { font-size: 12px; color: #6b8293; }
-      .tp-section { display: grid; gap: 8px; margin-top: 12px; }
+      .tp-section { display: grid; gap: 8px; }
       .tp-section-title { margin: 0; font-size: 13px; font-weight: 800; color: #0b6b8a; padding-left: 8px; border-left: 3px solid #0b6b8a; }
       details.tp-section > summary { cursor: pointer; }
       details.tp-section .tp-cards { margin-top: 8px; }
-      .tp-cards { display: grid; gap: 8px; }
+      .tp-cards { display: grid; gap: 10px; }
       .tp-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 4px 14px; border: 1px solid #e3ebf1; border-radius: 8px; padding: 10px 14px; min-width: 0; }
       .tp-card-noside { grid-template-columns: minmax(0, 1fr); }
       .tp-card-head { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; padding-top: 2px; }
       .tp-card-label { font-size: 13px; color: #12324a; }
       .tp-card-head-row { flex-direction: row; flex-wrap: wrap; align-items: center; padding-top: 0; }
-      .tp-card-main { display: grid; gap: 6px; min-width: 0; }
+      .tp-card-main { display: grid; gap: 8px; min-width: 0; }
       .tp-or { display:grid; grid-template-columns:64px minmax(0,1fr); margin:5px 0; font-size:12px; color:#587183; }.tp-or span { text-align:center; font-weight:700; white-space:nowrap; }
       .tp-review { margin:3px 0; padding:6px 9px; background:#fffbeb; border-left:3px solid #d69525; font-size:12px; color:#92400e; }
       .tp-selected-context { font-size:13px; }
@@ -367,7 +332,7 @@ function TpStyle() {
       .tp-flag-lock { background: #9f1239; color: #fff; }
       .tp-flag-warn { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
       .tp-flag-info { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-      .tp-module-links { margin: 10px 0 0; font-size: 12.5px; color: #4b6576; }
+      .tp-module-links { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4b6576; }
       .tp-module-links a { color: #087f89; font-weight: 700; text-decoration: underline; }
       .tp-cond { margin: 0; font-size: 13px; font-weight: 600; color: #0b4f6c; }
       .tp-alert { border-radius: 8px; padding: 8px 10px; font-size: 12.5px; }
@@ -381,29 +346,25 @@ function TpStyle() {
       .tp-notes-body { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; }
       .tp-info { width: 22px; height: 22px; border-radius: 6px; background: #e6f1f6; color: #0b6b8a; font: 800 12px/22px Georgia, serif; text-align: center; }
       .tp-notes h3 { margin: 1px 0 4px; font-size: 14px; }
-      .tp-notes ul { margin: 4px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.55; }
+      .tp-notes ul { margin: 6px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.6; }
       .tp-notes li + li { margin-top: 7px; }
       .tp-notes h4 { margin: 10px 0 0; font-size: 13px; }
       .tp-notes details { font-size: 13px; margin-top: 4px; }
       .tp-notes summary { cursor: pointer; color: #087f89; font-weight: 700; font-size: 12px; }
       .tp-detail-notes ul { color: #4b6576; font-size: 12.5px; }
       /* UI9: single white column, flat treatment rows. */
-      .tp { color:#12283c; gap:20px; }.tp-box { border:0; border-radius:0; padding:0; }
-      .tp-box-head { margin:0 0 8px; padding:16px 0 12px; border-top:1px solid #d8e4ea; border-bottom:0; }
-      .tp-box h3 { font-size:20px; color:#10243e; }.tp-card,.tp-card-noside { display:block; border:0; border-radius:0; padding:12px 0; border-bottom:1px solid #dfe8ee; }
+      .tp-box { border:0; border-radius:0; padding:0; }
+      .tp-box h3 { font-size:20px; color:#10243e; }.tp-card,.tp-card-noside { display:block; border:0; border-radius:0; padding:6px 0 12px; border-bottom:1px solid #dfe8ee; }
       .tp-card-head { flex-direction:row; flex-wrap:wrap; margin-bottom:8px; }.tp-card-label { font-size:12px; color:#557080; }
-      .tp-notes { border-top:1px solid #dfe8ee; padding-top:16px; }.tp-scn { display:block; }
+      .tp-notes { border-top:1px solid #dfe8ee; padding-top:12px; }
+      .tp > .do-monitor, .tp > .clinical-references { margin-block: 0; }
       @media (max-width: 640px) {
-        .tp-box { padding: 12px; }
-        .tp-box-head { margin: 0 -12px 4px; padding-left: 12px; padding-right: 12px; }
+        .tp-box h3 { font-size: 18px; }
         .tp-scn { grid-template-columns: minmax(0, 1fr); }
         .tp-scn-hint { grid-column: 1; }
-        .tp-card { grid-template-columns: minmax(0, 1fr); padding: 10px 12px; }
+        .tp-card { grid-template-columns: minmax(0, 1fr); }
         .tp-card-head { flex-direction: row; flex-wrap: wrap; align-items: center; }
       }
-      /* Thu tu: phac do -> luu y/theo doi -> co so lua chon -> lien ket module -> nguon. */
-      .tp > .tp-rationale { margin-top: 0; }
-      .tp > .tp-module-links { margin: 0; }
     `}</style>
   );
 }

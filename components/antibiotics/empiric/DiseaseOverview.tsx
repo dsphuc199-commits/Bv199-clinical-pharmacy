@@ -76,16 +76,16 @@ export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
 function DiseaseOverviewStyle() {
   return (
     <style>{`
-      .do { display:grid; gap:14px; margin:0 0 18px; color:#12283c; min-width:0; }
-      .do h4 { margin:0 0 6px; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e3a5f; }
-      .do ul { margin:0; padding-left:16px; font-size:13.5px; line-height:1.55; }
+      .do { display:grid; gap:var(--clinical-group-gap, 12px); margin:0 0 18px; color:#12283c; min-width:0; }
+      .do h4 { margin:0 0 8px; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e3a5f; }
+      .do ul { margin:0; padding-left:16px; font-size:13.5px; line-height:1.6; }
       .do li + li { margin-top:5px; }
-      .do-cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
-      .do-card { background:#fff; border:1px solid #dbe4ec; border-top:3px solid #1e3a5f; border-radius:8px; padding:10px 12px; min-width:0; }
+      .do-cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--clinical-group-gap, 12px); }
+      .do-card { background:#fff; border:1px solid #dbe4ec; border-top:3px solid #1e3a5f; border-radius:8px; padding:12px 14px; min-width:0; }
       .do-card:nth-child(4) { border-top-color:#2f7d5b; }
       .do-control { border-left:3px solid #d97706; background:#fffaf2; border-radius:0 8px 8px 0; padding:10px 14px; }
       .do-control h4 { color:#9a4f00; }
-      .do-monitor { border-top:1px solid #dfe8ee; padding-top:16px; margin-top:8px; }
+      .do-monitor { border-top:1px solid #dfe8ee; padding-top:12px; margin-top:8px; }
       .do-monitor h3 { margin:0; font-size:18px; font-weight:800; color:#10243e; }
       .do-mon-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
       .do details { border:1px solid #dce6ed; border-radius:8px; padding:9px 14px; background:#f7fafc; }

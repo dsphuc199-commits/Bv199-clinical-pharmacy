@@ -146,7 +146,7 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
       </footer>
 
       <style>{`
-        .uti-page { max-width: 1040px; margin: 0 auto; padding: 16px; color: #10243e; font-size: 14px; line-height: 1.55; display: grid; gap: 12px; }
+        .uti-page { max-width: 1040px; margin: 0 auto; padding: 16px; color: #10243e; font-size: 14px; line-height: 1.6; display: grid; gap: var(--clinical-section-gap, 16px); }
         .uti-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
         .uti-head h1 { margin: 0; font-size: 21px; color: #0b3a5b; }
         .uti-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -180,15 +180,15 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
         .uti-tier-alternative { background: #fff3d6; color: #8a5a00; }
         .uti-tier-culture-guided { background: #e6f0fb; color: #1d4f8a; }
         .uti-notes h3 { margin: 0 0 4px; font-size: 14px; color: #0b3a5b; }
-        .uti-notes ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+        .uti-notes ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
         .uti-warn { margin: 0; padding: 8px 10px; border: 1px solid #f6cfb5; border-radius: 8px; background: #fff4ed; color: #7c2d12; font-size: 13px; }
         .uti-foot { border-top: 1px solid #e3eaf0; padding-top: 8px; font-size: 12.5px; color: #4b6576; }
         .uti-foot p { margin: 0; }
         .uti-embedded { max-width: none; padding: 0; }
         .uti-embedded .uti-head { justify-content: flex-end; }
         .uti-scope { margin: 0; padding: 8px 10px; border-left: 3px solid #0b6b8a; border-radius: 6px; background: #eef6fa; color: #0b3a5b; font-weight: 600; }
-        .uti-briefs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-        .uti-brief { min-width: 0; border: 1px solid #cfdde6; border-top: 3px solid #0b6b8a; border-radius: 10px; padding: 10px 12px; background: #fff; }
+        .uti-briefs { display: grid; gap: var(--clinical-group-gap, 12px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+        .uti-brief { min-width: 0; border: 1px solid #cfdde6; border-top: 3px solid #0b6b8a; border-radius: 10px; padding: 12px 14px; background: #fff; }
         .uti-brief h3 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #0b3a5b; }
         .uti-brief ul { margin: 0; padding-left: 17px; display: grid; gap: 4px; font-size: 13px; list-style: disc; }
         .uti-brief li, .uti-notes li { display: list-item; }
@@ -204,7 +204,7 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
         }
         @media print {
           .uti-tools, .uti-hits, .uti-flow { display: none; }
-          .uti-page { max-width: none; padding: 0; font-size: 11px; }
+          .uti-page { max-width: none; padding: 0; font-size: 13px; }
           .uti-card { border: 0; padding: 0; }
           @page { size: A4; margin: 10mm; }
         }

@@ -2,8 +2,7 @@
   FILE: lib/antibiotics/source-citation.ts
 
   Trich dan nguon gon cho muc "Nguồn và đối chiếu": chi gom co quan ban hanh, so quyet dinh,
-  ten van ban, nam ban hanh (van ban moi nhat truoc). Vi tri muc/bang/trang van giu trong du lieu
-  va trong khoi "Vì sao chọn phác đồ này?" – khong hien o day.
+  ten van ban, nam ban hanh. Vi tri muc/bang/trang van giu trong du lieu.
 */
 
 import { DOCS } from "@/data/antibiotics/empiric/regimens/sources";

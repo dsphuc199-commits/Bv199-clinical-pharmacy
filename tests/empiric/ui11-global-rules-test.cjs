@@ -24,8 +24,9 @@ function mainLayer(html){
 }
 const PAGE=/\btr\.\s*\d|\bChương\s+\d|\bPhụ lục\s+\d/;
 const ADJUST=/Cockcroft|Child-Pugh|eGFR\s*[<>≤≥]|CrCl\s*[<>≤≥]\s*\d/;
+const WHY_QUESTION=/<summary[^>]*>\s*(?:Vì sao|Tại sao)\b/iu;
 
-const rows=[];const pageHits=[],dailyHits=[],adjustHits=[],orHits=[],noRationale=[],missingSource=[];
+const rows=[];const pageHits=[],dailyHits=[],adjustHits=[],orHits=[],whyHits=[],missingSource=[];
 let branches=0;
 for(const d of C.DISEASES){
   const items=R.getRegimensForDisease(d.id);
@@ -39,7 +40,7 @@ for(const d of C.DISEASES){
     if(PAGE.test(text)){pageHits.push(`${d.id}: ${text.match(new RegExp(`.{0,40}${PAGE.source}.{0,20}`))?.[0]}`);ok=false;}
     if(/class="tx-sub">= /.test(html)){dailyHits.push(d.id);ok=false;}
     if(ADJUST.test(textNoSource)){adjustHits.push(d.id);ok=false;}
-    if(!html.includes('tp-rationale'))noRationale.push(`${d.id}: ${name}`);
+    if(WHY_QUESTION.test(html))whyHits.push(`${d.id}: ${name}`);
     if(list.some(r=>!r.source||!r.source.doc||!r.source.page))missingSource.push(d.id);
     /* "Hoac" giua the chi khi cac the khong mang dieu kien khac nhau */
     for(const s of sections){s.cards.forEach((c,i)=>{if(i>0&&c.condition&&s.cards[i-1].condition&&c.condition!==s.cards[i-1].condition){const seg=html.split(`data-regimen="${c.id}"`)[0];const tail=seg.slice(seg.lastIndexOf('data-regimen='));if(/class="tp-or"/.test(tail))orHits.push(c.id);}});}
@@ -51,10 +52,10 @@ check('Lớp nội dung chính không hiển thị số trang/chương/phụ l�
 check('Không hiển thị tổng liều/ngày tính toán dư thừa (= x g/ngày)',!RULES.showCalculatedDailyDose&&dailyHits.length===0,dailyHits.slice(0,8));
 check('Không hiển thị bảng/công thức hiệu chỉnh liều trùng module',adjustHits.length===0,adjustHits);
 check('"Hoặc" không đặt giữa các phác đồ cho điều kiện/tác nhân khác nhau',orHits.length===0,orHits);
-check('Mọi nhánh có khối "Vì sao chọn phác đồ này?" (mặc định đóng)',noRationale.length===0,noRationale.slice(0,5));
+check(`${C.DISEASES.length} mặt bệnh · ${branches} bệnh cảnh Việt Nam: bỏ khối câu hỏi chọn phác đồ`,whyHits.length===0,whyHits.slice(0,5));
 check('Mọi phác đồ còn liên kết nguồn (văn bản + vị trí)',missingSource.length===0,missingSource);
-const ra=render(React.createElement(Panel,{sections:V.sectionsFor(R.getRegimensForDisease('v8-33').slice(0,2)).sections,sources:[],rationale:getRationale('v8-33',R.getRegimensForDisease('v8-33')[0].scenario)}));
-check('Khối tiêu chí mặc định đóng và có cấu trúc Tiêu chí → Ý nghĩa → Ảnh hưởng',/<details class="tp-rationale"(?![^>]*open)/.test(ra)&&ra.includes('Ý nghĩa lâm sàng')&&ra.includes('Ảnh hưởng đến lựa chọn'));
+const ra=render(React.createElement(Panel,{sections:[],sources:[],rationale:{status:'authored',items:[{condition:'Tiêu chí nội bộ',sources:['QĐ 708/QĐ-BYT']}]}}));
+check('Căn cứ của tiêu chí vẫn có trong tài liệu tham khảo',ra.includes('<summary>Tài liệu tham khảo</summary>')&&ra.includes('708/QĐ-BYT')&&!ra.includes('Tiêu chí nội bộ'));
 /* Liều có ý nghĩa kê đơn theo ngày (mg/kg/ngày, g/ngày) vẫn hiển thị */
 const perDay=R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-2');
 const pd=render(React.createElement(Panel,{sections:V.sectionsFor([perDay]).sections,sources:[]}));
@@ -79,8 +80,9 @@ const GT=load('components/antibiotics/empiric/GuidelineTabs.tsx');const tabBad=[
 const referenceSummary='<details class="clinical-references"><summary>Tài liệu tham khảo</summary>';
 for(const d of C.DISEASES){for(const [k,El] of [['Quốc tế',GT.IntlTab],['So sánh',GT.CompareTab]]){const html=render(React.createElement(El,{diseaseId:d.id}));const t=mainLayer(html);
   if(PAGE.test(t))tabBad.push(`${d.id} ${k}: ${t.match(new RegExp(`.{0,40}${PAGE.source}.{0,20}`))?.[0]}`);if(/class="tx-sub">= /.test(html))tabBad.push(`${d.id} ${k}: tổng liều/ngày`);
+  if(WHY_QUESTION.test(html))tabBad.push(`${d.id} ${k}: câu hỏi chọn phác đồ`);
   if(k==='So sánh'&&/Điểm giống/.test(html)&&!html.includes(referenceSummary+'<div class="clinical-references-content"><table class="clinical-source-rows"'))cmpSrc.push(d.id);}}
-check('Tab Quốc tế và So sánh: không số trang/chương inline, không tổng liều/ngày tính toán',tabBad.length===0,tabBad.slice(0,5));
+check('Tab Quốc tế và Đối chiếu: bỏ khối câu hỏi chọn phác đồ, tránh số trang và tổng liều/ngày trong nội dung chính',tabBad.length===0,tabBad.slice(0,5));
 check('Tab So sánh: nguồn đối chiếu nằm trong "Tài liệu tham khảo" (mặc định đóng)',cmpSrc.length===0,cmpSrc);
 const capIntl=render(React.createElement(GT.IntlTab,{diseaseId:'v8-1'}));
 const capSources=capIntl.match(/<table class="clinical-source-rows"[^>]*>[\s\S]*?<\/table>/)?.[0]??'';
@@ -101,11 +103,11 @@ check('CAP Quốc tế: lưu ý áp dụng hiện trước mục tài liệu tha
 const {COMPARISONS}=load('data/antibiotics/empiric/comparison.ts');
 const {INTL_GUIDELINES}=load('data/antibiotics/empiric/international.ts');
 check('Mọi nguồn quốc tế ở tab Đối chiếu có bản ghi tên tài liệu và năm',COMPARISONS.every(c=>c.intl.every(id=>INTL_GUIDELINES[id]?.title&&/\b(?:19|20)\d{2}\b/.test(INTL_GUIDELINES[id].published))));
-/* Module rieng (CAP QĐ 2147, HAP/VAP 2023): moi kich ban co khoi tieu chi dong, co can cu */
+/* Module riêng CAP, HAP và VAP. */
 const MR=load('data/antibiotics/empiric/rationale-modules.ts');const CAPM=load('components/antibiotics/CapByt2026.tsx');const HVM=load('components/antibiotics/HapVap2023.tsx');const modBad=[];
-for(const s of CAPM.CAP_SCENARIOS){const r=MR.getModuleRationale('cap',s.id);const h=render(React.createElement(CAPM.default,{initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||!/<details class="tp-rationale"(?![^>]*open)/.test(h)||PAGE.test(mainLayer(h)))modBad.push('cap '+s.id);}
-for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k]){const r=MR.getModuleRationale(k,s.id);const h=render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||!/<details class="tp-rationale"(?![^>]*open)/.test(h)||PAGE.test(mainLayer(h)))modBad.push(k+' '+s.id);}
-check('Module CAP/HAP/VAP: mọi kịch bản có "Vì sao chọn phác đồ này?" (đóng, có căn cứ), không số trang inline',modBad.length===0,modBad);
+for(const s of CAPM.CAP_SCENARIOS){const r=MR.getModuleRationale('cap',s.id);const h=render(React.createElement(CAPM.default,{initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||WHY_QUESTION.test(h)||PAGE.test(mainLayer(h)))modBad.push('cap '+s.id);}
+for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k]){const r=MR.getModuleRationale(k,s.id);const h=render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id}));if(!r||r.items.some(c=>!c.sources?.length)||WHY_QUESTION.test(h)||PAGE.test(mainLayer(h)))modBad.push(k+' '+s.id);}
+check('Module CAP/HAP/VAP: mọi kịch bản bỏ khối câu hỏi và có dữ liệu căn cứ',modBad.length===0,modBad);
 /* Khong nhung cong cu hieu chinh lieu/tuong tac trong the; nhan tre em trung tinh; khong nhan "Khac biet lieu" */
 const toolHits=[],badgeHits=[];
 for(const d of C.DISEASES){const scen=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!scen.has(r.scenario))scen.set(r.scenario,[]);scen.get(r.scenario).push(r);}
@@ -122,7 +124,7 @@ const BV=V.default;const single=(id)=>render(React.createElement(BV,{diseaseId:i
 check('Bệnh một bệnh cảnh: ẩn "Tiêu chí áp dụng" khi nhãn chỉ nhắc tên bệnh (v8-27, v8-25), giữ khi có điều kiện (v8-54 > 3 tuổi, v8-129 mức độ)',
   !single('v8-27').includes('<strong class="tp-scn-label"')&&!single('v8-25').includes('<strong class="tp-scn-label"')&&single('v8-54').includes('<strong class="tp-scn-label"')&&single('v8-129').includes('<strong class="tp-scn-label"'));
 const raHidden=render(React.createElement(Panel,{sections:V.sectionsFor(R.getRegimensForDisease('v8-117').slice(0,1)).sections,sources:[],rationale:{status:'authored',items:[{condition:'Mô tả không dẫn tới lựa chọn'},{condition:'Có lựa chọn',treatmentImplication:'Thuốc X'},{condition:'CẦN THẨM ĐỊNH – mâu thuẫn',clinicalMeaning:'Chi tiết'}]}}));
-check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc; không hiện ghi chú thẩm định',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&!/CẦN THẨM ĐỊNH|Cần thẩm định/.test(raHidden));
+check('Nội dung của khối giải thích cũ không hiển thị trong khung điều trị',!WHY_QUESTION.test(raHidden)&&!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&!raHidden.includes('Có lựa chọn')&&!/CẦN THẨM ĐỊNH|Cần thẩm định/.test(raHidden));
 const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.ts').RATIONALE_708,load('data/antibiotics/empiric/rationale-other.ts').RATIONALE_OTHER,load('data/antibiotics/empiric/overviews.ts').DISEASE_OVERVIEWS]);
 check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
 /* Mỗi khung tối đa một mục tài liệu tham khảo. */
@@ -151,7 +153,7 @@ check('Mọi mặt bệnh có khung tổng quan/theo dõi; mục trống đượ
 const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
 check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan và đặt theo dõi trước tài liệu',pageSrc.includes('<DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} />')&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.split('afterTreatment={<DiseaseMonitoring diseaseId={selected.id} />}').length===3);
 const COPDD=load('data/antibiotics/copd-2131.ts');
-check('COPD: mọi nhóm có "Vì sao chọn phác đồ này?" với lựa chọn lấy từ chính danh sách phác đồ',COPDD.COPD_GROUPS.every(g=>{const r=MR.getModuleRationale('copd',g.id);return r&&r.items[0].treatmentImplication&&r.items.every(c=>c.sources?.length);}));
+check('COPD: mọi nhóm có dữ liệu căn cứ lấy từ chính danh sách phác đồ',COPDD.COPD_GROUPS.every(g=>{const r=MR.getModuleRationale('copd',g.id);return r&&r.items[0].treatmentImplication&&r.items.every(c=>c.sources?.length);}));
 /* Khong lap "Chi tiết cách dùng theo văn bản"; phoi hop trong mot lua chon khong bi tach thanh lua chon don le */
 let detailHits=0;for(const r of R.ALL_REGIMENS){if(render(React.createElement(Panel,{sections:V.sectionsFor([r]).sections,sources:[]})).includes('Chi tiết cách dùng theo văn bản'))detailHits++;}
 check('Không còn khối "Chi tiết cách dùng theo văn bản" ở mọi phác đồ',detailHits===0,detailHits);

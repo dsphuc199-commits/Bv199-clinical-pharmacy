@@ -190,15 +190,15 @@ export default function DoseTable({ groups, status, duration, population, indepe
 export function TxStyle() {
   return (
     <style>{`
-      .tx { display: grid; gap: 6px; min-width: 0; }
-      .tx-group { min-width: 0; }
-      .tx-ghead { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; margin: 2px 0 4px; font-size: 12.5px; }
+      .tx { display: grid; gap: var(--clinical-group-gap, 12px); min-width: 0; }
+      .tx-group { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; }
+      .tx-ghead { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; font-size: 13px; }
       .tx-rule { font-size: 11px; font-weight: 800; color: #075985; background: #e0f2fe; border-radius: 999px; padding: 1px 8px; }
       .tx-cond { font-size: 12px; color: #7c2d12; }
-      .tx-join { font-size: 11.5px; font-weight: 800; color: #0b6b8a; letter-spacing: .02em; margin: 2px 0; }
+      .tx-join { font-size: 12px; font-weight: 700; color: #0b6b8a; }
       .tx-join-opt { color: #92400e; }
-      .tx-join-seq { color: #4b5563; }
-      .tx-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
+      .tx-join-seq { color: #4b5563; padding-block-start: 4px; }
+      .tx-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; line-height: 1.5; }
       .tx-table th { text-align: left; font-size: 11px; font-weight: 700; color: #4b6576; border-bottom: 1px solid #dce6ed; padding: 4px 6px; }
       .tx-table td { vertical-align: top; padding: 6px; border-bottom: 1px solid #edf2f6; overflow-wrap: break-word; }
       .tx-table th.tx-marker, .tx-table td.tx-marker { width: 64px; min-width: 64px; text-align:center; font-weight:700; color:#087f89; white-space: nowrap; word-break: keep-all; hyphens: none; }
@@ -213,7 +213,7 @@ export function TxStyle() {
       .tx-pop { color: #075985; font-weight: 700; }
       .tx-crit { display: block; margin-top: 3px; font-size: 11px; font-weight: 800; color: #9f1239; }
       .tx-row-warn td { background: #fff1f2; }
-      .tx-dur { font-size: 12.5px; margin: 2px 0 0; }
+      .tx-dur { font-size: 12.5px; line-height: 1.55; margin: 0; }
       .tx-dur span { font-weight: 700; color: #4b6576; margin-right: 4px; }
       .tx-src { font-size: 12px; color: #4b6576; }
       .tx-src summary { cursor: pointer; font-weight: 700; color: #087f89; }
@@ -228,13 +228,14 @@ export function TxStyle() {
         /* Mobile: ten thuoc mot dong; Lieu dung | Duong dung | Khoang cach lieu thanh 3 cot – van tach truong */
         .tx-table, .tx-table tbody { display: block; width: 100% !important; }
         .tx-table thead { display: none; }
-        .tx-table tr { display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 8px 4px; border: 0; border-bottom: 1px solid #edf2f6; padding: 10px 0; margin: 0; }
+        .tx-table tr { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 6px 8px; border: 0; border-bottom: 1px solid #edf2f6; padding: 10px 0; margin: 0; }
         .tx-table tr:last-child { border-bottom: 0; }
         .tx-table td { display: block; width: auto !important; border: 0; padding: 0; }
         .tx-table td::before { content: attr(data-label); display: block; font-size: 10.5px; font-weight: 700; color: #6b8293; }
-        .tx-table tr > td { grid-column:2; }.tx-table td.tx-marker { grid-column:1; grid-row:1 / span 5; }
+        .tx-table tr > td { grid-column:2; }
+        .tx-table td.tx-marker { grid-column:1; grid-row:1; align-self:start; min-width:0; }
         .tx-table td.tx-marker::before { content:none; }
-        .tx-table tr.tx-tools-row { display:block; padding-left:56px; }
+        .tx-table tr.tx-tools-row { display:block; padding-left:52px; }
         .tx-table td.tx-drug { grid-column: 2; }
         .tx-table td.tx-drug::before { content: none; }
         .tx-table-no-relation tr { grid-template-columns:minmax(0,1fr); }
