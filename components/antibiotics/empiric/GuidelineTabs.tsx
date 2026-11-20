@@ -21,7 +21,8 @@ import {
 import { structureOptionLines } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
 import ClinicalNotes from "../treatment/ClinicalNotes";
-import ClinicalSourceRows, { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
+import { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
+import ClinicalSources from "../treatment/ClinicalSources";
 import { citeIntlSources, citeSources } from "@/lib/antibiotics/source-citation";
 import {
   DOCS,
@@ -36,7 +37,7 @@ import { SOURCE_ROLE_TEXT, sourceRole, confirmedLifecycle } from "@/lib/antibiot
 
 import DrugActionLinks from "../links/DrugActionLinks";
 import { EvidencePanel } from "./EvidencePanel";
-import InternationalDoseReview from "./InternationalDoseReview";
+import InternationalDoseReview, { doseReviewCitation, doseReviewsFor } from "./InternationalDoseReview";
 import SepticArthritisSeimc2024 from "./SepticArthritisSeimc2024";
 import OsteomyelitisIntl from "./OsteomyelitisIntl";
 import CopdGold2026 from "./CopdGold2026";
@@ -198,14 +199,32 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
     );
   }
 
+  const hasUtiTool = isIdsaCuti(diseaseId) || isEauUrology(diseaseId);
+  const excludedDoseReviews = diseaseId === "v8-33" ? ["arthritis-seimc-adult-gramnegative"] : [];
+  const doseReviews = doseReviewsFor(diseaseId, excludedDoseReviews);
+  const sourceIds = new Set(entry.guidelineIds);
+  if (hasUtiTool) {
+    sourceIds.add("eau-ui-2026");
+    sourceIds.add("eau-urolithiasis-2026");
+  }
+  const citations = citeIntlSources([...sourceIds]);
+  for (const review of doseReviews) {
+    const citation = citations.find((source) => source.url === review.url);
+    if (citation) {
+      citation.note = [citation.note, review.locator].filter(Boolean).join(" ");
+    } else {
+      citations.push(doseReviewCitation(review));
+    }
+  }
+
   return (
     <section className="bv199-panel gt199">
       <div className="bv199-label">KHUYẾN CÁO QUỐC TẾ</div>
       <p className="gt199-scope"><strong>Phạm vi:</strong> {diseaseId === "v8-33" ? "Viêm khớp nhiễm khuẩn khớp tự nhiên: GEIO–SEIMC/SEIP/SECOT 2024 cho người lớn và trẻ em; PIDS/IDSA 2023 cho trẻ từ 1 tháng đến 17 tuổi." : clinicalText(entry.scope)}</p>
       {/* v8-33: nhanh Gram am GEIO–SEIMC da nam trong cong cu chon khang sinh – khong lap lai. */}
-      <InternationalDoseReview diseaseId={diseaseId} exclude={diseaseId === "v8-33" ? ["arthritis-seimc-adult-gramnegative"] : []} />
+      <InternationalDoseReview diseaseId={diseaseId} exclude={excludedDoseReviews} showReferences={false} />
       {/* Tiet nieu: noi dung EAU 2026 nam trong cong cu chon khang sinh, khong lap lai o phan doc khuyen cao. */}
-      {isIdsaCuti(diseaseId) ? <UtiIntlTools key={diseaseId} diseaseId={diseaseId} /> : isEauUrology(diseaseId) && <UrologyEau2026 key={diseaseId} diseaseId={diseaseId} />}
+      {isIdsaCuti(diseaseId) ? <UtiIntlTools key={diseaseId} diseaseId={diseaseId} /> : isEauUrology(diseaseId) && <UrologyEau2026 key={diseaseId} diseaseId={diseaseId} showReferences={false} />}
 
       {entry.guidelineIds.filter((gid) => !(isEauUrology(diseaseId) && gid.startsWith("eau-")) && !(isIdsaCuti(diseaseId) && gid === "idsa-cuti-2025")).map((gid) => {
         const g = INTL_GUIDELINES[gid];
@@ -277,12 +296,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
       {moduleContent}
 
       {/* Khong hien danh sach "noi dung chua trich xuat" (ghi chu quy trinh, khong phai van phong dieu tri). */}
-      {/* Mot khoi nguon duy nhat: to chuc, ten huong dan va nam. */}
-      <details className="gt199-cite">
-        <summary>Nguồn và đối chiếu</summary>
-        <ClinicalSourceRows sources={citeIntlSources(entry.guidelineIds)} />
-        {!isEauUrology(diseaseId) && !isIdsaCuti(diseaseId) && <InternationalSourceUse />}
-      </details>
+      {!hasUtiTool && citations.length > 0 && <InternationalSourceUse />}
+      <ClinicalSources sources={citations} />
       <GtStyle />
     </section>
   );
@@ -291,7 +306,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 /* ---------------- Tab 3 ---------------- */
 
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
-  if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p></section>;
+  if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p><ClinicalSources sources={citeSources(["QĐ 2131/QĐ-BYT"])} /></section>;
   if (diseaseId === "v8-101") return <section className="bv199-panel gt199"><p className="gt199-note">Chưa có bảng đối chiếu cho viêm phổi cộng đồng ở trẻ em. Mở tab Quốc tế để tra riêng IDSA/PIDS, NICE NG250 hoặc WHO 2024.</p></section>;
   const c = getComparison(diseaseId);
   if (!c) {
@@ -332,11 +347,7 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
         So sánh chỉ dựa trên nội dung đang hiển thị ở Tab 1 và Tab 2; không tạo phác đồ
         mới từ hai nguồn.
       </p>
-      {/* Quy tac chung: vi tri nguon (muc, bang, trang) gom vao "Nguon va can cu", mac dinh dong. */}
-      <details className="gt199-cite">
-        <summary>Nguồn và căn cứ</summary>
-        <ClinicalSourceRows sources={[...citeSources(c.vn.split(/;\s+/)), ...citeIntlSources(c.intl)]} />
-      </details>
+      <ClinicalSources sources={[...citeSources(c.vn.split(/;\s+/)), ...citeIntlSources(c.intl)]} />
       <GtStyle />
     </section>
   );
@@ -479,7 +490,6 @@ function GtStyle() {
       .gt199-banner { margin: 8px 0; padding: 10px 12px; border-radius: 10px; background: #eef4ff; border: 1px solid #c7d7fe; color: #1e3a8a; font-size: 12px; line-height: 1.6; }
       .gt199-scope { font-size: 12px; color: #33505f; line-height: 1.7; margin: 6px 0 10px; }
       .gt199-guide { border: 1px solid #dbe6ed; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-      .gt199-cite { font-size: 11px; color: #647b8c; margin: 0 0 8px; line-height: 1.6; overflow-wrap: break-word; }
       .gt199-status { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; vertical-align: middle; }
       .gt199-status-extracted { background: #dcfce7; color: #166534; }
       .gt199-status-identified { background: #fef3c7; color: #92400e; }
@@ -499,9 +509,7 @@ function GtStyle() {
       .gt199-more > summary, .gt199-links > summary { cursor: pointer; color: #087f89; font-weight: 700; font-size: 12px; }
       .gt199-links { margin-top: 6px; }
       .gt199-gap { color: #92400e; }
-      .gt199-gaps > summary, .gt199-cite > summary { cursor: pointer; }
-      .gt199-cite > summary { font-weight: 700; color: #1e3a5f; font-size: 12px; }
-      details.gt199-cite[open] { padding: 8px 10px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; }
+      .gt199-gaps > summary { cursor: pointer; }
       .gt199 :is(summary):focus-visible { outline: 3px solid #087f89; outline-offset: 3px; }
       .gt199-cmp-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
       .gt199-cmp { border-radius: 10px; padding: 10px 12px; border: 1px solid #dbe6ed; }

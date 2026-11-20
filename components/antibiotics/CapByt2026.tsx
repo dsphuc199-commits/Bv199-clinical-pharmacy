@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import { getModuleRationale } from "../../data/antibiotics/empiric/rationale-modules";
 import TreatmentPanel, { type TxCard, type TxSection } from "./treatment/TreatmentPanel";
@@ -572,8 +572,10 @@ function capCard(r: Regimen): TxCard {
 
 export default function CapByt2026({
   initialScenarioId,
+  afterTreatment,
 }: {
   initialScenarioId?: string;
+  afterTreatment?: ReactNode;
 }) {
   const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "ward");
   const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
@@ -609,6 +611,7 @@ export default function CapByt2026({
       sections={sections}
       notes={Array.from(new Set(notes))}
       monitoring={monitoring}
+      afterTreatment={afterTreatment}
       sources={["QĐ 2147/QĐ-BYT (2026) – Mục 5.3 (tr. 36–39), Bảng 5.1 (tr. 39); liều: Phụ lục 1 (tr. 60–63)"]}
     />
   );

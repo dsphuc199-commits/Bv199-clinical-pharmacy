@@ -1,9 +1,9 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { COPD_COLISTIN_SOURCE, COPD_DRUGS, COPD_GROUPS, COPD_REGIMENS, COPD_REVIEWS, COPD_SOURCES, COPD_SOURCE_URL, hasCopdSymptomIndication, type CopdRegimen, type DrugId, type GroupId, type ReviewId, type Setting, type SourceId } from "@/data/antibiotics/copd-2131";
 import Link from "next/link";
-import { citeSource } from "@/lib/antibiotics/source-citation";
+import { citeSource, citeSources } from "@/lib/antibiotics/source-citation";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { getModuleRationale } from "@/data/antibiotics/empiric/rationale-modules";
 import { RationaleAccordion } from "./treatment/TreatmentPanel";
@@ -14,22 +14,19 @@ import PatientGroupSelect from "./treatment/PatientGroupSelect";
 import { patientGroupsFor } from "@/lib/antibiotics/patient-groups";
 import { TxStyle } from "./treatment/DoseTable";
 import ClinicalNotes from "./treatment/ClinicalNotes";
-import ClinicalSourceRows from "./treatment/ClinicalSourceRows";
+import ClinicalSources from "./treatment/ClinicalSources";
 
 /* Nguon chi ghi quyet dinh (co quan, so, ten, nam); vi tri muc/bang giu trong du lieu COPD_SOURCES. */
 const COPD_CITATION = { ...citeSource("QĐ 2131/QĐ-BYT"), url: COPD_SOURCE_URL };
-/* Mot khoi "Nguồn và đối chiếu" duy nhat (cuoi nhanh, `cite`); cac vi tri khac chi hien "Chi tiết cần thẩm định" khi co.
-   Lieu duy tri theo Clcr cua colistin: xem module Hieu chinh lieu (khong lap bang o day). */
-function Sources({ reviews = [], cite = false }: { ids: SourceId[]; reviews?: ReviewId[]; cite?: boolean }) {
-  if (!cite && !reviews.includes("colistin")) return null;
-  return <details className="c26-source"><summary>{cite ? "Nguồn và đối chiếu" : "Colistin – liều nạp và liều duy trì"}</summary>
-    {cite && <ClinicalSourceRows sources={[COPD_CITATION]} />}
-    {reviews.includes("colistin") && <div className="c26-evidence-only"><strong>Colistin — liều theo QĐ 2131/QĐ-BYT</strong>
+function Sources({ reviews = [] }: { ids: SourceId[]; reviews?: ReviewId[] }) {
+  if (!reviews.includes("colistin")) return null;
+  return <details className="c26-source"><summary>Colistin – liều nạp và liều duy trì</summary>
+    <div className="c26-evidence-only"><strong>Colistin — liều theo QĐ 2131/QĐ-BYT</strong>
       <p>{clinicalText(COPD_COLISTIN_SOURCE.table)}</p>
       <p>Liều nạp theo cân nặng:</p><dl className="c26-renal">{COPD_COLISTIN_SOURCE.loading.map(([weight, dose]) => <div key={weight}><dt>{weight}</dt><dd>{dose}</dd></div>)}</dl>
       <p>Liều duy trì theo chức năng thận: xem module <Link href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link>.</p>
       <p>Giữ nguyên ký hiệu MUI của nguồn; không quy đổi giữa mg và MUI khi chưa xác định rõ chế phẩm và quy ước hoạt lực.</p>
-    </div>}
+    </div>
   </details>;
 }
 
@@ -83,7 +80,7 @@ function FollowUp({ setting }: { setting: Setting }) {
   </ul></section>;
 }
 
-export default function CopdAntibioticDecision() {
+export default function CopdAntibioticDecision({ afterTreatment }: { afterTreatment?: ReactNode }) {
   const uid = useId();
   const [setting, setSetting] = useState<Setting>("outpatient");
   const [groupId, setGroupId] = useState<GroupId | null>(null);
@@ -92,6 +89,11 @@ export default function CopdAntibioticDecision() {
   const [assessed, setAssessed] = useState(false);
   const [ventilated, setVentilated] = useState(false);
   const group = COPD_GROUPS.find(g => g.id === groupId);
+  const rationale = group ? getModuleRationale("copd", group.id) : undefined;
+  const citations = [
+    COPD_CITATION,
+    ...citeSources(rationale?.items.flatMap((item) => item.sources ?? []) ?? []).filter((source) => source.key !== COPD_CITATION.key),
+  ];
   const branch = setting;
   const regimens = COPD_REGIMENS.filter(r => r.groupId === groupId && (groupId !== "in-mdr" || r.drugs[0].drugId === baseId));
   const commonDuration=regimens.length>0&&new Set(regimens.map(r=>r.duration)).size===1?regimens[0].duration:undefined;
@@ -124,12 +126,13 @@ export default function CopdAntibioticDecision() {
           {commonDuration && <p className="c26-duration"><strong>Thời gian điều trị:</strong> {commonDuration}.</p>}
           {groupId === "in-mdr" && !baseId && <p>Chưa chọn thuốc nền. Phối hợp chỉ được cân nhắc khi điều kiện lâm sàng và kháng sinh đồ phù hợp.</p>}
           <Sources ids={group.sourceIds} reviews={group.reviewIds} />
-          {(() => { const ra = getModuleRationale("copd", group.id); return ra ? <RationaleAccordion rationale={ra} /> : null; })()}
+          {rationale && <RationaleAccordion rationale={rationale} />}
         </section>}
         {group && <FollowUp setting={branch} />}
-        <Sources cite ids={branch === "outpatient" ? ["text-out", "flow-out", "risk", "renal", "interaction"] : ["text-in", "flow-in", "table-in", "renal", "interaction"]} />
       </div></div>
     </SettingTabs>
+    {afterTreatment}
+    <ClinicalSources sources={citations} />
     <TxStyle/><style>{copdStyles}</style>
   </section>;
 }

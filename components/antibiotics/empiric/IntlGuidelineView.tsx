@@ -123,8 +123,9 @@ function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlG
         sources={references}
         notes={g.source_text.includes("không nêu liều") ? ["Liều theo hướng dẫn liều của khoa, dược lâm sàng."] : []}
         application={{ localReferences: "kháng sinh đồ của bệnh viện" }}
-      />
-      <Sources sources={sources} />
+      >
+        <Sources sources={sources} />
+      </SourceList>
     </>
   );
 }

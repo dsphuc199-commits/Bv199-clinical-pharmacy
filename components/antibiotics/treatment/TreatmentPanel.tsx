@@ -27,7 +27,6 @@ import ClinicalScenarioPicker from "./ClinicalScenarioPicker";
 import { useAbxLinkContext } from "../links/AbxLinkContext";
 import { DISEASES, getStream } from "@/data/antibiotics/empiric/catalog";
 import ClinicalSources from "./ClinicalSources";
-import ClinicalSourceRows from "./ClinicalSourceRows";
 import { citeSources } from "@/lib/antibiotics/source-citation";
 import type { ScenarioChoice } from "@/lib/antibiotics/patient-groups";
 import type { Rationale } from "@/data/antibiotics/empiric/rationale";
@@ -80,7 +79,7 @@ type Props = {
   initialChoice?: string;
   onScenario?: (value: string) => void;
   scenarioHint?: ReactNode;
-  /* Ten nguon ngan o dau khung (vd. "Bộ Y tế"). */
+  /* Nguồn chung trước khi chọn bệnh cảnh. */
   sourceTag?: string;
   sections: TxSection[];
   emptyText?: string;
@@ -91,6 +90,7 @@ type Props = {
   monitoring?: string[];
   sources: string[];
   footer?: ReactNode;
+  afterTreatment?: ReactNode;
   /* Tang 3 – tieu chi lua chon cua nhanh dang xem (mac dinh dong). */
   rationale?: Rationale;
 };
@@ -113,8 +113,6 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
         ))}
       </dl>
       {rationale.reassessment && rationale.reassessment.length > 0 && <p className="tp-rationale-re"><strong>Đánh giá lại:</strong> {rationale.reassessment.map((r) => clinicalText(r)).join(" ")}</p>}
-      {/* Can cu gop mot dong: chi ten van ban (vi tri muc/trang giu trong du lieu). */}
-      {(() => { const cites = citeSources(rationale.items.flatMap((c) => c.sources ?? [])); return cites.length > 0 && <p className="tp-rationale-src">Căn cứ: {cites.map((c) => c.label).join("; ")}</p>; })()}
       {/* CSS di kem khoi de hien thi giong nhau o moi noi dung (khung chung, module COPD). */}
       <style>{`
       .tp-rationale { margin-top: 14px; border: 1px solid #dce6ed; border-radius: 8px; background: #f7fafc; padding: 10px 14px; }
@@ -125,7 +123,6 @@ export function RationaleAccordion({ rationale }: { rationale: Rationale }) {
       .tp-rationale-item dt { font-size: 13px; font-weight: 600; color: #12283c; }
       .tp-rationale-item dd { margin: 0; font-size: 13px; line-height: 1.55; color: #33505f; }
       .tp-rationale-k { display: inline-block; min-width: 150px; margin-right: 6px; font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #557080; }
-      .tp-rationale-src { font-size: 11.5px !important; color: #6b8293 !important; }
       .tp-rationale-re { margin: 10px 0 0; font-size: 13px; }
       @media (max-width: 640px) { .tp-rationale-k { display: block; min-width: 0; } }
       `}</style>
@@ -243,6 +240,7 @@ export default function TreatmentPanel({
   monitoring = [],
   sources,
   footer,
+  afterTreatment,
   rationale,
 }: Props) {
   const [picked,setPicked] = useState<string>(initialChoice ?? '');
@@ -254,8 +252,12 @@ export default function TreatmentPanel({
   const shownNotes = notes.slice(0, NOTE_LIMIT);
   const moreNotes = notes.slice(NOTE_LIMIT);
   const hasNotes = notes.length > 0 || monitoring.length > 0 || (detailNotes?.items.length ?? 0) > 0;
-  /* Mot khoi nguon duy nhat cho ca khung: nguon chung + nguon tung the, khong trung lap, moi nhat truoc. */
-  const allCitations = citeSources([...(sources.length ? sources : sourceTag ? [sourceTag] : []), ...sections.flatMap((sec) => sec.cards.flatMap((c) => c.sources ?? []))]);
+  const generalSources = sourceTag?.split(/;\s*/) ?? [];
+  const citations = citeSources(hasSelection ? [
+    ...(sources.length ? sources : generalSources),
+    ...sections.flatMap((section) => section.cards.flatMap((card) => card.sources ?? [])),
+    ...(rationale?.items.flatMap((item) => item.sources ?? []) ?? []),
+  ] : generalSources);
   return (
     <div className="tp">
       {/* (2) Benh canh lam sang – mot hang: nhan | danh sach chon */}
@@ -271,7 +273,6 @@ export default function TreatmentPanel({
       )}
 
       {/* (3) Phac do khang sinh kinh nghiem */}
-      {!hasSelection && <ClinicalSources sources={sourceTag?.split(/;\s*/) ?? []} diseaseId={context.diseaseId} />}
       {hasSelection && scenarioHint && scenarios && scenarios.length > 1 && !scenarios.find(s=>s.value===picked)?.criteria?.includes(typeof scenarioHint==='string'?scenarioHint:'') && <p className="tp-selected-context">{typeof scenarioHint==='string'?clinicalText(scenarioHint):scenarioHint}</p>}
       {hasSelection && <><section className="tp-box tp-regimens">
         <div className="tp-box-head">
@@ -323,13 +324,9 @@ export default function TreatmentPanel({
           <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a> và{" "}
           <a href={SPECIALIZED_MODULE_LINKS.interactions.href}>{SPECIALIZED_MODULE_LINKS.interactions.label}</a>.</p>
       )}
-      {allCitations.length > 0 && (
-        <details className="tp-box tp-sources">
-          <summary>Nguồn tham khảo ({allCitations.length})</summary>
-          <ClinicalSourceRows sources={allCitations} />
-        </details>
-      )}
       </>}
+      {afterTreatment}
+      <ClinicalSources sources={citations} />
       <TpStyle />
     </div>
   );
@@ -365,7 +362,7 @@ function TpStyle() {
       .tp-card-main { display: grid; gap: 6px; min-width: 0; }
       .tp-or { display:grid; grid-template-columns:64px minmax(0,1fr); margin:5px 0; font-size:12px; color:#587183; }.tp-or span { text-align:center; font-weight:700; white-space:nowrap; }
       .tp-review { margin:3px 0; padding:6px 9px; background:#fffbeb; border-left:3px solid #d69525; font-size:12px; color:#92400e; }
-      .tp-card-source { font-size:12px; }.tp-card-source ul { padding-left:18px; }.tp-selected-context { font-size:13px; }
+      .tp-selected-context { font-size:13px; }
       .tp-flag { font-size: 10.5px; font-weight: 700; border-radius: 999px; padding: 1px 7px; line-height: 1.5; }
       .tp-flag-lock { background: #9f1239; color: #fff; }
       .tp-flag-warn { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
@@ -390,18 +387,15 @@ function TpStyle() {
       .tp-notes details { font-size: 13px; margin-top: 4px; }
       .tp-notes summary { cursor: pointer; color: #087f89; font-weight: 700; font-size: 12px; }
       .tp-detail-notes ul { color: #4b6576; font-size: 12.5px; }
-      .tp-sources { margin: 12px -18px 0; padding: 10px 18px 0; border-top: 1px solid #edf2f6; font-size: 12px; color: #4b6576; overflow-wrap: break-word; }
-      .tp-notes:not(:has(.tp-notes-body)) .tp-sources { margin-top: 0; padding-top: 0; border-top: 0; }
       /* UI9: single white column, flat treatment rows. */
       .tp { color:#12283c; gap:20px; }.tp-box { border:0; border-radius:0; padding:0; }
       .tp-box-head { margin:0 0 8px; padding:16px 0 12px; border-top:1px solid #d8e4ea; border-bottom:0; }
       .tp-box h3 { font-size:20px; color:#10243e; }.tp-card,.tp-card-noside { display:block; border:0; border-radius:0; padding:12px 0; border-bottom:1px solid #dfe8ee; }
       .tp-card-head { flex-direction:row; flex-wrap:wrap; margin-bottom:8px; }.tp-card-label { font-size:12px; color:#557080; }
-      .tp-notes { border-top:1px solid #dfe8ee; padding-top:16px; }.tp-sources { margin:12px 0 0; padding:12px 0 0; }.tp-scn { display:block; }
+      .tp-notes { border-top:1px solid #dfe8ee; padding-top:16px; }.tp-scn { display:block; }
       @media (max-width: 640px) {
         .tp-box { padding: 12px; }
         .tp-box-head { margin: 0 -12px 4px; padding-left: 12px; padding-right: 12px; }
-        .tp-sources { margin: 12px -12px 0; padding: 10px 12px 0; }
         .tp-scn { grid-template-columns: minmax(0, 1fr); }
         .tp-scn-hint { grid-column: 1; }
         .tp-card { grid-template-columns: minmax(0, 1fr); padding: 10px 12px; }
@@ -410,8 +404,6 @@ function TpStyle() {
       /* Thu tu: phac do -> luu y/theo doi -> co so lua chon -> lien ket module -> nguon. */
       .tp > .tp-rationale { margin-top: 0; }
       .tp > .tp-module-links { margin: 0; }
-      .tp > .tp-sources { margin: 0; padding: 12px 0 0; border-top: 1px solid #edf2f6; }
-      .tp > .tp-sources > summary { cursor: pointer; font-weight: 700; color: #1e3a5f; }
     `}</style>
   );
 }

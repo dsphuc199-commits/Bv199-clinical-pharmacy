@@ -11,7 +11,7 @@ const TITLE: Record<string, string> = {
   "v8-2": "Nhiễm khuẩn tiết niệu phức tạp",
 };
 
-export default function UrologyEau2026({ diseaseId }: { diseaseId: string }) {
+export default function UrologyEau2026({ diseaseId, showReferences }: { diseaseId: string; showReferences?: boolean }) {
   const forms = EAU_UROLOGY_FORMS[diseaseId];
   const [id, setId] = useState(forms[0].id);
   const f = forms.find((x) => x.id === id) ?? forms[0];
@@ -44,7 +44,7 @@ export default function UrologyEau2026({ diseaseId }: { diseaseId: string }) {
         {f.avoid.length > 0 && (<div><h4>Không khuyến cáo</h4><Rx items={f.avoid} /></div>)}
         {f.notes.length > 0 && (<div><h4>Lưu ý</h4><ul className="eau26-notes">{f.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>)}
       </section>
-      <SourceList sources={citeIntlSources(["eau-ui-2026", "eau-urolithiasis-2026"])} />
+      <SourceList sources={citeIntlSources(["eau-ui-2026", "eau-urolithiasis-2026"])} showReferences={showReferences} />
       <RxToolStyle />
       <style>{`.eau26-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }`}</style>
     </article>

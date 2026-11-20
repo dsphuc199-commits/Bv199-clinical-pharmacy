@@ -7,7 +7,7 @@ import { TIER_LABEL } from "@/data/uti-antibiotics/config";
 import type { Condition, PublicRegimen } from "@/data/uti-antibiotics/types";
 import { formsOf, populationsOf, resolveCondition, searchConditions, sitesOf } from "@/lib/uti/flow";
 import { citeSourceLabel, type Citation } from "@/lib/antibiotics/source-citation";
-import ClinicalSourceRows from "@/components/antibiotics/treatment/ClinicalSourceRows";
+import ClinicalSources from "@/components/antibiotics/treatment/ClinicalSources";
 
 type Props = {
   conditions: Condition[];
@@ -141,9 +141,8 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
       )}
 
       <footer className="uti-foot">
-        <h3>Nguồn và đối chiếu</h3>
-        <ClinicalSourceRows sources={sourceList} />
         <p>{config.effectiveStatus}</p>
+        <ClinicalSources sources={sourceList} />
       </footer>
 
       <style>{`
@@ -184,10 +183,6 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
         .uti-notes ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
         .uti-warn { margin: 0; padding: 8px 10px; border: 1px solid #f6cfb5; border-radius: 8px; background: #fff4ed; color: #7c2d12; font-size: 13px; }
         .uti-foot { border-top: 1px solid #e3eaf0; padding-top: 8px; font-size: 12.5px; color: #4b6576; }
-        .uti-foot h3 { margin: 0 0 4px; font-size: 13px; color: #0b3a5b; }
-        .uti-foot h4 { margin: 8px 0 3px; font-size: 12.5px; font-weight: 700; color: #17364b; }
-        .uti-foot ol { margin: 0 0 6px; padding-left: 20px; list-style: decimal; }
-        .uti-foot li { display: list-item; margin-bottom: 3px; }
         .uti-foot p { margin: 0; }
         .uti-embedded { max-width: none; padding: 0; }
         .uti-embedded .uti-head { justify-content: flex-end; }
@@ -197,7 +192,7 @@ export default function UtiTool({ conditions, regimens, config, intlSources = []
         .uti-brief h3 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #0b3a5b; }
         .uti-brief ul { margin: 0; padding-left: 17px; display: grid; gap: 4px; font-size: 13px; list-style: disc; }
         .uti-brief li, .uti-notes li { display: list-item; }
-        .uti-notes h3, .uti-foot h3 { font-weight: 800; }
+        .uti-notes h3 { font-weight: 800; }
         .uti-notes ul { list-style: disc; }
         @media (max-width: 720px) {
           .uti-table thead { display: none; }

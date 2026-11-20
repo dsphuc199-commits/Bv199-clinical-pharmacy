@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
-import { citeSources } from "@/lib/antibiotics/source-citation";
+import type { Citation } from "@/lib/antibiotics/source-citation";
 import ClinicalSourceRows from "./ClinicalSourceRows";
 
-/*
-  "Nguồn và đối chiếu": co quan ban hanh, so quyet dinh, ten van ban va nam.
-  Vi tri muc/bang/trang va ho so doi chieu noi bo khong hien o day (van giu trong du lieu).
-  `diseaseId`, `originalNotes` giu trong chu ky de tuong thich noi goi.
-*/
-export default function ClinicalSources({ sources, extra }: { sources:string[]; diseaseId?:string; originalNotes?:string[]; extra?:ReactNode }) {
-  const citations = citeSources(sources);
-  if (citations.length === 0 && !extra) return null;
-  return <details className="tp-card-source"><summary>Nguồn và đối chiếu</summary>
-    <ClinicalSourceRows sources={citations} />
-    {extra}
-  </details>;
+export default function ClinicalSources({ sources, children }: { sources: readonly Citation[]; children?: ReactNode }) {
+  if (sources.length === 0 && !children) return null;
+
+  return (
+    <details className="clinical-references">
+      <summary>Tài liệu tham khảo</summary>
+      <div className="clinical-references-content">
+        <ClinicalSourceRows sources={sources} />
+        {children}
+      </div>
+    </details>
+  );
 }

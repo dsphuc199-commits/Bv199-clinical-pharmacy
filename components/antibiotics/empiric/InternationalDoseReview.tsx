@@ -1,10 +1,31 @@
-import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
+import { INTERNATIONAL_DOSE_REVIEWS, type DoseReview } from "@/data/antibiotics/empiric/international-dose-review";
 import type { DrugGroup } from "@/lib/antibiotics/regimen-structure";
+import type { Citation } from "@/lib/antibiotics/source-citation";
 import DoseTable from "../treatment/DoseTable";
 import ClinicalNotes from "../treatment/ClinicalNotes";
+import ClinicalSources from "../treatment/ClinicalSources";
 
-export default function InternationalDoseReview({diseaseId,exclude=[]}:{diseaseId:string;exclude?:string[]}) {
-  const reviews=INTERNATIONAL_DOSE_REVIEWS.filter(r=>r.diseaseIds.includes(diseaseId)&&!exclude.includes(r.id));
+export function doseReviewsFor(diseaseId: string, exclude: readonly string[] = []): DoseReview[] {
+  return INTERNATIONAL_DOSE_REVIEWS.filter((review) => review.diseaseIds.includes(diseaseId) && !exclude.includes(review.id));
+}
+
+export function doseReviewCitation(review: DoseReview): Citation {
+  return {
+    key: review.id,
+    label: review.source,
+    detail: review.published,
+    year: Number(review.published.match(/\b(?:19|20)\d{2}\b/)?.[0]) || undefined,
+    url: review.url,
+    note: review.locator,
+  };
+}
+
+export default function InternationalDoseReview({ diseaseId, exclude, showReferences = true }: {
+  diseaseId: string;
+  exclude?: readonly string[];
+  showReferences?: boolean;
+}) {
+  const reviews = doseReviewsFor(diseaseId, exclude);
   if(!reviews.length)return null;
   return <section aria-label="Đối chiếu liều quốc tế">
     <h3>Liều theo khuyến cáo quốc tế</h3>
@@ -15,8 +36,8 @@ export default function InternationalDoseReview({diseaseId,exclude=[]}:{diseaseI
         <ClinicalNotes items={[r.condition]}/>
         <DoseTable groups={groups} status="PARTIAL" independent duration={r.duration}/>
         <ClinicalNotes items={r.cautions}/>
-        <details className="gt199-loc"><summary>Tài liệu tham khảo</summary><a href={r.url} target="_blank" rel="noopener noreferrer">{r.source} · {r.published}</a><p>{r.locator}</p></details>
       </details>;
     })}
+    {showReferences && <ClinicalSources sources={reviews.map(doseReviewCitation)} />}
   </section>;
 }

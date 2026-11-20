@@ -12,7 +12,7 @@ function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; ch
 
 const SEV_TEXT: Record<Sev, string> = { shock: "Sốc nhiễm khuẩn", sepsis: "Sepsis không sốc", none: "Không sepsis" };
 
-export default function UtiIdsa2025({ title }: { title: string }) {
+export default function UtiIdsa2025({ title, showReferences }: { title: string; showReferences?: boolean }) {
   const [sev, setSev] = useState<Sev>("none");
   const [oral, setOral] = useState(false);
   const [priorEsbl, setPriorEsbl] = useState(false);
@@ -92,7 +92,7 @@ export default function UtiIdsa2025({ title }: { title: string }) {
         </details>
         <div><h4>Lưu ý</h4><ul className="cuti-notes">{plan.notes.map((n) => <li key={n}>{n}</li>)}</ul></div>
       </section>
-      <SourceList sources={citeIntlSources(["idsa-cuti-2025"])} notes={[CUTI_SCOPE]} />
+      <SourceList sources={citeIntlSources(["idsa-cuti-2025"])} notes={[CUTI_SCOPE]} showReferences={showReferences} />
       <RxToolStyle />
       <style>{`.cuti-notes { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; line-height: 1.55; color: #33505f; }
         .cuti-pk thead th { background: #f1f6f9; color: #0b3a5b; font-size: 12px; }

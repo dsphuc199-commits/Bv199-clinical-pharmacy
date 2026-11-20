@@ -14,7 +14,7 @@
   phien ban o muc "Nguon, phien ban" cuoi trang (ReconciliationBox).
 */
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { RESOLVED_REGIMEN_IDS, SHARED_SCENARIO_REGIMENS, resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
 
 import {
@@ -200,7 +200,7 @@ export function sectionsFor(items: Regimen[]): { sections: TxSection[]; regimenO
 }
 
 export default function BytRegimenView(props: Props) {
-  if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 /><DiseaseMonitoring diseaseId="v8-6" /></>;
+  if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} /></>;
   /* Tiet nieu: cong cu chon khang sinh theo QD 708, Chuong X. */
   if (isUtiEmpiric(props.diseaseId)) return <UtiEmpiricVn diseaseId={props.diseaseId} />;
   /* Template chung: Tong quan (tang 1) – Phac do (tang 2, 3) – Theo doi (tang 4); tu dong khi co du lieu overview. */
@@ -208,15 +208,14 @@ export default function BytRegimenView(props: Props) {
     return (
       <>
         <DiseaseOverviewSummary diseaseId={props.diseaseId} />
-        <GenericBytRegimenView {...props} />
-        <DiseaseMonitoring diseaseId={props.diseaseId} />
+        <GenericBytRegimenView {...props} afterTreatment={<DiseaseMonitoring diseaseId={props.diseaseId} />} />
       </>
     );
   }
   return <GenericBytRegimenView {...props} />;
 }
 
-function GenericBytRegimenView({ diseaseId, showAllByDefault }: Props) {
+function GenericBytRegimenView({ diseaseId, showAllByDefault, afterTreatment }: Props & { afterTreatment?: ReactNode }) {
   const allRegimens = useMemo(() => getRegimensForDisease(diseaseId), [diseaseId]);
   // Listing an activity is distinct from supplying a verified prescribing dose.
   // Keep all source groups reachable; DoseTable marks missing/unverified fields.
@@ -294,7 +293,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault }: Props) {
   const sources = Array.from(
     new Set((active?.items ?? []).map((r) => `QĐ ${DOCS[r.source.doc].number} (${year(r.source.doc)}) – ${r.source.section}, ${r.source.page}`))
   );
-  const docTag = Array.from(new Set((active?.items ?? allRegimens).map((r) => `QĐ ${DOCS[r.source.doc].number}`))).join("; ");
+  const docTag = Array.from(new Set(allRegimens.map((r) => `QĐ ${DOCS[r.source.doc].number}`))).join("; ");
 
   const lockedScenario = (items: Regimen[]) => items.some((r) => safetyAlertsFor(r.id).some((a) => a.autoRecommend === "block"));
 
@@ -322,6 +321,7 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault }: Props) {
         notes={notes}
         comparison={<DoseConflictComparison conflicts={DOSE_CONFLICTS.filter(c => (active?.items ?? []).some(r => c.regimenIds.includes(r.id)))} />}
         sources={sources}
+        afterTreatment={afterTreatment}
         rationale={active ? getRationale(diseaseId, active.name, active.items) : undefined}
       />
       <style>{`

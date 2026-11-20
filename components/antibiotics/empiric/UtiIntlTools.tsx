@@ -14,7 +14,7 @@ export default function UtiIntlTools({ diseaseId }: { diseaseId: string }) {
       <div className="uti-intl-source">
         <Seg label="Hướng dẫn" value={source} onChange={setSource} options={[{ id: "idsa", label: "IDSA 2025" }, { id: "eau", label: "EAU 2026" }] as const} />
       </div>
-      {source === "idsa" ? <UtiIdsa2025 key={diseaseId} title={TITLE[diseaseId]} /> : <UrologyEau2026 key={diseaseId} diseaseId={diseaseId} />}
+      {source === "idsa" ? <UtiIdsa2025 key={diseaseId} title={TITLE[diseaseId]} showReferences={false} /> : <UrologyEau2026 key={diseaseId} diseaseId={diseaseId} showReferences={false} />}
       <RxToolStyle />
     </>
   );

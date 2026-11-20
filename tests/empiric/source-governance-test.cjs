@@ -23,8 +23,10 @@ const props={scenarios:[{value:'a',label:'A'},{value:'b',label:'B'}],scenario:'a
 const html=renderToStaticMarkup(React.createElement('div',null,React.createElement(Panel,props),React.createElement(Panel,props)));
 const ids=[...html.matchAll(/<select id="([^"]+)"/g)].map(x=>x[1]);
 check('Two treatment panels have distinct labelled scenario controls',ids.length===2&&ids[0]!==ids[1]&&ids.every(id=>html.includes(`for="${id}"`)));
-const selectedEvidence=renderToStaticMarkup(React.createElement(Panel,{...props,scenarios:undefined}));
-check('Source location preserved for selected guidance and absent before group selection',!html.includes('PDF trang 15; bảng 2')&&/<details class="tp-box tp-sources"><summary>Nguồn tham khảo \(\d+\)<\/summary><table class="clinical-source-rows"[^>]*>[\s\S]*?<td>PDF trang 15; bảng 2<\/td>/.test(selectedEvidence));
+const selectedEvidence=renderToStaticMarkup(React.createElement(Panel,{...props,scenarios:undefined,afterTreatment:React.createElement('div',{'data-monitoring':''})}));
+check('Source location appears in the closed reference disclosure after monitoring and is absent before group selection',!html.includes('PDF trang 15; bảng 2')&&/<div data-monitoring=""><\/div><details class="clinical-references"><summary>Tài liệu tham khảo<\/summary>[\s\S]*?<td>PDF trang 15; bảng 2<\/td>/.test(selectedEvidence));
+const initialSources=renderToStaticMarkup(React.createElement(Panel,{...props,sourceTag:'QĐ 708/QĐ-BYT; QĐ 3429/QĐ-BYT'}));
+check('References for the disease are available in a single closed disclosure before choosing a group',initialSources.includes('Quyết định 708/QĐ-BYT')&&initialSources.includes('Quyết định 3429/QĐ-BYT')&&initialSources.split('<details class="clinical-references"><summary>Tài liệu tham khảo</summary>').length===2&&!initialSources.includes('PDF trang 15; bảng 2'));
 const orderedSources=renderToStaticMarkup(React.createElement(SourceRows,{sources:[{key:'u',label:'Nguồn chưa rõ năm'},{key:'b',label:'Nguồn mới',year:2027},{key:'a',label:'Nguồn cũ',year:2019}]}));
 check('Sources are numbered after chronological sorting with undated sources last',orderedSources.includes('<tr><td>1.</td><td>Nguồn cũ</td><td>2019</td></tr><tr><td>2.</td><td>Nguồn mới</td><td>2027</td></tr><tr><td>3.</td><td>Nguồn chưa rõ năm</td><td>'));
 const links=renderToStaticMarkup(React.createElement(Links,{texts:['vancomycin 1 g mỗi 12 giờ'],compact:true}));

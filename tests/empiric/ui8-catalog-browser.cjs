@@ -43,7 +43,7 @@ async function selectFirst(page) {
       }
       const first=settingButtons.first();if(await first.getAttribute('aria-expanded')==='false')await first.click();await selectFirst(page);
     }
-    assert('source disclosure accessible',await page.locator('#bv199-tabpanel summary').filter({hasText:'Nguồn và đối chiếu'}).count()>0);
+    assert('source disclosure accessible',await page.locator('#bv199-tabpanel summary').filter({hasText:'Tài liệu tham khảo'}).count()>0);
     const tools=page.locator('#bv199-tabpanel .regimen-drug-tools > details,#bv199-tabpanel .c26-tools > details');
     assert('dose and interaction tools available or explicitly no dosing data',await tools.count()>0 || (await page.locator('#bv199-tabpanel').innerText()).includes('không nêu liều'));
     if(await tools.count()) {

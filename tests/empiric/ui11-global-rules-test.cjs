@@ -76,11 +76,12 @@ check('Tiêu chí đã soạn (QĐ 708 và văn bản khác): mọi khóa nhánh
 
 /* Tab Quoc te va tab So sanh dung chung quy tac: khong so trang/chuong inline, khong tong lieu/ngay tinh toan, nguon trong khoi dong */
 const GT=load('components/antibiotics/empiric/GuidelineTabs.tsx');const tabBad=[],cmpSrc=[];
+const referenceSummary='<details class="clinical-references"><summary>Tài liệu tham khảo</summary>';
 for(const d of C.DISEASES){for(const [k,El] of [['Quốc tế',GT.IntlTab],['So sánh',GT.CompareTab]]){const html=render(React.createElement(El,{diseaseId:d.id}));const t=mainLayer(html);
   if(PAGE.test(t))tabBad.push(`${d.id} ${k}: ${t.match(new RegExp(`.{0,40}${PAGE.source}.{0,20}`))?.[0]}`);if(/class="tx-sub">= /.test(html))tabBad.push(`${d.id} ${k}: tổng liều/ngày`);
-  if(k==='So sánh'&&/Điểm giống/.test(html)&&!/<details class="gt199-cite"><summary>Nguồn và căn cứ<\/summary><table class="clinical-source-rows"/.test(html))cmpSrc.push(d.id);}}
+  if(k==='So sánh'&&/Điểm giống/.test(html)&&!html.includes(referenceSummary+'<div class="clinical-references-content"><table class="clinical-source-rows"'))cmpSrc.push(d.id);}}
 check('Tab Quốc tế và So sánh: không số trang/chương inline, không tổng liều/ngày tính toán',tabBad.length===0,tabBad.slice(0,5));
-check('Tab So sánh: nguồn đối chiếu nằm trong "Nguồn và căn cứ" (mặc định đóng)',cmpSrc.length===0,cmpSrc);
+check('Tab So sánh: nguồn đối chiếu nằm trong "Tài liệu tham khảo" (mặc định đóng)',cmpSrc.length===0,cmpSrc);
 const capIntl=render(React.createElement(GT.IntlTab,{diseaseId:'v8-1'}));
 const capSources=capIntl.match(/<table class="clinical-source-rows"[^>]*>[\s\S]*?<\/table>/)?.[0]??'';
 const capSourceRows=Array.from(capSources.matchAll(/<tr><td>[\s\S]*?<\/tr>/g),([row])=>row);
@@ -96,6 +97,7 @@ check('CAP: ghi chú ATS/IDSA nêu phạm vi đồng thuận, hai nhóm bất đ
   'ngoại trú có bệnh đồng mắc',
   'nhập viện vì viêm phổi cộng đồng không nặng',
 ].every(text=>capSourceRows[2]?.includes(text))&&capIntl.includes('Áp dụng tại BV199')&&capIntl.includes('kháng sinh đồ của bệnh viện'));
+check('CAP Quốc tế: lưu ý áp dụng hiện trước mục tài liệu tham khảo mặc định đóng',capIntl.includes(referenceSummary)&&capIntl.indexOf('Áp dụng tại BV199')<capIntl.indexOf(referenceSummary));
 const {COMPARISONS}=load('data/antibiotics/empiric/comparison.ts');
 const {INTL_GUIDELINES}=load('data/antibiotics/empiric/international.ts');
 check('Mọi nguồn quốc tế ở tab Đối chiếu có bản ghi tên tài liệu và năm',COMPARISONS.every(c=>c.intl.every(id=>INTL_GUIDELINES[id]?.title&&/\b(?:19|20)\d{2}\b/.test(INTL_GUIDELINES[id].published))));
@@ -123,9 +125,9 @@ const raHidden=render(React.createElement(Panel,{sections:V.sectionsFor(R.getReg
 check('"Vì sao chọn phác đồ này?" chỉ giữ tiêu chí dẫn tới lựa chọn thuốc; không hiện ghi chú thẩm định',!raHidden.includes('Mô tả không dẫn tới lựa chọn')&&raHidden.includes('Có lựa chọn')&&!/CẦN THẨM ĐỊNH|Cần thẩm định/.test(raHidden));
 const authoredText=JSON.stringify([load('data/antibiotics/empiric/rationale-708.ts').RATIONALE_708,load('data/antibiotics/empiric/rationale-other.ts').RATIONALE_OTHER,load('data/antibiotics/empiric/overviews.ts').DISEASE_OVERVIEWS]);
 check('Nội dung soạn mới không dùng cách nói "Không dùng cho…" (thay bằng "Chống chỉ định"/"Không chỉ định")',!/Không dùng cho|không dùng cho trẻ/.test(authoredText));
-/* Gop nguon: moi khung toi da mot "Nguồn và đối chiếu"; khong hien "Phụ lục" (ke ca khoi dong) – moi mat benh, tab Quoc te, module */
+/* Mỗi khung tối đa một mục tài liệu tham khảo. */
 const appendixHits=[],multiSrc=[],reviewHits=[];
-const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);{const REVIEW=/.{0,160}(chưa xác minh|cần thẩm định|nguồn chưa nêu|văn bản không nêu|theo nguồn\b|chưa trích|theo văn bản|nguyên văn|nghi lỗi in|văn bản liệt kê|văn bản còn nêu|văn bản ghi|đối chiếu bản gốc|cần đối chiếu toàn văn).{0,60}/i;const m=h.replace(/<[^>]+>/g,' ').match(REVIEW);if(m)reviewHits.push(name+' :: '+m[0]);}if(h.split('<summary>Nguồn và đối chiếu</summary>').length>2)multiSrc.push(name);};
+const scanAll=(name,html)=>{const h=html.replace(/<style[\s\S]*?<\/style>/g,'');if(/Phụ lục\s*\d/.test(h))appendixHits.push(name);{const REVIEW=/.{0,160}(chưa xác minh|cần thẩm định|nguồn chưa nêu|văn bản không nêu|theo nguồn\b|chưa trích|theo văn bản|nguyên văn|nghi lỗi in|văn bản liệt kê|văn bản còn nêu|văn bản ghi|đối chiếu bản gốc|cần đối chiếu toàn văn).{0,60}/i;const m=h.replace(/<[^>]+>/g,' ').match(REVIEW);if(m)reviewHits.push(name+' :: '+m[0]);}if(h.split('<summary>Tài liệu tham khảo</summary>').length>2)multiSrc.push(name);};
 for(const d of C.DISEASES){const sc=new Map();for(const r of R.getRegimensForDisease(d.id)){if(!sc.has(r.scenario))sc.set(r.scenario,[]);sc.get(r.scenario).push(r);}
   for(const [nm,l] of sc)scanAll(`${d.id} ${nm.slice(0,30)}`,render(React.createElement(Panel,{sections:V.sectionsFor(l).sections,sources:l.map(r=>`QĐ x — ${r.source.section}`),rationale:getRationale(d.id,nm,l),scenarios:[{value:nm,label:nm,criteria:[nm]}],scenario:nm})));
   scanAll(`${d.id} Quốc tế`,render(React.createElement(GT.IntlTab,{diseaseId:d.id})));scanAll(`${d.id} So sánh`,render(React.createElement(GT.CompareTab,{diseaseId:d.id})));}
@@ -133,7 +135,7 @@ for(const s of CAPM.CAP_SCENARIOS)scanAll(`CAP ${s.id}`,render(React.createEleme
 for(const k of ['hap','vap'])for(const s of HVM.HAPVAP_SCENARIOS[k])scanAll(`${k} ${s.id}`,render(React.createElement(HVM.default,{kind:k,initialScenarioId:s.id})));
 check('Không hiển thị "Phụ lục" ở bất kỳ mặt bệnh, tab hay module nào (kể cả khối đóng)',appendixHits.length===0,appendixHits.slice(0,5));
 check('Không còn câu ghi chú quy trình ("chưa xác minh", "cần thẩm định", "nguồn chưa nêu", "văn bản không nêu") ở mọi mặt bệnh, tab Quốc tế, So sánh',reviewHits.length===0,reviewHits);
-check('Mỗi khung phác đồ chỉ có tối đa một khối "Nguồn và đối chiếu" (đã gộp)',multiSrc.length===0,multiSrc.slice(0,5));
+check('Mỗi khung phác đồ chỉ có tối đa một mục "Tài liệu tham khảo"',multiSrc.length===0,multiSrc.slice(0,5));
 /* Trinh bay: khong lap duong dung/cach chia da co trong cau lieu goc; khong cat chu giua tu */
 const clinda=render(React.createElement(Panel,{sections:V.sectionsFor([R.ALL_REGIMENS.find(r=>r.id==='r-sa-empiric-2')]).sections,sources:[]}));
 check('Câu liều đã ghi đường dùng và cách chia thì không gắn lặp lại (clindamycin 2,4 g TM/ngày chia 4 lần)',clinda.includes('2,4 g TM/ngày chia 4 lần')&&!clinda.includes('data-route="">Tĩnh mạch'));
@@ -147,7 +149,7 @@ for(const d of C.DISEASES){const h=render(React.createElement(DOV.DiseaseOvervie
   if(!h.includes('class="do-cards"')||!h.includes('<summary>Cảnh báo an toàn trong điều trị</summary>')||/Văn bản không nêu|Cần thẩm định|Chưa xác minh/.test(h))uniformBad.push(d.id);}
 check('Mọi mặt bệnh có khung tổng quan/theo dõi; mục trống được ẩn, không hiện câu "Văn bản không nêu"',uniformBad.length===0,uniformBad);
 const pageSrc=require('fs').readFileSync(require('path').resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
-check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan + theo dõi như khung chung',/selected\.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" \/><CopdByt2026 \/><DiseaseMonitoring diseaseId="v8-6" \/><\/>/.test(pageSrc)&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.includes('<DiseaseMonitoring diseaseId={selected.id} />'));
+check('Trang hướng dẫn bọc module COPD/CAP/HAP/VAP bằng tổng quan và đặt theo dõi trước tài liệu',pageSrc.includes('<DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} />')&&pageSrc.includes('<DiseaseOverviewSummary diseaseId={selected.id} />')&&pageSrc.split('afterTreatment={<DiseaseMonitoring diseaseId={selected.id} />}').length===3);
 const COPDD=load('data/antibiotics/copd-2131.ts');
 check('COPD: mọi nhóm có "Vì sao chọn phác đồ này?" với lựa chọn lấy từ chính danh sách phác đồ',COPDD.COPD_GROUPS.every(g=>{const r=MR.getModuleRationale('copd',g.id);return r&&r.items[0].treatmentImplication&&r.items.every(c=>c.sources?.length);}));
 /* Khong lap "Chi tiết cách dùng theo văn bản"; phoi hop trong mot lua chon khong bi tach thanh lua chon don le */

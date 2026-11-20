@@ -1015,7 +1015,7 @@ function GuidelineContent() {
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
-              {selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 /><DiseaseMonitoring diseaseId="v8-6" /></>}
+              {selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} /></>}
               {selected.id !== "v8-6" && moduleKey !== "cap" && moduleKey !== "hap" && moduleKey !== "vap" && (
                 <BytRegimenView
                   key={selected.id}
@@ -1032,15 +1032,16 @@ function GuidelineContent() {
                     <CapByt2026
                       key={`${selected.id}-${pickedScenario ?? "none"}`}
                       initialScenarioId={pickedScenario ?? undefined}
+                      afterTreatment={<DiseaseMonitoring diseaseId={selected.id} />}
                     />
                   ) : (
                     <HapVap2023
                       key={`${selected.id}-${pickedScenario ?? "none"}`}
                       kind={moduleKey}
                       initialScenarioId={pickedScenario ?? undefined}
+                      afterTreatment={<DiseaseMonitoring diseaseId={selected.id} />}
                     />
                   )}
-                  <DiseaseMonitoring diseaseId={selected.id} />
                 </>
               )}
             </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import DrugActionLinks from "./links/DrugActionLinks";
 import { getModuleRationale } from "../../data/antibiotics/empiric/rationale-modules";
@@ -608,9 +608,11 @@ function hvCard(r: Regimen): TxCard {
 export default function HapVap2023({
   kind,
   initialScenarioId,
+  afterTreatment,
 }: {
   kind: Kind;
   initialScenarioId?: string;
+  afterTreatment?: ReactNode;
 }) {
   const scenarios = kind === "hap" ? HAP : VAP;
   const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "");
@@ -690,6 +692,7 @@ export default function HapVap2023({
           : "Khuyến cáo VPBV/VPLQTM 2023 (Hội Hô hấp VN, Hội HSCC-CĐ VN) – Bảng 3.2, tr. 60–63; Mục 4, tr. 78",
       ]}
       footer={footer}
+      afterTreatment={afterTreatment}
     />
   );
 }

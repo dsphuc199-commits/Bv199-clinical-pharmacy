@@ -8,7 +8,8 @@
 import ClinicalReferenceDose from "../treatment/ClinicalReferenceDose";
 import RegimenDrugTools from "../treatment/RegimenDrugTools";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
-import ClinicalSourceRows, { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
+import { InternationalSourceUse } from "../treatment/ClinicalSourceRows";
+import ClinicalSources from "../treatment/ClinicalSources";
 
 export default function LungAbscessInternational() {
   return <section className="bv199-panel la-intl" aria-label="Khuyến cáo quốc tế về áp xe phổi người lớn">
@@ -101,17 +102,14 @@ export default function LungAbscessInternational() {
         </ul>
       </li>
     </ul>
-    <details>
-      <summary>Nguồn và đối chiếu</summary>
-      <ClinicalSourceRows sources={[{
+    <InternationalSourceUse />
+    <ClinicalSources sources={[{
         key: "uptodate-lung-abscess",
         label: "Lung abscess in adults",
         detail: "UpToDate · Mục cập nhật 11/09/2023 · Rà soát y văn đến 06/2026",
         year: 2023,
         url: "https://www.uptodate.com/contents/lung-abscess-in-adults",
-      }]} />
-      <InternationalSourceUse />
-    </details>
+    }]} />
     <style>{`
       .la-intl { color: #17364b; font-size: 13px; line-height: 1.75; min-width: 0; }
       .la-intl h3 { font-size: 17px; margin: 10px 0; }

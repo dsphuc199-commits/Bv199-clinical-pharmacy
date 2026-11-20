@@ -12,7 +12,7 @@ function check(name, ok) { if (ok) pass++; else fail++; console.log((ok ? 'PASS'
 const h = render(React.createElement(Copd));
 check('Common BYT entry point renders the current COPD decision interface inside the shared overview/monitoring layout', (()=>{const e=render(React.createElement(Byt, { diseaseId: 'v8-6' }));return e.includes('aria-label="Kháng sinh điều trị đợt cấp COPD"')&&h.includes('aria-label="Kháng sinh điều trị đợt cấp COPD"')&&e.includes('class="do-cards"')&&e.includes('Theo dõi, đánh giá lại và an toàn');})());
 const page = fs.readFileSync(path.resolve(__dirname, '../../app/antibiotics/empiric/guideline-v9/page.tsx'), 'utf8');
-check('Main page retains the existing COPD deep link and module mount', page.includes('selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 />') && page.includes('searchParams.get("disease")'));
+check('Main page retains the existing COPD deep link and module mount', page.includes('selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment=') && page.includes('searchParams.get("disease")'));
 const result = evaluate('v8-6', { population: 'adult', renal: 'normal', penicillinAllergy: 'no', pregnant: 'no', micro: 'none' });
 check('Selection engine does not recommend legacy COPD regimens', result.status === 'no-match' && result.message.includes('2131/'));
 check('Legacy scenario questions remain disabled', questionsFor('v8-6', {}).length === 0);
