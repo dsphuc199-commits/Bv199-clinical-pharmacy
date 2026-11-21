@@ -262,7 +262,7 @@ export default function ProphylaxisPage() {
           </button>
         </header>
 
-        <div className="ksdp-tabs">
+        <div className="ksdp-tabs" role="group" aria-label="Nội dung kháng sinh dự phòng">
           <button className={tab === "guide" ? "active" : ""} onClick={() => setTab("guide")}>
             <Search size={16}/> Lựa chọn KSDP
           </button>
@@ -287,10 +287,10 @@ export default function ProphylaxisPage() {
 
         {tab === "guide" && (
           <>
-            <section className="ksdp-panel">
+            <section className="ksdp-panel ksdp-selector">
               <div className="ksdp-section-title">
-                <span>01</span>
-                <h2>Chọn nhóm và loại phẫu thuật</h2>
+                <span aria-hidden="true"><Search size={16} /></span>
+                <h2>Tra cứu phẫu thuật</h2>
               </div>
 
               <div className="ksdp-grid two">
@@ -316,16 +316,23 @@ export default function ProphylaxisPage() {
 
               <label className="ksdp-select-op">
                 <span>Loại phẫu thuật / thủ thuật</span>
-                <select value={chosenId} onChange={e => setChosenId(e.target.value)}>
+                <select value={chosenId} onChange={e => setChosenId(e.target.value)}
+                  aria-describedby={chosen ? undefined : "ksdp-select-hint"}>
                   <option value="">-- Chọn loại phẫu thuật ({filtered.length} mục) --</option>
                   {filtered.map(x =>
                     <option key={x.id} value={x.id}>{x.group} – {x.name}</option>
                   )}
                 </select>
               </label>
+              {!chosen && (
+                <p id="ksdp-select-hint" className="ksdp-select-hint">
+                  <Pill size={17} aria-hidden="true" />
+                  <span>Chọn một phẫu thuật để xem kháng sinh đầu tay, phương án khi dị ứng penicillin, liều, thời điểm dùng và nhắc liều.</span>
+                </p>
+              )}
             </section>
 
-            {chosen ? (
+            {chosen && (
               <section className="ksdp-panel ksdp-plan">
                 <div className="ksdp-surgery">
                   <b>{chosen.name}</b>
@@ -450,12 +457,6 @@ export default function ProphylaxisPage() {
                 )}
 
               </section>
-            ) : (
-              <div className="ksdp-empty">
-                <Pill size={44}/>
-                <h3>Chọn phẫu thuật để xem phác đồ</h3>
-                <p>Lựa chọn đầu tay, thay thế khi dị ứng penicillin, liều, thời điểm dùng và nhắc liều.</p>
-              </div>
             )}
           </>
         )}
@@ -717,12 +718,20 @@ export default function ProphylaxisPage() {
       </div>
 
       <style>{`
+        /* The shared shell otherwise stretches short pages down to the bottom of the viewport. */
+        .bv199-page-content:has(> .ksdp-page) {flex-grow:0!important}
+        .bv199-page-content:has(> .ksdp-page) + .bv199-footer-region footer {
+          border-bottom:1px solid var(--border);
+        }
+        .bv199-page-content:has(> .ksdp-page) + .bv199-footer-region footer > div {
+          max-width:1180px;margin-inline:auto;
+        }
         .ksdp-page {
           background:var(--background);
           color:var(--text);
-          padding:20px 24px 14px;
+          padding:20px 24px 12px;
         }
-        .ksdp-inner {max-width:1320px;margin:auto}
+        .ksdp-inner {max-width:1132px;margin:auto}
         .ksdp-breadcrumb {
           display:flex;align-items:center;flex-wrap:wrap;
           gap:9px;font-size:12px;color:var(--text-muted);
@@ -733,22 +742,26 @@ export default function ProphylaxisPage() {
         }
         .ksdp-breadcrumb b {color:var(--text)}
         .ksdp-heading {
-          display:flex;gap:12px;align-items:center;
-          margin-bottom:16px;
+          display:flex;gap:14px;align-items:center;
+          margin-bottom:12px;padding:16px 18px;
+          border:1px solid var(--border);border-radius:var(--radius-lg);
+          background:linear-gradient(105deg,var(--primary-soft),var(--surface) 78%);
         }
         .ksdp-symbol {
           display:grid;place-items:center;
           width:44px;height:44px;flex:none;
-          background:var(--primary-soft);color:var(--primary-dark);
+          background:var(--surface);color:var(--primary-dark);
           border-radius:12px;
         }
         .ksdp-heading h1 {
-          flex:1;min-width:0;font-size:27px;line-height:1.25;
+          flex:1;min-width:0;font-size:clamp(20px,2.3vw,28px);line-height:1.2;
           margin:0;font-weight:800;
         }
         .ksdp-tabs {
-          display:flex;gap:8px;flex-wrap:wrap;
-          margin-bottom:16px;
+          display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;
+          margin-bottom:14px;padding:4px;
+          border:1px solid var(--border);border-radius:var(--radius-md);
+          background:var(--surface);
         }
         .ksdp-tabs button,.ksdp-secondary {
           border:1px solid var(--border);background:white;
@@ -757,6 +770,9 @@ export default function ProphylaxisPage() {
           font-size:13px;cursor:pointer;
           display:inline-flex;align-items:center;gap:8px;
         }
+        .ksdp-tabs button {justify-content:center;min-width:0;min-height:40px;padding-inline:8px;border-color:transparent;text-align:left;line-height:1.35}
+        .ksdp-tabs button svg {flex:none}
+        .ksdp-tabs button:not(.active):hover {background:var(--primary-soft);color:var(--primary-dark)}
         .ksdp-tabs .active {
           background:var(--primary-dark);color:white;
           border-color:var(--primary-dark);
@@ -788,6 +804,17 @@ export default function ProphylaxisPage() {
         .ksdp-grid.three {
           grid-template-columns:repeat(3,minmax(0,1fr));
         }
+        .ksdp-selector {padding:18px;margin-bottom:0}
+        .ksdp-selector .ksdp-section-title {margin-bottom:12px}
+        .ksdp-selector .ksdp-section-title h2 {font-weight:750}
+        .ksdp-select-hint {
+          display:flex;align-items:flex-start;gap:8px;
+          margin:12px 0 0;padding:9px 11px;border-radius:var(--radius-sm);
+          background:var(--primary-soft-2);color:var(--text-secondary);
+          font-size:12px;line-height:1.5;
+        }
+        .ksdp-select-hint svg {flex:none;color:var(--primary-dark)}
+        .ksdp-selector + .ksdp-plan {margin-top:14px}
         .ksdp-page label>span:first-child {
           display:block;font-weight:700;
           font-size:12px;margin-bottom:8px;
@@ -998,6 +1025,9 @@ export default function ProphylaxisPage() {
         .ksdp-inline-check {display:flex;align-items:center;gap:8px;margin:12px 0;font-size:13.5px;font-weight:600}
         .ksdp-notes {margin:0;padding-left:18px;line-height:1.6;font-size:13.5px}
         .ksdp-notes a {color:var(--primary-dark);font-size:11.5px}
+        @media(max-width:1120px) {
+          .ksdp-tabs {grid-template-columns:repeat(3,minmax(0,1fr))}
+        }
         @media(max-width:850px) {
           .ksdp-grid.two,.ksdp-grid.three {
             grid-template-columns:1fr;
@@ -1011,11 +1041,14 @@ export default function ProphylaxisPage() {
           .ksdp-rx-table td {display:grid;grid-template-columns:104px minmax(0,1fr);gap:8px;padding:3px 0;border:0}
           .ksdp-rx-table td::before {content:attr(data-label);font-size:12px;font-weight:700;color:var(--text-secondary)}
           .ksdp-page {padding:12px}
-          .ksdp-heading {gap:8px}
-          .ksdp-heading h1 {font-size:20px}
+          .ksdp-heading {gap:8px;padding:11px}
+          .ksdp-heading h1 {font-size:19px}
           .ksdp-symbol {width:36px;height:36px}
           .ksdp-symbol svg {width:22px;height:22px}
           .ksdp-reset {padding:8px}
+          .ksdp-reset svg {display:none}
+          .ksdp-tabs {grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:12px}
+          .ksdp-tabs button {justify-content:flex-start;padding:7px 8px;font-size:12px;line-height:1.35;min-height:38px;text-align:left}
           .ksdp-panel {padding:14px}
         }
         @media print {
@@ -1024,6 +1057,7 @@ export default function ProphylaxisPage() {
             display:none!important;
           }
           .ksdp-page {background:white;padding:0}
+          .ksdp-heading {background:white}
           .ksdp-panel {box-shadow:none}
         }
       `}</style>
