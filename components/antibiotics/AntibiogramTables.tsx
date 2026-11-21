@@ -7,7 +7,7 @@
   scripts/import-antibiogram-normalized.mjs va da doi chieu tung o voi workbook.
 */
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import tablesData from "@/data/antibiotics/antibiogram-bv199-tables.json";
 
 type Cell = { t: string; s?: number; n?: number; g?: number };
@@ -17,10 +17,8 @@ type Table = {
   id: string;
   kind: "scope" | "ward";
   label: string;
-  heading: string;
   group?: string;
   n: number;
-  title: string;
   gramNegative: Panel;
   gramPositive: Panel;
 };
@@ -33,60 +31,58 @@ type TablesFile = {
 };
 
 const data = tablesData as TablesFile;
+const scopes = data.tables.filter((table) => table.kind === "scope");
+const wards = data.tables.filter((table) => table.kind === "ward");
 
-export default function AntibiogramTables() {
-  const scopes = data.tables.filter((t) => t.kind === "scope");
-  const wards = data.tables.filter((t) => t.kind === "ward");
+export default function AntibiogramTables({ status }: { status: string }) {
   const [tableId, setTableId] = useState(scopes[0].id);
-  const table = useMemo(() => data.tables.find((t) => t.id === tableId) ?? scopes[0], [tableId, scopes]);
+  const table = data.tables.find((item) => item.id === tableId) ?? scopes[0];
   const isWard = table.kind === "ward";
 
   return (
-    <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-      <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-700">Kháng sinh đồ tích lũy</p>
-      <h2 className="mt-1 text-lg font-bold text-slate-900">Bảng tỷ lệ nhạy cảm theo phạm vi</h2>
+    <section aria-labelledby="antibiogram-scope" className="min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-5">
+      <h2 id="antibiogram-scope" className="text-lg font-bold text-slate-900">
+        {table.label} · {table.n} phân lập
+      </h2>
+      <p className="text-sm text-slate-600">{data.period} · Tỷ lệ nhạy cảm (%S)</p>
+      <p className="mt-1 text-xs font-semibold text-amber-900">{status}</p>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-1.5">
         {scopes.map((t) => (
           <button
             key={t.id}
             type="button"
             onClick={() => setTableId(t.id)}
-            className={`rounded-xl px-4 py-2 text-sm font-semibold ${
+            aria-pressed={t.id === table.id}
+            className={`min-h-9 rounded-lg px-2.5 py-1.5 text-xs font-semibold sm:px-3 sm:text-sm ${
               t.id === table.id ? "bg-teal-700 text-white" : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
             }`}
           >
-            {t.label} (n={t.n})
+            {t.label}
           </button>
         ))}
-        <label className="flex items-center gap-2 text-sm text-slate-700">
-          <span className="font-semibold">Theo khoa</span>
-          <select
-            value={isWard ? table.id : ""}
-            onChange={(e) => e.target.value && setTableId(e.target.value)}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm"
-          >
-            <option value="">Chọn khoa</option>
-            {wards.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.label} – {t.group} (n={t.n})
-              </option>
-            ))}
-          </select>
-        </label>
+        <select
+          aria-label="Theo khoa"
+          value={isWard ? table.id : ""}
+          onChange={(event) => setTableId(event.target.value || scopes[0].id)}
+          className="min-h-9 min-w-0 max-w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs font-semibold text-slate-700 sm:text-sm"
+        >
+          <option value="">Chọn khoa</option>
+          {wards.map((t) => (
+            <option key={t.id} value={t.id}>
+              {t.label} – {t.group} (n={t.n})
+            </option>
+          ))}
+        </select>
       </div>
 
-      <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
-        <p className="text-sm font-bold leading-6 text-slate-900">{table.title}</p>
-        <p className="mt-1 text-sm text-slate-600">Giai đoạn báo cáo: {data.period}</p>
-        <p className="text-sm text-slate-600">Tỷ lệ nhạy cảm với kháng sinh (%)^, ngưỡng phiên giải CLSI</p>
-        {isWard && table.n < data.minN && (
-          <p className="mt-2 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900">
-            Khoa có {table.n} phân lập, dưới {data.minN}: chỉ dùng để tham khảo, không dùng chọn kháng sinh kinh nghiệm.
-          </p>
-        )}
-      </div>
+      {isWard && table.n < data.minN && (
+        <p className="mt-2 rounded-lg bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900">
+          Khoa có dưới {data.minN} phân lập. Chỉ dùng để tham khảo, không dùng chọn kháng sinh kinh nghiệm.
+        </p>
+      )}
 
+      <p className="mt-3 text-xs text-slate-500 sm:hidden">Vuốt ngang bảng để xem thêm kháng sinh.</p>
       <MatrixPanel title="Vi khuẩn Gram âm" panel={table.gramNegative} minN={data.minN} />
       <MatrixPanel title="Vi khuẩn Gram dương" panel={table.gramPositive} minN={data.minN} />
 
@@ -110,19 +106,19 @@ export default function AntibiogramTables() {
 function MatrixPanel({ title, panel, minN }: { title: string; panel: Panel; minN: number }) {
   if (!panel.rows.length) return null;
   return (
-    <div className="mt-5">
-      <p className="mb-2 text-sm font-bold text-slate-900">{title}</p>
-      <div className="max-w-full overflow-x-auto rounded-xl border border-slate-200">
-        <table className="border-collapse text-xs">
+    <div className="mt-3 sm:mt-5">
+      <h3 className="mb-2 text-sm font-bold text-slate-900">{title}</h3>
+      <div role="region" aria-label={title} tabIndex={0} className="max-w-full overflow-x-auto rounded-xl border border-slate-200">
+        <table aria-label={title} className="w-max border-collapse text-xs">
           <thead>
             <tr className="bg-slate-100 text-slate-700">
-              <th className="sticky left-0 z-10 min-w-[150px] border-b border-r border-slate-200 bg-slate-100 px-2 py-2 text-left font-bold">
+              <th scope="col" className="sticky left-0 z-10 w-32 border-b border-r border-slate-200 bg-slate-100 px-2 py-2 text-left font-bold sm:w-44">
                 Vi khuẩn
               </th>
-              <th className="border-b border-r border-slate-200 px-2 py-2 font-bold">Số chủng phân lập</th>
-              <th className="border-b border-r border-slate-200 px-2 py-2 font-bold">Tỷ lệ (%)</th>
+              <th scope="col" className="w-14 border-b border-r border-slate-200 px-2 py-2 font-bold">Số phân lập</th>
+              <th scope="col" className="w-12 border-b border-r border-slate-200 px-2 py-2 font-bold">Tỷ lệ (%)</th>
               {panel.columns.map((c) => (
-                <th key={c.code} className="h-36 border-b border-r border-slate-200 px-1 py-2 align-bottom font-semibold">
+                <th key={c.code} scope="col" className="border-b border-r border-slate-200 px-1 py-2 align-bottom font-semibold">
                   <span className="inline-block whitespace-nowrap [writing-mode:vertical-rl] rotate-180" title={c.name}>
                     {c.name}
                   </span>
@@ -135,7 +131,7 @@ function MatrixPanel({ title, panel, minN }: { title: string; panel: Panel; minN
               const low = r.n < minN;
               return (
                 <tr key={r.group} className={low ? "italic text-slate-500" : "text-slate-900"}>
-                  <th className={`sticky left-0 z-10 border-b border-r border-slate-200 px-2 py-1.5 text-left font-semibold ${low ? "bg-slate-50" : "bg-white"}`}>
+                  <th scope="row" className={`sticky left-0 z-10 w-32 border-b border-r border-slate-200 px-2 py-1.5 text-left font-semibold sm:w-44 ${low ? "bg-slate-50" : "bg-white"}`}>
                     {r.group}
                   </th>
                   <td className="border-b border-r border-slate-200 px-2 py-1.5 text-center">{r.nText}</td>

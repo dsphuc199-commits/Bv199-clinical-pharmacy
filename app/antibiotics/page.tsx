@@ -23,7 +23,7 @@ const modules = [
   { id: "deescalation", title: "Xuống thang", description: "Thu hẹp phổ, ngừng kháng sinh.", href: "/antibiotics/deescalation", icon: TrendingDown, group: REVIEW },
   { id: "iv-to-po", title: "Chuyển đường uống", description: "Tiêu chí chuyển tĩnh mạch sang uống.", href: "/antibiotics/iv-to-po", icon: ArrowLeftRight, group: REVIEW },
   { id: "prophylaxis", title: "Kháng sinh dự phòng", description: "Lựa chọn, thời điểm, thời gian dùng.", href: "/antibiotics/prophylaxis", icon: ShieldCheck, group: PREVENT },
-  { id: "antibiogram", title: "Antibiogram BV199", description: "Dữ liệu kháng thuốc tại bệnh viện.", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: PREVENT },
+  { id: "antibiogram", title: "Kháng sinh đồ BV199", description: "Bảng tỷ lệ nhạy cảm theo viện, khối và khoa.", href: "/antibiotics/antibiogram", icon: ChartNoAxesColumn, group: PREVENT },
   { id: "pkpd", title: "PK/PD kháng sinh", description: "Phiên giải MIC, chỉ số PK/PD, cách dùng.", href: PKPD_HREF, icon: Gauge, group: PREVENT },
 ] as const;
 const groups = [START, REVIEW, PREVENT] as const;

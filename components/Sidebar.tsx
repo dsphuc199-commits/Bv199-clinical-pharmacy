@@ -68,7 +68,7 @@ const GROUPS: Group[] = [
       { label: "Xuống thang", href: "/antibiotics/deescalation", code: "XT" },
       { label: "Chuyển đường uống", href: "/antibiotics/iv-to-po", code: "IV" },
       { section: "Dự phòng & dữ liệu", label: "Kháng sinh dự phòng", href: "/antibiotics/prophylaxis", code: "DP" },
-      { label: "Antibiogram BV199", href: "/antibiotics/antibiogram", code: "AB" },
+      { label: "Kháng sinh đồ BV199", href: "/antibiotics/antibiogram", code: "AB" },
       ...(SHOW_PKPD ? [{ label: "PK/PD kháng sinh", href: PKPD_HREF, code: "PK" }] : []),
     ],
   },
