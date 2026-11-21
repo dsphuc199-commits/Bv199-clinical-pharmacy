@@ -41,8 +41,9 @@ type RawRecord = {
   susceptiblePercent: number;
   increasedExposurePercent: number;
   resistantPercent: number;
-  susceptibleTotalPercent: number;
   lowN: boolean;
+  organismGroup: string;
+  intrinsicResistance?: boolean;
 };
 
 type RawDatabase = {
@@ -54,6 +55,11 @@ type RawDatabase = {
       label: string;
     };
     isolateCount: number;
+    rawIsolateCount: number;
+    method: string;
+    status: string;
+    departmentNote: string;
+    intrinsicNote: string;
     departments: string[];
     specimens: string[];
     organisms: {
@@ -194,11 +200,9 @@ function AntibiogramContent({
               <p className="mt-3 max-w-4xl text-sm leading-6 text-amber-900">
                 Tỷ lệ nhạy được biểu thị bằng
                 {" "}
-                <strong>%S</strong>.
+                <strong>%S</strong>
                 {" "}
-                <strong>S + I</strong>
-                {" "}
-                chỉ là chỉ số thống kê bổ sung, không được xem là tỷ lệ nhạy.
+                = S/(S + I + R). Theo CLSI, I được tính là không nhạy.
               </p>
             </div>
 
@@ -470,7 +474,7 @@ function RawSource({
           <Badge>
             {metadata.isolateCount}
             {" "}
-            phân lập
+            phân lập đầu tiên
           </Badge>
 
           <Badge>
@@ -482,7 +486,7 @@ function RawSource({
           <Badge>
             {metadata.departments.length}
             {" "}
-            khoa
+            phạm vi
           </Badge>
 
           <Badge>
@@ -490,8 +494,19 @@ function RawSource({
           </Badge>
         </div>
 
-        <p className="mt-3 text-xs leading-5 text-emerald-800">
-          {metadata.privacy}
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-xs leading-5 text-emerald-900">
+          <li>
+            {metadata.method}
+            {" "}
+            Tổng {metadata.rawIsolateCount} phân lập, còn {metadata.isolateCount} phân lập đầu tiên.
+          </li>
+          <li>{metadata.departmentNote}</li>
+          <li>{metadata.intrinsicNote}</li>
+          <li>{metadata.privacy}</li>
+        </ul>
+
+        <p className="mt-3 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900">
+          {metadata.status}
         </p>
       </section>
 
@@ -540,7 +555,7 @@ function RawSource({
           />
 
           <SelectBox
-            label="Khoa"
+            label="Phạm vi"
             value={department}
             onChange={setDepartment}
             options={[
@@ -665,7 +680,7 @@ function RawSource({
         />
 
         <SummaryCard
-          label="Khoa"
+          label="Phạm vi"
           value={department}
         />
 
@@ -800,12 +815,6 @@ function RawSource({
                   </TH>
 
                   <TH>
-                    S + I
-                    <br />
-                    thống kê
-                  </TH>
-
-                  <TH>
                     Ghi chú
                   </TH>
 
@@ -869,15 +878,11 @@ function RawSource({
                       </TD>
 
                       <TD>
-                        <span className="inline-flex min-w-[60px] justify-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
-                          {
-                            item.susceptibleTotalPercent
-                          }
-                          %
-                        </span>
-                      </TD>
-
-                      <TD>
+                        {item.intrinsicResistance && (
+                          <span className="mb-1 inline-flex rounded-full bg-rose-100 px-2 py-1 text-xs font-bold text-rose-900">
+                            Kháng tự nhiên
+                          </span>
+                        )}
                         {item.lowN ? (
                           <div className="space-y-1">
 

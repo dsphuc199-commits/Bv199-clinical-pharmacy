@@ -1,3 +1,8 @@
+/*
+  DA THAY THE (21/11/2026) boi scripts/import-antibiogram-normalized.mjs.
+  Script nay khong loc phan lap dau tien va khong chuan hoa ten vi khuan;
+  chay lai se ghi de du lieu da chuan hoa trong antibiogram-bv199.json.
+*/
 import XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
