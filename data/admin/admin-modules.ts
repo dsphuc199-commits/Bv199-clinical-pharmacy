@@ -345,13 +345,13 @@ export const adminModules:
         "audit-log",
 
       title:
-        "Nhật ký thay đổi",
+        "Nhật ký đăng nhập & tài khoản",
 
       shortTitle:
-        "Audit log",
+        "Nhật ký",
 
       description:
-        "Theo dõi các thao tác tạo, sửa, khóa tài khoản và đặt lại mật khẩu.",
+        "Xem lượt đăng nhập thành công và các thay đổi về tài khoản.",
 
       icon:
         "NK",
@@ -363,6 +363,7 @@ export const adminModules:
         "ready",
 
       features: [
+        "Lượt đăng nhập",
         "Người thay đổi",
         "Thời gian",
         "Dữ liệu cũ",
