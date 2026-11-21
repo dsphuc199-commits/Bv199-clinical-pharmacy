@@ -691,7 +691,7 @@ export default function ProphylaxisPage() {
         )}
 
         <section className="ksdp-sources" aria-labelledby="ksdp-sources-title">
-          <h2 id="ksdp-sources-title"><BookOpen size={16} aria-hidden="true" /> Nguồn tham khảo</h2>
+          <h2 id="ksdp-sources-title"><BookOpen size={16} aria-hidden="true" /> Tài liệu tham khảo</h2>
           <ul className="ksdp-source-list">
             {sources.map(({ label, title, href }) => {
               const citation = (
