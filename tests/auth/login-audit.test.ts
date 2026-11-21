@@ -53,3 +53,17 @@ test("late writes retain the most recent events ordered by actual login time", a
     "newest", ...data.slice(0, -1).map(({ username }) => username),
   ]);
 });
+
+test("an unresponsive read cancels the audit attempt before writing", async (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const storage = {
+    read: (signal?: AbortSignal) => new Promise<Snapshot>((_, reject) => {
+      assert(signal);
+      signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+    }),
+    write: async () => assert.fail("Should only write after reading the existing audit data"),
+  };
+  const rejected = assert.rejects(recordSuccessfulLogin("viewer-fixture", "viewer", now, storage), { name: "AbortError" });
+  t.mock.timers.tick(3000);
+  await rejected;
+});

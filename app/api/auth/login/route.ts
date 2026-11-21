@@ -1,4 +1,4 @@
-import { after, NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { adminStorageConfigured } from "@/lib/admin/private-json-store";
 import { authenticateAccount } from "@/lib/auth/access";
 import { recordSuccessfulLogin } from "@/lib/auth/login-audit";
@@ -29,6 +29,11 @@ export async function POST(request: NextRequest) {
   }
 
   const now = Date.now();
+  if (adminStorageConfigured()) {
+    await recordSuccessfulLogin(account.user, account.admin ? "pharmacy-admin" : "viewer", now).catch(() => {
+      console.error("[auth] Could not record a successful login.");
+    });
+  }
   const res = NextResponse.redirect(new URL(next, request.url), 303);
   res.cookies.set(SESSION_COOKIE, createSession(account.user, config.secret, now, account), {
     httpOnly: true,
@@ -37,10 +42,5 @@ export async function POST(request: NextRequest) {
     path: "/",
     maxAge: account.admin ? ADMIN_SESSION_TTL_SECONDS : SESSION_TTL_SECONDS,
   });
-  if (adminStorageConfigured()) {
-    after(() => recordSuccessfulLogin(account.user, account.admin ? "pharmacy-admin" : "viewer", now).catch(() => {
-      console.error("[auth] Could not record a successful login.");
-    }));
-  }
   return res;
 }

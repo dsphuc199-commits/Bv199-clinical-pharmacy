@@ -12,21 +12,23 @@ export function adminStorageConfigured(): boolean {
 }
 
 export async function readPrivateJson<T>(
-  pathname: string, parse: (value: unknown) => T, empty: T
+  pathname: string, parse: (value: unknown) => T, empty: T, abortSignal?: AbortSignal,
 ): Promise<PrivateSnapshot<T>> {
   const token = storageToken();
   if (!token) throw new Error("Private admin storage is not configured");
-  const blob = await get(pathname, { access: "private", token, useCache: false });
+  const blob = await get(pathname, { access: "private", token, useCache: false, abortSignal });
   if (!blob) return { data: empty };
   if (blob.statusCode !== 200) throw new Error("Unexpected private storage response");
   return { data: parse(await new Response(blob.stream).json()), etag: blob.blob.etag };
 }
 
-export async function writePrivateJson<T>(pathname: string, snapshot: PrivateSnapshot<T>): Promise<void> {
+export async function writePrivateJson<T>(
+  pathname: string, snapshot: PrivateSnapshot<T>, abortSignal?: AbortSignal,
+): Promise<void> {
   const token = storageToken();
   if (!token) throw new Error("Private admin storage is not configured");
   await put(pathname, JSON.stringify(snapshot.data), {
     access: "private", token, contentType: "application/json", addRandomSuffix: false,
-    allowOverwrite: !!snapshot.etag, ifMatch: snapshot.etag,
+    allowOverwrite: !!snapshot.etag, ifMatch: snapshot.etag, abortSignal,
   });
 }

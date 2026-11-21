@@ -35,14 +35,21 @@ export default async function AdminAuditPage() {
       ) : (
         <>
           <section aria-labelledby="dang-nhap" className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
-            <h2 id="dang-nhap" className="text-lg font-bold text-slate-900">Nhật ký đăng nhập</h2>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 id="dang-nhap" className="text-lg font-bold text-slate-900">Nhật ký đăng nhập</h2>
+              <form action="/admin/audit-log" method="get">
+                <button type="submit" className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold text-teal-800 hover:bg-teal-50">
+                  Tải lại nhật ký
+                </button>
+              </form>
+            </div>
             <p className="text-sm text-slate-600">
-              Tối đa {LOGIN_AUDIT_LIMIT} lượt đăng nhập thành công gần nhất kể từ khi bật nhật ký. Thời gian theo giờ Việt Nam.
+              Bắt đầu ghi từ <time dateTime="2026-11-21">21/11/2026</time>. Hiển thị tối đa {LOGIN_AUDIT_LIMIT} lượt đăng nhập thành công gần nhất theo giờ Việt Nam.
             </p>
             {!logins ? (
               <p role="status" className="rounded-lg bg-amber-50 p-3 text-amber-900">Chưa kết nối được kho nhật ký đăng nhập.</p>
             ) : logins.length === 0 ? (
-              <p className="text-sm text-slate-700">Chưa ghi nhận lượt đăng nhập nào.</p>
+              <p className="text-sm text-slate-700">Chưa có lượt đăng nhập mới kể từ khi bật nhật ký. Mở trang bằng một phiên đang hoạt động sẽ không tạo bản ghi mới.</p>
             ) : (
               <ol className="divide-y divide-slate-200 rounded-xl border border-slate-200">
                 {logins.map(({ id, username, role, timestamp }) => (
