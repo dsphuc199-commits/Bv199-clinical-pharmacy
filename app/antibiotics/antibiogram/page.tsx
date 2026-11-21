@@ -6,6 +6,7 @@ import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import BackBar from "@/components/antibiotics/links/BackBar";
+import AntibiogramTables from "@/components/antibiotics/AntibiogramTables";
 
 import rawData from "@/data/antibiotics/antibiogram-bv199.json";
 
@@ -420,10 +421,11 @@ function RawSource({
             return organism;
           }
 
-          return (
-            b.susceptiblePercent -
-            a.susceptiblePercent
-          );
+          /* Khang tu nhien xep cuoi, khong de %S tu vai ket qua le day len dau. */
+          const rank = (x: RawRecord) =>
+            x.intrinsicResistance ? -1 : x.susceptiblePercent;
+
+          return rank(b) - rank(a);
         }
       ),
     [filtered]
@@ -510,6 +512,10 @@ function RawSource({
         </p>
       </section>
 
+      {/* BANG KHANG SINH DO TICH LUY (cung bo cuc Excel) */}
+
+      <AntibiogramTables />
+
       {/* FILTER */}
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -521,7 +527,7 @@ function RawSource({
             </p>
 
             <h2 className="mt-1 text-lg font-bold text-slate-900">
-              Phân tích dữ liệu gốc
+              Tra cứu chi tiết theo loài vi khuẩn và bệnh phẩm
             </h2>
           </div>
 
@@ -850,32 +856,51 @@ function RawSource({
                         }
                       </TD>
 
-                      <TD>
-                        <PercentBadge
-                          value={
-                            item.susceptiblePercent
-                          }
-                          type="S"
-                        />
-                      </TD>
+                      {item.intrinsicResistance ? (
+                        /* Khang tu nhien: hien R nhu bang Excel, khong hien %S tu vai ket qua le. */
+                        <>
+                          <TD>
+                            <span className="inline-flex min-w-[60px] justify-center rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-900">
+                              R
+                            </span>
+                          </TD>
+                          <TD>
+                            <span className="text-slate-400">—</span>
+                          </TD>
+                          <TD>
+                            <span className="text-slate-400">—</span>
+                          </TD>
+                        </>
+                      ) : (
+                        <>
+                          <TD>
+                            <PercentBadge
+                              value={
+                                item.susceptiblePercent
+                              }
+                              type="S"
+                            />
+                          </TD>
 
-                      <TD>
-                        <PercentBadge
-                          value={
-                            item.increasedExposurePercent
-                          }
-                          type="I"
-                        />
-                      </TD>
+                          <TD>
+                            <PercentBadge
+                              value={
+                                item.increasedExposurePercent
+                              }
+                              type="I"
+                            />
+                          </TD>
 
-                      <TD>
-                        <PercentBadge
-                          value={
-                            item.resistantPercent
-                          }
-                          type="R"
-                        />
-                      </TD>
+                          <TD>
+                            <PercentBadge
+                              value={
+                                item.resistantPercent
+                              }
+                              type="R"
+                            />
+                          </TD>
+                        </>
+                      )}
 
                       <TD>
                         {item.intrinsicResistance && (

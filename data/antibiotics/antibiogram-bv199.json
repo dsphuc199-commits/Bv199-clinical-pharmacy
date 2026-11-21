@@ -1562,7 +1562,7 @@
    "rCount": 9,
    "susceptiblePercent": 43.8,
    "increasedExposurePercent": 0,
-   "resistantPercent": 56.2,
+   "resistantPercent": 56.3,
    "lowN": true
   },
   {
@@ -1596,7 +1596,7 @@
    "sCount": 9,
    "iCount": 0,
    "rCount": 7,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 43.8,
    "lowN": true
@@ -1669,8 +1669,8 @@
    "iCount": 1,
    "rCount": 9,
    "susceptiblePercent": 37.5,
-   "increasedExposurePercent": 6.2,
-   "resistantPercent": 56.2,
+   "increasedExposurePercent": 6.3,
+   "resistantPercent": 56.3,
    "lowN": true
   },
   {
@@ -6449,7 +6449,7 @@
    "rCount": 9,
    "susceptiblePercent": 43.8,
    "increasedExposurePercent": 0,
-   "resistantPercent": 56.2,
+   "resistantPercent": 56.3,
    "lowN": true
   },
   {
@@ -6483,7 +6483,7 @@
    "sCount": 9,
    "iCount": 0,
    "rCount": 7,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 43.8,
    "lowN": true
@@ -6556,8 +6556,8 @@
    "iCount": 1,
    "rCount": 9,
    "susceptiblePercent": 37.5,
-   "increasedExposurePercent": 6.2,
-   "resistantPercent": 56.2,
+   "increasedExposurePercent": 6.3,
+   "resistantPercent": 56.3,
    "lowN": true
   },
   {
@@ -11656,8 +11656,8 @@
    "iCount": 1,
    "rCount": 1,
    "susceptiblePercent": 87.5,
-   "increasedExposurePercent": 6.2,
-   "resistantPercent": 6.2,
+   "increasedExposurePercent": 6.3,
+   "resistantPercent": 6.3,
    "lowN": true
   },
   {
@@ -11692,8 +11692,8 @@
    "iCount": 1,
    "rCount": 1,
    "susceptiblePercent": 87.5,
-   "increasedExposurePercent": 6.2,
-   "resistantPercent": 6.2,
+   "increasedExposurePercent": 6.3,
+   "resistantPercent": 6.3,
    "lowN": true
   },
   {
@@ -11746,7 +11746,7 @@
    "iCount": 1,
    "rCount": 8,
    "susceptiblePercent": 43.8,
-   "increasedExposurePercent": 6.2,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 50,
    "lowN": true
   },
@@ -18201,7 +18201,7 @@
    "iCount": 5,
    "rCount": 4,
    "susceptiblePercent": 43.8,
-   "increasedExposurePercent": 31.2,
+   "increasedExposurePercent": 31.3,
    "resistantPercent": 25,
    "lowN": true
   },
@@ -18291,8 +18291,8 @@
    "sCount": 9,
    "iCount": 1,
    "rCount": 6,
-   "susceptiblePercent": 56.2,
-   "increasedExposurePercent": 6.2,
+   "susceptiblePercent": 56.3,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 37.5,
    "lowN": true
   },
@@ -18309,7 +18309,7 @@
    "sCount": 9,
    "iCount": 0,
    "rCount": 7,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 43.8,
    "lowN": true
@@ -18363,8 +18363,8 @@
    "sCount": 9,
    "iCount": 1,
    "rCount": 6,
-   "susceptiblePercent": 56.2,
-   "increasedExposurePercent": 6.2,
+   "susceptiblePercent": 56.3,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 37.5,
    "lowN": true
   },
@@ -18471,7 +18471,7 @@
    "sCount": 9,
    "iCount": 3,
    "rCount": 4,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 18.8,
    "resistantPercent": 25,
    "lowN": true
@@ -21702,7 +21702,7 @@
    "rCount": 1,
    "susceptiblePercent": 75,
    "increasedExposurePercent": 18.8,
-   "resistantPercent": 6.2,
+   "resistantPercent": 6.3,
    "lowN": true
   },
   {
@@ -21719,7 +21719,7 @@
    "iCount": 1,
    "rCount": 3,
    "susceptiblePercent": 75,
-   "increasedExposurePercent": 6.2,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 18.8,
    "lowN": true
   },
@@ -21738,7 +21738,7 @@
    "rCount": 5,
    "susceptiblePercent": 50,
    "increasedExposurePercent": 18.8,
-   "resistantPercent": 31.2,
+   "resistantPercent": 31.3,
    "lowN": true
   },
   {
@@ -29804,7 +29804,7 @@
    "iCount": 1,
    "rCount": 8,
    "susceptiblePercent": 43.8,
-   "increasedExposurePercent": 6.2,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 50,
    "lowN": true
   },
@@ -29985,7 +29985,7 @@
    "rCount": 5,
    "susceptiblePercent": 50,
    "increasedExposurePercent": 18.8,
-   "resistantPercent": 31.2,
+   "resistantPercent": 31.3,
    "lowN": true
   },
   {
@@ -36043,8 +36043,8 @@
    "sCount": 2,
    "iCount": 2,
    "rCount": 28,
-   "susceptiblePercent": 6.2,
-   "increasedExposurePercent": 6.2,
+   "susceptiblePercent": 6.3,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 87.5,
    "lowN": false
   },
@@ -36117,7 +36117,7 @@
    "rCount": 10,
    "susceptiblePercent": 59.4,
    "increasedExposurePercent": 9.4,
-   "resistantPercent": 31.2,
+   "resistantPercent": 31.3,
    "lowN": false
   },
   {
@@ -39634,7 +39634,7 @@
    "sCount": 27,
    "iCount": 4,
    "rCount": 17,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 8.3,
    "resistantPercent": 35.4,
    "lowN": false
@@ -39706,9 +39706,9 @@
    "sCount": 27,
    "iCount": 6,
    "rCount": 15,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 12.5,
-   "resistantPercent": 31.2,
+   "resistantPercent": 31.3,
    "lowN": false
   },
   {
@@ -39778,7 +39778,7 @@
    "sCount": 27,
    "iCount": 4,
    "rCount": 17,
-   "susceptiblePercent": 56.2,
+   "susceptiblePercent": 56.3,
    "increasedExposurePercent": 8.3,
    "resistantPercent": 35.4,
    "lowN": false
@@ -39869,7 +39869,7 @@
    "iCount": 3,
    "rCount": 21,
    "susceptiblePercent": 50,
-   "increasedExposurePercent": 6.2,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 43.8,
    "lowN": false
   },
@@ -40559,7 +40559,7 @@
    "iCount": 2,
    "rCount": 13,
    "susceptiblePercent": 53.1,
-   "increasedExposurePercent": 6.2,
+   "increasedExposurePercent": 6.3,
    "resistantPercent": 40.6,
    "lowN": false
   },
