@@ -325,10 +325,10 @@ const ORGANISM_PATTERNS: { id: string; label: string; pattern: RegExp }[] = [
   { id: "klebsiella-pneumoniae", label: "K. pneumoniae", pattern: /klebsiella/ },
   { id: "staphylococcus-aureus", label: "S. aureus", pattern: /staphylococcus aureus|^staphylococcus methicillin|s aureus/ },
   { id: "enterococcus-spp", label: "Enterococcus spp.", pattern: /enterococcus/ },
-  { id: "s-pneumoniae", label: "S. pneumoniae", pattern: /streptococcus pneumoniae/ },
+  { id: "streptococcus-pneumoniae", label: "S. pneumoniae", pattern: /streptococcus pneumoniae/ },
   { id: "stenotrophomonas-maltophilia", label: "S. maltophilia", pattern: /stenotrophomonas/ },
   { id: "proteus-mirabilis", label: "P. mirabilis", pattern: /proteus/ },
-  { id: "citrobacter", label: "Citrobacter", pattern: /citrobacter/ },
+  { id: "citrobacter-freundii", label: "C. freundii", pattern: /citrobacter/ },
 ];
 
 export function antibiogramOrganismFor(
