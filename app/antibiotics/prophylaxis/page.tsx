@@ -692,7 +692,7 @@ export default function ProphylaxisPage() {
 
         <section className="ksdp-sources" aria-labelledby="ksdp-sources-title">
           <h2 id="ksdp-sources-title"><BookOpen size={16} aria-hidden="true" /> Tài liệu tham khảo</h2>
-          <ul className="ksdp-source-list">
+          <ol className="ksdp-source-list">
             {sources.map(({ label, title, href }) => {
               const citation = (
                 <span className="ksdp-source-copy">
@@ -711,7 +711,7 @@ export default function ProphylaxisPage() {
                 </li>
               );
             })}
-          </ul>
+          </ol>
           <p>Áp dụng cùng quy trình KSDP đã phê duyệt của bệnh viện.</p>
         </section>
       </div>
@@ -969,8 +969,10 @@ export default function ProphylaxisPage() {
         .ksdp-sources h2 svg,.ksdp-source-item svg {flex:none;color:var(--primary-dark)}
         .ksdp-source-list {
           display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));
-          gap:6px;margin:0;padding:0;list-style:none;
+          gap:6px;margin:0;padding:0;list-style:decimal outside;
         }
+        .ksdp-source-list > li {min-width:0;margin-inline-start:1.3rem}
+        .ksdp-source-list > li::marker {color:var(--text-secondary);font-size:13px;font-weight:700}
         .ksdp-source-item {
           display:flex;align-items:center;justify-content:space-between;gap:8px;
           height:100%;padding:7px 9px;border:1px solid var(--border);
