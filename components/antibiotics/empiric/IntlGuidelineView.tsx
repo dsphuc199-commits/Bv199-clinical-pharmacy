@@ -158,7 +158,7 @@ function ReviewBadge({ g }: { g: IntlGuideline }) {
   if (g.review.state === "draft_ai")
     return (
       <div className="igv-draft" role="note">
-        <b>{g.disease_id === "v8-24" ? "Chờ thẩm định chuyên môn" : "Bản nháp AI – chưa kiểm duyệt"}</b>
+        <b>Bản nháp AI – chưa kiểm duyệt</b>
         <span>Cần dược sĩ/bác sĩ xác nhận trước khi áp dụng.</span>
       </div>
     );
@@ -253,6 +253,7 @@ export default function IntlGuidelineView({ data, sourceAxis, clinical = false }
     );
   const g = parsed.data;
   const hidden = g.review.state === "draft_ai" && !SHOW_DRAFT;
+  const showReviewBadge = g.review.state !== "draft_ai" || (!clinical && g.disease_id !== "v8-24");
   return (
     <article className="sa24 igv" data-intl-guideline={g.slug} data-review={g.review.state}>
       {!clinical && <header>
@@ -264,7 +265,7 @@ export default function IntlGuidelineView({ data, sourceAxis, clinical = false }
         <p className="sa24-warn" data-intl-pending="">Đang chờ thẩm định.</p>
       ) : (
         <>
-          {(!clinical || g.review.state !== "draft_ai") && <ReviewBadge g={g} />}
+          {showReviewBadge && <ReviewBadge g={g} />}
           <Body g={g} sourceAxis={sourceAxis} clinical={clinical} />
         </>
       )}
