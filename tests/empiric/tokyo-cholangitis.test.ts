@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { INTL_GUIDELINE_JSON } from "../../data/guidelines/intl";
+import { cholangitisChoices, cholangitisCombination, cholangitisCourse, tg18Diagnosis, tg18Severity } from "../../lib/antibiotics/cholangitis-plan";
 import { effectiveState, resolve } from "../../lib/intl-rules";
 import { intlGuideline } from "../../schema/intl-guideline";
 
 const guideline = intlGuideline.parse(INTL_GUIDELINE_JSON["v8-24"]);
 const plan = (severity: string, setting: string, anastomosis = false, vre = false) =>
-  resolve(guideline, effectiveState(guideline.axes, { severity, setting, anastomosis, vre_risk: vre, vre_community: vre }));
+  resolve(guideline, effectiveState(guideline.axes, { severity, setting, anastomosis: anastomosis ? "present" : "absent", vre_risk: vre, vre_community: vre }));
 
 test("TG18 requires both severity and acquisition setting before showing drug options", () => {
   for (const result of [plan("pending", "pending"), plan("pending", "healthcare"), plan("iii", "pending", true)]) {
@@ -62,4 +63,31 @@ test("a VRE substitution replaces vancomycin without removing the Gram-negative 
   assert.ok(options("community", true).includes("Linezolid"));
   assert.ok(!options("community", true).includes("Vancomycin"));
   assert.ok(!plan("ii", "community", false, true).blocks.some(({ title }) => title.includes("VRE")));
+});
+
+test("severity stays pending until enough criteria are known and organ dysfunction takes precedence", () => {
+  assert.equal(tg18Severity("pending", "high"), "pending");
+  assert.equal(tg18Severity("no", "pending"), "pending");
+  assert.equal(tg18Severity("no", "low"), "i");
+  assert.equal(tg18Severity("no", "high"), "ii");
+  assert.equal(tg18Severity("yes", "pending"), "iii");
+  assert.match(tg18Diagnosis(true, false, true), /nghi ngờ/);
+  assert.match(tg18Diagnosis(true, true, true), /xác định/);
+});
+
+test("a selected backbone controls anaerobic duplication and unresolved coverage", () => {
+  assert.deepEqual(cholangitisCombination("Ceftriaxon", "present", false, false), { addAnaerobic: true, mode: "Phối hợp" });
+  assert.deepEqual(cholangitisCombination("Piperacillin/tazobactam", "present", false, false), { addAnaerobic: false, mode: "Đơn trị theo dữ kiện đã chọn" });
+  assert.match(cholangitisCombination("Ceftriaxon", "pending", false, false).mode, /xác nhận/);
+  assert.match(cholangitisCombination("Aztreonam", "absent", false, false).mode, /xác nhận/);
+  assert.equal(cholangitisChoices(plan("i", "community"), true).base.length, 0);
+  assert.deepEqual(cholangitisChoices(plan("ii", "community"), true).alternatives.map(({ role }) => role), ["Cefepim", "Ceftazidim"]);
+});
+
+test("the 4–7 day plan is conditional on source control and longer-course factors", () => {
+  assert.match(cholangitisCourse("controlled", "none").title, /^4–7 ngày/);
+  assert.match(cholangitisCourse("uncontrolled", "none").title, /^Chưa tính/);
+  assert.match(cholangitisCourse("controlled", "pending").title, /^Chờ xác nhận/);
+  assert.match(cholangitisCourse("controlled", "gram-positive").detail, /tối thiểu 2 tuần/);
+  assert.match(cholangitisCourse("controlled", "abscess").title, /áp-xe gan/);
 });

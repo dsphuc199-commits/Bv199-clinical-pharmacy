@@ -15,9 +15,9 @@
     "eyebrow": "TOKYO GUIDELINES 2018 · NGƯỜI LỚN",
     "title": "Viêm đường mật cấp",
     "flow": [
-      "Chọn phân độ TG18",
-      "Chọn bối cảnh mắc bệnh",
-      "Đối chiếu kháng sinh và dẫn lưu"
+      "Đối chiếu lâm sàng và cận lâm sàng",
+      "Chọn bệnh cảnh",
+      "Xem thuốc và thời gian dùng"
     ]
   },
   "axes": [
@@ -67,10 +67,9 @@
     },
     {
       "id": "anastomosis",
-      "label": "Có miệng nối mật–ruột",
-      "group": "Yếu tố ảnh hưởng chọn thuốc",
-      "type": "check",
-      "default": false,
+      "label": "Miệng nối mật–ruột",
+      "type": "seg",
+      "default": "pending",
       "visible_when": {
         "severity": [
           "i",
@@ -81,7 +80,21 @@
           "community",
           "healthcare"
         ]
-      }
+      },
+      "options": [
+        {
+          "id": "pending",
+          "label": "Chưa rõ"
+        },
+        {
+          "id": "absent",
+          "label": "Không có"
+        },
+        {
+          "id": "present",
+          "label": "Có miệng nối mật–ruột"
+        }
+      ]
     },
     {
       "id": "vre_risk",
@@ -248,7 +261,7 @@
         },
         {
           "role": "Cầu khuẩn Gram dương trong máu",
-          "text": "Với tác nhân như Enterococcus hoặc Streptococcus, Bảng 5 của TG18 nêu điều trị tối thiểu 2 tuần. Đánh giá khả năng viêm nội tâm mạc và điều chỉnh theo tác nhân, ổ nhiễm.",
+          "text": "Với tác nhân như Enterococcus hoặc Streptococcus, TG18 nêu điều trị tối thiểu 2 tuần. Đánh giá khả năng viêm nội tâm mạc và điều chỉnh theo tác nhân, ổ nhiễm.",
           "ref": "Q3 và Bảng 5, tr. 10–11",
           "source_ids": [
             "tg18-antibiotics"
@@ -283,7 +296,7 @@
       "items": [
         {
           "role": "Amoxicillin/clavulanat",
-          "text": "Lựa chọn chuyển uống theo Bảng 6 nếu chủng còn nhạy. Khi có nhiễm khuẩn huyết, đối chiếu phác đồ riêng theo tác nhân.",
+          "text": "Lựa chọn chuyển uống theo TG18 nếu chủng còn nhạy. Khi có nhiễm khuẩn huyết, đối chiếu phác đồ riêng theo tác nhân.",
           "dose": "875/125 mg uống mỗi 12 giờ",
           "administration": "Liều tham khảo cho chỉ định thông thường, CrCl >30 mL/phút.",
           "ref": "Bảng 6 TG18 và phần chuyển uống, tr. 12",
@@ -317,7 +330,7 @@
           ]
         },
         {
-          "text": "Độ III khi có ít nhất một dấu hiệu suy cơ quan. Đối chiếu Bảng 4 nếu có tụt huyết áp cần vận mạch, rối loạn ý thức, PaO₂/FiO₂ <300, thiểu niệu hoặc creatinin >2,0 mg/dL, PT-INR >1,5 hoặc tiểu cầu <100.000/mm³.",
+          "text": "Độ III khi có ít nhất một dấu hiệu suy cơ quan. Đối chiếu tiêu chuẩn TG18 nếu có tụt huyết áp cần vận mạch, rối loạn ý thức, PaO₂/FiO₂ <300, thiểu niệu hoặc creatinin >2,0 mg/dL, PT-INR >1,5 hoặc tiểu cầu <100.000/mm³.",
           "source_ids": [
             "tg18-grading"
           ]
@@ -332,30 +345,6 @@
           "text": "Độ I khi đã đánh giá và chưa đạt tiêu chí Độ II hoặc Độ III.",
           "source_ids": [
             "tg18-grading"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "original-options",
-      "position": "after",
-      "title": "Đối chiếu đầy đủ Bảng 3 TG18",
-      "show_when": {
-        "severity": [
-          "i",
-          "ii",
-          "iii"
-        ],
-        "setting": [
-          "community",
-          "healthcare"
-        ]
-      },
-      "bullets": [
-        {
-          "text": "Các thẻ trên ưu tiên những lựa chọn đã đối chiếu cách dùng. Bảng 3 còn liệt kê các thuốc khác như cefazolin, cefuroxim hay cefoperazon/sulbactam ở một số nhánh. Xem đúng cột phân độ, bối cảnh và chú thích trong nguồn gốc trước khi chọn.",
-          "source_ids": [
-            "tg18-antibiotics"
           ]
         }
       ]
@@ -758,7 +747,7 @@
         },
         {
           "title": "Phối hợp bao phủ Enterococcus",
-          "lead": "Chú thích Bảng 3 nêu vancomycin. Phần diễn giải nhấn mạnh nguy cơ Gram dương kháng thuốc hoặc tiền sử định cư.",
+          "lead": "TG18 nêu vancomycin. Phần diễn giải nhấn mạnh nguy cơ Gram dương kháng thuốc hoặc tiền sử định cư.",
           "items": [
             {
               "role": "Vancomycin",
@@ -824,7 +813,7 @@
           "community",
           "healthcare"
         ],
-        "anastomosis": true
+        "anastomosis": "present"
       },
       "blocks": [
         {
@@ -940,7 +929,7 @@
   ],
   "source_text": "Tokyo Guidelines 2018 về lựa chọn thuốc. Liều tham khảo người lớn đối chiếu với UCSF và nhãn thuốc.",
   "gaps": [
-    "Thẻ thuốc trình bày các lựa chọn đã đối chiếu liều và cách dùng. Xem Bảng 3 để tra danh sách lựa chọn đầy đủ theo từng bệnh cảnh."
+    "Thẻ thuốc trình bày các lựa chọn đã đối chiếu liều và cách dùng. Xem tài liệu gốc để tra danh sách lựa chọn đầy đủ theo từng bệnh cảnh."
   ],
   "selection_rationale": {
     "chosen": "Tokyo Guidelines 2018 cung cấp lựa chọn kháng sinh theo phân độ và bối cảnh mắc bệnh, cùng các tài liệu đồng bộ về chẩn đoán, phân độ và dẫn lưu.",
@@ -953,7 +942,7 @@
       "title": "Tokyo Guidelines 2018: antimicrobial therapy for acute cholangitis and cholecystitis",
       "short_title": "TG18 · Kháng sinh, thời gian điều trị và chuyển uống",
       "year": 2018,
-      "version": "J Hepatobiliary Pancreat Sci 25(1):3–16 · Bảng 3, 5, 6",
+      "version": "J Hepatobiliary Pancreat Sci 25(1):3–16 · Chọn kháng sinh, thời gian và chuyển uống",
       "url": "https://doi.org/10.1002/jhbp.518",
       "accessed": "2026-11-22",
       "population": [
@@ -968,7 +957,7 @@
       "title": "Tokyo Guidelines 2018: diagnostic criteria and severity grading of acute cholangitis (with videos)",
       "short_title": "TG18 · Chẩn đoán và phân độ",
       "year": 2018,
-      "version": "J Hepatobiliary Pancreat Sci 25(1):17–30 · Bảng 2 và 4",
+      "version": "J Hepatobiliary Pancreat Sci 25(1):17–30 · Chẩn đoán và phân độ",
       "url": "https://doi.org/10.1002/jhbp.512",
       "accessed": "2026-11-22",
       "population": [

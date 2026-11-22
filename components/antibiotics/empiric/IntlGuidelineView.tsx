@@ -8,6 +8,7 @@ import { defaultState, effectiveState, isVisible, resolve, type AxisState, type 
 import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-guideline";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 import CholangitisCards from "./CholangitisCards";
+import { CholangitisAssessment, CholangitisPlan } from "./CholangitisWorkflow";
 import { citeIntlGuideline } from "@/lib/antibiotics/source-citation";
 
 const SHOW_DRAFT = process.env.NEXT_PUBLIC_SHOW_DRAFT_GUIDELINES !== "0";
@@ -189,6 +190,25 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
         {references}
       </>
     );
+  if (g.disease_id === "v8-24") {
+    const severity = String(eff.severity);
+    const setting = String(eff.setting);
+    const supportingCare = r.after.filter(({ id }) => id === "initial" || id === "oral-step-down");
+    return (
+      <>
+        <CholangitisAssessment apply={(value) => set("severity", value)} />
+        <Form g={g} raw={raw} eff={eff} set={set} />
+        <CholangitisPlan key={`${severity}-${setting}`} result={r} severity={severity} setting={setting} junction={String(eff.anastomosis)} sources={sources} />
+        {supportingCare.length > 0 && (
+          <details className="my-3 rounded-xl border border-slate-200 bg-white p-3">
+            <summary className="cursor-pointer font-bold text-slate-900">Khởi trị, lấy mẫu và chuyển uống</summary>
+            {supportingCare.map((section) => <Section key={section.id} s={section} g={g} eff={eff} set={set} />)}
+          </details>
+        )}
+        {references}
+      </>
+    );
+  }
   return (
     <>
       <Form g={g} raw={raw} eff={eff} set={set} />
