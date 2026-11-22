@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { GET as scheduledWatch } from "../../app/api/internal/guideline-watch/route";
 import { reviewPublicGuideline, validateFindings } from "../../lib/admin/guideline-watch-ai";
-import { fetchOfficial, parseWatchHtml, WATCH_SOURCES } from "../../lib/admin/guideline-watch-sources";
+import { fetchOfficial, parseWatchHtml, verifyTokyoArticle, WATCH_SOURCES } from "../../lib/admin/guideline-watch-sources";
 import { isCurrentDocument, mergeChecks, type WatchState } from "../../lib/admin/guideline-watch";
 import { BILIARY_BASE_CONTENT } from "../../lib/antibiotics/biliary-protocol";
 
@@ -41,6 +41,14 @@ test("refuses a redirect outside the official source list", async () => {
   };
   await assert.rejects(fetchOfficial(cap.url, redirect), /ngoài danh sách/);
   assert.equal(requests, 1);
+});
+
+test("checks the title, DOI and completeness of the TG18 archive PDF", () => {
+  const article = "DOI: 10.1002/jhbp.518\nTokyo Guidelines 2018: antimicrobial therapy for acute cholangitis and\ncholecystitis";
+  assert.doesNotThrow(() => verifyTokyoArticle(article, 16));
+  assert.throws(() => verifyTokyoArticle(article, 1), /thiếu trang/i);
+  assert.throws(() => verifyTokyoArticle(article.replace("jhbp.518", "jhbp.5181"), 16), /tiêu đề hoặc DOI/i);
+  assert.throws(() => verifyTokyoArticle(article.replace("antimicrobial therapy", "diagnostic criteria"), 16), /tiêu đề hoặc DOI/i);
 });
 
 const quote = "Synthetic test passage includes the reference number 17.";

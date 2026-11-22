@@ -10,7 +10,13 @@ export const WATCH_SOURCES = [
   { id: "byt-cap", label: "Bộ Y tế · QĐ 2147/QĐ-BYT", region: "Việt Nam", url: capUrl },
   { id: "idsa-iai", label: "IDSA · Nhiễm khuẩn ổ bụng", region: "Quốc tế", url: "https://www.idsociety.org/practice-guideline/intra-abdominal-infections/" },
   { id: "tokyo-index", label: "JSHBPS · Danh mục Tokyo Guidelines", region: "Quốc tế", url: "https://www.jshbps.jp/modules/en/index.php?cat_id=4" },
-  { id: "tokyo-antibiotics", label: "JSHBPS · Tokyo Guidelines 2018 về kháng sinh", region: "Quốc tế", url: "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jhbp.518" },
+  {
+    id: "tokyo-antibiotics",
+    label: "Tokyo Guidelines 2018 · Toàn văn lưu tại Amsterdam UMC",
+    region: "Quốc tế",
+    url: "https://pure.amsterdamumc.nl/en/publications/tokyo-guidelines-2018-antimicrobial-therapy-for-acute-cholangitis/",
+    pdfUrl: "https://pure.amsterdamumc.nl/ws/files/158545466/Tokyo-guidelines-2018-antimicrobial-therapy-for-acute-cholangitis-and-cholecystitis.pdf",
+  },
 ] as const;
 
 export type WatchSource = (typeof WATCH_SOURCES)[number];
@@ -29,7 +35,7 @@ export type DetectedDocument = {
 };
 export type EvidencePassage = { id: string; locator: string; text: string };
 
-const permittedHosts = new Set(["kcb.vn", "www.kcb.vn", "www.idsociety.org", "www.jshbps.jp", "onlinelibrary.wiley.com"]);
+const permittedHosts = new Set(["kcb.vn", "www.kcb.vn", "www.idsociety.org", "www.jshbps.jp", "onlinelibrary.wiley.com", "pure.amsterdamumc.nl"]);
 const maxBytes = 8 * 1024 * 1024;
 
 export class SourceError extends Error {}
@@ -167,6 +173,9 @@ export function findOfficialPdf(html: string, articleUrl: string): string | unde
   return files.size === 1 ? [...files][0] : undefined;
 }
 
+const pdfHeader = Buffer.from("%PDF-");
+const isPdf = (bytes: Buffer) => bytes.subarray(0, pdfHeader.length).equals(pdfHeader);
+
 async function verifyDomesticAttachment(entry: DetectedDocument, source: WatchSource): Promise<DetectedDocument> {
   if (entry.topic !== "biliary" || entry.notice || !/quyet dinh|huong dan/.test(accentless(entry.title))) return entry;
   try {
@@ -174,26 +183,51 @@ async function verifyDomesticAttachment(entry: DetectedDocument, source: WatchSo
     const pdfUrl = original.type.includes("pdf") ? original.url : findOfficialPdf(original.bytes.toString("utf8"), original.url);
     if (!pdfUrl) return entry;
     const pdf = original.type.includes("pdf") ? original : await fetchOfficial(pdfUrl);
-    if (!pdf.bytes.subarray(0, 5).equals(Buffer.from("%PDF-"))) return entry;
+    if (!isPdf(pdf.bytes)) return entry;
     return detection(source, { ...entry, pdfUrl, fullText: "pdf", fingerprint: digest(pdf.bytes) });
   } catch { return entry; }
 }
 
 export async function scanWatchSource(source: WatchSource): Promise<DetectedDocument[]> {
-  const response = await fetchOfficial(source.url);
   if (source.id === "tokyo-antibiotics") {
-    if (!response.bytes.subarray(0, 5).equals(Buffer.from("%PDF-"))) throw new SourceError("Hội chuyên ngành chưa trả về tệp PDF toàn văn.");
+    const pdf = await fetchOfficial(source.pdfUrl);
+    if (!isPdf(pdf.bytes)) throw new SourceError("Bản lưu TG18 không trả về tệp PDF.");
+    const passages = await readPdfEvidence(pdf.bytes);
+    verifyTokyoArticle(passages[0]?.text ?? "", passages.length);
     return [detection(source, {
       topic: "biliary", title: "Tokyo Guidelines 2018 · Antimicrobial therapy for acute cholangitis and cholecystitis",
-      url: source.url, fullText: "pdf", fingerprint: digest(response.bytes),
+      url: source.url, pdfUrl: pdf.url, fullText: "pdf", fingerprint: digest(pdf.bytes),
     })];
   }
+  const response = await fetchOfficial(source.url);
   if (!response.type.includes("html")) throw new SourceError("Nguồn chưa trả về trang HTML đọc được.");
   const documents = parseWatchHtml(source, response.bytes.toString("utf8"));
   if (source.id !== "byt-index" && source.id !== "byt-decisions") return documents;
   const candidates = documents.filter(({ topic, notice }) => topic === "biliary" && !notice).slice(0, 2);
   const verified = await Promise.all(candidates.map((entry) => verifyDomesticAttachment(entry, source)));
   return documents.map((entry) => verified.find(({ url }) => entry.url === url) ?? entry);
+}
+
+export function verifyTokyoArticle(firstPage: string, pageCount: number): void {
+  const text = tidy(firstPage);
+  const title = /Tokyo Guidelines\s+2018\s*:\s*antimicrobial therapy for acute cholangitis and cholecystitis/i;
+  if (!title.test(text) || !/\b10\.1002\/jhbp\.518\b/i.test(text)) {
+    throw new SourceError("Tiêu đề hoặc DOI của PDF chưa khớp bài TG18 về kháng sinh.");
+  }
+  if (pageCount < 14) throw new SourceError("Bản lưu PDF thiếu trang so với bài TG18 đã xuất bản.");
+}
+
+async function readPdfEvidence(bytes: Buffer): Promise<EvidencePassage[]> {
+  const pdf = await getDocumentProxy(Uint8Array.from(bytes));
+  try {
+    if (pdf.numPages > 65) throw new SourceError("Tài liệu vượt giới hạn số trang của đợt thí điểm.");
+    const { text } = await extractText(pdf, { mergePages: false });
+    const passages = text.map((page, i) => ({ id: `p${i + 1}`, locator: `Trang PDF ${i + 1}`, text: tidy(page) }));
+    if (passages.filter(({ text }) => text.length > 150).length < Math.ceil(pdf.numPages / 2)) throw new SourceError("Tệp thiếu lớp văn bản đọc được. Cần đối chiếu thủ công.");
+    return passages;
+  } finally {
+    await pdf.loadingTask.destroy();
+  }
 }
 
 export async function loadEvidence(document: DetectedDocument): Promise<EvidencePassage[]> {
@@ -205,18 +239,10 @@ export async function loadEvidence(document: DetectedDocument): Promise<Evidence
     if (!source || parseWatchHtml(source, html)[0]?.fingerprint !== document.fingerprint) throw new SourceError("Nguồn đã thay đổi. Rà soát lại trước khi soạn.");
     return readIdsaPassages(html);
   }
-  if (!response.bytes.subarray(0, 5).equals(Buffer.from("%PDF-"))) throw new SourceError("Chưa tải được tệp PDF toàn văn từ nguồn chính thức.");
+  if (!isPdf(response.bytes)) throw new SourceError("Chưa tải được tệp PDF toàn văn từ nguồn chính thức.");
   if (digest(response.bytes) !== document.fingerprint) throw new SourceError("Tệp nguồn đã thay đổi. Rà soát lại trước khi soạn.");
-  const pdf = await getDocumentProxy(Uint8Array.from(response.bytes));
-  try {
-    if (pdf.numPages > 65) throw new SourceError("Tài liệu vượt giới hạn số trang của đợt thí điểm.");
-    const { text } = await extractText(pdf, { mergePages: false });
-    const passages = text.map((text, i) => ({ id: `p${i + 1}`, locator: `Trang PDF ${i + 1}`, text: tidy(text) }));
-    if (passages.filter(({ text }) => text.length > 150).length < Math.ceil(pdf.numPages / 2)) throw new SourceError("Tệp thiếu lớp văn bản đọc được. Cần đối chiếu thủ công.");
-    if (!passages.some(({ text }) => topicFor(text) === document.topic)) throw new SourceError("Toàn văn chưa khớp bệnh cảnh đang rà soát.");
-    if (document.sourceId === "tokyo-antibiotics" && !/Tokyo Guidelines 2018/i.test(passages[0]?.text ?? "")) throw new SourceError("Tiêu đề PDF chưa khớp bản Tokyo Guidelines 2018.");
-    return passages;
-  } finally {
-    await pdf.loadingTask.destroy();
-  }
+  const passages = await readPdfEvidence(response.bytes);
+  if (!passages.some(({ text }) => topicFor(text) === document.topic)) throw new SourceError("Toàn văn chưa khớp bệnh cảnh đang rà soát.");
+  if (document.sourceId === "tokyo-antibiotics") verifyTokyoArticle(passages[0]?.text ?? "", passages.length);
+  return passages;
 }
