@@ -77,7 +77,7 @@ export default function CholangitisAntibioticTable({ groups, sources, selected, 
                     ) : item.preparation && <span className="mt-0.5 block text-[11px] text-slate-600">Theo nhãn chế phẩm</span>}
                   </Cell>
                   <Cell label="Liều mỗi lần">
-                    {renalAdjustment ? "Cần hiệu chỉnh" : dose ? (
+                    {renalAdjustment ? "Đối chiếu liều theo thận" : dose ? (
                       <>
                         {dose.loadingDose && <span className="block"><strong>{dose.loadingDose}</strong> liều đầu</span>}
                         <span className="block font-bold text-teal-950">{dose.dose}{dose.loadingDose && " duy trì"}</span>
@@ -86,7 +86,7 @@ export default function CholangitisAntibioticTable({ groups, sources, selected, 
                     ) : "Đối chiếu nguồn liều"}
                   </Cell>
                   <Cell label="Số lần dùng">
-                    {renalAdjustment ? "Theo lịch hiệu chỉnh" : (
+                    {renalAdjustment ? "Theo lịch sau đối chiếu" : (
                       <>
                         {dose?.dosesPerDay && <strong className="block">{dose.dosesPerDay} lần/24 giờ{dose.loadingDose && " khi duy trì"}</strong>}
                         <span className="block first-letter:uppercase">{dose?.frequency ?? "Đối chiếu hướng dẫn liều"}</span>
