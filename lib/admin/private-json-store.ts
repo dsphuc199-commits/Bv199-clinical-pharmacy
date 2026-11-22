@@ -16,7 +16,8 @@ export async function readPrivateJson<T>(
 ): Promise<PrivateSnapshot<T>> {
   const token = storageToken();
   if (!token) throw new Error("Private admin storage is not configured");
-  const blob = await get(pathname, { access: "private", token, useCache: false, abortSignal });
+  // A compressed download uses a weak ETag. Conditional writes require the strong ETag of the stored object.
+  const blob = await get(pathname, { access: "private", token, useCache: false, headers: { "Accept-Encoding": "identity" }, abortSignal });
   if (!blob) return { data: empty };
   if (blob.statusCode !== 200) throw new Error("Unexpected private storage response");
   return { data: parse(await new Response(blob.stream).json()), etag: blob.blob.etag };
