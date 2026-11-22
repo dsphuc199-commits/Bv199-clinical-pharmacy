@@ -7,6 +7,7 @@ import { Fragment, useMemo, useState } from "react";
 import { defaultState, effectiveState, isVisible, resolve, type AxisState, type AxisVal, type OutItem } from "@/lib/intl-rules";
 import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-guideline";
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
+import CholangitisCards from "./CholangitisCards";
 import { citeIntlGuideline } from "@/lib/antibiotics/source-citation";
 
 const SHOW_DRAFT = process.env.NEXT_PUBLIC_SHOW_DRAFT_GUIDELINES !== "0";
@@ -73,6 +74,10 @@ function Form({ g, raw, eff, set }: { g: IntlGuideline; raw: AxisState; eff: Axi
   return <div className="sa24-form">{rows}</div>;
 }
 
+function GuidelineItems({ items, g }: { items: OutItem[]; g: IntlGuideline }) {
+  return g.disease_id === "v8-24" ? <CholangitisCards items={items} sources={g.sources} /> : <Rx items={items} />;
+}
+
 function Section({ s, g, eff, set }: { s: ReturnType<typeof resolve>["after"][number]; g: IntlGuideline; eff: AxisState; set: (id: string, v: AxisVal) => void }) {
   return (
     <>
@@ -83,7 +88,7 @@ function Section({ s, g, eff, set }: { s: ReturnType<typeof resolve>["after"][nu
         return a ? <Row key={cid} label={a.label}><AxisControl a={a} value={eff[cid]} set={(v) => set(cid, v)} /></Row> : null;
       })}
       {s.antibiogram_reminder && <p className="igv-abg">Đối chiếu Antibiogram BV199: {s.antibiogram_reminder}</p>}
-      <Rx items={s.items as OutItem[]} />
+      <GuidelineItems items={s.items} g={g} />
       {s.bullets.length > 0 && <ul className="igv-notes">{s.bullets.map((n) => <li key={n.text}>{n.text}</li>)}</ul>}
     </>
   );
@@ -106,6 +111,20 @@ function Sources({ sources }: { sources: IntlGuideline["sources"] }) {
 
 function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlGuideline["sources"]; clinical: boolean }) {
   if (!sources.length) return null;
+  if (g.disease_id === "v8-24") return (
+    <details className="clinical-references">
+      <summary>Tài liệu tham khảo</summary>
+      <ol className="m-0 list-decimal space-y-2 pb-3 pl-8 pr-3 text-sm leading-relaxed">
+        {sources.map((source) => (
+          <li key={source.id} className="pl-1">
+            <a className="font-semibold text-teal-800 underline" href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
+            <p className="m-0 text-xs text-slate-600">{source.org} · {source.version}</p>
+          </li>
+        ))}
+      </ol>
+    </details>
+  );
+
   const references = sources.map((s) => ({
     ...citeIntlGuideline({ ...s, published: s.version }),
     year: s.year,
@@ -134,7 +153,7 @@ function ReviewBadge({ g }: { g: IntlGuideline }) {
   if (g.review.state === "draft_ai")
     return (
       <div className="igv-draft" role="note">
-        <b>Bản nháp AI – chưa kiểm duyệt</b>
+        <b>{g.disease_id === "v8-24" ? "Chờ thẩm định chuyên môn" : "Bản nháp AI – chưa kiểm duyệt"}</b>
         <span>Cần dược sĩ/bác sĩ xác nhận trước khi áp dụng.</span>
       </div>
     );
@@ -185,10 +204,10 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
               <div key={`${b.title}-${i}`} className={clinical ? "pn-plan" : undefined}>
                 <h4 className={clinical ? "pn-plan-h" : undefined}>{b.title}</h4>
                 {b.lead && <p className={clinical ? "pn-lead" : "sa24-lead"}>{b.lead}</p>}
-                <Rx items={b.items} />
+                <GuidelineItems items={b.items} g={g} />
               </div>
             ))}
-            {r.avoid.length > 0 && (<><h4>Không dùng</h4><Rx items={r.avoid} /></>)}
+            {r.avoid.length > 0 && (<><h4>Không dùng</h4><GuidelineItems items={r.avoid} g={g} /></>)}
             {r.notes.length > 0 && (<><h4>Lưu ý</h4><ul className="igv-notes">{r.notes.map((n, i) => <li key={i}>{n.text}</li>)}</ul></>)}
             {r.after.map((s) => <Fragment key={s.id}><Section s={s} g={g} eff={eff} set={set} /></Fragment>)}
           </>

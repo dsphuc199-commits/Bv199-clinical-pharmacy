@@ -4,13 +4,21 @@
   "disease_id": "v8-24",
   "name_vi": "Viêm đường mật cấp",
   "name_en": "Acute cholangitis",
-  "icd10": ["K83.0"],
-  "population": ["adult"],
+  "icd10": [
+    "K83.0"
+  ],
+  "population": [
+    "adult"
+  ],
   "status": "extracted",
   "header": {
     "eyebrow": "TOKYO GUIDELINES 2018 · NGƯỜI LỚN",
     "title": "Viêm đường mật cấp",
-    "flow": ["Chọn phân độ TG18", "Chọn bối cảnh mắc bệnh", "Đối chiếu kháng sinh và dẫn lưu"]
+    "flow": [
+      "Chọn phân độ TG18",
+      "Chọn bối cảnh mắc bệnh",
+      "Đối chiếu kháng sinh và dẫn lưu"
+    ]
   },
   "axes": [
     {
@@ -19,10 +27,22 @@
       "type": "seg",
       "default": "pending",
       "options": [
-        { "id": "pending", "label": "Chưa chọn" },
-        { "id": "i", "label": "Độ I · nhẹ" },
-        { "id": "ii", "label": "Độ II · trung bình" },
-        { "id": "iii", "label": "Độ III · nặng" }
+        {
+          "id": "pending",
+          "label": "Chưa chọn"
+        },
+        {
+          "id": "i",
+          "label": "Độ I · nhẹ"
+        },
+        {
+          "id": "ii",
+          "label": "Độ II · trung bình"
+        },
+        {
+          "id": "iii",
+          "label": "Độ III · nặng"
+        }
       ]
     },
     {
@@ -31,9 +51,18 @@
       "type": "seg",
       "default": "pending",
       "options": [
-        { "id": "pending", "label": "Chưa chọn" },
-        { "id": "community", "label": "Mắc phải cộng đồng" },
-        { "id": "healthcare", "label": "Liên quan chăm sóc y tế" }
+        {
+          "id": "pending",
+          "label": "Chưa chọn"
+        },
+        {
+          "id": "community",
+          "label": "Mắc phải cộng đồng"
+        },
+        {
+          "id": "healthcare",
+          "label": "Liên quan chăm sóc y tế"
+        }
       ]
     },
     {
@@ -42,58 +71,238 @@
       "group": "Yếu tố ảnh hưởng chọn thuốc",
       "type": "check",
       "default": false,
-      "visible_when": { "severity": ["i", "ii", "iii"], "setting": ["community", "healthcare"] }
+      "visible_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      }
+    },
+    {
+      "id": "vre_risk",
+      "label": "Cần bao phủ VRE sau đánh giá",
+      "group": "Yếu tố ảnh hưởng chọn thuốc",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "setting": "healthcare",
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ]
+      },
+      "tip": "Ví dụ đã biết định cư VRE, đã dùng vancomycin hoặc VRE phổ biến tại địa phương."
+    },
+    {
+      "id": "vre_community",
+      "label": "Cần bao phủ VRE sau đánh giá",
+      "group": "Yếu tố ảnh hưởng chọn thuốc",
+      "type": "check",
+      "default": false,
+      "visible_when": {
+        "setting": "community",
+        "severity": "iii"
+      },
+      "tip": "Ví dụ đã biết định cư VRE, đã dùng vancomycin hoặc VRE phổ biến tại địa phương."
     }
   ],
   "sections": [
     {
+      "id": "dose-scope",
+      "position": "before",
+      "title": "Phạm vi liều tham khảo",
+      "show_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      },
+      "bullets": [
+        {
+          "text": "TG18 xác định lựa chọn thuốc theo bệnh cảnh. Liều tham khảo lấy từ hướng dẫn liều UCSF và nhãn chế phẩm, chủ yếu cho người lớn chức năng thận ổn định, CrCl >60 mL/phút, không lọc máu. Hiệu chỉnh theo chức năng thận, gan và hướng dẫn BV199.",
+          "source_ids": [
+            "tg18-antibiotics",
+            "dose-ucsf-adult"
+          ]
+        }
+      ]
+    },
+    {
       "id": "drainage-i",
       "position": "before",
       "title": "Dẫn lưu đường mật",
-      "show_when": { "severity": "i" },
+      "show_when": {
+        "severity": "i"
+      },
       "bullets": [
-        { "text": "Độ I thường đáp ứng với điều trị ban đầu. Cân nhắc dẫn lưu nếu đáp ứng kém. Đánh giá lại mức độ nặng trong quá trình theo dõi.", "source_ids": ["tg18-flow"] }
+        {
+          "text": "Độ I thường đáp ứng với điều trị ban đầu. Cân nhắc dẫn lưu nếu đáp ứng kém. Đánh giá lại mức độ nặng trong quá trình theo dõi.",
+          "source_ids": [
+            "tg18-flow"
+          ]
+        }
       ]
     },
     {
       "id": "drainage-ii",
       "position": "before",
       "title": "Dẫn lưu đường mật",
-      "show_when": { "severity": "ii" },
+      "show_when": {
+        "severity": "ii"
+      },
       "bullets": [
-        { "text": "Độ II có chỉ định dẫn lưu sớm qua nội soi hoặc qua da xuyên gan. Xử trí nguyên nhân sau khi tình trạng chung cải thiện.", "source_ids": ["tg18-flow"] }
+        {
+          "text": "Độ II có chỉ định dẫn lưu sớm qua nội soi hoặc qua da xuyên gan. Xử trí nguyên nhân sau khi tình trạng chung cải thiện.",
+          "source_ids": [
+            "tg18-flow"
+          ]
+        }
       ]
     },
     {
       "id": "drainage-iii",
       "position": "before",
       "title": "Hồi sức và dẫn lưu đường mật",
-      "show_when": { "severity": "iii" },
+      "show_when": {
+        "severity": "iii"
+      },
       "bullets": [
-        { "text": "Độ III cần hỗ trợ hô hấp, tuần hoàn và các cơ quan suy. Dẫn lưu càng sớm càng tốt sau khi tình trạng chung được ổn định bằng hồi sức ban đầu.", "source_ids": ["tg18-flow"] }
+        {
+          "text": "Độ III cần hỗ trợ hô hấp, tuần hoàn và các cơ quan suy. Dẫn lưu càng sớm càng tốt sau khi tình trạng chung được ổn định bằng hồi sức ban đầu.",
+          "source_ids": [
+            "tg18-flow"
+          ]
+        }
       ]
     },
     {
       "id": "initial",
       "position": "after",
       "title": "Khởi trị và lấy mẫu",
-      "show_when": { "severity": ["i", "ii", "iii"], "setting": ["community", "healthcare"] },
+      "show_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      },
       "bullets": [
-        { "text": "Khởi trị khi nghi viêm đường mật cấp và trước can thiệp dẫn lưu. Nếu có sốc nhiễm khuẩn, TG18 nêu dùng kháng sinh trong vòng 1 giờ kể từ khi nhận biết.", "source_ids": ["tg18-antibiotics"] },
-        { "text": "Gửi mật ống mật chủ làm vi sinh khi tiếp cận được trong lúc dẫn lưu. Cân nhắc cấy máu ở ca nặng hoặc khi kết quả có thể thay đổi điều trị.", "source_ids": ["tg18-antibiotics"] },
-        { "text": "Đối chiếu kháng sinh đồ tại chỗ, tiền sử dùng thuốc và dị ứng. Kiểm tra chức năng thận, gan và hướng dẫn liều của bệnh viện trước khi kê.", "source_ids": ["tg18-antibiotics"] }
+        {
+          "text": "Khởi trị khi nghi viêm đường mật cấp và trước can thiệp dẫn lưu. Nếu có sốc nhiễm khuẩn, TG18 nêu dùng kháng sinh trong vòng 1 giờ kể từ khi nhận biết.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "text": "Gửi mật ống mật chủ làm vi sinh khi tiếp cận được trong lúc dẫn lưu. Cân nhắc cấy máu ở ca nặng hoặc khi kết quả có thể thay đổi điều trị.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "text": "Đối chiếu kháng sinh đồ tại chỗ, tiền sử dùng thuốc và dị ứng. Kiểm tra chức năng thận, gan và hướng dẫn liều của bệnh viện trước khi kê.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     },
     {
       "id": "duration",
       "position": "after",
-      "title": "Thời gian điều trị và chuyển uống",
-      "show_when": { "severity": ["i", "ii", "iii"], "setting": ["community", "healthcare"] },
+      "title": "Thời gian điều trị",
+      "show_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      },
       "items": [
-        { "role": "Đã kiểm soát ổ nhiễm", "text": "TG18 khuyến cáo 4–7 ngày sau khi kiểm soát ổ nhiễm. Khuyến cáo 1, mức bằng chứng C theo TG18.", "ref": "Q3 và Bảng 5, tr. 10–11", "source_ids": ["tg18-antibiotics"] },
-        { "role": "Cầu khuẩn Gram dương trong máu", "text": "Với tác nhân như Enterococcus hoặc Streptococcus, Bảng 5 của TG18 nêu điều trị tối thiểu 2 tuần. Đánh giá khả năng viêm nội tâm mạc và điều chỉnh theo tác nhân, ổ nhiễm.", "ref": "Q3 và Bảng 5, tr. 10–11", "source_ids": ["tg18-antibiotics"] },
-        { "role": "Còn sỏi, tắc mật hoặc áp-xe gan", "text": "Với sỏi tồn dư hoặc tắc mật, TG18 nêu tiếp tục điều trị đến khi xử trí được nguyên nhân. Với áp-xe gan, tiếp tục đến khi theo dõi lâm sàng, xét nghiệm và hình ảnh xác nhận ổ áp-xe đã hết.", "ref": "Bảng 5, tr. 10", "source_ids": ["tg18-antibiotics"] },
-        { "role": "Thu hẹp và chuyển uống", "text": "Thu hẹp theo kết quả vi sinh. Khi người bệnh dung nạp đường uống và chủng phân lập còn nhạy, TG18 liệt kê các lựa chọn như amoxicillin/clavulanat, cephalosporin uống phù hợp hoặc fluoroquinolon phù hợp.", "ref": "Conversion to oral antimicrobial agents, Bảng 6, tr. 12", "source_ids": ["tg18-antibiotics"] }
+        {
+          "role": "Đã kiểm soát ổ nhiễm",
+          "text": "TG18 khuyến cáo 4–7 ngày sau khi kiểm soát ổ nhiễm. Khuyến cáo 1, mức bằng chứng C theo TG18.",
+          "ref": "Q3 và Bảng 5, tr. 10–11",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "role": "Cầu khuẩn Gram dương trong máu",
+          "text": "Với tác nhân như Enterococcus hoặc Streptococcus, Bảng 5 của TG18 nêu điều trị tối thiểu 2 tuần. Đánh giá khả năng viêm nội tâm mạc và điều chỉnh theo tác nhân, ổ nhiễm.",
+          "ref": "Q3 và Bảng 5, tr. 10–11",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "role": "Còn sỏi, tắc mật hoặc áp-xe gan",
+          "text": "Với sỏi tồn dư hoặc tắc mật, TG18 nêu tiếp tục điều trị đến khi xử trí được nguyên nhân. Với áp-xe gan, tiếp tục đến khi theo dõi lâm sàng, xét nghiệm và hình ảnh xác nhận ổ áp-xe đã hết.",
+          "ref": "Bảng 5, tr. 10",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oral-step-down",
+      "position": "after",
+      "title": "Thu hẹp phổ và chuyển uống",
+      "show_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      },
+      "lead": "Cân nhắc sau khi ổn định, kiểm soát ổ nhiễm, dung nạp đường uống và xác nhận chủng còn nhạy. Chọn một phương án theo vi sinh.",
+      "items": [
+        {
+          "role": "Amoxicillin/clavulanat",
+          "text": "Lựa chọn chuyển uống theo Bảng 6 nếu chủng còn nhạy. Khi có nhiễm khuẩn huyết, đối chiếu phác đồ riêng theo tác nhân.",
+          "dose": "875/125 mg uống mỗi 12 giờ",
+          "administration": "Liều tham khảo cho chỉ định thông thường, CrCl >30 mL/phút.",
+          "ref": "Bảng 6 TG18 và phần chuyển uống, tr. 12",
+          "source_ids": [
+            "tg18-antibiotics",
+            "dose-ucsf-adult"
+          ]
+        },
+        {
+          "role": "Ciprofloxacin",
+          "text": "Lựa chọn chuyển uống khi chủng còn nhạy và phù hợp về an toàn. Rà nhu cầu phối hợp bao phủ kỵ khí nếu có miệng nối mật–ruột.",
+          "dose": "500 mg uống mỗi 12 giờ",
+          "administration": "Liều chuẩn của UCSF khi CrCl >50 mL/phút. Đối chiếu riêng nếu có nhiễm khuẩn huyết hoặc Pseudomonas.",
+          "ref": "Bảng 6 TG18 và phần chuyển uống, tr. 12",
+          "source_ids": [
+            "tg18-antibiotics",
+            "dose-ucsf-adult"
+          ]
+        }
       ]
     },
     {
@@ -101,10 +310,54 @@
       "position": "after",
       "title": "Tiêu chuẩn chẩn đoán và phân độ TG18",
       "bullets": [
-        { "text": "Nghi ngờ khi có dấu hiệu viêm toàn thân (A) và ít nhất một dấu hiệu ứ mật (B) hoặc hình ảnh phù hợp (C). Chẩn đoán xác định cần có cả A, B và C. Hình ảnh có thể cho thấy giãn đường mật hoặc nguyên nhân như sỏi, hẹp hay stent.", "source_ids": ["tg18-grading"] },
-        { "text": "Độ III khi có ít nhất một dấu hiệu suy cơ quan. Đối chiếu Bảng 4 nếu có tụt huyết áp cần vận mạch, rối loạn ý thức, PaO₂/FiO₂ <300, thiểu niệu hoặc creatinin >2,0 mg/dL, PT-INR >1,5 hoặc tiểu cầu <100.000/mm³.", "source_ids": ["tg18-grading"] },
-        { "text": "Độ II khi chưa đạt Độ III và có ít nhất hai tiêu chí gồm bạch cầu >12.000 hoặc <4.000/mm³, sốt ≥39 °C, tuổi ≥75, bilirubin toàn phần ≥5 mg/dL hoặc albumin dưới 0,7 lần giới hạn dưới bình thường.", "source_ids": ["tg18-grading"] },
-        { "text": "Độ I khi đã đánh giá và chưa đạt tiêu chí Độ II hoặc Độ III.", "source_ids": ["tg18-grading"] }
+        {
+          "text": "Nghi ngờ khi có dấu hiệu viêm toàn thân (A) và ít nhất một dấu hiệu ứ mật (B) hoặc hình ảnh phù hợp (C). Chẩn đoán xác định cần có cả A, B và C. Hình ảnh có thể cho thấy giãn đường mật hoặc nguyên nhân như sỏi, hẹp hay stent.",
+          "source_ids": [
+            "tg18-grading"
+          ]
+        },
+        {
+          "text": "Độ III khi có ít nhất một dấu hiệu suy cơ quan. Đối chiếu Bảng 4 nếu có tụt huyết áp cần vận mạch, rối loạn ý thức, PaO₂/FiO₂ <300, thiểu niệu hoặc creatinin >2,0 mg/dL, PT-INR >1,5 hoặc tiểu cầu <100.000/mm³.",
+          "source_ids": [
+            "tg18-grading"
+          ]
+        },
+        {
+          "text": "Độ II khi chưa đạt Độ III và có ít nhất hai tiêu chí gồm bạch cầu >12.000 hoặc <4.000/mm³, sốt ≥39 °C, tuổi ≥75, bilirubin toàn phần ≥5 mg/dL hoặc albumin dưới 0,7 lần giới hạn dưới bình thường.",
+          "source_ids": [
+            "tg18-grading"
+          ]
+        },
+        {
+          "text": "Độ I khi đã đánh giá và chưa đạt tiêu chí Độ II hoặc Độ III.",
+          "source_ids": [
+            "tg18-grading"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-options",
+      "position": "after",
+      "title": "Đối chiếu đầy đủ Bảng 3 TG18",
+      "show_when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ]
+      },
+      "bullets": [
+        {
+          "text": "Các thẻ trên ưu tiên những lựa chọn đã đối chiếu cách dùng. Bảng 3 còn liệt kê các thuốc khác như cefazolin, cefuroxim hay cefoperazon/sulbactam ở một số nhánh. Xem đúng cột phân độ, bối cảnh và chú thích trong nguồn gốc trước khi chọn.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     }
   ],
@@ -112,165 +365,788 @@
     {
       "id": "pending-severity",
       "kind": "primary",
-      "when": { "severity": "pending" },
-      "summary": [{ "label": "Phân độ TG18", "text": "Chọn mức độ nặng đã xác định. Tiêu chuẩn phân độ có ở bên dưới." }],
-      "source_ids": ["tg18-grading"]
+      "when": {
+        "severity": "pending"
+      },
+      "summary": [
+        {
+          "label": "Phân độ TG18",
+          "text": "Chọn mức độ nặng đã xác định. Tiêu chuẩn phân độ có ở bên dưới."
+        }
+      ],
+      "source_ids": [
+        "tg18-grading"
+      ]
     },
     {
       "id": "pending-setting",
       "kind": "primary",
-      "when": { "severity": ["i", "ii", "iii"], "setting": "pending" },
-      "summary": [{ "label": "Bối cảnh mắc bệnh", "text": "Chọn mắc phải cộng đồng hoặc liên quan chăm sóc y tế để hiện nhóm thuốc tương ứng." }],
-      "source_ids": ["tg18-antibiotics"]
+      "when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": "pending"
+      },
+      "summary": [
+        {
+          "label": "Bối cảnh mắc bệnh",
+          "text": "Chọn mắc phải cộng đồng hoặc liên quan chăm sóc y tế để hiện nhóm thuốc tương ứng."
+        }
+      ],
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
     },
     {
       "id": "community-i",
       "kind": "primary",
-      "when": { "severity": "i", "setting": "community" },
-      "summary": [{ "label": "Cộng đồng · Độ I", "text": "Đối chiếu nhóm thuốc theo kháng sinh đồ tại cơ sở và nguy cơ kháng thuốc của người bệnh." }],
+      "when": {
+        "severity": "i",
+        "setting": "community"
+      },
+      "summary": [
+        {
+          "label": "Cộng đồng · Độ I",
+          "text": "Đối chiếu nhóm thuốc theo kháng sinh đồ tại cơ sở và nguy cơ kháng thuốc của người bệnh."
+        }
+      ],
       "blocks": [
         {
-          "title": "Kháng sinh kinh nghiệm · Bảng 3 TG18",
-          "lead": "Chọn một nhóm nền phù hợp. Xem mục bao phủ kỵ khí khi có miệng nối mật–ruột.",
+          "title": "Thuốc nền · chọn một",
+          "lead": "Có thể dùng đơn trị nếu thuốc nền đủ phổ cho bệnh cảnh. Chỉ thêm thuốc khi có chỉ định bao phủ riêng.",
           "items": [
-            { "role": "Cephalosporin", "text": "Ceftriaxon hoặc cefotaxim. Cefazolin, cefotiam, cefuroxim, cefmetazol, cefoxitin hoặc flomoxef cần đối chiếu độ nhạy tại chỗ. Cefoperazon/sulbactam là một lựa chọn trong bảng.", "ref": "Bảng 3, cột cộng đồng Độ I, chú thích c–d, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Penicillin phối hợp", "text": "Ampicillin/sulbactam chỉ xem xét khi dữ liệu tại chỗ hoặc kháng sinh đồ ủng hộ. TG18 loại khỏi lựa chọn kinh nghiệm khi tỷ lệ kháng tại chỗ >20%.", "ref": "Bảng 3, chú thích b, tr. 6 và phần cộng đồng, tr. 9", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Carbapenem", "text": "Ertapenem có trong bảng TG18. Cân nhắc theo nguy cơ kháng thuốc và chỉ định quản lý carbapenem tại cơ sở.", "ref": "Bảng 3, cột cộng đồng Độ I, tr. 6", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Ceftriaxon",
+              "text": "Dùng làm thuốc nền khi phổ phù hợp. Thêm metronidazol nếu có miệng nối mật–ruột.",
+              "dose": "2 g truyền tĩnh mạch mỗi 24 giờ",
+              "administration": "Truyền khoảng 30 phút. Kiểm tra dung môi tương thích theo nhãn chế phẩm.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-ceftriaxone"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Thay thế có điều kiện",
+          "lead": "Chọn thay cho thuốc nền theo kháng sinh đồ, tiền sử dị ứng và nguy cơ kháng thuốc.",
+          "items": [
+            {
+              "role": "Ampicillin/sulbactam",
+              "text": "Chỉ cân nhắc ở Độ I khi độ nhạy tại chỗ ủng hộ. TG18 không khuyến cáo kinh nghiệm nếu tỷ lệ kháng tại chỗ >20%. Có thể dùng theo đích khi chủng còn nhạy.",
+              "dose": "3 g truyền tĩnh mạch mỗi 6 giờ",
+              "administration": "Truyền 15–30 phút. Mỗi liều gồm ampicillin 2 g và sulbactam 1 g. Hiệu chỉnh theo CrCl.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-unasyn"
+              ]
+            },
+            {
+              "role": "Ertapenem",
+              "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
+              "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
+              "administration": "Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Ciprofloxacin",
+              "text": "Thay thế có điều kiện ở Độ I–II khi chủng còn nhạy hoặc dị ứng beta-lactam và dữ liệu tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol.",
+              "dose": "400 mg truyền tĩnh mạch mỗi 12 giờ",
+              "administration": "Liều chuẩn người lớn theo UCSF khi chức năng thận phù hợp. Kiểm tra tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            }
           ]
         }
       ],
-      "source_ids": ["tg18-antibiotics"]
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
     },
     {
       "id": "community-ii",
       "kind": "primary",
-      "when": { "severity": "ii", "setting": "community" },
-      "summary": [{ "label": "Cộng đồng · Độ II", "text": "Chọn kháng sinh kinh nghiệm cùng kế hoạch dẫn lưu sớm và rà soát kết quả nuôi cấy." }],
+      "when": {
+        "severity": "ii",
+        "setting": "community"
+      },
+      "summary": [
+        {
+          "label": "Cộng đồng · Độ II",
+          "text": "Chọn kháng sinh kinh nghiệm cùng kế hoạch dẫn lưu sớm và rà soát kết quả nuôi cấy."
+        }
+      ],
       "blocks": [
         {
-          "title": "Kháng sinh kinh nghiệm · Bảng 3 TG18",
-          "lead": "Chọn một nhóm nền phù hợp. Xem mục bao phủ kỵ khí khi có miệng nối mật–ruột.",
+          "title": "Thuốc nền · chọn một",
+          "lead": "Có thể dùng đơn trị nếu thuốc nền đủ phổ cho bệnh cảnh. Chỉ thêm thuốc khi có chỉ định bao phủ riêng.",
           "items": [
-            { "role": "Penicillin phối hợp", "text": "Piperacillin/tazobactam.", "ref": "Bảng 3, cột cộng đồng Độ II, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Cephalosporin", "text": "Ceftriaxon, cefotaxim, cefepim, cefozopran hoặc ceftazidim. Cefoperazon/sulbactam là một lựa chọn khác trong bảng.", "ref": "Bảng 3, cột cộng đồng Độ II, chú thích d, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Carbapenem", "text": "Ertapenem có trong bảng TG18. Cân nhắc theo nguy cơ kháng thuốc và chỉ định quản lý carbapenem tại cơ sở.", "ref": "Bảng 3, cột cộng đồng Độ II, tr. 6", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Piperacillin/tazobactam",
+              "text": "Thuốc nền có phổ kỵ khí, dùng một chế phẩm phối hợp cố định. Xem chỉ định bổ sung bao phủ Enterococcus ở ca nặng hoặc liên quan chăm sóc y tế.",
+              "dose": "4,5 g tĩnh mạch liều đầu, sau đó 4,5 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Theo quy trình truyền kéo dài của UCSF. Truyền liều đầu 30 phút, bắt đầu liều duy trì ngay sau đó và truyền mỗi liều trong 4 giờ. Áp dụng khi cơ sở có quy trình truyền kéo dài phù hợp.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Ceftriaxon",
+              "text": "Dùng làm thuốc nền khi phổ phù hợp. Thêm metronidazol nếu có miệng nối mật–ruột.",
+              "dose": "2 g truyền tĩnh mạch mỗi 24 giờ",
+              "administration": "Truyền khoảng 30 phút. Kiểm tra dung môi tương thích theo nhãn chế phẩm.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-ceftriaxone"
+              ]
+            },
+            {
+              "role": "Cefotaxim",
+              "text": "Lựa chọn cephalosporin ở Độ II. Thêm metronidazol nếu có miệng nối mật–ruột.",
+              "dose": "1–2 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều người lớn cho nhiễm khuẩn trung bình đến nặng. Khi tiêm tĩnh mạch trực tiếp, dùng trong 3–5 phút theo nhãn.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-cefotaxime"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Thay thế có điều kiện",
+          "lead": "Cefepim hoặc ceftazidim khi cần phổ kháng Pseudomonas. Các lựa chọn còn lại tùy nguy cơ và độ nhạy.",
+          "items": [
+            {
+              "role": "Cefepim",
+              "text": "Thuốc nền khi cần bao phủ Pseudomonas và độ nhạy tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol. Đánh giá phối hợp bao phủ Enterococcus ở nhánh nặng.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền khoảng 30 phút. Liều tham khảo của UCSF cho nhiễm khuẩn nặng hoặc nghi Pseudomonas, CrCl >60 mL/phút.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-cefepime"
+              ]
+            },
+            {
+              "role": "Ceftazidim",
+              "text": "Thay thế cefepim khi cần bao phủ Pseudomonas và độ nhạy ủng hộ. Đánh giá thêm phổ Gram dương và kỵ khí theo bối cảnh.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền ngắn theo hướng dẫn chế phẩm. Hiệu chỉnh khi CrCl giảm.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Ertapenem",
+              "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
+              "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
+              "administration": "Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Ciprofloxacin",
+              "text": "Thay thế có điều kiện ở Độ I–II khi chủng còn nhạy hoặc dị ứng beta-lactam và dữ liệu tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol.",
+              "dose": "400 mg truyền tĩnh mạch mỗi 12 giờ",
+              "administration": "Liều chuẩn người lớn theo UCSF khi chức năng thận phù hợp. Kiểm tra tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            }
           ]
         }
       ],
-      "source_ids": ["tg18-antibiotics", "tg18-flow"]
+      "source_ids": [
+        "tg18-antibiotics",
+        "tg18-flow"
+      ]
     },
     {
       "id": "community-iii",
       "kind": "primary",
-      "when": { "severity": "iii", "setting": "community" },
-      "summary": [{ "label": "Cộng đồng · Độ III", "text": "Bao phủ Pseudomonas trong điều trị kinh nghiệm theo TG18, cùng bao phủ Enterococcus cho đến khi có kết quả cấy." }],
+      "when": {
+        "severity": "iii",
+        "setting": "community"
+      },
+      "summary": [
+        {
+          "label": "Cộng đồng · Độ III",
+          "text": "Bao phủ Pseudomonas trong điều trị kinh nghiệm theo TG18, cùng bao phủ Enterococcus cho đến khi có kết quả cấy."
+        }
+      ],
       "blocks": [
         {
-          "title": "Kháng sinh kinh nghiệm · Bảng 3 TG18",
-          "lead": "Chọn một nhóm nền có hoạt tính kháng Pseudomonas. Đối chiếu nhu cầu phối hợp kỵ khí và Enterococcus ở các mục dưới.",
+          "title": "Thuốc nền · chọn một",
+          "lead": "Chọn một thuốc nền kháng Pseudomonas. Rà phần phối hợp Enterococcus và kỵ khí trước khi dùng.",
           "items": [
-            { "role": "Penicillin phối hợp", "text": "Piperacillin/tazobactam.", "ref": "Bảng 3, cột cộng đồng Độ III, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Cephalosporin", "text": "Cefepim, ceftazidim hoặc cefozopran.", "ref": "Bảng 3, cột cộng đồng Độ III, chú thích d, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Carbapenem", "text": "Imipenem/cilastatin, meropenem hoặc doripenem. Bảng 3 cũng liệt kê ertapenem, chỉ đối chiếu khi không cần bao phủ Pseudomonas.", "ref": "Bảng 3 và phần cộng đồng Độ III, tr. 6, 8", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Monobactam", "text": "Aztreonam là lựa chọn trong Bảng 3. Đánh giá riêng nhu cầu bao phủ Gram dương và kỵ khí khi chọn thuốc nền này.", "ref": "Bảng 3, cột cộng đồng Độ III, chú thích a và d, tr. 6", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Piperacillin/tazobactam",
+              "text": "Thuốc nền có phổ kỵ khí, dùng một chế phẩm phối hợp cố định. Xem chỉ định bổ sung bao phủ Enterococcus ở ca nặng hoặc liên quan chăm sóc y tế.",
+              "dose": "4,5 g tĩnh mạch liều đầu, sau đó 4,5 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Theo quy trình truyền kéo dài của UCSF. Truyền liều đầu 30 phút, bắt đầu liều duy trì ngay sau đó và truyền mỗi liều trong 4 giờ. Áp dụng khi cơ sở có quy trình truyền kéo dài phù hợp.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Cefepim",
+              "text": "Thuốc nền khi cần bao phủ Pseudomonas và độ nhạy tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol. Đánh giá phối hợp bao phủ Enterococcus ở nhánh nặng.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền khoảng 30 phút. Liều tham khảo của UCSF cho nhiễm khuẩn nặng hoặc nghi Pseudomonas, CrCl >60 mL/phút.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-cefepime"
+              ]
+            },
+            {
+              "role": "Meropenem",
+              "text": "Lựa chọn carbapenem khi cần phổ rộng và độ nhạy ủng hộ. Thuốc có phổ kỵ khí. Đánh giá chỉ định phối hợp bao phủ Enterococcus riêng.",
+              "dose": "1 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều tham khảo cho nhiễm khuẩn ổ bụng, truyền trong 15–30 phút theo nhãn.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-meropenem"
+              ]
+            }
           ]
         },
         {
-          "title": "Bao phủ Enterococcus",
+          "title": "Phối hợp bao phủ Enterococcus",
+          "lead": "Ví dụ piperacillin/tazobactam + vancomycin. Nếu chọn cefepim, thêm metronidazol khi có miệng nối mật–ruột.",
           "items": [
-            { "role": "Phối hợp kinh nghiệm", "text": "TG18 khuyến cáo vancomycin để bao phủ Enterococcus ở Độ III mắc phải cộng đồng trong khi chờ kết quả cấy.", "ref": "Bảng 3, chú thích a và phần cộng đồng Độ III, tr. 6, 8", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Vancomycin",
+              "text": "TG18 khuyến cáo phối hợp vancomycin để bao phủ Enterococcus ở viêm đường mật cấp Độ III mắc phải cộng đồng. Rà lại khi có kết quả vi sinh.",
+              "dose": "Nếu nhiễm nặng có chỉ định liều nạp, tham khảo 20–25 mg/kg tĩnh mạch một lần",
+              "administration": "Liều duy trì và khoảng cách liều theo cân nặng, CrCl và TDM. Truyền ít nhất 60 phút với tốc độ ≤10 mg/phút. Áp dụng thời gian dài hơn nếu cần để đáp ứng cả hai giới hạn.",
+              "ref": "Bảng 3, chú thích a và phần điều trị kinh nghiệm, tr. 6, 8–9",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-vanco-nomogram",
+                "dose-vanco-label"
+              ]
+            }
+          ],
+          "show_when": {
+            "vre_community": false
+          }
+        },
+        {
+          "title": "Thay thế có điều kiện",
+          "lead": "Ceftazidim hoặc aztreonam thay cho thuốc nền khi phù hợp. Aztreonam cần đánh giá bổ sung phổ còn thiếu.",
+          "items": [
+            {
+              "role": "Ceftazidim",
+              "text": "Thay thế cefepim khi cần bao phủ Pseudomonas và độ nhạy ủng hộ. Đánh giá thêm phổ Gram dương và kỵ khí theo bối cảnh.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền ngắn theo hướng dẫn chế phẩm. Hiệu chỉnh khi CrCl giảm.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Aztreonam",
+              "text": "Thuốc nền thay thế khi cần bao phủ Gram âm và không dùng được lựa chọn beta-lactam phù hợp. Không dùng đơn độc khi cần bao phủ Gram dương hoặc kỵ khí. Rà kỹ tiền sử dị ứng ceftazidim.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền trong 20–60 phút theo nhãn AZACTAM.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-aztreonam"
+              ]
+            }
           ]
         }
       ],
-      "source_ids": ["tg18-antibiotics"]
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
     },
     {
       "id": "healthcare",
       "kind": "primary",
-      "when": { "severity": ["i", "ii", "iii"], "setting": "healthcare" },
-      "summary": [{ "label": "Liên quan chăm sóc y tế", "text": "Chọn thuốc có hoạt tính kháng Pseudomonas theo dữ liệu tại cơ sở. Đánh giá ESBL/kháng carbapenem, vi khuẩn Gram dương kháng thuốc và tiền sử dùng kháng sinh." }],
+      "when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": "healthcare"
+      },
+      "summary": [
+        {
+          "label": "Liên quan chăm sóc y tế",
+          "text": "Chọn thuốc có hoạt tính kháng Pseudomonas theo dữ liệu tại cơ sở. Đánh giá ESBL/kháng carbapenem, vi khuẩn Gram dương kháng thuốc và tiền sử dùng kháng sinh."
+        }
+      ],
       "blocks": [
         {
-          "title": "Kháng sinh kinh nghiệm · Bảng 3 TG18",
-          "lead": "Chọn một nhóm nền có hoạt tính kháng Pseudomonas. Đối chiếu nhu cầu phối hợp kỵ khí và Enterococcus ở các mục dưới.",
+          "title": "Thuốc nền · chọn một",
+          "lead": "Chọn một thuốc nền kháng Pseudomonas. Rà phần phối hợp Enterococcus và kỵ khí trước khi dùng.",
           "items": [
-            { "role": "Penicillin phối hợp", "text": "Piperacillin/tazobactam.", "ref": "Bảng 3, cột liên quan chăm sóc y tế, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Cephalosporin", "text": "Cefepim, ceftazidim hoặc cefozopran.", "ref": "Bảng 3, cột liên quan chăm sóc y tế, chú thích d, tr. 6", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Carbapenem", "text": "Imipenem/cilastatin, meropenem hoặc doripenem. Bảng 3 cũng liệt kê ertapenem, chỉ đối chiếu khi không cần bao phủ Pseudomonas.", "ref": "Bảng 3 và phần liên quan chăm sóc y tế, tr. 6, 9", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Monobactam", "text": "Aztreonam là lựa chọn trong Bảng 3. Đánh giá riêng nhu cầu bao phủ Gram dương và kỵ khí khi chọn thuốc nền này.", "ref": "Bảng 3, cột liên quan chăm sóc y tế, chú thích a và d, tr. 6", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Piperacillin/tazobactam",
+              "text": "Thuốc nền có phổ kỵ khí, dùng một chế phẩm phối hợp cố định. Xem chỉ định bổ sung bao phủ Enterococcus ở ca nặng hoặc liên quan chăm sóc y tế.",
+              "dose": "4,5 g tĩnh mạch liều đầu, sau đó 4,5 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Theo quy trình truyền kéo dài của UCSF. Truyền liều đầu 30 phút, bắt đầu liều duy trì ngay sau đó và truyền mỗi liều trong 4 giờ. Áp dụng khi cơ sở có quy trình truyền kéo dài phù hợp.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Cefepim",
+              "text": "Thuốc nền khi cần bao phủ Pseudomonas và độ nhạy tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol. Đánh giá phối hợp bao phủ Enterococcus ở nhánh nặng.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền khoảng 30 phút. Liều tham khảo của UCSF cho nhiễm khuẩn nặng hoặc nghi Pseudomonas, CrCl >60 mL/phút.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-cefepime"
+              ]
+            },
+            {
+              "role": "Meropenem",
+              "text": "Lựa chọn carbapenem khi cần phổ rộng và độ nhạy ủng hộ. Thuốc có phổ kỵ khí. Đánh giá chỉ định phối hợp bao phủ Enterococcus riêng.",
+              "dose": "1 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều tham khảo cho nhiễm khuẩn ổ bụng, truyền trong 15–30 phút theo nhãn.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-meropenem"
+              ]
+            }
           ]
         },
         {
-          "title": "Bao phủ Enterococcus và Gram dương kháng thuốc",
+          "title": "Phối hợp bao phủ Enterococcus",
+          "lead": "Chú thích Bảng 3 nêu vancomycin. Phần diễn giải nhấn mạnh nguy cơ Gram dương kháng thuốc hoặc tiền sử định cư.",
           "items": [
-            { "role": "Enterococcus", "text": "Chú thích Bảng 3 nêu vancomycin để bao phủ Enterococcus trong nhiễm khuẩn liên quan chăm sóc y tế. Phần diễn giải nhấn mạnh tiền sử định cư hoặc nguy cơ Gram dương kháng thuốc.", "ref": "Bảng 3, chú thích a và phần liên quan chăm sóc y tế, tr. 6, 9", "source_ids": ["tg18-antibiotics"] },
-            { "role": "VRE có nguy cơ", "text": "TG18 nêu linezolid hoặc daptomycin khi đã biết định cư VRE, có tiền sử điều trị vancomycin hoặc VRE phổ biến tại địa phương. Hội chẩn để chọn thuốc theo vi sinh và bối cảnh cụ thể.", "ref": "Bảng 3, chú thích a và phần liên quan chăm sóc y tế, tr. 6, 9", "source_ids": ["tg18-antibiotics"] }
-          ]
-        }
-      ],
-      "source_ids": ["tg18-antibiotics"]
-    },
-    {
-      "id": "fluoroquinolones",
-      "kind": "addon",
-      "when": { "severity": ["i", "ii"], "setting": "community" },
-      "blocks": [
+            {
+              "role": "Vancomycin",
+              "text": "Đánh giá chỉ định phối hợp theo vi sinh trước đó, nguy cơ Gram dương kháng thuốc và dữ liệu tại cơ sở. Khi có kết quả cấy, thu hẹp phổ theo tác nhân.",
+              "dose": "Nếu nhiễm nặng có chỉ định liều nạp, tham khảo 20–25 mg/kg tĩnh mạch một lần",
+              "administration": "Liều duy trì và khoảng cách liều theo cân nặng, CrCl và TDM. Truyền ít nhất 60 phút với tốc độ ≤10 mg/phút. Áp dụng thời gian dài hơn nếu cần để đáp ứng cả hai giới hạn.",
+              "ref": "Bảng 3, chú thích a và phần điều trị kinh nghiệm, tr. 6, 8–9",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-vanco-nomogram",
+                "dose-vanco-label"
+              ]
+            }
+          ],
+          "show_when": {
+            "vre_risk": false
+          }
+        },
         {
-          "title": "Kháng sinh kinh nghiệm · Bảng 3 TG18",
+          "title": "Thay thế có điều kiện",
+          "lead": "Ceftazidim hoặc aztreonam thay thuốc nền khi phù hợp. Linezolid hoặc daptomycin chỉ thay phần bao phủ Gram dương khi có chỉ định VRE.",
           "items": [
-            { "role": "Fluoroquinolon có điều kiện", "text": "Ciprofloxacin, levofloxacin, pazufloxacin hoặc moxifloxacin được liệt kê ở Độ I–II. Đối chiếu khi đã biết chủng còn nhạy hoặc khi cần lựa chọn vì dị ứng beta-lactam và độ nhạy tại chỗ ủng hộ.", "ref": "Bảng 3, chú thích d–e, tr. 6 và phần cộng đồng, tr. 9", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Ceftazidim",
+              "text": "Thay thế cefepim khi cần bao phủ Pseudomonas và độ nhạy ủng hộ. Đánh giá thêm phổ Gram dương và kỵ khí theo bối cảnh.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền ngắn theo hướng dẫn chế phẩm. Hiệu chỉnh khi CrCl giảm.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Aztreonam",
+              "text": "Thuốc nền thay thế khi cần bao phủ Gram âm và không dùng được lựa chọn beta-lactam phù hợp. Không dùng đơn độc khi cần bao phủ Gram dương hoặc kỵ khí. Rà kỹ tiền sử dị ứng ceftazidim.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Truyền trong 20–60 phút theo nhãn AZACTAM.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult",
+                "dose-aztreonam"
+              ]
+            }
           ]
         }
       ],
-      "source_ids": ["tg18-antibiotics"]
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
     },
     {
       "id": "anaerobic-cover",
       "kind": "addon",
-      "when": { "severity": ["i", "ii", "iii"], "setting": ["community", "healthcare"], "anastomosis": true },
+      "when": {
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "setting": [
+          "community",
+          "healthcare"
+        ],
+        "anastomosis": true
+      },
       "blocks": [
         {
-          "title": "Bổ sung bao phủ kỵ khí khi có miệng nối mật–ruột",
+          "title": "Phối hợp kỵ khí khi có miệng nối mật–ruột",
+          "lead": "Bổ sung khi thuốc nền thiếu phổ kỵ khí.",
           "items": [
-            { "role": "Thuốc nền thiếu phổ kỵ khí", "text": "Phối hợp metronidazol khi thuốc nền chưa bao phủ đủ kỵ khí, chẳng hạn khi chọn ceftriaxon, cefotaxim, cefepim, ceftazidim hoặc aztreonam.", "ref": "Q2 và Bảng 3, chú thích d, tr. 6–7", "source_ids": ["tg18-antibiotics"] },
-            { "role": "Thuốc nền đã bao phủ kỵ khí", "text": "TG18 xem carbapenem, piperacillin/tazobactam, ampicillin/sulbactam, cefmetazol, cefoxitin, flomoxef và cefoperazon/sulbactam có phổ kỵ khí phù hợp trong tình huống này.", "ref": "Bảng 3, chú thích d, tr. 6", "source_ids": ["tg18-antibiotics"] }
+            {
+              "role": "Metronidazol",
+              "text": "Bổ sung vào ceftriaxon, cefotaxim, cefepim, ceftazidim, aztreonam hoặc ciprofloxacin khi có miệng nối mật–ruột và thuốc nền chưa đủ phổ kỵ khí. Piperacillin/tazobactam và carbapenem đã có phổ kỵ khí trong tình huống này.",
+              "dose": "500 mg tĩnh mạch mỗi 12 giờ",
+              "administration": "Liều cho nhiễm khuẩn ổ bụng theo UCSF. Có thể dùng đường uống nếu phù hợp với giai đoạn điều trị. Rà chức năng gan.",
+              "ref": "Q2 và Bảng 3 TG18, chú thích d, tr. 6–7",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            }
           ]
         }
       ],
-      "source_ids": ["tg18-antibiotics"]
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
+    },
+    {
+      "id": "vre-alternatives",
+      "kind": "addon",
+      "when": {
+        "setting": "healthcare",
+        "severity": [
+          "i",
+          "ii",
+          "iii"
+        ],
+        "vre_risk": true
+      },
+      "blocks": [
+        {
+          "title": "Thay thế vancomycin khi cần bao phủ VRE",
+          "lead": "Chọn một thuốc theo hội chẩn và kháng sinh đồ. Giữ thuốc nền Gram âm khi vẫn còn chỉ định.",
+          "items": [
+            {
+              "role": "Linezolid",
+              "text": "Lựa chọn thay vancomycin khi cần bao phủ VRE phù hợp theo vi sinh và hội chẩn. Giữ thuốc nền Gram âm nếu vẫn còn chỉ định. Kiểm tra tương tác và theo dõi công thức máu.",
+              "dose": "600 mg truyền tĩnh mạch mỗi 12 giờ",
+              "administration": "Truyền trong 30–120 phút theo nhãn. Dùng riêng từng thuốc.",
+              "ref": "Bảng 3 TG18, chú thích a, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-linezolid"
+              ]
+            },
+            {
+              "role": "Daptomycin",
+              "text": "Một lựa chọn khác khi cần bao phủ VRE. Chuyên khoa chọn liều theo loài, MIC, chức năng thận và vị trí nhiễm. Giữ thuốc nền Gram âm nếu còn chỉ định.",
+              "dose": "8–10 mg/kg tĩnh mạch mỗi 24 giờ theo UCSF khi CrCl >30 mL/phút",
+              "administration": "Một số VRE cần liều khác theo hội chẩn. Theo dõi creatine kinase.",
+              "ref": "Bảng 3 TG18, chú thích a, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
+    },
+    {
+      "id": "vre-community",
+      "kind": "addon",
+      "when": {
+        "setting": "community",
+        "severity": "iii",
+        "vre_community": true
+      },
+      "blocks": [
+        {
+          "title": "Thay thế vancomycin khi cần bao phủ VRE",
+          "lead": "Chọn một thuốc theo hội chẩn và kháng sinh đồ. Giữ thuốc nền Gram âm khi vẫn còn chỉ định.",
+          "items": [
+            {
+              "role": "Linezolid",
+              "text": "Lựa chọn thay vancomycin khi cần bao phủ VRE phù hợp theo vi sinh và hội chẩn. Giữ thuốc nền Gram âm nếu vẫn còn chỉ định. Kiểm tra tương tác và theo dõi công thức máu.",
+              "dose": "600 mg truyền tĩnh mạch mỗi 12 giờ",
+              "administration": "Truyền trong 30–120 phút theo nhãn. Dùng riêng từng thuốc.",
+              "ref": "Bảng 3 TG18, chú thích a, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-linezolid"
+              ]
+            },
+            {
+              "role": "Daptomycin",
+              "text": "Một lựa chọn khác khi cần bao phủ VRE. Chuyên khoa chọn liều theo loài, MIC, chức năng thận và vị trí nhiễm. Giữ thuốc nền Gram âm nếu còn chỉ định.",
+              "dose": "8–10 mg/kg tĩnh mạch mỗi 24 giờ theo UCSF khi CrCl >30 mL/phút",
+              "administration": "Một số VRE cần liều khác theo hội chẩn. Theo dõi creatine kinase.",
+              "ref": "Bảng 3 TG18, chú thích a, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            }
+          ]
+        }
+      ],
+      "source_ids": [
+        "tg18-antibiotics"
+      ]
     }
   ],
-  "source_text": "Tokyo Guidelines 2018. Bảng 3 không nêu liều kháng sinh cụ thể.",
-  "gaps": ["Phạm vi mô-đun là người lớn. Bảng 3 dùng để đối chiếu lựa chọn thuốc, còn liều cần tra theo chức năng cơ quan và hướng dẫn của cơ sở."],
+  "source_text": "Tokyo Guidelines 2018 về lựa chọn thuốc. Liều tham khảo người lớn đối chiếu với UCSF và nhãn thuốc.",
+  "gaps": [
+    "Thẻ thuốc trình bày các lựa chọn đã đối chiếu liều và cách dùng. Xem Bảng 3 để tra danh sách lựa chọn đầy đủ theo từng bệnh cảnh."
+  ],
   "selection_rationale": {
     "chosen": "Tokyo Guidelines 2018 cung cấp lựa chọn kháng sinh theo phân độ và bối cảnh mắc bệnh, cùng các tài liệu đồng bộ về chẩn đoán, phân độ và dẫn lưu.",
     "current_version_check": "Đối chiếu PDF của Gomi và cộng sự, DOI 10.1002/jhbp.518, với danh mục ấn bản TG18 và các bài liên quan trên trang của Hội Phẫu thuật Gan Mật Tụy Nhật Bản."
   },
   "sources": [
     {
-      "id": "tg18-antibiotics", "org": "Tokyo Guidelines 2018 · Gomi và cộng sự",
+      "id": "tg18-antibiotics",
+      "org": "Tokyo Guidelines 2018 · Gomi và cộng sự",
       "title": "Tokyo Guidelines 2018: antimicrobial therapy for acute cholangitis and cholecystitis",
       "short_title": "TG18 · Kháng sinh, thời gian điều trị và chuyển uống",
-      "year": 2018, "version": "J Hepatobiliary Pancreat Sci 25(1):3–16 · Bảng 3, 5, 6",
-      "url": "https://doi.org/10.1002/jhbp.518", "accessed": "2026-11-22", "population": ["adult"],
-      "evidence_system": "TG18 dùng mức khuyến cáo 1/2 và mức bằng chứng A–D cho các câu hỏi lâm sàng.", "grade_system": "none"
+      "year": 2018,
+      "version": "J Hepatobiliary Pancreat Sci 25(1):3–16 · Bảng 3, 5, 6",
+      "url": "https://doi.org/10.1002/jhbp.518",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "TG18 dùng mức khuyến cáo 1/2 và mức bằng chứng A–D cho các câu hỏi lâm sàng.",
+      "grade_system": "none"
     },
     {
-      "id": "tg18-grading", "org": "Tokyo Guidelines 2018 · Kiriyama và cộng sự",
+      "id": "tg18-grading",
+      "org": "Tokyo Guidelines 2018 · Kiriyama và cộng sự",
       "title": "Tokyo Guidelines 2018: diagnostic criteria and severity grading of acute cholangitis (with videos)",
       "short_title": "TG18 · Chẩn đoán và phân độ",
-      "year": 2018, "version": "J Hepatobiliary Pancreat Sci 25(1):17–30 · Bảng 2 và 4",
-      "url": "https://doi.org/10.1002/jhbp.512", "accessed": "2026-11-22", "population": ["adult"],
-      "evidence_system": "Tiêu chuẩn chẩn đoán và phân độ TG18/TG13.", "grade_system": "none"
+      "year": 2018,
+      "version": "J Hepatobiliary Pancreat Sci 25(1):17–30 · Bảng 2 và 4",
+      "url": "https://doi.org/10.1002/jhbp.512",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Tiêu chuẩn chẩn đoán và phân độ TG18/TG13.",
+      "grade_system": "none"
     },
     {
-      "id": "tg18-flow", "org": "Tokyo Guidelines 2018 · Miura và cộng sự",
+      "id": "tg18-flow",
+      "org": "Tokyo Guidelines 2018 · Miura và cộng sự",
       "title": "Tokyo Guidelines 2018: initial management of acute biliary infection and flowchart for acute cholangitis",
       "short_title": "TG18 · Xử trí ban đầu và dẫn lưu",
-      "year": 2018, "version": "J Hepatobiliary Pancreat Sci 25(1):31–40 · Lưu đồ viêm đường mật cấp",
-      "url": "https://doi.org/10.1002/jhbp.509", "accessed": "2026-11-22", "population": ["adult"],
-      "evidence_system": "Lưu đồ xử trí ban đầu theo phân độ TG18.", "grade_system": "none"
+      "year": 2018,
+      "version": "J Hepatobiliary Pancreat Sci 25(1):31–40 · Lưu đồ viêm đường mật cấp",
+      "url": "https://doi.org/10.1002/jhbp.509",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Lưu đồ xử trí ban đầu theo phân độ TG18.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-ucsf-adult",
+      "org": "UCSF Infectious Diseases Management Program",
+      "title": "Adult Antimicrobial Dosing, Non-dialysis",
+      "short_title": "UCSF · Liều người lớn",
+      "year": 2026,
+      "version": "Bản trực tuyến đối chiếu 22/11/2026",
+      "url": "https://idmp.ucsf.edu/adult-antimicrobial-dosing-non-dialysis",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-ceftriaxone",
+      "org": "DailyMed",
+      "title": "Ceftriaxone for Injection, USP",
+      "short_title": "Nhãn ceftriaxon",
+      "year": 2026,
+      "version": "Liều và cách dùng",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ddbc3bf6-5bab-4851-ae5a-ef263cd8f255",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-cefotaxime",
+      "org": "DailyMed",
+      "title": "Cefotaxime for Injection, USP",
+      "short_title": "Nhãn cefotaxim",
+      "year": 2024,
+      "version": "Dosage and Administration",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ed23b6bc-32c7-4c50-a53d-313ae78e5623",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-cefepime",
+      "org": "DailyMed",
+      "title": "Cefepime for Injection and Dextrose Injection",
+      "short_title": "Nhãn cefepim",
+      "year": 2026,
+      "version": "Truyền tĩnh mạch",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=57517a0e-ec1b-4605-a7cc-7e3801158ec9",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-unasyn",
+      "org": "DailyMed",
+      "title": "UNASYN (ampicillin/sulbactam) for Injection",
+      "short_title": "Nhãn UNASYN",
+      "year": 2026,
+      "version": "Liều và truyền tĩnh mạch",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=155c7ec0-5862-404f-b1d0-f278f8a8bbda",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-meropenem",
+      "org": "DailyMed",
+      "title": "Meropenem for Injection",
+      "short_title": "Nhãn meropenem",
+      "year": 2025,
+      "version": "Liều người lớn trong nhiễm khuẩn ổ bụng",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=35466216-55ed-4836-8cbc-c8aafb079dae",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-aztreonam",
+      "org": "DailyMed",
+      "title": "AZACTAM (aztreonam) for injection",
+      "short_title": "Nhãn AZACTAM",
+      "year": 2025,
+      "version": "Truyền tĩnh mạch",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f9d5515e-54bc-4efc-9f49-8ee3e88c3e01",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-vanco-nomogram",
+      "org": "UCSF IDMP · Zuckerberg San Francisco General",
+      "title": "Vancomycin Initial Dosing Nomogram",
+      "short_title": "ZSFG · Liều vancomycin",
+      "year": 2025,
+      "version": "Cập nhật 30/05/2025",
+      "url": "https://idmp.ucsf.edu/content/vancomycin-initial-dosing-nomogram",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-vanco-label",
+      "org": "DailyMed",
+      "title": "Vancomycin Hydrochloride for Injection, USP",
+      "short_title": "Nhãn vancomycin",
+      "year": 2026,
+      "version": "Tốc độ và thời gian truyền",
+      "url": "https://www.dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6ea38b4d-a6d2-4826-8110-ae42c9f7a42a",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-linezolid",
+      "org": "DailyMed",
+      "title": "Linezolid Injection",
+      "short_title": "Nhãn linezolid",
+      "year": 2024,
+      "version": "Liều và truyền tĩnh mạch",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=95b8fd63-d018-8062-e053-2995a90ab96d",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
     }
   ],
-  "review": { "state": "draft_ai", "verified_by": null, "verified_date": null, "next_review": null }
+  "review": {
+    "state": "draft_ai",
+    "verified_by": null,
+    "verified_date": null,
+    "next_review": null
+  }
 }

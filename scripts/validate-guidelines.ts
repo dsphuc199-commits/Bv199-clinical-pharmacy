@@ -14,6 +14,7 @@ export const TRUSTED = [
   "idsociety.org", "ashp.org", "aap.org", "publications.aap.org", "nice.org.uk", "who.int", "cdc.gov", "espid.org",
   "escmid.org", "sccm.org", "thoracic.org", "ersnet.org", "kdigo.org", "diabetesjournals.org", "pubmed.ncbi.nlm.nih.gov",
   "ncbi.nlm.nih.gov", "doi.org", "moh.gov.vn", "kcb.vn",
+  "dailymed.nlm.nih.gov", "idmp.ucsf.edu",
   "ecil-leukaemia.com", // trang chính thức của ECIL (European Conference on Infections in Leukaemia) – thêm 14/11/2026
 ];
 const MAX_MULTI_OPTIONS = 14; // 2^14 tập con – giới hạn liệt kê
