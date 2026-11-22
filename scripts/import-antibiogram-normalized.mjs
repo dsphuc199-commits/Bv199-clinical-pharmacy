@@ -90,8 +90,18 @@ const slug = (s) =>
 const SOURCE_SCOPES = ["Toàn viện", "HSCC", "Khối nội", "Khối ngoại"];
 const C9_LABEL = "Khoa Vật lý trị liệu – Phục hồi chức năng (C9)";
 const SCOPES = [...SOURCE_SCOPES, C9_LABEL];
-const DEPARTMENT_NOTE = "Mã A thuộc Khối Nội và mã B thuộc Khối Ngoại. A7 được tính trong Khối Nội và có bảng HSCC riêng để tra cứu. C9 là Khoa Vật lý trị liệu – Phục hồi chức năng.";
-const wardOf = (iso) => iso.khoa.trim().toUpperCase();
+const DEPARTMENT_NOTE = "Mã A thuộc Khối Nội và mã B thuộc Khối Ngoại. A7 được tính trong Khối Nội và có bảng HSCC riêng để tra cứu. Mã cũ N1 được gộp vào A1, N2 vào A2. C9 là Khoa Vật lý trị liệu – Phục hồi chức năng.";
+/* Ma khoa cu trong du lieu nguon: N1 = A1, N2 = A2 (theo xac nhan cua Khoa Duoc). */
+const WARD_ALIAS = { N1: "A1", N2: "A2" };
+const rawWardOf = (iso) => iso.khoa.trim().toUpperCase();
+const wardOf = (iso) => WARD_ALIAS[rawWardOf(iso)] ?? rawWardOf(iso);
+/* Thu tu ma khoa: chu cai roi so (A1, A2, ..., A8, B1, ..., C9); ma khong theo dang nay xep cuoi. */
+const wardOrder = (a, b) => {
+  const pa = a.match(/^([A-Z]+)(\d+)$/), pb = b.match(/^([A-Z]+)(\d+)$/);
+  if (pa && pb) return pa[1].localeCompare(pb[1]) || Number(pa[2]) - Number(pb[2]);
+  if (pa || pb) return pa ? -1 : 1;
+  return a.localeCompare(b, "vi");
+};
 function divisionOf(iso) {
   const ward = wardOf(iso);
   if (/^A\d+$/.test(ward)) return "Khối nội";
@@ -333,14 +343,17 @@ function buildTables(sourceLayout = false) {
       : isolates.filter((iso) => scopesOf(iso).includes(scope));
     return { id: slug(scope), kind: "scope", label: scope, heading: SCOPE_LABEL[scope], n: subset.length, subset };
   });
+  /* Bo cuc goc (doi chieu Excel) giu ma khoa nhu workbook; bang hien thi gop ma cu va xep theo ma khoa. */
+  const wardKey = sourceLayout ? rawWardOf : wardOf;
   const byWard = new Map();
   for (const iso of isolates) {
-    const ward = wardOf(iso);
+    const ward = wardKey(iso);
     if (!byWard.has(ward)) byWard.set(ward, []);
     byWard.get(ward).push(iso);
   }
-  for (const [ward, subset] of [...byWard].sort(([a, as], [b, bs]) =>
-    groups.indexOf(groupOf(as[0])) - groups.indexOf(groupOf(bs[0])) || a.localeCompare(b, "vi")
+  for (const [ward, subset] of [...byWard].sort(([a, as], [b, bs]) => sourceLayout
+    ? groups.indexOf(groupOf(as[0])) - groups.indexOf(groupOf(bs[0])) || a.localeCompare(b, "vi")
+    : wardOrder(a, b)
   )) {
     const label = !sourceLayout && ward === "C9" ? C9_LABEL : `Khoa ${ward}`;
     const group = !sourceLayout && ward === "C9" ? undefined : groupOf(subset[0]);
