@@ -1,9 +1,10 @@
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   cholangitisChoices, cholangitisCombination, cholangitisCourse, tg18Diagnosis, tg18Severity,
   type CholangitisResult, type CourseException, type OrganStatus, type SourceControl, type TG18SeverityAssessment,
 } from "@/lib/antibiotics/cholangitis-plan";
+import { effectiveState, resolve } from "@/lib/intl-rules";
 import type { IntlGuideline } from "@/schema/intl-guideline";
 import CholangitisCards from "./CholangitisCards";
 
@@ -14,6 +15,12 @@ const diagnosisCriteria = [
   { id: "c", name: "C · Hình ảnh", detail: "Giãn đường mật hoặc thấy nguyên nhân như sỏi, hẹp hay stent trên hình ảnh." },
 ] as const;
 const gradeLabels = { i: "Độ I · nhẹ", ii: "Độ II · trung bình", iii: "Độ III · nặng" };
+type TG18Grade = keyof typeof gradeLabels;
+const gradeGuide = [
+  { id: "i", criteria: "Đã đánh giá đủ, không có suy cơ quan và có 0–1 tiêu chí Độ II." },
+  { id: "ii", criteria: "Có ít nhất 2/5 tiêu chí Độ II và đã loại trừ suy cơ quan." },
+  { id: "iii", criteria: "Có ít nhất 1 dấu hiệu suy cơ quan mới xuất hiện." },
+] as const;
 
 const organCriteria = [
   { id: "cardiovascular", name: "Tuần hoàn", detail: "Hạ huyết áp cần dopamin ≥5 µg/kg/phút hoặc noradrenalin ở bất kỳ liều nào." },
@@ -58,7 +65,66 @@ function CriteriaChecklist({ criteria, selected, onChange }: {
   );
 }
 
-export function CholangitisAssessment({ apply, manualControl }: { apply: (severity: string) => void; manualControl: ReactNode }) {
+function CholangitisOverview({ guideline, setting, severity }: { guideline: IntlGuideline; setting: string; severity: string }) {
+  const healthcare = setting === "healthcare";
+  const overview = useMemo(() => {
+    const context = healthcare ? "healthcare" : "community";
+    const resultFor = (grade: TG18Grade) => resolve(guideline, effectiveState(guideline.axes, { severity: grade, setting: context }));
+    const mild = cholangitisChoices(resultFor("i"), false);
+    if (healthcare) return { healthcare: mild, community: null };
+
+    const moderate = resultFor("ii");
+    const standard = cholangitisChoices(moderate, false);
+    const broad = cholangitisChoices(moderate, true);
+    const broadRoles = [...broad.base, ...broad.alternatives].map(({ role }) => role);
+    const standardRoles = standard.base.filter(({ role }) => !broadRoles.includes(role)).map(({ role }) => role);
+    return {
+      healthcare: null,
+      community: { mild, standardRoles, broadRoles, severe: cholangitisChoices(resultFor("iii"), false) },
+    };
+  }, [guideline, healthcare]);
+  const community = overview.community;
+  const enterococcusAgent = community?.severe.enterococcus?.role;
+  const treatment = community && {
+    i: community.mild.baseLead,
+    ii: [
+      community.standardRoles.length > 0 && `${community.standardRoles.join(" hoặc ")} khi phổ phù hợp.`,
+      community.broadRoles.length > 0 && `Khi cần kháng Pseudomonas, cân nhắc ${community.broadRoles.join(", ")}.`,
+    ].filter(Boolean).join(" "),
+    iii: [
+      community.severe.base.length > 0 && `Thuốc nền kháng Pseudomonas gồm ${community.severe.base.map(({ role }) => role).join(", ")}. Cân nhắc carbapenem khi có chỉ định.`,
+      enterococcusAgent && `Phối hợp ${enterococcusAgent} để bao phủ Enterococcus.`,
+    ].filter(Boolean).join(" "),
+  };
+
+  return (
+    <div className="@container grid gap-2" role="region" aria-label="Tổng quan phân độ và kháng sinh TG18">
+      <p className="m-0 text-xs font-semibold text-teal-900">
+        {healthcare ? "Phân độ TG18 · Liên quan chăm sóc y tế" : "Kháng sinh tham khảo · Mắc phải cộng đồng"}
+      </p>
+      <ol className="m-0 grid list-none gap-2 p-0 @min-[42rem]:grid-cols-3">
+        {gradeGuide.map(({ id, criteria }) => (
+          <li key={id} aria-current={severity === id ? true : undefined}
+            className="grid min-w-0 content-start gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 aria-[current=true]:border-teal-600 aria-[current=true]:bg-teal-50">
+            <h5 className="m-0 text-sm font-bold text-slate-900">{gradeLabels[id]}</h5>
+            <p className="m-0 text-xs leading-relaxed text-slate-700">{criteria}</p>
+            {treatment?.[id] && <p className="m-0 break-words border-t border-slate-200 pt-1.5 text-xs leading-relaxed text-slate-800">{treatment[id]}</p>}
+          </li>
+        ))}
+      </ol>
+      {overview.healthcare && (
+        <div className="rounded-lg border border-teal-100 bg-teal-50 px-3 py-2 text-xs leading-relaxed text-teal-950">
+          <p className="m-0"><strong>Kháng sinh tham khảo ở cả ba độ</strong> · {overview.healthcare.baseLead}</p>
+          {overview.healthcare.base.length > 0 && <p className="m-0 mt-1">Thuốc nền gồm {overview.healthcare.base.map(({ role }) => role).join(", ")}. Đánh giá chỉ định phủ Enterococcus hoặc Gram dương kháng thuốc.</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function CholangitisAssessment({ apply, manualControl, guideline, severity, setting }: {
+  apply: (severity: string) => void; manualControl: ReactNode; guideline: IntlGuideline; severity: string; setting: string;
+}) {
   const [findings, setFindings] = useState({ a: false, b: false, c: false });
   const [manual, setManual] = useState(false);
   const [assessment, setAssessment] = useState<TG18SeverityAssessment>({
@@ -86,29 +152,27 @@ export function CholangitisAssessment({ apply, manualControl }: { apply: (severi
           </button>
         )}
       </div>
+      <CholangitisOverview guideline={guideline} severity={severity} setting={setting} />
       {manual ? manualControl : (
         <>
           <div className="grid gap-2.5 lg:grid-cols-2">
-            <fieldset className="grid min-w-0 content-start gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 pb-2.5">
-              <legend className="px-1 text-sm font-bold text-slate-900">{gradeLabels.iii}</legend>
-              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700">Tích các dấu hiệu suy cơ quan mới xuất hiện. Một dấu hiệu đủ để xếp Độ III.</p>
-              <CriteriaChecklist criteria={organCriteria} selected={assessment.organFindings} onChange={(organFindings) => updateAssessment({ ...assessment, organFindings, noOrganDysfunction: false })} />
-              <label className="flex items-start gap-2 border-t border-slate-200 px-2 pt-2 text-xs font-semibold text-slate-800">
-                <input type="checkbox" className="mt-0.5 shrink-0 accent-teal-800" checked={assessment.noOrganDysfunction} disabled={assessment.organFindings.length > 0}
-                  onChange={(e) => updateAssessment({ ...assessment, noOrganDysfunction: e.target.checked })} />
-                Đã đánh giá và không có dấu hiệu suy cơ quan
-              </label>
-            </fieldset>
             <fieldset className="grid min-w-0 content-start gap-1.5 rounded-xl border border-teal-100 bg-teal-50/50 px-2.5 pb-2.5">
-              <legend className="px-1 text-sm font-bold text-slate-900">{gradeLabels.ii}</legend>
-              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700">Xếp Độ II khi có ít nhất 2 tiêu chí và đã loại trừ Độ III.</p>
+              <legend className="px-1 text-sm font-bold text-slate-900">Tiêu chí Độ II</legend>
               <CriteriaChecklist criteria={moderateCriteria} selected={assessment.moderateFindings} onChange={(moderateFindings) => updateAssessment({ ...assessment, moderateFindings, moderateReviewed: false })} />
               <label className="flex items-start gap-2 border-t border-teal-100 px-2 pt-2 text-xs font-semibold text-slate-800">
                 <input type="checkbox" className="mt-0.5 shrink-0 accent-teal-800" checked={assessment.moderateReviewed}
                   onChange={(e) => updateAssessment({ ...assessment, moderateReviewed: e.target.checked })} />
                 Đã đối chiếu đủ 5 tiêu chí Độ II
               </label>
-              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700"><strong>Độ I · nhẹ</strong> khi đã loại trừ suy cơ quan và chỉ có 0–1 tiêu chí Độ II sau đánh giá.</p>
+            </fieldset>
+            <fieldset className="grid min-w-0 content-start gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 pb-2.5">
+              <legend className="px-1 text-sm font-bold text-slate-900">Dấu hiệu suy cơ quan · Độ III</legend>
+              <CriteriaChecklist criteria={organCriteria} selected={assessment.organFindings} onChange={(organFindings) => updateAssessment({ ...assessment, organFindings, noOrganDysfunction: false })} />
+              <label className="flex items-start gap-2 border-t border-slate-200 px-2 pt-2 text-xs font-semibold text-slate-800">
+                <input type="checkbox" className="mt-0.5 shrink-0 accent-teal-800" checked={assessment.noOrganDysfunction} disabled={assessment.organFindings.length > 0}
+                  onChange={(e) => updateAssessment({ ...assessment, noOrganDysfunction: e.target.checked })} />
+                Đã đánh giá và không có dấu hiệu suy cơ quan
+              </label>
             </fieldset>
           </div>
           <p role="status" className="m-0 rounded-lg bg-teal-50 px-3 py-2 text-sm text-teal-950">

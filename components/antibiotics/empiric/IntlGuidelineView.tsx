@@ -208,6 +208,9 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
     return (
       <>
         <CholangitisAssessment
+          guideline={g}
+          severity={severity}
+          setting={setting}
           apply={(value) => set("severity", value)}
           manualControl={severityAxis && <AxisControl a={severityAxis} value={severity} set={(value) => set("severity", value)} />}
         />
