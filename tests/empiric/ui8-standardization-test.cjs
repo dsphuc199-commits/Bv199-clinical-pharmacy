@@ -8,6 +8,9 @@ const Picker=load('components/antibiotics/treatment/ClinicalScenarioPicker.tsx')
 const Panel=load('components/antibiotics/treatment/TreatmentPanel.tsx').default;
 const {AbxLinkProvider}=load('components/antibiotics/links/AbxLinkContext.tsx');
 const audit=path.resolve(__dirname,'../../audit-69-2026/codex-review/UI8_ALL');
+/* So noi dung, bo qua khac biet ky tu xuong dong CRLF/LF giua ban checkout va baseline. */
+const eol=(t)=>t.split('\r\n').join('\n');
+const eolPairs=(pairs)=>pairs.map(([n,v])=>[n,eol(v)]);
 let pass=0,fail=0;function check(name,ok){if(ok)pass++;else fail++;console.log(`${ok?'PASS':'FAIL'} ${name}`);}
 const baseline=JSON.parse(fs.readFileSync(path.join(audit,'baseline.json'),'utf8'));
 check('Actual catalog IDs are unique and unchanged',new Set(C.DISEASES.map(d=>d.id)).size===C.DISEASES.length&&JSON.stringify(C.DISEASES)===JSON.stringify(baseline.catalog));
@@ -18,7 +21,7 @@ const unchangedRegimens = R.ALL_REGIMENS.filter(outsideBiliary);
 check('Regimen source, dose, notes and duration preserved outside the biliary source correction',JSON.stringify(unchangedRegimens)===JSON.stringify(baseline.regimens.filter(outsideBiliary)));
 check('Structured clinical records unchanged outside the biliary source correction',JSON.stringify(unchangedRegimens.map(r=>S.structureOf(r)))===JSON.stringify(baseline.structures.filter((_,i)=>outsideBiliary(baseline.regimens[i]))));
 const declarationBaseline=JSON.parse(fs.readFileSync(path.join(audit,'module-declarations-baseline.json'),'utf8'));
-for(const [file,expected]of Object.entries(declarationBaseline)){const text=fs.readFileSync(path.resolve(__dirname,'../..',file),'utf8');const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const actual=source.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations.filter(d=>d.initializer&&/^[A-Z][A-Z0-9_]*$/.test(d.name.getText(source))).map(d=>[d.name.getText(source),d.initializer.getText(source)]));check(`Original clinical declarations unchanged: ${path.basename(file)}`,JSON.stringify(actual)===JSON.stringify(expected));}
+for(const [file,expected]of Object.entries(declarationBaseline)){const text=fs.readFileSync(path.resolve(__dirname,'../..',file),'utf8');const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const actual=source.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations.filter(d=>d.initializer&&/^[A-Z][A-Z0-9_]*$/.test(d.name.getText(source))).map(d=>[d.name.getText(source),d.initializer.getText(source)]));check(`Original clinical declarations unchanged: ${path.basename(file)}`,JSON.stringify(eolPairs(actual))===JSON.stringify(eolPairs(expected)));}
 check('Severity alone does not invent an inpatient branch',Picker.settingInSourceLabel('Bệnh cảnh nặng')===undefined&&Picker.settingInSourceLabel('Điều trị ngoại trú')==='outpatient'&&Picker.settingInSourceLabel('Điều trị nội trú')==='inpatient');
 const picker=render(React.createElement(Picker.default,{scenarios:[{value:'out',label:'Ngoại trú'},{value:'in',label:'Nội trú'}],onChange:()=>{}}));
 check('Setting tabs expose one context without assigning a patient group', (picker.match(/role="tab"/g)||[]).length===2&&(picker.match(/aria-selected="true"/g)||[]).length===1&&picker.includes('Ngoại trú')&&picker.includes('Nội trú')&&picker.includes('Chọn nhóm người bệnh')&&!picker.includes('data-selected-group='));
@@ -37,7 +40,7 @@ const biliaryDoseMarkup=render(React.createElement(Table,{groups:biliaryDose.gro
 check('Biliary adjunct keeps the source dose, route and slash interval',biliaryAdjunct.role==='adjunct'&&biliaryDoseMarkup.includes('TM 500 mg/8 giờ'));
 const routeText=fs.readFileSync(path.resolve(__dirname,'../../app/antibiotics/empiric/guideline-v9/page.tsx'),'utf8');
 check('ABRS wrapper uses source-scoped horizontal context tabs',routeText.includes('<SettingTabs items=')&&routeText.includes('value={abrsSetting}')&&!routeText.includes('<DecisionDisclosure'));
-check('ABRS inpatient scope and warnings remain unchanged',routeText.includes(fs.readFileSync(path.join(audit,'abrs-inpatient-baseline.txt'),'utf8')));
+check('ABRS inpatient scope and warnings remain unchanged',eol(routeText).includes(eol(fs.readFileSync(path.join(audit,'abrs-inpatient-baseline.txt'),'utf8'))));
 function drug(name){return{name,dose:'100',doseUnit:'mg',route:'Uống',interval:'Mỗi 12 giờ',population:'adult',doseBasis:'per-dose',ingredientIds:[],flags:[],raw:`${name} 100 mg uống mỗi 12 giờ`,complete:true};}
 const group={rule:'one-of',optional:false,ambiguous:false,options:[drug('A'),drug('B')],raw:[{name:'A hoặc B',dose:'100 mg uống mỗi 12 giờ'}]};
 const alternatives=render(React.createElement(Table,{groups:[group],status:'STRUCTURED'}));
