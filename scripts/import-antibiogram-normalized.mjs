@@ -2,6 +2,7 @@
   Nhap goi du lieu vi sinh da chuan hoa (BV199, 04/2025 – 03/2026) vao web app.
 
   Cach chay:
+    node scripts/import-antibiogram-normalized.mjs <workbook.xlsx>
     node scripts/import-antibiogram-normalized.mjs <thu-muc-goi-du-lieu> [workbook.xlsx]
   Thu muc can co: isolates.csv, ast_results.csv, ref_intrinsic_resistance.csv,
   antibiogram_long.csv (doi chieu S/I/R). Tham so thu 2 (tuy chon): file workbook .xlsx
@@ -21,12 +22,23 @@ import path from "node:path";
 
 const SRC = process.argv[2] ?? process.env.ANTIBIOGRAM_SRC;
 if (!SRC) {
-  console.error("Thieu duong dan thu muc goi du lieu.");
+  console.error("Thieu duong dan workbook hoac thu muc goi du lieu.");
   process.exit(1);
 }
 const OUT = path.resolve("data/antibiotics/antibiogram-bv199.json");
+const sourceIsWorkbook = /\.xlsx$/i.test(SRC);
+const XLSX_PATH = process.argv[3] ?? process.env.ANTIBIOGRAM_XLSX ?? (sourceIsWorkbook ? SRC : undefined);
+const XLSX = sourceIsWorkbook || XLSX_PATH ? (await import("xlsx")).default : null;
+const workbook = sourceIsWorkbook ? XLSX.readFile(SRC) : null;
 
-function readCsv(name) {
+function readRows(name, sheetName) {
+  if (workbook) {
+    const sheet = workbook.Sheets[sheetName];
+    if (!sheet) throw new Error(`Workbook thieu bang ${sheetName}.`);
+    return XLSX.utils.sheet_to_json(sheet, { defval: "" }).map((row) => Object.fromEntries(
+      Object.entries(row).map(([column, value]) => [column, String(value).trim()])
+    ));
+  }
   const text = fs.readFileSync(path.join(SRC, name), "utf8").replace(/^﻿/, "");
   const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
   const head = lines[0].split(",");
@@ -75,7 +87,24 @@ const slug = (s) =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").toLowerCase()
     .replace(/\./g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-const SCOPES = ["Toàn viện", "HSCC", "Khối nội", "Khối ngoại"];
+const SOURCE_SCOPES = ["Toàn viện", "HSCC", "Khối nội", "Khối ngoại"];
+const C9_LABEL = "Khoa Vật lý trị liệu – Phục hồi chức năng (C9)";
+const SCOPES = [...SOURCE_SCOPES, C9_LABEL];
+const DEPARTMENT_NOTE = "Mã A thuộc Khối Nội và mã B thuộc Khối Ngoại. A7 được tính trong Khối Nội và có bảng HSCC riêng để tra cứu. C9 là Khoa Vật lý trị liệu – Phục hồi chức năng.";
+const wardOf = (iso) => iso.khoa.trim().toUpperCase();
+function divisionOf(iso) {
+  const ward = wardOf(iso);
+  if (/^A\d+$/.test(ward)) return "Khối nội";
+  if (/^B\d+$/.test(ward)) return "Khối ngoại";
+  if (ward === "C9") return C9_LABEL;
+  return iso.nhom_khoa;
+}
+function scopesOf(iso) {
+  const division = divisionOf(iso);
+  const scopes = ["Toàn viện", division];
+  if (wardOf(iso) === "A7") scopes.push("HSCC");
+  return scopes;
+}
 const ALL_SPECIMENS = "Tất cả";
 /* Lam tron 1 chu so thap phan kieu ROUND cua Excel (diem giua lam tron len: 27/48 = 56,3),
    trung bang khang sinh do trong workbook. */
@@ -87,11 +116,11 @@ const pct = (a, b) => {
   return q / 10;
 };
 
-const isolatesAll = readCsv("isolates.csv");
+const isolatesAll = readRows("isolates.csv", "DATA_PHAN_LAP");
 const isolates = isolatesAll.filter((r) => r.first_isolate === "Y");
-const ast = readCsv("ast_results.csv");
+const ast = readRows("ast_results.csv", "AST_LONG");
 const intrinsic = new Set(
-  readCsv("ref_intrinsic_resistance.csv").map((r) => `${r.nhom_bao_cao}|${r.ma_khang_sinh}`)
+  readRows("ref_intrinsic_resistance.csv", "DM_KHANG_TU_NHIEN").map((r) => `${r.nhom_bao_cao}|${r.ma_khang_sinh}`)
 );
 
 for (const r of isolatesAll) {
@@ -112,7 +141,7 @@ for (const row of ast) {
   if (!iso) continue;
   if (!["S", "I", "R"].includes(row.ket_qua)) throw new Error(`Ket qua la: ${row.ket_qua}`);
   const [antibioticId, antibioticName] = ANTIBIOTICS[row.ma_khang_sinh];
-  for (const department of ["Toàn viện", iso.nhom_khoa]) {
+  for (const department of scopesOf(iso)) {
     for (const specimen of [ALL_SPECIMENS, iso.nhom_benh_pham]) {
       const base = {
         department, specimen,
@@ -145,7 +174,7 @@ const records = [...cells.values()].map((c) => {
   return rec;
 }).sort((a, b) => a.id.localeCompare(b.id, "vi"));
 
-/* Doi chieu: gop theo nhom bao cao, tat ca benh pham -> phai trung antibiogram_long.csv. */
+/* Doi chieu S/I/R theo phan nhom cua workbook goc, truoc khi ap dung danh muc khoa BV199. */
 const groupSum = new Map();
 for (const row of ast) {
   const iso = byIsolate.get(row.isolate_id);
@@ -158,7 +187,7 @@ for (const row of ast) {
   }
 }
 /* So S/I/R phai trung tung dong; %S duoc doi chieu tung o voi workbook Excel o phan bang ben duoi. */
-const reference = readCsv("antibiogram_long.csv");
+const reference = readRows("antibiogram_long.csv", "AB_LONG");
 const mismatches = [];
 for (const r of reference) {
   const key = `${r.pham_vi}|${r.nhom_bao_cao}|${r.ma_khang_sinh}`;
@@ -183,7 +212,7 @@ const database = {
     period: { id: "2025-04_2026-03", label: "04/2025 – 03/2026" },
     method: "CLSI M39: chỉ tính phân lập đầu tiên của mỗi loài ở mỗi người bệnh; %S = S/(S+I+R), I tính là không nhạy.",
     status: "Chưa thẩm định cho hỗ trợ quyết định lâm sàng.",
-    departmentNote: "Nhóm khoa (HSCC, Khối nội, Khối ngoại) suy ra từ báo cáo trước; chờ khoa và Kiểm soát nhiễm khuẩn xác nhận.",
+    departmentNote: DEPARTMENT_NOTE,
     intrinsicNote: "Kháng tự nhiên chưa đối chiếu với CLSI M100 và EUCAST Expected Resistant Phenotypes.",
     isolateCount: isolates.length,
     rawIsolateCount: isolatesAll.length,
@@ -195,9 +224,6 @@ const database = {
   },
   records,
 };
-
-fs.writeFileSync(OUT, JSON.stringify(database, null, 1) + "\n");
-console.log(`OK: ${isolates.length}/${isolatesAll.length} phan lap dau tien, ${records.length} dong, ${organisms.length} loai; doi chieu ${reference.length} dong khop 100%.`);
 
 /* =========================================================
    BANG KHANG SINH DO TICH LUY (cung mau workbook Excel)
@@ -218,7 +244,7 @@ const GRAM_POS = {
   codes: ["PEN", "AMP", "FOX", "CTX", "CIP", "LVX", "SXT", "TCY", "DOX", "ERY", "CLI", "VAN", "LZD"],
 };
 const STAPH = new Set(["Staphylococcus aureus", "Staphylococcus coagulase âm (CoNS)"]);
-const abName = Object.fromEntries(readCsv("ref_antibiotics.csv").map((r) => [r.ma_khang_sinh, r.ten_en]));
+const abName = Object.fromEntries(readRows("ref_antibiotics.csv", "DM_KHANG_SINH").map((r) => [r.ma_khang_sinh, r.ten_en]));
 const excelRound1 = (a, b) => {
   const num = a * 1000;
   let q = Math.floor(num / b);
@@ -230,7 +256,6 @@ for (const row of ast) {
   if (!astByIsolate.has(row.isolate_id)) astByIsolate.set(row.isolate_id, []);
   astByIsolate.get(row.isolate_id).push(row);
 }
-const wardOf = (iso) => iso.khoa.trim().toUpperCase();
 
 function buildPanel(subset, panel, scopeN) {
   const rows = [];
@@ -262,32 +287,41 @@ function buildPanel(subset, panel, scopeN) {
 }
 
 const SCOPE_LABEL = { "Toàn viện": "TOÀN VIỆN", HSCC: "HSCC", "Khối nội": "KHỐI NỘI", "Khối ngoại": "KHỐI NGOẠI" };
-const tableList = [];
-for (const scope of SCOPES) {
-  const subset = scope === "Toàn viện" ? isolates : isolates.filter((i) => i.nhom_khoa === scope);
-  tableList.push({ id: slug(scope), kind: "scope", label: scope, heading: SCOPE_LABEL[scope], n: subset.length, subset });
+function buildTables(sourceLayout = false) {
+  const groupOf = sourceLayout ? (iso) => iso.nhom_khoa : divisionOf;
+  const groups = sourceLayout ? SOURCE_SCOPES : SCOPES;
+  const list = SOURCE_SCOPES.map((scope) => {
+    const subset = sourceLayout
+      ? (scope === "Toàn viện" ? isolates : isolates.filter((iso) => groupOf(iso) === scope))
+      : isolates.filter((iso) => scopesOf(iso).includes(scope));
+    return { id: slug(scope), kind: "scope", label: scope, heading: SCOPE_LABEL[scope], n: subset.length, subset };
+  });
+  const byWard = new Map();
+  for (const iso of isolates) {
+    const ward = wardOf(iso);
+    if (!byWard.has(ward)) byWard.set(ward, []);
+    byWard.get(ward).push(iso);
+  }
+  for (const [ward, subset] of [...byWard].sort(([a, as], [b, bs]) =>
+    groups.indexOf(groupOf(as[0])) - groups.indexOf(groupOf(bs[0])) || a.localeCompare(b, "vi")
+  )) {
+    const label = !sourceLayout && ward === "C9" ? C9_LABEL : `Khoa ${ward}`;
+    const group = !sourceLayout && ward === "C9" ? undefined : groupOf(subset[0]);
+    list.push({ id: `khoa-${slug(ward)}`, kind: "ward", label, heading: label.toUpperCase(), group, n: subset.length, subset });
+  }
+  return list.map(({ subset, ...t }) => ({
+    ...t,
+    title: `BẢNG KHÁNG SINH ĐỒ TÍCH LŨY CHO CÁC VI KHUẨN PHÂN LẬP – BỆNH VIỆN 199 – ${t.heading} (n=${t.n})`,
+    gramNegative: buildPanel(subset, GRAM_NEG, t.n),
+    gramPositive: buildPanel(subset, GRAM_POS, t.n),
+  }));
 }
-const wards = [...new Set(isolates.map(wardOf))].sort((a, b) => {
-  const ga = SCOPES.indexOf(isolates.find((i) => wardOf(i) === a).nhom_khoa);
-  const gb = SCOPES.indexOf(isolates.find((i) => wardOf(i) === b).nhom_khoa);
-  return ga - gb || a.localeCompare(b, "vi");
-});
-for (const ward of wards) {
-  const subset = isolates.filter((i) => wardOf(i) === ward);
-  tableList.push({ id: `khoa-${slug(ward)}`, kind: "ward", label: `Khoa ${ward}`, heading: `KHOA ${ward}`, group: subset[0].nhom_khoa, n: subset.length, subset });
-}
-const tables = tableList.map(({ subset, ...t }) => ({
-  ...t,
-  title: `BẢNG KHÁNG SINH ĐỒ TÍCH LŨY CHO CÁC VI KHUẨN PHÂN LẬP – BỆNH VIỆN 199 – ${t.heading} (n=${t.n})`,
-  gramNegative: buildPanel(subset, GRAM_NEG, t.n),
-  gramPositive: buildPanel(subset, GRAM_POS, t.n),
-}));
+const tables = buildTables();
 
 /* Doi chieu tung o voi workbook Excel (neu co duong dan file .xlsx o tham so thu 2). */
-const XLSX_PATH = process.argv[3] ?? process.env.ANTIBIOGRAM_XLSX;
 if (XLSX_PATH) {
-  const XLSX = (await import("xlsx")).default;
-  const wb = XLSX.readFile(XLSX_PATH);
+  const sourceTables = buildTables(true);
+  const wb = workbook && XLSX_PATH === SRC ? workbook : XLSX.readFile(XLSX_PATH);
   const sheetRows = (n) => XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, defval: "" });
   const blocks = [];
   for (const [sheet] of [["BANG_TOAN_VIEN"], ["BANG_HSCC"], ["BANG_KHOI_NOI"], ["BANG_KHOI_NGOAI"], ["BANG_THEO_KHOA"]]) {
@@ -300,8 +334,8 @@ if (XLSX_PATH) {
   }
   const diff = [];
   let compared = 0;
-  if (blocks.length !== tables.length) diff.push(`So bang: Excel ${blocks.length}, web ${tables.length}`);
-  for (const t of tables) {
+  if (blocks.length !== sourceTables.length) diff.push(`So bang: Excel ${blocks.length}, nguon ${sourceTables.length}`);
+  for (const t of sourceTables) {
     const b = blocks.find((x) => x.title === t.title);
     if (!b) { diff.push(`Khong thay bang trong Excel: ${t.title}`); continue; }
     for (const panel of [t.gramNegative, t.gramPositive]) {
@@ -318,12 +352,14 @@ if (XLSX_PATH) {
     }
   }
   if (diff.length) { console.error(`Lech voi Excel (${diff.length}):\n` + diff.slice(0, 30).join("\n")); process.exit(1); }
-  console.log(`Doi chieu Excel: ${tables.length} bang, ${compared} o khop.`);
+  console.log(`Doi chieu Excel goc: ${sourceTables.length} bang, ${compared} o khop.`);
 }
 
+fs.writeFileSync(OUT, JSON.stringify(database, null, 1) + "\n");
 fs.writeFileSync(OUT_TABLES, JSON.stringify({
   period: "01/04/2025 – 31/03/2026",
   minN: MIN_N, minTestedRatio: MIN_TESTED, greenThreshold: GREEN,
   tables,
 }) + "\n");
+console.log(`OK: ${isolates.length}/${isolatesAll.length} phan lap dau tien, ${records.length} dong, ${organisms.length} loai; doi chieu ${reference.length} dong khop 100%.`);
 console.log(`OK: ${tables.length} bang khang sinh do tich luy.`);

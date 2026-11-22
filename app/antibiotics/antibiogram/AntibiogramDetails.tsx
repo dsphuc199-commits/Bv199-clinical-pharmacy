@@ -828,8 +828,8 @@ export function ReportSource() {
         </p>
 
         <p className="mt-2 text-sm leading-6 text-blue-900">
-          Đây là nguồn báo cáo tổng hợp độc lập với dữ liệu Excel gốc.
-          Không tự động trộn tỷ lệ giữa hai nguồn.
+          Số liệu giữ theo phân nhóm tại thời điểm lập báo cáo.
+          Xem phân nhóm khoa hiện hành tại Bảng tích lũy và Tra cứu chi tiết.
         </p>
 
         <p className="mt-2 text-xs leading-5 text-blue-800">

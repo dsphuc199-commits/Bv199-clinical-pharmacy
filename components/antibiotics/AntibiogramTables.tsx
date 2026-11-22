@@ -34,7 +34,7 @@ const data = tablesData as TablesFile;
 const scopes = data.tables.filter((table) => table.kind === "scope");
 const wards = data.tables.filter((table) => table.kind === "ward");
 
-export default function AntibiogramTables({ status }: { status: string }) {
+export default function AntibiogramTables({ status, departmentNote }: { status: string; departmentNote: string }) {
   const [tableId, setTableId] = useState(scopes[0].id);
   const table = data.tables.find((item) => item.id === tableId) ?? scopes[0];
   const isWard = table.kind === "ward";
@@ -70,11 +70,13 @@ export default function AntibiogramTables({ status }: { status: string }) {
           <option value="">Chọn khoa</option>
           {wards.map((t) => (
             <option key={t.id} value={t.id}>
-              {t.label} – {t.group} (n={t.n})
+              {t.label}{t.group ? ` – ${t.group}` : ""} (n={t.n})
             </option>
           ))}
         </select>
       </div>
+
+      <p className="mt-2 text-xs leading-5 text-slate-600">{departmentNote}</p>
 
       {isWard && table.n < data.minN && (
         <p className="mt-2 rounded-lg bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900">

@@ -64,7 +64,7 @@ export default async function AntibiogramPage({ searchParams }: PageProps<"/anti
           })}
         </nav>
 
-        {view === "matrix" && <AntibiogramTables status={rawData.metadata.status} />}
+        {view === "matrix" && <AntibiogramTables status={rawData.metadata.status} departmentNote={rawData.metadata.departmentNote} />}
         {view === "details" && (
           <RawSource
             key={JSON.stringify([antibiotic, organism])}
