@@ -5,6 +5,7 @@ import {
   type AccountAuditEvent,
 } from "@/lib/auth/account-store";
 import { LOGIN_AUDIT_LIMIT, readLoginAudit } from "@/lib/auth/login-audit";
+import { formatAuditLocation } from "@/lib/auth/audit-location";
 
 const formatDate = new Intl.DateTimeFormat("vi-VN", {
   dateStyle: "short", timeStyle: "medium", timeZone: "Asia/Ho_Chi_Minh",
@@ -52,10 +53,30 @@ export default async function AdminAuditPage() {
               <p className="text-sm text-slate-700">Chưa có lượt đăng nhập mới kể từ khi bật nhật ký. Mở trang bằng một phiên đang hoạt động sẽ không tạo bản ghi mới.</p>
             ) : (
               <ol className="divide-y divide-slate-200 rounded-xl border border-slate-200">
-                {logins.map(({ id, username, role, timestamp }) => (
-                  <li key={id} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 p-3 text-sm text-slate-700">
-                    <span className="min-w-0 break-words"><strong className="text-slate-900">{username}</strong> · {ACCOUNT_ROLE_LABELS[role]}</span>
-                    <time className="shrink-0 tabular-nums" dateTime={timestamp}>{formatDate.format(new Date(timestamp))}</time>
+                {logins.map(({ id, username, role, timestamp, location, deviceLocation }) => (
+                  <li key={id} className="grid gap-2 p-3 text-sm text-slate-700">
+                    <strong className="break-words text-slate-900">{username} · {ACCOUNT_ROLE_LABELS[role]}</strong>
+                    <dl className="grid gap-x-4 gap-y-2 sm:grid-cols-2">
+                      <div>
+                        <dt className="text-xs text-slate-600">Thời điểm đăng nhập</dt>
+                        <dd><time className="tabular-nums" dateTime={timestamp}>{formatDate.format(new Date(timestamp))}</time></dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs text-slate-600">Vị trí đăng nhập</dt>
+                        <dd className="break-words">
+                          {deviceLocation ? (
+                            <a
+                              href={`https://www.openstreetmap.org/?mlat=${deviceLocation.latitude}&mlon=${deviceLocation.longitude}#map=15/${deviceLocation.latitude}/${deviceLocation.longitude}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="font-semibold text-teal-800 underline underline-offset-2"
+                            >
+                              {deviceLocation.latitude.toFixed(3)}, {deviceLocation.longitude.toFixed(3)} · Xem bản đồ
+                            </a>
+                          ) : location ? `${formatAuditLocation(location)} (ước tính theo IP)` : "Chưa ghi nhận vị trí"}
+                        </dd>
+                      </div>
+                    </dl>
                   </li>
                 ))}
               </ol>

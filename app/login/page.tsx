@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { adminStorageConfigured } from "@/lib/admin/private-json-store";
 import { authConfig, safeNextPath } from "@/lib/auth/session";
+import LoginLocation from "./LoginLocation";
 import PasswordField from "./PasswordField";
 
 export const metadata: Metadata = { title: "Đăng nhập" };
@@ -15,6 +17,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const next = safeNextPath(typeof params.next === "string" ? params.next : "/");
   const errorKey = !authConfig().configured ? "config" : typeof params.error === "string" ? params.error : "";
   const error = MESSAGES[errorKey];
+  const auditEnabled = adminStorageConfigured();
 
   return (
     <div className="bv199-login">
@@ -29,8 +32,14 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <input id="login-username" name="username" type="text" autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} required autoFocus />
         <label htmlFor="login-password">Mật khẩu</label>
         <PasswordField />
+        {auditEnabled && <LoginLocation />}
         <button type="submit">Đăng nhập</button>
         <p className="bv199-login-note">Chỉ dành cho nhân viên y tế được cấp tài khoản.</p>
+        {auditEnabled && (
+          <p className="bv199-login-note">
+            Nhật ký quản trị ghi thời điểm đăng nhập. Vị trí đăng nhập lấy từ thiết bị nếu bạn chia sẻ, hoặc ước tính theo IP khi có dữ liệu.
+          </p>
+        )}
         <a className="bv199-login-app" href="/tai-app">Cài ứng dụng lên điện thoại (Android, iPhone)</a>
       </form>
       <style>{`
@@ -48,6 +57,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         .bv199-login-card input:focus-visible, .bv199-login-card button:focus-visible { outline:3px solid #087f89; outline-offset:2px; }
         .bv199-login-card button { margin-top:10px; padding:12px; border:0; border-radius:8px; background:#0b3a5b; color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; }
         .bv199-login-card button:hover { background:#087f89; }
+        .bv199-login-location { display:grid; gap:4px; font-size:12px; color:#4b6576; }
+        .bv199-login-card .bv199-login-location button { justify-self:start; margin:0; padding:6px 0; background:transparent; color:#087f89; text-align:left; }
+        .bv199-login-card .bv199-login-location button:hover { text-decoration:underline; }
+        .bv199-login-card .bv199-login-location button:disabled { opacity:.65; cursor:default; }
         .bv199-login-error { margin:0; padding:9px 12px; border-radius:8px; background:#fdecec; border:1px solid #f3c6c6; color:#9b1c1c; font-size:13px; }
         .bv199-login-note { margin:6px 0 0; text-align:center; font-size:12px; color:#6b8293; }
         .bv199-login-app { text-align:center; font-size:13px; font-weight:700; color:#087f89; }

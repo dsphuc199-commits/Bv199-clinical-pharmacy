@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
 import { BlobPreconditionFailedError } from "@vercel/blob";
-import { LOGIN_AUDIT_LIMIT, readLoginAudit, recordSuccessfulLogin } from "../../lib/auth/login-audit";
+import { auditLocation, formatAuditLocation } from "../../lib/auth/audit-location";
+import { LOGIN_AUDIT_LIMIT, readLoginAudit, readLoginDeviceLocation, recordSuccessfulLogin } from "../../lib/auth/login-audit";
 
 type Snapshot = Awaited<ReturnType<typeof readLoginAudit>>;
 const now = Date.UTC(2026, 0, 1, 10);
@@ -52,6 +53,32 @@ test("late writes retain the most recent events ordered by actual login time", a
   assert.deepEqual((await storage.read()).data.map(({ username }) => username), [
     "newest", ...data.slice(0, -1).map(({ username }) => username),
   ]);
+});
+
+test("login audit keeps older records and stores the available device and IP locations", async () => {
+  const storage = privateStorage({ data: [] });
+  const form = new FormData();
+  assert.equal(readLoginDeviceLocation(form), undefined);
+  form.set("loginLatitude", "91");
+  form.set("loginLongitude", "108.2022345");
+  assert.equal(readLoginDeviceLocation(form), undefined);
+  form.set("loginLatitude", "16.0544678");
+  const deviceLocation = readLoginDeviceLocation(form);
+  const headers = new Headers({
+    "x-vercel-ip-city": encodeURIComponent("Đà Nẵng"),
+    "x-vercel-ip-country": "VN",
+  });
+  assert.equal(auditLocation(headers, false), undefined);
+  const location = auditLocation(headers, true);
+
+  await recordSuccessfulLogin("viewer-fixture", "viewer", now, storage);
+  await recordSuccessfulLogin("viewer-fixture", "viewer", now + 1000, storage, { location, deviceLocation });
+
+  const { data } = await storage.read();
+  assert.deepEqual(data[0].deviceLocation, { latitude: 16.054, longitude: 108.202 });
+  assert.equal(formatAuditLocation(data[0].location), "Đà Nẵng, Việt Nam");
+  assert.equal(data[1].deviceLocation, undefined);
+  assert.equal(data[1].location, undefined);
 });
 
 test("an unresponsive read cancels the audit attempt before writing", async (t) => {

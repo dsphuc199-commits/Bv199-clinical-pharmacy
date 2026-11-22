@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { adminStorageConfigured } from "@/lib/admin/private-json-store";
 import { authenticateAccount } from "@/lib/auth/access";
-import { recordSuccessfulLogin } from "@/lib/auth/login-audit";
+import { auditLocation } from "@/lib/auth/audit-location";
+import { readLoginDeviceLocation, recordSuccessfulLogin } from "@/lib/auth/login-audit";
 import { ADMIN_SESSION_TTL_SECONDS, authConfig, createSession, safeNextPath, SESSION_COOKIE, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
 /* POST /api/auth/login – form dang nhap (username, password, next). */
@@ -30,7 +31,13 @@ export async function POST(request: NextRequest) {
 
   const now = Date.now();
   if (adminStorageConfigured()) {
-    await recordSuccessfulLogin(account.user, account.admin ? "pharmacy-admin" : "viewer", now).catch(() => {
+    await recordSuccessfulLogin(
+      account.user,
+      account.admin ? "pharmacy-admin" : "viewer",
+      now,
+      undefined,
+      { location: auditLocation(request.headers), deviceLocation: readLoginDeviceLocation(form) },
+    ).catch(() => {
       console.error("[auth] Could not record a successful login.");
     });
   }
