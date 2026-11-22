@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { cholangitisTableDose } from "../../components/antibiotics/empiric/cholangitis-dose";
 import { INTL_GUIDELINE_JSON } from "../../data/guidelines/intl";
 import { cholangitisChoices, cholangitisCombination, cholangitisCourse, tg18Diagnosis, tg18Severity } from "../../lib/antibiotics/cholangitis-plan";
 import { effectiveState, resolve } from "../../lib/intl-rules";
@@ -50,6 +51,46 @@ test("TG18 adds the anaerobic section for a biliary-enteric anastomosis", () => 
   assert.equal(hasAnaerobicSection(plan("i", "healthcare", true)), true);
   assert.equal(guideline.review.state, "draft_ai");
   assert.equal(guideline.sources.filter(({ id }) => id.startsWith("tg18-")).length, 3);
+});
+
+test("TG18 table separates verified formulation strength, dose and timing", () => {
+  const medicines = new Map<string, string>();
+  for (const severity of ["i", "ii", "iii"]) {
+    for (const context of ["community", "healthcare"]) {
+      for (const vre of [false, true]) {
+        const rows = plan(severity, context, true, vre).blocks.flatMap(({ items }) => items);
+        for (const item of rows) {
+          assert.ok(item.preparation && item.dose, item.role);
+          const validSource = item.role === "Aztreonam" ? "dose-aztreonam"
+            : item.role === "Daptomycin" ? "dose-daptomycin-label"
+              : "bv199-formulary";
+          assert.ok(item.source_ids.includes(validSource), item.role);
+          const parts = cholangitisTableDose(item.dose);
+          assert.ok(parts.dose && parts.route && parts.frequency, item.role);
+          if (item.role !== "Vancomycin") assert.ok(parts.dosesPerDay, item.role);
+          medicines.set(item.role, item.dose);
+        }
+      }
+    }
+  }
+  assert.equal(medicines.size, 16);
+
+  const cefuroxime = cholangitisTableDose(medicines.get("Cefuroxim")!);
+  assert.equal(cefuroxime.dose, "1,5 g");
+  assert.equal(cefuroxime.dosesPerDay, 3);
+
+  const piperacillin = cholangitisTableDose(medicines.get("Piperacillin/tazobactam")!);
+  assert.equal(piperacillin.loadingDose, "4,5 g");
+  assert.equal(piperacillin.dose, "4,5 g");
+  assert.equal(piperacillin.dosesPerDay, 3);
+
+  const vancomycin = cholangitisTableDose(medicines.get("Vancomycin")!);
+  assert.match(vancomycin.frequency ?? "", /Nạp một lần.*Duy trì.*TDM/);
+  assert.equal(vancomycin.dosesPerDay, undefined);
+
+  const daptomycin = cholangitisTableDose(medicines.get("Daptomycin")!);
+  assert.equal(daptomycin.dosesPerDay, 1);
+  assert.match(daptomycin.qualifier ?? "", /CrCl >30 mL\/phút/);
 });
 
 test("community grade I and II expose distinct TG18 backbones and susceptibility conditions", () => {

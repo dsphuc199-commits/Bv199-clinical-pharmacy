@@ -215,7 +215,7 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
           manualControl={severityAxis && <AxisControl a={severityAxis} value={severity} set={(value) => set("severity", value)} />}
         />
         <Form g={g} raw={raw} eff={eff} set={set} excludeAxis="severity" />
-        <CholangitisPlan key={`${severity}-${setting}`} result={r} severity={severity} setting={setting} junction={String(eff.anastomosis)} sources={sources} />
+        <CholangitisPlan guideline={g} result={r} severity={severity} setting={setting} junction={String(eff.anastomosis)} sources={sources} />
         {supportingCare.length > 0 && (
           <details className="my-3 rounded-xl border border-slate-200 bg-white p-3">
             <summary className="cursor-pointer font-bold text-slate-900">Khởi trị, lấy mẫu và chuyển uống</summary>

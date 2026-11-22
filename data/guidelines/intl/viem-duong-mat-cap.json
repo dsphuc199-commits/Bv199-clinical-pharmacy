@@ -414,8 +414,10 @@
               "ref": "TG18 · Lựa chọn kháng sinh kinh nghiệm, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Cefuroxim",
@@ -425,8 +427,10 @@
               "ref": "TG18 · Lựa chọn kháng sinh kinh nghiệm, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-cefuroxime"
-              ]
+                "dose-cefuroxime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 750 mg hoặc 1,5 g"
             },
             {
               "role": "Ceftriaxon",
@@ -437,8 +441,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-ceftriaxone"
-              ]
+                "dose-ceftriaxone",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Cefotaxim",
@@ -448,8 +454,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-cefotaxime"
-              ]
+                "dose-cefotaxime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             }
           ]
         },
@@ -466,30 +474,38 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-unasyn"
-              ]
+                "dose-unasyn",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g + 0,5 g hoặc 2 g + 1 g"
             },
             {
               "role": "Ertapenem",
               "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
               "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
-              "administration": "Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
+              "administration": "Truyền tĩnh mạch trong 30 phút theo nhãn. Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary",
+                "dose-ertapenem-label"
+              ],
+              "preparation": "Lọ 1 g"
             },
             {
               "role": "Ciprofloxacin",
               "text": "Thay thế có điều kiện ở Độ I–II khi chủng còn nhạy hoặc dị ứng beta-lactam và dữ liệu tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol.",
               "dose": "400 mg truyền tĩnh mạch mỗi 12 giờ",
-              "administration": "Liều chuẩn người lớn theo UCSF khi chức năng thận phù hợp. Kiểm tra tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
+              "administration": "Truyền tĩnh mạch trong 60 phút theo nhãn. Rà tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary",
+                "dose-ciprofloxacin-label"
+              ],
+              "preparation": "Dung dịch truyền 200 mg/100 mL hoặc 400 mg/200 mL"
             }
           ]
         }
@@ -538,8 +554,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 2 g + 0,25 g hoặc 4 g + 0,5 g"
             },
             {
               "role": "Ceftriaxon",
@@ -550,8 +568,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-ceftriaxone"
-              ]
+                "dose-ceftriaxone",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Cefotaxim",
@@ -561,8 +581,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-cefotaxime"
-              ]
+                "dose-cefotaxime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             }
           ]
         },
@@ -579,8 +601,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-cefepime"
-              ]
+                "dose-cefepime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Ceftazidim",
@@ -590,30 +614,38 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Ertapenem",
               "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
               "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
-              "administration": "Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
+              "administration": "Truyền tĩnh mạch trong 30 phút theo nhãn. Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary",
+                "dose-ertapenem-label"
+              ],
+              "preparation": "Lọ 1 g"
             },
             {
               "role": "Ciprofloxacin",
               "text": "Thay thế có điều kiện ở Độ I–II khi chủng còn nhạy hoặc dị ứng beta-lactam và dữ liệu tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol.",
               "dose": "400 mg truyền tĩnh mạch mỗi 12 giờ",
-              "administration": "Liều chuẩn người lớn theo UCSF khi chức năng thận phù hợp. Kiểm tra tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
+              "administration": "Truyền tĩnh mạch trong 60 phút theo nhãn. Rà tương tác, nguy cơ kéo dài QT và kháng fluoroquinolon.",
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary",
+                "dose-ciprofloxacin-label"
+              ],
+              "preparation": "Dung dịch truyền 200 mg/100 mL hoặc 400 mg/200 mL"
             }
           ]
         }
@@ -657,8 +689,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 2 g + 0,25 g hoặc 4 g + 0,5 g"
             },
             {
               "role": "Cefepim",
@@ -669,8 +703,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-cefepime"
-              ]
+                "dose-cefepime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Meropenem",
@@ -681,8 +717,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-meropenem"
-              ]
+                "dose-meropenem",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 500 mg hoặc 1 g"
             }
           ]
         },
@@ -699,8 +737,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-vanco-nomogram",
-                "dose-vanco-label"
-              ]
+                "dose-vanco-label",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 500 mg hoặc 1 g"
             }
           ],
           "show_when": {
@@ -719,8 +759,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Aztreonam",
@@ -732,7 +774,8 @@
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
                 "dose-aztreonam"
-              ]
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             }
           ]
         }
@@ -779,8 +822,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 2 g + 0,25 g hoặc 4 g + 0,5 g"
             },
             {
               "role": "Cefepim",
@@ -791,8 +836,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-cefepime"
-              ]
+                "dose-cefepime",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Meropenem",
@@ -803,8 +850,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
-                "dose-meropenem"
-              ]
+                "dose-meropenem",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 500 mg hoặc 1 g"
             }
           ]
         },
@@ -821,8 +870,10 @@
               "source_ids": [
                 "tg18-antibiotics",
                 "dose-vanco-nomogram",
-                "dose-vanco-label"
-              ]
+                "dose-vanco-label",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 500 mg hoặc 1 g"
             }
           ],
           "show_when": {
@@ -841,8 +892,10 @@
               "ref": "Bảng 3 TG18, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary"
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             },
             {
               "role": "Aztreonam",
@@ -854,7 +907,8 @@
                 "tg18-antibiotics",
                 "dose-ucsf-adult",
                 "dose-aztreonam"
-              ]
+              ],
+              "preparation": "Lọ 1 g hoặc 2 g"
             }
           ]
         }
@@ -895,12 +949,15 @@
               "role": "Metronidazol",
               "text": "Bổ sung khi có miệng nối mật–ruột và thuốc nền chưa đủ phổ kỵ khí. Piperacillin/tazobactam, ampicillin/sulbactam và carbapenem đã có phổ kỵ khí cho tình huống này.",
               "dose": "500 mg tĩnh mạch mỗi 12 giờ",
-              "administration": "Liều cho nhiễm khuẩn ổ bụng theo UCSF. Có thể dùng đường uống nếu phù hợp với giai đoạn điều trị. Rà chức năng gan.",
+              "administration": "Truyền tĩnh mạch chậm theo nhãn. Liều nhiễm khuẩn ổ bụng theo UCSF. Rà chức năng gan và đối chiếu tiêu chí chuyển uống.",
               "ref": "Q2 và Bảng 3 TG18, chú thích d, tr. 6–7",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "bv199-formulary",
+                "dose-metronidazole-label"
+              ],
+              "preparation": "Dung dịch truyền 500 mg/100 mL"
             }
           ]
         }
@@ -934,19 +991,23 @@
               "ref": "Bảng 3 TG18, chú thích a, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-linezolid"
-              ]
+                "dose-linezolid",
+                "bv199-formulary"
+              ],
+              "preparation": "Dung dịch truyền pha sẵn 600 mg/300 mL"
             },
             {
               "role": "Daptomycin",
               "text": "Một lựa chọn khác khi cần bao phủ VRE. Chuyên khoa chọn liều theo loài, MIC, chức năng thận và vị trí nhiễm. Giữ thuốc nền Gram âm nếu còn chỉ định.",
               "dose": "8–10 mg/kg tĩnh mạch mỗi 24 giờ theo UCSF khi CrCl >30 mL/phút",
-              "administration": "Một số VRE cần liều khác theo hội chẩn. Theo dõi creatine kinase.",
+              "administration": "Có thể truyền tĩnh mạch trong 30 phút theo nhãn. Hội chẩn về liều khi điều trị VRE và theo dõi creatine kinase.",
               "ref": "Bảng 3 TG18, chú thích a, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "dose-daptomycin-label"
+              ],
+              "preparation": "Lọ 500 mg"
             }
           ]
         }
@@ -976,19 +1037,23 @@
               "ref": "Bảng 3 TG18, chú thích a, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-linezolid"
-              ]
+                "dose-linezolid",
+                "bv199-formulary"
+              ],
+              "preparation": "Dung dịch truyền pha sẵn 600 mg/300 mL"
             },
             {
               "role": "Daptomycin",
               "text": "Một lựa chọn khác khi cần bao phủ VRE. Chuyên khoa chọn liều theo loài, MIC, chức năng thận và vị trí nhiễm. Giữ thuốc nền Gram âm nếu còn chỉ định.",
               "dose": "8–10 mg/kg tĩnh mạch mỗi 24 giờ theo UCSF khi CrCl >30 mL/phút",
-              "administration": "Một số VRE cần liều khác theo hội chẩn. Theo dõi creatine kinase.",
+              "administration": "Có thể truyền tĩnh mạch trong 30 phút theo nhãn. Hội chẩn về liều khi điều trị VRE và theo dõi creatine kinase.",
               "ref": "Bảng 3 TG18, chú thích a, tr. 6",
               "source_ids": [
                 "tg18-antibiotics",
-                "dose-ucsf-adult"
-              ]
+                "dose-ucsf-adult",
+                "dose-daptomycin-label"
+              ],
+              "preparation": "Lọ 500 mg"
             }
           ]
         }
@@ -1215,6 +1280,81 @@
         "adult"
       ],
       "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "bv199-formulary",
+      "org": "Bệnh viện 199",
+      "title": "Danh mục thuốc kháng sinh Bệnh viện 199",
+      "short_title": "Danh mục BV199",
+      "year": 2026,
+      "version": "Bản đối chiếu 22/11/2026",
+      "url": "https://duoc199.vercel.app/drugs",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Hàm lượng chế phẩm tiêm hoặc truyền trong dữ liệu danh mục BV199.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-ciprofloxacin-label",
+      "org": "DailyMed",
+      "title": "Ciprofloxacin in Dextrose, intravenous infusion",
+      "short_title": "Nhãn ciprofloxacin",
+      "year": 2023,
+      "version": "Bản đối chiếu 22/11/2026",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cbbbf939-3219-4515-a48e-ca264daa4d07",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nhãn chế phẩm, đối chiếu thời gian truyền tĩnh mạch.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-ertapenem-label",
+      "org": "DailyMed",
+      "title": "Ertapenem for Injection",
+      "short_title": "Nhãn ertapenem",
+      "year": 2025,
+      "version": "Bản đối chiếu 22/11/2026",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=39bd4d41-36f8-4826-a733-a5ad1a531c02",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nhãn chế phẩm, đối chiếu thời gian truyền tĩnh mạch.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-daptomycin-label",
+      "org": "DailyMed",
+      "title": "Daptomycin for Injection",
+      "short_title": "Nhãn daptomycin",
+      "year": 2025,
+      "version": "Bản đối chiếu 22/11/2026",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=95909792-972b-4c0c-b2ce-2be4bed36cff",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nhãn chế phẩm, đối chiếu hàm lượng và cách truyền tĩnh mạch.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-metronidazole-label",
+      "org": "DailyMed",
+      "title": "Metronidazole Injection, USP",
+      "short_title": "Nhãn metronidazol",
+      "year": 2025,
+      "version": "Bản đối chiếu 22/11/2026",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d46870f5-e2b1-46bd-8413-4a0a8bcf3175",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nhãn chế phẩm, đối chiếu cách truyền tĩnh mạch.",
       "grade_system": "none"
     }
   ],
