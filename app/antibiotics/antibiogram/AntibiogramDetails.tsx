@@ -40,6 +40,8 @@ type RawRecord = {
   lowN: boolean;
   organismGroup: string;
   intrinsicResistance?: boolean;
+  noBreakpoint?: boolean;
+  clsiNote?: string;
 };
 
 type RawDatabase = {
@@ -53,6 +55,7 @@ type RawDatabase = {
     isolateCount: number;
     rawIsolateCount: number;
     method: string;
+    breakpointNote?: string;
     status: string;
     departmentNote: string;
     intrinsicNote: string;
@@ -213,7 +216,7 @@ export function RawSource({
 
           /* Khang tu nhien xep cuoi, khong de %S tu vai ket qua le day len dau. */
           const rank = (x: RawRecord) =>
-            x.intrinsicResistance ? -1 : x.susceptiblePercent;
+            x.intrinsicResistance || x.noBreakpoint ? -1 : x.susceptiblePercent;
 
           return rank(b) - rank(a);
         }
@@ -293,6 +296,7 @@ export function RawSource({
             Tổng {metadata.rawIsolateCount} phân lập, còn {metadata.isolateCount} phân lập đầu tiên.
           </li>
           <li>{metadata.departmentNote}</li>
+          {metadata.breakpointNote && <li>{metadata.breakpointNote}</li>}
           <li>{metadata.intrinsicNote}</li>
           <li>{metadata.privacy}</li>
         </ul>
@@ -657,6 +661,13 @@ export function RawSource({
                             <span className="text-slate-400">—</span>
                           </TD>
                         </>
+                      ) : item.noBreakpoint ? (
+                        /* Khong co diem gay CLSI: khong hien %S/%I/%R. */
+                        <>
+                          <TD><span className="text-slate-400">—</span></TD>
+                          <TD><span className="text-slate-400">—</span></TD>
+                          <TD><span className="text-slate-400">—</span></TD>
+                        </>
                       ) : (
                         <>
                           <TD>
@@ -693,6 +704,14 @@ export function RawSource({
                           <span className="mb-1 inline-flex rounded-full bg-rose-100 px-2 py-1 text-xs font-bold text-rose-900">
                             Kháng tự nhiên
                           </span>
+                        )}
+                        {item.noBreakpoint && (
+                          <span className="mb-1 inline-flex rounded-full bg-slate-200 px-2 py-1 text-xs font-bold text-slate-800">
+                            Không có điểm gãy CLSI
+                          </span>
+                        )}
+                        {item.clsiNote && (
+                          <p className="mb-1 text-xs leading-5 text-slate-700">{item.clsiNote}</p>
                         )}
                         {item.lowN ? (
                           <div className="space-y-1">
@@ -732,8 +751,7 @@ export function RawSource({
             </strong>
             {" "}
             %S là tỷ lệ nhạy.
-            %I được báo cáo riêng theo CLSI.
-            S+I chỉ phục vụ mô tả thống kê và không đồng nghĩa với tỷ lệ nhạy.
+            %I và %R được báo cáo riêng theo CLSI; I tính là không nhạy.
           </p>
 
         </div>

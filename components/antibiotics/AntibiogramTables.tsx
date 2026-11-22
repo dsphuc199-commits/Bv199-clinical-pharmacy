@@ -10,7 +10,7 @@
 import { useState } from "react";
 import tablesData from "@/data/antibiotics/antibiogram-bv199-tables.json";
 
-type Cell = { t: string; s?: number; n?: number; g?: number };
+type Cell = { t: string; s?: number; n?: number; g?: number; k?: string; c?: string };
 type Row = { group: string; n: number; nText: string; share: number; cells: Cell[] };
 type Panel = { columns: { code: string; name: string }[]; rows: Row[] };
 type Table = {
@@ -27,6 +27,9 @@ type TablesFile = {
   minN: number;
   minTestedRatio: number;
   greenThreshold: number;
+  method: string;
+  breakpointNote: string;
+  clsiNotes: { mark: string; text: string }[];
   tables: Table[];
 };
 
@@ -93,13 +96,24 @@ export default function AntibiogramTables({ status, departmentNote }: { status: 
         <li>*: tỷ lệ nhạy cảm được tính từ kết quả xét nghiệm của dưới {Math.round(data.minTestedRatio * 100)}% số phân lập.</li>
         <li>a: số phân lập dưới {data.minN}; dòng in nghiêng, màu xám.</li>
         <li>R: kháng tự nhiên; danh mục chưa đối chiếu với CLSI M100 và EUCAST.</li>
-        <li>-: kháng sinh không làm xét nghiệm hoặc không chỉ định.</li>
+        <li>-: kháng sinh không làm xét nghiệm, không chỉ định, hoặc không có điểm gãy CLSI (kèm †).</li>
         <li>b: tỷ lệ nhạy cảm dựa trên cefoxitin (chỉ điểm methicillin) cho Staphylococcus; chưa suy ra cho β-lactam khác.</li>
         <li>
           <span className="mr-1 inline-block h-3 w-3 rounded-sm bg-emerald-200 align-middle" />
           Ô xanh: tỷ lệ nhạy ≥{data.greenThreshold}% với các chủng ≥{data.minN} phân lập và xét nghiệm ≥{Math.round(data.minTestedRatio * 100)}% số chủng.
         </li>
         <li>Rê chuột vào ô để xem số nhạy / số có xét nghiệm.</li>
+      </ul>
+
+      <h3 className="mt-5 text-sm font-bold text-slate-900">Phương pháp và diễn giải theo CLSI M100</h3>
+      <ul className="mt-1 space-y-1 text-xs leading-5 text-slate-600">
+        <li>{data.method}</li>
+        {data.clsiNotes.map(({ mark, text }) => (
+          <li key={mark}><sup className="font-bold text-slate-800">{mark}</sup> {text}</li>
+        ))}
+        <li>{data.breakpointNote}</li>
+        <li>Piperacillin/tazobactam với Enterobacterales: từ CLSI M100 ấn bản 32, vùng ức chế S ≥25, SDD 21–24, R ≤20 mm; CLSI ghi nhận khoanh giấy hoạt động chưa tối ưu với điểm gãy mới, cân nhắc xác nhận bằng MIC khi kết quả gần ngưỡng.</li>
+        <li>Trực khuẩn Gram âm khác gộp Serratia, Citrobacter, S. maltophilia và Enterobacterales chưa định danh loài. Các loài có kiểu kháng tự nhiên khác nhau nên %S của nhóm không dùng để chọn kháng sinh.</li>
       </ul>
     </section>
   );
@@ -141,12 +155,13 @@ function MatrixPanel({ title, panel, minN }: { title: string; panel: Panel; minN
                   {r.cells.map((c, i) => (
                     <td
                       key={panel.columns[i].code}
-                      title={c.n ? `${panel.columns[i].name}: ${c.s}/${c.n} nhạy` : c.t === "R" ? "Kháng tự nhiên" : "Không làm xét nghiệm"}
+                      title={[c.n ? `${panel.columns[i].name}: ${c.s}/${c.n} nhạy` : c.t === "R" ? "Kháng tự nhiên" : c.c ? "" : "Không làm xét nghiệm", c.c].filter(Boolean).join(". ")}
                       className={`whitespace-nowrap border-b border-r border-slate-200 px-1.5 py-1.5 text-center ${
                         c.g ? "bg-emerald-200 font-bold text-emerald-950" : c.t === "R" ? "font-bold text-rose-800" : c.t === "-" ? "text-slate-400" : ""
                       }`}
                     >
                       {c.t}
+                      {c.k && <sup className="ml-0.5 font-bold text-slate-800">{c.k}</sup>}
                     </td>
                   ))}
                 </tr>

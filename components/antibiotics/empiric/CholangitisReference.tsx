@@ -124,6 +124,8 @@ export function CholangitisLocalThresholds() {
       <ul className="m-0 mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-slate-700">
         <li>Số liệu gộp mọi bệnh phẩm và mọi khoa, chưa có nhóm bệnh phẩm mật hoặc dịch ổ bụng mà TG18 khuyến cáo. Tỷ lệ kháng ở viêm đường mật mắc phải cộng đồng có thể thấp hơn.</li>
         <li>Đây là kết quả áp ngưỡng của TG18, chưa phải phác đồ của bệnh viện. Phác đồ kinh nghiệm do Hội đồng Thuốc và điều trị quyết định.</li>
+        <li>Aminoglycosid cho P. aeruginosa theo CLSI M100 hiện hành: không còn điểm gãy gentamicin; amikacin chỉ áp dụng cho chủng từ nước tiểu; tobramycin vẫn có điểm gãy (khoanh 10 µg: S ≥19, I 13–18, R ≤12 mm).</li>
+        <li>Kháng sinh đồ BV199 làm bằng khoanh giấy khuếch tán. Piperacillin/tazobactam với Enterobacterales gần ngưỡng nên xác nhận bằng MIC.</li>
         <li>Yếu tố nguy cơ vi khuẩn kháng thuốc (IDSA 2024): dùng kháng sinh trong 90 ngày, đã nhiễm hoặc định cư vi khuẩn kháng thuốc, nhiễm khuẩn liên quan chăm sóc y tế, suy giảm miễn dịch, tuổi cao, bệnh nền nặng.</li>
       </ul>
       <Link href="/antibiotics/antibiogram" className="mt-2 inline-block text-xs font-semibold text-teal-800 underline underline-offset-2">Mở bảng kháng sinh đồ BV199</Link>

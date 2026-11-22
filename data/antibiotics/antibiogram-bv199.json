@@ -6,7 +6,8 @@
    "id": "2025-04_2026-03",
    "label": "04/2025 – 03/2026"
   },
-  "method": "CLSI M39: chỉ tính phân lập đầu tiên của mỗi loài ở mỗi người bệnh; %S = S/(S+I+R), I tính là không nhạy.",
+  "method": "Kháng sinh đồ bằng khoanh giấy khuếch tán, diễn giải theo CLSI M100. Tổng hợp theo CLSI M39: chỉ tính phân lập đầu tiên của mỗi loài ở mỗi người bệnh; %S = S/(S+I+R), I tính là không nhạy.",
+  "breakpointNote": "Từ CLSI M100 ấn bản 33, vùng ức chế aminoglycosid cho Enterobacterales tăng: amikacin 30 µg S ≥20, I 17–19, R ≤16 mm; gentamicin 10 µg S ≥18, I 15–17, R ≤14 mm. Khoảng I rộng hơn làm tăng tỷ lệ I của amikacin; mức I của aminoglycosid có ý nghĩa khi thuốc cô đặc trong nước tiểu.",
   "status": "Chưa thẩm định cho hỗ trợ quyết định lâm sàng.",
   "departmentNote": "Mã A thuộc Khối Nội và mã B thuộc Khối Ngoại. A7 được tính trong Khối Nội và có bảng HSCC riêng để tra cứu. C9 là Khoa Vật lý trị liệu – Phục hồi chức năng.",
   "intrinsicNote": "Kháng tự nhiên chưa đối chiếu với CLSI M100 và EUCAST Expected Resistant Phenotypes.",
@@ -335,7 +336,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Đường hô hấp__acinetobacter-baumannii__ceftazidime",
@@ -371,7 +374,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Đường hô hấp__acinetobacter-baumannii__ciprofloxacin",
@@ -1510,7 +1515,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 16.7,
    "resistantPercent": 33.3,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "HSCC__Đường hô hấp__pseudomonas-aeruginosa__cefepime",
@@ -1582,7 +1588,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Đường hô hấp__pseudomonas-aeruginosa__imipenem",
@@ -2663,7 +2671,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "HSCC__Mủ / vết thương / mô mềm__proteus-mirabilis__levofloxacin",
@@ -4375,7 +4384,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Tất cả__acinetobacter-baumannii__ceftazidime",
@@ -4411,7 +4422,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Tất cả__acinetobacter-baumannii__ciprofloxacin",
@@ -6270,7 +6283,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "HSCC__Tất cả__proteus-mirabilis__levofloxacin",
@@ -6397,7 +6411,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 16.7,
    "resistantPercent": 33.3,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "HSCC__Tất cả__pseudomonas-aeruginosa__cefepime",
@@ -6469,7 +6484,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "HSCC__Tất cả__pseudomonas-aeruginosa__imipenem",
@@ -9407,7 +9424,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 50,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Khối ngoại__Dịch (không ghi rõ nguồn)__proteus-mirabilis__levofloxacin",
@@ -10146,7 +10164,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối ngoại__Dịch (không ghi rõ nguồn)__streptococcus-spp__tetracycline",
@@ -11533,7 +11552,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Khối ngoại__Mủ / vết thương / mô mềm__proteus-mirabilis__levofloxacin",
@@ -13424,7 +13444,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối ngoại__Nước tiểu__pseudomonas-aeruginosa__cefepime",
@@ -15787,7 +15808,8 @@
    "susceptiblePercent": 40,
    "increasedExposurePercent": 40,
    "resistantPercent": 20,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Khối ngoại__Tất cả__proteus-mirabilis__levofloxacin",
@@ -15914,7 +15936,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối ngoại__Tất cả__pseudomonas-aeruginosa__cefepime",
@@ -16742,7 +16765,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối ngoại__Tất cả__streptococcus-spp__tetracycline",
@@ -17841,7 +17865,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Dịch (không ghi rõ nguồn)__streptococcus-agalactiae__tetracycline",
@@ -18006,7 +18031,9 @@
    "susceptiblePercent": 33.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Đường hô hấp__acinetobacter-baumannii__ceftazidime",
@@ -18042,7 +18069,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Đường hô hấp__acinetobacter-baumannii__ciprofloxacin",
@@ -18168,7 +18197,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 ấn bản 36 (2026) bỏ điểm gãy tetracyclin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Đường hô hấp__acinetobacter-baumannii__tobramycin",
@@ -19235,7 +19266,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 16.7,
    "resistantPercent": 33.3,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối nội__Đường hô hấp__pseudomonas-aeruginosa__cefepime",
@@ -19307,7 +19339,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Đường hô hấp__pseudomonas-aeruginosa__imipenem",
@@ -19992,7 +20026,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Đường hô hấp__streptococcus-pneumoniae__tetracycline",
@@ -20694,7 +20729,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối nội__Máu__pseudomonas-aeruginosa__amoxicillin-clavulanate",
@@ -20786,7 +20822,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 100,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Máu__pseudomonas-aeruginosa__imipenem",
@@ -21453,7 +21491,8 @@
    "susceptiblePercent": 66.7,
    "increasedExposurePercent": 33.3,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Khối nội__Mủ / vết thương / mô mềm__proteus-mirabilis__levofloxacin",
@@ -21580,7 +21619,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối nội__Mủ / vết thương / mô mềm__pseudomonas-aeruginosa__cefepime",
@@ -22012,7 +22052,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Streptococcus.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Mủ / vết thương / mô mềm__streptococcus-intermedius__clindamycin",
@@ -22084,7 +22126,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Mủ / vết thương / mô mềm__streptococcus-intermedius__tetracycline",
@@ -24193,7 +24236,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Nước tiểu__streptococcus-spp__vancomycin",
@@ -24340,7 +24384,9 @@
    "susceptiblePercent": 33.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Tất cả__acinetobacter-baumannii__ceftazidime",
@@ -24376,7 +24422,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Tất cả__acinetobacter-baumannii__ciprofloxacin",
@@ -24502,7 +24550,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 ấn bản 36 (2026) bỏ điểm gãy tetracyclin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Tất cả__acinetobacter-baumannii__tobramycin",
@@ -26850,7 +26900,8 @@
    "susceptiblePercent": 66.7,
    "increasedExposurePercent": 33.3,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Khối nội__Tất cả__proteus-mirabilis__levofloxacin",
@@ -26977,7 +27028,8 @@
    "susceptiblePercent": 62.5,
    "increasedExposurePercent": 12.5,
    "resistantPercent": 25,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Khối nội__Tất cả__pseudomonas-aeruginosa__amoxicillin-clavulanate",
@@ -27087,7 +27139,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 33.3,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Tất cả__pseudomonas-aeruginosa__imipenem",
@@ -28006,7 +28060,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Tất cả__streptococcus-agalactiae__tetracycline",
@@ -28060,7 +28115,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Streptococcus.",
+   "noBreakpoint": true
   },
   {
    "id": "Khối nội__Tất cả__streptococcus-intermedius__clindamycin",
@@ -28132,7 +28189,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Tất cả__streptococcus-intermedius__tetracycline",
@@ -28258,7 +28316,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Tất cả__streptococcus-pneumoniae__tetracycline",
@@ -28456,7 +28515,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Khối nội__Tất cả__streptococcus-spp__tetracycline",
@@ -30206,7 +30266,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 50,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Toàn viện__Dịch (không ghi rõ nguồn)__proteus-mirabilis__levofloxacin",
@@ -30945,7 +31006,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Dịch (không ghi rõ nguồn)__streptococcus-agalactiae__tetracycline",
@@ -31053,7 +31115,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Dịch (không ghi rõ nguồn)__streptococcus-spp__tetracycline",
@@ -31543,7 +31606,9 @@
    "susceptiblePercent": 33.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Đường hô hấp__acinetobacter-baumannii__ceftazidime",
@@ -31579,7 +31644,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Đường hô hấp__acinetobacter-baumannii__ciprofloxacin",
@@ -31705,7 +31772,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 ấn bản 36 (2026) bỏ điểm gãy tetracyclin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Đường hô hấp__acinetobacter-baumannii__tobramycin",
@@ -32772,7 +32841,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 16.7,
    "resistantPercent": 33.3,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Toàn viện__Đường hô hấp__pseudomonas-aeruginosa__cefepime",
@@ -32844,7 +32914,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Đường hô hấp__pseudomonas-aeruginosa__imipenem",
@@ -33529,7 +33601,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Đường hô hấp__streptococcus-pneumoniae__tetracycline",
@@ -34231,7 +34304,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Toàn viện__Máu__pseudomonas-aeruginosa__amoxicillin-clavulanate",
@@ -34323,7 +34397,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 100,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Máu__pseudomonas-aeruginosa__imipenem",
@@ -35548,7 +35624,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 25,
    "resistantPercent": 25,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Toàn viện__Mủ / vết thương / mô mềm__proteus-mirabilis__levofloxacin",
@@ -35675,7 +35752,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Toàn viện__Mủ / vết thương / mô mềm__pseudomonas-aeruginosa__cefepime",
@@ -36287,7 +36365,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Streptococcus.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Mủ / vết thương / mô mềm__streptococcus-intermedius__clindamycin",
@@ -36359,7 +36439,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Mủ / vết thương / mô mềm__streptococcus-intermedius__tetracycline",
@@ -38721,7 +38802,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Toàn viện__Nước tiểu__pseudomonas-aeruginosa__cefepime",
@@ -39369,7 +39451,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Nước tiểu__streptococcus-spp__vancomycin",
@@ -39516,7 +39599,9 @@
    "susceptiblePercent": 33.3,
    "increasedExposurePercent": 0,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Tất cả__acinetobacter-baumannii__ceftazidime",
@@ -39552,7 +39637,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Tất cả__acinetobacter-baumannii__ciprofloxacin",
@@ -39678,7 +39765,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 ấn bản 36 (2026) bỏ điểm gãy tetracyclin cho Acinetobacter.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Tất cả__acinetobacter-baumannii__tobramycin",
@@ -42586,7 +42675,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 37.5,
    "resistantPercent": 12.5,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem."
   },
   {
    "id": "Toàn viện__Tất cả__proteus-mirabilis__levofloxacin",
@@ -42713,7 +42803,8 @@
    "susceptiblePercent": 70,
    "increasedExposurePercent": 10,
    "resistantPercent": 20,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)."
   },
   {
    "id": "Toàn viện__Tất cả__pseudomonas-aeruginosa__amoxicillin-clavulanate",
@@ -42823,7 +42914,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 33.3,
    "resistantPercent": 66.7,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Tất cả__pseudomonas-aeruginosa__imipenem",
@@ -43778,7 +43871,8 @@
    "susceptiblePercent": 100,
    "increasedExposurePercent": 0,
    "resistantPercent": 0,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Tất cả__streptococcus-agalactiae__tetracycline",
@@ -43832,7 +43926,9 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "CLSI M100 không có điểm gãy cefoxitin cho Streptococcus.",
+   "noBreakpoint": true
   },
   {
    "id": "Toàn viện__Tất cả__streptococcus-intermedius__clindamycin",
@@ -43904,7 +44000,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Tất cả__streptococcus-intermedius__tetracycline",
@@ -44030,7 +44127,8 @@
    "susceptiblePercent": 0,
    "increasedExposurePercent": 0,
    "resistantPercent": 100,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Tất cả__streptococcus-pneumoniae__tetracycline",
@@ -44246,7 +44344,8 @@
    "susceptiblePercent": 50,
    "increasedExposurePercent": 0,
    "resistantPercent": 50,
-   "lowN": true
+   "lowN": true,
+   "clsiNote": "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin."
   },
   {
    "id": "Toàn viện__Tất cả__streptococcus-spp__tetracycline",

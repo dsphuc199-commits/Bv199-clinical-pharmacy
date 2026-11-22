@@ -153,6 +153,34 @@ for (const row of ast) {
   }
 }
 
+/* =========================================================
+   QUY TAC DIEN GIAI CLSI M100 (khoang giay khuech tan)
+   Chi ap len phan hien thi; so S/I/R goc va doi chieu Excel giu nguyen.
+   - nobp: khong co diem gay CLSI cho cap vi khuan – khang sinh -> khong hien %S.
+   - note: van hien %S nhung kem chu thich bat buoc.
+   Nguon: Schuetz AN et al. J Clin Microbiol 2025;63(9):e01623-23 (M100 Ed32–33);
+   tom tat thay doi M100 Ed36 (2026) cho Acinetobacter.
+========================================================= */
+const CLSI_RULES = [
+  { group: "Pseudomonas aeruginosa", code: "CN/GEN", kind: "nobp", mark: "†",
+    text: "CLSI M100 bỏ điểm gãy gentamicin cho P. aeruginosa từ ấn bản 33; không diễn giải, không dùng điều trị." },
+  { group: "Acinetobacter baumannii", code: "CXM", kind: "nobp", mark: "†",
+    text: "CLSI M100 không có điểm gãy cefuroxim cho Acinetobacter." },
+  { group: "Acinetobacter baumannii", code: "FOX", kind: "nobp", mark: "†",
+    text: "CLSI M100 không có điểm gãy cefoxitin cho Acinetobacter." },
+  { group: "Acinetobacter baumannii", code: "TCY", kind: "nobp", mark: "†",
+    text: "CLSI M100 ấn bản 36 (2026) bỏ điểm gãy tetracyclin cho Acinetobacter." },
+  { group: "Streptococcus spp.", code: "FOX", kind: "nobp", mark: "†",
+    text: "CLSI M100 không có điểm gãy cefoxitin cho Streptococcus." },
+  { group: "Pseudomonas aeruginosa", code: "AMK", kind: "note", mark: "u",
+    text: "Điểm gãy amikacin cho P. aeruginosa chỉ áp dụng cho chủng phân lập từ nước tiểu (CLSI M100 từ ấn bản 33)." },
+  { group: "Proteus mirabilis", code: "IMP", kind: "note", mark: "p",
+    text: "P. mirabilis thường có MIC imipenem tăng do cơ chế không phải carbapenemase; đánh giá nhóm carbapenem theo meropenem." },
+  { group: "Streptococcus spp.", code: "PEN", kind: "note", mark: "s",
+    text: "Nhóm gộp phế cầu, liên cầu tan huyết beta và viridans. Với phế cầu, khoanh giấy chỉ dùng oxacillin 1 µg để sàng lọc; vùng ức chế ≤19 mm cần làm MIC penicillin." },
+];
+const clsiRule = (group, code) => CLSI_RULES.find((r) => r.group === group && r.code === code);
+
 const records = [...cells.values()].map((c) => {
   const n = c.S + c.I + c.R;
   const rec = {
@@ -171,6 +199,11 @@ const records = [...cells.values()].map((c) => {
     lowN: n < 30,
   };
   if (intrinsic.has(`${c.group}|${c.code}`)) rec.intrinsicResistance = true;
+  const rule = clsiRule(c.group, c.code);
+  if (rule) {
+    rec.clsiNote = rule.text;
+    if (rule.kind === "nobp") rec.noBreakpoint = true;
+  }
   return rec;
 }).sort((a, b) => a.id.localeCompare(b.id, "vi"));
 
@@ -210,7 +243,8 @@ const database = {
     hospital: "Bệnh viện 199 – Bộ Công an",
     source: "Kết quả kháng sinh đồ từ tháng 04/2025 đến hết tháng 03/2026, đã chuẩn hóa tên vi khuẩn, nhóm khoa và nhóm bệnh phẩm.",
     period: { id: "2025-04_2026-03", label: "04/2025 – 03/2026" },
-    method: "CLSI M39: chỉ tính phân lập đầu tiên của mỗi loài ở mỗi người bệnh; %S = S/(S+I+R), I tính là không nhạy.",
+    method: "Kháng sinh đồ bằng khoanh giấy khuếch tán, diễn giải theo CLSI M100. Tổng hợp theo CLSI M39: chỉ tính phân lập đầu tiên của mỗi loài ở mỗi người bệnh; %S = S/(S+I+R), I tính là không nhạy.",
+    breakpointNote: "Từ CLSI M100 ấn bản 33, vùng ức chế aminoglycosid cho Enterobacterales tăng: amikacin 30 µg S ≥20, I 17–19, R ≤16 mm; gentamicin 10 µg S ≥18, I 15–17, R ≤14 mm. Khoảng I rộng hơn làm tăng tỷ lệ I của amikacin; mức I của aminoglycosid có ý nghĩa khi thuốc cô đặc trong nước tiểu.",
     status: "Chưa thẩm định cho hỗ trợ quyết định lâm sàng.",
     departmentNote: DEPARTMENT_NOTE,
     intrinsicNote: "Kháng tự nhiên chưa đối chiếu với CLSI M100 và EUCAST Expected Resistant Phenotypes.",
@@ -257,7 +291,7 @@ for (const row of ast) {
   astByIsolate.get(row.isolate_id).push(row);
 }
 
-function buildPanel(subset, panel, scopeN) {
+function buildPanel(subset, panel, scopeN, applyClsi) {
   const rows = [];
   for (const group of panel.groups) {
     const isos = subset.filter((i) => i.nhom_bao_cao === group);
@@ -265,6 +299,7 @@ function buildPanel(subset, panel, scopeN) {
     const N = isos.length;
     const cells = panel.codes.map((code) => {
       if (intrinsic.has(`${group}|${code}`)) return { t: "R" };
+      const rule = applyClsi ? clsiRule(group, code) : undefined;
       let s = 0, tested = 0;
       for (const iso of isos) {
         for (const r of astByIsolate.get(iso.isolate_id) ?? []) {
@@ -274,10 +309,12 @@ function buildPanel(subset, panel, scopeN) {
         }
       }
       if (!tested) return { t: "-" };
+      if (rule?.kind === "nobp") return { t: "-", k: rule.mark, c: rule.text };
       const p = excelRound1(s, tested);
       const lowTested = tested < MIN_TESTED * N;
       const text = `${p}${lowTested ? "*" : ""}${code === "FOX" && STAPH.has(group) ? "b" : ""}`;
       const cell = { t: text, s, n: tested };
+      if (rule) { cell.k = rule.mark; cell.c = rule.text; }
       if (p >= GREEN && N >= MIN_N && !lowTested) cell.g = 1;
       return cell;
     });
@@ -312,8 +349,8 @@ function buildTables(sourceLayout = false) {
   return list.map(({ subset, ...t }) => ({
     ...t,
     title: `BẢNG KHÁNG SINH ĐỒ TÍCH LŨY CHO CÁC VI KHUẨN PHÂN LẬP – BỆNH VIỆN 199 – ${t.heading} (n=${t.n})`,
-    gramNegative: buildPanel(subset, GRAM_NEG, t.n),
-    gramPositive: buildPanel(subset, GRAM_POS, t.n),
+    gramNegative: buildPanel(subset, GRAM_NEG, t.n, !sourceLayout),
+    gramPositive: buildPanel(subset, GRAM_POS, t.n, !sourceLayout),
   }));
 }
 const tables = buildTables();
@@ -359,6 +396,15 @@ fs.writeFileSync(OUT, JSON.stringify(database, null, 1) + "\n");
 fs.writeFileSync(OUT_TABLES, JSON.stringify({
   period: "01/04/2025 – 31/03/2026",
   minN: MIN_N, minTestedRatio: MIN_TESTED, greenThreshold: GREEN,
+  method: database.metadata.method,
+  breakpointNote: database.metadata.breakpointNote,
+  clsiNotes: [...new Map(CLSI_RULES.map((r) => [r.mark, r])).values()].map(({ mark, kind }) => ({
+    mark,
+    text: kind === "nobp"
+      ? "Không có điểm gãy CLSI M100 cho cặp vi khuẩn – kháng sinh này, không diễn giải: " +
+        CLSI_RULES.filter((r) => r.mark === mark).map((r) => `${r.group} – ${abName[r.code]}`).join("; ") + "."
+      : CLSI_RULES.find((r) => r.mark === mark).text,
+  })),
   tables,
 }) + "\n");
 console.log(`OK: ${isolates.length}/${isolatesAll.length} phan lap dau tien, ${records.length} dong, ${organisms.length} loai; doi chieu ${reference.length} dong khop 100%.`);
