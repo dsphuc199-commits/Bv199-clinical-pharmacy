@@ -69,6 +69,13 @@ test("sends the gateway public passages and title only", async (t) => {
   assert.equal(mock.mock.callCount(), 1);
 });
 
+test("reports account verification separately from invalid gateway credentials", async (t) => {
+  const [document] = parseWatchHtml(cap, capHtml);
+  const passages = [evidence[0], { ...evidence[0], id: "p2" }];
+  t.mock.method(globalThis, "fetch", async () => Response.json({ error: { type: "customer_verification_required" } }, { status: 403 }));
+  await assert.rejects(reviewPublicGuideline(document, passages, "test-token"), /xác minh phương thức thanh toán/);
+});
+
 test("the scheduled route rejects unauthenticated requests", async () => {
   const response = await scheduledWatch(new Request("https://example.test/api/internal/guideline-watch"));
   assert.equal(response.status, 401);

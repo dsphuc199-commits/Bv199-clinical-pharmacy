@@ -93,13 +93,19 @@ export function readyForReview(entry: WatchEntry): boolean {
   return entry.topic === "biliary" && entry.fullText !== "manual" && !entry.notice;
 }
 
+function dueForScheduledReview(analysis: WatchEntry["analysis"], now: number): boolean {
+  if (!analysis) return true;
+  if (analysis.status === "done") return false;
+  return now - Date.parse(analysis.at) >= 20 * 60 * 60 * 1000;
+}
+
 export async function prepareWatchProposal(id: string, token: string, allowRetry = true): Promise<void> {
   const attempt = randomUUID();
   const at = new Date().toISOString();
   const reserved = await updateWatch((state) => {
     const entry = state.documents.find((entry) => entry.id === id);
     if (!entry || !readyForReview(entry) || !isCurrentDocument(state, id)) throw new SourceError("Tài liệu chưa có toàn văn đã xác minh hoặc nguồn cần rà soát lại.");
-    if (entry.analysis && !allowRetry) return null;
+    if (!allowRetry && !dueForScheduledReview(entry.analysis, Date.parse(at))) return null;
     if (entry.analysis?.status === "running" && Date.now() - Date.parse(entry.analysis.at) < 120_000) return null;
     return { ...state, documents: state.documents.map((entry) => entry.id === id ? { ...entry, analysis: { status: "running", id: attempt, at } } : entry) };
   });
@@ -124,6 +130,7 @@ export async function prepareWatchProposal(id: string, token: string, allowRetry
 }
 
 export async function reviewNextWatchEntry(state: WatchState, token: string) {
-  const entry = state.documents.find((entry) => readyForReview(entry) && !entry.analysis && isCurrentDocument(state, entry.id));
+  const candidates = state.documents.filter((entry) => readyForReview(entry) && isCurrentDocument(state, entry.id));
+  const entry = candidates.find(({ analysis }) => !analysis) ?? candidates.find(({ analysis }) => dueForScheduledReview(analysis, Date.now()));
   if (entry) await prepareWatchProposal(entry.id, token, false);
 }

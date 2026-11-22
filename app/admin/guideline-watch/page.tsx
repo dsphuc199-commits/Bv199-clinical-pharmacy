@@ -34,7 +34,7 @@ export default async function GuidelineWatchPage() {
           <div>
             <h2 id="watch-sources" className="text-lg font-bold">Nguồn đang theo dõi</h2>
             <p className="mt-1 text-sm text-slate-600">{process.env.CRON_SECRET ? "Đã cấu hình kiểm tra hằng ngày theo giờ Việt Nam." : "Chưa cấu hình lịch tự động."}{" "}
-              {aiAvailable ? "AI xử lý tài liệu công khai. Khoa Dược thẩm định đề xuất trong app." : "Chưa kết nối AI Gateway."}</p>
+              {aiAvailable ? "Đã cấu hình AI Gateway cho tài liệu công khai. Khoa Dược thẩm định đề xuất trong app." : "Chưa kết nối AI Gateway."}</p>
           </div>
           {configured && <WatchForm label="Kiểm tra nguồn ngay" />}
         </div>

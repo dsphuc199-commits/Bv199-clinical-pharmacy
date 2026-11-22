@@ -86,6 +86,13 @@ export async function reviewPublicGuideline(document: DetectedDocument, passages
     }),
   });
   if (!response.ok) {
+    if (response.status === 403) {
+      const body = await response.json().catch(() => null);
+      const verification = z.object({ error: z.object({ type: z.literal("customer_verification_required") }) });
+      if (verification.safeParse(body).success) {
+        throw new SourceError("Vercel yêu cầu chủ tài khoản xác minh phương thức thanh toán để bật AI Gateway.");
+      }
+    }
     throw new SourceError(response.status === 401 || response.status === 403 ? "AI Gateway chưa xác thực được cho dự án." :
       response.status === 402 || response.status === 429 ? "AI Gateway đã hết hạn mức hoặc đang giới hạn yêu cầu." : `AI Gateway chưa trả được đề xuất (HTTP ${response.status}).`);
   }
