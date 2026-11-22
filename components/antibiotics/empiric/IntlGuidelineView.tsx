@@ -114,15 +114,19 @@ function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlG
   if (!sources.length) return null;
   if (g.disease_id === "v8-24") return (
     <details className="clinical-references">
-      <summary>Tài liệu tham khảo</summary>
-      <ol className="m-0 list-decimal space-y-2 pb-3 pl-8 pr-3 text-sm leading-relaxed">
-        {sources.map((source) => (
+      <summary>Tài liệu tham khảo · Tokyo Guidelines 2018 (TG18)</summary>
+      <ol className="m-0 list-decimal space-y-2 pl-8 pr-3 text-sm leading-relaxed">
+        {sources.filter((source) => source.id.startsWith("tg18-")).map((source) => (
           <li key={source.id} className="pl-1">
-            <a className="font-semibold text-teal-800 underline" href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
-            <p className="m-0 text-xs text-slate-600">{source.org} · {source.version}</p>
+            <a className="font-semibold text-teal-800 underline" href={source.url} target="_blank" rel="noreferrer">{source.short_title?.replace(/^TG18 · /, "") ?? source.title}</a>
+            <p className="m-0 text-xs text-slate-600">
+              {source.id === "tg18-antibiotics" && <strong>Khuyến cáo điều trị chính · </strong>}
+              {source.org.replace(/^Tokyo Guidelines 2018 · /, "")} · {source.year}
+            </p>
           </li>
         ))}
       </ol>
+      <p className="m-0 px-3 pb-3 pt-2 text-xs text-slate-600">Nguồn liều và cách dùng được ghi ngay trên từng thẻ thuốc.</p>
     </details>
   );
 
