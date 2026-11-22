@@ -65,12 +65,18 @@ test("a VRE substitution replaces vancomycin without removing the Gram-negative 
   assert.ok(!plan("ii", "community", false, true).blocks.some(({ title }) => title.includes("VRE")));
 });
 
-test("severity stays pending until enough criteria are known and organ dysfunction takes precedence", () => {
-  assert.equal(tg18Severity("pending", "high"), "pending");
-  assert.equal(tg18Severity("no", "pending"), "pending");
-  assert.equal(tg18Severity("no", "low"), "i");
-  assert.equal(tg18Severity("no", "high"), "ii");
-  assert.equal(tg18Severity("yes", "pending"), "iii");
+test("a TG18 checklist requires enough assessed criteria and prioritizes organ dysfunction", () => {
+  const empty = { organFindings: [], noOrganDysfunction: false, moderateFindings: [], moderateReviewed: false };
+  const excludedOrganDysfunction = { ...empty, noOrganDysfunction: true };
+  const twoModerateFindings = ["fever", "age"];
+  assert.equal(tg18Severity(empty), "pending");
+  assert.equal(tg18Severity({ ...empty, moderateFindings: twoModerateFindings }), "pending");
+  assert.equal(tg18Severity({ ...excludedOrganDysfunction, moderateFindings: ["fever"] }), "pending");
+  assert.equal(tg18Severity({ ...excludedOrganDysfunction, moderateReviewed: true }), "i");
+  assert.equal(tg18Severity({ ...excludedOrganDysfunction, moderateFindings: ["fever"], moderateReviewed: true }), "i");
+  assert.equal(tg18Severity({ ...excludedOrganDysfunction, moderateFindings: twoModerateFindings }), "ii");
+  assert.equal(tg18Severity({ ...empty, organFindings: ["renal"] }), "iii");
+  assert.equal(tg18Severity({ ...excludedOrganDysfunction, organFindings: ["renal"], moderateFindings: twoModerateFindings }), "iii");
   assert.match(tg18Diagnosis(true, false, true), /nghi ngờ/);
   assert.match(tg18Diagnosis(true, true, true), /xác định/);
 });

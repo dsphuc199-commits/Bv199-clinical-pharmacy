@@ -1,62 +1,139 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   cholangitisChoices, cholangitisCombination, cholangitisCourse, tg18Diagnosis, tg18Severity,
-  type CholangitisResult, type CourseException, type ModerateCount, type OrganStatus, type SourceControl,
+  type CholangitisResult, type CourseException, type OrganStatus, type SourceControl, type TG18SeverityAssessment,
 } from "@/lib/antibiotics/cholangitis-plan";
 import type { IntlGuideline } from "@/schema/intl-guideline";
 import CholangitisCards from "./CholangitisCards";
 
 const field = "mt-1 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900";
-const criteria = [
+const diagnosisCriteria = [
   { id: "a", name: "A · Viêm toàn thân", detail: "Sốt >38 °C hoặc rét run. Bạch cầu <4.000 hoặc >10.000/mm³, hoặc CRP ≥1 mg/dL." },
   { id: "b", name: "B · Ứ mật", detail: "Bilirubin toàn phần ≥2 mg/dL, hoặc ALP, GGT, AST hay ALT >1,5 lần giới hạn trên bình thường." },
   { id: "c", name: "C · Hình ảnh", detail: "Giãn đường mật hoặc thấy nguyên nhân như sỏi, hẹp hay stent trên hình ảnh." },
 ] as const;
 const gradeLabels = { i: "Độ I · nhẹ", ii: "Độ II · trung bình", iii: "Độ III · nặng" };
 
-export function CholangitisAssessment({ apply }: { apply: (severity: string) => void }) {
-  const [findings, setFindings] = useState({ a: false, b: false, c: false });
-  const [organ, setOrgan] = useState<OrganStatus>("pending");
-  const [moderate, setModerate] = useState<ModerateCount>("pending");
-  const grade = tg18Severity(organ, moderate);
+const organCriteria = [
+  { id: "cardiovascular", name: "Tuần hoàn", detail: "Hạ huyết áp cần dopamin ≥5 µg/kg/phút hoặc noradrenalin ở bất kỳ liều nào." },
+  { id: "neurologic", name: "Thần kinh", detail: "Rối loạn ý thức." },
+  { id: "respiratory", name: "Hô hấp", detail: "PaO₂/FiO₂ <300." },
+  { id: "renal", name: "Thận", detail: "Thiểu niệu hoặc creatinin huyết thanh >2,0 mg/dL." },
+  { id: "hepatic", name: "Gan", detail: "PT-INR >1,5." },
+  { id: "hematologic", name: "Huyết học", detail: "Tiểu cầu <100.000/mm³." },
+];
+
+const moderateCriteria = [
+  { id: "wbc", name: "Bạch cầu", detail: ">12.000 hoặc <4.000/mm³." },
+  { id: "fever", name: "Nhiệt độ", detail: "≥39 °C." },
+  { id: "age", name: "Tuổi", detail: "≥75 tuổi." },
+  { id: "bilirubin", name: "Bilirubin toàn phần", detail: "≥5 mg/dL." },
+  { id: "albumin", name: "Albumin huyết thanh", detail: "<0,7 × giới hạn dưới bình thường của labo." },
+];
+
+function CriteriaChecklist({ criteria, selected, onChange }: {
+  criteria: typeof organCriteria;
+  selected: readonly string[];
+  onChange: (selected: string[]) => void;
+}) {
   return (
-    <details className="mb-3 rounded-xl border border-slate-200 bg-white p-3">
-      <summary className="cursor-pointer font-bold text-slate-900">Đối chiếu dấu hiệu, xét nghiệm và hình ảnh</summary>
-      <div className="mt-3 grid gap-3 text-sm">
-        <fieldset className="grid gap-2 md:grid-cols-3">
-          {criteria.map(({ id, name, detail }) => (
-            <label key={id} className="grid content-start gap-1 rounded-lg bg-slate-50 p-2.5">
-              <span className="flex items-center gap-2 font-semibold"><input type="checkbox" checked={findings[id]} onChange={(e) => setFindings({ ...findings, [id]: e.target.checked })} />{name}</span>
-              <span className="text-xs leading-relaxed text-slate-700">{detail}</span>
-            </label>
-          ))}
-        </fieldset>
-        <p className="m-0 text-teal-900" role="status">{tg18Diagnosis(findings.a, findings.b, findings.c)}</p>
-        <div className="grid gap-3 md:grid-cols-2">
-          <label className="block">
-            <span className="font-semibold">Suy ít nhất một cơ quan theo TG18</span>
-            <select className={field} value={organ} onChange={(e) => setOrgan(e.target.value as OrganStatus)}>
-              <option value="pending">Chưa đánh giá</option><option value="yes">Có</option><option value="no">Không</option>
-            </select>
-            <span className="mt-1 block text-xs leading-relaxed text-slate-700">Tụt huyết áp cần dopamin ≥5 µg/kg/phút hoặc noradrenalin bất kỳ liều nào, giảm ý thức, PaO₂/FiO₂ &lt;300, thiểu niệu hoặc creatinin &gt;2 mg/dL, PT-INR &gt;1,5, tiểu cầu &lt;100.000/mm³.</span>
+    <ul className="m-0 grid list-none gap-1 p-0">
+      {criteria.map(({ id, name, detail }) => (
+        <li key={id}>
+          <label className="flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 hover:bg-white has-[:checked]:bg-teal-100">
+            <input
+              type="checkbox"
+              className="mt-0.5 shrink-0 accent-teal-800"
+              checked={selected.includes(id)}
+              onChange={(e) => onChange(e.target.checked ? [...selected, id] : selected.filter((criterion) => criterion !== id))}
+            />
+            <span className="min-w-0 text-xs leading-relaxed text-slate-700">
+              <strong className="text-sm text-slate-900">{name}</strong>{" "}{detail}
+            </span>
           </label>
-          <label className="block">
-            <span className="font-semibold">Số tiêu chí Độ II</span>
-            <select className={field} value={moderate} onChange={(e) => setModerate(e.target.value as ModerateCount)} disabled={organ === "yes"}>
-              <option value="pending">Chưa đối chiếu đủ</option><option value="low">0 hoặc 1 tiêu chí</option><option value="high">Ít nhất 2 tiêu chí</option>
-            </select>
-            <span className="mt-1 block text-xs leading-relaxed text-slate-700">Bạch cầu &gt;12.000 hoặc &lt;4.000/mm³, sốt ≥39 °C, tuổi ≥75, bilirubin toàn phần ≥5 mg/dL hoặc albumin dưới 0,7 lần giới hạn dưới bình thường.</span>
-          </label>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          {grade === "pending" ? <p className="m-0 text-slate-600">Cần thêm dữ kiện để phân độ.</p> : (
-            <button type="button" onClick={() => apply(grade)} className="rounded-lg bg-teal-800 px-3 py-2 font-semibold text-white">Áp dụng {gradeLabels[grade]}</button>
-          )}
-          <a className="font-semibold text-teal-800 underline" href="https://doi.org/10.1002/jhbp.512" target="_blank" rel="noreferrer">Tiêu chuẩn TG18</a>
-        </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function CholangitisAssessment({ apply, manualControl }: { apply: (severity: string) => void; manualControl: ReactNode }) {
+  const [findings, setFindings] = useState({ a: false, b: false, c: false });
+  const [manual, setManual] = useState(false);
+  const [assessment, setAssessment] = useState<TG18SeverityAssessment>({
+    organFindings: [], noOrganDysfunction: false, moderateFindings: [], moderateReviewed: false,
+  });
+  const grade = tg18Severity(assessment);
+
+  const updateAssessment = (next: TG18SeverityAssessment) => {
+    setAssessment(next);
+    apply(tg18Severity(next));
+  };
+
+  return (
+    <section className="grid gap-3 rounded-xl border border-slate-200 bg-white p-3 sm:p-4" aria-label="Phân độ nặng theo TG18">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h4 className="!m-0 !text-base !font-bold">Xác định độ nặng theo TG18</h4>
+        {manualControl && (
+          <button type="button" className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-teal-800 hover:border-teal-400"
+            onClick={() => {
+              setManual(!manual);
+              if (manual) apply(grade);
+            }}
+          >
+            {manual ? "Phân độ theo tiêu chí" : "Chọn độ đã xác định"}
+          </button>
+        )}
       </div>
-    </details>
+      {manual ? manualControl : (
+        <>
+          <div className="grid gap-2.5 lg:grid-cols-2">
+            <fieldset className="grid min-w-0 content-start gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 pb-2.5">
+              <legend className="px-1 text-sm font-bold text-slate-900">{gradeLabels.iii}</legend>
+              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700">Tích các dấu hiệu suy cơ quan mới xuất hiện. Một dấu hiệu đủ để xếp Độ III.</p>
+              <CriteriaChecklist criteria={organCriteria} selected={assessment.organFindings} onChange={(organFindings) => updateAssessment({ ...assessment, organFindings, noOrganDysfunction: false })} />
+              <label className="flex items-start gap-2 border-t border-slate-200 px-2 pt-2 text-xs font-semibold text-slate-800">
+                <input type="checkbox" className="mt-0.5 shrink-0 accent-teal-800" checked={assessment.noOrganDysfunction} disabled={assessment.organFindings.length > 0}
+                  onChange={(e) => updateAssessment({ ...assessment, noOrganDysfunction: e.target.checked })} />
+                Đã đánh giá và không có dấu hiệu suy cơ quan
+              </label>
+            </fieldset>
+            <fieldset className="grid min-w-0 content-start gap-1.5 rounded-xl border border-teal-100 bg-teal-50/50 px-2.5 pb-2.5">
+              <legend className="px-1 text-sm font-bold text-slate-900">{gradeLabels.ii}</legend>
+              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700">Xếp Độ II khi có ít nhất 2 tiêu chí và đã loại trừ Độ III.</p>
+              <CriteriaChecklist criteria={moderateCriteria} selected={assessment.moderateFindings} onChange={(moderateFindings) => updateAssessment({ ...assessment, moderateFindings, moderateReviewed: false })} />
+              <label className="flex items-start gap-2 border-t border-teal-100 px-2 pt-2 text-xs font-semibold text-slate-800">
+                <input type="checkbox" className="mt-0.5 shrink-0 accent-teal-800" checked={assessment.moderateReviewed}
+                  onChange={(e) => updateAssessment({ ...assessment, moderateReviewed: e.target.checked })} />
+                Đã đối chiếu đủ 5 tiêu chí Độ II
+              </label>
+              <p className="m-0 px-2 text-xs leading-relaxed text-slate-700"><strong>Độ I · nhẹ</strong> khi đã loại trừ suy cơ quan và chỉ có 0–1 tiêu chí Độ II sau đánh giá.</p>
+            </fieldset>
+          </div>
+          <p role="status" className="m-0 rounded-lg bg-teal-50 px-3 py-2 text-sm text-teal-950">
+            <strong>{grade === "pending" ? "Chưa đủ dữ kiện phân độ" : gradeLabels[grade]}</strong>
+            <span className="ml-2 text-xs">{assessment.organFindings.length > 0
+              ? `${assessment.organFindings.length}/6 dấu hiệu suy cơ quan`
+              : `${assessment.moderateFindings.length}/5 tiêu chí Độ II`}</span>
+          </p>
+        </>
+      )}
+      <details className="rounded-lg border border-slate-200 px-3 py-2 text-sm">
+        <summary className="cursor-pointer font-semibold text-slate-900">Đối chiếu chẩn đoán TG18</summary>
+        <div className="mt-2 grid gap-2">
+          <fieldset className="grid gap-2 md:grid-cols-3" aria-label="Tiêu chí chẩn đoán TG18">
+            {diagnosisCriteria.map(({ id, name, detail }) => (
+              <label key={id} className="grid content-start gap-1 rounded-lg bg-slate-50 p-2.5">
+                <span className="flex items-center gap-2 font-semibold"><input type="checkbox" checked={findings[id]} onChange={(e) => setFindings({ ...findings, [id]: e.target.checked })} />{name}</span>
+                <span className="text-xs leading-relaxed text-slate-700">{detail}</span>
+              </label>
+            ))}
+          </fieldset>
+          <p className="m-0 text-teal-900" role="status">{tg18Diagnosis(findings.a, findings.b, findings.c)}</p>
+        </div>
+      </details>
+    </section>
   );
 }
 
@@ -83,7 +160,11 @@ export function CholangitisPlan({ result, severity, setting, junction, sources }
   const drainageInfo = drainage && <div className="rounded-lg bg-white px-3 py-2 text-sm"><strong>{drainage.title}</strong>{drainage.bullets.map(({ text }) => <p key={text} className="m-0 mt-1">{text}</p>)}</div>;
   if (!result.primary || severity === "pending" || setting === "pending") return (
     <div className="my-3 grid gap-2 rounded-xl border border-teal-100 bg-teal-50 p-3 text-sm text-teal-950">
-      <p role="status" className="m-0">Chọn phân độ TG18 và bối cảnh mắc bệnh để hiện phương án tham khảo.</p>
+      <p role="status" className="m-0">
+        {severity === "pending" ? "Xác định độ nặng theo TG18 để xem phương án kháng sinh."
+          : setting === "pending" ? "Chọn bối cảnh mắc bệnh để xem phương án kháng sinh."
+          : "Chưa có phương án kháng sinh khớp dữ kiện đã chọn."}
+      </p>
       {drainageInfo}
     </div>
   );

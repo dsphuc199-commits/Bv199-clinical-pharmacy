@@ -9,6 +9,7 @@ import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 import CholangitisCards from "./CholangitisCards";
 import { CholangitisAssessment, CholangitisPlan } from "./CholangitisWorkflow";
+import ClinicalSources from "../treatment/ClinicalSources";
 import { citeIntlGuideline } from "@/lib/antibiotics/source-citation";
 
 const SHOW_DRAFT = process.env.NEXT_PUBLIC_SHOW_DRAFT_GUIDELINES !== "0";
@@ -30,9 +31,9 @@ function Chk({ on, set, children }: { on: boolean; set: (v: boolean) => void; ch
 }
 
 /** Vẽ các trục placement "form": gom checkbox liền nhau cùng group vào một hàng; multi tách hàng theo option.group. */
-function Form({ g, raw, eff, set }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void }) {
+function Form({ g, raw, eff, set, excludeAxis }: { g: IntlGuideline; raw: AxisState; eff: AxisState; set: (id: string, v: AxisVal) => void; excludeAxis?: string }) {
   const rows: React.ReactNode[] = [];
-  const axes = g.axes.filter((a) => a.placement === "form" && isVisible(g.axes, eff, a.id));
+  const axes = g.axes.filter((a) => a.id !== excludeAxis && a.placement === "form" && isVisible(g.axes, eff, a.id));
   for (let i = 0; i < axes.length; i++) {
     const a = axes[i];
     if (a.type === "check") {
@@ -112,23 +113,28 @@ function Sources({ sources }: { sources: IntlGuideline["sources"] }) {
 
 function References({ g, sources, clinical }: { g: IntlGuideline; sources: IntlGuideline["sources"]; clinical: boolean }) {
   if (!sources.length) return null;
-  if (g.disease_id === "v8-24") return (
-    <details className="clinical-references">
-      <summary>Tài liệu tham khảo · Tokyo Guidelines 2018 (TG18)</summary>
-      <ol className="m-0 list-decimal space-y-2 pl-8 pr-3 text-sm leading-relaxed">
-        {sources.filter((source) => source.id.startsWith("tg18-")).map((source) => (
-          <li key={source.id} className="pl-1">
-            <a className="font-semibold text-teal-800 underline" href={source.url} target="_blank" rel="noreferrer">{source.short_title?.replace(/^TG18 · /, "") ?? source.title}</a>
-            <p className="m-0 text-xs text-slate-600">
-              {source.id === "tg18-antibiotics" && <strong>Khuyến cáo điều trị chính · </strong>}
-              {source.org.replace(/^Tokyo Guidelines 2018 · /, "")} · {source.year}
-            </p>
-          </li>
-        ))}
-      </ol>
-      <p className="m-0 px-3 pb-3 pt-2 text-xs text-slate-600">Nguồn liều và cách dùng được ghi ngay trên từng thẻ thuốc.</p>
-    </details>
-  );
+  if (g.disease_id === "v8-24") {
+    const references = sources.filter((source) => source.id.startsWith("tg18-"));
+    if (!references.length) return null;
+    return (
+      <ClinicalSources sources={[]}>
+        <div className="grid gap-2 px-1 pb-1">
+          <h4 className="!m-0 !font-bold">Tokyo Guidelines 2018</h4>
+          <ol className="m-0 list-decimal space-y-2 pl-5 text-sm leading-relaxed">
+            {references.map((source) => (
+              <li key={source.id} className="pl-1">
+                <a className="font-semibold text-teal-800 underline" href={source.url} target="_blank" rel="noreferrer">{source.short_title?.replace(/^TG18 · /, "") ?? source.title}</a>
+                <p className="m-0 text-xs text-slate-600">
+                  {source.id === "tg18-antibiotics" && <strong>Khuyến cáo điều trị chính · </strong>}
+                  {source.org.replace(/^Tokyo Guidelines 2018 · /, "")}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </ClinicalSources>
+    );
+  }
 
   const references = sources.map((s) => ({
     ...citeIntlGuideline({ ...s, published: s.version }),
@@ -197,11 +203,15 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
   if (g.disease_id === "v8-24") {
     const severity = String(eff.severity);
     const setting = String(eff.setting);
+    const severityAxis = g.axes.find(({ id }) => id === "severity");
     const supportingCare = r.after.filter(({ id }) => id === "initial" || id === "oral-step-down");
     return (
       <>
-        <CholangitisAssessment apply={(value) => set("severity", value)} />
-        <Form g={g} raw={raw} eff={eff} set={set} />
+        <CholangitisAssessment
+          apply={(value) => set("severity", value)}
+          manualControl={severityAxis && <AxisControl a={severityAxis} value={severity} set={(value) => set("severity", value)} />}
+        />
+        <Form g={g} raw={raw} eff={eff} set={set} excludeAxis="severity" />
         <CholangitisPlan key={`${severity}-${setting}`} result={r} severity={severity} setting={setting} junction={String(eff.anastomosis)} sources={sources} />
         {supportingCare.length > 0 && (
           <details className="my-3 rounded-xl border border-slate-200 bg-white p-3">

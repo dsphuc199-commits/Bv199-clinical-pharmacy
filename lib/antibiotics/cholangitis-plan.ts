@@ -2,14 +2,21 @@ import type { resolve } from "@/lib/intl-rules";
 
 export type CholangitisResult = ReturnType<typeof resolve>;
 export type OrganStatus = "pending" | "yes" | "no";
-export type ModerateCount = "pending" | "low" | "high";
 export type SourceControl = "pending" | "controlled" | "uncontrolled";
 export type CourseException = "pending" | "none" | "gram-positive" | "abscess";
 
-export function tg18Severity(organ: OrganStatus, moderate: ModerateCount) {
-  if (organ === "yes") return "iii";
-  if (organ === "pending" || moderate === "pending") return "pending";
-  return moderate === "high" ? "ii" : "i";
+export type TG18SeverityAssessment = {
+  organFindings: readonly string[];
+  noOrganDysfunction: boolean;
+  moderateFindings: readonly string[];
+  moderateReviewed: boolean;
+};
+
+export function tg18Severity({ organFindings, noOrganDysfunction, moderateFindings, moderateReviewed }: TG18SeverityAssessment) {
+  if (organFindings.length > 0) return "iii";
+  if (!noOrganDysfunction) return "pending";
+  if (moderateFindings.length >= 2) return "ii";
+  return moderateReviewed ? "i" : "pending";
 }
 
 export function tg18Diagnosis(inflammation: boolean, cholestasis: boolean, imaging: boolean) {
