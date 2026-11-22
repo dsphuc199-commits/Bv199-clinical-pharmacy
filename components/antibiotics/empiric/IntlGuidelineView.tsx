@@ -205,7 +205,7 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
     const severity = String(eff.severity);
     const setting = String(eff.setting);
     const severityAxis = g.axes.find(({ id }) => id === "severity");
-    const supportingCare = r.after.filter(({ id }) => id === "initial" || id === "oral-step-down");
+    const supportingCare = r.after.filter(({ id }) => ["initial", "microbiology", "resistant", "oral-step-down"].includes(id));
     return (
       <>
         <CholangitisAssessment
@@ -219,7 +219,7 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
         <CholangitisPlan guideline={g} result={r} severity={severity} setting={setting} junction={String(eff.anastomosis)} sources={sources} />
         {supportingCare.length > 0 && (
           <details className="my-3 rounded-xl border border-slate-200 bg-white p-3">
-            <summary className="cursor-pointer font-bold text-slate-900">Khởi trị, lấy mẫu và chuyển uống</summary>
+            <summary className="cursor-pointer font-bold text-slate-900">Khởi trị, lấy mẫu, tác nhân, vi khuẩn kháng thuốc và chuyển uống</summary>
             {supportingCare.map((section) => <Section key={section.id} s={section} g={g} eff={eff} set={set} />)}
           </details>
         )}

@@ -93,7 +93,7 @@ function CholangitisOverview({ guideline, setting, severity }: { guideline: Intl
       community.broadRoles.length > 0 && `Khi cần kháng Pseudomonas, cân nhắc ${community.broadRoles.join(", ")}.`,
     ].filter(Boolean).join(" "),
     iii: [
-      community.severe.base.length > 0 && `Thuốc nền kháng Pseudomonas gồm ${community.severe.base.map(({ role }) => role).join(", ")}. Cân nhắc carbapenem khi có chỉ định.`,
+      community.severe.base.length > 0 && `Thuốc kháng Pseudomonas TG18 liệt kê ngang hàng: ${community.severe.base.map(({ role }) => role).join(", ")}.`,
       enterococcusAgent && `Phối hợp ${enterococcusAgent} để bao phủ Enterococcus.`,
     ].filter(Boolean).join(" "),
   };
@@ -276,7 +276,7 @@ function CholangitisGradePlan({ guideline, result, severity, setting, junction, 
   const adjuncts = [reference.choices.anaerobic, needsVre ? undefined : reference.choices.enterococcus].filter((item) => item !== undefined);
   const groups: CholangitisAntibioticGroup[] = [
     { label: "Thuốc nền · chọn một", items: choices.base, relation: backboneRelation, choose: canChoose ? setSelected : undefined },
-    { label: "Thuốc thay thế · thay cho thuốc nền khi phù hợp", items: choices.alternatives, relation: backboneRelation, choose: canChoose ? setSelected : undefined },
+    { label: "Chỉ dùng khi đủ điều kiện TG18 · thay cho thuốc nền", items: choices.alternatives, relation: backboneRelation, choose: canChoose ? setSelected : undefined },
     {
       label: "Thuốc bổ sung để phối hợp",
       items: adjuncts,

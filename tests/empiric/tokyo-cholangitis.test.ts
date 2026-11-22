@@ -95,15 +95,15 @@ test("TG18 table separates verified formulation strength, dose and timing", () =
 
 test("community grade I and II expose distinct TG18 backbones and susceptibility conditions", () => {
   const mild = cholangitisChoices(plan("i", "community"), false);
-  assert.deepEqual(mild.base.map(({ role }) => role), ["Cefazolin", "Cefuroxim", "Ceftriaxon", "Cefotaxim"]);
-  assert.match(mild.alternativesLead ?? "", /Ampicillin\/sulbactam.*≥80%/);
+  assert.deepEqual(mild.base.map(({ role }) => role), ["Cefazolin", "Cefuroxim", "Ceftriaxon", "Cefotaxim", "Ertapenem", "Cefoperazon/sulbactam"]);
+  assert.match(mild.alternativesLead ?? "", /Ampicillin\/sulbactam.*>20%/);
   assert.ok(mild.base.find(({ role }) => role === "Cefuroxim")?.source_ids.includes("dose-cefuroxime"));
 
   const moderate = cholangitisChoices(plan("ii", "community"), true);
   assert.deepEqual(moderate.base.map(({ role }) => role), ["Piperacillin/tazobactam", "Cefepim", "Ceftazidim"]);
   assert.deepEqual(moderate.alternatives.map(({ role }) => role), []);
   const moderateAll = cholangitisChoices(plan("ii", "community"), false);
-  assert.deepEqual(moderateAll.base.map(({ role }) => role), ["Piperacillin/tazobactam", "Ceftriaxon", "Cefotaxim", "Cefepim", "Ceftazidim"]);
+  assert.deepEqual(moderateAll.base.map(({ role }) => role), ["Piperacillin/tazobactam", "Ceftriaxon", "Cefotaxim", "Cefepim", "Ceftazidim", "Ertapenem", "Cefoperazon/sulbactam"]);
   assert.equal(moderate.baseLead, undefined);
 
   for (const setting of ["community", "healthcare"]) {
@@ -166,7 +166,7 @@ test("TG18 details added after source review: cefoperazone/sulbactam, healthcare
   assert.match(hcLead, /mọi độ nặng/);
   assert.match(hcLead, /định cư/);
   const after = plan("i", "community").after;
-  assert.match(after.find(({ id }) => id === "initial")!.bullets[0].text, /1 giờ.*6 giờ/);
+  assert.ok(after.find(({ id }) => id === "initial")!.bullets.some(({ text }) => /1 giờ.*6 giờ/.test(text)));
   const oral = after.find(({ id }) => id === "oral-step-down")!;
   assert.deepEqual(oral.items.map(({ role }) => role), ["Amoxicillin/clavulanat", "Ciprofloxacin", "Cephalexin", "Levofloxacin", "Moxifloxacin"]);
   for (const item of oral.items.slice(2)) assert.equal(item.dose, undefined, item.role);
@@ -179,4 +179,31 @@ test("the 4–7 day plan is conditional on source control and longer-course fact
   assert.match(cholangitisCourse("controlled", "pending").title, /^Chờ xác nhận/);
   assert.match(cholangitisCourse("controlled", "gram-positive").detail, /tối thiểu 2 tuần/);
   assert.match(cholangitisCourse("controlled", "abscess").title, /áp-xe gan/);
+});
+
+test("TG18 drug lists match Table 3: only ampicillin/sulbactam and fluoroquinolones are conditional", () => {
+  const roles = (severity: string, setting: string) => {
+    const blocks = plan(severity, setting).blocks;
+    const of = (prefix: string) => blocks.find(({ title }) => title.startsWith(prefix))?.items.map(({ role }) => role) ?? [];
+    return { base: of("Thuốc nền"), conditional: of("Thay thế có điều kiện") };
+  };
+  assert.deepEqual(roles("i", "community").conditional, ["Ampicillin/sulbactam", "Ciprofloxacin"]);
+  assert.deepEqual(roles("ii", "community").conditional, ["Ciprofloxacin"]);
+  for (const [severity, setting] of [["iii", "community"], ["i", "healthcare"], ["ii", "healthcare"], ["iii", "healthcare"]]) {
+    const { base, conditional } = roles(severity, setting);
+    assert.deepEqual(base, ["Piperacillin/tazobactam", "Cefepim", "Ceftazidim", "Meropenem", "Aztreonam"], `${severity}-${setting}`);
+    assert.deepEqual(conditional, [], `${severity}-${setting}`);
+    assert.ok(plan(severity, setting).notes.some(({ text }) => /ertapenem không có hoạt tính/.test(text)));
+  }
+  const after = plan("ii", "community").after;
+  for (const id of ["microbiology", "resistant"]) assert.ok(after.some((s) => s.id === id), id);
+  const resistant = after.find(({ id }) => id === "resistant")!.bullets.map(({ text }) => text).join(" ");
+  assert.match(resistant, /colistin/);
+  assert.match(resistant, /ceftazidim trên 20%/);
+  const initial = after.find(({ id }) => id === "initial")!.bullets.map(({ text }) => text).join(" ");
+  assert.match(initial, /6 tháng/);
+  assert.match(initial, /Clindamycin không còn/);
+  assert.match(initial, /bài tiết tốt vào mật/);
+  assert.match(plan("i", "community").before.find(({ id }) => id === "drainage-i")!.bullets[0].text, /không đáp ứng với điều trị ban đầu/);
+  assert.match(plan("ii", "community").before.find(({ id }) => id === "drainage-ii")!.bullets[0].text, /lấy sỏi ống mật chủ cùng lúc/);
 });

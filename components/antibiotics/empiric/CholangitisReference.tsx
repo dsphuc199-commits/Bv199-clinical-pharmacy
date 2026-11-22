@@ -181,6 +181,7 @@ const differences = [
   { topic: "Fluoroquinolon", tg18: "Độ I–II khi biết chủng nhạy hoặc dị ứng beta-lactam; không có ở Độ III và nhóm liên quan chăm sóc y tế.", byt: "Lựa chọn số 2, không giới hạn theo độ.", meaning: "Tỷ lệ E. coli nhạy ciprofloxacin tại BV199 thấp; chỉ dùng theo kháng sinh đồ." },
   { topic: "Thời gian", tg18: "4–7 ngày sau khi kiểm soát ổ nhiễm; tối thiểu 2 tuần khi có cầu khuẩn Gram dương trong máu.", byt: "Thể nhẹ 5–7 ngày; trung bình và nặng 7–14 ngày.", meaning: "TG18 ngắn hơn và tính mốc từ lúc kiểm soát ổ nhiễm." },
   { topic: "Liều thuốc", tg18: "TG18 không đưa liều; module dùng liều theo UCSF và nhãn: piperacillin/tazobactam 4,5 g mỗi 8 giờ truyền kéo dài; cefepim, ceftazidim, aztreonam 2 g mỗi 8 giờ; metronidazol 500 mg mỗi 12 giờ.", byt: "Piperacillin/tazobactam 4,5 g mỗi 6 giờ; ceftazidim, cefepim 1–2 g mỗi 12 giờ; aztreonam 1–2 g mỗi 12 giờ; metronidazol 500 mg mỗi 8 giờ.", meaning: "Liều cephalosporin và aztreonam mỗi 12 giờ của QĐ 708 thấp hơn liều nhãn cho nhiễm khuẩn nặng; cần Hội đồng Thuốc và điều trị thống nhất." },
+  { topic: "Bài tiết qua mật", tg18: "Không cần ưu tiên thuốc bài tiết tốt vào mật vì khi tắc mật kháng sinh gần như ngừng bài tiết vào mật; chọn thuốc thấm tốt vào vị trí nhiễm.", byt: "Chọn kháng sinh bài tiết tốt vào đường mật.", meaning: "Chọn thuốc theo phổ và kháng sinh đồ, không dựa vào nồng độ trong mật." },
   { topic: "Viêm túi mật", tg18: "Hướng dẫn riêng, gồm dùng kháng sinh quanh mổ ở Độ I–II.", byt: "Không tách riêng.", meaning: "Xem mục viêm túi mật cấp ở trên." },
 ];
 
