@@ -3,9 +3,11 @@ import { DISEASES } from "@/data/antibiotics/empiric/catalog";
 import { currentAdmin } from "@/lib/auth/admin";
 import { adminStorageConfigured } from "@/lib/admin/private-json-store";
 import { readBiliaryHistory } from "@/lib/admin/biliary-protocol-store";
+import { isCurrentDocument, readWatch } from "@/lib/admin/guideline-watch";
 import { BILIARY_BASE_CONTENT, BILIARY_BASE_REVISION, BILIARY_DISEASE_ID, BILIARY_EDIT_GROUPS, biliaryChanges } from "@/lib/antibiotics/biliary-protocol";
 import { ProtocolForm, ProtocolReview } from "./ProtocolForm";
 import ProtocolPicker from "./ProtocolPicker";
+import ProposalDetails from "../guideline-watch/ProposalDetails";
 
 const box = "rounded-2xl border border-slate-200 bg-white p-5";
 const link = "font-semibold text-teal-800 hover:underline";
@@ -29,9 +31,9 @@ function Changes({ entries }: { entries: ReturnType<typeof biliaryChanges> }) {
   );
 }
 
-export default async function AdminProtocolsPage({ searchParams }: { searchParams: Promise<{ disease?: string | string[] }> }) {
+export default async function AdminProtocolsPage({ searchParams }: { searchParams: Promise<{ disease?: string | string[]; proposal?: string | string[] }> }) {
   if (!await currentAdmin()) return null;
-  const { disease } = await searchParams;
+  const { disease, proposal } = await searchParams;
   const selected = protocolById.get(typeof disease === "string" ? disease : disease === undefined ? BILIARY_DISEASE_ID : "");
   const pilot = selected?.id === BILIARY_DISEASE_ID;
   const header = (
@@ -83,9 +85,14 @@ export default async function AdminProtocolsPage({ searchParams }: { searchParam
   const current = latest?.content ?? BILIARY_BASE_CONTENT;
   const currentRevision = latest?.revision ?? BILIARY_BASE_REVISION;
   const stale = !!draft && draft.basedOn !== currentRevision;
+  const watch = typeof proposal === "string" && /^[a-f0-9]{24}$/.test(proposal) ? await readWatch().catch(() => null) : null;
+  const tracked = watch?.data.documents.find((entry) => entry.id === proposal && entry.topic === "biliary");
+  const proposalIsStale = !!watch && tracked?.analysis?.status === "done" &&
+    (tracked.analysis.proposal.basedOn !== currentRevision || !isCurrentDocument(watch.data, tracked.id));
   return (
     <main className="mx-auto grid max-w-5xl gap-5 p-6">
       {header}
+      <Link className={link} href="/admin/guideline-watch">Mở hàng chờ cập nhật hướng dẫn</Link>
       <section className={box}>
         <h2 className="text-lg font-bold">Bản đang dùng</h2>
         <p className="mt-2 text-sm">
@@ -94,6 +101,18 @@ export default async function AdminProtocolsPage({ searchParams }: { searchParam
         <p className="mt-1 text-sm text-slate-700">{current.source.title} · {current.source.locator}</p>
         <a className={`mt-2 inline-block ${link}`} href={current.source.url} target="_blank" rel="noreferrer">Mở tài liệu đối chiếu</a>
       </section>
+      {tracked?.analysis?.status === "done" && (
+        <section className={box} aria-label="Đề xuất AI chờ thẩm định">
+          <h2 className="text-lg font-bold">Đề xuất AI · Chờ thẩm định</h2>
+          <p className="mt-1 text-sm font-semibold text-slate-700">{tracked.title}</p>
+          {proposalIsStale && <p role="status" className="mt-2 text-sm text-amber-900">Bản đang dùng hoặc tài liệu nguồn đã đổi. Rà soát lại trước khi sử dụng đề xuất.</p>}
+          <ProposalDetails entry={tracked} />
+          <nav aria-label="Dữ liệu BV199 để đối chiếu" className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            <Link href="/drugs" className={link}>Danh mục thuốc</Link>
+            <Link href="/antibiotics/antibiogram" className={link}>Dữ liệu kháng sinh đồ BV199</Link>
+          </nav>
+        </section>
+      )}
       {draft && (
         <section className={box}>
           <h2 className="text-lg font-bold">So sánh bản nháp với bản đang dùng</h2>

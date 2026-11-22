@@ -11,7 +11,8 @@ import { getAccountSession } from "@/lib/auth/access";
 import { authConfig, createSession, SESSION_COOKIE, SESSION_RENEW_AFTER_SECONDS, SESSION_TTL_SECONDS } from "@/lib/auth/session";
 
 /* Cong khai: dang nhap + trang huong dan cai ung dung (PWA) va tep khai bao ung dung. */
-const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/tai-app", "/manifest.webmanifest", "/sw.js"];
+// The scheduled route authenticates with CRON_SECRET in its own handler.
+const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/api/internal/guideline-watch", "/tai-app", "/manifest.webmanifest", "/sw.js"];
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;

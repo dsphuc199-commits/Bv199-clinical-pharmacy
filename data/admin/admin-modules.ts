@@ -341,6 +341,16 @@ export const adminModules:
     },
 
     {
+      id: "guideline-watch",
+      title: "Theo dõi cập nhật hướng dẫn",
+      shortTitle: "Cập nhật hướng dẫn",
+      description: "Rà soát nguồn Việt Nam và quốc tế, đối chiếu đề xuất AI trước khi thẩm định tại BV199.",
+      icon: "CN",
+      href: "/admin/guideline-watch",
+      features: ["Theo dõi nguồn", "Bản đề xuất chờ thẩm định"],
+      status: "ready",
+    },
+    {
       id:
         "audit-log",
 
