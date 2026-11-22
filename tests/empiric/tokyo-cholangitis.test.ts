@@ -73,7 +73,7 @@ test("TG18 table separates verified formulation strength, dose and timing", () =
       }
     }
   }
-  assert.equal(medicines.size, 16);
+  assert.equal(medicines.size, 17);
 
   const cefuroxime = cholangitisTableDose(medicines.get("Cefuroxim")!);
   assert.equal(cefuroxime.dose, "1,5 g");
@@ -96,12 +96,14 @@ test("TG18 table separates verified formulation strength, dose and timing", () =
 test("community grade I and II expose distinct TG18 backbones and susceptibility conditions", () => {
   const mild = cholangitisChoices(plan("i", "community"), false);
   assert.deepEqual(mild.base.map(({ role }) => role), ["Cefazolin", "Cefuroxim", "Ceftriaxon", "Cefotaxim"]);
-  assert.match(mild.alternativesLead ?? "", /Ampicillin\/sulbactam.*>80%/);
+  assert.match(mild.alternativesLead ?? "", /Ampicillin\/sulbactam.*≥80%/);
   assert.ok(mild.base.find(({ role }) => role === "Cefuroxim")?.source_ids.includes("dose-cefuroxime"));
 
   const moderate = cholangitisChoices(plan("ii", "community"), true);
-  assert.deepEqual(moderate.base.map(({ role }) => role), ["Piperacillin/tazobactam"]);
-  assert.deepEqual(moderate.alternatives.map(({ role }) => role), ["Cefepim", "Ceftazidim"]);
+  assert.deepEqual(moderate.base.map(({ role }) => role), ["Piperacillin/tazobactam", "Cefepim", "Ceftazidim"]);
+  assert.deepEqual(moderate.alternatives.map(({ role }) => role), []);
+  const moderateAll = cholangitisChoices(plan("ii", "community"), false);
+  assert.deepEqual(moderateAll.base.map(({ role }) => role), ["Piperacillin/tazobactam", "Ceftriaxon", "Cefotaxim", "Cefepim", "Ceftazidim"]);
   assert.equal(moderate.baseLead, undefined);
 
   for (const setting of ["community", "healthcare"]) {
@@ -148,7 +150,27 @@ test("a selected backbone controls anaerobic duplication and unresolved coverage
   assert.match(cholangitisCombination("Ceftriaxon", "pending", false, false).mode, /xác nhận/);
   assert.match(cholangitisCombination("Aztreonam", "absent", false, false).mode, /xác nhận/);
   assert.equal(cholangitisChoices(plan("i", "community"), true).base.length, 0);
-  assert.deepEqual(cholangitisChoices(plan("ii", "community"), true).alternatives.map(({ role }) => role), ["Cefepim", "Ceftazidim"]);
+  assert.deepEqual(cholangitisChoices(plan("ii", "community"), true).base.map(({ role }) => role), ["Piperacillin/tazobactam", "Cefepim", "Ceftazidim"]);
+  assert.deepEqual(cholangitisCombination("Cefoperazon/sulbactam", "present", false, false), { addAnaerobic: false, mode: "Đơn trị theo dữ kiện đã chọn" });
+});
+
+test("TG18 details added after source review: cefoperazone/sulbactam, healthcare vancomycin, timing and oral list", () => {
+  for (const severity of ["i", "ii"]) {
+    const item = plan(severity, "community").blocks.flatMap(({ items }) => items).find(({ role }) => role === "Cefoperazon/sulbactam");
+    assert.ok(item, severity);
+    assert.equal(item.dose, "2 g tĩnh mạch mỗi 12 giờ");
+    assert.ok(item.source_ids.includes("dose-byt-708") && item.source_ids.includes("tg18-antibiotics"));
+  }
+  assert.ok(!plan("iii", "community").blocks.flatMap(({ items }) => items).some(({ role }) => role === "Cefoperazon/sulbactam"));
+  const hcLead = plan("ii", "healthcare").blocks.find(({ title }) => title.startsWith("Phối hợp bao phủ Enterococcus"))?.lead ?? "";
+  assert.match(hcLead, /mọi độ nặng/);
+  assert.match(hcLead, /định cư/);
+  const after = plan("i", "community").after;
+  assert.match(after.find(({ id }) => id === "initial")!.bullets[0].text, /1 giờ.*6 giờ/);
+  const oral = after.find(({ id }) => id === "oral-step-down")!;
+  assert.deepEqual(oral.items.map(({ role }) => role), ["Amoxicillin/clavulanat", "Ciprofloxacin", "Cephalexin", "Levofloxacin", "Moxifloxacin"]);
+  for (const item of oral.items.slice(2)) assert.equal(item.dose, undefined, item.role);
+  assert.ok(oral.bullets.some(({ text }) => /Enterococcus: dùng ampicillin/.test(text)));
 });
 
 test("the 4–7 day plan is conditional on source control and longer-course factors", () => {

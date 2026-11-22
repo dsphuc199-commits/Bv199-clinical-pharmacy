@@ -216,7 +216,7 @@
       },
       "bullets": [
         {
-          "text": "Khởi trị khi nghi viêm đường mật cấp và trước can thiệp dẫn lưu. Nếu có sốc nhiễm khuẩn, TG18 nêu dùng kháng sinh trong vòng 1 giờ kể từ khi nhận biết.",
+          "text": "Khởi trị khi nghi nhiễm khuẩn đường mật và trước mọi can thiệp dẫn lưu qua da, nội soi hay phẫu thuật. Sốc nhiễm khuẩn: dùng kháng sinh trong vòng 1 giờ kể từ khi nhận biết. Các trường hợp khác: trong vòng 6 giờ, thời gian này dùng để hoàn tất chẩn đoán.",
           "source_ids": [
             "tg18-antibiotics"
           ]
@@ -314,6 +314,52 @@
           "source_ids": [
             "tg18-antibiotics",
             "dose-ucsf-adult"
+          ]
+        },
+        {
+          "role": "Cephalexin",
+          "text": "Lựa chọn chuyển uống theo TG18 khi chủng còn nhạy. Thêm metronidazol nếu có miệng nối mật–ruột.",
+          "administration": "Liều theo nhãn chế phẩm và hướng dẫn liều BV199, hiệu chỉnh theo chức năng thận.",
+          "preparation": "Viên 250 mg hoặc 500 mg",
+          "ref": "TG18 Table 6",
+          "source_ids": [
+            "tg18-antibiotics",
+            "bv199-formulary"
+          ]
+        },
+        {
+          "role": "Levofloxacin",
+          "text": "Lựa chọn chuyển uống theo TG18 khi chủng còn nhạy, thay cho ciprofloxacin. Thêm metronidazol nếu có miệng nối mật–ruột. Rà nguy cơ kéo dài QT và tương tác.",
+          "administration": "Liều theo nhãn chế phẩm và hướng dẫn liều BV199, hiệu chỉnh theo chức năng thận.",
+          "ref": "TG18 Table 6",
+          "source_ids": [
+            "tg18-antibiotics",
+            "bv199-formulary"
+          ]
+        },
+        {
+          "role": "Moxifloxacin",
+          "text": "Lựa chọn chuyển uống theo TG18 khi chủng còn nhạy. Thuốc có phổ kỵ khí nên không cần thêm metronidazol. Rà nguy cơ kéo dài QT và tương tác.",
+          "administration": "Liều theo nhãn chế phẩm và hướng dẫn liều BV199, hiệu chỉnh theo chức năng thận.",
+          "preparation": "Viên 400 mg",
+          "ref": "TG18 Table 6",
+          "source_ids": [
+            "tg18-antibiotics",
+            "bv199-formulary"
+          ]
+        }
+      ],
+      "bullets": [
+        {
+          "text": "Khi có kết quả cấy, chuyển sang kháng sinh hẹp phổ nhất còn nhạy. Các thuốc TG18 xếp vào nhóm Enterobacteriaceae kháng cao (ampicillin/sulbactam, cefazolin, cefuroxim, cefoxitin, ceftriaxon, cefotaxim, fluoroquinolon) dùng được khi kháng sinh đồ xác nhận còn nhạy.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "text": "Enterococcus: dùng ampicillin khi chủng nhạy. E. faecium: vancomycin. VRE: linezolid hoặc daptomycin.",
+          "source_ids": [
+            "tg18-antibiotics"
           ]
         }
       ]
@@ -463,7 +509,7 @@
         },
         {
           "title": "Thay thế có điều kiện",
-          "lead": "Ampicillin/sulbactam khi độ nhạy tại chỗ >80% hoặc đã biết chủng nhạy. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng và độ nhạy phù hợp. Ertapenem khi có chỉ định carbapenem và không cần phổ kháng Pseudomonas.",
+          "lead": "Ampicillin/sulbactam chỉ dùng kinh nghiệm khi độ nhạy tại chỗ ≥80%. Ertapenem và cefoperazon/sulbactam có trong danh sách TG18 cho Độ I. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng.",
           "items": [
             {
               "role": "Ampicillin/sulbactam",
@@ -481,7 +527,7 @@
             },
             {
               "role": "Ertapenem",
-              "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
+              "text": "TG18 liệt kê ertapenem cho Độ I–II mắc phải cộng đồng. Theo nguyên tắc quản lý kháng sinh, cân nhắc khi có nguy cơ ESBL và không cần phổ kháng Pseudomonas. Thuốc đã đủ phổ kỵ khí khi có miệng nối mật–ruột.",
               "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
               "administration": "Truyền tĩnh mạch trong 30 phút theo nhãn. Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
               "ref": "Bảng 3 TG18, tr. 6",
@@ -506,6 +552,19 @@
                 "dose-ciprofloxacin-label"
               ],
               "preparation": "Dung dịch truyền 200 mg/100 mL hoặc 400 mg/200 mL"
+            },
+            {
+              "role": "Cefoperazon/sulbactam",
+              "text": "TG18 liệt kê cho Độ I mắc phải cộng đồng. Thuốc có phổ kỵ khí đủ cho tình huống miệng nối mật–ruột. Đối chiếu độ nhạy tại chỗ trước khi chọn.",
+              "dose": "2 g tĩnh mạch mỗi 12 giờ",
+              "administration": "Liều theo QĐ 708/QĐ-BYT cho nhiễm khuẩn đường mật. Hoàn nguyên và pha truyền theo nhãn chế phẩm. Hiệu chỉnh khi suy gan hoặc tắc mật nặng theo nhãn.",
+              "preparation": "Lọ cefoperazon 1 g + sulbactam 1 g",
+              "ref": "TG18 Table 3; QĐ 708 Bảng II.15",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-byt-708",
+                "bv199-formulary"
+              ]
             }
           ]
         }
@@ -515,7 +574,7 @@
       ],
       "notes": [
         {
-          "text": "TG18 còn liệt kê cefotiam, cefmetazol, cefoxitin, flomoxef và cefoperazon/sulbactam. Đối chiếu độ nhạy tại chỗ, chế phẩm và nguồn liều trước khi chọn.",
+          "text": "TG18 còn liệt kê cefotiam, cefmetazol, cefoxitin và flomoxef. Đối chiếu độ nhạy tại chỗ, chế phẩm và nguồn liều trước khi chọn.",
           "source_ids": [
             "tg18-antibiotics"
           ]
@@ -544,7 +603,7 @@
       "blocks": [
         {
           "title": "Thuốc nền · chọn một",
-          "lead": "Ceftriaxon hoặc cefotaxim khi phổ phù hợp và không cần bao phủ Pseudomonas. Piperacillin/tazobactam là lựa chọn khi cần phổ kháng Pseudomonas và độ nhạy ủng hộ.",
+          "lead": "TG18 xếp ngang hàng ceftriaxon, cefotaxim, cefepim, cefozopran và ceftazidim, mỗi thuốc ± metronidazol, cùng piperacillin/tazobactam. Chọn cefepim, ceftazidim hoặc piperacillin/tazobactam khi cần phổ kháng Pseudomonas.",
           "items": [
             {
               "role": "Piperacillin/tazobactam",
@@ -585,13 +644,7 @@
                 "bv199-formulary"
               ],
               "preparation": "Lọ 1 g hoặc 2 g"
-            }
-          ]
-        },
-        {
-          "title": "Thay thế có điều kiện",
-          "lead": "Cefepim hoặc ceftazidim khi cần kháng Pseudomonas. Ertapenem khi có chỉ định carbapenem và không cần phổ này. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng và độ nhạy phù hợp.",
-          "items": [
+            },
             {
               "role": "Cefepim",
               "text": "Thuốc nền khi cần bao phủ Pseudomonas và độ nhạy tại chỗ phù hợp. Nếu có miệng nối mật–ruột, thêm metronidazol. Đánh giá phối hợp bao phủ Enterococcus ở nhánh nặng.",
@@ -618,10 +671,16 @@
                 "bv199-formulary"
               ],
               "preparation": "Lọ 1 g hoặc 2 g"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Thay thế có điều kiện",
+          "lead": "Ertapenem và cefoperazon/sulbactam có trong danh sách TG18 cho Độ II. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng.",
+          "items": [
             {
               "role": "Ertapenem",
-              "text": "Thay thế khi có chỉ định carbapenem và không cần bao phủ Pseudomonas. Phổ kỵ khí của thuốc đủ cho tình huống nối mật–ruột theo TG18.",
+              "text": "TG18 liệt kê ertapenem cho Độ I–II mắc phải cộng đồng. Theo nguyên tắc quản lý kháng sinh, cân nhắc khi có nguy cơ ESBL và không cần phổ kháng Pseudomonas. Thuốc đã đủ phổ kỵ khí khi có miệng nối mật–ruột.",
               "dose": "1 g truyền tĩnh mạch mỗi 24 giờ",
               "administration": "Truyền tĩnh mạch trong 30 phút theo nhãn. Hiệu chỉnh theo CrCl. Hội chẩn nếu bệnh nặng hoặc albumin thấp trước khi chọn ertapenem.",
               "ref": "Bảng 3 TG18, tr. 6",
@@ -646,6 +705,19 @@
                 "dose-ciprofloxacin-label"
               ],
               "preparation": "Dung dịch truyền 200 mg/100 mL hoặc 400 mg/200 mL"
+            },
+            {
+              "role": "Cefoperazon/sulbactam",
+              "text": "TG18 liệt kê cho Độ II mắc phải cộng đồng. Thuốc có phổ kỵ khí đủ cho tình huống miệng nối mật–ruột. Đối chiếu độ nhạy tại chỗ trước khi chọn.",
+              "dose": "2 g tĩnh mạch mỗi 12 giờ",
+              "administration": "Liều theo QĐ 708/QĐ-BYT cho nhiễm khuẩn đường mật. Hoàn nguyên và pha truyền theo nhãn chế phẩm. Hiệu chỉnh khi suy gan hoặc tắc mật nặng theo nhãn.",
+              "preparation": "Lọ cefoperazon 1 g + sulbactam 1 g",
+              "ref": "TG18 Table 3; QĐ 708 Bảng II.15",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-byt-708",
+                "bv199-formulary"
+              ]
             }
           ]
         }
@@ -656,7 +728,7 @@
       ],
       "notes": [
         {
-          "text": "TG18 còn liệt kê cefozopran và cefoperazon/sulbactam. Levofloxacin, pazufloxacin và moxifloxacin là lựa chọn theo điều kiện độ nhạy hoặc dị ứng beta-lactam.",
+          "text": "TG18 còn liệt kê cefozopran. Levofloxacin, pazufloxacin và moxifloxacin là lựa chọn theo điều kiện độ nhạy hoặc dị ứng beta-lactam.",
           "source_ids": [
             "tg18-antibiotics"
           ]
@@ -859,7 +931,7 @@
         },
         {
           "title": "Phối hợp bao phủ Enterococcus",
-          "lead": "TG18 nêu vancomycin. Phần diễn giải nhấn mạnh nguy cơ Gram dương kháng thuốc hoặc tiền sử định cư.",
+          "lead": "Chú thích của bảng thuốc TG18 khuyến cáo vancomycin bao phủ Enterococcus cho viêm đường mật liên quan chăm sóc y tế ở mọi độ nặng. Phần diễn giải nhấn mạnh chỉ định khi định cư hoặc nghi Gram dương kháng thuốc như MRSA, Enterococcus. Quyết định phối hợp sau khi đánh giá cả hai yếu tố.",
           "items": [
             {
               "role": "Vancomycin",
@@ -1355,6 +1427,21 @@
         "adult"
       ],
       "evidence_system": "Nhãn chế phẩm, đối chiếu cách truyền tĩnh mạch.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-byt-708",
+      "org": "Bộ Y tế Việt Nam",
+      "title": "Hướng dẫn sử dụng kháng sinh (Quyết định 708/QĐ-BYT ngày 02/03/2015)",
+      "short_title": "QĐ 708/QĐ-BYT · Nhiễm khuẩn đường mật",
+      "year": 2015,
+      "version": "Chương 5 · Nhiễm khuẩn đường mật",
+      "url": "https://duoc199.vercel.app/antibiotics/empiric/guideline-v9",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Không phân mức bằng chứng.",
       "grade_system": "none"
     }
   ],

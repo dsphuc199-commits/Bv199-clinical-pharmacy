@@ -25,7 +25,7 @@ export function tg18Diagnosis(inflammation: boolean, cholestasis: boolean, imagi
   return "Chưa đủ tiêu chuẩn theo dữ liệu đã chọn";
 }
 
-const anaerobicBackbones = new Set(["Piperacillin/tazobactam", "Meropenem", "Ertapenem", "Ampicillin/sulbactam"]);
+const anaerobicBackbones = new Set(["Piperacillin/tazobactam", "Meropenem", "Ertapenem", "Ampicillin/sulbactam", "Cefoperazon/sulbactam"]);
 const pseudomonalBackbones = new Set(["Piperacillin/tazobactam", "Cefepim", "Ceftazidim", "Meropenem", "Aztreonam"]);
 
 export function cholangitisChoices(result: CholangitisResult, antipseudomonal: boolean) {

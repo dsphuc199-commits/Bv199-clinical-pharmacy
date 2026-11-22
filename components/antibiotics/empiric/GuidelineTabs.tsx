@@ -10,6 +10,7 @@
 import type { ReactNode } from "react";
 
 import { getComparison } from "@/data/antibiotics/empiric/comparison";
+import { CholangitisGuidelineComparison } from "./CholangitisReference";
 import {
   DOSE_REFERENCES,
   INTL_GUIDELINES,
@@ -308,6 +309,7 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
 export function CompareTab({ diseaseId }: { diseaseId: string }) {
   if (diseaseId === "v8-6") return <section className="bv199-panel gt199"><p className="gt199-note">Phác đồ tab Việt Nam áp dụng QĐ 2131/QĐ-BYT ngày 14/7/2026.</p><ClinicalSources sources={citeSources(["QĐ 2131/QĐ-BYT"])} /></section>;
   if (diseaseId === "v8-101") return <section className="bv199-panel gt199"><p className="gt199-note">Chưa có bảng đối chiếu cho viêm phổi cộng đồng ở trẻ em. Mở tab Quốc tế để tra riêng IDSA/PIDS, NICE NG250 hoặc WHO 2024.</p></section>;
+  if (diseaseId === "v8-24") return <section className="bv199-panel gt199"><CholangitisGuidelineComparison open /><GtStyle /></section>;
   const c = getComparison(diseaseId);
   if (!c) {
     const hasIntlGuideline = ["v8-24", "v8-102", "v8-103"].includes(diseaseId) && Boolean(INTL_GUIDELINE_JSON[diseaseId]);

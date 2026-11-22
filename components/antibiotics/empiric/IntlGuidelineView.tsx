@@ -9,6 +9,7 @@ import { intlGuideline, type IntlAxis, type IntlGuideline } from "@/schema/intl-
 import { Row, Rx, RxToolStyle, Seg, SourceList } from "./rx-tool";
 import CholangitisCards from "./CholangitisCards";
 import { CholangitisAssessment, CholangitisPlan } from "./CholangitisWorkflow";
+import { CholangitisGuidelineComparison, CholangitisLocalThresholds, CholecystitisTG18 } from "./CholangitisReference";
 import ClinicalSources from "../treatment/ClinicalSources";
 import { citeIntlGuideline } from "@/lib/antibiotics/source-citation";
 
@@ -222,6 +223,9 @@ function Body({ g, sourceAxis, clinical }: { g: IntlGuideline; sourceAxis?: stri
             {supportingCare.map((section) => <Section key={section.id} s={section} g={g} eff={eff} set={set} />)}
           </details>
         )}
+        <CholangitisLocalThresholds />
+        <CholecystitisTG18 />
+        <CholangitisGuidelineComparison />
         {references}
       </>
     );
