@@ -310,12 +310,12 @@ export function CompareTab({ diseaseId }: { diseaseId: string }) {
   if (diseaseId === "v8-101") return <section className="bv199-panel gt199"><p className="gt199-note">Chưa có bảng đối chiếu cho viêm phổi cộng đồng ở trẻ em. Mở tab Quốc tế để tra riêng IDSA/PIDS, NICE NG250 hoặc WHO 2024.</p></section>;
   const c = getComparison(diseaseId);
   if (!c) {
-    const hasNeonatalGuideline = (diseaseId === "v8-102" || diseaseId === "v8-103") && Boolean(INTL_GUIDELINE_JSON[diseaseId]);
+    const hasIntlGuideline = ["v8-24", "v8-102", "v8-103"].includes(diseaseId) && Boolean(INTL_GUIDELINE_JSON[diseaseId]);
     return (
       <section className="bv199-panel gt199">
         <div className="bv199-label">SO SÁNH HAI NGUỒN</div>
         <div className="gt199-note">
-          {hasNeonatalGuideline
+          {hasIntlGuideline
             ? "Chưa có bảng đối chiếu. Mở tab Quốc tế để xem điều trị theo từng hướng dẫn."
             : "Mặt bệnh này hiện áp dụng theo hướng dẫn của Bộ Y tế (tab Việt Nam)."}
         </div>
