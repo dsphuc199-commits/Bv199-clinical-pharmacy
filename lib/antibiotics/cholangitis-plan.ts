@@ -29,14 +29,18 @@ const anaerobicBackbones = new Set(["Piperacillin/tazobactam", "Meropenem", "Ert
 const pseudomonalBackbones = new Set(["Piperacillin/tazobactam", "Cefepim", "Ceftazidim", "Meropenem", "Aztreonam"]);
 
 export function cholangitisChoices(result: CholangitisResult, antipseudomonal: boolean) {
-  const items = (prefix: string) => result.blocks.find(({ title }) => title.startsWith(prefix))?.items ?? [];
+  const block = (prefix: string) => result.blocks.find(({ title }) => title.startsWith(prefix));
+  const base = block("Thuốc nền");
+  const alternatives = block("Thay thế có điều kiện");
   const inSpectrum = ({ role }: { role: string }) => !antipseudomonal || pseudomonalBackbones.has(role);
   return {
-    base: items("Thuốc nền").filter(inSpectrum),
-    alternatives: items("Thay thế có điều kiện").filter(inSpectrum),
-    anaerobic: items("Phối hợp kỵ khí")[0],
-    enterococcus: items("Phối hợp bao phủ Enterococcus")[0],
-    vre: items("Thay thế vancomycin"),
+    base: base?.items.filter(inSpectrum) ?? [],
+    baseLead: antipseudomonal ? undefined : base?.lead,
+    alternatives: alternatives?.items.filter(inSpectrum) ?? [],
+    alternativesLead: antipseudomonal ? undefined : alternatives?.lead,
+    anaerobic: block("Phối hợp kỵ khí")?.items[0],
+    enterococcus: block("Phối hợp bao phủ Enterococcus")?.items[0],
+    vre: block("Thay thế vancomycin")?.items ?? [],
   };
 }
 

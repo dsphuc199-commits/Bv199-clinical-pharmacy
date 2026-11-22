@@ -137,6 +137,30 @@ export function CholangitisAssessment({ apply, manualControl }: { apply: (severi
   );
 }
 
+function DrugChoices({ label, lead, choices, selected, choose }: {
+  label: string;
+  lead?: string;
+  choices: CholangitisResult["blocks"][number]["items"];
+  selected: string;
+  choose: (role: string) => void;
+}) {
+  if (!choices.length) return null;
+  return (
+    <div role="group" aria-label={label} className="grid gap-2 rounded-xl border border-slate-200 bg-white p-3">
+      <p className="m-0 text-sm font-bold text-slate-900">{label}</p>
+      {lead && <p className="m-0 text-xs leading-relaxed text-slate-700">{lead}</p>}
+      <div className="flex flex-wrap gap-1.5">
+        {choices.map(({ role }) => (
+          <button key={role} type="button" aria-pressed={role === selected} onClick={() => choose(role)}
+            className="cursor-pointer rounded-lg border border-teal-200 bg-white px-3 py-1.5 text-xs font-semibold text-teal-900 hover:bg-teal-50 aria-pressed:border-teal-800 aria-pressed:bg-teal-800 aria-pressed:text-white">
+            {role}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function CholangitisPlan({ result, severity, setting, junction, sources }: {
   result: CholangitisResult; severity: string; setting: string; junction: string; sources: IntlGuideline["sources"];
 }) {
@@ -147,14 +171,15 @@ export function CholangitisPlan({ result, severity, setting, junction, sources }
   const [renal, setRenal] = useState<"pending" | "stable" | "adjust">("pending");
   const [control, setControl] = useState<SourceControl>("pending");
   const [exception, setException] = useState<CourseException>("pending");
-  const communityMild = setting === "community" && (severity === "i" || severity === "ii");
-  const choices = cholangitisChoices(result, communityMild && needsPseudomonas);
+  const communityNonSevere = setting === "community" && (severity === "i" || severity === "ii");
+  const choices = cholangitisChoices(result, communityNonSevere && needsPseudomonas);
   const options = [...choices.base, ...choices.alternatives];
-  const fallback = communityMild && !needsPseudomonas ? options.find((drug) => drug.role === "Ceftriaxon") : undefined;
-  const base = options.find((drug) => drug.role === selected) ?? fallback ?? options[0];
-  const vre = choices.vre.find((drug) => drug.role === selectVre) ?? choices.vre[0];
-  const gramAgent = vre ?? (setting === "community" || gram === "yes" ? choices.enterococcus : undefined);
-  const gramPending = setting === "healthcare" && !vre && gram === "pending";
+  const base = options.find((drug) => drug.role === selected);
+  const needsVre = choices.vre.length > 0;
+  const vre = choices.vre.find((drug) => drug.role === selectVre);
+  const gramAgent = needsVre ? vre : setting === "community" || gram === "yes" ? choices.enterococcus : undefined;
+  const gramPending = needsVre ? !vre : setting === "healthcare" && gram === "pending";
+  const gramPrompt = needsVre ? "Chọn thuốc bao phủ VRE. " : "Cần xác nhận chỉ định phủ Gram dương. ";
   const course = cholangitisCourse(control, exception);
   const drainage = result.before.find(({ id }) => id.startsWith("drainage-"));
   const drainageInfo = drainage && <div className="rounded-lg bg-white px-3 py-2 text-sm"><strong>{drainage.title}</strong>{drainage.bullets.map(({ text }) => <p key={text} className="m-0 mt-1">{text}</p>)}</div>;
@@ -174,41 +199,33 @@ export function CholangitisPlan({ result, severity, setting, junction, sources }
   return (
     <section className="my-3 grid gap-3 rounded-2xl border border-teal-200 bg-teal-50/50 p-3 sm:p-4" aria-label="Phương án kháng sinh đang xem">
       <header>
-        <h4 className="!m-0 !text-base">Phương án kháng sinh đang xem</h4>
+        <h4 className="!m-0 !text-base !font-bold">Lựa chọn kháng sinh theo TG18</h4>
         {result.summary.map(({ label, text }) => <p key={label} className="m-0 mt-1 text-sm text-slate-700"><strong>{label}</strong> · {text}</p>)}
+        <Link href="/antibiotics/antibiogram" className="mt-1 inline-block text-xs font-semibold text-teal-800 underline underline-offset-2">Đối chiếu kháng sinh đồ BV199</Link>
       </header>
       {drainageInfo}
-      <div className="grid gap-3 sm:grid-cols-2">
-        {communityMild && <label className="flex items-center gap-2 text-sm font-semibold"><input type="checkbox" checked={needsPseudomonas} onChange={(e) => setNeedsPseudomonas(e.target.checked)} />Cần bao phủ Pseudomonas sau đánh giá</label>}
-        {setting === "healthcare" && !vre && <label className="block text-sm font-semibold">Chỉ định phủ Enterococcus hoặc Gram dương kháng thuốc
+      {communityNonSevere && (
+        <label className="flex items-start gap-2 text-sm font-semibold">
+          <input className="mt-0.5 accent-teal-800" type="checkbox" checked={needsPseudomonas} onChange={(e) => setNeedsPseudomonas(e.target.checked)} />
+          Cần bao phủ Pseudomonas sau đánh giá
+        </label>
+      )}
+      <DrugChoices label="Chọn một thuốc nền" lead={choices.baseLead} choices={choices.base} selected={base?.role ?? ""} choose={setSelected} />
+      <DrugChoices label="Thay thế có điều kiện" lead={choices.alternativesLead} choices={choices.alternatives} selected={base?.role ?? ""} choose={setSelected} />
+        {setting === "healthcare" && !needsVre && <label className="block text-sm font-semibold sm:max-w-md">Chỉ định phủ Enterococcus hoặc Gram dương kháng thuốc
           <select className={field} value={gram} onChange={(e) => setGram(e.target.value as OrganStatus)}>
             <option value="pending">Chưa đánh giá</option><option value="yes">Có chỉ định phối hợp vancomycin</option><option value="no">Không phối hợp theo đánh giá</option>
           </select>
+          <span className="mt-1 block text-xs font-normal text-slate-700">TG18 dùng vancomycin khi có định cư hoặc nghi ngờ Gram dương kháng thuốc, gồm Enterococcus và MRSA.</span>
         </label>}
-        {vre && <label className="block text-sm font-semibold">Chọn thuốc thay vancomycin
-          <select className={field} value={vre.role} onChange={(e) => setSelectVre(e.target.value)}>
+        {needsVre && <label className="block text-sm font-semibold sm:max-w-md">Chọn thuốc thay vancomycin
+          <select className={field} value={vre?.role ?? ""} onChange={(e) => setSelectVre(e.target.value)}>
+            <option value="">Chọn thuốc bao phủ VRE</option>
             {choices.vre.map(({ role }) => <option key={role}>{role}</option>)}
           </select>
         </label>}
-        {base && <label className="block text-sm font-semibold">Thuốc nền hoặc thuốc thay thế
-          <select className={field} value={base.role} onChange={(e) => setSelected(e.target.value)}>
-            {choices.base.length > 0 && <optgroup label="Thuốc nền trong nhánh đã chọn">{choices.base.map(({ role }) => <option key={role}>{role}</option>)}</optgroup>}
-            {choices.alternatives.length > 0 && <optgroup label="Thay thế có điều kiện">{choices.alternatives.map(({ role }) => <option key={role}>{role}</option>)}</optgroup>}
-          </select>
-        </label>}
-      </div>
-      {choices.alternatives.length > 0 && (
-        <div className="grid gap-1.5">
-          <p className="m-0 text-xs font-semibold text-slate-700">Thay thế có điều kiện</p>
-          <div className="flex flex-wrap gap-1.5" role="group" aria-label="Thuốc thay thế có điều kiện">
-            {choices.alternatives.map(({ role }) => (
-              <button key={role} type="button" aria-pressed={role === base?.role} onClick={() => setSelected(role)}
-                className="rounded-full border border-teal-200 bg-white px-3 py-1.5 text-xs font-semibold text-teal-900 aria-pressed:bg-teal-100">
-                {role}
-              </button>
-            ))}
-          </div>
-        </div>
+      {setting === "community" && choices.enterococcus && !needsVre && (
+        <p className="m-0 text-sm text-teal-950"><strong>Phối hợp vancomycin</strong> để bao phủ Enterococcus theo TG18 ở Độ III mắc phải cộng đồng.</p>
       )}
       {base && combination ? (
         <div className="grid gap-2">
@@ -226,10 +243,24 @@ export function CholangitisPlan({ result, severity, setting, junction, sources }
             </p>
           )}
           <CholangitisCards items={drugCards} sources={sources} />
-          {combination.mode === "Cần xác nhận phối hợp" && <p className="m-0 text-xs leading-relaxed text-amber-950">{gramPending ? "Cần xác nhận chỉ định phủ Gram dương. " : ""}{junction === "pending" ? "Cần xác nhận có miệng nối mật–ruột. " : ""}{base.role === "Aztreonam" && !gramAgent ? "Đánh giá thuốc phủ Gram dương phù hợp khi dùng aztreonam. " : ""}</p>}
+          {combination.mode === "Cần xác nhận phối hợp" && <p className="m-0 text-xs leading-relaxed text-amber-950">{gramPending ? gramPrompt : ""}{junction === "pending" ? "Cần xác nhận có miệng nối mật–ruột. " : ""}{base.role === "Aztreonam" && !gramAgent ? "Đánh giá thuốc phủ Gram dương phù hợp khi dùng aztreonam. " : ""}</p>}
           {renal !== "adjust" && <p className="m-0 text-xs leading-relaxed text-slate-700">Liều tham khảo người lớn có chức năng thận ổn định, chủ yếu CrCl &gt;60 mL/phút, chưa lọc máu. Đối chiếu vi sinh, dị ứng và hiệu chỉnh theo chức năng cơ quan trước khi kê.</p>}
         </div>
-      ) : <p className="m-0 text-sm text-amber-950" role="status">TG18 không liệt kê thuốc nền kháng Pseudomonas cho nhánh này. Rà phân độ, vi sinh và hội chẩn để chọn phác đồ.</p>}
+      ) : (
+        <p className="m-0 text-sm text-slate-700" role="status">
+          {options.length > 0 ? "Chọn một thuốc nền hoặc thuốc thay thế để xem liều, cách dùng và phối hợp."
+            : severity === "i" && needsPseudomonas ? "TG18 không liệt kê thuốc nền kháng Pseudomonas ở Độ I mắc phải cộng đồng. Rà lại phân độ và vi sinh để chọn phác đồ."
+              : "Chưa có thuốc nền khớp bệnh cảnh đã chọn."}
+        </p>
+      )}
+      {result.notes.length > 0 && !needsPseudomonas && (
+        <details className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
+          <summary className="cursor-pointer font-semibold text-slate-900">Lựa chọn khác được TG18 liệt kê</summary>
+          <ul className="m-0 mt-2 list-disc space-y-1 pl-5 leading-relaxed text-slate-700">
+            {result.notes.map(({ text }) => <li key={text}>{text}</li>)}
+          </ul>
+        </details>
+      )}
       <div className="grid gap-2 rounded-xl border border-slate-200 bg-white p-3">
         <h4 className="!m-0">Thời gian dùng</h4>
         <div className="grid gap-2 sm:grid-cols-2">

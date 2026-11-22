@@ -160,7 +160,7 @@
       },
       "bullets": [
         {
-          "text": "Độ I thường đáp ứng với điều trị ban đầu. Cân nhắc dẫn lưu nếu đáp ứng kém. Đánh giá lại mức độ nặng trong quá trình theo dõi.",
+          "text": "Độ I thường đáp ứng với điều trị ban đầu. Cân nhắc dẫn lưu sớm nếu có sỏi ống mật chủ hoặc không đáp ứng. Đánh giá lại độ nặng trong quá trình theo dõi.",
           "source_ids": [
             "tg18-flow"
           ]
@@ -398,14 +398,36 @@
       "summary": [
         {
           "label": "Cộng đồng · Độ I",
-          "text": "Đối chiếu nhóm thuốc theo kháng sinh đồ tại cơ sở và nguy cơ kháng thuốc của người bệnh."
+          "text": "Chọn cephalosporin theo phổ và độ nhạy tại chỗ. Cân nhắc thuốc thay thế theo dị ứng, vi sinh và nguy cơ kháng thuốc."
         }
       ],
       "blocks": [
         {
           "title": "Thuốc nền · chọn một",
-          "lead": "Có thể dùng đơn trị nếu thuốc nền đủ phổ cho bệnh cảnh. Chỉ thêm thuốc khi có chỉ định bao phủ riêng.",
+          "lead": "Cefazolin hoặc cefuroxim khi độ nhạy tại chỗ phù hợp. Ceftriaxon và cefotaxim cũng được TG18 liệt kê.",
           "items": [
+            {
+              "role": "Cefazolin",
+              "text": "Cephalosporin cho Độ I mắc phải cộng đồng khi kháng sinh đồ tại chỗ ủng hộ.",
+              "dose": "2 g truyền tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều tham khảo UCSF cho nhiễm Gram âm ở người lớn có chức năng thận phù hợp. Hoàn nguyên và pha truyền theo nhãn chế phẩm.",
+              "ref": "TG18 · Lựa chọn kháng sinh kinh nghiệm, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-ucsf-adult"
+              ]
+            },
+            {
+              "role": "Cefuroxim",
+              "text": "Dạng tiêm là lựa chọn cho Độ I mắc phải cộng đồng khi kháng sinh đồ tại chỗ ủng hộ.",
+              "dose": "1,5 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều tham khảo theo nhãn cho nhiễm khuẩn có biến chứng. Nếu tiêm tĩnh mạch trực tiếp, dùng trong 3–5 phút.",
+              "ref": "TG18 · Lựa chọn kháng sinh kinh nghiệm, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-cefuroxime"
+              ]
+            },
             {
               "role": "Ceftriaxon",
               "text": "Dùng làm thuốc nền khi phổ phù hợp. Thêm metronidazol nếu có miệng nối mật–ruột.",
@@ -417,16 +439,27 @@
                 "dose-ucsf-adult",
                 "dose-ceftriaxone"
               ]
+            },
+            {
+              "role": "Cefotaxim",
+              "text": "Cephalosporin TG18 liệt kê cho Độ I–II mắc phải cộng đồng. Thêm metronidazol nếu có miệng nối mật–ruột.",
+              "dose": "1–2 g tĩnh mạch mỗi 8 giờ",
+              "administration": "Liều người lớn cho nhiễm khuẩn trung bình đến nặng. Khi tiêm tĩnh mạch trực tiếp, dùng trong 3–5 phút theo nhãn.",
+              "ref": "Bảng 3 TG18, tr. 6",
+              "source_ids": [
+                "tg18-antibiotics",
+                "dose-cefotaxime"
+              ]
             }
           ]
         },
         {
           "title": "Thay thế có điều kiện",
-          "lead": "Chọn thay cho thuốc nền theo kháng sinh đồ, tiền sử dị ứng và nguy cơ kháng thuốc.",
+          "lead": "Ampicillin/sulbactam khi độ nhạy tại chỗ >80% hoặc đã biết chủng nhạy. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng và độ nhạy phù hợp. Ertapenem khi có chỉ định carbapenem và không cần phổ kháng Pseudomonas.",
           "items": [
             {
               "role": "Ampicillin/sulbactam",
-              "text": "Chỉ cân nhắc ở Độ I khi độ nhạy tại chỗ ủng hộ. TG18 không khuyến cáo kinh nghiệm nếu tỷ lệ kháng tại chỗ >20%. Có thể dùng theo đích khi chủng còn nhạy.",
+              "text": "Cân nhắc kinh nghiệm ở Độ I khi độ nhạy tại chỗ >80%. Khi có kết quả vi sinh, dùng theo đích nếu tác nhân nhạy.",
               "dose": "3 g truyền tĩnh mạch mỗi 6 giờ",
               "administration": "Truyền 15–30 phút. Mỗi liều gồm ampicillin 2 g và sulbactam 1 g. Hiệu chỉnh theo CrCl.",
               "ref": "Bảng 3 TG18, tr. 6",
@@ -463,6 +496,20 @@
       ],
       "source_ids": [
         "tg18-antibiotics"
+      ],
+      "notes": [
+        {
+          "text": "TG18 còn liệt kê cefotiam, cefmetazol, cefoxitin, flomoxef và cefoperazon/sulbactam. Đối chiếu độ nhạy tại chỗ, chế phẩm và nguồn liều trước khi chọn.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        },
+        {
+          "text": "Levofloxacin, pazufloxacin và moxifloxacin cũng là lựa chọn theo điều kiện độ nhạy hoặc dị ứng beta-lactam.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     },
     {
@@ -475,13 +522,13 @@
       "summary": [
         {
           "label": "Cộng đồng · Độ II",
-          "text": "Chọn kháng sinh kinh nghiệm cùng kế hoạch dẫn lưu sớm và rà soát kết quả nuôi cấy."
+          "text": "Chọn thuốc theo phổ cần bao phủ và độ nhạy tại chỗ, đồng thời bố trí dẫn lưu sớm."
         }
       ],
       "blocks": [
         {
           "title": "Thuốc nền · chọn một",
-          "lead": "Có thể dùng đơn trị nếu thuốc nền đủ phổ cho bệnh cảnh. Chỉ thêm thuốc khi có chỉ định bao phủ riêng.",
+          "lead": "Ceftriaxon hoặc cefotaxim khi phổ phù hợp và không cần bao phủ Pseudomonas. Piperacillin/tazobactam là lựa chọn khi cần phổ kháng Pseudomonas và độ nhạy ủng hộ.",
           "items": [
             {
               "role": "Piperacillin/tazobactam",
@@ -521,7 +568,7 @@
         },
         {
           "title": "Thay thế có điều kiện",
-          "lead": "Cefepim hoặc ceftazidim khi cần phổ kháng Pseudomonas. Các lựa chọn còn lại tùy nguy cơ và độ nhạy.",
+          "lead": "Cefepim hoặc ceftazidim khi cần kháng Pseudomonas. Ertapenem khi có chỉ định carbapenem và không cần phổ này. Ciprofloxacin khi biết chủng nhạy hoặc cần thay beta-lactam do dị ứng và độ nhạy phù hợp.",
           "items": [
             {
               "role": "Cefepim",
@@ -574,6 +621,14 @@
       "source_ids": [
         "tg18-antibiotics",
         "tg18-flow"
+      ],
+      "notes": [
+        {
+          "text": "TG18 còn liệt kê cefozopran và cefoperazon/sulbactam. Levofloxacin, pazufloxacin và moxifloxacin là lựa chọn theo điều kiện độ nhạy hoặc dị ứng beta-lactam.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     },
     {
@@ -592,7 +647,7 @@
       "blocks": [
         {
           "title": "Thuốc nền · chọn một",
-          "lead": "Chọn một thuốc nền kháng Pseudomonas. Rà phần phối hợp Enterococcus và kỵ khí trước khi dùng.",
+          "lead": "Chọn một thuốc nền kháng Pseudomonas theo độ nhạy tại chỗ. Cân nhắc meropenem khi có chỉ định carbapenem.",
           "items": [
             {
               "role": "Piperacillin/tazobactam",
@@ -684,6 +739,14 @@
       ],
       "source_ids": [
         "tg18-antibiotics"
+      ],
+      "notes": [
+        {
+          "text": "TG18 còn liệt kê cefozopran, imipenem/cilastatin, doripenem và ertapenem. Cân nhắc ertapenem sau khi xác định có thể thu hẹp phổ vì thuốc không bao phủ Pseudomonas.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     },
     {
@@ -700,13 +763,13 @@
       "summary": [
         {
           "label": "Liên quan chăm sóc y tế",
-          "text": "Chọn thuốc có hoạt tính kháng Pseudomonas theo dữ liệu tại cơ sở. Đánh giá ESBL/kháng carbapenem, vi khuẩn Gram dương kháng thuốc và tiền sử dùng kháng sinh."
+          "text": "Ở mọi độ nặng, lựa chọn kinh nghiệm cần tính đến Pseudomonas, ESBL, kháng carbapenem và vi sinh trước đó. Đánh giá chỉ định phối hợp bao phủ Gram dương kháng thuốc."
         }
       ],
       "blocks": [
         {
           "title": "Thuốc nền · chọn một",
-          "lead": "Chọn một thuốc nền kháng Pseudomonas. Rà phần phối hợp Enterococcus và kỵ khí trước khi dùng.",
+          "lead": "Chọn một thuốc nền kháng Pseudomonas theo độ nhạy tại cơ sở. Dùng carbapenem khi có căn cứ vi sinh hoặc nguy cơ kháng thuốc phù hợp.",
           "items": [
             {
               "role": "Piperacillin/tazobactam",
@@ -798,6 +861,14 @@
       ],
       "source_ids": [
         "tg18-antibiotics"
+      ],
+      "notes": [
+        {
+          "text": "TG18 còn liệt kê cefozopran, imipenem/cilastatin, doripenem và ertapenem. Cân nhắc ertapenem sau khi xác định có thể thu hẹp phổ vì thuốc không bao phủ Pseudomonas.",
+          "source_ids": [
+            "tg18-antibiotics"
+          ]
+        }
       ]
     },
     {
@@ -822,7 +893,7 @@
           "items": [
             {
               "role": "Metronidazol",
-              "text": "Bổ sung vào ceftriaxon, cefotaxim, cefepim, ceftazidim, aztreonam hoặc ciprofloxacin khi có miệng nối mật–ruột và thuốc nền chưa đủ phổ kỵ khí. Piperacillin/tazobactam và carbapenem đã có phổ kỵ khí trong tình huống này.",
+              "text": "Bổ sung khi có miệng nối mật–ruột và thuốc nền chưa đủ phổ kỵ khí. Piperacillin/tazobactam, ampicillin/sulbactam và carbapenem đã có phổ kỵ khí cho tình huống này.",
               "dose": "500 mg tĩnh mạch mỗi 12 giờ",
               "administration": "Liều cho nhiễm khuẩn ổ bụng theo UCSF. Có thể dùng đường uống nếu phù hợp với giai đoạn điều trị. Rà chức năng gan.",
               "ref": "Q2 và Bảng 3 TG18, chú thích d, tr. 6–7",
@@ -994,6 +1065,21 @@
         "adult"
       ],
       "evidence_system": "Nguồn liều hoặc thông tin sử dụng thuốc ở người lớn.",
+      "grade_system": "none"
+    },
+    {
+      "id": "dose-cefuroxime",
+      "org": "DailyMed",
+      "title": "Cefuroxime for Injection, USP",
+      "short_title": "Nhãn cefuroxim",
+      "year": 2025,
+      "version": "Liều người lớn và cách tiêm tĩnh mạch",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0a145288-733a-4966-b7ae-dc96eb103d8c",
+      "accessed": "2026-11-22",
+      "population": [
+        "adult"
+      ],
+      "evidence_system": "Nhãn chế phẩm cefuroxim tiêm.",
       "grade_system": "none"
     },
     {

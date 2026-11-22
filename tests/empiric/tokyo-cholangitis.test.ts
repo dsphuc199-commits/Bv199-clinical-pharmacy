@@ -52,6 +52,25 @@ test("TG18 adds the anaerobic section for a biliary-enteric anastomosis", () => 
   assert.equal(guideline.sources.filter(({ id }) => id.startsWith("tg18-")).length, 3);
 });
 
+test("community grade I and II expose distinct TG18 backbones and susceptibility conditions", () => {
+  const mild = cholangitisChoices(plan("i", "community"), false);
+  assert.deepEqual(mild.base.map(({ role }) => role), ["Cefazolin", "Cefuroxim", "Ceftriaxon", "Cefotaxim"]);
+  assert.match(mild.alternativesLead ?? "", /Ampicillin\/sulbactam.*>80%/);
+  assert.ok(mild.base.find(({ role }) => role === "Cefuroxim")?.source_ids.includes("dose-cefuroxime"));
+
+  const moderate = cholangitisChoices(plan("ii", "community"), true);
+  assert.deepEqual(moderate.base.map(({ role }) => role), ["Piperacillin/tazobactam"]);
+  assert.deepEqual(moderate.alternatives.map(({ role }) => role), ["Cefepim", "Ceftazidim"]);
+  assert.equal(moderate.baseLead, undefined);
+
+  for (const setting of ["community", "healthcare"]) {
+    const severe = cholangitisChoices(plan("iii", setting), false);
+    const backbones = [...severe.base, ...severe.alternatives].map(({ role }) => role);
+    assert.doesNotMatch(backbones.join(" "), /Ceftriaxon|Cefuroxim|Ampicillin\/sulbactam|Ertapenem|Ciprofloxacin/);
+    assert.ok(severe.enterococcus);
+  }
+});
+
 test("a VRE substitution replaces vancomycin without removing the Gram-negative backbone", () => {
   const options = (setting: string, enabled: boolean) => plan("iii", setting, false, enabled).blocks.flatMap(({ items }) => items.map(({ role }) => role));
   assert.ok(options("healthcare", false).includes("Vancomycin"));
@@ -82,6 +101,7 @@ test("a TG18 checklist requires enough assessed criteria and prioritizes organ d
 });
 
 test("a selected backbone controls anaerobic duplication and unresolved coverage", () => {
+  assert.deepEqual(cholangitisCombination("Cefuroxim", "present", false, false), { addAnaerobic: true, mode: "Phối hợp" });
   assert.deepEqual(cholangitisCombination("Ceftriaxon", "present", false, false), { addAnaerobic: true, mode: "Phối hợp" });
   assert.deepEqual(cholangitisCombination("Piperacillin/tazobactam", "present", false, false), { addAnaerobic: false, mode: "Đơn trị theo dữ kiện đã chọn" });
   assert.match(cholangitisCombination("Ceftriaxon", "pending", false, false).mode, /xác nhận/);
