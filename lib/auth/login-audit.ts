@@ -12,19 +12,6 @@ const deviceLocationSchema = z.object({
   latitude: z.number().min(-90).max(90),
   longitude: z.number().min(-180).max(180),
 }).strict();
-type DeviceLocation = z.infer<typeof deviceLocationSchema>;
-
-export function readLoginDeviceLocation(form: FormData): DeviceLocation | undefined {
-  const latitude = form.get("loginLatitude");
-  const longitude = form.get("loginLongitude");
-  if (typeof latitude !== "string" || typeof longitude !== "string" || !latitude.trim() || !longitude.trim()) return;
-  const parsed = deviceLocationSchema.safeParse({ latitude: Number(latitude), longitude: Number(longitude) });
-  if (!parsed.success) return;
-  return {
-    latitude: Number(parsed.data.latitude.toFixed(3)),
-    longitude: Number(parsed.data.longitude.toFixed(3)),
-  };
-}
 
 const auditEvents = z.array(z.object({
   id: z.uuid(),
@@ -47,7 +34,7 @@ const auditStorage = {
 
 export async function recordSuccessfulLogin(
   username: string, role: AccountRole, now: number, storage = auditStorage,
-  { location, deviceLocation }: { location?: AuditLocation; deviceLocation?: DeviceLocation } = {},
+  location?: AuditLocation,
 ): Promise<void> {
   const event = {
     id: randomUUID(),
@@ -55,7 +42,6 @@ export async function recordSuccessfulLogin(
     role,
     timestamp: new Date(now).toISOString(),
     ...(location ? { location } : {}),
-    ...(deviceLocation ? { deviceLocation } : {}),
   };
   const controller = new AbortController();
   const { signal } = controller;

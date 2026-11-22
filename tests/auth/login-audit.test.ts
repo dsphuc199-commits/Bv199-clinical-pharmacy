@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { test } from "node:test";
 import { BlobPreconditionFailedError } from "@vercel/blob";
 import { auditLocation, formatAuditLocation } from "../../lib/auth/audit-location";
-import { LOGIN_AUDIT_LIMIT, readLoginAudit, readLoginDeviceLocation, recordSuccessfulLogin } from "../../lib/auth/login-audit";
+import { LOGIN_AUDIT_LIMIT, readLoginAudit, recordSuccessfulLogin } from "../../lib/auth/login-audit";
 
 type Snapshot = Awaited<ReturnType<typeof readLoginAudit>>;
 const now = Date.UTC(2026, 0, 1, 10);
@@ -55,15 +55,15 @@ test("late writes retain the most recent events ordered by actual login time", a
   ]);
 });
 
-test("login audit keeps older records and stores the available device and IP locations", async () => {
-  const storage = privateStorage({ data: [] });
-  const form = new FormData();
-  assert.equal(readLoginDeviceLocation(form), undefined);
-  form.set("loginLatitude", "91");
-  form.set("loginLongitude", "108.2022345");
-  assert.equal(readLoginDeviceLocation(form), undefined);
-  form.set("loginLatitude", "16.0544678");
-  const deviceLocation = readLoginDeviceLocation(form);
+test("login audit stores the IP location for new logins and keeps historical device locations", async () => {
+  const olderLogin = {
+    id: randomUUID(),
+    username: "viewer-fixture",
+    role: "viewer" as const,
+    timestamp: new Date(now).toISOString(),
+    deviceLocation: { latitude: 16.054, longitude: 108.202 },
+  };
+  const storage = privateStorage({ data: [olderLogin], etag: "initial" });
   const headers = new Headers({
     "x-vercel-ip-city": encodeURIComponent("Đà Nẵng"),
     "x-vercel-ip-country": "VN",
@@ -71,14 +71,14 @@ test("login audit keeps older records and stores the available device and IP loc
   assert.equal(auditLocation(headers, false), undefined);
   const location = auditLocation(headers, true);
 
-  await recordSuccessfulLogin("viewer-fixture", "viewer", now, storage);
-  await recordSuccessfulLogin("viewer-fixture", "viewer", now + 1000, storage, { location, deviceLocation });
+  await recordSuccessfulLogin("viewer-fixture", "viewer", now + 1000, storage, location);
+  await recordSuccessfulLogin("viewer-fixture", "viewer", now + 2000, storage);
 
   const { data } = await storage.read();
-  assert.deepEqual(data[0].deviceLocation, { latitude: 16.054, longitude: 108.202 });
-  assert.equal(formatAuditLocation(data[0].location), "Đà Nẵng, Việt Nam");
+  assert.equal(data[0].location, undefined);
+  assert.equal(formatAuditLocation(data[1].location), "Đà Nẵng, Việt Nam");
   assert.equal(data[1].deviceLocation, undefined);
-  assert.equal(data[1].location, undefined);
+  assert.deepEqual(data[2], olderLogin);
 });
 
 test("an unresponsive read cancels the audit attempt before writing", async (t) => {
