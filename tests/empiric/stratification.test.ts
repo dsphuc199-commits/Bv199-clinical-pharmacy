@@ -1,8 +1,19 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { test } from "node:test";
+import { load } from "cheerio";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { createSourceFile, isImportDeclaration, isStringLiteral, ScriptKind, ScriptTarget } from "typescript";
+import { CAP_SCENARIOS } from "../../components/antibiotics/CapByt2026";
+import { HAPVAP_SCENARIOS } from "../../components/antibiotics/HapVap2023";
+import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../components/antibiotics/empiric/DiseaseOverview";
+import StratificationPanel from "../../components/antibiotics/empiric/StratificationPanel";
 import tables from "../../data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, getRegimensForDisease } from "../../data/antibiotics/empiric/regimens";
-import { STRATIFICATIONS } from "../../data/antibiotics/empiric/stratification";
+import { safetyAlertsFor } from "../../data/antibiotics/empiric/safety-alerts";
+import { STRATIFICATIONS, cleanRef, stratificationFor } from "../../data/antibiotics/empiric/stratification";
+import { SPECIALIZED_MODULE_LINKS } from "../../lib/antibiotics/empiric-ui-rules";
 
 test("stratification references only existing BYT regimens of the same disease", () => {
   for (const s of STRATIFICATIONS) {
@@ -53,4 +64,173 @@ test("pneumonia stratification uses the current Vietnamese documents shown in ta
   }
   const text = JSON.stringify(STRATIFICATIONS.map((s) => s.columns.map((c) => c.vn)));
   assert.doesNotMatch(text, /Phụ lục|Bảng \d|DTQG|tr\. \d|không ghi liều/);
+});
+
+const waveOneIds = ["v8-11", "v8-12", "v8-1", "v8-4", "v8-5"] as const;
+type SourceDrug = { name: string; dose: string; caution?: string };
+type SourceRegimen = { id: string; drugs: readonly SourceDrug[]; indication?: string; caution?: string; notes?: readonly string[] };
+type SourceScenario = { id: string; regimens: readonly SourceRegimen[] };
+const moduleScenarios: Partial<Record<typeof waveOneIds[number], readonly SourceScenario[]>> = {
+  "v8-1": CAP_SCENARIOS,
+  "v8-4": HAPVAP_SCENARIOS.hap,
+  "v8-5": HAPVAP_SCENARIOS.vap,
+};
+
+function doseTokens(text: string): string[] {
+  const amounts = /(?<![\p{L}\d])\d+(?:[.,]\d+)?(?:\s*[–/-]\s*\d+(?:[.,]\d+)?)*\s*(?:mg\/kg|mg|g)(?!\p{L})/giu;
+  return [...text.matchAll(amounts)].map(([value]) => value.replace(/\s+/gu, "").toLowerCase());
+}
+
+function checkedData(diseaseId: string) {
+  const data = stratificationFor(diseaseId);
+  assert.ok(data, 'Thiếu khung phân tầng ' + diseaseId);
+  return data;
+}
+
+for (const diseaseId of waveOneIds) {
+  test(diseaseId + " giữ mọi phác đồ BYT và phác đồ module Việt Nam", () => {
+    const data = checkedData(diseaseId);
+    const active = getRegimensForDisease(diseaseId);
+    const byt = [...data.columns.flatMap((column) => column.byt), ...(data.focus ?? []).flatMap((group) => group.byt)];
+    assert.deepEqual([...byt].sort(), active.map(({ id }) => id).sort());
+
+    const scenarios = moduleScenarios[diseaseId] ?? [];
+    assert.deepEqual(
+      data.columns.flatMap((column) => column.vnScenarioIds ?? []).sort(),
+      scenarios.map(({ id }) => id).sort(),
+    );
+    const moduleRows = data.columns.flatMap((column) => column.vn ?? []).flatMap((block) => block.items);
+    assert.deepEqual(moduleRows.map(({ ref }) => ref).sort(), scenarios.flatMap(({ regimens }) => regimens.map(({ id }) => id)).sort());
+
+    for (const { id, drugs } of active) {
+      for (const drug of drugs) {
+        const cleaned = cleanRef(drug.dose);
+        assert.deepEqual(doseTokens(cleaned), doseTokens(drug.dose), id + " · " + drug.name);
+        if (drug.dose.includes("nghi sai, không dùng")) assert.match(cleaned, /nghi sai, không dùng/u);
+      }
+    }
+    for (const scenario of scenarios) {
+      const column = data.columns.find((entry) => entry.vnScenarioIds?.includes(scenario.id));
+      assert.ok(column, scenario.id);
+      const rows = new Map((column.vn ?? []).flatMap((block) => block.items).map((row) => [row.ref, row]));
+      for (const { id, drugs, indication, caution, notes } of scenario.regimens) {
+        const row = rows.get(id);
+        assert.ok(row, id);
+        for (const drug of drugs) {
+          assert.deepEqual(doseTokens(cleanRef(drug.dose)), doseTokens(drug.dose), id + " · " + drug.name);
+        }
+        assert.deepEqual(doseTokens(row.text), drugs.flatMap((drug) => doseTokens(drug.dose)), id);
+        const originalNotes = [indication, caution, ...(notes ?? []), ...drugs.map((drug) => drug.caution)];
+        const cleanedNotes = originalNotes.flatMap((note) => {
+          if (!note) return [];
+          const cleaned = cleanRef(note);
+          assert.deepEqual(doseTokens(cleaned), doseTokens(note), id + " · Chú thích");
+          return [cleaned];
+        });
+        assert.deepEqual(doseTokens(row.preparation ?? ""), [...new Set(cleanedNotes)].flatMap(doseTokens), id + " · Chú thích bảng");
+      }
+    }
+  });
+}
+
+test("khung gọn không import các component phác đồ cũ", () => {
+  const pathname = new URL("../../components/antibiotics/empiric/StratificationPanel.tsx", import.meta.url);
+  const content = readFileSync(pathname, "utf8");
+  const source = createSourceFile(pathname.pathname, content, ScriptTarget.Latest, true, ScriptKind.TSX);
+  for (const node of source.statements) {
+    if (!isImportDeclaration(node) || !isStringLiteral(node.moduleSpecifier)) continue;
+    const name = node.moduleSpecifier.text.split("/").at(-1);
+    assert.ok(name !== "BytRegimenView" && name !== "TreatmentPanel", node.getText(source));
+    if (name === "CapByt2026" || name === "HapVap2023") {
+      assert.ok(!node.importClause?.name, node.getText(source));
+    }
+  }
+});
+
+function viewOf(diseaseId: string, scenario?: string) {
+  const markup = renderToStaticMarkup(createElement(StratificationPanel, {
+    data: checkedData(diseaseId),
+    family: "vn",
+    overview: createElement(DiseaseOverviewSummary, { diseaseId }),
+    monitoring: createElement(DiseaseMonitoring, { diseaseId }),
+    scenario,
+  }));
+  const $ = load(markup);
+  $("script, style").remove();
+  return $;
+}
+
+const forbiddenVn = /không nêu|cần xác minh|theo nguồn|nguyên văn|văn bản|\btrang\b|\btr\.\s*\d|\b(?:Bảng|Table)\s+(?:\d|[IVX]+\.\d)|Phụ lục|DTQG|CHƯA XÁC MINH|\b(?:SWAB|IDSA|SSC|ESC|EAU)\b/giu;
+
+for (const diseaseId of waveOneIds) {
+  test(diseaseId + " hiển thị một khung Việt Nam dạng lưới và giữ cảnh báo an toàn", () => {
+    const $ = viewOf(diseaseId);
+    const frame = $("body > details[data-stratification='vn']");
+    assert.equal(frame.length, 1);
+    assert.equal(frame.find(".do-cards").length, 1);
+    assert.equal(frame.find(".do-cards .do-card").length, 4);
+    assert.equal(frame.find(".do-monitor").length, 1);
+    assert.equal(frame.find(".clinical-scenario-picker").length, 0);
+    assert.equal(frame.find("[role='tab']").filter((_, node) => /^(?:Ngoại trú|Nội trú)$/iu.test($(node).text().trim())).length, 0);
+    const columns = frame.find("[data-strat-column]");
+    assert.equal(columns.length, checkedData(diseaseId).columns.length);
+    assert.ok(columns.first().parent().hasClass("lg:grid-cols-2"));
+    assert.ok(columns.first().parent().hasClass("2xl:grid-cols-3"));
+
+    const overview = load(renderToStaticMarkup(createElement(DiseaseOverviewSummary, { diseaseId })));
+    overview("script, style").remove();
+    assert.equal(frame.find(".do-cards").text(), overview(".do-cards").text());
+    assert.equal(frame.find(".do-control").text(), overview(".do-control").text());
+    // Dòng tham chiếu này nằm trong tổng quan dùng chung từ bản nền, giữ nguyên theo yêu cầu.
+    const overviewCards = frame.find(".do-cards").clone();
+    overviewCards.find("li").filter((_, node) => $(node).text().trim() === "Đã biết vi khuẩn: theo Bảng II.10.").remove();
+    const content = frame.clone();
+    content.find(".do-cards").replaceWith(overviewCards);
+    const text = content.text().replace(/\s+/gu, " ").trim();
+    assert.match(text, /Kháng sinh gợi ý/iu);
+    assert.match(text, /Thời gian/iu);
+    assert.match(text, /Theo dõi, đánh giá lại và an toàn/iu);
+    assert.equal(text.includes("Chọn nhóm người bệnh"), false);
+    const numberedHeadings = frame.find("h1, h2, h3, h4, h5, h6, summary, .tp-regimen-title")
+      .filter((_, node) => /^Phác đồ\s+\d+\b/iu.test($(node).text().trim()));
+    assert.equal(numberedHeadings.length, 0);
+    const samples = Array.from(text.matchAll(forbiddenVn), (m) => text.slice(Math.max(0, m.index - 20), m.index + m[0].length + 20));
+    assert.deepEqual([...new Set(samples)], [], "Khung Việt Nam còn cụm cấm hoặc lẫn nguồn");
+
+    for (const { id } of getRegimensForDisease(diseaseId)) {
+      const regimen = frame.find('[data-regimen="' + id + '"]');
+      assert.equal(regimen.length, 1, id);
+      assert.equal(regimen.find('a[href="' + SPECIALIZED_MODULE_LINKS.doseAdjustment.href + '"]').length, 1, id);
+      if (id === "r-sepsis-c-device") {
+        assert.match(regimen.text(), /600\s*mg\s*mỗi\s*12\s*giờ/iu);
+        assert.match(regimen.text(), /600\s*mg\s*x\s*1\s*lần\/ngày[^;.]*nghi sai,\s*không dùng/iu);
+      }
+      const warnings = safetyAlertsFor(id);
+      for (const { title } of warnings) assert.ok(regimen.find(".strat-safety").text().includes(title), id + " · " + title);
+      if (warnings.some(({ autoRecommend }) => autoRecommend === "block")) assert.match(regimen.text(), /Khóa đề xuất tự động/u);
+      if (warnings.some(({ blockFor }) => blockFor?.includes("child"))) assert.match(regimen.text(), /Liều người lớn/u);
+    }
+  });
+}
+
+test("liên kết scenario đánh dấu duy nhất tầng hoặc nhóm ổ nhiễm khuẩn", () => {
+  const columns = [
+    ["v8-11", "r-sepsis-b-mdr", "hospital"],
+    ["v8-1", "icu", "icu"],
+    ["v8-4", "hap-mrsa", "mdr"],
+    ["v8-5", "vap-low", "low"],
+  ];
+  for (const [diseaseId, scenario, columnId] of columns) {
+    const $ = viewOf(diseaseId, scenario);
+    const target = $('[data-selected-scenario="true"]');
+    assert.equal(target.length, 1, scenario);
+    assert.equal(target.attr("data-strat-column"), columnId);
+    assert.ok(target.hasClass("ring-2") && target.hasClass("ring-teal-700"), scenario);
+  }
+  const $ = viewOf("v8-12", "r-sepsis-c-biliary");
+  const focus = $('[data-selected-scenario="true"]');
+  assert.equal(focus.length, 1);
+  const regimen = '[data-regimen="r-sepsis-c-biliary"]';
+  assert.equal(focus.filter(regimen).add(focus.find(regimen)).length, 1);
+  assert.ok(focus.closest("details").is("[open]"));
 });

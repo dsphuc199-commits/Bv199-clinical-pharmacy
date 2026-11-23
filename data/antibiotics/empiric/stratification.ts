@@ -18,6 +18,7 @@ import { swabPlan } from "../../../components/antibiotics/empiric/sepsis-swab202
 import { CAP_DIAG, capPlans, hvDiagnosis, hvGrades, hvPlan, type CapIn, type HvIn, type Plan } from "../../../components/antibiotics/empiric/pneumonia-intl";
 import { CAP_SCENARIOS } from "../../../components/antibiotics/CapByt2026";
 import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/HapVap2023";
+import { getRegimensForDisease } from "./regimens";
 
 export type StratCite = { text: string; source: string; ref: string };
 export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string })[]; notes?: string[] };
@@ -30,6 +31,7 @@ export type StratColumn = {
   byt: string[];
   /** Phác đồ Việt Nam nằm trong module riêng (QĐ 2147/2026, khuyến cáo hội chuyên ngành). */
   vn?: StratIntl[];
+  vnScenarioIds?: string[];
   intl: StratIntl[];
   links?: { diseaseId: string; label: string }[];
 };
@@ -62,38 +64,43 @@ const HVVN = "Hội Hô hấp VN – Hội HSCC & CĐ VN 2023";
 const ATS = "ATS/IDSA 2019";
 const IDSA16 = "IDSA/ATS 2016";
 
-/* Bỏ chú thích vị trí tài liệu (QĐ 708 Bảng…, DTQG…, Phụ lục…, Mục…, tr.…) khỏi câu liều; giữ nguyên liều. */
+/* Ẩn vị trí tra cứu, giữ cả vế lâm sàng khi dùng chung câu hoặc ngoặc. */
 export function cleanRef(text: string): string {
   return text
-    .replace(/\s*\([^()]*?(?:QĐ 708|DTQG|Bảng|chương|Phụ lục|Mục \d|tr\.\s*\d)[^()]*\)/gu, "")
-    .replace(/\bPhụ lục \d+:\s*/gu, "")
-    .split(/;\s*/)
-    .map((part) => part
-      .replace(/\s*[–.]\s*(?:DTQG|Bảng)\b.*$/u, "")
-      .replace(/(?:;|,)?\s*theo Mục [\d.]+/gu, "")
-      /* Chỉ bỏ đúng câu ghi chú soạn thảo, giữ các câu liều khác trong cùng đoạn. */
-      .split(/(?<=\.)\s+(?=\p{Lu})/u)
-      .filter((sentence) => !/nguồn không|không ghi liều/iu.test(sentence))
-      .join(" ")
-      .trim())
-    .filter(Boolean)
-    .join("; ");
+    .replace(/(?:theo\s+)?(?:Phụ lục|Bảng|Table|Mục|Chương)\s+(?:[IVX]+\.)?\d+(?:\.\d+)*(?:[a-z])?[.:]?(?=\s|[),;]|$)/giu, "")
+    .replace(/\btr\.\s*(?:(?:in|PDF)\s*)?\d+(?:\s*[–-]\s*\d+)?(?:\s*(?:,|và)\s*\d+)*/giu, "")
+    .replace(/QĐ\s+708\s*(?=[,);])/gu, "")
+    .replace(/\bPDF\b/gu, "")
+    .replace(/\bDTQG\b/gu, "Dược thư quốc gia")
+    .replace(/chưa đối chiếu lại trang gốc|cần xác minh/giu, "cần đối chiếu trước khi áp dụng")
+    .replace(/(?:nguồn |văn bản )?không (?:nêu|ghi)(?: số)? liều(?: cụ thể)?(?:\s+trong)?/giu, "chưa có thông tin liều cụ thể")
+    .replace(/không nêu riêng/giu, "chưa có hướng dẫn riêng cho")
+    .replace(/không nêu/giu, "chưa có thông tin về")
+    .replace(/văn bản/giu, "tài liệu")
+    .replace(/\(\s*(?:(?:QĐ\s+\d+(?:\/QĐ-BYT)?|Dược thư quốc gia\s+\d{4}|nhãn FDA|[,;.:–-])\s*)+\)/giu, "")
+    .replace(/\(\s*\)/gu, "")
+    .replace(/\(\s*[,;–]\s*/gu, "(")
+    .replace(/,\s*;/gu, ";")
+    .replace(/\s+([,;.)])/gu, "$1")
+    .replace(/[ \t]{2,}/gu, " ")
+    .trim();
 }
 
 type ModuleDrug = { name: string; dose: string; route?: string; caution?: string };
-type ModuleRegimen = { id: string; name: string; drugs: ModuleDrug[] };
+type ModuleRegimen = { id: string; name: string; drugs: ModuleDrug[]; indication?: string; caution?: string; notes?: string[] };
 /* Phác đồ trong module Việt Nam -> dòng bảng; giữ nguyên thuốc, liều, đường dùng và chú thích liều. */
 function moduleBlock(source: string, regimens: ModuleRegimen[], lead?: string): StratIntl {
   return {
     source,
     lead,
     items: regimens.map((r) => {
-      const cautions = r.drugs.map((d) => d.caution && cleanRef(d.caution)).filter(Boolean);
+      const cautions = [r.indication, r.caution, ...(r.notes ?? []), ...r.drugs.map((d) => d.caution)]
+        .flatMap((note) => note ? [cleanRef(note)] : []).filter(Boolean);
       return {
         role: r.name,
-        text: r.drugs.map((d) => `${d.name}: ${cleanRef(d.dose)}${d.route && d.route !== "IV" ? ` (${d.route})` : ""}`).join(" + "),
+        text: r.drugs.map((d) => `${d.name}: ${cleanRef(d.dose)}${d.route ? ` (${d.route})` : ""}`).join(" + "),
         ref: r.id,
-        ...(cautions.length ? { preparation: cautions.join(" ") } : {}),
+        ...(cautions.length ? { preparation: [...new Set(cautions)].join(" ") } : {}),
       };
     }),
   };
@@ -249,7 +256,7 @@ const CAP: Stratification = {
         { text: capScenario("low").description, source: CAPVN, ref: "Mục 5.3.1" },
         { text: `Không có bệnh đồng mắc (${ATS_COMORB}).`, source: ATS, ref: "Bảng 3" },
       ],
-      byt: [], vn: [capVn("low")], intl: capIntl({ setting: "out" }),
+      byt: [], vn: [capVn("low")], vnScenarioIds: ["low"], intl: capIntl({ setting: "out" }),
     },
     {
       id: "out-risk", label: "Ngoại trú – có bệnh đồng mắc hoặc nguy cơ", tone: "community",
@@ -257,17 +264,17 @@ const CAP: Stratification = {
         { text: capScenario("risk").description, source: CAPVN, ref: "Mục 5.3.1" },
         { text: `Có bệnh đồng mắc: ${ATS_COMORB}.`, source: ATS, ref: "Bảng 3" },
       ],
-      byt: [], vn: [capVn("risk")], intl: capIntl({ setting: "out", comorb: true }),
+      byt: [], vn: [capVn("risk")], vnScenarioIds: ["risk"], intl: capIntl({ setting: "out", comorb: true }),
     },
     {
       id: "ward", label: "Nội trú – không hồi sức", tone: "hospital",
       criteria: [{ text: capScenario("ward").description, source: CAPVN, ref: "Mục 5.3.2.1" }, ATS_RISK],
-      byt: [], vn: [capVn("ward")], intl: capIntl({ setting: "in" }, true),
+      byt: [], vn: [capVn("ward")], vnScenarioIds: ["ward"], intl: capIntl({ setting: "in" }, true),
     },
     {
       id: "icu", label: "Viêm phổi nặng – hồi sức (ICU)", tone: "special",
       criteria: [{ text: capScenario("icu").description, source: CAPVN, ref: "Mục 5.3.2.2" }, ATS_SEVERE],
-      byt: [], vn: [capVn("icu")], intl: capIntl({ setting: "in", severe: true }, true),
+      byt: [], vn: [capVn("icu")], vnScenarioIds: ["icu"], intl: capIntl({ setting: "in", severe: true }, true),
     },
   ],
   focusTitle: "Viêm phổi do hít hoặc do vi khuẩn kỵ khí (hồi sức)",
@@ -299,13 +306,13 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
     {
       id: "low", label: "Không nặng, không nguy cơ đa kháng", tone: "community",
       criteria: [cite("Không thở máy, không sốc nhiễm khuẩn; không dùng kháng sinh tĩnh mạch trong 90 ngày; không có yếu tố nguy cơ đa kháng hoặc MRSA dưới đây.")],
-      byt: [], vn: [hvVn("hap", low)],
+      byt: [], vn: [hvVn("hap", low)], vnScenarioIds: [low],
       intl: [hvIntl({ kind: "hap" }, "nguy cơ tử vong thấp, không yếu tố nguy cơ MRSA")],
     },
     {
       id: "mdr", label: "Nặng (thở máy, sốc) hoặc có nguy cơ đa kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
-      byt: [], vn: rest.map((id) => hvVn("hap", id)),
+      byt: [], vn: rest.map((id) => hvVn("hap", id)), vnScenarioIds: rest,
       intl: [
         hvIntl({ kind: "hap", mrsaUnit: true }, "có yếu tố nguy cơ MRSA, không nguy cơ tử vong cao"),
         hvIntl({ kind: "hap", shock: true, ivAbx: true }, "nguy cơ tử vong cao hoặc kháng sinh tĩnh mạch trong 90 ngày"),
@@ -315,13 +322,13 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
     {
       id: "low", label: "Không nguy cơ đa kháng, đơn vị < 10% kháng", tone: "community",
       criteria: [cite("Không có tiêu chuẩn đa kháng dưới đây và đơn vị có < 10% Gram âm kháng thuốc định dùng đơn trị.")],
-      byt: [], vn: [hvVn("vap", low)],
+      byt: [], vn: [hvVn("vap", low)], vnScenarioIds: [low],
       intl: [hvIntl({ kind: "vap" }, "không yếu tố nguy cơ đa kháng")],
     },
     {
       id: "mdr", label: "Có nguy cơ đa kháng hoặc đơn vị > 10% kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
-      byt: [], vn: rest.map((id) => hvVn("vap", id)),
+      byt: [], vn: rest.map((id) => hvVn("vap", id)), vnScenarioIds: rest,
       intl: [
         hvIntl({ kind: "vap", gnUnit: true }, "đơn vị > 10% Gram âm kháng thuốc định đơn trị"),
         hvIntl({ kind: "vap", ivAbx: true }, "có yếu tố nguy cơ đa kháng"),
@@ -350,6 +357,11 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
       : [{ text: "Muộn (≥ 5 ngày) hoặc đã dùng kháng sinh: MRSA, P. aeruginosa, A. baumannii, S. maltophilia; nấm ở người suy giảm miễn dịch.", source: BYT, ref: "Viêm phổi liên quan thở máy" }]),
   ],
   columns: hvColumns(kind),
+  focusTitle: "Phương án theo hướng dẫn Bộ Y tế",
+  focus: [{
+    label: "QĐ 708/QĐ-BYT và QĐ 1493/QĐ-BYT",
+    byt: getRegimensForDisease(kind === "hap" ? "v8-4" : "v8-5").map(({ id }) => id),
+  }],
   principles: {
     source: `${IDSA16} – phạm vi bao phủ kinh nghiệm`,
     items: [...hvGrades(kind), ...hvPlan({ ...HV_BASE, kind, ivAbx: true }).notes.map((n) => ({ role: "Lưu ý", text: n, ref: kind === "hap" ? "Bảng 4" : "Bảng 3" }))],

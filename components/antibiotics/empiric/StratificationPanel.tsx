@@ -5,10 +5,14 @@
   tách hồi sức và không hồi sức. Dữ liệu: data/antibiotics/empiric/stratification.ts.
 */
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import tablesData from "@/data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, DOCS, type Regimen } from "@/data/antibiotics/empiric/regimens";
-import type { StratCite, StratColumn, StratIntl, Stratification } from "@/data/antibiotics/empiric/stratification";
+import { cleanRef, type StratCite, type StratColumn, type StratIntl, type Stratification } from "@/data/antibiotics/empiric/stratification";
+import { safetyAlertsFor } from "@/data/antibiotics/empiric/safety-alerts";
+import { anyInFormulary, betaLactamFlags, mdrOf, severityOf } from "@/lib/antibiotics/clinical-filters";
+import { SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
+import { useClinicalFilters } from "./ClinicalFilters";
 import { Rx, RxToolStyle } from "./rx-tool";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { structureOf } from "@/lib/antibiotics/regimen-structure";
@@ -16,13 +20,24 @@ import DoseTable from "../treatment/DoseTable";
 
 /* Ghi chú quy trình soạn (vị trí trong văn bản, nguồn không nêu…) không hiển thị trên giao diện lâm sàng. */
 const PROCESS = /không nêu|văn bản|theo nguồn|nguyên văn|cần xác minh|bảng\s|table\s|(^|[\s(])tr\.\s*\d|trang\s/iu;
-/* Bỏ chú thích vị trí tài liệu trong câu liều (QĐ 708 Bảng…, DTQG…); giữ nguyên liều. */
-const stripDose = (text: string) => text
-  .replace(/\s*\([^()]*?(?:QĐ 708|DTQG|Bảng|chương)[^()]*\)/gu, "")
-  .split(/;\s*/)
-  .map((part) => part.replace(/\s*[–.]\s*(?:DTQG|Bảng)\b.*$/u, "").trim())
-  .join("; ");
-const shown = (text: string) => { const t = clinicalText(text).trim(); return t && !PROCESS.test(t) ? t : ""; };
+const vnText = (text: string) => clinicalText(cleanRef(text));
+const foreign = /SWAB|IDSA|SSC\s+2026|nhãn FDA|tham khảo quốc tế/iu;
+const selectedClass = "ring-2 ring-teal-700";
+
+function compactNote(text: string): string {
+  if (/^ĐỐI CHIẾU LIỀU|^Tham khảo quốc tế/iu.test(text)) return "";
+  return vnText(text
+    .replace(/^Liều bổ sung ngày[^]*?(?=Liều cho người lớn|Người suy thận)/u, "")
+    .split(/(?<=\.)\s+(?=\p{Lu})/u)
+    .filter((sentence) => !foreign.test(sentence))
+    .join(" ")
+    .replace(/^(?:CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI TRONG NGUỒN):\s*/u, "Đối chiếu liều: "));
+}
+
+function DoseLink() {
+  const link = SPECIALIZED_MODULE_LINKS.doseAdjustment;
+  return <Link className="text-xs font-semibold text-teal-800 underline" href={link.href}>{link.label}</Link>;
+}
 
 type Cell = { t: string; s?: number; n?: number; g?: number };
 type Panel = { columns: { code: string; name?: string }[]; rows: { group: string; n: number; cells: Cell[] }[] };
@@ -42,43 +57,89 @@ const TONE: Record<StratColumn["tone"], string> = {
   special: "border-sky-300 bg-sky-50/60",
 };
 
-function Cites({ items }: { items: StratCite[] }) {
+function Cites({ items, hideLocator }: { items: StratCite[]; hideLocator?: boolean }) {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm text-slate-800">
-      {items.map((c) => <li key={c.text}>{c.text} <span className="text-xs text-slate-500" title={c.ref}>({c.source}{PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
+      {items.map((c) => <li key={c.text}>{hideLocator ? vnText(c.text) : c.text} <span className="text-xs text-slate-500" title={hideLocator ? undefined : c.ref}>({c.source}{hideLocator || PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
     </ul>
   );
 }
 
-function BytRegimen({ regimen }: { regimen: Regimen }) {
-  const notes = (regimen.notes ?? []).map(shown).filter(Boolean);
-  const structure = structureOf({ ...regimen, drugs: regimen.drugs.map((drug) => ({ ...drug, dose: stripDose(drug.dose) })) });
+function BytRegimen({ regimen, selected }: { regimen: Regimen; selected?: boolean }) {
+  const notes = (regimen.notes ?? []).map(compactNote).filter(Boolean);
+  const alerts = safetyAlertsFor(regimen.id);
+  const flag = alerts.some(({ autoRecommend }) => autoRecommend === "block") ? "Khóa đề xuất tự động"
+    : alerts.some(({ blockFor }) => blockFor?.includes("child")) ? "Liều người lớn" : undefined;
+  const { groups, status } = structureOf(regimen);
+  const doseGroups = groups.map((group) => ({
+    ...group,
+    label: group.label && vnText(group.label),
+    condition: group.condition && vnText(group.condition),
+    raw: group.raw.map((drug) => ({ ...drug, name: vnText(drug.name), dose: cleanRef(drug.dose) })),
+    options: group.options.map((option) => ({
+      ...option, name: vnText(option.name), raw: cleanRef(option.raw),
+      context: option.context && vnText(option.context),
+      flags: option.flags.map(vnText),
+    })),
+  }));
   return (
-    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-2">
-      <p className="text-sm font-semibold text-slate-900">{shown(regimen.scenario) || regimen.scenario}</p>
-      <DoseTable groups={structure.groups} status={structure.status} duration={regimen.duration} />
+    <div data-regimen={regimen.id} data-selected-scenario={selected || undefined} className={`min-w-0 rounded-lg border border-slate-200 bg-white p-2${selected ? ` ${selectedClass}` : ""}`}>
+      <p className="text-sm font-semibold text-slate-900">{vnText(regimen.scenario)}</p>
+      <DoseTable groups={doseGroups} status={status} duration={regimen.duration && vnText(regimen.duration)} showSourceDose hideReviewNote />
+      {alerts.length > 0 && (
+        <div className="strat-safety mt-1 rounded bg-orange-50 px-2 py-1 text-xs text-orange-900">
+          {flag && <strong>{flag}</strong>}
+          {alerts.map((alert) => (
+            <p key={alert.id}>
+              <strong>{vnText(alert.title)}.</strong>{" "}
+              {vnText(alert.id === "colistin-unit"
+                ? alert.text.replace(/Tương đương gần đúng theo nguồn: [^;]+; nhãn thuốc/u, "Nhãn thuốc")
+                : alert.text)}
+              {alert.checklist && <span> {alert.checklist.map(vnText).join(" ")}</span>}
+            </p>
+          ))}
+        </div>
+      )}
       {notes.length > 0 && (
         <details className="mt-1 text-xs text-slate-600">
           <summary className="cursor-pointer">Chú thích</summary>
           <ul className="list-disc pl-4">{notes.map((n) => <li key={n}>{n}</li>)}</ul>
         </details>
       )}
-      <p className="mt-1 text-xs text-slate-500" title={regimen.source.page}>{DOCS[regimen.source.doc]?.number ? `QĐ ${DOCS[regimen.source.doc].number}` : "Bộ Y tế"}{PROCESS.test(regimen.source.section) ? "" : `, ${regimen.source.section}`}</p>
+      <p className="mt-1 flex flex-wrap items-baseline justify-between gap-x-2 text-xs text-slate-500">
+        <span>{DOCS[regimen.source.doc]?.number ? `QĐ ${DOCS[regimen.source.doc].number}` : "Bộ Y tế"}</span>
+        <DoseLink />
+      </p>
     </div>
   );
 }
 
-function BytList({ ids }: { ids: string[] }) {
-  const items = ids.map((id) => ALL_REGIMENS.find((r) => r.id === id)).filter((r): r is Regimen => Boolean(r));
-  return <div className="space-y-2">{items.map((r) => <BytRegimen key={r.id} regimen={r} />)}</div>;
+function BytList({ ids, selectedRegimen }: { ids: string[]; selectedRegimen?: string | null }) {
+  const filters = useClinicalFilters();
+  const items = ids.flatMap((id) => {
+    const regimen = ALL_REGIMENS.find((r) => r.id === id);
+    if (!regimen || !filters) return regimen ? [regimen] : [];
+    const texts = regimen.drugs.map(({ name, dose }) => `${name}: ${dose}`);
+    const severity = severityOf(regimen.scenario, regimen.role);
+    const mdr = mdrOf(regimen.scenario);
+    const excluded = (filters.hidePenicillin && betaLactamFlags(texts).penicillin)
+      || (filters.formularyOnly && anyInFormulary(texts) === false)
+      || (filters.severity !== "all" && severity !== "unspecified" && severity !== filters.severity)
+      || (filters.mdr !== "all" && mdr !== "unspecified" && mdr !== filters.mdr);
+    return excluded ? [] : [regimen];
+  });
+  return items.length > 0
+    ? <div className="space-y-2">{items.map((r) => <BytRegimen key={r.id} regimen={r} selected={r.id === selectedRegimen} />)}</div>
+    : <p className="text-sm text-slate-600">Bộ lọc đang ẩn các phương án.</p>;
 }
 
-function Intl({ block }: { block: StratIntl }) {
+function Intl({ block, vn }: { block: StratIntl; vn?: boolean }) {
   return (
     <div className="min-w-0 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-white p-2">
       <p className="text-sm font-semibold text-slate-900">{block.source}</p>
-      {block.lead && <p className="text-xs text-slate-600">{block.lead}</p>}
-      <Rx items={block.items} />
+      {block.lead && <p className="text-xs text-slate-600">{vn ? vnText(block.lead) : block.lead}</p>}
+      <Rx items={vn ? block.items.map((item) => ({ ...item, role: vnText(item.role), text: vnText(item.text), preparation: item.preparation && vnText(item.preparation) })) : block.items} />
+      {vn && <p className="mt-1"><DoseLink /></p>}
     </div>
   );
 }
@@ -88,18 +149,18 @@ type Family = "vn" | "intl";
 const isVn = (source: string) => /^(QĐ|Hội|Bộ Y tế)/u.test(source);
 const ofFamily = (items: StratCite[], family: Family) => items.filter((c) => isVn(c.source) === (family === "vn"));
 
-function Column({ col, family }: { col: StratColumn; family: Family }) {
+function Column({ col, family, selected }: { col: StratColumn; family: Family; selected?: boolean }) {
   const criteria = ofFamily(col.criteria, family);
   const pathogens = col.pathogens ? ofFamily(col.pathogens, family) : [];
   const vn = family === "vn";
   return (
-    <section className={`min-w-0 rounded-xl border-2 p-3 ${TONE[col.tone]}`} aria-label={col.label}>
+    <section className={`min-w-0 rounded-xl border-2 p-3 ${TONE[col.tone]}${selected ? ` ${selectedClass}` : ""}`} aria-label={col.label} data-strat-column={vn ? col.id : undefined} data-selected-scenario={selected || undefined}>
       <h4 className="text-base font-bold text-slate-900">{col.label}</h4>
-      {criteria.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5><Cites items={criteria} /></>}
-      {pathogens.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={pathogens} /></>}
+      {criteria.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5><Cites items={criteria} hideLocator={vn} /></>}
+      {pathogens.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={pathogens} hideLocator={vn} /></>}
       {vn && (col.byt.length > 0 || (col.vn?.length ?? 0) > 0) && <h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5>}
       {vn && col.byt.length > 0 && <BytList ids={col.byt} />}
-      {vn && col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
+      {vn && col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} vn />)}</div>}
       {!vn && col.intl.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5><div className="space-y-2">{col.intl.map((b) => <Intl key={b.source} block={b} />)}</div></>}
       {!vn && col.links && (
         <p className="mt-3 text-sm">Khuyến cáo chi tiết: {col.links.map((l, i) => (
@@ -162,7 +223,13 @@ function Antibiogram({ spec }: { spec: Stratification["antibiogram"] }) {
   );
 }
 
-export default function StratificationPanel({ data, family }: { data: Stratification; family: Family }) {
+export default function StratificationPanel({ data, family, overview, monitoring, scenario }: {
+  data: Stratification;
+  family: Family;
+  overview?: ReactNode;
+  monitoring?: ReactNode;
+  scenario?: string | null;
+}) {
   const vn = family === "vn";
   const sampling = ofFamily(data.sampling, family);
   const pathogens = ofFamily(data.pathogens, family);
@@ -170,9 +237,16 @@ export default function StratificationPanel({ data, family }: { data: Stratifica
     ? ofFamily(c.criteria, "vn").length > 0 || c.byt.length > 0 || (c.vn?.length ?? 0) > 0
     : ofFamily(c.criteria, "intl").length > 0 || c.intl.length > 0 || Boolean(c.links));
   const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
+  const targetColumn = vn && scenario ? columns.find((col) => col.id === scenario || col.byt.includes(scenario)
+    || col.vnScenarioIds?.includes(scenario) || col.vn?.some((block) => block.items.some(({ ref }) => ref === scenario))) : undefined;
+  const targetFocus = vn && scenario && !targetColumn ? data.focus?.find(({ byt }) => byt.includes(scenario)) : undefined;
+  const frame = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    if (targetColumn || targetFocus) frame.current?.querySelector("[data-selected-scenario=true]")?.scrollIntoView({ block: "start" });
+  }, [scenario, targetColumn, targetFocus]);
   if (!columns.length) return null;
   return (
-    <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
+    <details ref={frame} open data-stratification={vn ? "vn" : undefined} className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
       <summary className="cursor-pointer">
         <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
@@ -180,29 +254,30 @@ export default function StratificationPanel({ data, family }: { data: Stratifica
       </summary>
       <div className="mt-2 space-y-3">
         {sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
-        {sampling.length > 0 && (
+        {vn && overview}
+        {!(vn && overview) && sampling.length > 0 && (
           <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
             <h4 className="text-sm font-bold text-amber-950">Gửi bệnh phẩm trước kháng sinh</h4>
             <Cites items={sampling} />
           </section>
         )}
-        {pathogens.length > 0 && (
+        {!(vn && overview) && pathogens.length > 0 && (
           <section className="rounded-xl border border-slate-200 bg-white p-3">
             <h4 className="text-sm font-bold text-slate-900">Tác nhân lưu ý</h4>
             <Cites items={pathogens} />
           </section>
         )}
         <div className={`grid min-w-0 gap-3 ${vn ? "lg:grid-cols-2 2xl:grid-cols-3" : "2xl:grid-cols-2"}`}>
-          {columns.map((col) => <Column key={col.id} col={col} family={family} />)}
+          {columns.map((col) => <Column key={col.id} col={col} family={family} selected={col === targetColumn} />)}
         </div>
         {vn && data.focus && (
-          <details className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
-            <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle}</summary>
+          <details open={targetFocus ? true : undefined} className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+            <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle && vnText(data.focusTitle)}</summary>
             <div className="mt-2 grid min-w-0 gap-3 lg:grid-cols-2">
               {data.focus.map((f) => (
                 <div key={f.label} className="min-w-0">
                   <p className="text-sm font-semibold text-slate-800">{f.label}{f.diseaseId && <> – <Link className="text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${f.diseaseId}`}>mở mặt bệnh</Link></>}</p>
-                  <BytList ids={f.byt} />
+                  <BytList ids={f.byt} selectedRegimen={f === targetFocus ? scenario : undefined} />
                 </div>
               ))}
             </div>
@@ -215,7 +290,8 @@ export default function StratificationPanel({ data, family }: { data: Stratifica
           </section>
         )}
         <Antibiogram spec={data.antibiogram} />
-        <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>
+        {vn && monitoring}
+        {!vn && <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>}
       </div>
     </details>
   );
