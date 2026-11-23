@@ -152,17 +152,8 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   /* Viem khop nhiem khuan: cong cu chon khang sinh (GEIO–SEIMC 2024, PIDS/IDSA 2023) thay cho phan doc khuyen cao. */
   /* Viem xuong tuy: cong cu chon khang sinh (WikiGuidelines 2022/2025 nguoi lon, PIDS/IDSA 2021 tre em). */
   /* Dot cap COPD: cong cu chon khang sinh theo GOLD 2026. */
-  /* Viêm phổi cộng đồng đã có khung phân tầng ở đầu tab. Giữ liên kết tài liệu ở cuối. */
-  if (diseaseId === "v8-1") {
-    const sources = citeIntlSources(getIntlEntry(diseaseId)?.guidelineIds ?? []);
-    return (
-      <>
-        <InternationalSourceUse setting="Hoa Kỳ" localReferences="kháng sinh đồ của bệnh viện" />
-        <ClinicalSources sources={sources} />
-      </>
-    );
-  }
-  if (diseaseId === "v8-4" || diseaseId === "v8-5") return <section className="bv199-panel gt199"><PneumoniaIntl kind={diseaseId === "v8-4" ? "hap" : "vap"} /><GtStyle /></section>;
+  /* Viem phoi: cong cu chon khang sinh (ATS/IDSA 2019 VPCD; IDSA/ATS 2016 VPBV, VPLQTM; IDSA 2026 vi khuan khang thuoc). */
+  if (diseaseId === "v8-1" || diseaseId === "v8-4" || diseaseId === "v8-5") return <section className="bv199-panel gt199"><PneumoniaIntl kind={diseaseId === "v8-1" ? "cap" : diseaseId === "v8-4" ? "hap" : "vap"} /><GtStyle /></section>;
   /* Enterobacterales sinh ESBL: cong cu chon khang sinh theo IDSA 2026 (Section 1, Table 1). */
   /* Nhiem khuan huyet Gram am: kinh nghiem (IDSA 2025 cUTI, nguon tiet nieu) va dieu tri dich theo kieu hinh (IDSA 2026). */
   if (diseaseId === "v8-14") return <section className="bv199-panel gt199"><GnbBsiIntl /><GtStyle /></section>;

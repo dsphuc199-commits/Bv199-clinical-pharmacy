@@ -357,7 +357,6 @@ function GuidelineContent() {
   /* Benh khong co phuong an BYT co lieu (vd. QĐ 1530) -> hien du phuong an, kem co "khong neu lieu". */
   const vnShowAll = !isAdultCAP(selected) && getConcreteRegimensForDisease(selected.id).length === 0;
 
-  const vnStratification = tab === "vn" ? stratificationFor(selected.id) : undefined;
   const evidence = evidenceFor(selected.id);
   const backPath = empiricHref(selected.id);
   const organismLink = DISEASE_ORGANISM[selected.id];
@@ -1022,16 +1021,18 @@ function GuidelineContent() {
 
 
           <div key={`${selected.id}-${tab}`} id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
-          {tab === "vn" && (vnStratification ? (
-            <StratificationPanel
-              data={vnStratification}
-              family="vn"
-              overview={<DiseaseOverviewSummary diseaseId={selected.id} />}
-              monitoring={<DiseaseMonitoring diseaseId={selected.id} />}
-              scenario={pickedScenario ?? searchParams.get("scenario")}
-            />
-          ) : (
+          {tab === "vn" && (
             <>
+              {/* Mặt bệnh đã phân tầng: khung phân tầng nguồn Việt Nam thay toàn bộ phần trình bày cũ. */}
+              {stratificationFor(selected.id) && (
+                <StratificationPanel
+                  data={stratificationFor(selected.id)!}
+                  family="vn"
+                  overview={<DiseaseOverviewSummary diseaseId={selected.id} />}
+                  monitoring={<DiseaseMonitoring diseaseId={selected.id} />}
+                />
+              )}
+              {!stratificationFor(selected.id) && (<>
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
@@ -1064,8 +1065,9 @@ function GuidelineContent() {
                   )}
                 </>
               )}
+              </>)}
             </>
-          ))}
+          )}
 
           {tab === "intl" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
           {tab === "intl" && (

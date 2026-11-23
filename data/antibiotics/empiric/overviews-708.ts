@@ -54,7 +54,7 @@ const SEPSIS: DiseaseOverviewData = {
     { label: "Phân nhánh lựa chọn", points: [
       { text: "Chưa rõ ổ nhiễm khuẩn: theo miễn dịch, giảm bạch cầu hạt và nguy cơ nhiễm khuẩn bệnh viện.", ref: "tr. 119–120" },
       { text: "Có ổ nhiễm khuẩn chỉ điểm: theo vị trí (gan mật, tiêu hóa, sinh dục nữ, da, dụng cụ mạch máu).", ref: "tr. 120–121" },
-      { text: "Đã biết vi khuẩn: theo Bảng II.10.", ref: "tr. 121–122" },
+      { text: "Đã biết vi khuẩn: điều trị theo tác nhân gây bệnh đã xác định.", ref: "tr. 121–122" },
     ] },
   ],
   sourceControl: SEPSIS_SOURCE_CONTROL,
