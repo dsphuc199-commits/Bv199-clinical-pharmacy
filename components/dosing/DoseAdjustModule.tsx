@@ -45,7 +45,7 @@ function stage(crcl: number) {
   return { label: "Suy thận giai đoạn cuối (< 15)", tone: "s-bad" };
 }
 
-export default function DoseAdjustModule({ entries, params, source, note }: { entries: DoseEntry[]; params: UrlParams; source: string; note: string }) {
+export default function DoseAdjustModule({ entries, params, source }: { entries: DoseEntry[]; params: UrlParams; source: string }) {
   const from = params.get("from");
   const fromLabel = params.get("fromLabel");
   const requested = params.get("drug");
@@ -222,7 +222,7 @@ export default function DoseAdjustModule({ entries, params, source, note }: { en
                 <p>Chọn một thuốc để xem hướng dẫn hiệu chỉnh liều.</p>
               </section>
             ) : (
-              <Detail entry={sel} profiles={profiles} profile={profile} range={range} crcl={crcl} indication={profile?.indicationId ?? ""} setIndication={setIndication} source={source} note={note} />
+              <Detail entry={sel} profiles={profiles} profile={profile} range={range} crcl={crcl} indication={profile?.indicationId ?? ""} setIndication={setIndication} source={source} />
             )}
           </div>
         </div>
@@ -232,9 +232,9 @@ export default function DoseAdjustModule({ entries, params, source, note }: { en
   );
 }
 
-function Detail({ entry, profiles, profile, range, crcl, setIndication, source, note }: {
+function Detail({ entry, profiles, profile, range, crcl, setIndication, source }: {
   entry: DoseEntry; profiles: RenalDoseProfile[]; profile?: RenalDoseProfile; range?: RenalDoseRange; crcl: number | null;
-  indication: string; setIndication: (v: string) => void; source: string; note: string;
+  indication: string; setIndication: (v: string) => void; source: string;
 }) {
   const d = entry.dtqg;
 
@@ -373,10 +373,11 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source, 
 
       {!d && !profile && !entry.outside && <p className="da-muted">Chưa có dữ liệu hiệu chỉnh liều.</p>}
 
-      <footer className="da-doc-f">
-        {d && <p><strong>Nguồn:</strong> {source}, chuyên luận {d.name}, trang {d.pages.printed[0]}–{d.pages.printed[1]}.</p>}
-        <p><strong>Trạng thái:</strong> {note}</p>
-      </footer>
+      {d && (
+        <footer className="da-doc-f">
+          <p><strong>Tài liệu tham khảo:</strong> {source}. Chuyên luận {d.name}, trang {d.pages.printed[0]}–{d.pages.printed[1]}.</p>
+        </footer>
+      )}
     </article>
   );
 }

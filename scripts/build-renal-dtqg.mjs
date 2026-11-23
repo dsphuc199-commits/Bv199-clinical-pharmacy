@@ -537,7 +537,6 @@ if (PREG) {
 writeFileSync(join(ROOT, "data", "renal-dtqg.json"), JSON.stringify({
   source: "Bộ Y tế – Hội đồng Dược thư quốc gia Việt Nam. Dược thư quốc gia Việt Nam, lần xuất bản thứ ba (2023)",
   extractedAt: new Date().toISOString().slice(0, 10),
-  note: "Trích nguyên văn phần hiệu chỉnh liều ở người suy thận (mục Liều lượng và cách dùng), chống chỉ định và thận trọng liên quan chức năng thận; bảng dựng lại theo đường kẻ của trang gốc. Chưa được dược sĩ lâm sàng BV199 xác nhận.",
   items: results,
 }, null, 1));
 console.log("Tong:", results.length, "| theo nhom:", JSON.stringify(results.reduce((a, r) => ((a[r.group] = (a[r.group] || 0) + 1), a), {})));

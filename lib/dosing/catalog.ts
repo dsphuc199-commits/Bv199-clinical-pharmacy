@@ -145,4 +145,3 @@ export function doseEntries(): DoseEntry[] {
 }
 
 export const DTQG_SOURCE = (dtqg as { source: string }).source;
-export const DTQG_NOTE = (dtqg as { note: string }).note;
