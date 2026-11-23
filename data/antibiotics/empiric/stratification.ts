@@ -20,8 +20,8 @@ import { CAP_SCENARIOS } from "../../../components/antibiotics/CapByt2026";
 import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/HapVap2023";
 import { getRegimensForDisease } from "./regimens";
 
-export type StratCite = { text: string; source: string; ref: string };
-export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string })[]; notes?: string[] };
+export type StratCite = { text: string; source: string; ref: string; grade?: string };
+export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; group?: string })[]; notes?: string[] };
 export type StratColumn = {
   id: string;
   label: string;
@@ -132,7 +132,15 @@ function capIntl(i: Partial<CapIn>, withRisk = false): StratIntl[] {
 const HV_BASE: HvIn = { kind: "hap", ivAbx: false, shock: false, ards: false, hosp5: false, rrt: false, mrsaUnit: false, mrsaColon: false, gnUnit: false, structural: false, gram: false };
 function hvIntl(i: Partial<HvIn>, label: string): StratIntl {
   const out = hvPlan({ ...HV_BASE, ...i });
-  return { source: `${IDSA16} – ${label}`, lead: out.headline, items: out.plan.blocks.flatMap((b) => b.items) };
+  const groups = out.plan.blocks;
+  const lead = groups.length > 1
+    ? `${out.headline} Chọn một thuốc trong mỗi nhóm dưới đây và dùng đồng thời.`
+    : out.headline;
+  return {
+    source: `${IDSA16} – ${label}`,
+    lead,
+    items: groups.flatMap(({ title, items }) => items.map((item) => ({ ...item, group: title || undefined }))),
+  };
 }
 
 /* Khối "Phổ kháng sinh kinh nghiệm" của SSC 2026 (KC 25–29) – lấy nguyên văn từ module SSC. */
@@ -307,15 +315,16 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
       id: "low", label: "Không nặng, không nguy cơ đa kháng", tone: "community",
       criteria: [cite("Không thở máy, không sốc nhiễm khuẩn; không dùng kháng sinh tĩnh mạch trong 90 ngày; không có yếu tố nguy cơ đa kháng hoặc MRSA dưới đây.")],
       byt: [], vn: [hvVn("hap", low)], vnScenarioIds: [low],
-      intl: [hvIntl({ kind: "hap" }, "nguy cơ tử vong thấp, không yếu tố nguy cơ MRSA")],
+      intl: [hvIntl({ kind: "hap" }, "không có yếu tố cần mở rộng phổ")],
     },
     {
       id: "mdr", label: "Nặng (thở máy, sốc) hoặc có nguy cơ đa kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
       byt: [], vn: rest.map((id) => hvVn("hap", id)), vnScenarioIds: rest,
       intl: [
-        hvIntl({ kind: "hap", mrsaUnit: true }, "có yếu tố nguy cơ MRSA, không nguy cơ tử vong cao"),
-        hvIntl({ kind: "hap", shock: true, ivAbx: true }, "nguy cơ tử vong cao hoặc kháng sinh tĩnh mạch trong 90 ngày"),
+        hvIntl({ kind: "hap", mrsaUnit: true }, "chỉ có tiêu chí phủ MRSA"),
+        hvIntl({ kind: "hap", structural: true }, "chỉ có tiêu chí phối hợp hai thuốc kháng Pseudomonas"),
+        hvIntl({ kind: "hap", ivAbx: true }, "có cả tiêu chí phủ MRSA và phối hợp hai thuốc kháng Pseudomonas"),
       ],
     },
   ] : [
@@ -323,15 +332,16 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
       id: "low", label: "Không nguy cơ đa kháng, đơn vị < 10% kháng", tone: "community",
       criteria: [cite("Không có tiêu chuẩn đa kháng dưới đây và đơn vị có < 10% Gram âm kháng thuốc định dùng đơn trị.")],
       byt: [], vn: [hvVn("vap", low)], vnScenarioIds: [low],
-      intl: [hvIntl({ kind: "vap" }, "không yếu tố nguy cơ đa kháng")],
+      intl: [hvIntl({ kind: "vap" }, "không có yếu tố cần mở rộng phổ")],
     },
     {
       id: "mdr", label: "Có nguy cơ đa kháng hoặc đơn vị > 10% kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
       byt: [], vn: rest.map((id) => hvVn("vap", id)), vnScenarioIds: rest,
       intl: [
-        hvIntl({ kind: "vap", gnUnit: true }, "đơn vị > 10% Gram âm kháng thuốc định đơn trị"),
-        hvIntl({ kind: "vap", ivAbx: true }, "có yếu tố nguy cơ đa kháng"),
+        hvIntl({ kind: "vap", mrsaUnit: true }, "chỉ có tiêu chí phủ MRSA"),
+        hvIntl({ kind: "vap", gnUnit: true }, "chỉ có tiêu chí phối hợp hai thuốc kháng Pseudomonas"),
+        hvIntl({ kind: "vap", ivAbx: true }, "có cả tiêu chí phủ MRSA và phối hợp hai thuốc kháng Pseudomonas"),
       ],
     },
   ];
@@ -348,7 +358,7 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
   lead: `Phân tầng theo mức độ nặng và nguy cơ vi khuẩn đa kháng, MRSA như khuyến cáo ${HVVN}; đặt cạnh IDSA/ATS 2016.`,
   sampling: [
     ...(kind === "vap" ? [{ text: "Cấy định lượng dịch hút phế quản, rửa phế quản phế nang hoặc chải có bảo vệ.", source: BYT, ref: "Viêm phổi liên quan thở máy" }] : []),
-    ...hvDiagnosis(kind).filter(({ role }) => role === "Bệnh phẩm" || role === "Cấy máu").map((i) => ({ text: `${i.role}: ${i.text}`, source: IDSA16, ref: i.ref })),
+    ...hvDiagnosis(kind).filter(({ role }) => role === "Bệnh phẩm" || role === "Cấy máu").map((i) => ({ text: `${i.role}: ${i.text}`, source: IDSA16, ref: i.ref, grade: i.grade })),
   ],
   pathogens: [
     { text: "Phần lớn là P. aeruginosa và vi khuẩn Gram âm khác; MRSA khi có yếu tố nguy cơ.", source: HVVN, ref: kind === "hap" ? "Bảng 3.1" : "Bảng 3.2" },
@@ -364,7 +374,11 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
   }],
   principles: {
     source: `${IDSA16} – phạm vi bao phủ kinh nghiệm`,
-    items: [...hvGrades(kind), ...hvPlan({ ...HV_BASE, kind, ivAbx: true }).notes.map((n) => ({ role: "Lưu ý", text: n, ref: kind === "hap" ? "Bảng 4" : "Bảng 3" }))],
+    items: [
+      ...hvGrades(kind),
+      ...[...new Set([...hvPlan({ ...HV_BASE, kind, ivAbx: true }).notes, ...hvPlan({ ...HV_BASE, kind }).notes])]
+        .map((text) => ({ role: "Lưu ý", text, ref: kind === "hap" ? "Bảng 4" : "Bảng 3" })),
+    ],
   },
   antibiogram: HV_ANTIBIOGRAM,
   sources: [

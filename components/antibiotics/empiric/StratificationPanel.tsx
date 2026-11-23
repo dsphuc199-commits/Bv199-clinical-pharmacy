@@ -13,7 +13,7 @@ import { safetyAlertsFor } from "@/data/antibiotics/empiric/safety-alerts";
 import { anyInFormulary, betaLactamFlags, mdrOf, severityOf } from "@/lib/antibiotics/clinical-filters";
 import { SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 import { useClinicalFilters } from "./ClinicalFilters";
-import { Rx, RxToolStyle } from "./rx-tool";
+import { Grade, Rx, RxToolStyle } from "./rx-tool";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { structureOf } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
@@ -60,7 +60,7 @@ const TONE: Record<StratColumn["tone"], string> = {
 function Cites({ items, hideLocator }: { items: StratCite[]; hideLocator?: boolean }) {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm text-slate-800">
-      {items.map((c) => <li key={c.text}>{hideLocator ? vnText(c.text) : c.text} <span className="text-xs text-slate-500" title={hideLocator ? undefined : c.ref}>({c.source}{hideLocator || PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
+      {items.map((c) => <li key={c.text}>{hideLocator ? vnText(c.text) : c.text} <span className="text-xs text-slate-500" title={hideLocator ? undefined : c.ref}>({c.source}{hideLocator || PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span>{c.grade && <> <Grade g={c.grade} /></>}</li>)}
     </ul>
   );
 }
@@ -134,11 +134,21 @@ function BytList({ ids, selectedRegimen }: { ids: string[]; selectedRegimen?: st
 }
 
 function Intl({ block, vn }: { block: StratIntl; vn?: boolean }) {
+  const items = vn ? block.items.map((item) => ({
+    ...item, role: vnText(item.role), text: vnText(item.text), preparation: item.preparation && vnText(item.preparation),
+  })) : block.items;
+  const groups = [...new Set(items.map(({ group }) => group))];
+
   return (
-    <div className={`min-w-0 max-w-full rounded-lg border border-slate-200 bg-white p-2 ${vn ? "strat-rx-vn space-y-2" : "overflow-x-auto"}`}>
+    <div className={`min-w-0 max-w-full rounded-lg border border-slate-200 bg-white p-2 space-y-2 ${vn ? "strat-rx-vn" : "overflow-x-auto"}`}>
       <p className="text-sm font-semibold text-slate-900">{block.source}</p>
       {block.lead && <p className="text-xs text-slate-600">{vn ? vnText(block.lead) : block.lead}</p>}
-      <Rx items={vn ? block.items.map((item) => ({ ...item, role: vnText(item.role), text: vnText(item.text), preparation: item.preparation && vnText(item.preparation) })) : block.items} />
+      {groups.length > 1 ? groups.map((group) => (
+        <div key={group ?? ""} className="min-w-0">
+          {group && <p className="mb-1 text-xs font-bold text-slate-700">{group}</p>}
+          <Rx items={items.filter((item) => item.group === group)} />
+        </div>
+      )) : <Rx items={items} />}
       {vn && <p className="mt-1"><DoseLink /></p>}
     </div>
   );
@@ -263,7 +273,7 @@ export default function StratificationPanel({ data, family, overview, monitoring
   const columns = data.columns.filter((c) => vn
     ? ofFamily(c.criteria, "vn").length > 0 || c.byt.length > 0 || (c.vn?.length ?? 0) > 0
     : ofFamily(c.criteria, "intl").length > 0 || c.intl.length > 0 || Boolean(c.links));
-  const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
+  const sources = data.sources.filter(isVn);
   const vnGrid = columns.length > 1
     ? `lg:grid-cols-2${columns.length === 3 ? " 2xl:grid-cols-3" : ""}`
     : "";
@@ -284,7 +294,6 @@ export default function StratificationPanel({ data, family, overview, monitoring
         <span className="block text-lg font-bold text-slate-900">{data.title}</span>
       </summary>
       <div className="mt-2 space-y-3">
-        {!vn && sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
         {vn && overview}
         {!(vn && overview) && sampling.length > 0 && (
           <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
@@ -330,7 +339,7 @@ export default function StratificationPanel({ data, family, overview, monitoring
             </ul>
           </footer>
         )}
-        {!vn && <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>}
+        {!vn && <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199.</p>}
       </div>
     </details>
   );

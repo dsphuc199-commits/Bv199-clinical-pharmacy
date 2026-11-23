@@ -8,7 +8,9 @@ import { createSourceFile, isImportDeclaration, isStringLiteral, ScriptKind, Scr
 import { CAP_SCENARIOS } from "../../components/antibiotics/CapByt2026";
 import { HAPVAP_SCENARIOS } from "../../components/antibiotics/HapVap2023";
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../components/antibiotics/empiric/DiseaseOverview";
+import PneumoniaIntl from "../../components/antibiotics/empiric/PneumoniaIntl";
 import StratificationPanel from "../../components/antibiotics/empiric/StratificationPanel";
+import { PATHOGENS, hvPlan, type HvIn } from "../../components/antibiotics/empiric/pneumonia-intl";
 import tables from "../../data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, getRegimensForDisease } from "../../data/antibiotics/empiric/regimens";
 import { safetyAlertsFor } from "../../data/antibiotics/empiric/safety-alerts";
@@ -240,4 +242,42 @@ test("liên kết scenario đánh dấu duy nhất tầng hoặc nhóm ổ nhi�
   const regimen = '[data-regimen="r-sepsis-c-biliary"]';
   assert.equal(focus.filter(regimen).add(focus.find(regimen)).length, 1);
   assert.ok(focus.closest("details").is("[open]"));
+});
+
+test("mỗi mặt bệnh HAP/VAP giữ đủ bốn tổ hợp từ công cụ Quốc tế", () => {
+  for (const [diseaseId, kind] of [["v8-4", "hap"], ["v8-5", "vap"]] as const) {
+    const base: HvIn = {
+      kind, ivAbx: false, shock: false, ards: false, hosp5: false, rrt: false, mrsaUnit: false,
+      mrsaColon: false, gnUnit: false, structural: false, gram: false,
+    };
+    const variants = [{}, { mrsaUnit: true }, { structural: true }, { ivAbx: true }];
+    const blocks = checkedData(diseaseId).columns.flatMap(({ intl }) => intl);
+    assert.equal(blocks.length, variants.length, diseaseId);
+    variants.forEach((variant, index) => {
+      const source = hvPlan({ ...base, ...variant });
+      const actual = blocks[index];
+      assert.ok(actual.lead?.startsWith(source.headline), actual.source);
+      assert.deepEqual(actual.items, source.plan.blocks.flatMap(({ title, items }) =>
+        items.map((item) => ({ ...item, group: title || undefined })),
+      ));
+    });
+  }
+});
+
+test("HAP/VAP bỏ bộ chọn kinh nghiệm lặp và giữ điều trị đích, theo dõi, tài liệu", () => {
+  for (const kind of ["hap", "vap"] as const) {
+    const $ = load(renderToStaticMarkup(createElement(PneumoniaIntl, { kind })));
+    $("script, style").remove();
+    assert.equal($(".sa24-flow, .sa24-eyebrow, input[type='checkbox']").length, 0, kind);
+    assert.doesNotMatch($("body").text(), /Kinh nghiệm – chưa có kết quả cấy/u);
+    const directed = $(".sa24 > details").first();
+    assert.equal(directed.children("summary").text(), "Điều trị đích khi đã có tác nhân");
+    assert.equal(directed.attr("open"), undefined);
+    assert.deepEqual(directed.find("select option").map((_, node) => $(node).attr("value")).get(), PATHOGENS.map(({ id }) => id));
+    assert.equal(directed.find("[role='group'][aria-label='Dị ứng beta-lactam']").length, 1);
+    const course = $(".sa24 > details").eq(1);
+    assert.equal(course.children("summary").text(), "Liều, xuống thang, thời gian điều trị");
+    assert.equal($(".sa24-src").prev().children("summary").text(), "Xét nghiệm vi sinh và chỉ điểm sinh học");
+    assert.equal($(".sa24-src a[href^='https']").length, 2);
+  }
 });
