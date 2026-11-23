@@ -201,7 +201,7 @@ const SEPSIS: Stratification = {
   ],
   principles: {
     source: `${SSC} – phổ kháng sinh kinh nghiệm`,
-    lead: "SSC 2026 quyết định khi nào phủ tác nhân đa kháng, kỵ khí, nấm. Chọn thuốc và liều theo QĐ 708 và SWAB 2021 ở các cột trên.",
+    lead: "SSC 2026 quyết định khi nào phủ tác nhân đa kháng, kỵ khí, nấm; thuốc và liều cụ thể theo SWAB 2021 ở các cột trên.",
     items: [...sscCoverage(["mrsa", "gnmdr"]), ...sscCoverage([]).filter(({ role }) => role === "Không phủ đa kháng")],
   },
   antibiogram: {

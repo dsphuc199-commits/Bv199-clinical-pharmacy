@@ -75,7 +75,7 @@ function BytList({ ids }: { ids: string[] }) {
 
 function Intl({ block }: { block: StratIntl }) {
   return (
-    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-2">
+    <div className="min-w-0 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-white p-2">
       <p className="text-sm font-semibold text-slate-900">{block.source}</p>
       {block.lead && <p className="text-xs text-slate-600">{block.lead}</p>}
       <Rx items={block.items} />
@@ -83,19 +83,26 @@ function Intl({ block }: { block: StratIntl }) {
   );
 }
 
-function Column({ col }: { col: StratColumn }) {
+type Family = "vn" | "intl";
+/* Nguồn Việt Nam: văn bản Bộ Y tế, khuyến cáo hội chuyên ngành Việt Nam. */
+const isVn = (source: string) => /^(QĐ|Hội|Bộ Y tế)/u.test(source);
+const ofFamily = (items: StratCite[], family: Family) => items.filter((c) => isVn(c.source) === (family === "vn"));
+
+function Column({ col, family }: { col: StratColumn; family: Family }) {
+  const criteria = ofFamily(col.criteria, family);
+  const pathogens = col.pathogens ? ofFamily(col.pathogens, family) : [];
+  const vn = family === "vn";
   return (
     <section className={`min-w-0 rounded-xl border-2 p-3 ${TONE[col.tone]}`} aria-label={col.label}>
       <h4 className="text-base font-bold text-slate-900">{col.label}</h4>
-      <h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5>
-      <Cites items={col.criteria} />
-      {col.pathogens && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={col.pathogens} /></>}
-      {(col.byt.length > 0 || (col.vn?.length ?? 0) > 0) && <h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý – Việt Nam</h5>}
-      {col.byt.length > 0 && <BytList ids={col.byt} />}
-      {col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
-      {col.intl.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý – Quốc tế</h5><div className="space-y-2">{col.intl.map((b) => <Intl key={b.source} block={b} />)}</div></>}
-      {col.links && (
-        <p className="mt-3 text-sm">Khuyến cáo quốc tế chi tiết: {col.links.map((l, i) => (
+      {criteria.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5><Cites items={criteria} /></>}
+      {pathogens.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={pathogens} /></>}
+      {vn && (col.byt.length > 0 || (col.vn?.length ?? 0) > 0) && <h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5>}
+      {vn && col.byt.length > 0 && <BytList ids={col.byt} />}
+      {vn && col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
+      {!vn && col.intl.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5><div className="space-y-2">{col.intl.map((b) => <Intl key={b.source} block={b} />)}</div></>}
+      {!vn && col.links && (
+        <p className="mt-3 text-sm">Khuyến cáo chi tiết: {col.links.map((l, i) => (
           <span key={l.diseaseId}>{i > 0 && "; "}<Link className="font-semibold text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${l.diseaseId}&tab=intl`}>{l.label}</Link></span>
         ))}</p>
       )}
@@ -130,8 +137,8 @@ function Antibiogram({ spec }: { spec: Stratification["antibiogram"] }) {
     );
   };
   return (
-    <section className="mt-4 min-w-0 rounded-xl border border-slate-200 bg-white p-3">
-      <h4 className="text-base font-bold text-slate-900">Kháng sinh đồ BV199 (%S) – {tables.period}</h4>
+    <details className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+      <summary className="cursor-pointer text-base font-bold text-slate-900">Kháng sinh đồ BV199 (%S) – {tables.period}</summary>
       <div role="tablist" aria-label="Phạm vi khoa" className="my-2 flex flex-wrap gap-2">
         {SCOPES.map((s) => (
           <button key={s.id} type="button" role="tab" aria-selected={scope === s.id} onClick={() => setScope(s.id)}
@@ -151,53 +158,65 @@ function Antibiogram({ spec }: { spec: Stratification["antibiogram"] }) {
         {tables.clsiNotes.filter((c) => c.mark !== "s").map((c) => ` ${c.mark}: ${c.text}`).join("")}{" "}
         Xem đầy đủ tại <Link className="font-semibold text-teal-800 underline" href="/antibiotics/antibiogram">Kháng sinh đồ BV199</Link>.
       </p>
-    </section>
+    </details>
   );
 }
 
-export default function StratificationPanel({ data }: { data: Stratification }) {
+export default function StratificationPanel({ data, family }: { data: Stratification; family: Family }) {
+  const vn = family === "vn";
+  const sampling = ofFamily(data.sampling, family);
+  const pathogens = ofFamily(data.pathogens, family);
+  const columns = data.columns.filter((c) => vn
+    ? ofFamily(c.criteria, "vn").length > 0 || c.byt.length > 0 || (c.vn?.length ?? 0) > 0
+    : ofFamily(c.criteria, "intl").length > 0 || c.intl.length > 0 || Boolean(c.links));
+  const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
+  if (!columns.length) return null;
   return (
-    <article className="min-w-0 max-w-full space-y-3">
+    <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
-      <header>
-        <p className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn</p>
-        <h3 className="text-lg font-bold text-slate-900">{data.title}</h3>
-        <p className="text-sm text-slate-700">{data.lead}</p>
-      </header>
-      <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
-        <h4 className="text-sm font-bold text-amber-950">Gửi bệnh phẩm trước kháng sinh</h4>
-        <Cites items={data.sampling} />
-      </section>
-      <section className="rounded-xl border border-slate-200 bg-white p-3">
-        <h4 className="text-sm font-bold text-slate-900">Tác nhân lưu ý</h4>
-        <Cites items={data.pathogens} />
-      </section>
-      <div className="grid min-w-0 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
-        {data.columns.map((col) => <Column key={col.id} col={col} />)}
+      <summary className="cursor-pointer">
+        <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
+        <span className="block text-lg font-bold text-slate-900">{data.title}</span>
+      </summary>
+      <div className="mt-2 space-y-3">
+        {sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
+        {sampling.length > 0 && (
+          <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
+            <h4 className="text-sm font-bold text-amber-950">Gửi bệnh phẩm trước kháng sinh</h4>
+            <Cites items={sampling} />
+          </section>
+        )}
+        {pathogens.length > 0 && (
+          <section className="rounded-xl border border-slate-200 bg-white p-3">
+            <h4 className="text-sm font-bold text-slate-900">Tác nhân lưu ý</h4>
+            <Cites items={pathogens} />
+          </section>
+        )}
+        <div className={`grid min-w-0 gap-3 ${vn ? "lg:grid-cols-2 2xl:grid-cols-3" : "2xl:grid-cols-2"}`}>
+          {columns.map((col) => <Column key={col.id} col={col} family={family} />)}
+        </div>
+        {vn && data.focus && (
+          <details className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+            <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle}</summary>
+            <div className="mt-2 grid min-w-0 gap-3 lg:grid-cols-2">
+              {data.focus.map((f) => (
+                <div key={f.label} className="min-w-0">
+                  <p className="text-sm font-semibold text-slate-800">{f.label}{f.diseaseId && <> – <Link className="text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${f.diseaseId}`}>mở mặt bệnh</Link></>}</p>
+                  <BytList ids={f.byt} />
+                </div>
+              ))}
+            </div>
+          </details>
+        )}
+        {!vn && (
+          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+            <h4 className="text-sm font-bold text-slate-900">Nguyên tắc phủ phổ kinh nghiệm</h4>
+            <Intl block={data.principles} />
+          </section>
+        )}
+        <Antibiogram spec={data.antibiogram} />
+        <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>
       </div>
-      {data.focus && (
-        <details className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
-          <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle}</summary>
-          <div className="mt-2 grid min-w-0 gap-3 lg:grid-cols-2">
-            {data.focus.map((f) => (
-              <div key={f.label} className="min-w-0">
-                <p className="text-sm font-semibold text-slate-800">{f.label}{f.diseaseId && <> – <Link className="text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${f.diseaseId}`}>mở mặt bệnh</Link></>}</p>
-                <BytList ids={f.byt} />
-              </div>
-            ))}
-          </div>
-        </details>
-      )}
-      <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
-        <h4 className="text-sm font-bold text-slate-900">Nguyên tắc phủ phổ kinh nghiệm</h4>
-        <Intl block={data.principles} />
-      </section>
-      <Antibiogram spec={data.antibiogram} />
-      <section className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-700">
-        <p className="font-semibold">Nguồn</p>
-        <ul className="list-disc pl-4">{data.sources.map((s) => <li key={s}>{s}</li>)}</ul>
-        <p className="mt-1">Thuốc, liều lấy nguyên từ phác đồ đã đối chiếu ở tab Việt Nam và tab Quốc tế; chỉnh liều theo chức năng thận và hướng dẫn liều BV199.</p>
-      </section>
-    </article>
+    </details>
   );
 }

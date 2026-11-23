@@ -66,11 +66,10 @@ import { INTL_GUIDELINE_JSON } from "@/data/guidelines/intl";
 import { INTERNATIONAL_DOSE_REVIEWS } from "@/data/antibiotics/empiric/international-dose-review";
 import { capitalizeBullet, clinicalText } from "@/lib/antibiotics/presentation-text";
 
-export type TabKey = "strat" | "vn" | "intl" | "compare" | "sources";
+export type TabKey = "vn" | "intl" | "compare" | "sources";
 
 /* Master Task 6: chi 3 tab; "Nguon, phien ban" chuyen vao accordion duoi ket qua (?tab=sources mo accordion). */
 export const TAB_LABELS: Record<Exclude<TabKey, "sources">, { short: string; long: string }> = {
-  strat: { short: "Phân tầng", long: "Phân tầng nguy cơ" },
   vn: { short: "Việt Nam", long: "Hướng dẫn Việt Nam" },
   intl: { short: "Quốc tế", long: "Quốc tế" },
   compare: { short: "Đối chiếu", long: "Đối chiếu" },

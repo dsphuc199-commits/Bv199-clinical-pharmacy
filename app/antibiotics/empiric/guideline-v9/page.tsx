@@ -115,13 +115,12 @@ function isAdultABRS(disease: Disease): boolean {
 const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
 
 function defaultTabForDisease(diseaseId: string): TabKey {
-  if (stratificationFor(diseaseId)) return "strat";
   return diseaseId === "v8-101" ? "intl" : "vn";
 }
 
-/* Tab "Phân tầng" chỉ có ở mặt bệnh đã có dữ liệu phân tầng. */
 function tabsForDisease(diseaseId: string): Exclude<TabKey, "sources">[] {
-  return (Object.keys(TAB_LABELS) as Exclude<TabKey, "sources">[]).filter((key) => key !== "strat" || Boolean(stratificationFor(diseaseId)));
+  void diseaseId;
+  return Object.keys(TAB_LABELS) as Exclude<TabKey, "sources">[];
 }
 
 /* Nhan ngan muc do bang chung (chi tiet: muc Nguon / trang Bang chung). */
@@ -160,7 +159,7 @@ function GuidelineContent() {
     /* ?tab=vn|intl|compare: mo dung tab. Lien ket sources cu mo tab Viet Nam. */
     const fromUrl = searchParams.get("tab");
     if (fromUrl === "sources") return "vn";
-    return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) && (fromUrl !== "strat" || stratificationFor(selectedId)) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
+    return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
   });
   /* ?tab=sources (lien ket cu) -> mo accordion Nguon. */
   const [filters, setFilters] = useState<ClinicalFilterState>(DEFAULT_FILTERS);
@@ -1022,9 +1021,10 @@ function GuidelineContent() {
 
 
           <div key={`${selected.id}-${tab}`} id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
-          {tab === "strat" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} />}
           {tab === "vn" && (
             <>
+              {/* Phân tầng nguy cơ theo nguồn Việt Nam (QĐ BYT, khuyến cáo hội chuyên ngành). */}
+              {stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="vn" />}
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
@@ -1060,6 +1060,7 @@ function GuidelineContent() {
             </>
           )}
 
+          {tab === "intl" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
           {tab === "intl" && (
             <IntlTab
               diseaseId={selected.id}
