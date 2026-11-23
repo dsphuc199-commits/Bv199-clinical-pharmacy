@@ -211,9 +211,24 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
   );
 }
 
+/* Bảng khuyến cáo quốc tế trong ô cột hẹp: xếp dọc từng lựa chọn (nhãn + mức khuyến cáo trên một dòng,
+   nội dung trải hết chiều ngang ô) thay cho 3 cột bị bó chữ. Chỉ đổi trình bày, không đổi nội dung. */
+const STRAT_INTL_CSS = [
+  ".strat-intl .sa24-rx,.strat-intl .sa24-rx tbody,.strat-intl .sa24-rx tr,.strat-intl .sa24-rx th,.strat-intl .sa24-rx td{display:block;width:auto!important}",
+  ".strat-intl .sa24-rx thead{display:none}",
+  ".strat-intl .sa24-rx tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;border-top:1px solid #edf2f6;padding:8px 6px}",
+  ".strat-intl .sa24-rx tbody tr:first-child{border-top:0}",
+  ".strat-intl .sa24-rx th,.strat-intl .sa24-rx td{border:0;padding:0;grid-column:1/-1;text-align:left;font-size:14px;line-height:1.5}",
+  ".strat-intl .sa24-rx th{grid-column:1;font-size:12.5px;color:#0b6b6b}",
+  ".strat-intl .sa24-rx .sa24-gc{grid-column:2;grid-row:1;text-align:right}",
+  ".strat-intl .sa24-rx td[data-label]{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px}",
+  ".strat-intl .sa24-rx td[data-label]::before{content:attr(data-label);font-size:12px;font-weight:700;color:#5a7385}",
+  ".strat-intl .sa24-rx td[data-label]:empty{display:none}",
+].join("");
+
 function Intl({ block }: { block: StratIntl }) {
   return (
-    <div className="min-w-0 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-white p-2">
+    <div className="strat-intl min-w-0 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-white p-2">
       <p className="text-sm font-semibold text-slate-900">{block.source}</p>
       {block.lead && <p className="text-xs text-slate-600">{block.lead}</p>}
       <Rx items={block.items} />
@@ -313,7 +328,7 @@ export default function StratificationPanel({ data, family, overview, monitoring
   return (
     <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
-      <style>{`.strat-row{display:grid;gap:.5rem}@media (min-width:1024px){.strat-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}}`}</style>
+      <style>{`.strat-row{display:grid;gap:.5rem}@media (min-width:1024px){.strat-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}}${STRAT_INTL_CSS}`}</style>
       <summary className="cursor-pointer">
         <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
         <span className="block text-lg font-bold text-slate-900">{data.title}</span>
