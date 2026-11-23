@@ -1070,7 +1070,8 @@ function GuidelineContent() {
           )}
 
           {tab === "intl" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
-          {tab === "intl" && (
+          {/* Mặt bệnh đã có khung phân tầng quốc tế: không hiện thêm công cụ quốc tế cũ bên dưới. */}
+          {tab === "intl" && !stratificationFor(selected.id) && (
             <IntlTab
               diseaseId={selected.id}
               moduleContent={

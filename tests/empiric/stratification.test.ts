@@ -26,6 +26,13 @@ test("international blocks come from the verified module and are not empty", () 
   }
 });
 
+test("sepsis international principles keep the SWAB penicillin-allergy advice", () => {
+  const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-11"))!;
+  assert.ok(s.principles.items.some((i) => i.role === "Dị ứng penicilin" && /cephalosporin hoặc carbapenem/.test(i.text)));
+  const cap = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-1"))!;
+  assert.ok(cap.columns.some((c) => c.intl.some((b) => /Dị ứng beta-lactam/.test(b.source))));
+});
+
 test("antibiogram organisms and codes exist in the BV199 tables", () => {
   const t = (tables as { tables: { id: string; gramNegative: { columns: { code: string }[]; rows: { group: string }[] }; gramPositive: { columns: { code: string }[]; rows: { group: string }[] } }[] }).tables.find((x) => x.id === "toan-vien")!;
   for (const s of STRATIFICATIONS) {
