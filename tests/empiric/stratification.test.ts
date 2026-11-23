@@ -111,3 +111,35 @@ test("module regimens marked 'chọn một thuốc' are shown as alternatives, n
   }
   assert.match(items.find((i) => i.ref === "icu-ctx-levo")!.text, / \+ Levofloxacin: /u);
 });
+
+/* ===== Nhiễm khuẩn tiết niệu ===== */
+import { EAU_UROLOGY_FORMS } from "../../components/antibiotics/empiric/urology-eau2026";
+
+test("urology: every EAU 2026 form is shown (column or special group) with every drug and dose", () => {
+  for (const d of ["v8-16", "v8-17", "v8-2"]) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
+    assert.ok(s, `${d} missing stratification`);
+    const blocks = [...s.columns.flatMap((c) => c.intl), ...(s.extras ?? []).flatMap((x) => x.blocks)];
+    const shown = blocks.flatMap((b) => b.items).map((i) => `${i.role}|${i.text}|${i.dose ?? ""}`);
+    for (const f of EAU_UROLOGY_FORMS[d]) {
+      for (const it of [...f.blocks.flatMap((b) => b.items), ...f.avoid]) assert.ok(shown.includes(`${it.role}|${it.text}|${it.dose ?? ""}`), `${d} ${f.id}: ${it.text} missing`);
+      for (const n of f.notes) assert.ok(shown.some((x) => x.includes(n)) || s.principles.items.some((i) => i.text === n) || s.sampling.some((c) => c.text === n), `${d} ${f.id}: note missing`);
+      /* Tiêu đề nhóm thuốc (vd. "Chỉ khi tỷ lệ E. coli kháng tại chỗ < 20%") phải còn. */
+      for (const b of f.blocks.filter((x) => x.items.length && x.title)) assert.ok(blocks.some((x) => x.source.includes(b.title)), `${d} ${f.id}: block "${b.title}" lost`);
+    }
+  }
+});
+
+test("urology: Vietnamese columns use QĐ 708 only and keep the pharmacist dose checks visible", () => {
+  for (const d of ["v8-16", "v8-17", "v8-2"]) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
+    for (const c of s.columns.filter((x) => x.byt.length)) {
+      assert.equal(c.intl.length, 0, `${c.id} mixes sources`);
+      for (const cr of c.criteria) assert.match(cr.source, /^QĐ 708/);
+    }
+  }
+  /* Liều lệch nguồn được gắn qua dose-conflicts.ts (ĐỐI CHIẾU LIỀU), không sửa ghi chú gốc của phác đồ BYT. */
+  const notes = (id: string) => (ALL_REGIMENS.find((r) => r.id === id)!.notes ?? []).join(" ");
+  for (const id of ["r-cy-tmp", "r-cy-male-tmp"]) assert.match(notes(id), /ĐỐI CHIẾU LIỀU – Viêm bàng quang – liều trimethoprim-sulfamethoxazol/);
+  assert.match(notes("r-py-iv-bl"), /875\/125 mg là hàm lượng dạng uống/);
+});

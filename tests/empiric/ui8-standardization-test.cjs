@@ -18,7 +18,10 @@ check('Actual catalog IDs are unique and unchanged',new Set(C.DISEASES.map(d=>d.
 // Its unchanged records are checked here, and the corrected data use byt-regimens-baseline.json.
 const outsideBiliary = r => !r.diseaseIds.includes('v8-24');
 const unchangedRegimens = R.ALL_REGIMENS.filter(outsideBiliary);
-check('Regimen source, dose, notes and duration preserved outside the biliary source correction',JSON.stringify(unchangedRegimens)===JSON.stringify(baseline.regimens.filter(outsideBiliary)));
+/* Ghi chú "ĐỐI CHIẾU LIỀU" do dose-conflicts.ts thêm sau bản chụp UI8 (kiểm tra riêng ở dose-conflict-test, group3-test);
+   nội dung BYT gốc (nguồn, thuốc, liều, thời gian, ghi chú gốc) vẫn phải giữ nguyên. */
+const noConflictNotes = rs => rs.map(r => { const { notes, ...rest } = r; const kept = (notes ?? []).filter(n => !n.startsWith('ĐỐI CHIẾU LIỀU')); return kept.length ? { ...rest, notes: kept } : rest; });
+check('Regimen source, dose, notes and duration preserved outside the biliary source correction',JSON.stringify(noConflictNotes(unchangedRegimens))===JSON.stringify(noConflictNotes(baseline.regimens.filter(outsideBiliary))));
 check('Structured clinical records unchanged outside the biliary source correction',JSON.stringify(unchangedRegimens.map(r=>S.structureOf(r)))===JSON.stringify(baseline.structures.filter((_,i)=>outsideBiliary(baseline.regimens[i]))));
 const declarationBaseline=JSON.parse(fs.readFileSync(path.join(audit,'module-declarations-baseline.json'),'utf8'));
 for(const [file,expected]of Object.entries(declarationBaseline)){const text=fs.readFileSync(path.resolve(__dirname,'../..',file),'utf8');const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const actual=source.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations.filter(d=>d.initializer&&/^[A-Z][A-Z0-9_]*$/.test(d.name.getText(source))).map(d=>[d.name.getText(source),d.initializer.getText(source)]));check(`Original clinical declarations unchanged: ${path.basename(file)}`,JSON.stringify(eolPairs(actual))===JSON.stringify(eolPairs(expected)));}

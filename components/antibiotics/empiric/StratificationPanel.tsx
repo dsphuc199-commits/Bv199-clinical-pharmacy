@@ -95,6 +95,20 @@ function mergeDoseParts(items: { name: string; dose: string }[]) {
     return out;
   }, []);
 }
+/* Văn bản ghi "X hoặc Y <liều>" (vd. "amoxicilin hoặc ampicilin 1 g x 4 lọ/ngày"): bộ tách thuốc để X không có liều.
+   Gộp lại đúng như câu gốc để liều áp dụng cho cả hai thuốc. */
+const escRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+function mergeOrPairs(items: { name: string; dose: string }[], source: string) {
+  const out: { name: string; dose: string }[] = [];
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i], next = items[i + 1];
+    if (!it.dose && next?.dose && new RegExp(`${escRe(it.name)}\\s+hoặc\\s+${escRe(next.name)}`, "iu").test(source)) {
+      out.push({ name: `${it.name} hoặc ${next.name.toLowerCase()}`, dose: next.dose });
+      i++;
+    } else out.push(it);
+  }
+  return out;
+}
 /* Ghi chú về liều lệch nguồn cần dược sĩ xác nhận: luôn hiện, không thu gọn. */
 const CRITICAL_NOTE = /^(CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI)/u;
 
@@ -113,7 +127,7 @@ function RegimenDrugs({ regimen }: { regimen: Regimen }) {
           <div key={gi}>
             {label && <p className={`text-xs font-semibold ${gi > 0 ? "text-emerald-700" : "text-slate-600"}`}>{label}</p>}
             <ul className="list-disc pl-5 text-sm text-slate-900">
-              {mergeDoseParts(g.options.map((o) => ({ name: doseText(o.name), dose: o.raw ? doseText(o.raw) : "" }))).map((o, oi) => (
+              {mergeDoseParts(mergeOrPairs(g.options.map((o) => ({ name: doseText(o.name), dose: o.raw ? doseText(o.raw) : "" })), (aligned ? drugs[gi].dose : g.raw.map((x) => x.dose).join("; ")) ?? "")).map((o, oi) => (
                 <li key={oi}><b className="font-semibold">{o.name}</b>{o.dose && o.dose !== o.name ? `: ${o.dose}` : ""}</li>
               ))}
             </ul>
@@ -152,6 +166,9 @@ function ModuleBlock({ block }: { block: StratIntl }) {
   );
 }
 
+/* Tình huống của phương án: chỉ in khi khác phương án trước, tránh lặp cùng một dòng ở mọi phương án. */
+const caseOf = (r: Regimen) => `${r.scenario}|${r.condition ?? ""}`;
+
 /** Ô "Kháng sinh gợi ý" của một cột (tab Việt Nam). */
 function VnAntibiotics({ col }: { col: StratColumn }) {
   const regs = byId(col.byt);
@@ -160,6 +177,10 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
   const alerts = Array.from(new Map(regs.flatMap((r) => safetyAlertsFor(r.id)).map((a) => [a.id, a])).values());
   const notes = Array.from(new Set(regs.flatMap((r) => (r.notes ?? []).filter((n) => !EDITORIAL_NOTE.test(n)).map(panelNote)))).filter(Boolean);
   const sources = Array.from(new Set(regs.map(docLabel)));
+  /* Mục đối chiếu liều (dose-conflicts.ts) gắn vào phương án: chỉ hiện tên mục, chi tiết ở tab Đối chiếu. */
+  const conflicts = Array.from(new Map(regs.flatMap((r) => (r.notes ?? [])
+    .filter((n) => n.startsWith("ĐỐI CHIẾU LIỀU – "))
+    .map((n) => [n.slice("ĐỐI CHIẾU LIỀU – ".length).split(". Theo BYT")[0], r.diseaseIds[0]] as const))).entries());
   return (
     <div className="space-y-2">
       {(col.vn ?? []).map((b) => <ModuleBlock key={b.source} block={b} />)}
@@ -169,7 +190,7 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
           {main.map((r, i) => (
             <Fragment key={r.id}>
               {i > 0 && <p className="text-xs font-bold uppercase text-slate-500">Hoặc</p>}
-              {(main.length > 1 || r.condition) && <p className="text-xs italic text-slate-600">{shown(r.condition ?? "") || shown(r.scenario) || r.scenario}{main.length > 1 && r.source.doc !== main[0].source.doc ? ` (${docLabel(r)})` : ""}</p>}
+              {(r.condition || (main.length > 1 && (i === 0 ? new Set(main.map(caseOf)).size > 1 || caseOf(r) !== col.label : caseOf(r) !== caseOf(main[i - 1])))) && <p className="text-xs italic text-slate-600">{shown(r.condition ?? "") || shown(r.scenario) || r.scenario}{main.length > 1 && r.source.doc !== main[0].source.doc ? ` (${docLabel(r)})` : ""}</p>}
               <RegimenDrugs regimen={r} />
             </Fragment>
           ))}
@@ -195,6 +216,14 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
           <ul className="list-disc pl-4">{alerts.map((a) => <li key={a.id}><b>{clinicalText(a.title) || a.title}</b>: {clinicalText(a.text) || a.text}{a.checklist && <ul className="list-[circle] pl-4">{a.checklist.map((c) => <li key={c}>{clinicalText(c) || c}</li>)}</ul>}</li>)}</ul>
         </div>
       )}
+      {conflicts.length > 0 && (
+        <div className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">
+          <p className="font-semibold">Liều khác nhau giữa các nguồn – HĐT&amp;ĐT BV199 quyết định liều áp dụng</p>
+          <ul className="list-disc pl-4">{conflicts.map(([topic, did]) => (
+            <li key={topic}><Link className="underline" href={`/antibiotics/empiric/guideline-v9?disease=${did}&tab=compare`}>{topic}</Link></li>
+          ))}</ul>
+        </div>
+      )}
       {notes.some((n) => CRITICAL_NOTE.test(n)) && (
         <div className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">
           <ClinicalNotes items={notes.filter((n) => CRITICAL_NOTE.test(n))} />
@@ -214,15 +243,18 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
 /* Bảng khuyến cáo quốc tế trong ô cột hẹp: xếp dọc từng lựa chọn (nhãn + mức khuyến cáo trên một dòng,
    nội dung trải hết chiều ngang ô) thay cho 3 cột bị bó chữ. Chỉ đổi trình bày, không đổi nội dung. */
 const STRAT_INTL_CSS = [
-  ".strat-intl .sa24-rx,.strat-intl .sa24-rx tbody,.strat-intl .sa24-rx tr,.strat-intl .sa24-rx th,.strat-intl .sa24-rx td{display:block;width:auto!important}",
+  ".strat-intl .sa24-rx,.strat-intl .sa24-rx tbody,.strat-intl .sa24-rx th,.strat-intl .sa24-rx td{display:block;width:auto!important}",
   ".strat-intl .sa24-rx thead{display:none}",
-  ".strat-intl .sa24-rx tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;border-top:1px solid #edf2f6;padding:8px 6px}",
+  /* Mỗi lựa chọn: nhãn + mức khuyến cáo trên một dòng, thuốc trải hết ô, các trường liều nối tiếp trên cùng dòng. */
+  ".strat-intl .sa24-rx tbody tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;border-top:1px solid #edf2f6;padding:8px 6px}",
   ".strat-intl .sa24-rx tbody tr:first-child{border-top:0}",
-  ".strat-intl .sa24-rx th,.strat-intl .sa24-rx td{border:0;padding:0;grid-column:1/-1;text-align:left;font-size:14px;line-height:1.5}",
-  ".strat-intl .sa24-rx th{grid-column:1;font-size:12.5px;color:#0b6b6b}",
-  ".strat-intl .sa24-rx .sa24-gc{grid-column:2;grid-row:1;text-align:right}",
-  ".strat-intl .sa24-rx td[data-label]{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px}",
-  ".strat-intl .sa24-rx td[data-label]::before{content:attr(data-label);font-size:12px;font-weight:700;color:#5a7385}",
+  ".strat-intl .sa24-rx th,.strat-intl .sa24-rx td{border:0;padding:0;text-align:left;font-size:14px;line-height:1.5}",
+  ".strat-intl .sa24-rx th{flex:1 1 auto;order:0;font-size:12.5px;color:#0b6b6b}",
+  ".strat-intl .sa24-rx .sa24-gc{flex:0 0 auto;order:1;margin-left:auto;text-align:right}",
+  ".strat-intl .sa24-rx .sa24-drug,.strat-intl .sa24-rx .sa24-note{flex:1 1 100%;order:2}",
+  ".strat-intl .sa24-rx td[data-label]{flex:0 1 auto;order:3}",
+  ".strat-intl .sa24-rx td[data-label]::before{content:attr(data-label) \": \";font-size:12px;font-weight:700;color:#5a7385}",
+  ".strat-intl .sa24-rx td[data-label][data-whole]::before{content:none}",
   ".strat-intl .sa24-rx td[data-label]:empty{display:none}",
 ].join("");
 
@@ -403,6 +435,13 @@ export default function StratificationPanel({ data, family, overview, monitoring
             </div>
           </details>
         )}
+        {!vn && data.extras?.map((x) => (
+          <details key={x.title} className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+            <summary className="cursor-pointer font-bold text-slate-900">{x.title}</summary>
+            {x.criteria && <p className="mt-1 text-sm text-slate-700">{x.criteria}</p>}
+            <div className="mt-2 space-y-2">{x.blocks.map((b) => <Intl key={b.source} block={b} />)}</div>
+          </details>
+        ))}
         {!vn && (
           <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
             <h4 className="text-sm font-bold text-slate-900">Nguyên tắc phủ phổ kinh nghiệm</h4>

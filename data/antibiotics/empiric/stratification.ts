@@ -18,6 +18,9 @@ import { swabPlan } from "../../../components/antibiotics/empiric/sepsis-swab202
 import { CAP_DIAG, capPlans, hvDiagnosis, hvGrades, hvPlan, type CapIn, type HvIn, type Plan } from "../../../components/antibiotics/empiric/pneumonia-intl";
 import { CAP_SCENARIOS } from "../../../components/antibiotics/CapByt2026";
 import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/HapVap2023";
+import { EAU_UROLOGY_FORMS } from "../../../components/antibiotics/empiric/urology-eau2026";
+import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-bsi-intl";
+import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
 
 export type StratCite = { text: string; source: string; ref: string };
 export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string })[]; notes?: string[] };
@@ -53,6 +56,8 @@ export type Stratification = {
   settingNote?: string;
   focusTitle?: string;
   focus?: StratFocus[];
+  /** Nhóm đặc biệt của hướng dẫn quốc tế không đặt thành cột (vd. EAU: tái phát, khuẩn niệu không triệu chứng). */
+  extras?: { title: string; criteria?: string; blocks: StratIntl[] }[];
   principles: StratIntl;
   antibiogram: StratAntibiogram;
   sources: string[];
@@ -398,7 +403,159 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
   ],
 });
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap")];
+/* ======================= NHIỄM KHUẨN TIẾT NIỆU ======================= */
+/* Việt Nam: QĐ 708 chương Nhiễm khuẩn tiết niệu (văn bản Việt Nam duy nhất có trong ứng dụng cho nhóm này).
+   Quốc tế: EAU 2026 (module urology-eau2026) và IDSA 2025 NKTN phức tạp (hàm empPlan, durationRows).
+   Cột Việt Nam và cột quốc tế tách riêng vì hai nguồn phân tầng khác nhau; không ghép thuốc giữa các nguồn. */
+const EAU = "EAU 2026";
+const IDSA25 = "IDSA 2025";
+type FormLike = { headline: string; blocks: { title: string; lead?: string; items: RxItem[] }[]; avoid: RxItem[]; notes: string[] };
+/** Mỗi nhóm thuốc của module thành một khối, giữ nguyên tiêu đề nhóm (vd. "Chỉ khi tỷ lệ E. coli kháng tại chỗ < 20%"). */
+function formBlocks(src: string, label: string, f: FormLike): StratIntl[] {
+  const out: StratIntl[] = f.blocks.filter((b) => b.items.length > 0).map((b, i) => ({
+    source: `${src} – ${label}${b.title ? `: ${b.title}` : ""}`,
+    lead: [i === 0 ? f.headline : "", b.lead ?? ""].filter(Boolean).join(" ") || undefined,
+    items: b.items,
+  }));
+  if (f.avoid.length) out.push({ source: `${src} – ${label}: không dùng hoặc tránh`, items: f.avoid });
+  if (f.notes.length) out.push({ source: `${src} – ${label}: lưu ý`, items: f.notes.map((text) => ({ role: "Lưu ý", text, ref: "notes" })) });
+  return out;
+}
+const eauForm = (disease: string, id: string) => EAU_UROLOGY_FORMS[disease].find((f) => f.id === id)!;
+const eau = (disease: string, id: string) => { const f = eauForm(disease, id); return formBlocks(EAU, f.label, f); };
+const eauCite = (disease: string, id: string): StratCite => ({ text: eauForm(disease, id).criteria, source: EAU, ref: "Urological Infections 2026" });
+const idsaCuti = (sev: Sev, oral: boolean, label: string): StratIntl[] =>
+  formBlocks(IDSA25, label, empPlan({ sev, oral, priorEsbl: false, priorFqR: false, fq12m: false, priorPtzR: false, priorTmpR: false }));
+const IDSA_CUTI_CRITERIA: StratCite = { text: CUTI_CRITERIA, source: IDSA25, ref: "Introduction" };
+const IDSA_PRINCIPLES: StratIntl = {
+  source: `${IDSA25} – thời gian điều trị và chuyển đường uống`,
+  items: [...durationRows({ bacteremia: true, prostatitis: true }), ...SWITCH_ROWS, ...DURATION_NOTES.map((text) => ({ role: "Lưu ý", text, ref: "CQ3" }))],
+};
+const UTI_ANTIBIOGRAM = (codes: string[]): StratAntibiogram => ({
+  gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Proteus mirabilis", "Enterobacter spp. (gồm K. aerogenes)", "Pseudomonas aeruginosa"], codes },
+  gramPositive: { organisms: ["Enterococcus spp."], codes: ["AMP", "VAN", "LZD"] },
+  defaultScope: "toan-vien",
+  note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng mẫu nước tiểu, chỉ dùng để định hướng.",
+});
+const SRC_708_UTI = "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn tiết niệu.";
+const SRC_EAU_UI = "European Association of Urology. EAU Guidelines on Urological Infections, Limited Update March 2026.";
+const SRC_EAU_URO = "European Association of Urology. EAU Guidelines on Urolithiasis, Limited Update March 2026.";
+const SRC_IDSA_CUTI = "Trautner BW và cs. IDSA 2025 Guideline Update on Complicated Urinary Tract Infections.";
+
+const CYSTITIS: Stratification = {
+  diseaseIds: ["v8-16"],
+  title: "Viêm bàng quang cấp không biến chứng – người lớn",
+  lead: "Phân tầng theo đối tượng như QĐ 708 (thông thường, phụ nữ có thai, nam giới); đặt cạnh EAU 2026.",
+  sampling: [
+    { text: "Chỉ cấy nước tiểu khi có nguyên nhân thuận lợi, không đáp ứng, tái phát hoặc nam giới.", source: BYT, ref: "tr. 249" },
+    { text: eauForm("v8-16", "women").notes[0], source: EAU, ref: "UI 3.4" },
+  ],
+  pathogens: [
+    { text: "Gram âm khoảng 90%: E. coli 70–80%, Proteus 10–15%, Klebsiella 5–10%.", source: BYT, ref: "tr. 248" },
+    { text: "S. saprophyticus 5–10%; P. aeruginosa, S. aureus 1–2%.", source: BYT, ref: "tr. 248" },
+  ],
+  columns: [
+    { id: "vn-common", label: "Viêm bàng quang cấp thông thường", tone: "community",
+      criteria: [{ text: "Hội chứng bàng quang; thường không sốt hoặc sốt < 38 °C.", source: BYT, ref: "tr. 248" }],
+      byt: ["r-cy-tmp", "r-cy-cephalexin", "r-cy-nitro", "r-cy-amoxclav", "r-cy-fq"], intl: [] },
+    { id: "vn-preg", label: "Phụ nữ có thai", tone: "special",
+      criteria: [{ text: "Viêm bàng quang cấp ở phụ nữ có thai.", source: BYT, ref: "tr. 249–250" }],
+      byt: ["r-cy-preg-cephalexin", "r-cy-preg-nitro", "r-cy-preg-amoxclav"], intl: [] },
+    { id: "vn-male", label: "Nam giới", tone: "hospital",
+      criteria: [{ text: "Viêm bàng quang cấp ở nam giới; tìm nguyên nhân liên quan (viêm tuyến tiền liệt, viêm tinh hoàn, mào tinh hoàn).", source: BYT, ref: "tr. 250" }],
+      byt: ["r-cy-male-tmp", "r-cy-male-cephalexin", "r-cy-male-amoxclav"], intl: [] },
+    { id: "eau-women", label: "Phụ nữ", tone: "community", criteria: [eauCite("v8-16", "women")], byt: [], intl: eau("v8-16", "women") },
+    { id: "eau-preg", label: "Phụ nữ có thai", tone: "special", criteria: [eauCite("v8-16", "pregnant")], byt: [], intl: eau("v8-16", "pregnant") },
+    { id: "eau-men", label: "Nam giới", tone: "hospital", criteria: [eauCite("v8-16", "men")], byt: [], intl: eau("v8-16", "men") },
+  ],
+  settingNote: "Điều trị ngoại trú, kháng sinh đường uống.",
+  extras: [
+    { title: `${EAU} – ${eauForm("v8-16", "recurrent").label}`, criteria: eauForm("v8-16", "recurrent").criteria, blocks: eau("v8-16", "recurrent") },
+    { title: `${EAU} – ${eauForm("v8-16", "abu").label}`, criteria: eauForm("v8-16", "abu").criteria, blocks: eau("v8-16", "abu") },
+    { title: `${EAU} – ${eauForm("v8-16", "fungal").label}`, criteria: eauForm("v8-16", "fungal").criteria, blocks: eau("v8-16", "fungal") },
+  ],
+  principles: { source: `${EAU} – nguyên tắc`, items: eauForm("v8-16", "women").notes.slice(1).map((text) => ({ role: "Lưu ý", text, ref: "UI 3.4" })) },
+  antibiogram: UTI_ANTIBIOGRAM(["AMP", "AMC", "KZ", "CXM", "SXT", "CIP", "LVX"]),
+  sources: [SRC_708_UTI, SRC_EAU_UI],
+};
+
+const PYELONEPHRITIS: Stratification = {
+  diseaseIds: ["v8-17"],
+  title: "Viêm thận bể thận cấp – người lớn",
+  lead: "Phân tầng theo mức độ (ngoại trú uống / nội trú tiêm) và phụ nữ có thai như QĐ 708; đặt cạnh EAU 2026 và IDSA 2025.",
+  sampling: [
+    { text: "Cấy nước tiểu; cấy máu nếu sốt cao. Bắt đầu kháng sinh ngay trong khi chờ kết quả.", source: BYT, ref: "tr. 235" },
+    { text: "Siêu âm tìm giãn đài bể thận, sỏi, khối chèn ép.", source: BYT, ref: "tr. 235" },
+    ...eauForm("v8-17", "outpatient").notes.filter((n) => /cấy/iu.test(n)).map((text) => ({ text, source: EAU, ref: "UI 3.6" })),
+  ],
+  pathogens: [
+    { text: "Gram âm: E. coli 70–80%, Klebsiella, Proteus mirabilis, Enterobacter.", source: BYT, ref: "tr. 234" },
+    { text: "Gram dương dưới 10%: Enterococcus, Staphylococcus.", source: BYT, ref: "tr. 234" },
+  ],
+  columns: [
+    { id: "vn-oral", label: "Nhẹ – ngoại trú, kháng sinh uống", tone: "community",
+      criteria: [{ text: "Nhẹ: ngoại trú, kháng sinh uống.", source: BYT, ref: "tr. 235–236" }],
+      byt: ["r-py-oral-bl", "r-py-oral-fq"], intl: [] },
+    { id: "vn-iv", label: "Sốt cao, rét run – nội trú, kháng sinh tiêm", tone: "hospital",
+      criteria: [{ text: "Sốt cao rét run: nội trú, kháng sinh tiêm.", source: BYT, ref: "tr. 235–236" }],
+      byt: ["r-py-iv-bl", "r-py-iv-ceph", "r-py-iv-carba", "r-py-iv-fq", "r-py-aminoglyc", "r-py-gramneg", "r-py-grampos"], intl: [] },
+    { id: "vn-preg", label: "Phụ nữ có thai", tone: "special",
+      criteria: [{ text: "Thai phụ: thận trọng; không dùng fluoroquinolon.", source: BYT, ref: "tr. 237–238" }],
+      byt: ["r-py-preg"], intl: [] },
+    { id: "intl-out", label: "Ngoại trú, không sepsis", tone: "community",
+      criteria: [eauCite("v8-17", "outpatient"), IDSA_CUTI_CRITERIA], byt: [],
+      intl: [...eau("v8-17", "outpatient"), ...idsaCuti("none", true, "không sepsis, điều trị đường uống")] },
+    { id: "intl-in", label: "Nhập viện, không sepsis", tone: "hospital",
+      criteria: [eauCite("v8-17", "inpatient")], byt: [],
+      intl: [...eau("v8-17", "inpatient"), ...idsaCuti("none", false, "không sepsis, đường tĩnh mạch")] },
+    { id: "intl-severe", label: "Sepsis hoặc sốc nhiễm khuẩn", tone: "special",
+      criteria: [{ text: "Nhiễm khuẩn tiết niệu phức tạp kèm sepsis hoặc sốc nhiễm khuẩn.", source: IDSA25, ref: "CQ1" }], byt: [],
+      intl: [...idsaCuti("sepsis", false, "sepsis không sốc"), ...idsaCuti("shock", false, "sốc nhiễm khuẩn")] },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức; sốt cao, rét run điều trị nội trú bằng kháng sinh tiêm.",
+  extras: [
+    { title: `${EAU} – ${eauForm("v8-17", "pregnant").label}`, criteria: eauForm("v8-17", "pregnant").criteria, blocks: eau("v8-17", "pregnant") },
+    { title: `${EAU} – ${eauForm("v8-17", "men").label}`, criteria: eauForm("v8-17", "men").criteria, blocks: eau("v8-17", "men") },
+  ],
+  principles: IDSA_PRINCIPLES,
+  antibiogram: UTI_ANTIBIOGRAM(["AMP", "AMC", "SAM", "CXM", "CTX", "CRO", "CAZ", "FEP", "TZP", "IMP", "MEM", "CN/GEN", "AMK", "CIP", "LVX", "SXT"]),
+  sources: [SRC_708_UTI, SRC_EAU_UI, SRC_IDSA_CUTI],
+};
+
+const COMPLICATED_UTI: Stratification = {
+  diseaseIds: ["v8-2"],
+  title: "Nhiễm khuẩn tiết niệu phức tạp – người lớn",
+  lead: "QĐ 708 có phác đồ cho sỏi thận tiết niệu có biến chứng nhiễm khuẩn; đặt cạnh IDSA 2025 (theo mức độ nặng) và EAU 2026.",
+  sampling: [
+    { text: "Siêu âm phát hiện sỏi, tắc nghẽn, ứ nước, ứ mủ; CT phân biệt áp xe nhu mô.", source: BYT, ref: "tr. 241" },
+    { text: "Cấy máu nếu sốt > 38 °C kèm rét run. Không chụp UIV khi đang nhiễm khuẩn nặng hoặc suy thận cấp.", source: BYT, ref: "tr. 241" },
+    ...eauForm("v8-2", "systemic").notes.filter((n) => /cấy máu/iu.test(n)).map((text) => ({ text, source: EAU, ref: "UI 3.7" })),
+  ],
+  pathogens: [{ text: "E. coli, Proteus, Klebsiella; vi khuẩn tiết urease tạo sỏi struvit.", source: BYT, ref: "tr. 240–241" }],
+  columns: [
+    { id: "vn-stone", label: "Sỏi thận tiết niệu có biến chứng nhiễm khuẩn", tone: "hospital",
+      criteria: [{ text: "Sỏi thận tiết niệu có biến chứng nhiễm khuẩn. Có viêm thận bể thận cấp: theo bài viêm thận bể thận cấp.", source: BYT, ref: "tr. 242–243" }],
+      byt: ["r-stone-complic-bl", "r-stone-complic-fq"], intl: [] },
+    { id: "intl-none", label: "Không sepsis", tone: "community",
+      criteria: [IDSA_CUTI_CRITERIA, eauCite("v8-2", "systemic")], byt: [],
+      intl: [...idsaCuti("none", false, "không sepsis"), ...eau("v8-2", "systemic")] },
+    { id: "intl-sepsis", label: "Sepsis không sốc", tone: "hospital",
+      criteria: [{ text: "Nhiễm khuẩn tiết niệu phức tạp kèm sepsis, chưa sốc.", source: IDSA25, ref: "CQ1" }], byt: [],
+      intl: idsaCuti("sepsis", false, "sepsis không sốc") },
+    { id: "intl-shock", label: "Sốc nhiễm khuẩn, bệnh nặng hoặc nghi tắc nghẽn", tone: "special",
+      criteria: [{ text: "Sốc nhiễm khuẩn.", source: IDSA25, ref: "CQ1" }, eauCite("v8-2", "critical")], byt: [],
+      intl: [...idsaCuti("shock", false, "sốc nhiễm khuẩn"), ...eau("v8-2", "critical")] },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  extras: ["stone-sepsis", "stone-proc", "struvite", "cauti", "abp", "fungal"].map((id) => ({
+    title: `${EAU} – ${eauForm("v8-2", id).label}`, criteria: eauForm("v8-2", id).criteria, blocks: eau("v8-2", id),
+  })),
+  principles: IDSA_PRINCIPLES,
+  antibiogram: UTI_ANTIBIOGRAM(["AMP", "AMC", "SAM", "CXM", "CTX", "CRO", "CAZ", "FEP", "TZP", "IMP", "MEM", "CN/GEN", "AMK", "CIP", "LVX", "SXT"]),
+  sources: [SRC_708_UTI, SRC_EAU_UI, SRC_EAU_URO, SRC_IDSA_CUTI],
+};
+
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));

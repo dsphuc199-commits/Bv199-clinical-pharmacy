@@ -453,6 +453,21 @@ DOSE_CONFLICTS.push(
     decision: "Chọn thuốc uống kinh nghiệm và thời gian điều trị viêm thận bể thận. " + DECIDE,
   },
   {
+    id: "cystitis-tmp-smx",
+    topic: "Viêm bàng quang – liều trimethoprim-sulfamethoxazol",
+    diseaseIds: ["v8-16"],
+    regimenIds: ["r-cy-tmp", "r-cy-male-tmp"],
+    byt: [
+      { source: BYT708, locator: "Viêm bàng quang cấp, mục 3.2 (tr. 249–250)", url: URL_708, dose: "trimethoprim-sulfamethoxazol 80/400 mg, uống 1 viên/lần, 2 lần/ngày; 3–5 ngày (thông thường), 14 ngày (nam giới)" },
+      { source: BYT708, locator: "Viêm thận bể thận cấp, mục 4.2a (tr. 236)", url: URL_708, dose: "trimethoprim-sulfamethoxazol 80/400 mg x 4 viên chia 2 lần (tức 160/800 mg x 2 lần/ngày)" },
+    ],
+    intl: [
+      { source: EAU26, locator: "Bảng 3 (viêm bàng quang)", url: URL_EAU, dose: "trimethoprim-sulfamethoxazol 160/800 mg x 2 lần/ngày, 3 ngày, chỉ khi tỷ lệ E. coli kháng tại chỗ < 20%; nam giới 160/800 mg x 2 lần/ngày, 7 ngày" },
+    ],
+    warning: "Liều viêm bàng quang của QĐ 708 (80/400 mg x 2 lần/ngày) bằng một nửa liều ghi ở phần viêm thận bể thận cùng văn bản và của EAU 2026 (160/800 mg x 2 lần/ngày). Không tự đổi liều.",
+    decision: "Chọn liều trimethoprim-sulfamethoxazol cho viêm bàng quang (phụ nữ và nam giới). " + DECIDE,
+  },
+  {
     id: "septic-arthritis",
     topic: "Viêm khớp nhiễm khuẩn – kinh nghiệm ở trẻ nhỏ, MRSA và thời gian",
     diseaseIds: ["v8-33"],
