@@ -135,7 +135,7 @@ function BytList({ ids, selectedRegimen }: { ids: string[]; selectedRegimen?: st
 
 function Intl({ block, vn }: { block: StratIntl; vn?: boolean }) {
   return (
-    <div className="min-w-0 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-white p-2">
+    <div className={`min-w-0 max-w-full rounded-lg border border-slate-200 bg-white p-2 ${vn ? "strat-rx-vn space-y-2" : "overflow-x-auto"}`}>
       <p className="text-sm font-semibold text-slate-900">{block.source}</p>
       {block.lead && <p className="text-xs text-slate-600">{vn ? vnText(block.lead) : block.lead}</p>}
       <Rx items={vn ? block.items.map((item) => ({ ...item, role: vnText(item.role), text: vnText(item.text), preparation: item.preparation && vnText(item.preparation) })) : block.items} />
@@ -223,6 +223,33 @@ function Antibiogram({ spec }: { spec: Stratification["antibiogram"] }) {
   );
 }
 
+function VietnameseTableStyle() {
+  return <style>{`
+    [data-stratification="vn"] { overflow-wrap: anywhere; }
+    .strat-rx-vn { container: strat-rx / inline-size; }
+    .strat-rx-vn .sa24-rx:not(.has-dose) {
+      table-layout: fixed;
+      width: 100%;
+      border: 0;
+      overflow: visible;
+    }
+    .strat-rx-vn .sa24-rx:not(.has-dose) th { width: 32%; color: #17364b; }
+    .strat-rx-vn .sa24-rx :is(th, td) { white-space: normal; overflow-wrap: anywhere; }
+    .strat-rx-vn .sa24-rx .sa24-gc:empty { display: none; }
+    [data-stratification="vn"] .tx-table :is(th, td):not(.tx-marker) { overflow-wrap: anywhere; }
+
+    @container strat-rx (max-width: 25rem) {
+      .strat-rx-vn .sa24-rx:not(.has-dose) { display: block; width: 100% !important; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) tbody { display: block; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) tr { display: block; padding: 8px 6px; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) tr + tr { border-top: 1px solid #e3eaf0; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) :is(th, td) { display: block; width: auto; border: 0; padding: 0; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) th { margin-bottom: 3px; }
+      .strat-rx-vn .sa24-rx:not(.has-dose) .sa24-gc:empty { display: none; }
+    }
+  `}</style>;
+}
+
 export default function StratificationPanel({ data, family, overview, monitoring, scenario }: {
   data: Stratification;
   family: Family;
@@ -237,6 +264,9 @@ export default function StratificationPanel({ data, family, overview, monitoring
     ? ofFamily(c.criteria, "vn").length > 0 || c.byt.length > 0 || (c.vn?.length ?? 0) > 0
     : ofFamily(c.criteria, "intl").length > 0 || c.intl.length > 0 || Boolean(c.links));
   const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
+  const vnGrid = columns.length > 1
+    ? `lg:grid-cols-2${columns.length === 3 ? " 2xl:grid-cols-3" : ""}`
+    : "";
   const targetColumn = vn && scenario ? columns.find((col) => col.id === scenario || col.byt.includes(scenario)
     || col.vnScenarioIds?.includes(scenario) || col.vn?.some((block) => block.items.some(({ ref }) => ref === scenario))) : undefined;
   const targetFocus = vn && scenario && !targetColumn ? data.focus?.find(({ byt }) => byt.includes(scenario)) : undefined;
@@ -248,12 +278,13 @@ export default function StratificationPanel({ data, family, overview, monitoring
   return (
     <details ref={frame} open data-stratification={vn ? "vn" : undefined} className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
+      {vn && <VietnameseTableStyle />}
       <summary className="cursor-pointer">
         <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
         <span className="block text-lg font-bold text-slate-900">{data.title}</span>
       </summary>
       <div className="mt-2 space-y-3">
-        {sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
+        {!vn && sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
         {vn && overview}
         {!(vn && overview) && sampling.length > 0 && (
           <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
@@ -267,13 +298,13 @@ export default function StratificationPanel({ data, family, overview, monitoring
             <Cites items={pathogens} />
           </section>
         )}
-        <div className={`grid min-w-0 gap-3 ${vn ? "lg:grid-cols-2 2xl:grid-cols-3" : "2xl:grid-cols-2"}`}>
+        <div className={`grid min-w-0 gap-3 ${vn ? `items-start ${vnGrid}` : "2xl:grid-cols-2"}`}>
           {columns.map((col) => <Column key={col.id} col={col} family={family} selected={col === targetColumn} />)}
         </div>
         {vn && data.focus && (
           <details open={targetFocus ? true : undefined} className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
             <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle && vnText(data.focusTitle)}</summary>
-            <div className="mt-2 grid min-w-0 gap-3 lg:grid-cols-2">
+            <div className={`mt-2 grid min-w-0 items-start gap-3 ${data.focus.length > 1 ? "lg:grid-cols-2" : ""}`}>
               {data.focus.map((f) => (
                 <div key={f.label} className="min-w-0">
                   <p className="text-sm font-semibold text-slate-800">{f.label}{f.diseaseId && <> – <Link className="text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${f.diseaseId}`}>mở mặt bệnh</Link></>}</p>
@@ -291,6 +322,14 @@ export default function StratificationPanel({ data, family, overview, monitoring
         )}
         <Antibiogram spec={data.antibiogram} />
         {vn && monitoring}
+        {vn && sources.length > 0 && (
+          <footer data-strat-references className="rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-700">
+            <h3 className="font-bold text-slate-900">Tài liệu tham khảo</h3>
+            <ul className="mt-1 list-disc space-y-1 pl-5 leading-relaxed">
+              {sources.map((source) => <li key={source}>{source}</li>)}
+            </ul>
+          </footer>
+        )}
         {!vn && <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>}
       </div>
     </details>

@@ -175,7 +175,14 @@ for (const diseaseId of waveOneIds) {
     const columns = frame.find("[data-strat-column]");
     assert.equal(columns.length, checkedData(diseaseId).columns.length);
     assert.ok(columns.first().parent().hasClass("lg:grid-cols-2"));
-    assert.ok(columns.first().parent().hasClass("2xl:grid-cols-3"));
+    assert.equal(columns.first().parent().hasClass("2xl:grid-cols-3"), columns.length === 3);
+    const references = frame.find("[data-strat-references]");
+    assert.equal(references.length, 1);
+    assert.equal(references.find("h3").text(), "Tài liệu tham khảo");
+    assert.equal(references.prev().hasClass("do-monitor"), true);
+    assert.equal(references.next().length, 0);
+    const vietnameseSources = checkedData(diseaseId).sources.filter((source) => /^(Bộ Y tế|Hội)/u.test(source));
+    assert.deepEqual(references.find("li").map((_, node) => $(node).text()).get(), vietnameseSources);
 
     const overview = load(renderToStaticMarkup(createElement(DiseaseOverviewSummary, { diseaseId })));
     overview("script, style").remove();
