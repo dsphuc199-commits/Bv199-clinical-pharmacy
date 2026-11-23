@@ -50,9 +50,11 @@ test("pneumonia stratification uses the current Vietnamese documents shown in ta
   for (const c of cap.columns) assert.match(c.vn![0].source, /QĐ 2147\/QĐ-BYT 2026/);
   for (const id of ["v8-4", "v8-5"]) {
     const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(id))!;
-    assert.equal(s.columns.length, 2);
-    for (const c of s.columns) for (const b of c.vn!) assert.match(b.source, /Hội Hô hấp VN/);
+    /* Bố cục ĐHYD: VPBV có bảng không hồi sức và hồi sức (QĐ 1493); VPLQTM chỉ ở hồi sức. */
+    assert.deepEqual(s.columns.map((c) => c.setting), id === "v8-4" ? ["ward", "ward", "icu", "icu"] : ["icu", "icu"]);
+    for (const c of s.columns) for (const blk of c.vn ?? []) assert.match(blk.source, /Hội Hô hấp VN/);
   }
+  assert.deepEqual(cap.columns.map((c) => c.setting), ["ward", "ward", "ward", "icu"]);
   const text = JSON.stringify(STRATIFICATIONS.map((s) => s.columns.map((c) => c.vn)));
   assert.doesNotMatch(text, /Phụ lục|Bảng \d|DTQG|tr\. \d|không ghi liều/);
 });
@@ -90,4 +92,15 @@ test("cleanRef keeps every dose and renal adjustment of BYT regimens", () => {
     }
   }
   assert.match(cleanRef("1,5–3 g mỗi 6 giờ (Phụ lục 1; Clcr 10–30: mỗi 8–12 giờ)"), /Clcr 10–30: mỗi 8–12 giờ/);
+});
+
+test("module regimens marked 'chọn một thuốc' are shown as alternatives, not combinations", () => {
+  const items = STRATIFICATIONS.flatMap((s) => s.columns.flatMap((c) => (c.vn ?? []).flatMap((b) => b.items)));
+  for (const id of ["cap-quinolone-allergy", "ward-levo"]) {
+    const it = items.find((i) => i.ref === id)!;
+    assert.ok(it, `${id} missing`);
+    assert.match(it.text, /Levofloxacin: .* hoặc Moxifloxacin: /u);
+    assert.doesNotMatch(it.text, / \+ Moxifloxacin/u);
+  }
+  assert.match(items.find((i) => i.ref === "icu-ctx-levo")!.text, / \+ Levofloxacin: /u);
 });
