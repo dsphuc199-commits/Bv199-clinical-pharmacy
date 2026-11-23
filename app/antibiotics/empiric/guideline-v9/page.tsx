@@ -24,6 +24,8 @@ import SettingTabs from "@/components/antibiotics/treatment/SettingTabs";
 import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
 import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
+import StratificationPanel from "../../../../components/antibiotics/empiric/StratificationPanel";
+import { stratificationFor } from "../../../../data/antibiotics/empiric/stratification";
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
@@ -113,7 +115,13 @@ function isAdultABRS(disease: Disease): boolean {
 const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
 
 function defaultTabForDisease(diseaseId: string): TabKey {
+  if (stratificationFor(diseaseId)) return "strat";
   return diseaseId === "v8-101" ? "intl" : "vn";
+}
+
+/* Tab "Phân tầng" chỉ có ở mặt bệnh đã có dữ liệu phân tầng. */
+function tabsForDisease(diseaseId: string): Exclude<TabKey, "sources">[] {
+  return (Object.keys(TAB_LABELS) as Exclude<TabKey, "sources">[]).filter((key) => key !== "strat" || Boolean(stratificationFor(diseaseId)));
 }
 
 /* Nhan ngan muc do bang chung (chi tiet: muc Nguon / trang Bang chung). */
@@ -152,7 +160,7 @@ function GuidelineContent() {
     /* ?tab=vn|intl|compare: mo dung tab. Lien ket sources cu mo tab Viet Nam. */
     const fromUrl = searchParams.get("tab");
     if (fromUrl === "sources") return "vn";
-    return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
+    return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) && (fromUrl !== "strat" || stratificationFor(selectedId)) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
   });
   /* ?tab=sources (lien ket cu) -> mo accordion Nguon. */
   const [filters, setFilters] = useState<ClinicalFilterState>(DEFAULT_FILTERS);
@@ -989,7 +997,7 @@ function GuidelineContent() {
             </div>
             {/* Nguon hien thi: Bo Y te | Quoc te | Doi chieu (bo chuyen nho, khong chiem mot hang rieng) */}
             <div className="bv199-tabs" role="tablist" aria-label="Nguồn hướng dẫn">
-              {(Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]).map((key) => (
+              {tabsForDisease(selected.id).map((key) => (
                 <button
                   key={key}
                   type="button"
@@ -1000,7 +1008,7 @@ function GuidelineContent() {
                   className={tab === key ? "active" : ""}
                   tabIndex={tab === key ? 0 : -1}
                   onClick={() => changeSource(key)}
-                  onKeyDown={event=>{const keys:TabKey[]=['vn','intl','compare'];const index=keys.indexOf(key);const next=event.key==='ArrowRight'?(index+1)%keys.length:event.key==='ArrowLeft'?(index-1+keys.length)%keys.length:event.key==='Home'?0:event.key==='End'?keys.length-1:undefined;if(next!==undefined){event.preventDefault();changeSource(keys[next]);document.getElementById(`bv199-tab-${keys[next]}`)?.focus();}}}
+                  onKeyDown={event=>{const keys:TabKey[]=tabsForDisease(selected.id);const index=keys.indexOf(key);const next=event.key==='ArrowRight'?(index+1)%keys.length:event.key==='ArrowLeft'?(index-1+keys.length)%keys.length:event.key==='Home'?0:event.key==='End'?keys.length-1:undefined;if(next!==undefined){event.preventDefault();changeSource(keys[next]);document.getElementById(`bv199-tab-${keys[next]}`)?.focus();}}}
                   title={TAB_LABELS[key].long}
                 >
                   <span className="bv199-tab-short">{TAB_LABELS[key].short}</span>
@@ -1014,6 +1022,7 @@ function GuidelineContent() {
 
 
           <div key={`${selected.id}-${tab}`} id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
+          {tab === "strat" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} />}
           {tab === "vn" && (
             <>
               {/* PHAC DO THEO VAN BAN BO Y TE.
