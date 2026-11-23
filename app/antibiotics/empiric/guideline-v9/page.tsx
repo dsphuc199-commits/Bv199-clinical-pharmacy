@@ -23,8 +23,11 @@ import EntEmpiricGuidelines, {
 import SettingTabs from "@/components/antibiotics/treatment/SettingTabs";
 import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
-import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
+import BytRegimenView, { comparisonNotesFor } from "../../../../components/antibiotics/empiric/BytRegimenView";
 import StratificationPanel from "../../../../components/antibiotics/empiric/StratificationPanel";
+import IntegratedVnStratification from "../../../../components/antibiotics/empiric/IntegratedVnStratification";
+import DoseConflictComparison from "../../../../components/antibiotics/empiric/DoseConflictComparison";
+import { DOSE_CONFLICTS } from "@/data/antibiotics/empiric/dose-conflicts";
 import { stratificationFor } from "../../../../data/antibiotics/empiric/stratification";
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
@@ -145,7 +148,7 @@ function GuidelineContent() {
       ? fromUrl
       : "v8-1";
   });
-  const [pickedScenario, setPickedScenario] = useState<string | null>(null);
+  const [pickedScenario, setPickedScenario] = useState<string | null>(() => searchParams.get("scenario"));
   /* Danh muc khong loc theo chuyen khoa nua (toi gian) – giu bien de logic loc giu nguyen. */
   const specialtyFilter = "Tất cả";
 
@@ -357,6 +360,8 @@ function GuidelineContent() {
   /* Benh khong co phuong an BYT co lieu (vd. QĐ 1530) -> hien du phuong an, kem co "khong neu lieu". */
   const vnShowAll = !isAdultCAP(selected) && getConcreteRegimensForDisease(selected.id).length === 0;
 
+  const stratification = stratificationFor(selected.id);
+  const mixedNotes = tab === "compare" && stratification ? comparisonNotesFor(selected.id) : [];
   const evidence = evidenceFor(selected.id);
   const backPath = empiricHref(selected.id);
   const organismLink = DISEASE_ORGANISM[selected.id];
@@ -1021,10 +1026,10 @@ function GuidelineContent() {
 
 
           <div key={`${selected.id}-${tab}`} id="bv199-tabpanel" role="tabpanel" aria-labelledby={`bv199-tab-${tab}`} className="bv199-treatment">
-          {tab === "vn" && (
+          {tab === "vn" && (stratification ? (
+            <IntegratedVnStratification data={stratification} diseaseId={selected.id} scenario={pickedScenario} />
+          ) : (
             <>
-              {/* Phân tầng nguy cơ theo nguồn Việt Nam (QĐ BYT, khuyến cáo hội chuyên ngành). */}
-              {stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="vn" />}
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
@@ -1058,9 +1063,9 @@ function GuidelineContent() {
                 </>
               )}
             </>
-          )}
+          ))}
 
-          {tab === "intl" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
+          {tab === "intl" && stratification && <StratificationPanel data={stratification} family="intl" />}
           {tab === "intl" && (
             <IntlTab
               diseaseId={selected.id}
@@ -1086,7 +1091,15 @@ function GuidelineContent() {
             />
           )}
 
-          {tab === "compare" && <CompareTab diseaseId={selected.id} />}
+          {tab === "compare" && <>
+            <CompareTab diseaseId={selected.id} />
+            {stratification && DOSE_CONFLICTS.some((conflict) => conflict.diseaseIds.includes(selected.id)) && (
+              <div id="doi-chieu-lieu">
+                <DoseConflictComparison conflicts={DOSE_CONFLICTS.filter((conflict) => conflict.diseaseIds.includes(selected.id))} />
+                {mixedNotes.length > 0 && <details><summary>Ghi chú đối chiếu theo bệnh cảnh</summary><ul>{mixedNotes.map((note) => <li key={note}>{note}</li>)}</ul></details>}
+              </div>
+            )}
+          </>}
 
           </div>
 

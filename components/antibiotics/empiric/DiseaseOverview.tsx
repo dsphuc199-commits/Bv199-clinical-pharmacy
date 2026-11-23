@@ -8,7 +8,7 @@
 */
 
 import { getDiseaseOverview, type Point } from "@/data/antibiotics/empiric/overviews";
-import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { clinicalText, stratifiedText } from "@/lib/antibiotics/presentation-text";
 import { EMPIRIC_TREATMENT_UI_RULES as RULES, SPECIALIZED_MODULE_LINKS } from "@/lib/antibiotics/empiric-ui-rules";
 
 export function hasDiseaseOverview(diseaseId: string): boolean {
@@ -16,39 +16,63 @@ export function hasDiseaseOverview(diseaseId: string): boolean {
 }
 
 /* Bo cuc dong deu moi mat benh: muc nao nguon khong neu thi ghi ro, khong an muc, khong tu bo sung noi dung. */
-function List({ points, empty }: { points: Point[]; empty: string }) {
-  return points.length > 0 ? <ul>{points.map((p) => <Item key={p.text} p={p} />)}</ul> : empty ? <p className="do-empty">{empty}</p> : null;
+function List({ points, empty, stratified }: { points: Point[]; empty: string; stratified?: boolean }) {
+  return points.length > 0 ? <ul>{points.map((p) => <Item key={p.text} p={p} stratified={stratified} />)}</ul> : empty ? <p className="do-empty">{empty}</p> : null;
 }
 
-function Item({ p }: { p: Point }) {
-  const t = clinicalText(p.text);
+export function overviewPointText(text: string): string {
+  if (text === "Đã biết vi khuẩn: theo Bảng II.10.") return "Đã biết vi khuẩn: chọn kháng sinh theo tác nhân.";
+  return stratifiedText(text);
+}
+
+function Item({ p, stratified }: { p: Point; stratified?: boolean }) {
+  const t = stratified ? overviewPointText(p.text) : clinicalText(p.text);
   if (!t) return null;
-  return <li>{t}{RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
+  return <li>{t}{!stratified && RULES.showPageNumbersInline && <span className="do-ref"> ({p.ref})</span>}</li>;
 }
 
-export function DiseaseOverviewSummary({ diseaseId, durationPoints }: { diseaseId: string; durationPoints?: Point[] }) {
+export function DiseaseOverviewSummary({ diseaseId, durationPoints, stratified }: {
+  diseaseId: string;
+  durationPoints?: Point[];
+  stratified?: { pathogens: Point[]; sampling: Point[] };
+}) {
   const o = getDiseaseOverview(diseaseId);
   if (!o) return null;
+  const cards = o.cards.slice(0, 4).map((card) => ({ ...card, points: [...card.points] }));
+  if (stratified) {
+    for (const [label, points] of [["Tác nhân", stratified.pathogens], ["Trước kháng sinh", stratified.sampling]] as const) {
+      if (points.length === 0) continue;
+      const existing = cards.find((card) => card.label.startsWith(label));
+      if (!existing) cards.push({ label, points });
+      else for (const point of points) {
+        if (!existing.points.some((p) => overviewPointText(p.text) === overviewPointText(point.text))) existing.points.push(point);
+      }
+    }
+    if (!cards.some((card) => card.label === "Thời gian")) {
+      const duration = o.monitoring.reassessment.filter((p) => /thời gian điều trị/iu.test(p.text));
+      if (duration.length) cards.push({ label: "Thời gian", points: duration });
+    }
+  }
   return (
     <section className="do" aria-label="Tổng quan quyết định lâm sàng">
       <div className="do-cards">
-        {o.cards.slice(0, 4).map((c) => (
+        {cards.map((c) => (
           <div key={c.label} className="do-card">
             <h4>{c.label}</h4>
-            <ul>{(c.label === "Thời gian" && durationPoints ? durationPoints : c.points).map((p) => <Item key={p.text} p={p} />)}</ul>
+            <ul>{(c.label === "Thời gian" && durationPoints ? durationPoints : c.points).map((p) => <Item key={p.text} p={p} stratified={!!stratified} />)}</ul>
           </div>
         ))}
       </div>
       {o.sourceControl.length > 0 && (
         <div className="do-control">
           <h4>Kiểm soát ổ nhiễm và can thiệp</h4>
-          <List points={o.sourceControl} empty="" />
+          <List points={o.sourceControl} empty="" stratified={!!stratified} />
         </div>
       )}
       {!!o.prevention?.length && (
         <div>
           <h4>Dự phòng</h4>
-          <List points={o.prevention} empty="" />
+          <List points={o.prevention} empty="" stratified={!!stratified} />
         </div>
       )}
       <DiseaseOverviewStyle />
@@ -56,19 +80,19 @@ export function DiseaseOverviewSummary({ diseaseId, durationPoints }: { diseaseI
   );
 }
 
-export function DiseaseMonitoring({ diseaseId }: { diseaseId: string }) {
+export function DiseaseMonitoring({ diseaseId, stratified }: { diseaseId: string; stratified?: boolean }) {
   const o = getDiseaseOverview(diseaseId);
   if (!o) return null;
   return (
     <section className="do do-monitor" aria-label="Theo dõi và an toàn">
       <h3>Theo dõi, đánh giá lại và an toàn</h3>
       <div className="do-mon-grid">
-        {o.monitoring.efficacy.length > 0 && <div><h4>Theo dõi hiệu quả</h4><List points={o.monitoring.efficacy} empty="" /></div>}
-        {o.monitoring.reassessment.length > 0 && <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="" /></div>}
+        {o.monitoring.efficacy.length > 0 && <div><h4>Theo dõi hiệu quả</h4><List points={o.monitoring.efficacy} empty="" stratified={stratified} /></div>}
+        {o.monitoring.reassessment.length > 0 && <div><h4>Đánh giá lại điều trị</h4><List points={o.monitoring.reassessment} empty="" stratified={stratified} /></div>}
       </div>
       <details className="do-safety">
         <summary>Cảnh báo an toàn trong điều trị</summary>
-        <List points={o.monitoring.safety} empty="" />
+        <List points={o.monitoring.safety} empty="" stratified={stratified} />
         {!RULES.showDoseAdjustmentTables && (
           <p className="do-link">Hiệu chỉnh liều theo chức năng thận, gan: xem module <a href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</a>.</p>
         )}

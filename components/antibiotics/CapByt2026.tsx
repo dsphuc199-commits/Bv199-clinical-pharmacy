@@ -573,12 +573,14 @@ function capCard(r: Regimen): TxCard {
 export default function CapByt2026({
   initialScenarioId,
   afterTreatment,
+  stratifiedScenarioId,
 }: {
   initialScenarioId?: string;
   afterTreatment?: ReactNode;
+  stratifiedScenarioId?: string;
 }) {
   const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "ward");
-  const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
+  const scenario = SCENARIOS.find((s) => s.id === (stratifiedScenarioId ?? scenarioId)) ?? SCENARIOS[0];
 
   const allergy = scenario.regimens.filter((r) => ALLERGY_RE.test(r.name));
   const conditional = scenario.regimens.filter((r) => !ALLERGY_RE.test(r.name) && CONDITIONAL_RE.test(r.name));
@@ -591,6 +593,7 @@ export default function CapByt2026({
   const notes = [
     "Liều theo cột “Liều thường dùng” Phụ lục 1 (CrCl > 50–90 mL/phút) – điều chỉnh liều theo chức năng thận.",
     ...scenario.regimens.flatMap((r) => [r.caution, ...r.drugs.map((d) => d.caution)].filter((x): x is string => !!x)),
+    ...(stratifiedScenarioId && (scenario.id === "low" || scenario.id === "risk") ? ["Cần đối chiếu tiêu chí tuổi đúng 65: mô tả nhóm hiện có ghi <65 và >65. Không tự xác định nhóm chỉ từ tuổi."] : []),
   ];
   const monitoring = [
     ...scenario.alerts,
@@ -601,7 +604,8 @@ export default function CapByt2026({
 
   return (
     <TreatmentPanel
-      scenarios={SCENARIOS.map((s) => ({ value:s.id,label:s.name,setting:s.id === "low" || s.id === "risk" ? "outpatient" as const : "inpatient" as const,criteria:[s.description],reviewNotes:s.id==="low"||s.id==="risk"?["Cần đối chiếu tiêu chí tuổi đúng 65: mô tả nhóm hiện có ghi <65 và >65. Không tự xác định nhóm chỉ từ tuổi."]:[],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>`QĐ 2147/QĐ-BYT (2026) — ${r.source}`))] }))}
+      inStratification={!!stratifiedScenarioId}
+      scenarios={stratifiedScenarioId ? undefined : SCENARIOS.map((s) => ({ value:s.id,label:s.name,setting:s.id === "low" || s.id === "risk" ? "outpatient" as const : "inpatient" as const,criteria:[s.description],reviewNotes:s.id==="low"||s.id==="risk"?["Cần đối chiếu tiêu chí tuổi đúng 65: mô tả nhóm hiện có ghi <65 và >65. Không tự xác định nhóm chỉ từ tuổi."]:[],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>`QĐ 2147/QĐ-BYT (2026) — ${r.source}`))] }))}
       scenario={scenario.id}
       initialChoice={initialScenarioId}
       onScenario={setScenarioId}

@@ -21,7 +21,7 @@ import DrugActionLinks from "@/components/antibiotics/links/DrugActionLinks";
 import type { DrugGroup, StructureStatus } from "@/lib/antibiotics/regimen-structure";
 
 import DoseTable from "./DoseTable";
-import { clinicalText } from "@/lib/antibiotics/presentation-text";
+import { clinicalText, stratifiedText } from "@/lib/antibiotics/presentation-text";
 import ClinicalNotes from "./ClinicalNotes";
 import ClinicalScenarioPicker from "./ClinicalScenarioPicker";
 import { useAbxLinkContext } from "../links/AbxLinkContext";
@@ -76,6 +76,7 @@ export type TxSection = {
 
 type Props = {
   scenarios?: ScenarioChoice[];
+  inStratification?: boolean;
   scenario?: string;
   initialChoice?: string;
   onScenario?: (value: string) => void;
@@ -105,7 +106,12 @@ export function cardLabel(section: TxSection, index: number): string | undefined
 }
 
 /* Mot phac do = mot hang: cot trai nhan ("Phac do 1"/"Lua chon 1") + nhan an toan; cot phai noi dung. */
-function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCard; label?: string; durationColumn?:boolean; hideRegimenDuration?:boolean }) {
+function Card({ card, label, durationColumn, hideRegimenDuration, inStratification }: { card: TxCard; label?: string; durationColumn?:boolean; hideRegimenDuration?:boolean; inStratification?: boolean }) {
+  const evidence = (a: TxAlert) => inStratification ? a.sources?.filter((s) => /^(Bộ Y tế|QĐ|Hội |Dược thư quốc gia|Danh mục thuốc BV199)/iu.test(s)).map(stratifiedText) : a.sources;
+  const displayText = inStratification ? stratifiedText : clinicalText;
+  const alertText = (a: TxAlert) => displayText(inStratification && a.id === "colistin-unit"
+    ? a.text.replace(/Tương đương gần đúng theo nguồn: [^;]+; nhãn thuốc/u, "Nhãn thuốc")
+    : a.text);
   const critical = (card.alerts ?? []).filter((a) => a.level === "critical");
   const high = (card.alerts ?? []).filter((a) => a.level !== "critical");
   /* Co nhan (Phac do N / Lua chon N) -> cot trai; khong nhan -> nhan an toan thanh mot hang tren noi dung. */
@@ -125,33 +131,33 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
       {label && head}
       <div className="tp-card-main">
         {!label && head}
-        {card.condition && <p className="tp-cond">{clinicalText(card.condition)}</p>}
+        {card.condition && <p className="tp-cond">{displayText(card.condition)}</p>}
         
 
         {critical.map((a) => (
           <div key={a.id} className="byt199-alert byt199-alert-critical tp-alert tp-alert-critical" role="alert">
-            <strong>NGUY CƠ CAO – {clinicalText(a.title)}</strong>
-            <p>{clinicalText(a.text)}</p>
-            {a.sources && <details><summary>Nguồn chứng cứ</summary><span className="tp-alert-src">{a.sources.join("; ")}</span></details>}
+            <strong>NGUY CƠ CAO – {displayText(a.title)}</strong>
+            <p>{alertText(a)}</p>
+            {!!evidence(a)?.length && <details><summary>Nguồn chứng cứ</summary><span className="tp-alert-src">{evidence(a)?.join("; ")}</span></details>}
           </div>
         ))}
 
-        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent} showSourceDose={card.showSourceDose} hideReviewNote/>
+        <DoseTable groups={card.groups} status={card.status} duration={card.duration} hideDailyDose={card.hideDailyDose} durationColumn={durationColumn} hideRegimenDuration={hideRegimenDuration} sourceDoseAbsent={card.sourceDoseAbsent} showSourceDose={card.showSourceDose} hideReviewNote inStratification={inStratification} />
         {card.extra}
         {/* Nguon cua the gop vao mot khoi "Nguồn và đối chiếu" cuoi khung phac do. */}
 
         {high.map((a) => (
           <details key={a.id} className="byt199-alert byt199-alert-high tp-alert tp-alert-high" open={!!a.checklist}>
-            <summary>{clinicalText(a.title)}</summary>
-            <p>{clinicalText(a.text)}</p>
+            <summary>{displayText(a.title)}</summary>
+            <p>{alertText(a)}</p>
             {a.checklist && (
               <ul>
                 {a.checklist.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>{inStratification ? stratifiedText(item) : item}</li>
                 ))}
               </ul>
             )}
-            {a.sources && <details><summary>Nguồn chứng cứ</summary><span className="tp-alert-src">{a.sources.join("; ")}</span></details>}
+            {!!evidence(a)?.length && <details><summary>Nguồn chứng cứ</summary><span className="tp-alert-src">{evidence(a)?.join("; ")}</span></details>}
           </details>
         ))}
 
@@ -163,13 +169,13 @@ function Card({ card, label, durationColumn, hideRegimenDuration }: { card: TxCa
   );
 }
 
-function Section({ section }: { section: TxSection }) {
+function Section({ section, inStratification }: { section: TxSection; inStratification?: boolean }) {
   const durationColumn=new Set(section.cards.map(card=>card.duration)).size>1;
   const commonDuration=!durationColumn?section.cards[0]?.duration:undefined;
   const body = (
     <div className="tp-cards">
       {section.cards.map((card, i) => (
-        <div key={card.id}>{i > 0 && section.key !== 'adjunct' && !(card.condition && section.cards[i-1].condition && card.condition !== section.cards[i-1].condition) && <div className="tp-or"><span>Hoặc</span></div>}<Card card={card} label={cardLabel(section,i)} durationColumn={durationColumn} hideRegimenDuration={!!commonDuration}/></div>
+        <div key={card.id}>{i > 0 && section.key !== 'adjunct' && !(card.condition && section.cards[i-1].condition && card.condition !== section.cards[i-1].condition) && <div className="tp-or"><span>Hoặc</span></div>}<Card card={card} label={cardLabel(section,i)} durationColumn={durationColumn} hideRegimenDuration={!!commonDuration} inStratification={inStratification}/></div>
       ))}
       {commonDuration&&<p className="tp-duration-common"><strong>Thời gian điều trị:</strong> {clinicalText(commonDuration)}</p>}
     </div>
@@ -194,6 +200,7 @@ function Section({ section }: { section: TxSection }) {
 
 export default function TreatmentPanel({
   scenarios,
+  inStratification,
   scenario,
   initialChoice,
   onScenario,
@@ -217,14 +224,15 @@ export default function TreatmentPanel({
   const stream=disease?getStream(disease):'empiric';
   const heading=stream==='antifungal'?'Điều trị kháng nấm':stream==='tuberculosis'?'Phác đồ điều trị lao':stream==='pathogen'?'Điều trị theo tác nhân':stream==='prophylaxis'?'Dự phòng nhiễm khuẩn':'Kháng sinh theo kinh nghiệm';
   const hasSelection=!scenarios || scenarios.length<=1 || (!!picked && scenarios.some(s=>s.value===picked) && picked===scenario);
-  const shownNotes = notes.slice(0, NOTE_LIMIT);
-  const moreNotes = notes.slice(NOTE_LIMIT);
+  const displayNotes = inStratification ? notes.map(stratifiedText).filter(Boolean) : notes;
+  const shownNotes = displayNotes.slice(0, NOTE_LIMIT);
+  const moreNotes = displayNotes.slice(NOTE_LIMIT);
   const hasNotes = notes.length > 0 || monitoring.length > 0 || (detailNotes?.items.length ?? 0) > 0;
   const generalSources = sourceTag?.split(/;\s*/) ?? [];
   const citations = citeSources(hasSelection ? [
     ...(sources.length ? sources : generalSources),
     ...sections.flatMap((section) => section.cards.flatMap((card) => card.sources ?? [])),
-    ...(rationale?.items.flatMap((item) => item.sources ?? []) ?? []),
+    ...(inStratification ? [] : rationale?.items.flatMap((item) => item.sources ?? []) ?? []),
   ] : generalSources);
   return (
     <div className="tp">
@@ -243,10 +251,10 @@ export default function TreatmentPanel({
       {/* (3) Phac do khang sinh kinh nghiem */}
       {hasSelection && scenarioHint && scenarios && scenarios.length > 1 && !scenarios.find(s=>s.value===picked)?.criteria?.includes(typeof scenarioHint==='string'?scenarioHint:'') && <p className="tp-selected-context">{typeof scenarioHint==='string'?clinicalText(scenarioHint):scenarioHint}</p>}
       {hasSelection && <><section className="tp-box tp-regimens">
-        <div className="tp-box-head">
+        {!inStratification && <div className="tp-box-head">
           <h3>{heading}</h3>
-        </div>
-        {sections.length > 0 ? sections.map((s) => <Section key={s.key} section={s} />) : <p className="tp-empty">{emptyText ?? "Không có phác đồ cho bệnh cảnh này."}</p>}
+        </div>}
+        {sections.length > 0 ? sections.map((s) => <Section key={s.key} section={s} inStratification={inStratification} />) : <p className="tp-empty">{emptyText ?? "Không có phác đồ cho bệnh cảnh này."}</p>}
         {footer}
       </section>
       {comparison}
@@ -277,7 +285,7 @@ export default function TreatmentPanel({
                 {monitoring.length > 0 && (
                   <>
                     <h4>Theo dõi hiệu quả và an toàn</h4>
-                    <ClinicalNotes items={monitoring}/>
+                    <ClinicalNotes items={inStratification ? monitoring.map(stratifiedText) : monitoring}/>
                   </>
                 )}
               </div>

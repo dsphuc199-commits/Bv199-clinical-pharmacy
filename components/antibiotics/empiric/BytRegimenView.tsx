@@ -50,6 +50,21 @@ import { BILIARY_ANAEROBIC_BASE_IDS, BILIARY_ANAEROBIC_REGIMEN_ID } from "@/data
 import { BILIARY_DISEASE_ID, biliaryDurationText, biliaryPublishedGroups, type BiliaryPublication } from "@/lib/antibiotics/biliary-protocol";
 import { useBiliaryProtocol } from "./BiliaryProtocolContext";
 
+const MIXED_SOURCE = /IDSA|SWAB|ESC(?:MID)?\b|nhãn FDA|tham khảo quốc tế/iu;
+
+export function comparisonNotesFor(diseaseId: string) {
+  return [...new Set(getRegimensForDisease(diseaseId).flatMap(({ notes }) => (notes ?? []).filter((note) => MIXED_SOURCE.test(note) && !note.startsWith("ĐỐI CHIẾU LIỀU"))))];
+}
+
+function vietnameseNote(text: string): string {
+  if (/^Tham khảo quốc tế/iu.test(text)) return "";
+  return text
+    .replace(/^Liều bổ sung ngày[^]*?(?=Liều cho người lớn|Người suy thận)/u, "")
+    .split(/(?<=\.)\s+(?=\p{Lu})/u)
+    .filter((sentence) => !MIXED_SOURCE.test(sentence))
+    .join(" ");
+}
+
 export function therapyNames(regimen: Regimen): string {
   const structured = structureOf(regimen).groups.flatMap(g => g.options.map(o => o.name.replace(/\s*\(liều như trên\)$/i, "")));
   const names = structured.length ? structured : findDrugs(regimen.drugs.map(d => `${d.name}: ${d.dose}`)).map(d => d.name);
@@ -86,6 +101,7 @@ type Props = {
   diseaseTitle?: string;
   /* Hien ca phuong an khong lieu ngay tu dau (benh khong co phuong an co lieu). */
   showAllByDefault?: boolean;
+  stratifiedRegimenIds?: readonly string[];
 };
 
 const PREFERRED: RegimenRole[] = ["first", "severe"];
@@ -206,6 +222,7 @@ export default function BytRegimenView(props: Props) {
   const protocol = useBiliaryProtocol();
   const publication = props.diseaseId === BILIARY_DISEASE_ID ? protocol : null;
   if (publication === "unavailable") return <p role="status" className="rounded-xl border border-slate-200 bg-white p-4">Tạm thời chưa tải được bản phác đồ đang dùng. Hãy tải lại trang.</p>;
+  if (props.stratifiedRegimenIds) return <GenericBytRegimenView {...props} />;
   const durationPoints = publication && biliaryDurationText(publication.content).map((text) => ({ text, ref: publication.content.source.locator }));
   if (props.diseaseId === "v8-6") return <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} /></>;
   /* Tiet nieu: cong cu chon khang sinh theo QD 708, Chuong X. */
@@ -222,8 +239,8 @@ export default function BytRegimenView(props: Props) {
   return <GenericBytRegimenView {...props} />;
 }
 
-function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, afterTreatment }: Props & { afterTreatment?: ReactNode } & { publication?: BiliaryPublication }) {
-  const allRegimens = useMemo(() => getRegimensForDisease(diseaseId), [diseaseId]);
+function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, afterTreatment, stratifiedRegimenIds }: Props & { afterTreatment?: ReactNode } & { publication?: BiliaryPublication }) {
+  const allRegimens = useMemo(() => getRegimensForDisease(diseaseId).filter((r) => !stratifiedRegimenIds || stratifiedRegimenIds.includes(r.id)), [diseaseId, stratifiedRegimenIds]);
   const isBiliary = diseaseId === BILIARY_DISEASE_ID;
   // Listing an activity is distinct from supplying a verified prescribing dose.
   // Keep all source groups reachable; DoseTable marks missing/unverified fields.
@@ -316,7 +333,8 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, after
       const label = own ? (sections.length > 1 ? `${s.title} – ${own}` : own) : s.title;
       for (const n of regimenOf.get(card.id)?.notes ?? []) {
         if (n.startsWith("ĐỐI CHIẾU LIỀU")) continue;
-        const text = n.replace(/^ĐỐI CHIẾU LIỀU – /, "");
+        const text = stratifiedRegimenIds ? vietnameseNote(n) : n;
+        if (!text) continue;
         notes.push(totalCards > 1 ? `${label}: ${text}` : text);
       }
     });
@@ -339,7 +357,8 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, after
         </section>
       )}
       <TreatmentPanel
-        scenarios={visible.map((s) => {
+        inStratification={!!stratifiedRegimenIds}
+        scenarios={stratifiedRegimenIds ? undefined : visible.map((s) => {
           const label = diseaseId === "v8-9" && s.name === "Áp xe phổi: phối hợp beta-lactam + aminoglycosid" ? "Áp xe phổi" : s.name;
           /* Mot benh canh duy nhat: chi giu lam "tieu chi" khi nhan mang dieu kien lam sang (tuoi, doi tuong, muc do, yeu to nguy co...). */
           const informative = visible.length > 1 || INFORMATIVE_LABEL.test(s.name);
@@ -352,14 +371,14 @@ function GenericBytRegimenView({ diseaseId, showAllByDefault, publication, after
         sourceTag={publication ? "Phiên bản Khoa Dược duyệt" : allRegimens.length > 0 ? `Bộ Y tế · ${docTag}` : undefined}
         sections={sections}
         emptyText={
-          allRegimens.length === 0
+          stratifiedRegimenIds ? "Không có phương án phù hợp bộ lọc đang dùng." : allRegimens.length === 0
             ? "Không có phác đồ kháng sinh kinh nghiệm trong các văn bản BYT đã đọc."
             : visible.length === 0 && scenarios.length > 0
               ? "Không có bệnh cảnh phù hợp bộ lọc."
               : "Văn bản BYT chỉ nêu tên thuốc/nhóm thuốc, không nêu liều."
         }
         notes={notes}
-        comparison={<DoseConflictComparison conflicts={DOSE_CONFLICTS.filter(c => (active?.items ?? []).some(r => c.regimenIds.includes(r.id)))} />}
+        comparison={!stratifiedRegimenIds && <DoseConflictComparison conflicts={DOSE_CONFLICTS.filter(c => (active?.items ?? []).some(r => c.regimenIds.includes(r.id)))} />}
         sources={publication ? [publication.content.source.title + " · " + publication.content.source.locator] : sources}
         afterTreatment={afterTreatment}
         rationale={rationale && publication ? {
