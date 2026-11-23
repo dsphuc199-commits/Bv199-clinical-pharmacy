@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import tablesData from "@/data/antibiotics/antibiogram-bv199-tables.json";
-import { ALL_REGIMENS, type Regimen } from "@/data/antibiotics/empiric/regimens";
+import { ALL_REGIMENS, DOCS, type Regimen } from "@/data/antibiotics/empiric/regimens";
 import type { StratCite, StratColumn, StratIntl, Stratification } from "@/data/antibiotics/empiric/stratification";
 import { Rx, RxToolStyle } from "./rx-tool";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
@@ -63,7 +63,7 @@ function BytRegimen({ regimen }: { regimen: Regimen }) {
           <ul className="list-disc pl-4">{notes.map((n) => <li key={n}>{n}</li>)}</ul>
         </details>
       )}
-      <p className="mt-1 text-xs text-slate-500" title={regimen.source.page}>QĐ 708/QĐ-BYT{PROCESS.test(regimen.source.section) ? "" : `, ${regimen.source.section}`}</p>
+      <p className="mt-1 text-xs text-slate-500" title={regimen.source.page}>{DOCS[regimen.source.doc]?.number ? `QĐ ${DOCS[regimen.source.doc].number}` : "Bộ Y tế"}{PROCESS.test(regimen.source.section) ? "" : `, ${regimen.source.section}`}</p>
     </div>
   );
 }
@@ -90,7 +90,9 @@ function Column({ col }: { col: StratColumn }) {
       <h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5>
       <Cites items={col.criteria} />
       {col.pathogens && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={col.pathogens} /></>}
-      {col.byt.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý – Bộ Y tế</h5><BytList ids={col.byt} /></>}
+      {(col.byt.length > 0 || (col.vn?.length ?? 0) > 0) && <h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý – Việt Nam</h5>}
+      {col.byt.length > 0 && <BytList ids={col.byt} />}
+      {col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
       {col.intl.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý – Quốc tế</h5><div className="space-y-2">{col.intl.map((b) => <Intl key={b.source} block={b} />)}</div></>}
       {col.links && (
         <p className="mt-3 text-sm">Khuyến cáo quốc tế chi tiết: {col.links.map((l, i) => (
