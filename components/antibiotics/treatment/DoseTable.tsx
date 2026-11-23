@@ -20,7 +20,7 @@ import {
 } from "@/lib/antibiotics/regimen-structure";
 import { Fragment } from "react";
 import RegimenDrugTools from "./RegimenDrugTools";
-import { clinicalText, displayRewrite, stratifiedText } from "@/lib/antibiotics/presentation-text";
+import { clinicalText, displayRewrite } from "@/lib/antibiotics/presentation-text";
 import { EMPIRIC_TREATMENT_UI_RULES } from "@/lib/antibiotics/empiric-ui-rules";
 
 type Props = {
@@ -37,7 +37,6 @@ type Props = {
   hideRegimenDuration?: boolean;
   sourceDoseAbsent?: boolean;
   showSourceDose?: boolean;
-  inStratification?: boolean;
   /* The chua da co canh bao "Cần thẩm định" cua tinh trang lieu: khong nhac lai trong bang. */
   hideReviewNote?: boolean;
 };
@@ -86,14 +85,11 @@ function ruleText(g: DrugGroup, n: number): string | undefined {
   return undefined;
 }
 
-function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation, showSourceDose, inStratification }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean; showSourceDose?: boolean; inStratification?: boolean }) {
+function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation, showSourceDose }: { o: StructuredDrug; showCourse: boolean; duration?:string; hideDailyDose?: boolean; marker?: string; showRelation:boolean; showSourceDose?: boolean }) {
   const critical = o.flags.filter((f) => f.startsWith("KIỂM TRA"));
-  const fullDose = showSourceDose || inStratification;
-  const dose = inStratification ? stratifiedText(o.raw) || "—" : showSourceDose ? clinicalText(o.raw) : doseText(o);
-  // Bộ tách cũ có thể nhận nhầm chữ “uống” trong “xuống” thành đường dùng.
-  const inferredOral = inStratification && o.route === "Uống" && /xuống/iu.test(o.raw) && !/(?<![\p{L}\p{M}])uống(?![\p{L}\p{M}])|\bPO\b/iu.test(o.raw);
-  const showRoute = !inferredOral && (!showSourceDose || inStratification) && !routeAlreadyStated(dose, o.route);
-  const showInterval = !fullDose && !intervalAlreadyStated(dose, o.interval);
+  const dose = showSourceDose ? clinicalText(o.raw) : doseText(o);
+  const showRoute = !showSourceDose && !routeAlreadyStated(dose, o.route);
+  const showInterval = !showSourceDose && !intervalAlreadyStated(dose, o.interval);
   return (
     <tr className={critical.length ? "tx-row tx-row-warn" : "tx-row"}>
       {showRelation && <td className="tx-marker" data-label="Quan hệ lựa chọn">{marker}</td>}
@@ -109,10 +105,10 @@ function Row({ o, showCourse, duration, hideDailyDose, marker = "", showRelation
         <div>
           <span data-dose="">{dose}</span>{showRoute && o.route && <><span className="tx-separator"> · </span><span data-route="">{clinicalText(o.route)}</span></>}{showInterval && o.interval && <><span className="tx-separator"> · </span><span data-interval="">{clinicalText(o.interval)}</span></>}
           {!showSourceDose && o.dailyDose && !hideDailyDose && EMPIRIC_TREATMENT_UI_RULES.showCalculatedDailyDose && <span className="tx-sub">= {o.dailyDose}</span>}
-          {!fullDose && o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
-          {!fullDose && o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
+          {!showSourceDose && o.maxDose && <span className="tx-sub">{o.maxDose}</span>}
+          {!showSourceDose && o.infusionDuration && <span className="tx-sub">{o.infusionDuration}</span>}
           {/* Ghi chu can doc cau nguon (giai doan, muc do, phoi hop...): hien cau nguon ngay trong o, thay cho khoi chi tiet rieng. */}
-          {!fullDose && needsSourceWording(o) && <span className="tx-sub tx-source-line">{sourceExtra(o)}</span>}
+          {!showSourceDose && needsSourceWording(o) && <span className="tx-sub tx-source-line">{sourceExtra(o)}</span>}
           {o.flags.filter((f) => f.startsWith("Ghi chú kèm")).map((f) => <span key={f} className="tx-sub">{clinicalText(f.replace(/^Ghi chú kèm:\s*/u, ""))}</span>)}
         </div>
       </td>
@@ -128,14 +124,13 @@ function hidesCombination(groups: DrugGroup[]): boolean {
   return groups.some((g) => g.rule === "one-of" && g.raw.some((r) => MID_COMBINATION.test(`${r.name} ${r.dose ?? ""}`)));
 }
 
-export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, hideReviewNote, showSourceDose, inStratification }: Props) {
-  const doseLabel = inStratification ? stratifiedText : clinicalText;
+export default function DoseTable({ groups, status, duration, population, independent, hideDailyDose, durationColumn, hideRegimenDuration, hideReviewNote, showSourceDose }: Props) {
   if (status === "NEEDS_STRUCTURED_REVIEW" || status === "NO_DOSE" || hidesCombination(groups)) {
     return (
       <div className="tx">
         {status === "NO_DOSE" && !hideReviewNote && <p className="tx-dur">Liều dùng theo tờ hướng dẫn sử dụng của chế phẩm.</p>}
         {/* Cau lieu goc hien ngay duoi ten thuoc (da bo Phu luc/Bang/trang); khong tach khoi "Nguon va doi chieu" rieng. */}
-        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{displayRewrite(r.name)}</strong>{r.dose && doseLabel(r.dose) && <span className="tx-raw-dose">: {doseLabel(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
+        <ul className="tx-listed">{groups.flatMap(g=>g.raw).map((r,i)=><li key={`${r.name}-${i}`}><strong>{displayRewrite(r.name)}</strong>{r.dose && clinicalText(r.dose) && <span className="tx-raw-dose">: {clinicalText(r.dose)}</span>}{EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <RegimenDrugTools name={r.name} texts={[`${r.name}: ${r.dose}`]}/>}</li>)}</ul>
         {duration && clinicalText(duration) && !hideRegimenDuration && <p className="tx-dur"><span>Thời gian điều trị</span> {clinicalText(duration)}</p>}
         <TxStyle />
       </div>
@@ -177,7 +172,7 @@ export default function DoseTable({ groups, status, duration, population, indepe
               </thead>
               <tbody>
                 {opts.map((o, j) => <Fragment key={`${o.name}-${j}`}>
-                  <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} showSourceDose={showSourceDose} inStratification={inStratification} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
+                  <Row o={o} showCourse={showCourse} duration={duration} hideDailyDose={hideDailyDose} showRelation={showRelation} showSourceDose={showSourceDose} marker={j === 0 ? "" : g.rule === "one-of" ? "Hoặc" : g.rule === "all" ? "+" : ""} />
                   {EMPIRIC_TREATMENT_UI_RULES.showDrugToolsInRegimen && <tr className="tx-tools-row"><td colSpan={2+Number(showRelation)+Number(showCourse)}><RegimenDrugTools name={o.name} texts={[o.raw]} /></td></tr>}
                 </Fragment>)}
               </tbody>

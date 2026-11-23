@@ -93,32 +93,6 @@ export function stripReviewNotes(text: string): string {
   return t.replace(/\s*·\s*(?=·|$)/g, "").replace(/^\s*[·,;]\s*/, "").replace(/[ \t]{2,}/g, " ").replace(/\s+([,;.])/g, "$1").trim();
 }
 
-/* Chỉ bỏ ký hiệu tra cứu. Giữ các vế lâm sàng nằm cùng ngoặc hoặc cùng câu. */
-export function cleanRef(text: string): string {
-  return text
-    .replace(/(?:theo\s+)?(?:Phụ lục|Bảng|Table|Mục|Chương)\s+(?:[IVX]+\.)?\d+(?:\.\d+)*(?:[a-z])?[.:]?(?=\s|[),;]|$)/giu, "")
-    .replace(/\btr\.\s*(?:in\s*)?\d+(?:\s*[–-]\s*\d+)?(?:\s*(?:,|và)\s*\d+)*/giu, "")
-    .replace(/\bPDF\b/gu, "")
-    .replace(/\bDTQG\b/gu, "Dược thư quốc gia")
-    .replace(/(?:nguồn |văn bản )?không (?:nêu|ghi)(?: số)? liều(?: cụ thể)?(?:\s+trong)?/giu, "chưa có thông tin liều cụ thể")
-    .replace(/chưa đối chiếu lại trang gốc/giu, "cần đối chiếu trước khi áp dụng")
-    .replace(/cần xác minh/giu, "cần đối chiếu trước khi áp dụng")
-    .replace(/\(\s*(?:(?:QĐ\s+\d+(?:\/QĐ-BYT)?|Dược thư quốc gia\s+\d{4}|nhãn FDA|[,;.:–-])\s*)+\)/giu, "")
-    .replace(/\(\s*[,;.:–-]*\s*\)/gu, "")
-    .replace(/\s+([,;.)])/gu, "$1")
-    .replace(/[ \t]{2,}/gu, " ")
-    .trim();
-}
-
-export function stratifiedText(text: string): string {
-  const cleaned = cleanRef(text)
-    .replace(/^(?:CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI TRONG NGUỒN):\s*/u, (label) => label.startsWith("LIỀU") ? "Nguy cơ sai liều: " : "Đối chiếu liều: ")
-    .replace(/Cùng văn bản,?\s*/giu, "Cùng hướng dẫn, ")
-    .replace(/văn bản/giu, "tài liệu")
-    .replace(/không nêu/giu, "chưa có thông tin về");
-  return clinicalText(cleaned);
-}
-
 export function clinicalText(text:string):string {
   return stripInlineCitations(stripReviewNotes(text)).replace(/\s*\(?\s*Nguồn BYT không nêu liều\s*\)?/giu,'').replace(/(?:theo\s+)?(?:Phụ lục|Mục|Bảng|Biểu đồ)\s+\d+(?:\.\d+)*(?:[a-z])?(?:,\s*tr\.\s*[\d–-]+)?/giu,'')
     .replace(/,\s*một lựa chọn của\s*(?=[.;]|$)/giu,'').replace(/\(\s*[;,:]\s*/g,'(').replace(/\s*[;,:]\s*\)/g,')').replace(/\(\s*\)/g,'').replace(/;\s*:/g,';').replace(/[ \t]{2,}/g,' ').replace(/\s+([,;.])/g,'$1').trim();

@@ -18,9 +18,6 @@ import { swabPlan } from "../../../components/antibiotics/empiric/sepsis-swab202
 import { CAP_DIAG, capPlans, hvDiagnosis, hvGrades, hvPlan, type CapIn, type HvIn, type Plan } from "../../../components/antibiotics/empiric/pneumonia-intl";
 import { CAP_SCENARIOS } from "../../../components/antibiotics/CapByt2026";
 import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/HapVap2023";
-import { cleanRef } from "../../../lib/antibiotics/presentation-text";
-
-export { cleanRef };
 
 export type StratCite = { text: string; source: string; ref: string };
 export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string })[]; notes?: string[] };
@@ -33,7 +30,6 @@ export type StratColumn = {
   byt: string[];
   /** Phác đồ Việt Nam nằm trong module riêng (QĐ 2147/2026, khuyến cáo hội chuyên ngành). */
   vn?: StratIntl[];
-  vnScenarioIds?: string[];
   intl: StratIntl[];
   links?: { diseaseId: string; label: string }[];
 };
@@ -66,7 +62,24 @@ const HVVN = "Hội Hô hấp VN – Hội HSCC & CĐ VN 2023";
 const ATS = "ATS/IDSA 2019";
 const IDSA16 = "IDSA/ATS 2016";
 
-/* Bỏ chú thích vị trí tài liệu khỏi câu liều; giữ nguyên liều. */
+/* Bỏ chú thích vị trí tài liệu (QĐ 708 Bảng…, DTQG…, Phụ lục…, Mục…, tr.…) khỏi câu liều; giữ nguyên liều. */
+export function cleanRef(text: string): string {
+  return text
+    .replace(/\s*\([^()]*?(?:QĐ 708|DTQG|Bảng|chương|Phụ lục|Mục \d|tr\.\s*\d)[^()]*\)/gu, "")
+    .replace(/\bPhụ lục \d+:\s*/gu, "")
+    .split(/;\s*/)
+    .map((part) => part
+      .replace(/\s*[–.]\s*(?:DTQG|Bảng)\b.*$/u, "")
+      .replace(/(?:;|,)?\s*theo Mục [\d.]+/gu, "")
+      /* Chỉ bỏ đúng câu ghi chú soạn thảo, giữ các câu liều khác trong cùng đoạn. */
+      .split(/(?<=\.)\s+(?=\p{Lu})/u)
+      .filter((sentence) => !/nguồn không|không ghi liều/iu.test(sentence))
+      .join(" ")
+      .trim())
+    .filter(Boolean)
+    .join("; ");
+}
+
 type ModuleDrug = { name: string; dose: string; route?: string; caution?: string };
 type ModuleRegimen = { id: string; name: string; drugs: ModuleDrug[] };
 /* Phác đồ trong module Việt Nam -> dòng bảng; giữ nguyên thuốc, liều, đường dùng và chú thích liều. */
@@ -236,7 +249,7 @@ const CAP: Stratification = {
         { text: capScenario("low").description, source: CAPVN, ref: "Mục 5.3.1" },
         { text: `Không có bệnh đồng mắc (${ATS_COMORB}).`, source: ATS, ref: "Bảng 3" },
       ],
-      byt: [], vn: [capVn("low")], vnScenarioIds: ["low"], intl: capIntl({ setting: "out" }),
+      byt: [], vn: [capVn("low")], intl: capIntl({ setting: "out" }),
     },
     {
       id: "out-risk", label: "Ngoại trú – có bệnh đồng mắc hoặc nguy cơ", tone: "community",
@@ -244,17 +257,17 @@ const CAP: Stratification = {
         { text: capScenario("risk").description, source: CAPVN, ref: "Mục 5.3.1" },
         { text: `Có bệnh đồng mắc: ${ATS_COMORB}.`, source: ATS, ref: "Bảng 3" },
       ],
-      byt: [], vn: [capVn("risk")], vnScenarioIds: ["risk"], intl: capIntl({ setting: "out", comorb: true }),
+      byt: [], vn: [capVn("risk")], intl: capIntl({ setting: "out", comorb: true }),
     },
     {
       id: "ward", label: "Nội trú – không hồi sức", tone: "hospital",
       criteria: [{ text: capScenario("ward").description, source: CAPVN, ref: "Mục 5.3.2.1" }, ATS_RISK],
-      byt: [], vn: [capVn("ward")], vnScenarioIds: ["ward"], intl: capIntl({ setting: "in" }, true),
+      byt: [], vn: [capVn("ward")], intl: capIntl({ setting: "in" }, true),
     },
     {
       id: "icu", label: "Viêm phổi nặng – hồi sức (ICU)", tone: "special",
       criteria: [{ text: capScenario("icu").description, source: CAPVN, ref: "Mục 5.3.2.2" }, ATS_SEVERE],
-      byt: [], vn: [capVn("icu")], vnScenarioIds: ["icu"], intl: capIntl({ setting: "in", severe: true }, true),
+      byt: [], vn: [capVn("icu")], intl: capIntl({ setting: "in", severe: true }, true),
     },
   ],
   focusTitle: "Viêm phổi do hít hoặc do vi khuẩn kỵ khí (hồi sức)",
@@ -286,13 +299,13 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
     {
       id: "low", label: "Không nặng, không nguy cơ đa kháng", tone: "community",
       criteria: [cite("Không thở máy, không sốc nhiễm khuẩn; không dùng kháng sinh tĩnh mạch trong 90 ngày; không có yếu tố nguy cơ đa kháng hoặc MRSA dưới đây.")],
-      byt: [], vn: [hvVn("hap", low)], vnScenarioIds: [low],
+      byt: [], vn: [hvVn("hap", low)],
       intl: [hvIntl({ kind: "hap" }, "nguy cơ tử vong thấp, không yếu tố nguy cơ MRSA")],
     },
     {
       id: "mdr", label: "Nặng (thở máy, sốc) hoặc có nguy cơ đa kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
-      byt: [], vn: rest.map((id) => hvVn("hap", id)), vnScenarioIds: rest,
+      byt: [], vn: rest.map((id) => hvVn("hap", id)),
       intl: [
         hvIntl({ kind: "hap", mrsaUnit: true }, "có yếu tố nguy cơ MRSA, không nguy cơ tử vong cao"),
         hvIntl({ kind: "hap", shock: true, ivAbx: true }, "nguy cơ tử vong cao hoặc kháng sinh tĩnh mạch trong 90 ngày"),
@@ -302,13 +315,13 @@ const hvColumns = (kind: "hap" | "vap"): StratColumn[] => {
     {
       id: "low", label: "Không nguy cơ đa kháng, đơn vị < 10% kháng", tone: "community",
       criteria: [cite("Không có tiêu chuẩn đa kháng dưới đây và đơn vị có < 10% Gram âm kháng thuốc định dùng đơn trị.")],
-      byt: [], vn: [hvVn("vap", low)], vnScenarioIds: [low],
+      byt: [], vn: [hvVn("vap", low)],
       intl: [hvIntl({ kind: "vap" }, "không yếu tố nguy cơ đa kháng")],
     },
     {
       id: "mdr", label: "Có nguy cơ đa kháng hoặc đơn vị > 10% kháng, MRSA", tone: "hospital",
       criteria: risk.map(cite),
-      byt: [], vn: rest.map((id) => hvVn("vap", id)), vnScenarioIds: rest,
+      byt: [], vn: rest.map((id) => hvVn("vap", id)),
       intl: [
         hvIntl({ kind: "vap", gnUnit: true }, "đơn vị > 10% Gram âm kháng thuốc định đơn trị"),
         hvIntl({ kind: "vap", ivAbx: true }, "có yếu tố nguy cơ đa kháng"),

@@ -5,12 +5,12 @@
   tách hồi sức và không hồi sức. Dữ liệu: data/antibiotics/empiric/stratification.ts.
 */
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import tablesData from "@/data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, DOCS, type Regimen } from "@/data/antibiotics/empiric/regimens";
 import type { StratCite, StratColumn, StratIntl, Stratification } from "@/data/antibiotics/empiric/stratification";
 import { Rx, RxToolStyle } from "./rx-tool";
-import { clinicalText, stratifiedText } from "@/lib/antibiotics/presentation-text";
+import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { structureOf } from "@/lib/antibiotics/regimen-structure";
 import DoseTable from "../treatment/DoseTable";
 
@@ -42,10 +42,10 @@ const TONE: Record<StratColumn["tone"], string> = {
   special: "border-sky-300 bg-sky-50/60",
 };
 
-function Cites({ items, hideRef }: { items: StratCite[]; hideRef?: boolean }) {
+function Cites({ items }: { items: StratCite[] }) {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm text-slate-800">
-      {items.map((c) => <li key={c.text}>{hideRef ? stratifiedText(c.text) : c.text} <span className="text-xs text-slate-500" title={hideRef ? undefined : c.ref}>({c.source}{hideRef || PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
+      {items.map((c) => <li key={c.text}>{c.text} <span className="text-xs text-slate-500" title={c.ref}>({c.source}{PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
     </ul>
   );
 }
@@ -85,23 +85,21 @@ function Intl({ block }: { block: StratIntl }) {
 
 type Family = "vn" | "intl";
 /* Nguồn Việt Nam: văn bản Bộ Y tế, khuyến cáo hội chuyên ngành Việt Nam. */
-export const isVn = (source: string) => /^(QĐ|Hội|Bộ Y tế)/u.test(source);
+const isVn = (source: string) => /^(QĐ|Hội|Bộ Y tế)/u.test(source);
 const ofFamily = (items: StratCite[], family: Family) => items.filter((c) => isVn(c.source) === (family === "vn"));
 
-function Column({ col, family, treatment }: { col: StratColumn; family: Family; treatment?: ReactNode }) {
+function Column({ col, family }: { col: StratColumn; family: Family }) {
   const criteria = ofFamily(col.criteria, family);
   const pathogens = col.pathogens ? ofFamily(col.pathogens, family) : [];
   const vn = family === "vn";
   return (
     <section className={`min-w-0 rounded-xl border-2 p-3 ${TONE[col.tone]}`} aria-label={col.label}>
       <h4 className="text-base font-bold text-slate-900">{col.label}</h4>
-      {criteria.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5><Cites items={criteria} hideRef={vn} /></>}
-      {pathogens.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={pathogens} hideRef={vn} /></>}
+      {criteria.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tiêu chí</h5><Cites items={criteria} /></>}
+      {pathogens.length > 0 && <><h5 className="mt-2 text-sm font-semibold text-slate-700">Tác nhân lưu ý</h5><Cites items={pathogens} /></>}
       {vn && (col.byt.length > 0 || (col.vn?.length ?? 0) > 0) && <h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5>}
-      {vn && (treatment ?? <>
-        {col.byt.length > 0 && <BytList ids={col.byt} />}
-        {col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
-      </>)}
+      {vn && col.byt.length > 0 && <BytList ids={col.byt} />}
+      {vn && col.vn && <div className="space-y-2">{col.vn.map((b) => <Intl key={b.source} block={b} />)}</div>}
       {!vn && col.intl.length > 0 && <><h5 className="mt-3 text-sm font-semibold text-slate-700">Kháng sinh gợi ý</h5><div className="space-y-2">{col.intl.map((b) => <Intl key={b.source} block={b} />)}</div></>}
       {!vn && col.links && (
         <p className="mt-3 text-sm">Khuyến cáo chi tiết: {col.links.map((l, i) => (
@@ -164,21 +162,8 @@ function Antibiogram({ spec }: { spec: Stratification["antibiogram"] }) {
   );
 }
 
-type VnContent = {
-  overview: ReactNode;
-  monitoring: ReactNode;
-  column: (column: StratColumn) => ReactNode;
-  focus: (ids: string[]) => ReactNode;
-  additionalTreatment?: ReactNode;
-};
-
-export default function StratificationPanel({ data, family, content }: {
-  data: Stratification;
-  family: Family;
-  content?: VnContent;
-}) {
+export default function StratificationPanel({ data, family }: { data: Stratification; family: Family }) {
   const vn = family === "vn";
-  const integrated = vn ? content : undefined;
   const sampling = ofFamily(data.sampling, family);
   const pathogens = ofFamily(data.pathogens, family);
   const columns = data.columns.filter((c) => vn
@@ -187,7 +172,7 @@ export default function StratificationPanel({ data, family, content }: {
   const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
   if (!columns.length) return null;
   return (
-    <details open data-stratification={family} className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
+    <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
       <summary className="cursor-pointer">
         <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
@@ -195,36 +180,34 @@ export default function StratificationPanel({ data, family, content }: {
       </summary>
       <div className="mt-2 space-y-3">
         {sources.length > 0 && <p className="text-xs text-slate-600">Nguồn: {sources.join(" ")}</p>}
-        {integrated?.overview}
-        {!integrated && sampling.length > 0 && (
+        {sampling.length > 0 && (
           <section className="rounded-xl border border-amber-300 bg-amber-50 p-3">
             <h4 className="text-sm font-bold text-amber-950">Gửi bệnh phẩm trước kháng sinh</h4>
             <Cites items={sampling} />
           </section>
         )}
-        {!integrated && pathogens.length > 0 && (
+        {pathogens.length > 0 && (
           <section className="rounded-xl border border-slate-200 bg-white p-3">
             <h4 className="text-sm font-bold text-slate-900">Tác nhân lưu ý</h4>
             <Cites items={pathogens} />
           </section>
         )}
-        <div className={`grid min-w-0 gap-3 ${integrated ? "" : vn ? "lg:grid-cols-2 2xl:grid-cols-3" : "2xl:grid-cols-2"}`}>
-          {columns.map((col) => <Column key={col.id} col={col} family={family} treatment={integrated?.column(col)} />)}
+        <div className={`grid min-w-0 gap-3 ${vn ? "lg:grid-cols-2 2xl:grid-cols-3" : "2xl:grid-cols-2"}`}>
+          {columns.map((col) => <Column key={col.id} col={col} family={family} />)}
         </div>
         {vn && data.focus && (
-          <details open={integrated ? true : undefined} className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
-            <summary className="cursor-pointer font-bold text-slate-900">{vn ? stratifiedText(data.focusTitle ?? "") : data.focusTitle}</summary>
-            <div className={`mt-2 grid min-w-0 gap-3 ${integrated ? "" : "lg:grid-cols-2"}`}>
+          <details className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
+            <summary className="cursor-pointer font-bold text-slate-900">{data.focusTitle}</summary>
+            <div className="mt-2 grid min-w-0 gap-3 lg:grid-cols-2">
               {data.focus.map((f) => (
                 <div key={f.label} className="min-w-0">
                   <p className="text-sm font-semibold text-slate-800">{f.label}{f.diseaseId && <> – <Link className="text-teal-800 underline" href={`/antibiotics/empiric/guideline-v9?disease=${f.diseaseId}`}>mở mặt bệnh</Link></>}</p>
-                  {integrated?.focus(f.byt) ?? <BytList ids={f.byt} />}
+                  <BytList ids={f.byt} />
                 </div>
               ))}
             </div>
           </details>
         )}
-        {integrated?.additionalTreatment}
         {!vn && (
           <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
             <h4 className="text-sm font-bold text-slate-900">Nguyên tắc phủ phổ kinh nghiệm</h4>
@@ -232,7 +215,7 @@ export default function StratificationPanel({ data, family, content }: {
           </section>
         )}
         <Antibiogram spec={data.antibiogram} />
-        {integrated ? integrated.monitoring : <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>}
+        <p className="text-xs text-slate-600">Chỉnh liều theo chức năng thận và hướng dẫn liều BV199. Chi tiết từng phương án ở phần bên dưới.</p>
       </div>
     </details>
   );

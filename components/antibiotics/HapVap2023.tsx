@@ -1,7 +1,5 @@
 "use client";
 
-import { stratifiedText } from "@/lib/antibiotics/presentation-text";
-
 import { useState, type ReactNode } from "react";
 
 import DrugActionLinks from "./links/DrugActionLinks";
@@ -611,16 +609,14 @@ export default function HapVap2023({
   kind,
   initialScenarioId,
   afterTreatment,
-  stratifiedScenarioId,
 }: {
   kind: Kind;
   initialScenarioId?: string;
   afterTreatment?: ReactNode;
-  stratifiedScenarioId?: string;
 }) {
   const scenarios = kind === "hap" ? HAP : VAP;
   const [scenarioId, setScenarioId] = useState(initialScenarioId ?? "");
-  const scenario = scenarios.find((s) => s.id === (stratifiedScenarioId ?? scenarioId)) ?? scenarios[0];
+  const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
 
   /* Nguon: cac the la VI DU to hop theo quy tac bang (ngang hang, khong thu tu uu tien). */
   const sections: TxSection[] = scenario.regimens.length
@@ -658,15 +654,15 @@ export default function HapVap2023({
       </details>
       {scenario.pool && (
         <details>
-          <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 12.5, color: "#087f89" }}>Danh sách thuốc theo nhóm</summary>
+          <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 12.5, color: "#087f89" }}>Danh sách thuốc theo nhóm của bảng nguồn</summary>
           {scenario.pool.map((group) => (
             <div key={group.title} style={{ margin: "6px 0" }}>
               <b>{group.title}</b>
               <ul style={{ paddingLeft: 18, margin: "4px 0", lineHeight: 1.6 }}>
                 {group.drugs.map((drug) => (
                   <li key={`${group.title}-${drug.name}`}>
-                    <b>{drug.name}:</b> {stratifiedScenarioId ? stratifiedText(drug.dose) : drug.dose}
-                    {drug.caution ? ` — ${stratifiedScenarioId ? stratifiedText(drug.caution) : drug.caution}` : ""}
+                    <b>{drug.name}:</b> {drug.dose}
+                    {drug.caution ? ` — ${drug.caution}` : ""}
                   </li>
                 ))}
               </ul>
@@ -680,8 +676,7 @@ export default function HapVap2023({
 
   return (
     <TreatmentPanel
-      inStratification={!!stratifiedScenarioId}
-      scenarios={stratifiedScenarioId ? undefined : scenarios.map(s=>({value:s.id,label:s.title,criteria:[s.title],definitionNotes:RISK[kind],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>r.source))]}))}
+      scenarios={scenarios.map(s=>({value:s.id,label:s.title,criteria:[s.title],definitionNotes:RISK[kind],regimenIds:s.regimens.map(r=>r.id),sources:[...new Set(s.regimens.map(r=>r.source))]}))}
       scenario={scenario.id}
       initialChoice={initialScenarioId}
       onScenario={setScenarioId}
