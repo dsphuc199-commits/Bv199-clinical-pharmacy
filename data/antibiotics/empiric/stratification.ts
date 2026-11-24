@@ -39,6 +39,8 @@ export type StratColumn = {
   vn?: StratIntl[];
   intl: StratIntl[];
   links?: { diseaseId: string; label: string }[];
+  /** Ghi chú ngắn cuối ô kháng sinh (vd. quy tắc phối hợp metronidazol của phác đồ đường mật). */
+  note?: string;
 };
 export type StratFocus = { label: string; byt: string[]; diseaseId?: string };
 export type StratAntibiogram = {
@@ -54,6 +56,8 @@ export type Stratification = {
   sampling: StratCite[];
   pathogens: StratCite[];
   columns: StratColumn[];
+  /** Hàng chung "Mức độ nặng" (tab Việt Nam), vd. phân độ nhiễm khuẩn đường mật. */
+  severity?: { title: string; items: StratCite[] };
   /** Ghi chú khi hướng dẫn Việt Nam dùng chung phác đồ cho hồi sức và không hồi sức. */
   settingNote?: string;
   focusTitle?: string;
@@ -597,7 +601,50 @@ const PERITONITIS: Stratification = {
   sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm phúc mạc."],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS];
+/* Nhiễm khuẩn đường mật: QĐ 708 chương 5 (Bảng II.14 phân độ, Bảng II.15 thuốc). Bảng II.15 chia "lựa chọn số 1 / số 2",
+   không gắn thuốc theo từng độ nặng → cột theo Bảng II.15, phân độ và thời gian ở hàng chung.
+   Liều và thời gian: giao diện dùng bản HĐT&ĐT đã công bố (lib/antibiotics/biliary-protocol) khi có.
+   Tab Quốc tế giữ công cụ TG18 hiện có (chưa có cột quốc tế). */
+const BILIARY: Stratification = {
+  diseaseIds: ["v8-24"],
+  title: "Nhiễm khuẩn đường mật – người lớn",
+  lead: "Phân độ nặng và thuốc theo QĐ 708 chương 5 (lựa chọn số 1, số 2).",
+  sampling: [{ text: "Chọn kháng sinh bài tiết tốt vào đường mật. Có thể điều trị theo kinh nghiệm trong khi chờ kháng sinh đồ.", source: BYT, ref: "mục 4a, tr. 182–183" }],
+  pathogens: [
+    { text: "Cộng đồng: E. coli, Klebsiella, Enterococcus. Thể nặng: đa vi khuẩn, có kỵ khí (Clostridium, Bacteroides).", source: BYT, ref: "tr. 181" },
+    { text: "Bệnh viện: MRSA, Enterococcus kháng vancomycin, Pseudomonas.", source: BYT, ref: "tr. 181" },
+  ],
+  severity: {
+    title: "Mức độ nặng và lựa chọn theo mức độ (QĐ 708)",
+    items: [
+      { text: "Nhẹ (I): không suy tạng, có đáp ứng điều trị ban đầu.", source: BYT, ref: "Bảng II.14, tr. 182" },
+      { text: "Trung bình (II): không suy tạng, không đáp ứng điều trị ban đầu.", source: BYT, ref: "Bảng II.14, tr. 182" },
+      { text: "Nặng (III): có suy tạng, không đáp ứng điều trị ban đầu.", source: BYT, ref: "Bảng II.14, tr. 182" },
+      { text: "Thể nhẹ: thường dùng ampicilin–sulbactam. Có thể dùng cephalosporin thế hệ 1 (cefazolin), thế hệ 2 (cefmetazol, cefotiam, oxacephem như flomoxef) hoặc thế hệ 3.", source: BYT, ref: "mục 4b, tr. 183" },
+      { text: "Thể nặng: phối hợp kháng sinh điều trị vi khuẩn kỵ khí.", source: BYT, ref: "mục 4a, tr. 183" },
+    ],
+  },
+  columns: [
+    { id: "vn-choice-1", label: "Lựa chọn số 1", tone: "community",
+      criteria: [{ text: "Lựa chọn số 1: penicilin phổ rộng + chất ức chế beta-lactamase, cephalosporin thế hệ 3–4, aminoglycosid, monobactam.", source: BYT, ref: "Bảng II.15, tr. 184" }],
+      byt: ["r-bil-1-bli", "r-bil-1-pip", "r-bil-1-ceph", "r-bil-1-aminoglyc", "r-bil-1-azt", "r-bil-anaer"], intl: [] },
+    { id: "vn-choice-2", label: "Lựa chọn số 2", tone: "hospital",
+      criteria: [{ text: "Lựa chọn số 2: fluoroquinolon, carbapenem.", source: BYT, ref: "Bảng II.15, tr. 184" }],
+      byt: ["r-bil-2-fq", "r-bil-2-carba", "r-bil-anaer"], intl: [],
+      note: "Metronidazol (kỵ khí) phối hợp với fluoroquinolon; carbapenem không phối hợp thêm metronidazol." },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức. Tắc nghẽn: dẫn lưu qua da, stent qua ERCP hoặc phẫu thuật.",
+  principles: { source: "", items: [] },
+  antibiogram: {
+    gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Enterobacter spp. (gồm K. aerogenes)", "Pseudomonas aeruginosa"], codes: ["SAM", "TZP", "CRO", "CAZ", "FEP", "IMP", "MEM", "CN/GEN", "AMK", "CIP", "LVX"] },
+    gramPositive: { organisms: ["Enterococcus spp."], codes: ["AMP", "VAN", "LZD"] },
+    defaultScope: "toan-vien",
+    note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng dịch mật, chỉ dùng để định hướng.",
+  },
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn đường mật."],
+};
+
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));

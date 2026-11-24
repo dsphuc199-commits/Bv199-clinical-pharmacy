@@ -19,6 +19,8 @@ import { Rx, RxToolStyle } from "./rx-tool";
 import { clinicalText } from "@/lib/antibiotics/presentation-text";
 import { structureOf } from "@/lib/antibiotics/regimen-structure";
 import { resolvedDrugs } from "@/data/antibiotics/empiric/dose-references";
+import { useBiliaryProtocol } from "./BiliaryProtocolContext";
+import { BILIARY_BASE_CONTENT, BILIARY_DISEASE_ID, biliaryDurationText, biliaryPublishedGroups } from "@/lib/antibiotics/biliary-protocol";
 
 /* Ghi chú quy trình soạn (vị trí trong văn bản, nguồn không nêu…) không hiển thị trên giao diện lâm sàng. */
 const PROCESS = /không nêu|văn bản|theo nguồn|nguyên văn|cần xác minh|bảng\s|table\s|(^|[\s(])tr\.\s*\d|trang\s/iu;
@@ -45,7 +47,7 @@ const HEAD: Record<StratColumn["tone"], string> = {
 function Cites({ items }: { items: StratCite[] }) {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm text-slate-800">
-      {items.map((c) => <li key={c.text}>{c.text} <span className="text-xs text-slate-500" title={c.ref}>({c.source}{PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
+      {items.map((c) => <li key={c.text}>{c.text} <span className="text-xs text-slate-500" title={c.ref}>({c.source}{!c.ref || PROCESS.test(c.ref) ? "" : `, ${c.ref}`})</span></li>)}
     </ul>
   );
 }
@@ -116,8 +118,14 @@ const CRITICAL_NOTE = /^(CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI)/u;
 
 /** Một phương án BYT: các nhóm thuốc giữ nguyên nhãn gốc ("Một trong", "Phối hợp (chọn một)"…), liều giữ nguyên. */
 function RegimenDrugs({ regimen }: { regimen: Regimen }) {
+  /* Đường mật: liều theo bản HĐT&ĐT đã công bố (trang quản trị) khi có; không tải được thì không hiện liều cũ. */
+  const protocol = useBiliaryProtocol();
+  const biliary = regimen.diseaseIds.includes(BILIARY_DISEASE_ID);
   const drugs = resolvedDrugs(regimen).map((drug) => ({ ...drug, dose: panelNote(cleanRef(drug.dose)) }));
-  const groups = structureOf({ ...regimen, id: `${regimen.id}#panel`, drugs }).groups;
+  const base = structureOf({ ...regimen, id: `${regimen.id}#panel`, drugs }).groups;
+  if (biliary && protocol === "unavailable") return <p role="status" className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">Tạm thời chưa tải được bản phác đồ đang dùng. Hãy tải lại trang.</p>;
+  const published = protocol && protocol !== "unavailable" ? protocol : null;
+  const groups = biliary && published ? biliaryPublishedGroups(regimen.id, base, published.content) : base;
   const aligned = groups.length === drugs.length;
   return (
     <div className="space-y-1">
@@ -242,6 +250,7 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
           <ClinicalNotes items={notes.filter((n) => !CRITICAL_NOTE.test(n))} />
         </details>
       )}
+      {col.note && <p className="text-xs font-medium text-slate-700">{col.note}</p>}
       {regs.length > 0 && <p className="text-xs"><Link className="text-teal-800 underline" href={SPECIALIZED_MODULE_LINKS.doseAdjustment.href}>{SPECIALIZED_MODULE_LINKS.doseAdjustment.label}</Link></p>}
     </div>
   );
@@ -360,12 +369,16 @@ export default function StratificationPanel({ data, family, overview, monitoring
   const columns = settings.length > 1 ? all.filter((c) => !c.setting || c.setting === setting) : all;
   /* Điện thoại: chọn một nhóm người bệnh, chỉ hiện ô của nhóm đó; máy tính giữ bảng đủ cột. */
   const [picked, setPicked] = useState<string>("");
+  /* Thời gian điều trị đường mật: theo bản HĐT&ĐT đã công bố khi có, nếu không theo QĐ 708. */
+  const protocol = useBiliaryProtocol();
   const active = columns.find((c) => c.id === picked)?.id ?? columns[0]?.id ?? "";
   const sampling = ofFamily(data.sampling, family);
   const shared = ofFamily(data.pathogens, family);
   const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
   if (!columns.length) return null;
   const hasColPathogens = columns.some((c) => ofFamily(c.pathogens ?? [], family).length > 0);
+  const biliaryContent = data.diseaseIds.includes(BILIARY_DISEASE_ID) ? (protocol && protocol !== "unavailable" ? protocol.content : BILIARY_BASE_CONTENT) : null;
+  const durationCites: StratCite[] = biliaryContent ? biliaryDurationText(biliaryContent).map((text) => ({ text: `Thời gian – ${text}`, source: protocol && protocol !== "unavailable" ? "Bản phác đồ BV199 đã công bố" : "QĐ 708/QĐ-BYT", ref: "" })) : [];
   const settingTitle = settings.length === 1 ? SETTING_LABEL[settings[0]] : settings.length > 1 ? SETTING_LABEL[setting] : "";
   return (
     <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
@@ -408,6 +421,12 @@ export default function StratificationPanel({ data, family, overview, monitoring
           {columns.map((col) => <h4 key={col.id} className={`rounded-lg border-2 px-2 py-1 text-center text-base font-bold ${HEAD[col.tone]}`}>{col.label}</h4>)}
         </div>
         <Row title="Tiêu chí" order={5} cols={columns} render={(col) => <Cites items={ofFamily(col.criteria, family)} />} />
+        {vn && data.severity && (
+          <section className="rounded-lg border border-amber-200 bg-amber-50/60 p-2" style={{ ["--o" as string]: 5 }}>
+            <p className="text-sm font-bold text-slate-900">{data.severity.title}</p>
+            <Cites items={[...data.severity.items, ...durationCites]} />
+          </section>
+        )}
 
         {sampling.length > 0 && (
           <section className="rounded-lg border border-rose-300 bg-rose-50 p-2" style={{ ["--o" as string]: 9 }}>

@@ -169,3 +169,23 @@ test("peritonitis: QĐ 708 columns only; tab Quốc tế keeps its gap note (no 
   assert.equal(hasIntlStratification("v8-21"), false);
   for (const d of ["v8-11", "v8-1", "v8-4", "v8-5", "v8-16", "v8-17", "v8-2"]) assert.equal(hasIntlStratification(d), true, d);
 });
+
+/* ===== Đường mật: liều HĐT&ĐT đã công bố phải áp vào khung phân tầng ===== */
+import { structureOf } from "../../lib/antibiotics/regimen-structure";
+import { resolvedDrugs } from "../../data/antibiotics/empiric/dose-references";
+import { BILIARY_BASE_CONTENT, BILIARY_EDIT_GROUPS, biliaryPublishedGroups } from "../../lib/antibiotics/biliary-protocol";
+
+test("biliary: panel drug names match the admin dose keys, so published doses replace every source dose", () => {
+  const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-24"))!;
+  const ids = Array.from(new Set(s.columns.flatMap((c) => c.byt)));
+  assert.deepEqual([...ids].sort(), BILIARY_EDIT_GROUPS.map((g) => g.id).sort());
+  const doses: Record<string, string> = {};
+  for (const g of BILIARY_EDIT_GROUPS) for (const row of g.rows) doses[row.id] = `DUYỆT ${row.drug}`;
+  for (const id of ids) {
+    const r = ALL_REGIMENS.find((x) => x.id === id)!;
+    const drugs = resolvedDrugs(r).map((d) => ({ ...d, dose: cleanRef(d.dose) }));
+    const groups = biliaryPublishedGroups(r.id, structureOf({ ...r, id: `${r.id}#panel`, drugs }).groups, { ...BILIARY_BASE_CONTENT, doses });
+    for (const o of groups.flatMap((g) => g.options)) assert.equal(o.raw, `DUYỆT ${o.name}`, `${id} ${o.name}: published dose not applied`);
+  }
+  assert.ok(s.columns[1].note && /carbapenem không phối hợp/.test(s.columns[1].note));
+});
