@@ -46,16 +46,47 @@ function roleOf(d: Dose): string {
   }
   return ({ failure: "Thất bại điều trị", failure_alternative: "Thất bại – thay thế", risk_resistance: "Nguy cơ kháng thuốc", severe: "Nặng, nhập viện", step_down: "Chuyển uống" } as Record<string, string>)[d.line] ?? "Chọn một";
 }
-/** Một dòng liều của module → dòng thuốc của khung (liều, đường dùng, số lần dùng, thời gian, liều tối đa, mức khuyến cáo). */
+/* Thẻ thuốc gọn: điều kiện dài của dòng liều rút thành nhãn ngắn (role) và một ghi chú nhỏ (note).
+   Chỉ tóm lược đúng nội dung điều kiện/lưu ý của dòng liều; dữ liệu gốc (JSON) giữ nguyên. */
+const FDA = "Chỉ khi không còn lựa chọn khác (cảnh báo FDA).";
+const SHORT: Record<string, { role?: string; note?: string }> = {
+  "abrsa-aao-amox": { role: "Không nguy cơ kháng thuốc" },
+  "abrsa-aao-amoxclav": { role: "Có nguy cơ kháng amoxicillin", note: "Ví dụ: kháng sinh trong tháng qua, > 65 tuổi, bệnh nền, suy giảm miễn dịch, triệu chứng vừa–nặng." },
+  "abrsa-aao-amoxclav-high": { role: "Nguy cơ phế cầu không nhạy penicilin", note: "Nhiễm khuẩn nặng, sốt ≥ 39 °C, > 65 tuổi, mới nằm viện, kháng sinh trong tháng qua, suy giảm miễn dịch." },
+  "abrsa-aao-doxy": {},
+  "abrsa-aao-cefixime": { note: "± clindamycin 450 mg uống 3 lần/ngày." },
+  "abrsa-aao-cefpodoxime": { note: "± clindamycin 450 mg uống 3 lần/ngày." },
+  "abrsa-aao-levo": { note: FDA },
+  "abrsa-aao-moxi": { note: FDA },
+  "abrsa-aao-fail-amoxclav": { role: "Thất bại sau 3–5 ngày" },
+  "abrsa-aao-fail-levo": { note: FDA },
+  "abrsa-aao-fail-moxi": { note: FDA },
+  "abrsp-amox-std": { role: "≥ 2 tuổi, nhẹ–vừa", note: "Không đi nhà trẻ, không dùng kháng sinh 4 tuần qua." },
+  "abrsp-amox-high": { role: "Tỷ lệ phế cầu không nhạy cảm > 10%" },
+  "abrsp-amoxclav-high": { role: "Vừa–nặng, < 2 tuổi, đi nhà trẻ hoặc mới dùng kháng sinh" },
+  "abrsp-ceftriaxone": { role: "Nôn, không uống được", note: "Cải thiện sau 24 giờ: chuyển uống." },
+  "abrsp-fail-amoxclav": { role: "Đang dùng amoxicillin, nặng lên trong 72 giờ" },
+  "abrsp-fail-after-amoxclav": { role: "Đang dùng amoxicillin-clavulanate, nặng lên", note: "Linezolid khi tỷ lệ phế cầu kháng clindamycin cao." },
+  "abrsp-fail-observe": { role: "Đang theo dõi, nặng lên" },
+  "gas-cefalexin": { note: "Tránh nếu quá mẫn tức thì với penicilin." },
+  "gas-cefadroxil": { note: "Tránh nếu quá mẫn tức thì với penicilin." },
+  "aom-amoxclav": { role: "Dùng amoxicillin 30 ngày qua, viêm kết mạc mủ hoặc tái phát" },
+  "aom-fail-amoxclav": { role: "Thất bại sau 48–72 giờ" },
+  "aom-fail-ceftriaxone": { role: "Thất bại sau 48–72 giờ" },
+  "aom-fail-clinda": { note: "Thất bại lần hai: kèm cephalosporin thế hệ 3, chọc màng nhĩ, hội chẩn chuyên khoa." },
+};
+/** Một dòng liều của module → thẻ thuốc gọn (tên thuốc; liều, đường dùng, số lần dùng; thời gian; ghi chú ngắn; mức khuyến cáo). */
 export function entItem(d: Dose): StratIntl["items"][number] {
   const noDose = /chỉ nêu|không nêu/u.test(d.dose);
-  const extra = [d.condition, d.caution && !(d.condition ?? "").includes(d.caution) ? d.caution : ""].filter(Boolean).join(". ");
+  const sh = SHORT[d.id];
+  const cond = sh ? sh.note ?? "" : [d.condition, d.caution && !(d.condition ?? "").includes(d.caution) ? d.caution : ""].filter(Boolean).join(". ");
+  const note = [cond && !/[.)]$/u.test(cond) ? `${cond}.` : cond, noDose ? "Liều theo các dòng nguồn đối chiếu." : "", d.max ? `Tối đa ${d.max}.` : ""].filter(Boolean).join(" ");
   return {
-    role: roleOf(d),
-    text: `${d.drug}${extra ? ` – ${extra}` : ""}${noDose ? ". Liều theo các dòng nguồn đối chiếu." : ""}`,
+    role: sh?.role ?? roleOf(d),
+    text: d.drug,
     ...(noDose ? {} : { dose: `${d.dose} ${d.route}${d.interval ? ` ${d.interval}` : ""}` }),
     ...(d.duration ? { course: d.duration } : {}),
-    ...(d.max ? { administration: `Tối đa ${d.max}.` } : {}),
+    ...(note ? { administration: note } : {}),
     ...(isAlg(d) ? { al: "alt" as const } : {}),
     ...(gradeOf(d.strength, d.quality) ? { grade: gradeOf(d.strength, d.quality) } : {}),
     ref: entShort(d.citation.sourceId),
