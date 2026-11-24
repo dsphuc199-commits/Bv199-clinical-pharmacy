@@ -22,12 +22,13 @@ import { EAU_UROLOGY_FORMS } from "../../../components/antibiotics/empiric/urolo
 import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-bsi-intl";
 import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
 import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
+import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
 /** parts/join: từng thuốc của phương án module Việt Nam và cách nối ("and" = phối hợp, "or" = chọn một thuốc);
     giao diện dùng để xuống dòng, không tách chuỗi theo chữ "hoặc" (vì chữ này có thể nằm trong câu liều). */
-export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; parts?: string[]; join?: "and" | "or" })[]; notes?: string[] };
+export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; administration?: string; parts?: string[]; join?: "and" | "or" })[]; notes?: string[] };
 export type StratColumn = {
   id: string;
   label: string;
@@ -626,15 +627,16 @@ const PERITONITIS: Stratification = {
 /* Nhiễm khuẩn đường mật: QĐ 708 chương 5 (Bảng II.14 phân độ, Bảng II.15 thuốc). Bảng II.15 chia "lựa chọn số 1 / số 2",
    không gắn thuốc theo từng độ nặng → cột theo Bảng II.15, phân độ và thời gian ở hàng chung.
    Liều và thời gian: giao diện dùng bản HĐT&ĐT đã công bố (lib/antibiotics/biliary-protocol) khi có.
-   Tab Quốc tế giữ công cụ TG18 hiện có (chưa có cột quốc tế). */
+   Tab Quốc tế: Tokyo Guidelines 2018 (module tg18-intl), cột theo độ nặng mắc phải cộng đồng và cột liên quan chăm sóc y tế. */
 const BILIARY: Stratification = {
   diseaseIds: ["v8-24"],
   title: "Nhiễm khuẩn đường mật – người lớn",
   lead: "Phân độ nặng và thuốc theo QĐ 708 chương 5 (lựa chọn số 1, số 2).",
-  sampling: [{ text: "Chọn kháng sinh bài tiết tốt vào đường mật. Có thể điều trị theo kinh nghiệm trong khi chờ kháng sinh đồ.", source: BYT, ref: "mục 4a, tr. 182–183" }],
+  sampling: [{ text: "Chọn kháng sinh bài tiết tốt vào đường mật. Có thể điều trị theo kinh nghiệm trong khi chờ kháng sinh đồ.", source: BYT, ref: "mục 4a, tr. 182–183" }, ...TG.TG18_SAMPLING],
   pathogens: [
     { text: "Cộng đồng: E. coli, Klebsiella, Enterococcus. Thể nặng: đa vi khuẩn, có kỵ khí (Clostridium, Bacteroides).", source: BYT, ref: "tr. 181" },
     { text: "Bệnh viện: MRSA, Enterococcus kháng vancomycin, Pseudomonas.", source: BYT, ref: "tr. 181" },
+    ...TG.TG18_PATHOGENS,
   ],
   severity: {
     title: "Mức độ nặng và lựa chọn theo mức độ (QĐ 708)",
@@ -654,16 +656,21 @@ const BILIARY: Stratification = {
       criteria: [{ text: "Lựa chọn số 2: fluoroquinolon, carbapenem.", source: BYT, ref: "Bảng II.15, tr. 184" }],
       byt: ["r-bil-2-fq", "r-bil-2-carba", "r-bil-anaer"], intl: [],
       note: "Metronidazol (kỵ khí) phối hợp với fluoroquinolon; carbapenem không phối hợp thêm metronidazol." },
+    { id: "tg-c1", label: "Cộng đồng · Độ I", tone: "community", criteria: TG.TG18_CRITERIA.c1, byt: [], intl: TG.TG18_COLUMNS.c1 },
+    { id: "tg-c2", label: "Cộng đồng · Độ II", tone: "hospital", criteria: TG.TG18_CRITERIA.c2, byt: [], intl: TG.TG18_COLUMNS.c2 },
+    { id: "tg-c3", label: "Cộng đồng · Độ III", tone: "special", criteria: TG.TG18_CRITERIA.c3, byt: [], intl: TG.TG18_COLUMNS.c3 },
+    { id: "tg-hc", label: "Liên quan chăm sóc y tế · Độ I–III", tone: "special", criteria: TG.TG18_CRITERIA.hc, byt: [], intl: TG.TG18_COLUMNS.hc },
   ],
   settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức. Tắc nghẽn: dẫn lưu qua da, stent qua ERCP hoặc phẫu thuật.",
-  principles: { source: "", items: [] },
+  extras: TG.TG18_EXTRAS,
+  principles: TG.TG18_PRINCIPLES,
   antibiogram: {
     gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Enterobacter spp. (gồm K. aerogenes)", "Pseudomonas aeruginosa"], codes: ["SAM", "TZP", "CRO", "CAZ", "FEP", "IMP", "MEM", "CN/GEN", "AMK", "CIP", "LVX"] },
     gramPositive: { organisms: ["Enterococcus spp."], codes: ["AMP", "VAN", "LZD"] },
     defaultScope: "toan-vien",
     note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng dịch mật, chỉ dùng để định hướng.",
   },
-  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn đường mật."],
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn đường mật.", ...TG.TG18_SOURCES],
 };
 
 /* ======================= DA – MÔ MỀM ======================= */

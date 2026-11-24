@@ -172,7 +172,28 @@ test("peritonitis: QĐ 708 columns stay Vietnamese-only; SIS 2024 / WSES 2021 co
   assert.ok(intl.every((c) => c.intl.filter((b) => b.source.startsWith("SIS")).every((b) => b.items.every((i) => !i.dose))));
   assert.equal(hasIntlStratification("v8-21"), true);
   for (const d of ["v8-11", "v8-1", "v8-4", "v8-5", "v8-16", "v8-17", "v8-2"]) assert.equal(hasIntlStratification(d), true, d);
-  assert.equal(hasIntlStratification("v8-24"), false);
+});
+
+/* ===== Đường mật quốc tế: TG18, cột theo độ nặng cộng đồng + liên quan chăm sóc y tế; dữ liệu từ JSON TG18 ===== */
+import tg18 from "../../data/guidelines/intl/viem-duong-mat-cap.json";
+test("biliary intl: TG18 columns reuse the TG18 JSON drug lists and doses, carry no BYT regimen", () => {
+  const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-24"))!;
+  assert.equal(hasIntlStratification("v8-24"), true);
+  const intl = s.columns.filter((c) => c.intl.length);
+  assert.deepEqual(intl.map((c) => c.id), ["tg-c1", "tg-c2", "tg-c3", "tg-hc"]);
+  assert.ok(intl.every((c) => c.byt.length === 0 && c.criteria.every((x) => x.source === "TG18") && c.intl.every((b) => b.source.startsWith("TG18 – "))));
+  const rules = (tg18 as unknown as { rules: { id: string; blocks?: { items: { role: string; dose?: string }[] }[] }[] }).rules;
+  const key = (i: { role: string; dose?: string }) => i.role + "|" + (i.dose ?? "");
+  for (const [col, ruleId] of [["tg-c1", "community-i"], ["tg-c2", "community-ii"], ["tg-c3", "community-iii"], ["tg-hc", "healthcare"]]) {
+    const want = rules.find((r) => r.id === ruleId)!.blocks!.flatMap((b) => b.items.map(key));
+    const got = intl.find((c) => c.id === col)!.intl.flatMap((b) => b.items.map(key));
+    assert.deepEqual(got, want, col);
+  }
+  /* Độ III cộng đồng và liên quan chăm sóc y tế có vancomycin; Độ I–II không. */
+  const has = (id: string, drug: string) => intl.find((c) => c.id === id)!.intl.some((b) => b.items.some((i) => i.role === drug));
+  assert.ok(has("tg-c3", "Vancomycin") && has("tg-hc", "Vancomycin") && !has("tg-c1", "Vancomycin") && !has("tg-c2", "Vancomycin"));
+  assert.ok(s.principles.items.some((i) => i.role.startsWith("Thời gian") && /4–7 ngày/.test(i.text)));
+  assert.ok((s.extras ?? []).some((x) => /miệng nối/.test(x.title)) && (s.extras ?? []).some((x) => /VRE/.test(x.title)));
 });
 
 /* ===== Đường mật: liều HĐT&ĐT đã công bố phải áp vào khung phân tầng ===== */
