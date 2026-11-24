@@ -21,6 +21,7 @@ import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/H
 import { EAU_UROLOGY_FORMS } from "../../../components/antibiotics/empiric/urology-eau2026";
 import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-bsi-intl";
 import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
+import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
 
 export type StratCite = { text: string; source: string; ref: string };
 /** parts/join: từng thuốc của phương án module Việt Nam và cách nối ("and" = phối hợp, "or" = chọn một thuốc);
@@ -568,19 +569,21 @@ const COMPLICATED_UTI: Stratification = {
 };
 
 /* ======================= Ổ BỤNG ======================= */
-/* Viêm phúc mạc thứ phát: QĐ 708 chương 5. Chưa có khuyến cáo quốc tế đã trích và đối chiếu (SIS 2024 mới xác minh
-   trích dẫn – international.ts), nên không có cột quốc tế; tab Quốc tế giữ ghi chú khoảng trống hiện có. */
+/* Viêm phúc mạc thứ phát: QĐ 708 chương 5 (cột Việt Nam). Quốc tế: SIS 2024 (lựa chọn thuốc, mức khuyến cáo, thời gian)
+   và WSES 2021 (liều) – module iai-intl; phân tầng nguy cơ thấp / cao / sau mổ theo SIS. Không ghép thuốc giữa hai họ nguồn. */
 const PERITONITIS: Stratification = {
   diseaseIds: ["v8-21"],
   title: "Viêm phúc mạc thứ phát – người lớn",
-  lead: "Phân tầng theo mức độ như QĐ 708 chương 5 (viêm phúc mạc thứ phát; trường hợp nặng).",
+  lead: "Phân tầng theo mức độ như QĐ 708 chương 5 (viêm phúc mạc thứ phát; trường hợp nặng); quốc tế phân tầng nguy cơ theo SIS 2024.",
   sampling: [
     { text: "Chọc dịch ổ bụng: bạch cầu > 500/mm³ và/hoặc bạch cầu trung tính > 250/mm³; soi, cấy dịch.", source: BYT, ref: "tr. 159" },
+    { text: "Luôn lấy bệnh phẩm tại ổ nhiễm khi nhiễm khuẩn liên quan chăm sóc y tế, nguy cơ vi khuẩn kháng thuốc hoặc bệnh nặng; cấy máu trước kháng sinh ở người bệnh nặng.", source: IAI.WSES21, ref: "Principles of antibiotic management" },
     { text: "Siêu âm, X-quang bụng đứng tìm nguyên nhân (liềm hơi, mức nước – hơi).", source: BYT, ref: "tr. 159" },
   ],
   pathogens: [
     { text: "Thứ phát: E. coli, K. pneumoniae, B. fragilis; có thể Streptococcus, Enterococcus, Clostridium.", source: BYT, ref: "tr. 158" },
     { text: "Viêm phúc mạc thì ba: trực khuẩn mủ xanh, Gram âm kháng thuốc, có thể C. albicans.", source: BYT, ref: "tr. 158" },
+    { text: "Phác đồ kinh nghiệm phủ Enterobacterales, liên cầu hiếu khí và vi khuẩn kỵ khí bắt buộc; nhiễm khuẩn liên quan chăm sóc y tế thêm tụ cầu, Enterococcus, Candida.", source: IAI.SIS24, ref: "Introduction" },
   ],
   columns: [
     { id: "vn-std", label: "Viêm phúc mạc thứ phát", tone: "community",
@@ -589,16 +592,34 @@ const PERITONITIS: Stratification = {
     { id: "vn-severe", label: "Trường hợp nặng", tone: "hospital",
       criteria: [{ text: "Viêm phúc mạc thứ phát – trường hợp nặng.", source: BYT, ref: "Viêm phúc mạc, mục 4.2" }],
       byt: ["r-peri-sec-2"], intl: [] },
+    { id: "iai-low", label: "Cộng đồng – nguy cơ thấp", tone: "community",
+      criteria: [{ text: IAI.IAI_LOWER_RISK, source: IAI.SIS24, ref: "Introduction" }],
+      byt: [], intl: [
+        { source: `${IAI.SIS24} – lựa chọn thuốc`, items: IAI.IAI_LOW_SIS },
+        { source: `${IAI.WSES21} – liều (chức năng thận bình thường)`, items: IAI.IAI_LOW_WSES },
+      ] },
+    { id: "iai-high", label: "Cộng đồng – nguy cơ cao", tone: "hospital",
+      criteria: [{ text: IAI.IAI_HIGHER_RISK, source: IAI.SIS24, ref: "Introduction" }],
+      byt: [], intl: [
+        { source: `${IAI.SIS24} – lựa chọn thuốc`, lead: IAI.IAI_HIGH_LEAD, items: IAI.IAI_HIGH_SIS },
+        { source: `${IAI.WSES21} – liều (chức năng thận bình thường)`, items: IAI.IAI_HIGH_WSES },
+      ] },
+    { id: "iai-postop", label: "Sau mổ / liên quan chăm sóc y tế", tone: "special",
+      criteria: [{ text: IAI.IAI_POSTOP, source: IAI.WSES21, ref: "Post-operative peritonitis" }],
+      byt: [], intl: [
+        { source: `${IAI.SIS24} – lựa chọn thuốc`, lead: IAI.IAI_POSTOP_LEAD, items: IAI.IAI_POSTOP_SIS },
+        { source: `${IAI.WSES21} – liều (chức năng thận bình thường)`, items: IAI.IAI_POSTOP_WSES },
+      ], note: IAI.IAI_POSTOP_NOTE },
   ],
   settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
-  principles: { source: "", items: [] },
+  principles: { source: `${IAI.SIS24} – kiểm soát ổ nhiễm, thời gian, quản lý kháng sinh`, items: IAI.IAI_PRINCIPLES },
   antibiogram: {
     gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Enterobacter spp. (gồm K. aerogenes)", "Pseudomonas aeruginosa"], codes: ["TZP", "CTX", "CRO", "FEP", "IMP", "MEM", "AMK", "CIP"] },
     gramPositive: { organisms: ["Enterococcus spp."], codes: ["AMP", "VAN", "LZD"] },
     defaultScope: "khoi-ngoai",
     note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng dịch ổ bụng, chỉ dùng để định hướng.",
   },
-  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm phúc mạc."],
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm phúc mạc.", ...IAI.IAI_SOURCES],
 };
 
 /* Nhiễm khuẩn đường mật: QĐ 708 chương 5 (Bảng II.14 phân độ, Bảng II.15 thuốc). Bảng II.15 chia "lựa chọn số 1 / số 2",

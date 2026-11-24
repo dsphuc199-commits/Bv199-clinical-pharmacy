@@ -52,6 +52,10 @@ const SSC = "SCCM/ESICM – Surviving Sepsis Campaign (2026)";
 
 const SEPSIS = ["v8-11", "v8-12"];
 const DECIDE = "HĐT&ĐT BV199 quyết định liều áp dụng; ứng dụng không chọn thay.";
+const WSES21 = "WSES/GAIS/SIS-E/WSIS/AAST – Global clinical pathways for intra-abdominal infections (2021), Sartelli M, World J Emerg Surg 2021;16:49";
+const URL_WSES21 = "https://doi.org/10.1186/s13017-021-00387-8";
+const SIS24 = "SIS – Guidelines on the Management of Intra-Abdominal Infection: 2024 Update (2024), Huston JM, Surg Infect 2024;25(6):419–435";
+const URL_SIS24 = "https://doi.org/10.1089/sur.2024.137";
 
 /* ---------------- Don vi ---------------- */
 
@@ -466,6 +470,64 @@ DOSE_CONFLICTS.push(
     ],
     warning: "Liều viêm bàng quang của QĐ 708 (80/400 mg x 2 lần/ngày) bằng một nửa liều ghi ở phần viêm thận bể thận cùng văn bản và của EAU 2026 (160/800 mg x 2 lần/ngày). Không tự đổi liều.",
     decision: "Chọn liều trimethoprim-sulfamethoxazol cho viêm bàng quang (phụ nữ và nam giới). " + DECIDE,
+  },
+  /* Đợt 2 ổ bụng – đường mật (24/11/2026): đối chiếu QĐ 708 với WSES 2021 (liều) và SIS 2024 (lựa chọn thuốc). */
+  {
+    id: "peritonitis-ptz-metro",
+    topic: "Viêm phúc mạc thứ phát – khoảng cách liều piperacilin-tazobactam, metronidazol",
+    diseaseIds: ["v8-21"],
+    regimenIds: ["r-peri-sec-1", "r-peri-sec-2"],
+    byt: [
+      { source: BYT708, locator: "Viêm phúc mạc, mục 4.2 (tr. 160)", url: URL_708, dose: "piperacilin-tazobactam truyền TM 4,5 g mỗi 8 giờ; metronidazol truyền TM 500 mg mỗi 8–12 giờ" },
+    ],
+    intl: [
+      { source: WSES21, locator: "Clinical pathway – thủng tạng rỗng, viêm phúc mạc sau mổ", url: URL_WSES21, dose: "piperacilin/tazobactam liều nạp 6 g/0,75 g, sau đó 4 g/0,5 g TM mỗi 6 giờ hoặc 16 g/2 g truyền liên tục (người bệnh nặng); metronidazol 500 mg TM mỗi 8 giờ" },
+    ],
+    warning: "QĐ 708 ghi piperacilin-tazobactam mỗi 8 giờ và metronidazol mỗi 8–12 giờ; WSES 2021 dùng piperacilin/tazobactam mỗi 6 giờ (có liều nạp ở người bệnh nặng) và metronidazol mỗi 8 giờ. Không tự đổi liều.",
+    decision: "Chọn khoảng cách liều piperacilin-tazobactam và metronidazol cho viêm phúc mạc thứ phát. " + DECIDE,
+  },
+  {
+    id: "biliary-imipenem",
+    topic: "Nhiễm khuẩn đường mật – liều imipenem-cilastatin",
+    diseaseIds: ["v8-24"],
+    regimenIds: ["r-bil-2-carba"],
+    byt: [
+      { source: BYT708, locator: "Nhiễm khuẩn đường mật, lựa chọn số 2 (tr. 184)", url: URL_708, dose: "imipenem-cilastatin TM 1–2 g mỗi 12 giờ" },
+    ],
+    intl: [
+      { source: WSES21, locator: "Clinical pathway – Acute cholangitis", url: URL_WSES21, dose: "imipenem/cilastatin 500 mg TM mỗi 6 giờ (chỉ khi sốc nhiễm khuẩn); meropenem 1 g mỗi 8 giờ; doripenem 500 mg mỗi 8 giờ" },
+    ],
+    warning: "QĐ 708 ghi imipenem-cilastatin 1–2 g mỗi 12 giờ; WSES 2021 dùng 500 mg mỗi 6 giờ. Khoảng cách 12 giờ khác với các nguồn quốc tế. Không tự đổi liều.",
+    decision: "Chọn liều và khoảng cách imipenem-cilastatin cho nhiễm khuẩn đường mật. " + DECIDE,
+  },
+  {
+    id: "biliary-aminoglycoside",
+    topic: "Nhiễm khuẩn đường mật – aminoglycosid",
+    diseaseIds: ["v8-24"],
+    regimenIds: ["r-bil-1-aminoglyc"],
+    byt: [
+      { source: BYT708, locator: "Nhiễm khuẩn đường mật, lựa chọn số 1 (tr. 184)", url: URL_708, dose: "gentamicin 80 mg mỗi 8 giờ; amikacin 5 mg/kg mỗi 8 giờ; tobramycin 1 mg/kg mỗi 8 giờ (TB hoặc TM)" },
+    ],
+    intl: [
+      { source: WSES21, locator: "Clinical pathway – Acute cholangitis", url: URL_WSES21, dose: "gentamicin 5–7 mg/kg mỗi 24 giờ, chỉ dùng kèm amoxicilin/clavulanat hoặc piperacilin/tazobactam (±), không dùng đơn độc" },
+      { source: SIS24, locator: "Antimicrobial agent therapy – Aminoglycosides", url: URL_SIS24, dose: "không dùng phác đồ phối hợp nền aminoglycosid để điều trị kinh nghiệm người bệnh nguy cơ cao (khuyến cáo mạnh, bằng chứng cao); không ghi liều" },
+    ],
+    warning: "QĐ 708 dùng aminoglycosid đơn độc, chia mỗi 8 giờ; WSES 2021 dùng gentamicin một lần/ngày và chỉ kèm beta-lactam; SIS 2024 khuyến cáo không dùng phác đồ nền aminoglycosid ở người bệnh nguy cơ cao. Không tự đổi liều.",
+    decision: "Chọn vị trí của aminoglycosid (đơn trị hay chỉ phối hợp) và cách chia liều cho nhiễm khuẩn đường mật. " + DECIDE,
+  },
+  {
+    id: "biliary-ciprofloxacin",
+    topic: "Nhiễm khuẩn đường mật – liều ciprofloxacin tĩnh mạch",
+    diseaseIds: ["v8-24"],
+    regimenIds: ["r-bil-2-fq"],
+    byt: [
+      { source: BYT708, locator: "Nhiễm khuẩn đường mật, lựa chọn số 2 (tr. 184)", url: URL_708, dose: "ciprofloxacin 500 mg uống hoặc TM mỗi 12 giờ (một liều chung cho cả hai đường)" },
+    ],
+    intl: [
+      { source: WSES21, locator: "Clinical pathway – Acute cholangitis", url: URL_WSES21, dose: "ciprofloxacin 400 mg TM mỗi 8–12 giờ + metronidazol 500 mg TM mỗi 8 giờ (dị ứng beta-lactam)" },
+    ],
+    warning: "QĐ 708 ghi một liều 500 mg cho cả đường uống và tĩnh mạch; WSES 2021 dùng 400 mg tĩnh mạch mỗi 8–12 giờ và luôn kèm metronidazol. Không tự đổi liều.",
+    decision: "Chọn liều ciprofloxacin tĩnh mạch và việc phối hợp metronidazol cho nhiễm khuẩn đường mật. " + DECIDE,
   },
   {
     id: "septic-arthritis",

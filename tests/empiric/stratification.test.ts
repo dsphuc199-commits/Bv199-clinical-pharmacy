@@ -162,12 +162,17 @@ test("only regimens whose source says 'chọn một thuốc' are alternatives; c
   assert.equal(items.find((i) => i.ref === "ward-ctax-azi")!.join, "and");
 });
 
-test("peritonitis: QĐ 708 columns only; tab Quốc tế keeps its gap note (no verified international recommendation)", () => {
+test("peritonitis: QĐ 708 columns stay Vietnamese-only; SIS 2024 / WSES 2021 columns carry no BYT regimen", () => {
   const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-21"))!;
-  assert.deepEqual(s.columns.map((c) => c.byt), [["r-peri-sec-1"], ["r-peri-sec-2"]]);
-  assert.ok(s.columns.every((c) => c.intl.length === 0));
-  assert.equal(hasIntlStratification("v8-21"), false);
+  assert.deepEqual(s.columns.filter((c) => c.byt.length).map((c) => c.byt), [["r-peri-sec-1"], ["r-peri-sec-2"]]);
+  const intl = s.columns.filter((c) => c.intl.length);
+  assert.deepEqual(intl.map((c) => c.id), ["iai-low", "iai-high", "iai-postop"]);
+  assert.ok(intl.every((c) => c.byt.length === 0 && c.intl.every((b) => /^(SIS 2024|WSES 2021) – /.test(b.source))));
+  /* Liều chỉ từ WSES 2021: khối SIS không có liều. */
+  assert.ok(intl.every((c) => c.intl.filter((b) => b.source.startsWith("SIS")).every((b) => b.items.every((i) => !i.dose))));
+  assert.equal(hasIntlStratification("v8-21"), true);
   for (const d of ["v8-11", "v8-1", "v8-4", "v8-5", "v8-16", "v8-17", "v8-2"]) assert.equal(hasIntlStratification(d), true, d);
+  assert.equal(hasIntlStratification("v8-24"), false);
 });
 
 /* ===== Đường mật: liều HĐT&ĐT đã công bố phải áp vào khung phân tầng ===== */

@@ -271,6 +271,7 @@ const STRAT_INTL_CSS = [
   ".strat-intl .sa24-rx td[data-label]{flex:0 1 auto;order:3}",
   ".strat-intl .sa24-rx td[data-label]::before{content:attr(data-label) \": \";font-size:12px;font-weight:700;color:#5a7385}",
   ".strat-intl .sa24-rx td[data-label][data-whole]::before{content:none}",
+  ".strat-intl .sa24-rx td[data-whole]{flex:1 1 100%;display:block!important}",
   ".strat-intl .sa24-rx td[data-label]:empty{display:none}",
 ].join("");
 
