@@ -85,7 +85,7 @@ export function entItem(d: Dose): StratIntl["items"][number] {
     role: sh?.role ?? roleOf(d),
     text: d.drug,
     ...(noDose ? {} : { dose: `${d.dose} ${d.route}${d.interval ? ` ${d.interval}` : ""}` }),
-    ...(d.duration ? { course: d.duration } : {}),
+    ...(d.duration ? { course: d.duration.replace(/ hoặc triệu chứng nặng: /u, " hoặc nặng: ").replace(/ nhẹ–vừa: /gu, ": ") } : {}),
     ...(note ? { administration: note } : {}),
     ...(isAlg(d) ? { al: "alt" as const } : {}),
     ...(gradeOf(d.strength, d.quality) ? { grade: gradeOf(d.strength, d.quality) } : {}),
@@ -122,12 +122,66 @@ export function entReference(diseaseId: string): StratIntl[] {
   const doses = disease(diseaseId).doses.filter((x) => x.status === "EXTRACTED" && x.role === "reference");
   return groupBySource(doses, "tham khảo, không phải khuyến cáo hội chuyên môn");
 }
+/* Nguyên tắc và dấu hiệu nặng viết gọn: id → một câu tóm lược đúng nội dung; "" = bỏ vì đã có nguyên ý trong thẻ thuốc
+   hoặc tiêu chí cột. Id không có trong bảng giữ câu gốc. */
+const SHORT_ST: Record<string, string> = {
+  "abrsa-aao-kas1a": "Chẩn đoán khi chảy mũi mủ kèm nghẹt mũi hoặc đau tức mặt ≥ 10 ngày không cải thiện, hoặc nặng lên lại sau khi đã đỡ.",
+  "abrsa-aao-kas1b": "Không chụp phim, trừ khi nghi biến chứng.",
+  "abrsa-aao-kas2": "Viêm xoang do virus: giảm đau, corticoid xịt, rửa mũi; không kháng sinh.",
+  "abrsa-aao-kas3": "Giảm đau, corticoid xịt mũi, rửa mũi nước muối giúp giảm triệu chứng.",
+  "abrsa-aao-kas4": "Không biến chứng, tái khám được: có thể theo dõi chờ đợi, không kháng sinh.",
+  "abrsa-aao-ww": "Theo dõi 3–5 ngày; nặng lên hoặc không cải thiện thì dùng kháng sinh.",
+  "abrsa-aao-severe": "",
+  "abrsa-aao-kas5": "Đầu tay: amoxicillin ± clavulanat, 5–7 ngày.",
+  "abrsa-aao-amox-pref": "",
+  "abrsa-aao-high": "",
+  "abrsa-aao-no-macrolide": "Không dùng macrolid, trimethoprim-sulfamethoxazol (tỷ lệ kháng cao).",
+  "abrsa-aao-no-fq": "Fluoroquinolon không còn là lựa chọn đầu tay (cảnh báo FDA).",
+  "abrsa-aao-allergy": "Báo dị ứng penicilin: nên làm test dị ứng.",
+  "abrsa-aao-duration": "",
+  "abrsa-aao-kas6": "Không cải thiện sau 3–5 ngày kháng sinh: đánh giá lại, loại trừ biến chứng rồi đổi thuốc.",
+  "abrsa-aao-failure": "",
+  "abrsa-rf-aao-complication": "Sốt, lồi mắt, giảm thị lực, đau đầu dữ dội, rối loạn ý thức, phù đỏ quanh mắt: chuyển cấp cứu, chụp CT.",
+  "abrsa-rf-aao-suppurative": "Nghi biến chứng mủ hoặc nguồn gốc răng: kháng sinh ngay hoặc chuyển chuyên khoa.",
+  "abrsa-rf-nice-refer": "Chuyển viện khi nhiễm khuẩn toàn thân nặng, biến chứng hốc mắt hoặc nội sọ.",
+  "abrsa-rf-refer": "Chuyển chuyên khoa khi suy giảm miễn dịch, xấu đi dù đã dùng kháng sinh, hoặc tái phát nhiều đợt.",
+  "abrsa-rf-ct": "",
+  "gas-idsa12-r1": "Làm RADT và/hoặc cấy họng, trừ khi biểu hiện virus rõ; trẻ em RADT âm tính thì cấy xác nhận.",
+  "gas-idsa12-r2": "",
+  "gas-idsa12-r5": "",
+  "gas-idsa12-r6": "Không xét nghiệm lại sau điều trị.",
+  "gas-idsa12-r8": "Penicilin hoặc amoxicillin, đủ 10 ngày.",
+  "gas-idsa12-r9": "",
+  "gas-idsa12-adj": "Giảm đau, hạ sốt bằng paracetamol hoặc NSAID; không dùng aspirin cho trẻ em, không corticoid.",
+  "gas-idsa12-r13": "Không cắt amidan chỉ để giảm số đợt viêm họng.",
+  "gas-cdc-treat": "",
+  "gas-cdc-diag": "",
+  "gas-cdc-allergy": "",
+  "gas-cdc-resistance": "Chưa có liên cầu nhóm A kháng penicilin; kháng macrolid, clindamycin thay đổi theo vùng.",
+  "gas-rf-suppurative": "Nghi áp xe quanh amidan, sau họng, viêm hạch cổ mủ: xem bệnh tương ứng.",
+  "gas-rf-highrisk": "",
+  "gas-rf-nice-refer": "Chuyển viện khi nhiễm khuẩn toàn thân nặng hoặc áp xe quanh amidan, cạnh họng, sau họng, hội chứng Lemierre.",
+  "aom-kas1a": "Chẩn đoán khi màng nhĩ phồng vừa–nhiều hoặc chảy mủ tai mới.",
+  "aom-kas1c": "Không chẩn đoán khi không có tràn dịch tai giữa.",
+  "aom-kas2": "Luôn đánh giá và điều trị đau.",
+  "aom-kas3a": "", "aom-kas3b": "", "aom-kas3c": "", "aom-kas3d": "", "aom-kas4a": "", "aom-kas4b": "",
+  "aom-kas4c": "Không đáp ứng sau 48–72 giờ: khám lại, cân nhắc đổi thuốc.",
+  "aom-kas5a": "Không dùng kháng sinh dự phòng cho viêm tai giữa tái phát.",
+  "aom-duration": "Thời gian: < 2 tuổi hoặc nặng 10 ngày; 2–5 tuổi 7 ngày; ≥ 6 tuổi 5–7 ngày.",
+  "aom-allergy-ceph": "Dị ứng penicilin không nặng: dùng được cephalosporin thế hệ 2–3.",
+  "aom-rf-toxic": "Trẻ có vẻ nhiễm độc, đau tai > 48 giờ, sốt ≥ 39 °C hoặc khó tái khám: xếp nhóm nặng, dùng kháng sinh.",
+  "aom-rf-second-failure": "Thất bại lần hai: chọc màng nhĩ hoặc hội chẩn chuyên khoa.",
+  "aom-rf-cps-worse": "",
+  "aom-rf-nice-refer": "Chuyển viện khi viêm xương chũm, viêm màng não, áp xe nội sọ, liệt mặt.",
+};
+const shortSt = <T extends { id: string; text: string }>(x: T) => (x.id in SHORT_ST ? SHORT_ST[x.id] : x.text);
+
 /** Khuyến cáo của nguồn chính (đã trích) – phần nguyên tắc. */
 export function entPrinciples(diseaseId: string, title: string, filter?: (s: Statement) => boolean): StratIntl {
   const d = disease(diseaseId);
-  const items = d.statements.filter((s) => s.role === "primary" && s.status === "EXTRACTED" && (!filter || filter(s))).map((s) => ({
+  const items = d.statements.filter((s) => s.role === "primary" && s.status === "EXTRACTED" && (!filter || filter(s)) && shortSt(s)).map((s) => ({
     role: s.kind === "recommendation" ? "Khuyến cáo" : "Ghi chú",
-    text: s.text,
+    text: shortSt(s),
     ref: entShort(s.citation.sourceId),
     ...(gradeOf(s.strength, s.quality) ? { grade: gradeOf(s.strength, s.quality) } : {}),
   }));
@@ -135,7 +189,7 @@ export function entPrinciples(diseaseId: string, title: string, filter?: (s: Sta
 }
 /** Dấu hiệu nặng của module. */
 export const entRedFlags = (diseaseId: string): StratIntl["items"] =>
-  disease(diseaseId).redFlags.filter((s) => s.status === "EXTRACTED").map((s) => ({ role: "Dấu hiệu nặng", text: s.text, ref: entShort(s.citation.sourceId) }));
+  disease(diseaseId).redFlags.filter((s) => s.status === "EXTRACTED" && shortSt(s)).map((s) => ({ role: "Dấu hiệu nặng", text: shortSt(s), ref: entShort(s.citation.sourceId) }));
 export const entCite = (text: string, sourceId: string, ref = ""): StratCite => ({ text, source: entShort(sourceId), ref });
 export const entSources = (diseaseId: string) => {
   const d = disease(diseaseId);
