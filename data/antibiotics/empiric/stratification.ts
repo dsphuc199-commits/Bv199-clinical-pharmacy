@@ -854,7 +854,8 @@ function sinusStrat(diseaseIds: string[], withChild: boolean): Stratification {
     extras: [
       { title: "Dấu hiệu nặng cần đánh giá cấp cứu", blocks: [{ source: "AAO-HNSF 2025 – dấu hiệu nặng", items: ENT.entRedFlags("abrs-adult") }] },
       { title: "Nguồn đối chiếu – người lớn (IDSA 2012, NICE NG79)", blocks: [...ENT.entComparison("abrs-adult", "abrsa-r-uncomplicated"), ...ENT.entComparison("abrs-adult", "abrsa-r-failure").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` }))] },
-      ...(withChild ? [{ title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: ENT.entComparison("abrs-peds", "abrsp-r-severe-worse", "child") },
+      ...(withChild ? [{ title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: [...ENT.entComparison("abrs-peds", "abrsp-r-severe-worse", "child"),
+          ...ENT.entComparison("abrs-peds", "abrsp-r-failure", "child").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` }))] },
         { title: "Đồng thuận Nhi khoa Ý 2025 – trẻ em", blocks: [EX.ITALY_SINUSITIS] }] : []),
     ],
     principles: ENT.entPrinciples("abrs-adult", "AAO-HNSF 2025 – khuyến cáo cho người lớn"),

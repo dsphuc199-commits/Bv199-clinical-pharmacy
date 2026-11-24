@@ -69,6 +69,8 @@ export const SFORL_CHILD: StratIntl[] = [{
     { role: "Kèm cefotaxim/ceftriaxon", text: "Hoặc metronidazol", dose: "30 mg/kg/ngày chia 2–3 lần (tối đa 1,5 g/ngày)", al: "alt", grade: DT, ref: SF },
     { role: "Chuyển uống", text: "Amoxicillin/acid clavulanic", dose: "80 mg/kg/ngày chia 3 lần (tối đa 3 g/ngày)", administration: "Khi hết sốt, đỡ đau, giảm viêm (thường sau 2–5 ngày).", grade: DT, ref: SF },
     { role: "Chuyển uống – dị ứng penicilin", text: "Clindamycin (trẻ > 6 tuổi)", dose: "30–40 mg/kg/ngày chia 3 lần (tối đa 1200 mg/ngày)", al: "alt", grade: DT, ref: SF },
+    { role: "Chuyển uống – dị ứng penicilin", text: "Linezolid", dose: "< 5 tuổi: 30 mg/kg/ngày chia 3 lần; ≥ 5 tuổi: 20 mg/kg/ngày chia 2 lần (tối đa 1200 mg/ngày)", al: "alt", grade: DT, ref: SF },
+    { role: "Chuyển uống – dị ứng penicilin", text: "Pristinamycin", dose: "50–100 mg/kg/ngày chia 2–3 lần (tối đa 4 g/ngày)", al: "alt", grade: DT, ref: SF },
   ],
 }];
 
@@ -120,6 +122,7 @@ export const ITALY_SINUSITIS: StratIntl = {
     { role: "Chọn một", text: "Amoxicillin/acid clavulanic (nặng lên lại hoặc khởi phát nặng)", dose: "90 mg/kg/ngày (theo amoxicillin) chia 3 lần", course: "≥ 10 ngày", grade: "T:Yếu · rất thấp", ref: IT },
     { role: "Thất bại sau 48–72 giờ", text: "Amoxicillin → amoxicillin/acid clavulanic; amoxicillin/acid clavulanic → cephalosporin thế hệ 2–3 + clindamycin", grade: "T:Yếu · thấp", ref: IT },
     { role: "Dị ứng penicilin nguy cơ thấp", text: "Cefixim, cefpodoxim hoặc ceftibuten", course: "≥ 10 ngày", al: "alt", grade: "T:Yếu · rất thấp", ref: IT },
+    { role: "Dị ứng nguy cơ cao, khởi phát nặng", text: "Quinolon (hội chẩn truyền nhiễm nhi)", al: "alt", grade: "T:Yếu · rất thấp", ref: IT },
     { role: "Không dùng", text: "Macrolid, trimethoprim-sulfamethoxazol", grade: "T:Mạnh · thấp", ref: IT },
   ],
 };
@@ -131,7 +134,9 @@ export const ITALY_AOM: StratIntl = {
     { role: "Kháng sinh ngay", text: "Trẻ < 6 tháng; 6–24 tháng viêm hai bên; chảy mủ tai hoặc nặng. Còn lại: theo dõi 48–72 giờ.", grade: "T:Mạnh · TB", ref: IT },
     { role: "Chọn một", text: "Amoxicillin", dose: "80–90 mg/kg/ngày uống chia 3 lần", course: "5 ngày (> 2 tuổi, không nguy cơ); 7–10 ngày nếu nguy cơ cao hoặc nặng", grade: "T:Mạnh · thấp", ref: IT },
     { role: "Thất bại hoặc tái phát trong 30 ngày", text: "Amoxicillin/acid clavulanic + amoxicillin", dose: "40 mg/kg/ngày (theo amoxicillin) + amoxicillin 50 mg/kg/ngày, chia 3 lần", grade: "T:Mạnh · TB", ref: IT },
-    { role: "Dị ứng penicilin", text: "Cefuroxim hoặc cefpodoxim (sau phân tầng nguy cơ dị ứng)", al: "alt", grade: "T:Mạnh · rất thấp", ref: IT },
+    { role: "Tái diễn", text: "Amoxicillin/acid clavulanic", course: "7–10 ngày", grade: "T:Yếu · TB", ref: IT },
+    { role: "Dị ứng penicilin nguy cơ thấp", text: "Cefuroxim hoặc cefpodoxim", al: "alt", grade: "T:Mạnh · rất thấp", ref: IT },
+    { role: "Dị ứng penicilin nguy cơ cao", text: "Macrolid hoặc clindamycin", al: "alt", grade: "T:Mạnh · rất thấp", ref: IT },
     { role: "Không dùng", text: "Kháng sinh tiêm cho thể không biến chứng; dự phòng kháng sinh thường quy", grade: "T:Mạnh · TB", ref: IT },
   ],
 };
