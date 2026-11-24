@@ -236,3 +236,24 @@ test("SSTI: every BYT regimen of v8-27/v8-28 appears exactly once; intl columns 
   const mild = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-27"))!.columns.find((c) => c.id === "cel-mild")!;
   assert.ok(mild.intl.flatMap((b) => b.items).some((i) => /Dị ứng penicilin/.test(i.role) && /Clindamycin/.test(i.text)));
 });
+
+/* ===== Thần kinh trung ương: cột Việt Nam đủ phác đồ QĐ 708 + QĐ 5642; WHO đúng liều đã trích; IDSA 2017 không ghi liều ===== */
+import { getIntlEntry } from "../../data/antibiotics/empiric/international";
+import { WHO_DOSE } from "../../components/antibiotics/empiric/cns-intl";
+test("CNS: every BYT regimen of v8-36/v8-38 appears exactly once; WHO doses come from the extracted WHO data; IDSA 2017 carries no dose", () => {
+  for (const d of ["v8-36", "v8-38"]) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
+    const ids = s.columns.flatMap((c) => c.byt);
+    assert.deepEqual([...ids].sort(), getRegimensForDisease(d).map((r) => r.id).sort(), d);
+    assert.equal(hasIntlStratification(d), true, d);
+  }
+  const who = JSON.stringify(getIntlEntry("v8-36")!.regimens);
+  for (const [k, v] of Object.entries(WHO_DOSE)) {
+    if (k.endsWith("Max")) continue;
+    assert.ok(who.includes(v), `${k}: ${v}`);
+  }
+  const vent = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-38"))!;
+  assert.ok(vent.columns.filter((c) => c.intl.length).every((c) => c.intl.every((b) => b.source.startsWith("IDSA 2017") && b.items.every((i) => !i.dose))));
+  const men = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-36"))!;
+  assert.ok(men.columns.find((c) => c.id === "cns-trauma")!.links!.some((l) => l.diseaseId === "v8-38"));
+});

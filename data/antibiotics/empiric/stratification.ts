@@ -23,12 +23,13 @@ import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-b
 import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
 import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
 import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
+import * as CNS from "../../../components/antibiotics/empiric/cns-intl";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
 /** parts/join: từng thuốc của phương án module Việt Nam và cách nối ("and" = phối hợp, "or" = chọn một thuốc);
     giao diện dùng để xuống dòng, không tách chuỗi theo chữ "hoặc" (vì chữ này có thể nằm trong câu liều). */
-export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; administration?: string; parts?: string[]; join?: "and" | "or" })[]; notes?: string[] };
+export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; administration?: string; course?: string; parts?: string[]; join?: "and" | "or" })[]; notes?: string[] };
 export type StratColumn = {
   id: string;
   label: string;
@@ -673,6 +674,84 @@ const BILIARY: Stratification = {
   sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn đường mật.", ...TG.TG18_SOURCES],
 };
 
+/* ======================= THẦN KINH TRUNG ƯƠNG ======================= */
+/* Việt Nam: QĐ 708 (Bảng II.19 theo lứa tuổi, cơ địa) và QĐ 5642/2015 (cùng cách chia); mỗi cột giữ cả hai văn bản,
+   QĐ 708 trước vì có liều người lớn cố định. Hàng "chấn thương, phẫu thuật, dò dịch não tủy" của QĐ 708 thuộc mặt bệnh
+   dẫn lưu não thất (v8-38). Quốc tế: WHO 2025/2026 (mắc phải cộng đồng) và IDSA 2017 (liên quan chăm sóc y tế). */
+const BYT5642 = "QĐ 5642/QĐ-BYT";
+const CNS_ANTIBIOGRAM: StratAntibiogram = {
+  gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Pseudomonas aeruginosa", "Acinetobacter baumannii"], codes: ["CRO", "CAZ", "FEP", "MEM", "AMK", "CIP"] },
+  gramPositive: { organisms: ["Staphylococcus aureus", "Staphylococcus coagulase âm (CoNS)", "Streptococcus spp."], codes: ["FOX", "PEN", "CTX", "VAN", "LZD"] },
+  defaultScope: "toan-vien",
+  note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng dịch não tủy, chỉ dùng để định hướng.",
+};
+const SRC_708_MEN = "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm màng não mủ.";
+const SRC_5642_MEN = "Bộ Y tế. QĐ 5642/QĐ-BYT ngày 31/12/2015 – Hướng dẫn chẩn đoán và điều trị một số bệnh truyền nhiễm, Viêm màng não nhiễm khuẩn.";
+
+const MENINGITIS: Stratification = {
+  diseaseIds: ["v8-36"],
+  title: "Viêm màng não vi khuẩn – người lớn",
+  lead: "Phân tầng theo lứa tuổi và cơ địa như QĐ 708 Bảng II.19 và QĐ 5642; quốc tế theo WHO 2025/2026 (mắc phải cộng đồng) và IDSA 2017 (liên quan chăm sóc y tế).",
+  sampling: [
+    { text: "Chọc dò dịch não tủy: bạch cầu đa nhân tăng, protein > 1 g/l, glucose < 2,2 mmol/l; nhuộm Gram, cấy, PCR. Cấy máu.", source: BYT, ref: "tr. 230" },
+  ],
+  pathogens: [
+    { text: "Người lớn: phế cầu, não mô cầu, liên cầu. Listeria ở người già.", source: BYT, ref: "tr. 229" },
+  ],
+  columns: [
+    { id: "vn-1850", label: "18–50 tuổi", tone: "community",
+      criteria: [{ text: "Người lớn 18–50 tuổi.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      pathogens: [{ text: "Phế cầu, liên cầu, não mô cầu.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      byt: ["r-men-18-50-first", "r-men-18-50-alt", "r-vmn42-18to50-first", "r-vmn42-18to50-alt"], intl: [] },
+    { id: "vn-over50", label: "Trên 50 tuổi", tone: "hospital",
+      criteria: [{ text: "Người lớn trên 50 tuổi. Ampicilin chọn khi nghi Listeria.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      pathogens: [{ text: "Phế cầu, não mô cầu, Listeria, kỵ khí Gram âm.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      byt: ["r-men-50-first", "r-men-50-alt", "r-vmn42-over50-first", "r-vmn42-over50-alt"], intl: [] },
+    { id: "vn-immuno", label: "Suy giảm miễn dịch", tone: "special",
+      criteria: [{ text: "Người bệnh suy giảm miễn dịch.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      pathogens: [{ text: "Phế cầu, não mô cầu, Listeria, kỵ khí Gram âm.", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      byt: ["r-men-immuno-first", "r-men-immuno-alt", "r-vmn42-immuno-first", "r-vmn42-immuno-alt"], intl: [] },
+    { id: "who-std", label: "Không có nguy cơ Listeria", tone: "community", criteria: CNS.MEN_WHO_CRIT.std, byt: [], intl: CNS.MEN_WHO_STD },
+    { id: "who-listeria", label: "Có nguy cơ Listeria", tone: "hospital", criteria: CNS.MEN_WHO_CRIT.listeria, byt: [], intl: CNS.MEN_WHO_LISTERIA },
+    { id: "cns-trauma", label: "Sau chấn thương, phẫu thuật, dò dịch não tủy", tone: "special",
+      criteria: [{ text: "Sau chấn thương, phẫu thuật sọ não, dò dịch não tủy.", source: BYT5642, ref: "mục 4.2a, tr. 19" }, ...CNS.MEN_WHO_CRIT.postop],
+      pathogens: [{ text: "Phế cầu, tụ cầu, kỵ khí Gram âm.", source: BYT5642, ref: "mục 4.2a, tr. 19" }],
+      byt: ["r-vmn42-trauma-first", "r-vmn42-trauma-alt"], intl: [],
+      links: [{ diseaseId: "v8-38", label: "Viêm não thất, viêm màng não liên quan chăm sóc y tế (IDSA 2017)" }],
+      note: "QĐ 708 xếp hàng này vào mặt bệnh nhiễm khuẩn dẫn lưu não thất." },
+  ],
+  settingNote: "QĐ 708 và QĐ 5642 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  extras: CNS.MEN_WHO_EXTRAS,
+  principles: CNS.MEN_WHO_PRINCIPLES,
+  antibiogram: CNS_ANTIBIOGRAM,
+  sources: [SRC_708_MEN, SRC_5642_MEN, ...CNS.CNS_SOURCES.who, CNS.CNS_SOURCES.idsa],
+};
+
+const VENTRICULITIS: Stratification = {
+  diseaseIds: ["v8-38"],
+  title: "Nhiễm khuẩn dẫn lưu não thất, viêm màng não sau phẫu thuật – người lớn",
+  lead: "Việt Nam theo hàng chấn thương, phẫu thuật, dò dịch não tủy của QĐ 708 Bảng II.19; quốc tế theo IDSA 2017 (viêm não thất, viêm màng não liên quan chăm sóc y tế).",
+  sampling: [
+    { text: "Chọc dò dịch não tủy: nhuộm Gram, cấy, PCR. Cấy máu.", source: BYT, ref: "tr. 230" },
+    ...CNS.VENT_SAMPLING,
+  ],
+  pathogens: [
+    { text: "Sau chấn thương, phẫu thuật, dò dịch não tủy: phế cầu, tụ cầu, kỵ khí Gram âm.", source: BYT, ref: "tr. 229, 231" },
+  ],
+  columns: [
+    { id: "vn-postsurg", label: "Chấn thương, phẫu thuật, dò dịch não tủy", tone: "special",
+      criteria: [{ text: "Viêm màng não sau chấn thương, phẫu thuật, dò dịch não tủy (gồm nhiễm khuẩn dẫn lưu não thất).", source: BYT, ref: "Bảng II.19, tr. 231" }],
+      byt: ["r-men-postsurg-first", "r-men-postsurg-alt"], intl: [] },
+    { id: "idsa-empiric", label: "Kinh nghiệm", tone: "hospital", criteria: CNS.VENT_CRIT.empiric, byt: [], intl: CNS.VENT_EMPIRIC },
+    { id: "idsa-allergy", label: "Phản vệ với beta-lactam", tone: "special", criteria: CNS.VENT_CRIT.allergy, byt: [], intl: CNS.VENT_ALLERGY },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  extras: CNS.VENT_EXTRAS,
+  principles: CNS.VENT_PRINCIPLES,
+  antibiogram: CNS_ANTIBIOGRAM,
+  sources: [SRC_708_MEN, CNS.CNS_SOURCES.idsa],
+};
+
 /* ======================= DA – MÔ MỀM ======================= */
 /* Việt Nam: QĐ 708 (viêm mô bào) và QĐ 4416/2023 (nhọt, áp xe da). Quốc tế: IDSA 2014 + ACE 2026 qua hàm sstiPlan
    (cùng dữ liệu công cụ tab Quốc tế cũ). Khối "khuyến cáo IDSA" chung cho mọi mức độ đặt một lần ở nguyên tắc;
@@ -794,7 +873,7 @@ const ABSCESS: Stratification = {
   sources: ["Bộ Y tế. QĐ 4416/QĐ-BYT ngày 06/12/2023 – Hướng dẫn chẩn đoán và điều trị các bệnh da liễu, Nhọt, áp xe da.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS];
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));

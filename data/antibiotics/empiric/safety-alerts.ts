@@ -34,7 +34,7 @@ const MEN_CHILD = ["r-men-1-3m-first", "r-men-1-3m-alt", "r-men-3m-18y-first", "
 const MEN_ADULT_5642 = ["r-vmn42-18to50-first", "r-vmn42-18to50-alt", "r-vmn42-over50-first", "r-vmn42-over50-alt", "r-vmn42-immuno-first", "r-vmn42-immuno-alt", "r-vmn42-trauma-first", "r-vmn42-trauma-alt"];
 
 const WHO_MAX =
-  "Liều tối đa theo WHO 2026 (sổ tay thực hành, Bảng 11, tr. in 35–37): ceftriaxon 4 g/ngày (trẻ em tối đa 2 g mỗi 12 giờ); cefotaxim 12 g/ngày; ampicilin/amoxicilin 12 g/ngày; vancomycin 4 g/ngày (không theo dõi nồng độ: ≤ 750 mg/liều ở trẻ em, ≤ 3 g/ngày ở người lớn). Ceftazidim, amikacin, gentamicin: WHO không ghi liều tối đa – CHƯA XÁC MINH.";
+  "Liều tối đa theo WHO 2026 (sổ tay thực hành): ceftriaxon 4 g/ngày (trẻ em tối đa 2 g mỗi 12 giờ); cefotaxim 12 g/ngày; ampicilin/amoxicilin 12 g/ngày; vancomycin 4 g/ngày (không theo dõi nồng độ: ≤ 750 mg/liều ở trẻ em, ≤ 3 g/ngày ở người lớn).";
 
 export const SAFETY_ALERTS: SafetyAlert[] = [
   /* ---------- Colistin ---------- */
@@ -105,7 +105,7 @@ export const SAFETY_ALERTS: SafetyAlert[] = [
     level: "critical",
     regimenIds: MEN_ADULT_5642,
     title: "Người lớn: liều QĐ 5642 tính theo kg có thể vượt liều tối đa",
-    text: "Bảng liều QĐ 5642 (tr. 19) chỉ ghi mg/kg/ngày, không có cột người lớn. Ví dụ 70 kg: ceftriaxon 80–100 mg/kg/ngày = 5,6–7 g/ngày (tối đa 4 g/ngày); ampicilin 150–300 mg/kg/ngày = 10,5–21 g/ngày (tối đa 12 g/ngày). Đối chiếu cột người lớn của QĐ 708 Bảng II.20. " + WHO_MAX,
+    text: "Liều QĐ 5642 chỉ ghi mg/kg/ngày, không có cột người lớn. Ví dụ 70 kg: ceftriaxon 80–100 mg/kg/ngày = 5,6–7 g/ngày (tối đa 4 g/ngày); ampicilin 150–300 mg/kg/ngày = 10,5–21 g/ngày (tối đa 12 g/ngày). Đối chiếu liều người lớn của QĐ 708. " + WHO_MAX,
     sources: ["QĐ 5642 tr. 19", "QĐ 708 Bảng II.20", "WHO 2026 Bảng 11"],
     autoRecommend: "block",
     blockReason: "Liều theo kg (QĐ 5642) áp dụng cho người lớn có thể vượt liều tối đa; dùng phác đồ QĐ 708 cột người lớn hoặc chờ HĐT&ĐT.",
@@ -114,8 +114,8 @@ export const SAFETY_ALERTS: SafetyAlert[] = [
     id: "meningitis-trauma-alt-unverified",
     level: "high",
     regimenIds: ["r-vmn42-trauma-alt"],
-    title: "Phác đồ thay thế CHƯA XÁC MINH",
-    text: "Bảng QĐ 5642 không tách rõ ô cột thay thế (ceftazidim + vancomycin, meropenem) – chưa xác định cách phối hợp. Không dùng khi chưa đối chiếu bản in.",
+    title: "Phác đồ thay thế: CHƯA XÁC MINH cách phối hợp",
+    text: "Cột thay thế của QĐ 5642 gồm ceftazidim + vancomycin và meropenem nhưng không tách rõ cách phối hợp. Chưa dùng phác đồ này khi chưa thống nhất với dược sĩ lâm sàng.",
     sources: ["QĐ 5642 tr. 19"],
     autoRecommend: "block",
     blockReason: "Cách phối hợp thuốc ở cột thay thế chưa xác định.",
