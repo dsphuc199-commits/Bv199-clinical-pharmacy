@@ -52,6 +52,7 @@ export function Grade({ g }: { g?: string }) {
   if (g === "GPS") return <span className="sa24-g sa24-g-gps" title="Khuyến cáo thực hành tốt">TH tốt</span>;
   if (g === "ACOG") return <span className="sa24-g sa24-g-gps" title="ACOG Clinical Consensus: khuyến cáo được hội đồng bỏ phiếu, đạt ngưỡng đồng thuận ≥ 75%; không xếp mức GRADE">Đồng thuận</span>;
   if (g === "KG") return <span className="sa24-g sa24-g-c" title="Khoảng trống kiến thức: hội đồng không khuyến cáo nên hay không nên">Chưa KC</span>;
+  if (g.startsWith("T:")) return <span className="sa24-g sa24-g-gps" title="Mức khuyến cáo theo đúng nhãn của nguồn">{g.slice(2)}</span>;
   const esc = g.match(/^ESC:(I|IIa|IIb|III)-([ABC])$/);
   if (esc) return <span className={`sa24-g ${esc[1] === "I" ? "sa24-g-a" : esc[1] === "IIa" ? "sa24-g-b" : esc[1] === "IIb" ? "sa24-g-c" : "sa24-g-d"}`} title="ESC: loại khuyến cáo (I nên dùng; IIa nên cân nhắc; IIb có thể cân nhắc; III không khuyến cáo) · mức bằng chứng (A, B, C)">Loại {esc[1]} · {esc[2]}</span>;
   const m = g.match(/^([SCW])-(H|M|L|VL)$/);

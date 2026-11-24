@@ -25,6 +25,7 @@ import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
 import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
 import * as CNS from "../../../components/antibiotics/empiric/cns-intl";
 import * as IE from "../../../components/antibiotics/empiric/ie-intl";
+import * as ENT from "../../../components/antibiotics/empiric/ent-strat";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
@@ -798,6 +799,173 @@ const ENDOCARDITIS: Stratification = {
   sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm nội tâm mạc nhiễm khuẩn.", ...IE.IE_SOURCES],
 };
 
+/* ======================= TAI MŨI HỌNG ======================= */
+/* Việt Nam: QĐ 5643/QĐ-BYT (2015, bệnh tai mũi họng) và QĐ 708 Bảng II.13 (viêm họng liên cầu, phòng thấp tim).
+   Quốc tế: dữ liệu module ENT (data/ent, có trích dẫn) qua ent-strat. Áp xe quanh amidan, sau họng, khoang cổ sâu:
+   module ENT chỉ có nguồn tham khảo → chỉ khung Việt Nam, tab Quốc tế giữ công cụ ENT. */
+const BYT5643 = "QĐ 5643/QĐ-BYT";
+const SRC_5643 = (bai: string) => `Bộ Y tế. QĐ 5643/QĐ-BYT ngày 31/12/2015 – Hướng dẫn chẩn đoán và điều trị một số bệnh về tai mũi họng, ${bai}.`;
+const ENT_ANTIBIOGRAM: StratAntibiogram = {
+  gramNegative: { organisms: ["Klebsiella pneumoniae", "Escherichia coli", "Trực khuẩn Gram âm khác"], codes: ["AMC", "CXM", "CTX", "CRO", "CIP", "LVX"] },
+  gramPositive: { organisms: ["Streptococcus spp.", "Staphylococcus aureus"], codes: ["PEN", "AMP", "ERY", "CLI", "FOX", "LVX"] },
+  defaultScope: "toan-vien",
+  note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng bệnh phẩm tai mũi họng, chỉ dùng để định hướng.",
+};
+
+function sinusStrat(diseaseIds: string[], withChild: boolean): Stratification {
+  const AAO = "AAOHNSF-2025", AAP = "AAP-2013-sinusitis";
+  const childCols: StratColumn[] = withChild ? [
+    { id: "sp-start", label: "Trẻ em – nặng, xấu đi hoặc kéo dài", tone: "community", byt: [],
+      criteria: [ENT.entCite("Khởi phát nặng (sốt ≥ 39 °C kèm chảy mũi mủ ≥ 3 ngày) hoặc diễn biến xấu đi: kê kháng sinh. Kéo dài trên 10 ngày không cải thiện: kê kháng sinh hoặc theo dõi ngoại trú thêm 3 ngày.", AAP)],
+      intl: ENT.entColumn("abrs-peds", "abrsp-r-severe-worse", "child") },
+    { id: "sp-fail", label: "Trẻ em – không cải thiện sau 72 giờ", tone: "special", byt: [],
+      criteria: [ENT.entCite("Nặng lên hoặc không cải thiện trong 72 giờ sau xử trí ban đầu: đánh giá lại, đổi kháng sinh hoặc bắt đầu kháng sinh.", AAP)],
+      intl: ENT.entColumn("abrs-peds", "abrsp-r-failure", "child") },
+  ] : [];
+  return {
+    diseaseIds,
+    title: withChild ? "Viêm xoang cấp do vi khuẩn" : "Viêm xoang cấp do vi khuẩn – người lớn",
+    lead: `Phân tầng theo mức độ và việc dùng kháng sinh gần đây như QĐ 5643; quốc tế theo AAO-HNSF 2025 (người lớn)${withChild ? " và AAP 2013 (trẻ em)" : ""}, đối chiếu IDSA 2012, NICE NG79.`,
+    sampling: [{ text: "Soi mũi trước, nội soi mũi (lấy bệnh phẩm khe giữa); CT khi nghi biến chứng.", source: BYT5643, ref: "tr. 109" }],
+    pathogens: [
+      { text: "S. pneumoniae, H. influenzae, M. catarrhalis.", source: BYT5643, ref: "tr. 108" },
+      { text: "Khoảng 25% phế cầu kháng penicilin; 30% H. influenzae và hầu hết M. catarrhalis tiết beta-lactamase.", source: BYT5643, ref: "tr. 111" },
+    ],
+    columns: [
+      { id: "vn-moderate", label: "Thể trung bình, chưa dùng kháng sinh gần đây", tone: "community",
+        criteria: [{ text: "Thể trung bình, không dùng kháng sinh trong 4–6 tuần gần đây.", source: BYT5643, ref: "mục 4.2.1, tr. 111" }],
+        byt: ["r-ent-sinus-moderate", "r-ent-sinus-allergy-adult"], intl: [] },
+      { id: "vn-recent", label: "Đã dùng kháng sinh gần đây", tone: "hospital",
+        criteria: [{ text: "Đã dùng kháng sinh trong 4–6 tuần gần đây hoặc bệnh chưa ở mức nguy hiểm.", source: BYT5643, ref: "mục 4.2.1, tr. 111" }],
+        byt: ["r-ent-sinus-recent-adult", "r-ent-sinus-recent-adult-allergy"], intl: [] },
+      { id: "sa-unc", label: "Người lớn – không biến chứng", tone: "community", byt: [],
+        criteria: [ENT.entCite("Đủ tiêu chuẩn (≥ 10 ngày không cải thiện, hoặc nặng lên lại trong 10 ngày), không biến chứng: theo dõi chờ đợi hoặc kháng sinh, quyết định cùng người bệnh. Bệnh nặng (sốt 39 °C kèm chảy mũi mủ ≥ 3–4 ngày) hoặc suy giảm miễn dịch: dùng kháng sinh.", AAO)],
+        intl: ENT.entColumn("abrs-adult", "abrsa-r-uncomplicated") },
+      { id: "sa-fail", label: "Người lớn – thất bại sau 3–5 ngày", tone: "hospital", byt: [],
+        criteria: [ENT.entCite("Không cải thiện hoặc nặng lên sau 3–5 ngày kháng sinh phù hợp: đánh giá lại; xác nhận chẩn đoán thì đổi kháng sinh.", AAO)],
+        intl: ENT.entColumn("abrs-adult", "abrsa-r-failure") },
+      { id: "sa-comp", label: "Người lớn – nghi biến chứng", tone: "special", byt: [],
+        criteria: [ENT.entCite("Nghi biến chứng lan ngoài xoang (hốc mắt, nội sọ) hoặc nguồn gốc răng: kháng sinh ngay hoặc chuyển chuyên khoa tai mũi họng.", AAO)],
+        intl: ENT.entColumn("abrs-adult", "abrsa-r-complicated") },
+      ...childCols,
+    ],
+    settingNote: "Thể nặng: 10–14 ngày. Rửa mũi nước muối, corticoid xịt mũi; phẫu thuật khi điều trị nội khoa tối đa 4–6 tuần không kết quả.",
+    extras: [
+      { title: "Dấu hiệu nặng cần đánh giá cấp cứu", blocks: [{ source: "AAO-HNSF 2025 – dấu hiệu nặng", items: ENT.entRedFlags("abrs-adult") }] },
+      { title: "Nguồn đối chiếu – người lớn (IDSA 2012, NICE NG79)", blocks: [...ENT.entComparison("abrs-adult", "abrsa-r-uncomplicated"), ...ENT.entComparison("abrs-adult", "abrsa-r-failure").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` }))] },
+      ...(withChild ? [{ title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: ENT.entComparison("abrs-peds", "abrsp-r-severe-worse", "child") }] : []),
+    ],
+    principles: ENT.entPrinciples("abrs-adult", "AAO-HNSF 2025 – khuyến cáo cho người lớn"),
+    antibiogram: ENT_ANTIBIOGRAM,
+    sources: [SRC_5643("Viêm mũi xoang cấp tính"), ...ENT.entSources("abrs-adult"), ...(withChild ? ENT.entSources("abrs-peds") : [])].filter((s, i, a) => a.indexOf(s) === i),
+  };
+}
+
+const GAS_STRAT: Stratification = {
+  diseaseIds: ["v8-8", "v8-54"],
+  title: "Viêm họng do liên cầu nhóm A",
+  lead: "Việt Nam theo QĐ 5643 (viêm họng cấp) và QĐ 708 Bảng II.13 (điều trị viêm họng liên cầu, phòng thấp tim); quốc tế theo IDSA 2012 và CDC 2025, đối chiếu NICE NG84.",
+  sampling: [
+    { text: "Phết họng nuôi cấy để định loại nguyên nhân.", source: BYT5643, ref: "tr. 156" },
+    ENT.entCite("Làm test kháng nguyên nhanh (RADT) và/hoặc cấy họng, vì lâm sàng không phân biệt được liên cầu nhóm A với virus, trừ khi có biểu hiện virus rõ.", "IDSA-2012-GAS"),
+  ],
+  pathogens: [{ text: "Virus 60–80%; vi khuẩn 20–40% (liên cầu tan huyết nhóm A, H. influenzae, tụ cầu vàng, M. catarrhalis, kỵ khí).", source: BYT5643, ref: "tr. 155" }],
+  columns: [
+    { id: "vn-5643", label: "Viêm họng đỏ cấp, trên 3 tuổi", tone: "community",
+      criteria: [{ text: "Trên 3 tuổi, chưa định loại nguyên nhân: điều trị như viêm họng do liên cầu.", source: BYT5643, ref: "mục 4.2.1, tr. 157" }],
+      byt: ["r-ent-pharyngitis"], intl: [] },
+    { id: "vn-708", label: "Viêm họng liên cầu – phòng thấp tim", tone: "hospital",
+      criteria: [{ text: "Điều trị viêm họng do liên cầu (phòng thấp tim): penicilin V hoặc erythromycin uống đủ 10 ngày; benzathin penicilin tiêm bắp một lần.", source: BYT, ref: "Bảng II.13, tr. 125–126" }],
+      byt: ["r-ent-gas-708-bpg", "r-ent-gas-708-penv", "r-ent-gas-708-ery"], intl: [] },
+    { id: "g-adult", label: "Người lớn – RADT hoặc cấy dương tính", tone: "community", byt: [],
+      criteria: [ENT.entCite("RADT hoặc cấy họng dương tính: điều trị kháng sinh đủ liều, đủ thời gian (thường 10 ngày).", "IDSA-2012-GAS")],
+      intl: ENT.entColumn("gas-pharyngitis", "gas-r-positive", "adult") },
+    { id: "g-child", label: "Trẻ em – RADT hoặc cấy dương tính", tone: "hospital", byt: [],
+      criteria: [ENT.entCite("RADT hoặc cấy họng dương tính: điều trị kháng sinh; liều theo cân nặng.", "IDSA-2012-GAS")],
+      intl: ENT.entColumn("gas-pharyngitis", "gas-r-positive", "child") },
+    { id: "g-test", label: "Chưa xét nghiệm hoặc RADT âm tính", tone: "special", byt: [],
+      criteria: [ENT.entCite("Chưa có kết quả xét nghiệm: xét nghiệm trước khi quyết định dùng kháng sinh.", "IDSA-2012-GAS")],
+      intl: [{ source: "IDSA 2012, CDC 2025 – xử trí", items: [
+        { role: "Biểu hiện virus rõ", text: "Sổ mũi, ho, loét miệng, khàn tiếng: chẩn đoán lâm sàng, không cần xét nghiệm, không dùng kháng sinh.", ref: "CDC 2025" },
+        { role: "Chưa xét nghiệm", text: "Làm RADT và/hoặc cấy họng; dương tính thì dùng phác đồ ở cột dương tính.", grade: "T:Mạnh · cao", ref: "IDSA 2012" },
+        { role: "Trẻ ≥ 3 tuổi, RADT âm tính", text: "Cấy họng xác nhận.", ref: "CDC 2025" },
+        { role: "Người lớn, RADT âm tính", text: "Không cần cấy lại thường quy; không dùng kháng sinh.", grade: "T:Mạnh · TB", ref: "IDSA 2012" },
+        { role: "Trẻ < 3 tuổi", text: "Không xét nghiệm liên cầu nhóm A thường quy; cân nhắc khi có yếu tố nguy cơ (ví dụ anh chị em nhiễm liên cầu nhóm A).", grade: "T:Mạnh · TB", ref: "IDSA 2012" },
+      ] }] },
+  ],
+  settingNote: "Penicilin V hoặc erythromycin uống đủ 10 ngày; benzathin penicilin tiêm bắp một lần. Thể nặng hoặc có biến chứng: chuyển chuyên khoa.",
+  extras: [
+    { title: "Dấu hiệu nặng", blocks: [{ source: "IDSA 2012, CDC 2025 – dấu hiệu nặng", items: ENT.entRedFlags("gas-pharyngitis") }] },
+    { title: "Nguồn đối chiếu (NICE NG84)", blocks: [
+      ...ENT.entComparison("gas-pharyngitis", "gas-r-positive", "adult").map((b) => ({ ...b, source: `${b.source} – người lớn` })),
+      ...ENT.entComparison("gas-pharyngitis", "gas-r-positive", "child").map((b) => ({ ...b, source: `${b.source} – trẻ em` })),
+    ] },
+  ],
+  principles: ENT.entPrinciples("gas-pharyngitis", "IDSA 2012, CDC 2025 – khuyến cáo", (s) => s.kind === "recommendation" || /kháng/u.test(s.text)),
+  antibiogram: ENT_ANTIBIOGRAM,
+  sources: [SRC_5643("Viêm họng cấp tính"), "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Thấp tim (điều trị viêm họng liên cầu).", ...ENT.entSources("gas-pharyngitis")],
+};
+
+function aomStrat(diseaseIds: string[], withAdult: boolean): Stratification {
+  const AAP = "AAP-2013-AOM";
+  return {
+    diseaseIds,
+    title: "Viêm tai giữa cấp – trẻ em",
+    lead: "Việt Nam theo QĐ 5643 (viêm tai giữa cấp tính trẻ em); quốc tế theo AAP 2013, đối chiếu Hội Nhi khoa Canada 2016, NICE NG91.",
+    sampling: [{ text: "Đau tai, sốt cao, nghe kém; màng nhĩ đỏ, phồng; nội soi tai.", source: BYT5643, ref: "tr. 210–212" }],
+    pathogens: [{ text: "Viêm vòm mũi họng lan qua vòi Eustache; trẻ có VA, sau cúm, sởi.", source: BYT5643, ref: "tr. 210" }],
+    columns: [
+      { id: "vn-child", label: "Trẻ em", tone: "community",
+        criteria: [{ text: "Kháng sinh phổ rộng (beta-lactam, cephalosporin, macrolid), tốt nhất theo kháng sinh đồ; phối hợp kháng viêm, dẫn lưu.", source: BYT5643, ref: "mục 4.3.3, tr. 214" }],
+        byt: ["r-ent-aom-child"], intl: [] },
+      { id: "a-now", label: "Kháng sinh ngay", tone: "hospital", byt: [],
+        criteria: [ENT.entCite("Trẻ ≥ 6 tháng có triệu chứng nặng (đau tai vừa–nặng hoặc ≥ 48 giờ, hoặc sốt ≥ 39 °C), chảy mủ tai, hoặc trẻ 6–23 tháng viêm tai giữa cấp hai bên.", AAP)],
+        intl: ENT.entColumn("aom-peds", "aom-r-severe", "child") },
+      { id: "a-watch", label: "Không nặng – kháng sinh hoặc theo dõi", tone: "community", byt: [],
+        criteria: [ENT.entCite("Trẻ 6–23 tháng viêm một bên, hoặc trẻ ≥ 24 tháng, không có triệu chứng nặng: kê kháng sinh hoặc theo dõi sát, quyết định cùng gia đình; bảo đảm tái khám nếu không cải thiện sau 48–72 giờ.", AAP)],
+        intl: ENT.entColumn("aom-peds", "aom-r-older", "child") },
+      { id: "a-fail", label: "Thất bại sau 48–72 giờ", tone: "special", byt: [],
+        criteria: [ENT.entCite("Nặng lên hoặc không đáp ứng kháng sinh ban đầu sau 48–72 giờ: đánh giá lại và đổi kháng sinh.", AAP)],
+        intl: ENT.entColumn("aom-peds", "aom-r-failure", "child") },
+    ],
+    settingNote: "Chích rạch màng nhĩ khi có mủ hòm nhĩ, triệu chứng toàn thân xấu, kéo dài trên 4 ngày.",
+    extras: [
+      { title: "Dấu hiệu nặng", blocks: [{ source: "AAP 2013 – dấu hiệu nặng", items: ENT.entRedFlags("aom-peds") }] },
+      { title: "Nguồn đối chiếu (Hội Nhi khoa Canada 2016, NICE NG91)", blocks: [
+        ...ENT.entComparison("aom-peds", "aom-r-severe", "child"),
+        ...ENT.entComparison("aom-peds", "aom-r-failure", "child").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` })),
+      ] },
+      ...(withAdult ? [{ title: "Người lớn", criteria: "AAP 2013 dành cho trẻ em.", blocks: ENT.entReference("aom-adult") }] : []),
+    ],
+    principles: ENT.entPrinciples("aom-peds", "AAP 2013 – khuyến cáo"),
+    antibiogram: ENT_ANTIBIOGRAM,
+    sources: [SRC_5643("Viêm tai giữa cấp tính trẻ em"), ...ENT.entSources("aom-peds"), ...(withAdult ? ["NHS (BAAG/IMOC, Anh). Summary of antimicrobial prescribing guidance – managing common infections (2025)."] : [])],
+  };
+}
+
+const DEEP_NECK_STRAT: Stratification = {
+  diseaseIds: ["v8-56", "v8-57", "v8-66"],
+  title: "Nhiễm trùng, áp xe khoang cổ sâu",
+  lead: "Theo QĐ 5643 (nhiễm trùng khoang cổ sâu; khoang quanh amiđan và sau hầu thuộc các khoang cổ sâu).",
+  sampling: [{ text: "Sốt, cổ sưng nóng đỏ đau, khó nuốt, khó thở; CT có cản quang phân biệt áp xe với viêm mô tế bào.", source: BYT5643, ref: "tr. 255" }],
+  pathogens: [
+    { text: "Đa vi khuẩn: hiếu khí (H. influenzae, S. pneumoniae, Klebsiella) và kỵ khí (Peptostreptococcus, Fusobacterium, Bacteroides).", source: BYT5643, ref: "tr. 254" },
+    { text: "Gram âm ở người già, đái tháo đường, suy giảm miễn dịch.", source: BYT5643, ref: "tr. 255" },
+  ],
+  columns: [
+    { id: "vn-deepneck", label: "Nhiễm trùng, áp xe khoang cổ sâu", tone: "special",
+      criteria: [
+        { text: "Bảo đảm đường thở trước. Kháng sinh phổ rộng, tĩnh mạch, liều cao: cephalosporin thế hệ 3 + metronidazol.", source: BYT5643, ref: "mục 5.2, tr. 255" },
+        { text: "Rạch dẫn lưu áp xe (trong miệng hoặc ngoài cổ); chọc hút dưới siêu âm, CT với áp xe nhỏ, đơn độc.", source: BYT5643, ref: "tr. 256" },
+      ],
+      byt: ["r-ent-deepneck-ctx"], intl: [] },
+  ],
+  settingNote: "Thời gian theo đáp ứng lâm sàng và kháng sinh đồ.",
+  principles: { source: "", items: [] },
+  antibiogram: ENT_ANTIBIOGRAM,
+  sources: [SRC_5643("Nhiễm trùng khoang cổ sâu")],
+};
+
 /* ======================= DA – MÔ MỀM ======================= */
 /* Việt Nam: QĐ 708 (viêm mô bào) và QĐ 4416/2023 (nhọt, áp xe da). Quốc tế: IDSA 2014 + ACE 2026 qua hàm sstiPlan
    (cùng dữ liệu công cụ tab Quốc tế cũ). Khối "khuyến cáo IDSA" chung cho mọi mức độ đặt một lần ở nguyên tắc;
@@ -919,7 +1087,8 @@ const ABSCESS: Stratification = {
   sources: ["Bộ Y tế. QĐ 4416/QĐ-BYT ngày 06/12/2023 – Hướng dẫn chẩn đoán và điều trị các bệnh da liễu, Nhọt, áp xe da.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS];
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS,
+  sinusStrat(["v8-7"], true), sinusStrat(["v8-58"], false), GAS_STRAT, aomStrat(["v8-60"], true), aomStrat(["v8-99"], false), DEEP_NECK_STRAT];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));
