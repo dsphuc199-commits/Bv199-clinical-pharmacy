@@ -128,7 +128,7 @@ function RegimenDrugs({ regimen }: { regimen: Regimen }) {
             {label && <p className={`text-xs font-semibold ${gi > 0 ? "text-emerald-700" : "text-slate-600"}`}>{label}</p>}
             <ul className="list-disc pl-5 text-sm text-slate-900">
               {mergeDoseParts(mergeOrPairs(g.options.map((o) => ({ name: doseText(o.name), dose: o.raw ? doseText(o.raw) : "" })), (aligned ? drugs[gi].dose : g.raw.map((x) => x.dose).join("; ")) ?? "")).map((o, oi) => (
-                <li key={oi}><b className="font-semibold">{o.name}</b>{o.dose && o.dose !== o.name ? `: ${o.dose}` : ""}</li>
+                <li key={oi} className="py-0.5"><b className="block font-semibold sm:inline">{o.name}</b>{o.dose && o.dose !== o.name && <><span className="hidden sm:inline">: </span><span className="block text-slate-800 sm:inline">{o.dose}</span></>}</li>
               ))}
             </ul>
           </div>
@@ -149,13 +149,18 @@ function ModuleBlock({ block }: { block: StratIntl }) {
         <Fragment key={`${it.ref}-${i}`}>
           {i > 0 && <p className="text-xs font-bold uppercase text-slate-500">Hoặc</p>}
           <div className="text-sm text-slate-900">
-            {/* Dữ liệu nối thuốc phối hợp bằng " + ", thuốc chọn một bằng " hoặc " (stratification.ts, moduleBlock). */}
-            {it.text.split(/ (\+|hoặc) (?=[^:+]{1,80}: )/u).map((part, pi, arr) => pi % 2 === 1 ? null : (
+            {/* Từng thuốc lấy từ parts (moduleBlock); join cho biết phối hợp hay chọn một thuốc. Không tách chuỗi theo chữ
+                "hoặc" vì chữ này có thể nằm trong câu liều (vd. "750 mg mỗi 24 giờ hoặc 500 mg mỗi 12 giờ"). */}
+            {(it.parts ?? [it.text]).map((part, pi) => (
               <Fragment key={pi}>
-                {pi > 0 && (arr[pi - 1] === "+"
+                {pi > 0 && (it.join !== "or"
                   ? <p className="text-xs font-semibold text-emerald-700">Kết hợp</p>
                   : <p className="text-xs font-bold uppercase text-slate-500">Hoặc (chọn một thuốc)</p>)}
-                <p>{part}</p>
+                <p>{(() => {
+                  /* "Tên thuốc: liều" – in đậm tên thuốc; nội dung giữ nguyên. */
+                  const k = part.indexOf(": ");
+                  return k > 0 && k < 80 ? <><b className="block font-semibold sm:inline">{part.slice(0, k)}</b><span className="hidden sm:inline">: </span><span className="block sm:inline">{part.slice(k + 2)}</span></> : part;
+                })()}</p>
               </Fragment>
             ))}
             {"preparation" in it && it.preparation && <p className="text-xs text-slate-600">{it.preparation}</p>}
@@ -274,11 +279,11 @@ const isVn = (source: string) => /^(QĐ|Hội|Bộ Y tế)/u.test(source);
 const ofFamily = (items: StratCite[], family: Family) => items.filter((c) => isVn(c.source) === (family === "vn"));
 
 /** Một hàng của bảng: mỗi cột một ô; trên màn hình nhỏ các ô xếp dọc và có nhãn cột. */
-function Row({ title, cols, render }: { title: string; cols: StratColumn[]; render: (col: StratColumn) => ReactNode }) {
+function Row({ title, cols, render, order }: { title: string; cols: StratColumn[]; render: (col: StratColumn) => ReactNode; order: number }) {
   return (
-    <div className="strat-row" style={{ ["--n" as string]: cols.length }} aria-label={title}>
+    <div className="strat-row" style={{ ["--n" as string]: cols.length, ["--o" as string]: order }} aria-label={title}>
       {cols.map((col) => (
-        <section key={col.id} className="min-w-0 rounded-lg border border-slate-200 bg-white p-2" aria-label={`${title} – ${col.label}`}>
+        <section key={col.id} data-col={col.id} className="strat-cell min-w-0 rounded-lg border border-slate-200 bg-white p-2" aria-label={`${title} – ${col.label}`}>
           <p className="mb-1 text-xs font-bold text-slate-500 lg:hidden">{col.label}</p>
           {render(col)}
         </section>
@@ -351,6 +356,9 @@ export default function StratificationPanel({ data, family, overview, monitoring
   const settings = vn ? (["ward", "icu"] as const).filter((s) => all.some((c) => c.setting === s)) : [];
   const [setting, setSetting] = useState<"ward" | "icu">(settings[0] ?? "ward");
   const columns = settings.length > 1 ? all.filter((c) => !c.setting || c.setting === setting) : all;
+  /* Điện thoại: chọn một nhóm người bệnh, chỉ hiện ô của nhóm đó; máy tính giữ bảng đủ cột. */
+  const [picked, setPicked] = useState<string>("");
+  const active = columns.find((c) => c.id === picked)?.id ?? columns[0]?.id ?? "";
   const sampling = ofFamily(data.sampling, family);
   const shared = ofFamily(data.pathogens, family);
   const sources = data.sources.filter((s) => /^(Bộ Y tế|Hội)/u.test(s) === vn);
@@ -360,14 +368,14 @@ export default function StratificationPanel({ data, family, overview, monitoring
   return (
     <details open className="mb-4 min-w-0 max-w-full rounded-2xl border border-teal-200 bg-teal-50/40 p-3">
       <RxToolStyle />
-      <style>{`.strat-row{display:grid;gap:.5rem}@media (min-width:1024px){.strat-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}}${STRAT_INTL_CSS}`}</style>
+      <style>{`.strat-row{display:grid;gap:.5rem}.strat-head{display:none}@media (min-width:1024px){.strat-head{display:grid}}.strat-body{display:flex;flex-direction:column;gap:.5rem}@media (min-width:1024px){.strat-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}}@media (max-width:1023px){.strat-body>*{order:var(--o,30)}.strat-cell:not([data-col="${active}"]){display:none}}${STRAT_INTL_CSS}`}</style>
       <summary className="cursor-pointer">
         <span className="text-xs font-bold uppercase tracking-wide text-teal-800">Phân tầng theo nguy cơ nhiễm khuẩn – {vn ? "hướng dẫn Việt Nam" : "hướng dẫn quốc tế"}</span>
         <span className="block text-lg font-bold text-slate-900">{data.title}</span>
       </summary>
-      <div className="mt-2 space-y-2">
+      <div className="strat-body mt-2">
         {settings.length > 1 && (
-          <div role="tablist" aria-label="Nơi điều trị" className="flex flex-wrap gap-2">
+          <div role="tablist" aria-label="Nơi điều trị" className="flex flex-wrap gap-2" style={{ ["--o" as string]: 1 }}>
             {settings.map((s) => (
               <button key={s} type="button" role="tab" aria-selected={setting === s} onClick={() => setSetting(s)}
                 className={`rounded-full border px-3 py-1 text-sm font-semibold ${setting === s ? "border-teal-700 bg-teal-700 text-white" : "border-slate-300 bg-white text-slate-800"}`}>
@@ -377,36 +385,49 @@ export default function StratificationPanel({ data, family, overview, monitoring
           </div>
         )}
         {vn && (settingTitle || data.settingNote) && (
-          <p className="text-center text-sm font-bold uppercase text-slate-800">{settingTitle}{settingTitle && data.settingNote ? " – " : ""}<span className="font-normal normal-case">{data.settingNote}</span></p>
+          <p className="text-center text-sm font-bold uppercase text-slate-800" style={{ ["--o" as string]: 2 }}>{settingTitle}{settingTitle && data.settingNote ? " – " : ""}<span className="font-normal normal-case">{data.settingNote}</span></p>
         )}
 
-        <p className="rounded bg-slate-800 px-2 py-1 text-center text-sm font-bold text-white">Phân tầng theo nguy cơ nhiễm khuẩn</p>
-        <div className="strat-row hidden lg:grid" style={{ ["--n" as string]: columns.length }}>
+        <p className="rounded bg-slate-800 px-2 py-1 text-center text-sm font-bold text-white" style={{ ["--o" as string]: 3 }}>Phân tầng theo nguy cơ nhiễm khuẩn</p>
+        {columns.length > 1 && (
+          <div className="lg:hidden" style={{ ["--o" as string]: 4 }}>
+            <p className="mb-1 text-xs font-semibold text-slate-600">Nhóm nguy cơ – bấm để chọn</p>
+            <div role="tablist" aria-label="Nhóm người bệnh" className="flex flex-col gap-1.5">
+              {columns.map((col) => (
+                <button key={col.id} type="button" role="tab" aria-selected={active === col.id} onClick={() => setPicked(col.id)}
+                  className={`rounded-lg border-2 px-3 py-2 text-left text-sm font-bold ${active === col.id ? "border-teal-700 bg-teal-700 text-white" : HEAD[col.tone]}`}>
+                  {col.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="strat-row strat-head" style={{ ["--n" as string]: columns.length }}>
           {columns.map((col) => <h4 key={col.id} className={`rounded-lg border-2 px-2 py-1 text-center text-base font-bold ${HEAD[col.tone]}`}>{col.label}</h4>)}
         </div>
-        <Row title="Tiêu chí" cols={columns} render={(col) => <Cites items={ofFamily(col.criteria, family)} />} />
+        <Row title="Tiêu chí" order={5} cols={columns} render={(col) => <Cites items={ofFamily(col.criteria, family)} />} />
 
         {sampling.length > 0 && (
-          <section className="rounded-lg border border-rose-300 bg-rose-50 p-2">
+          <section className="rounded-lg border border-rose-300 bg-rose-50 p-2" style={{ ["--o" as string]: 9 }}>
             <p className="text-center text-sm font-bold italic text-rose-800">Gửi bệnh phẩm nhuộm Gram, nuôi cấy và làm kháng sinh đồ trước khi dùng kháng sinh</p>
             <Cites items={sampling} />
           </section>
         )}
 
-        <p className="rounded bg-slate-800 px-2 py-1 text-center text-sm font-bold text-white">Điều trị ban đầu (kháng sinh kinh nghiệm)</p>
+        <p className="rounded bg-slate-800 px-2 py-1 text-center text-sm font-bold text-white" style={{ ["--o" as string]: 6 }}>Điều trị ban đầu (kháng sinh kinh nghiệm)</p>
         {shared.length > 0 && (
-          <section className="rounded-lg border border-slate-200 bg-white p-2">
+          <section className="rounded-lg border border-slate-200 bg-white p-2" style={{ ["--o" as string]: 10 }}>
             <p className="text-sm font-bold text-slate-900">Tác nhân lưu ý</p>
             <Cites items={shared} />
           </section>
         )}
         {hasColPathogens && (
-          <Row title="Tác nhân lưu ý" cols={columns} render={(col) => {
+          <Row title="Tác nhân lưu ý" order={11} cols={columns} render={(col) => {
             const items = ofFamily(col.pathogens ?? [], family);
             return items.length ? <><p className="text-sm font-bold text-slate-900">Tác nhân lưu ý</p><Cites items={items} /></> : null;
           }} />
         )}
-        <Row title="Kháng sinh gợi ý" cols={columns} render={(col) => (
+        <Row title="Kháng sinh gợi ý" order={7} cols={columns} render={(col) => (
           <>
             <p className="mb-1 text-sm font-bold text-slate-900">Kháng sinh gợi ý</p>
             {vn ? <VnAntibiotics col={col} /> : (

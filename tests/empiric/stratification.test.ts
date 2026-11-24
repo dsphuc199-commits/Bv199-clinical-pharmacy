@@ -143,3 +143,21 @@ test("urology: Vietnamese columns use QĐ 708 only and keep the pharmacist dose 
   for (const id of ["r-cy-tmp", "r-cy-male-tmp"]) assert.match(notes(id), /ĐỐI CHIẾU LIỀU – Viêm bàng quang – liều trimethoprim-sulfamethoxazol/);
   assert.match(notes("r-py-iv-bl"), /875\/125 mg là hàm lượng dạng uống/);
 });
+
+test("module regimens keep one part per drug, so 'hoặc' inside a dose never splits the line", () => {
+  const items = STRATIFICATIONS.flatMap((s) => s.columns.flatMap((c) => (c.vn ?? []).flatMap((b) => b.items)));
+  for (const it of items) {
+    assert.ok(it.parts && it.parts.length > 0, `${it.ref} has no parts`);
+    assert.equal(it.text, it.parts!.join(it.join === "or" ? " hoặc " : " + "), `${it.ref} text and parts differ`);
+  }
+  const levo = items.find((i) => i.ref === "ward-levo")!;
+  assert.equal(levo.parts!.length, 2);
+  assert.match(levo.parts![0], /^Levofloxacin: 750 mg mỗi 24 giờ hoặc 500 mg mỗi 12 giờ/);
+});
+
+test("only regimens whose source says 'chọn một thuốc' are alternatives; cefotaxim + azithromycin stays a combination", () => {
+  const items = STRATIFICATIONS.flatMap((s) => s.columns.flatMap((c) => (c.vn ?? []).flatMap((b) => b.items)));
+  const or = Array.from(new Set(items.filter((i) => i.join === "or").map((i) => i.ref))).sort();
+  assert.deepEqual(or, ["cap-quinolone-allergy", "ward-levo"]);
+  assert.equal(items.find((i) => i.ref === "ward-ctax-azi")!.join, "and");
+});

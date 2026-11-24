@@ -23,7 +23,9 @@ import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-b
 import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
 
 export type StratCite = { text: string; source: string; ref: string };
-export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string })[]; notes?: string[] };
+/** parts/join: từng thuốc của phương án module Việt Nam và cách nối ("and" = phối hợp, "or" = chọn một thuốc);
+    giao diện dùng để xuống dòng, không tách chuỗi theo chữ "hoặc" (vì chữ này có thể nằm trong câu liều). */
+export type StratIntl = { source: string; lead?: string; items: (RxItem & { preparation?: string; parts?: string[]; join?: "and" | "or" })[]; notes?: string[] };
 export type StratColumn = {
   id: string;
   label: string;
@@ -97,7 +99,9 @@ export function cleanRef(text: string): string {
 type ModuleDrug = { name: string; dose: string; route?: string; caution?: string };
 type ModuleRegimen = { id: string; name: string; drugs: ModuleDrug[]; indication?: string };
 /* Phương án mà nguồn ghi "chọn một thuốc" (vd. levofloxacin hoặc moxifloxacin): nối bằng "hoặc", không phải phối hợp. */
-const ONE_OF = /chọn một thuốc|không dùng cả hai/iu;
+/* Chỉ cụm "chọn một thuốc" (vd. levofloxacin hoặc moxifloxacin). KHÔNG dùng "không dùng cả hai": câu đó ở ward-ctax-azi
+   nghĩa là cefotaxim thay ceftriaxon, còn cefotaxim + azithromycin vẫn là phối hợp. */
+const ONE_OF = /chọn một thuốc/iu;
 /* Phác đồ trong module Việt Nam -> dòng bảng; giữ nguyên thuốc, liều, đường dùng và chú thích liều. */
 function moduleBlock(source: string, regimens: ModuleRegimen[], lead?: string): StratIntl {
   return {
@@ -105,9 +109,13 @@ function moduleBlock(source: string, regimens: ModuleRegimen[], lead?: string): 
     lead,
     items: regimens.map((r) => {
       const cautions = r.drugs.map((d) => d.caution && cleanRef(d.caution)).filter(Boolean);
+      const parts = r.drugs.map((d) => `${d.name}: ${cleanRef(d.dose)}${d.route && d.route !== "IV" ? ` (${d.route})` : ""}`);
+      const join = ONE_OF.test(r.indication ?? "") ? "or" as const : "and" as const;
       return {
         role: r.name,
-        text: r.drugs.map((d) => `${d.name}: ${cleanRef(d.dose)}${d.route && d.route !== "IV" ? ` (${d.route})` : ""}`).join(ONE_OF.test(r.indication ?? "") ? " hoặc " : " + "),
+        text: parts.join(join === "or" ? " hoặc " : " + "),
+        parts,
+        join,
         ref: r.id,
         ...(cautions.length ? { preparation: cautions.join(" ") } : {}),
       };
