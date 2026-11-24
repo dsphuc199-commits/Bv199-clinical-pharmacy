@@ -194,3 +194,24 @@ test("biliary: panel drug names match the admin dose keys, so published doses re
   }
   assert.ok(s.columns[1].note && /carbapenem không phối hợp/.test(s.columns[1].note));
 });
+
+/* ===== Da – mô mềm: cột Việt Nam đủ phác đồ gốc; cột quốc tế lấy từ sstiPlan, không lặp khối khuyến cáo chung ===== */
+test("SSTI: every BYT regimen of v8-27/v8-28 appears exactly once; intl columns come from IDSA 2014 / ACE 2026 only", () => {
+  for (const [d, intlIds] of [["v8-27", ["cel-mild", "cel-mod", "cel-severe"]], ["v8-28", ["pur-mild", "pur-mod", "pur-severe"]]] as const) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
+    const ids = s.columns.flatMap((c) => c.byt);
+    /* So với phác đồ còn hiệu lực ở tab Việt Nam (QĐ 708 Nhọt đã được QĐ 4416 thay thế). */
+    assert.deepEqual([...ids].sort(), getRegimensForDisease(d).map((r) => r.id).sort(), d);
+    assert.equal(new Set(ids).size, ids.length);
+    const intl = s.columns.filter((c) => c.intl.length);
+    assert.deepEqual(intl.map((c) => c.id), [...intlIds]);
+    for (const c of intl) {
+      assert.ok(c.byt.length === 0 && c.intl.every((b) => /^(IDSA 2014|ACE 2026) – /.test(b.source)), c.id);
+      assert.ok(c.intl.every((b) => b.source !== "IDSA 2014 – khuyến cáo"), `${c.id}: general IDSA block repeated`);
+    }
+    assert.ok(s.principles.items.length > 5);
+  }
+  /* Dị ứng penicilin có trong cột viêm mô tế bào nhẹ (clindamycin uống theo ACE). */
+  const mild = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-27"))!.columns.find((c) => c.id === "cel-mild")!;
+  assert.ok(mild.intl.flatMap((b) => b.items).some((i) => /Dị ứng penicilin/.test(i.role) && /Clindamycin/.test(i.text)));
+});

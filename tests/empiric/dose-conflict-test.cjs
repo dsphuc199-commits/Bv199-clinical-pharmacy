@@ -23,7 +23,7 @@ const wrongDisease = C.DOSE_CONFLICTS.flatMap((c) => c.regimenIds.filter((id) =>
 check("Phương án được gắn thuộc đúng mặt bệnh của mục đối chiếu", wrongDisease.length === 0, wrongDisease.join(", "));
 // Nhóm 3 + đợt tiết niệu (23/11/2026): thêm viêm bàng quang (liều trimethoprim-sulfamethoxazol).
 // Đợt 2 ổ bụng – đường mật (24/11/2026): viêm phúc mạc thứ phát, nhiễm khuẩn đường mật.
-const GROUP3 = ["v8-39", "v8-2", "v8-17", "v8-33", "v9-1", "v8-16", "v8-21", "v8-24"];
+const GROUP3 = ["v8-39", "v8-2", "v8-17", "v8-33", "v9-1", "v8-16", "v8-21", "v8-24", "v8-27"];
 check("Chỉ gắn cho mặt bệnh Nhóm 1–3", C.DOSE_CONFLICTS.every((c) => c.diseaseIds.every((d) => GROUP1.includes(d) || GROUP2.includes(d) || GROUP3.includes(d))));
 
 // 2. Nguon day du, hien thi rieng BYT / quoc te

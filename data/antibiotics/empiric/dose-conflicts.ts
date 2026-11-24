@@ -54,6 +54,8 @@ const SEPSIS = ["v8-11", "v8-12"];
 const DECIDE = "HĐT&ĐT BV199 quyết định liều áp dụng; ứng dụng không chọn thay.";
 const WSES21 = "WSES/GAIS/SIS-E/WSIS/AAST – Global clinical pathways for intra-abdominal infections (2021), Sartelli M, World J Emerg Surg 2021;16:49";
 const URL_WSES21 = "https://doi.org/10.1186/s13017-021-00387-8";
+const IDSA14 = "IDSA – Practice Guidelines for Skin and Soft Tissue Infections: 2014 Update (2014), Stevens DL, Clin Infect Dis 2014;59(2):e10–e52";
+const URL_IDSA14 = "https://doi.org/10.1093/cid/ciu296";
 const SIS24 = "SIS – Guidelines on the Management of Intra-Abdominal Infection: 2024 Update (2024), Huston JM, Surg Infect 2024;25(6):419–435";
 const URL_SIS24 = "https://doi.org/10.1089/sur.2024.137";
 
@@ -470,6 +472,21 @@ DOSE_CONFLICTS.push(
     ],
     warning: "Liều viêm bàng quang của QĐ 708 (80/400 mg x 2 lần/ngày) bằng một nửa liều ghi ở phần viêm thận bể thận cùng văn bản và của EAU 2026 (160/800 mg x 2 lần/ngày). Không tự đổi liều.",
     decision: "Chọn liều trimethoprim-sulfamethoxazol cho viêm bàng quang (phụ nữ và nam giới). " + DECIDE,
+  },
+  /* Đợt 3 da – mô mềm (24/11/2026): thời gian điều trị viêm mô bào. */
+  {
+    id: "cellulitis-duration",
+    topic: "Viêm mô bào – thời gian điều trị",
+    diseaseIds: ["v8-27"],
+    regimenIds: ["r-cell-pen", "r-cell-amoxclav", "r-cell-ctx", "r-cell-roxi"],
+    byt: [
+      { source: BYT708, locator: "Viêm mô bào, mục 4a (tr. 139–140)", url: URL_708, dose: "ít nhất 10 ngày" },
+    ],
+    intl: [
+      { source: IDSA14, locator: "Khuyến cáo viêm quầng, viêm mô tế bào – thời gian điều trị", url: URL_IDSA14, dose: "5 ngày; kéo dài nếu chưa cải thiện trong thời gian này (khuyến cáo mạnh, bằng chứng cao)" },
+    ],
+    warning: "QĐ 708 yêu cầu ít nhất 10 ngày; IDSA 2014 khuyến cáo mạnh 5 ngày và chỉ kéo dài khi chưa cải thiện. Không tự đổi thời gian điều trị.",
+    decision: "Chọn thời gian điều trị mặc định cho viêm mô bào không biến chứng. " + DECIDE,
   },
   /* Đợt 2 ổ bụng – đường mật (24/11/2026): đối chiếu QĐ 708 với WSES 2021 (liều) và SIS 2024 (lựa chọn thuốc). */
   {

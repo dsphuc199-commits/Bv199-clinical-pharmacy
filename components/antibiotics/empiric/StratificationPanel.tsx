@@ -114,7 +114,9 @@ function mergeOrPairs(items: { name: string; dose: string }[], source: string) {
   return out;
 }
 /* Ghi chú về liều lệch nguồn cần dược sĩ xác nhận: luôn hiện, không thu gọn. */
-const CRITICAL_NOTE = /^(CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI)/u;
+const CRITICAL_NOTE = /^(CẦN DƯỢC SĨ XÁC NHẬN|LIỀU NGHI SAI)|ghi thiếu số lần|không nêu khoảng cách liều|không có \/kg/u;
+/* Ghi chú liều thiếu thông tin: viết lại giọng lâm sàng (không giữ chữ "Văn bản"), giữ nguyên phần liều trích. */
+const criticalText = (n: string) => n.replace(/^Văn bản\s+/u, "Liều ").replace(/(:|\.)\s*Văn bản\s+/u, "$1 liều ").replace(/:\s*ghi nguyên văn,\s*/u, ": ").replace(/cần thẩm định/u, "cần dược sĩ thẩm định");
 
 /** Một phương án BYT: các nhóm thuốc giữ nguyên nhãn gốc ("Một trong", "Phối hợp (chọn một)"…), liều giữ nguyên. */
 function RegimenDrugs({ regimen }: { regimen: Regimen }) {
@@ -133,6 +135,22 @@ function RegimenDrugs({ regimen }: { regimen: Regimen }) {
         const caption = clinicalText(panelNote((aligned ? drugs[gi].name : g.label) ?? "")).replace(/:$/u, "");
         const single = g.options.length === 1 && g.options[0].name.toLowerCase() === caption.toLowerCase();
         const label = single ? (gi > 0 ? "Kết hợp" : "") : caption || (gi > 0 ? (g.optional ? "Có thể kết hợp thêm" : "Kết hợp") : "");
+        /* Một thuốc bị tách theo đối tượng (trẻ em / người lớn): bộ tách bỏ nhãn đối tượng và có thể cắt vế cuối
+           (vd. "trường hợp nặng tiêm TM mỗi 6 giờ"). Hiện nguyên câu liều gốc, mỗi vế một dòng – không mất chữ. */
+        const byPopulation = aligned && g.options.length > 1 && g.options.every((o) => o.name === g.options[0].name && o.population !== "any" && o.populationLabel);
+        if (byPopulation) {
+          return (
+            <div key={gi}>
+              {gi > 0 && <p className="text-xs font-semibold text-emerald-700">{g.optional ? "Có thể kết hợp thêm" : "Kết hợp"}</p>}
+              <ul className="list-disc pl-5 text-sm text-slate-900">
+                <li className="py-0.5">
+                  <b className="block font-semibold">{doseText(g.options[0].name)}</b>
+                  {doseText(drugs[gi].dose).split(/;\s*/u).filter(Boolean).map((part, pi) => <span key={pi} className="block text-slate-800">{part}</span>)}
+                </li>
+              </ul>
+            </div>
+          );
+        }
         return (
           <div key={gi}>
             {label && <p className={`text-xs font-semibold ${gi > 0 ? "text-emerald-700" : "text-slate-600"}`}>{label}</p>}
@@ -190,7 +208,9 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
   const main = regs.filter((r) => MAIN_ROLES.has(r.role));
   const extra = regs.filter((r) => !MAIN_ROLES.has(r.role));
   const alerts = Array.from(new Map(regs.flatMap((r) => safetyAlertsFor(r.id)).map((a) => [a.id, a])).values());
-  const notes = Array.from(new Set(regs.flatMap((r) => (r.notes ?? []).filter((n) => !EDITORIAL_NOTE.test(n)).map(panelNote)))).filter(Boolean);
+  /* Ghi chú liều thiếu thông tin: gắn tên thuốc của phương án để biết cảnh báo thuộc thuốc nào. */
+  const notes = Array.from(new Set(regs.flatMap((r) => (r.notes ?? []).filter((n) => !EDITORIAL_NOTE.test(n)).map(panelNote)
+    .map((n) => (CRITICAL_NOTE.test(n) && /^Văn bản/u.test(n) ? `${resolvedDrugs(r).map((d) => d.name).join(", ")}: ${n}` : n))))).filter(Boolean);
   const sources = Array.from(new Set(regs.map(docLabel)));
   /* Mục đối chiếu liều (dose-conflicts.ts) gắn vào phương án: chỉ hiện tên mục, chi tiết ở tab Đối chiếu. */
   const conflicts = Array.from(new Map(regs.flatMap((r) => (r.notes ?? [])
@@ -241,7 +261,7 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
       )}
       {notes.some((n) => CRITICAL_NOTE.test(n)) && (
         <div className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">
-          <ClinicalNotes items={notes.filter((n) => CRITICAL_NOTE.test(n))} />
+          <ClinicalNotes items={notes.filter((n) => CRITICAL_NOTE.test(n)).map(criticalText)} />
         </div>
       )}
       {notes.some((n) => !CRITICAL_NOTE.test(n)) && (

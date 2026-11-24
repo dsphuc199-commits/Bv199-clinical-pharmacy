@@ -22,6 +22,7 @@ import { EAU_UROLOGY_FORMS } from "../../../components/antibiotics/empiric/urolo
 import { empPlan, type Sev } from "../../../components/antibiotics/empiric/gnb-bsi-intl";
 import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../../components/antibiotics/empiric/uti-idsa2025";
 import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
+import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
 /** parts/join: từng thuốc của phương án module Việt Nam và cách nối ("and" = phối hợp, "or" = chọn một thuốc);
@@ -665,7 +666,128 @@ const BILIARY: Stratification = {
   sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Nhiễm khuẩn đường mật."],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY];
+/* ======================= DA – MÔ MỀM ======================= */
+/* Việt Nam: QĐ 708 (viêm mô bào) và QĐ 4416/2023 (nhọt, áp xe da). Quốc tế: IDSA 2014 + ACE 2026 qua hàm sstiPlan
+   (cùng dữ liệu công cụ tab Quốc tế cũ). Khối "khuyến cáo IDSA" chung cho mọi mức độ đặt một lần ở nguyên tắc;
+   mỗi cột chỉ giữ thuốc, liều và phương án dị ứng penicilin (al = "alt", lấy từ cùng hàm với pcnAllergy = true). */
+const IDSA14 = "IDSA 2014";
+const ACE26 = "ACE 2026";
+const BYT4416 = "QĐ 4416/QĐ-BYT";
+type SstiForm = "cellulitis" | "purulent";
+const SSTI_BASE: SstiIn = { form: "cellulitis", age: "adult", sev: "mild", aceSevere: false, highRisk: false, pcnAllergy: false, impSub: "impetigo", mrsa: false, culture: "none", recurrent: false, site: "clean", pathogen: "empiric", bite: "animal", infected: false, immuno: false };
+const IDSA_RECS = "Theo IDSA 2014: khuyến cáo";
+const sstiOut = (form: SstiForm, sev: SstiIn["sev"], extra: Partial<SstiIn> = {}) => sstiPlan({ ...SSTI_BASE, form, sev, aceSevere: sev === "severe", ...extra });
+/** Tên khối của module ("Theo ACE 2026: …") → nguồn hiển thị ("ACE 2026 – …"). */
+const sstiSource = (title: string) => title.replace(/^Theo (IDSA 2014|ACE 2026):\s*/u, "$1 – ");
+function sstiBlocks(out: SstiOut, alt?: SstiOut): StratIntl[] {
+  const blocks: StratIntl[] = out.blocks.filter((b) => b.title !== IDSA_RECS).map((b) => {
+    const extra = alt?.blocks.find((a) => a.title === b.title)?.items.filter((i) => i.al === "alt" && !b.items.some((x) => x.role === i.role && x.text === i.text)) ?? [];
+    return { source: sstiSource(b.title), lead: b.lead, items: [...b.items.filter((i) => i.al !== "alt"), ...extra] };
+  }).filter((b) => b.items.length > 0);
+  if (out.avoid.length) blocks.push({ source: `${IDSA14} – không khuyến cáo`, items: out.avoid });
+  return blocks;
+}
+const sstiCol = (form: SstiForm, sev: SstiIn["sev"]) => sstiBlocks(sstiOut(form, sev), sstiOut(form, sev, { pcnAllergy: true }));
+const sstiCrit = (form: SstiForm, sev: SstiIn["sev"]): StratCite[] => [
+  { text: SEV_TIP[form][sev], source: IDSA14, ref: "SSTI 2014" },
+  ...(sev === "severe" ? [{ text: `Nặng theo ACE: ${ACE_SEVERE[form]}.`, source: ACE26, ref: "SSTI 2026" }] : []),
+];
+/** Lưu ý dùng thuốc của module: gộp mọi mức độ, bỏ trùng; đặt trong mục thu gọn. */
+const sstiNotes = (form: SstiForm): StratIntl => ({
+  source: `${ACE26}, ${IDSA14} – lưu ý khi dùng thuốc`,
+  items: Array.from(new Set((["mild", "moderate", "severe"] as const).flatMap((sev) => [false, true].flatMap((pcnAllergy) => sstiOut(form, sev, { pcnAllergy }).notes))))
+    .map((text) => ({ role: "Lưu ý", text, ref: "notes" })),
+});
+const sstiPrinciples = (form: SstiForm): StratIntl => ({
+  source: `${IDSA14} – khuyến cáo chung (mức GRADE)`,
+  items: [
+    ...(sstiOut(form, "mild").blocks.find((b) => b.title === IDSA_RECS)?.items ?? []),
+    { role: "Dấu hiệu nặng", text: RED_FLAGS, ref: "ACE" },
+    { role: "SIRS", text: SIRS_IDSA, ref: "IDSA erratum 2015" },
+  ],
+});
+/** Nhóm đặc biệt của module (kết quả cấy, tái phát): chỉ giữ các khối khác với phác đồ kinh nghiệm cùng mức độ. */
+function sstiVariant(title: string, form: SstiForm, sev: SstiIn["sev"], extra: Partial<SstiIn>, criteria?: string) {
+  const base = sstiBlocks(sstiOut(form, sev)).map((b) => JSON.stringify(b));
+  const blocks = sstiBlocks(sstiOut(form, sev, extra), sstiOut(form, sev, { ...extra, pcnAllergy: true })).filter((b) => !base.includes(JSON.stringify(b)));
+  return blocks.length ? [{ title, criteria, blocks }] : [];
+}
+const SSTI_ANTIBIOGRAM: StratAntibiogram = {
+  gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Pseudomonas aeruginosa"], codes: ["AMC", "CRO", "TZP", "MEM", "CIP"] },
+  gramPositive: { organisms: ["Staphylococcus aureus", "Streptococcus spp."], codes: ["FOX", "PEN", "ERY", "CLI", "SXT", "DOX", "VAN", "LZD"] },
+  defaultScope: "toan-vien",
+  note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng mẫu da – mô mềm, chỉ dùng để định hướng.",
+};
+const SRC_IDSA_SSTI = "Stevens DL và cs. Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update by the IDSA. Clin Infect Dis 2014;59(2):e10–e52; đính chính Clin Infect Dis 2015;60(9):1448.";
+const SRC_ACE_SSTI = "Agency for Care Effectiveness (Bộ Y tế Singapore). Bacterial skin and soft tissue infections – diagnosis and antibiotic prescribing. ACE Clinical Guideline, 21/09/2026.";
+
+const CELLULITIS: Stratification = {
+  diseaseIds: ["v8-27"],
+  title: "Viêm mô bào – người lớn",
+  lead: "Phân tầng theo mức độ như QĐ 708 (nhẹ dùng đường uống; nặng tiêm bắp hoặc tĩnh mạch); quốc tế theo IDSA 2014 và ACE 2026.",
+  sampling: [
+    { text: "Cấy bệnh phẩm, cấy máu: chỉ khoảng 1/5 dương tính.", source: BYT, ref: "tr. 139" },
+    { text: "Phân biệt viêm tắc tĩnh mạch sâu (siêu âm Doppler) và viêm quầng.", source: BYT, ref: "tr. 138–139" },
+  ],
+  pathogens: [
+    { text: "Liên cầu nhóm A; tụ cầu vàng đơn thuần hoặc phối hợp.", source: BYT, ref: "tr. 138" },
+    { text: "Ít gặp: S. pneumoniae, H. influenzae; A. hydrophila từ nước, đất.", source: BYT, ref: "tr. 138" },
+  ],
+  columns: [
+    { id: "vn-mild", label: "Nhẹ – đường uống", tone: "community",
+      criteria: [{ text: "Nhẹ: có thể dùng đường uống.", source: BYT, ref: "tr. 139" }],
+      byt: ["r-cell-amoxclav", "r-cell-roxi"], intl: [] },
+    { id: "vn-severe", label: "Nặng – tiêm bắp hoặc tĩnh mạch", tone: "hospital",
+      criteria: [{ text: "Nặng, nhất là nghi nhiễm khuẩn huyết, viêm khớp, viêm cân cơ: tiêm bắp hoặc tĩnh mạch.", source: BYT, ref: "tr. 139" }],
+      byt: ["r-cell-pen", "r-cell-ctx"], intl: [] },
+    { id: "cel-mild", label: "Nhẹ", tone: "community", criteria: sstiCrit("cellulitis", "mild"), byt: [], intl: sstiCol("cellulitis", "mild") },
+    { id: "cel-mod", label: "Vừa", tone: "hospital", criteria: sstiCrit("cellulitis", "moderate"), byt: [], intl: sstiCol("cellulitis", "moderate") },
+    { id: "cel-severe", label: "Nặng", tone: "special", criteria: sstiCrit("cellulitis", "severe"), byt: [], intl: sstiCol("cellulitis", "severe") },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  extras: [
+    ...sstiVariant("Viêm mô tế bào tái phát", "cellulitis", "mild", { recurrent: true }),
+    { title: "Lưu ý khi dùng thuốc", blocks: [sstiNotes("cellulitis")] },
+  ],
+  principles: sstiPrinciples("cellulitis"),
+  antibiogram: SSTI_ANTIBIOGRAM,
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm mô bào.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
+};
+
+const ABSCESS: Stratification = {
+  diseaseIds: ["v8-28"],
+  title: "Nhọt, áp xe da – người lớn",
+  lead: "Phân tầng như QĐ 4416/2023 (thông thường; tụ cầu vàng kháng methicilin); quốc tế theo IDSA 2014 và ACE 2026.",
+  sampling: [
+    { text: "Chủ yếu lâm sàng; siêu âm đánh giá ổ áp xe; nhuộm Gram, cấy, kháng sinh đồ.", source: BYT4416, ref: "tr. 15" },
+  ],
+  pathogens: [
+    { text: "Nhọt: tụ cầu vàng. Áp xe: tụ cầu vàng (MRSA gây tái phát), S. pyogenes, Gram âm, kỵ khí.", source: BYT4416, ref: "tr. 14" },
+  ],
+  columns: [
+    { id: "vn-std", label: "Nhọt, áp xe da", tone: "community",
+      criteria: [{ text: "Ổ áp xe: trích rạch dẫn lưu kèm kháng sinh toàn thân.", source: BYT4416, ref: "tr. 15–16" }],
+      byt: ["r-abscess-4416-clox", "r-abscess-4416-amoxclav", "r-abscess-4416-roxi", "r-abscess-4416-azi", "r-abscess-4416-clinda"], intl: [] },
+    { id: "vn-mrsa", label: "Do MRSA", tone: "hospital",
+      criteria: [{ text: "Nghi hoặc xác định tụ cầu vàng kháng methicilin: thuốc có hiệu quả trên MRSA.", source: BYT4416, ref: "tr. 15–16" }],
+      byt: ["r-abscess-4416-mrsa-vanco", "r-abscess-4416-mrsa-tmp", "r-abscess-4416-mrsa-linezolid"], intl: [] },
+    { id: "pur-mild", label: "Nhẹ", tone: "community", criteria: sstiCrit("purulent", "mild"), byt: [], intl: sstiCol("purulent", "mild") },
+    { id: "pur-mod", label: "Vừa", tone: "hospital", criteria: sstiCrit("purulent", "moderate"), byt: [], intl: sstiCol("purulent", "moderate") },
+    { id: "pur-severe", label: "Nặng", tone: "special", criteria: sstiCrit("purulent", "severe"), byt: [], intl: sstiCol("purulent", "severe") },
+  ],
+  settingNote: "QĐ 4416 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  extras: [
+    ...sstiVariant("Có kết quả cấy: MRSA", "purulent", "severe", { culture: "mrsa" }),
+    ...sstiVariant("Có kết quả cấy: MSSA", "purulent", "severe", { culture: "mssa" }),
+    ...sstiVariant("Áp xe tái phát", "purulent", "moderate", { recurrent: true }),
+    { title: "Lưu ý khi dùng thuốc", blocks: [sstiNotes("purulent")] },
+  ],
+  principles: sstiPrinciples("purulent"),
+  antibiogram: SSTI_ANTIBIOGRAM,
+  sources: ["Bộ Y tế. QĐ 4416/QĐ-BYT ngày 06/12/2023 – Hướng dẫn chẩn đoán và điều trị các bệnh da liễu, Nhọt, áp xe da.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
+};
+
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));
