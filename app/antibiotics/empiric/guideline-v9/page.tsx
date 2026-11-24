@@ -25,7 +25,7 @@ import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate202
 
 import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
 import StratificationPanel from "../../../../components/antibiotics/empiric/StratificationPanel";
-import { stratificationFor } from "../../../../data/antibiotics/empiric/stratification";
+import { hasIntlStratification, stratificationFor } from "../../../../data/antibiotics/empiric/stratification";
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
@@ -1069,9 +1069,10 @@ function GuidelineContent() {
             </>
           )}
 
-          {tab === "intl" && stratificationFor(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
-          {/* Mặt bệnh đã có khung phân tầng quốc tế: không hiện thêm công cụ quốc tế cũ bên dưới. */}
-          {tab === "intl" && !stratificationFor(selected.id) && (
+          {tab === "intl" && hasIntlStratification(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
+          {/* Mặt bệnh đã có khung phân tầng quốc tế: không hiện thêm công cụ quốc tế cũ bên dưới.
+              Chưa có khuyến cáo quốc tế đã đối chiếu (vd. viêm phúc mạc thứ phát): giữ nội dung tab Quốc tế hiện có. */}
+          {tab === "intl" && !hasIntlStratification(selected.id) && (
             <IntlTab
               diseaseId={selected.id}
               moduleContent={

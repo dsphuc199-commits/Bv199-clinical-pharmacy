@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import tables from "../../data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, getRegimensForDisease } from "../../data/antibiotics/empiric/regimens";
-import { STRATIFICATIONS, cleanRef } from "../../data/antibiotics/empiric/stratification";
+import { STRATIFICATIONS, cleanRef, hasIntlStratification } from "../../data/antibiotics/empiric/stratification";
 import { CAP_SCENARIOS } from "../../components/antibiotics/CapByt2026";
 import { HAPVAP_SCENARIOS } from "../../components/antibiotics/HapVap2023";
 
@@ -21,7 +21,7 @@ test("stratification references only existing BYT regimens of the same disease",
 test("international blocks come from the verified module and are not empty", () => {
   for (const s of STRATIFICATIONS) {
     for (const c of s.columns) for (const b of c.intl) assert.ok(b.items.length > 0, `${c.id} ${b.source}`);
-    assert.ok(s.principles.items.length > 0);
+    if (s.columns.some((c) => c.intl.length > 0)) assert.ok(s.principles.items.length > 0);
     for (const c of s.columns) for (const b of c.vn ?? []) assert.ok(b.items.length > 0, `${c.id} ${b.source}`);
   }
 });
@@ -160,4 +160,12 @@ test("only regimens whose source says 'chọn một thuốc' are alternatives; c
   const or = Array.from(new Set(items.filter((i) => i.join === "or").map((i) => i.ref))).sort();
   assert.deepEqual(or, ["cap-quinolone-allergy", "ward-levo"]);
   assert.equal(items.find((i) => i.ref === "ward-ctax-azi")!.join, "and");
+});
+
+test("peritonitis: QĐ 708 columns only; tab Quốc tế keeps its gap note (no verified international recommendation)", () => {
+  const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-21"))!;
+  assert.deepEqual(s.columns.map((c) => c.byt), [["r-peri-sec-1"], ["r-peri-sec-2"]]);
+  assert.ok(s.columns.every((c) => c.intl.length === 0));
+  assert.equal(hasIntlStratification("v8-21"), false);
+  for (const d of ["v8-11", "v8-1", "v8-4", "v8-5", "v8-16", "v8-17", "v8-2"]) assert.equal(hasIntlStratification(d), true, d);
 });

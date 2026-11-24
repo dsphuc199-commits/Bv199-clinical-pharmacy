@@ -563,8 +563,47 @@ const COMPLICATED_UTI: Stratification = {
   sources: [SRC_708_UTI, SRC_EAU_UI, SRC_EAU_URO, SRC_IDSA_CUTI],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI];
+/* ======================= Ổ BỤNG ======================= */
+/* Viêm phúc mạc thứ phát: QĐ 708 chương 5. Chưa có khuyến cáo quốc tế đã trích và đối chiếu (SIS 2024 mới xác minh
+   trích dẫn – international.ts), nên không có cột quốc tế; tab Quốc tế giữ ghi chú khoảng trống hiện có. */
+const PERITONITIS: Stratification = {
+  diseaseIds: ["v8-21"],
+  title: "Viêm phúc mạc thứ phát – người lớn",
+  lead: "Phân tầng theo mức độ như QĐ 708 chương 5 (viêm phúc mạc thứ phát; trường hợp nặng).",
+  sampling: [
+    { text: "Chọc dịch ổ bụng: bạch cầu > 500/mm³ và/hoặc bạch cầu trung tính > 250/mm³; soi, cấy dịch.", source: BYT, ref: "tr. 159" },
+    { text: "Siêu âm, X-quang bụng đứng tìm nguyên nhân (liềm hơi, mức nước – hơi).", source: BYT, ref: "tr. 159" },
+  ],
+  pathogens: [
+    { text: "Thứ phát: E. coli, K. pneumoniae, B. fragilis; có thể Streptococcus, Enterococcus, Clostridium.", source: BYT, ref: "tr. 158" },
+    { text: "Viêm phúc mạc thì ba: trực khuẩn mủ xanh, Gram âm kháng thuốc, có thể C. albicans.", source: BYT, ref: "tr. 158" },
+  ],
+  columns: [
+    { id: "vn-std", label: "Viêm phúc mạc thứ phát", tone: "community",
+      criteria: [{ text: "Viêm phúc mạc thứ phát.", source: BYT, ref: "Viêm phúc mạc, mục 4.2" }],
+      byt: ["r-peri-sec-1"], intl: [] },
+    { id: "vn-severe", label: "Trường hợp nặng", tone: "hospital",
+      criteria: [{ text: "Viêm phúc mạc thứ phát – trường hợp nặng.", source: BYT, ref: "Viêm phúc mạc, mục 4.2" }],
+      byt: ["r-peri-sec-2"], intl: [] },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  principles: { source: "", items: [] },
+  antibiogram: {
+    gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Enterobacter spp. (gồm K. aerogenes)", "Pseudomonas aeruginosa"], codes: ["TZP", "CTX", "CRO", "FEP", "IMP", "MEM", "AMK", "CIP"] },
+    gramPositive: { organisms: ["Enterococcus spp."], codes: ["AMP", "VAN", "LZD"] },
+    defaultScope: "khoi-ngoai",
+    note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng dịch ổ bụng, chỉ dùng để định hướng.",
+  },
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm phúc mạc."],
+};
+
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));
+}
+
+/** Có khung phân tầng quốc tế (cột có khuyến cáo quốc tế): khi không có, tab Quốc tế giữ nội dung cũ (vd. ghi chú khoảng trống). */
+export function hasIntlStratification(diseaseId: string): boolean {
+  return Boolean(stratificationFor(diseaseId)?.columns.some((c) => c.intl.length > 0 || c.links));
 }

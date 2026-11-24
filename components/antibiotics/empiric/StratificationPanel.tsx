@@ -79,7 +79,9 @@ function panelNote(note: string): string {
     .replace(/(^|[.!?]\s+)phần/gu, "$1Phần")
     .trim();
 }
-const doseText = (text: string) => clinicalText(panelNote(cleanRef(text))) || panelNote(cleanRef(text));
+/* Câu gốc dạng "thuốc (truyền TM … mỗi 8 giờ)": bộ tách thuốc để lại dấu ")" lẻ ở cuối liều – bỏ dấu lẻ đó. */
+const dropStrayParen = (s: string) => (s.endsWith(")") && (s.match(/\(/gu)?.length ?? 0) < (s.match(/\)/gu)?.length ?? 0) ? s.slice(0, -1).trimEnd() : s);
+const doseText = (text: string) => dropStrayParen(clinicalText(panelNote(cleanRef(text))) || panelNote(cleanRef(text)));
 
 const byId = (ids: string[]) => ids.map((id) => ALL_REGIMENS.find((r) => r.id === id)).filter((r): r is Regimen => Boolean(r));
 const MAIN_ROLES = new Set(["first", "severe", "alternative"]);
