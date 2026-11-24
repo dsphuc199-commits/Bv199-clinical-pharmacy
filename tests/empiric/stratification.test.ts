@@ -257,3 +257,15 @@ test("CNS: every BYT regimen of v8-36/v8-38 appears exactly once; WHO doses come
   const men = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-36"))!;
   assert.ok(men.columns.find((c) => c.id === "cns-trauma")!.links!.some((l) => l.diseaseId === "v8-38"));
 });
+
+/* ===== Viêm nội tâm mạc: cột Việt Nam đủ phác đồ QĐ 708; ESC 2023 đúng liều đã trích ===== */
+import { ESC_DOSE } from "../../components/antibiotics/empiric/ie-intl";
+test("endocarditis: every BYT regimen of v8-39 appears exactly once; ESC 2023 doses come from the extracted ESC data", () => {
+  const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-39"))!;
+  assert.deepEqual(s.columns.flatMap((c) => c.byt).sort(), getRegimensForDisease("v8-39").map((r) => r.id).sort());
+  assert.equal(hasIntlStratification("v8-39"), true);
+  const esc = JSON.stringify(getIntlEntry("v8-39")!.regimens);
+  for (const [k, v] of Object.entries(ESC_DOSE)) assert.ok(esc.includes(v), `${k}: ${v}`);
+  const intl = s.columns.filter((c) => c.intl.length);
+  assert.ok(intl.every((c) => c.byt.length === 0 && c.intl.every((b) => b.source.startsWith("ESC 2023") && b.items.every((i) => i.dose && /^ESC:/.test(i.grade ?? "")))));
+});

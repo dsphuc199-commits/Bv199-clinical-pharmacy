@@ -11,8 +11,10 @@
   2) Viêm não thất, viêm màng não liên quan chăm sóc y tế (dẫn lưu não thất, shunt, sau phẫu thuật thần kinh; v8-38):
      - Tunkel AR và cs. 2017 IDSA Clinical Practice Guidelines for Healthcare-Associated Ventriculitis and
        Meningitis. Clin Infect Dis 2017;64(6):e34–e65. doi:10.1093/cid/ciw861 (PMC5848239).
+     Bản tóm tắt khuyến cáo: Clin Infect Dis 2017;64(6):701–706. doi:10.1093/cid/cix152 – 83 khuyến cáo có số
+     và mức (người dùng cung cấp PDF, đã đối chiếu từng câu KC 15–83 dùng ở đây).
      Mức khuyến cáo IDSA (mạnh/yếu · chất lượng bằng chứng cao/TB/thấp) đổi sang mã chung: strong-low → S-L…
-     Bảng liều của IDSA 2017 chưa đọc được từ bản toàn văn → khối IDSA không ghi liều (không tự điền);
+     Bảng liều chỉ có ở bản toàn văn (e34–e65), chưa có bản PDF → khối IDSA không ghi liều (không tự điền);
      liều dùng theo cột QĐ 708 ở tab Việt Nam.
   Mức WHO: "Mạnh; rất thấp" → S-VL, "Mạnh; thấp" → S-L, "Có điều kiện; rất thấp" → C-VL.
 */
@@ -159,6 +161,18 @@ export const VENT_EXTRAS: { title: string; criteria?: string; blocks: StratIntl[
     it("Kỹ thuật", "Tiêm qua dẫn lưu não thất: kẹp dẫn lưu 15–60 phút để thuốc cân bằng trong dịch não tủy.", "S-L"),
     it("Liều và khoảng cách", "Điều chỉnh để nồng độ dịch não tủy đạt 10–20 lần MIC, theo kích thước não thất và lượng dịch dẫn lưu mỗi ngày.", "S-L"),
   ] }] },
+  { title: "Theo dõi đáp ứng điều trị", blocks: [{ source: `${IDSA17} – theo dõi`, items: [
+    it("Lâm sàng", "Theo dõi đáp ứng điều trị dựa trên các thông số lâm sàng.", "S-L"),
+    it("Có dẫn lưu ra ngoài", "Theo dõi cấy dịch não tủy để bảo đảm cấy trở về âm tính.", "S-L"),
+    it("Không cải thiện rõ", "Xét nghiệm lại dịch não tủy để xác nhận các chỉ số cải thiện và cấy âm tính.", "S-L"),
+    it("Dẫn lưu không dùng để điều trị nhiễm shunt", "Không cấy và xét nghiệm dịch não tủy hằng ngày trừ khi có chỉ định lâm sàng.", "S-L"),
+    it("Chẩn đoán hình ảnh", "Chụp hình ảnh thần kinh khi nghi nhiễm khuẩn; ưu tiên MRI có tiêm gadolinium và chuỗi khuếch tán. Shunt não thất – ổ bụng nhiễm khuẩn kèm đau bụng: siêu âm hoặc CT bụng tìm ổ dịch khu trú ở đầu shunt.", "S-M"),
+  ] }] },
+  { title: "Vỡ nền sọ có rò dịch não tủy", blocks: [{ source: `${IDSA17} – dự phòng`, items: [
+    it("Kháng sinh dự phòng", "Không khuyến cáo dùng kháng sinh dự phòng.", "S-M"),
+    it("Rò kéo dài > 7 ngày", "Khuyến cáo can thiệp sửa chỗ rò.", "S-L"),
+    it("Vắc xin", "Khuyến cáo tiêm vắc xin phế cầu.", "S-M"),
+  ] }] },
 ];
 
 export const VENT_PRINCIPLES: StratIntl = {
@@ -176,5 +190,5 @@ export const CNS_SOURCES = {
     "World Health Organization. Guidelines on meningitis diagnosis, treatment and care. Geneva: WHO; 2025.",
     "World Health Organization. Practical manual on meningitis diagnosis, treatment and care. Geneva: WHO; 2026.",
   ],
-  idsa: "Tunkel AR và cs. 2017 Infectious Diseases Society of America's Clinical Practice Guidelines for Healthcare-Associated Ventriculitis and Meningitis. Clin Infect Dis 2017;64(6):e34–e65.",
+  idsa: "Tunkel AR và cs. 2017 Infectious Diseases Society of America's Clinical Practice Guidelines for Healthcare-Associated Ventriculitis and Meningitis. Clin Infect Dis 2017;64(6):e34–e65; tóm tắt khuyến cáo: Clin Infect Dis 2017;64(6):701–706.",
 };

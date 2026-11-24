@@ -24,6 +24,7 @@ import { CUTI_CRITERIA, DURATION_NOTES, SWITCH_ROWS, durationRows } from "../../
 import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
 import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
 import * as CNS from "../../../components/antibiotics/empiric/cns-intl";
+import * as IE from "../../../components/antibiotics/empiric/ie-intl";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
@@ -752,6 +753,51 @@ const VENTRICULITIS: Stratification = {
   sources: [SRC_708_MEN, CNS.CNS_SOURCES.idsa],
 };
 
+/* ======================= VIÊM NỘI TÂM MẠC ======================= */
+/* Việt Nam: QĐ 708 chương 3 (mục 4.2a–c: van tự nhiên, dị ứng penicilin, trẻ em, van nhân tạo < 1 năm, > 1 năm).
+   Quốc tế: ESC 2023 Bảng khuyến cáo 10 (kinh nghiệm) qua module ie-intl; điều trị đích ở mục thu gọn. */
+const ENDOCARDITIS: Stratification = {
+  diseaseIds: ["v8-39"],
+  title: "Viêm nội tâm mạc nhiễm khuẩn",
+  lead: "Phân tầng theo loại van và thời gian sau thay van như QĐ 708 mục 4.2; quốc tế theo ESC 2023.",
+  sampling: [
+    { text: "Cấy máu nhiều lần (ba lần), cố gắng cấy khi đang sốt.", source: BYT, ref: "tr. 128–129" },
+    { text: "Siêu âm tim: thấy sùi giúp xác định; không thấy cũng không loại trừ.", source: BYT, ref: "tr. 129" },
+    ...IE.IE_ESC_SAMPLING,
+  ],
+  pathogens: [
+    { text: "Đa số do liên cầu. Tụ cầu (hay gặp sau nạo phá thai, tổn thương van ba lá).", source: BYT, ref: "tr. 128" },
+    { text: "Não mô cầu, phế cầu, lậu cầu; trực khuẩn Gram âm; nấm ở người suy giảm miễn dịch.", source: BYT, ref: "tr. 128" },
+  ],
+  columns: [
+    { id: "vn-native", label: "Van tự nhiên", tone: "community",
+      criteria: [{ text: "Van tự nhiên, trong khi chờ kết quả cấy máu. Dị ứng penicilin: dùng vancomycin.", source: BYT, ref: "mục 4.2a, tr. 129" }],
+      byt: ["r-ie-native-1", "r-ie-native-2"], intl: [] },
+    { id: "vn-early", label: "Van nhân tạo < 1 năm sau mổ", tone: "hospital",
+      criteria: [{ text: "Van nhân tạo, xảy ra dưới 1 năm sau phẫu thuật thay van: phối hợp bốn kháng sinh.", source: BYT, ref: "mục 4.2b, tr. 129" }],
+      byt: ["r-ie-prosth-early"], intl: [] },
+    { id: "vn-late", label: "Van nhân tạo > 1 năm sau mổ", tone: "community",
+      criteria: [{ text: "Van nhân tạo, xảy ra trên 1 năm sau phẫu thuật thay van: điều trị như van tự nhiên.", source: BYT, ref: "mục 4.2c, tr. 130" }],
+      byt: ["r-ie-prosth-late"], intl: [] },
+    { id: "vn-peds", label: "Trẻ em", tone: "special",
+      criteria: [{ text: "Trẻ em: không vượt quá liều người lớn bình thường.", source: BYT, ref: "mục 4.2a, tr. 129" }],
+      byt: ["r-ie-native-peds", "r-ie-prosth-early-peds"], intl: [] },
+    { id: "esc-native", label: "Van tự nhiên cộng đồng, van nhân tạo ≥ 12 tháng", tone: "community", criteria: IE.IE_ESC_CRIT.native, byt: [], intl: IE.IE_ESC_NATIVE },
+    { id: "esc-early", label: "Van nhân tạo < 12 tháng, liên quan chăm sóc y tế", tone: "hospital", criteria: IE.IE_ESC_CRIT.early, byt: [], intl: IE.IE_ESC_EARLY },
+    { id: "esc-allergy", label: "Dị ứng beta-lactam", tone: "special", criteria: IE.IE_ESC_CRIT.allergy, byt: [], intl: IE.IE_ESC_ALLERGY },
+  ],
+  settingNote: "QĐ 708 dùng chung phác đồ cho khoa hồi sức và không hồi sức. Thời gian 4–6 tuần, van nhân tạo 6 tuần; aminoglycosid không quá 14 ngày.",
+  extras: IE.IE_ESC_EXTRAS,
+  principles: IE.IE_ESC_PRINCIPLES,
+  antibiogram: {
+    gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Pseudomonas aeruginosa"], codes: ["CRO", "FEP", "MEM", "CN/GEN", "CIP"] },
+    gramPositive: { organisms: ["Staphylococcus aureus", "Staphylococcus coagulase âm (CoNS)", "Enterococcus spp.", "Streptococcus spp."], codes: ["PEN", "AMP", "FOX", "VAN", "LZD"] },
+    defaultScope: "toan-vien",
+    note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng cấy máu viêm nội tâm mạc, chỉ dùng để định hướng.",
+  },
+  sources: ["Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Viêm nội tâm mạc nhiễm khuẩn.", ...IE.IE_SOURCES],
+};
+
 /* ======================= DA – MÔ MỀM ======================= */
 /* Việt Nam: QĐ 708 (viêm mô bào) và QĐ 4416/2023 (nhọt, áp xe da). Quốc tế: IDSA 2014 + ACE 2026 qua hàm sstiPlan
    (cùng dữ liệu công cụ tab Quốc tế cũ). Khối "khuyến cáo IDSA" chung cho mọi mức độ đặt một lần ở nguyên tắc;
@@ -873,7 +919,7 @@ const ABSCESS: Stratification = {
   sources: ["Bộ Y tế. QĐ 4416/QĐ-BYT ngày 06/12/2023 – Hướng dẫn chẩn đoán và điều trị các bệnh da liễu, Nhọt, áp xe da.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS];
+export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS];
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));
