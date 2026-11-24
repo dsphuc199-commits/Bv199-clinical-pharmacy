@@ -272,12 +272,12 @@ test("endocarditis: every BYT regimen of v8-39 appears exactly once; ESC 2023 do
 
 /* ===== Tai mũi họng: cột Việt Nam đủ phác đồ; cột quốc tế lấy đúng dòng liều của luật module ENT ===== */
 import { getDisease } from "../../data/ent";
-test("ENT: every BYT regimen appears exactly once; intl rows are the ENT rule doses (no reference sources); deep neck has no intl columns", () => {
+test("ENT: every BYT regimen appears exactly once; intl rows are the ENT rule doses (no reference sources); deep neck intl = SFORL 2024", () => {
   for (const d of ["v8-7", "v8-58", "v8-8", "v8-54", "v8-60", "v8-99", "v8-56", "v8-57", "v8-66"]) {
     const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
     assert.ok(s, d);
     assert.deepEqual(s.columns.flatMap((c) => c.byt).sort(), getRegimensForDisease(d).map((r) => r.id).sort(), d);
-    assert.equal(hasIntlStratification(d), !["v8-56", "v8-57", "v8-66"].includes(d), d);
+    assert.equal(hasIntlStratification(d), true, d);
   }
   const gas = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-8"))!;
   const rule = getDisease("gas-pharyngitis")!.rules.find((r) => r.id === "gas-r-positive")!;
@@ -287,4 +287,7 @@ test("ENT: every BYT regimen appears exactly once; intl rows are the ENT rule do
   for (const x of doses) assert.ok(adult.some((i) => i.dose?.startsWith(x.dose)), x.id);
   const all = STRATIFICATIONS.filter((x) => x.diseaseIds.some((d) => d.startsWith("v8-") && ["v8-7", "v8-58", "v8-8", "v8-60", "v8-99"].includes(d)));
   assert.ok(all.every((x) => x.columns.every((c) => c.intl.every((b) => !/UCSF|tham khảo/u.test(b.source)))));
+  const neck = STRATIFICATIONS.find((x) => x.diseaseIds.includes("v8-56"))!;
+  assert.deepEqual(neck.columns.filter((c) => c.intl.length).map((c) => c.id), ["sf-abscess", "sf-cellulitis", "sf-child"]);
+  assert.ok(neck.columns.every((c) => c.intl.every((b) => b.source.startsWith("SFORL 2024") && b.items.every((i) => i.ref === "SFORL 2024"))));
 });

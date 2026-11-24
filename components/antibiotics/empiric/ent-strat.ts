@@ -6,8 +6,8 @@
   chọn (rule.doseIds), chỉ dòng đã trích (status EXTRACTED), bỏ nguồn tham khảo (UCSF, tóm tắt NHS).
   - Nguồn chính (role primary) vào cột; nguồn đối chiếu (role comparison) vào mục thu gọn, trừ khi cột không có dòng
     nguồn chính (khi đó hiện nguồn đối chiếu trong cột, như công cụ ENT).
-  - Áp xe quanh amidan, áp xe sau họng, khoang cổ sâu, viêm tai giữa người lớn: module ENT chỉ có nguồn tham khảo
-    (UCSF, NHS) → không dựng cột quốc tế; tab Quốc tế giữ công cụ ENT.
+  - Khoang cổ sâu: cột quốc tế lấy từ SFORL 2024 (ent-extra-intl.ts); viêm tai giữa người lớn: module ENT chỉ có nguồn tham khảo
+    (NHS) → chỉ đặt trong mục thu gọn.
   Mức khuyến cáo hiển thị đúng nhãn của nguồn qua mã "T:<nhãn>" (Grade trong rx-tool).
 */
 import type { Disease, Dose, Statement } from "../../../types/ent";

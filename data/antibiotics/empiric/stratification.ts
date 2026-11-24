@@ -26,6 +26,7 @@ import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
 import * as CNS from "../../../components/antibiotics/empiric/cns-intl";
 import * as IE from "../../../components/antibiotics/empiric/ie-intl";
 import * as ENT from "../../../components/antibiotics/empiric/ent-strat";
+import * as EX from "../../../components/antibiotics/empiric/ent-extra-intl";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
 
 export type StratCite = { text: string; source: string; ref: string };
@@ -853,11 +854,12 @@ function sinusStrat(diseaseIds: string[], withChild: boolean): Stratification {
     extras: [
       { title: "Dấu hiệu nặng cần đánh giá cấp cứu", blocks: [{ source: "AAO-HNSF 2025 – dấu hiệu nặng", items: ENT.entRedFlags("abrs-adult") }] },
       { title: "Nguồn đối chiếu – người lớn (IDSA 2012, NICE NG79)", blocks: [...ENT.entComparison("abrs-adult", "abrsa-r-uncomplicated"), ...ENT.entComparison("abrs-adult", "abrsa-r-failure").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` }))] },
-      ...(withChild ? [{ title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: ENT.entComparison("abrs-peds", "abrsp-r-severe-worse", "child") }] : []),
+      ...(withChild ? [{ title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: ENT.entComparison("abrs-peds", "abrsp-r-severe-worse", "child") },
+        { title: "Đồng thuận Nhi khoa Ý 2025 – trẻ em", blocks: [EX.ITALY_SINUSITIS] }] : []),
     ],
     principles: ENT.entPrinciples("abrs-adult", "AAO-HNSF 2025 – khuyến cáo cho người lớn"),
     antibiogram: ENT_ANTIBIOGRAM,
-    sources: [SRC_5643("Viêm mũi xoang cấp tính"), ...ENT.entSources("abrs-adult"), ...(withChild ? ENT.entSources("abrs-peds") : [])].filter((s, i, a) => a.indexOf(s) === i),
+    sources: [SRC_5643("Viêm mũi xoang cấp tính"), ...ENT.entSources("abrs-adult"), ...(withChild ? [...ENT.entSources("abrs-peds"), EX.ITALY_SINUSITIS_SOURCE] : [])].filter((s, i, a) => a.indexOf(s) === i),
   };
 }
 
@@ -885,7 +887,8 @@ const GAS_STRAT: Stratification = {
       intl: ENT.entColumn("gas-pharyngitis", "gas-r-positive", "child") },
     { id: "g-test", label: "Chưa xét nghiệm hoặc RADT âm tính", tone: "special", byt: [],
       criteria: [ENT.entCite("Chưa có kết quả xét nghiệm: xét nghiệm trước khi quyết định dùng kháng sinh.", "IDSA-2012-GAS")],
-      intl: [{ source: "IDSA 2012, CDC 2025 – xử trí", items: [
+      intl: [{ source: "IDSA 2012, IDSA 2025, CDC 2025 – xử trí", items: [
+        EX.IDSA25_GAS_SCORE,
         { role: "Biểu hiện virus rõ", text: "Sổ mũi, ho, loét miệng, khàn tiếng: chẩn đoán lâm sàng, không cần xét nghiệm, không dùng kháng sinh.", ref: "CDC 2025" },
         { role: "Chưa xét nghiệm", text: "Làm RADT và/hoặc cấy họng; dương tính thì dùng phác đồ ở cột dương tính.", grade: "T:Mạnh · cao", ref: "IDSA 2012" },
         { role: "Trẻ ≥ 3 tuổi, RADT âm tính", text: "Cấy họng xác nhận.", ref: "CDC 2025" },
@@ -903,7 +906,7 @@ const GAS_STRAT: Stratification = {
   ],
   principles: ENT.entPrinciples("gas-pharyngitis", "IDSA 2012, CDC 2025 – khuyến cáo", (s) => s.kind === "recommendation" || /kháng/u.test(s.text)),
   antibiogram: ENT_ANTIBIOGRAM,
-  sources: [SRC_5643("Viêm họng cấp tính"), "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Thấp tim (điều trị viêm họng liên cầu).", ...ENT.entSources("gas-pharyngitis")],
+  sources: [SRC_5643("Viêm họng cấp tính"), "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh, Thấp tim (điều trị viêm họng liên cầu).", ...ENT.entSources("gas-pharyngitis"), EX.IDSA25_GAS_SOURCE],
 };
 
 function aomStrat(diseaseIds: string[], withAdult: boolean): Stratification {
@@ -935,22 +938,24 @@ function aomStrat(diseaseIds: string[], withAdult: boolean): Stratification {
         ...ENT.entComparison("aom-peds", "aom-r-severe", "child"),
         ...ENT.entComparison("aom-peds", "aom-r-failure", "child").map((b) => ({ ...b, source: `${b.source} – thất bại điều trị` })),
       ] },
+      { title: "Đồng thuận Nhi khoa Ý 2025", blocks: [EX.ITALY_AOM] },
       ...(withAdult ? [{ title: "Người lớn", criteria: "AAP 2013 dành cho trẻ em.", blocks: ENT.entReference("aom-adult") }] : []),
     ],
     principles: ENT.entPrinciples("aom-peds", "AAP 2013 – khuyến cáo"),
     antibiogram: ENT_ANTIBIOGRAM,
-    sources: [SRC_5643("Viêm tai giữa cấp tính trẻ em"), ...ENT.entSources("aom-peds"), ...(withAdult ? ["NHS (BAAG/IMOC, Anh). Summary of antimicrobial prescribing guidance – managing common infections (2025)."] : [])],
+    sources: [SRC_5643("Viêm tai giữa cấp tính trẻ em"), ...ENT.entSources("aom-peds"), EX.ITALY_AOM_SOURCE, ...(withAdult ? ["NHS (BAAG/IMOC, Anh). Summary of antimicrobial prescribing guidance – managing common infections (2025)."] : [])],
   };
 }
 
 const DEEP_NECK_STRAT: Stratification = {
   diseaseIds: ["v8-56", "v8-57", "v8-66"],
   title: "Nhiễm trùng, áp xe khoang cổ sâu",
-  lead: "Theo QĐ 5643 (nhiễm trùng khoang cổ sâu; khoang quanh amiđan và sau hầu thuộc các khoang cổ sâu).",
-  sampling: [{ text: "Sốt, cổ sưng nóng đỏ đau, khó nuốt, khó thở; CT có cản quang phân biệt áp xe với viêm mô tế bào.", source: BYT5643, ref: "tr. 255" }],
+  lead: "Việt Nam theo QĐ 5643 (nhiễm trùng khoang cổ sâu; khoang quanh amiđan và sau hầu thuộc các khoang cổ sâu); quốc tế theo SFORL 2024 (Hội Tai mũi họng Pháp, phối hợp SPILF).",
+  sampling: [{ text: "Sốt, cổ sưng nóng đỏ đau, khó nuốt, khó thở; CT có cản quang phân biệt áp xe với viêm mô tế bào.", source: BYT5643, ref: "tr. 255" }, ...EX.SFORL_SAMPLING],
   pathogens: [
     { text: "Đa vi khuẩn: hiếu khí (H. influenzae, S. pneumoniae, Klebsiella) và kỵ khí (Peptostreptococcus, Fusobacterium, Bacteroides).", source: BYT5643, ref: "tr. 254" },
     { text: "Gram âm ở người già, đái tháo đường, suy giảm miễn dịch.", source: BYT5643, ref: "tr. 255" },
+    ...EX.SFORL_PATHOGENS,
   ],
   columns: [
     { id: "vn-deepneck", label: "Nhiễm trùng, áp xe khoang cổ sâu", tone: "special",
@@ -959,11 +964,18 @@ const DEEP_NECK_STRAT: Stratification = {
         { text: "Rạch dẫn lưu áp xe (trong miệng hoặc ngoài cổ); chọc hút dưới siêu âm, CT với áp xe nhỏ, đơn độc.", source: BYT5643, ref: "tr. 256" },
       ],
       byt: ["r-ent-deepneck-ctx"], intl: [] },
+    { id: "sf-abscess", label: "Người lớn – áp xe quanh amidan, cạnh họng, sau họng", tone: "community", byt: [],
+      criteria: EX.SFORL_CRIT_ADULT_ABSCESS, intl: EX.SFORL_ADULT_ABSCESS },
+    { id: "sf-cellulitis", label: "Người lớn – viêm mô tế bào cổ sâu lan tỏa, viêm trung thất", tone: "special", byt: [],
+      criteria: EX.SFORL_CRIT_ADULT_CELLULITIS, intl: EX.SFORL_ADULT_CELLULITIS },
+    { id: "sf-child", label: "Trẻ em", tone: "hospital", byt: [],
+      criteria: EX.SFORL_CRIT_CHILD, intl: EX.SFORL_CHILD },
   ],
   settingNote: "Thời gian theo đáp ứng lâm sàng và kháng sinh đồ.",
-  principles: { source: "", items: [] },
+  extras: [{ title: "Điều chỉnh theo vi sinh (SFORL 2024)", blocks: [EX.SFORL_TARGETED] }],
+  principles: EX.SFORL_PRINCIPLES,
   antibiogram: ENT_ANTIBIOGRAM,
-  sources: [SRC_5643("Nhiễm trùng khoang cổ sâu")],
+  sources: [SRC_5643("Nhiễm trùng khoang cổ sâu"), EX.SFORL_SOURCE],
 };
 
 /* ======================= DA – MÔ MỀM ======================= */
