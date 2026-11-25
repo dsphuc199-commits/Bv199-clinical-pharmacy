@@ -114,6 +114,12 @@ test("module regimens marked 'chọn một thuốc' are shown as alternatives, n
 
 /* ===== Nhiễm khuẩn tiết niệu ===== */
 import { EAU_UROLOGY_FORMS } from "../../components/antibiotics/empiric/urology-eau2026";
+import { compactText, compactDose, DOSE_PAIRS } from "../../data/antibiotics/empiric/strat-compact";
+const nums = (x: string) => (x.match(/[0-9]+(?:[.,][0-9]+)?/g) ?? []).sort().join(" ");
+
+test("compact cards: shortened doses keep every number", () => {
+  for (const [a, b] of DOSE_PAIRS) assert.equal(nums(b), nums(a), a);
+});
 
 test("urology: every EAU 2026 form is shown (column or special group) with every drug and dose", () => {
   for (const d of ["v8-16", "v8-17", "v8-2"]) {
@@ -122,8 +128,8 @@ test("urology: every EAU 2026 form is shown (column or special group) with every
     const blocks = [...s.columns.flatMap((c) => c.intl), ...(s.extras ?? []).flatMap((x) => x.blocks)];
     const shown = blocks.flatMap((b) => b.items).map((i) => `${i.role}|${i.text}|${i.dose ?? ""}`);
     for (const f of EAU_UROLOGY_FORMS[d]) {
-      for (const it of [...f.blocks.flatMap((b) => b.items), ...f.avoid]) assert.ok(shown.includes(`${it.role}|${it.text}|${it.dose ?? ""}`), `${d} ${f.id}: ${it.text} missing`);
-      for (const n of f.notes) assert.ok(shown.some((x) => x.includes(n)) || s.principles.items.some((i) => i.text === n) || s.sampling.some((c) => c.text === n), `${d} ${f.id}: note missing`);
+      for (const it of [...f.blocks.flatMap((b) => b.items), ...f.avoid]) assert.ok(shown.includes(`${it.role}|${compactText(it.text)}|${it.dose ? compactDose(it.dose) : ""}`), `${d} ${f.id}: ${it.text} missing`);
+      for (const n of f.notes) assert.ok(shown.some((x) => x.includes(compactText(n))) || s.principles.items.some((i) => i.text === n) || s.sampling.some((c) => c.text === n), `${d} ${f.id}: note missing`);
       /* Tiêu đề nhóm thuốc (vd. "Chỉ khi tỷ lệ E. coli kháng tại chỗ < 20%") phải còn. */
       for (const b of f.blocks.filter((x) => x.items.length && x.title)) assert.ok(blocks.some((x) => x.source.includes(b.title)), `${d} ${f.id}: block "${b.title}" lost`);
     }
@@ -183,7 +189,8 @@ test("biliary intl: TG18 columns reuse the TG18 JSON drug lists and doses, carry
   assert.deepEqual(intl.map((c) => c.id), ["tg-c1", "tg-c2", "tg-c3", "tg-hc"]);
   assert.ok(intl.every((c) => c.byt.length === 0 && c.criteria.every((x) => x.source === "TG18") && c.intl.every((b) => b.source.startsWith("TG18 – "))));
   const rules = (tg18 as unknown as { rules: { id: string; blocks?: { items: { role: string; dose?: string }[] }[] }[] }).rules;
-  const key = (i: { role: string; dose?: string }) => i.role + "|" + (i.dose ?? "");
+  /* Liều TG18 viết gọn ("truyền tĩnh mạch" → "TM"): so tên thuốc và số liệu liều. */
+  const key = (i: { role: string; dose?: string }) => i.role + "|" + nums(i.dose ?? "");
   for (const [col, ruleId] of [["tg-c1", "community-i"], ["tg-c2", "community-ii"], ["tg-c3", "community-iii"], ["tg-hc", "healthcare"]]) {
     const want = rules.find((r) => r.id === ruleId)!.blocks!.flatMap((b) => b.items.map(key));
     const got = intl.find((c) => c.id === col)!.intl.flatMap((b) => b.items.map(key));

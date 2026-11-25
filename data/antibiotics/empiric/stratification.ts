@@ -25,6 +25,7 @@ import * as IAI from "../../../components/antibiotics/empiric/iai-intl";
 import * as TG from "../../../components/antibiotics/empiric/tg18-intl";
 import * as CNS from "../../../components/antibiotics/empiric/cns-intl";
 import * as IE from "../../../components/antibiotics/empiric/ie-intl";
+import { compactStrat } from "./strat-compact";
 import * as ENT from "../../../components/antibiotics/empiric/ent-strat";
 import * as EX from "../../../components/antibiotics/empiric/ent-extra-intl";
 import { ACE_SEVERE, RED_FLAGS, SEV_TIP, SIRS_IDSA, sstiPlan, type SstiIn, type SstiOut } from "../../../components/antibiotics/empiric/ssti-idsa2014-ace2026";
@@ -1100,8 +1101,8 @@ const ABSCESS: Stratification = {
   sources: ["Bộ Y tế. QĐ 4416/QĐ-BYT ngày 06/12/2023 – Hướng dẫn chẩn đoán và điều trị các bệnh da liễu, Nhọt, áp xe da.", SRC_IDSA_SSTI, SRC_ACE_SSTI],
 };
 
-export const STRATIFICATIONS: Stratification[] = [SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS,
-  sinusStrat(["v8-7"], true), sinusStrat(["v8-58"], false), GAS_STRAT, aomStrat(["v8-60"], true), aomStrat(["v8-99"], false), DEEP_NECK_STRAT];
+export const STRATIFICATIONS: Stratification[] = ([SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS,
+  sinusStrat(["v8-7"], true), sinusStrat(["v8-58"], false), GAS_STRAT, aomStrat(["v8-60"], true), aomStrat(["v8-99"], false), DEEP_NECK_STRAT] as Stratification[]).map(compactStrat);
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));
