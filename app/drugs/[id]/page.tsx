@@ -10,6 +10,8 @@ import { getIntlReferences, getStoredFiles } from "@/lib/drugs/leaflets";
 import { DTQG_BOOK, dtqgFor, flaggedSections, loadMonograph, textOk, type MonoKey } from "@/lib/drugs/dtqg";
 import type { DtqgBlock } from "@/lib/dosing/catalog";
 import { lasaFor } from "@/lib/drugs/lasa-match";
+import { bhytFor } from "@/lib/drugs/bhyt";
+import BhytSection from "@/components/drugs/BhytSection";
 import DtqgProse from "@/components/dosing/DtqgProse";
 import { fixSubscripts } from "@/lib/dosing/dtqg-text";
 
@@ -63,6 +65,7 @@ export default async function DrugDetailPage({ params }: Props) {
   const renalOk = !!renal && textOk(renal.content, [...renal.contraindications, ...renal.cautions]);
   const monoSrc = mono ? `Dược thư quốc gia 2023 – ${mono.name}, ${pageLabel(mono.pages)}` : "";
   const lasa = lasaFor(drug.brandName);
+  const bhyt = bhytFor(drug.ingredientName);
   const sections = [
     (ms.chiDinh || monograph) && { id: "chi-dinh", label: "Chỉ định" },
     ms.lieuDung && { id: "lieu-dung", label: "Liều dùng" },
@@ -73,6 +76,7 @@ export default async function DrugDetailPage({ params }: Props) {
     ms.tuongTac && { id: "tuong-tac", label: "Tương tác" },
     ms.adr && { id: "adr", label: "Tác dụng không mong muốn" },
     ms.quaLieu && { id: "qua-lieu", label: "Quá liều" },
+    bhyt.length > 0 && { id: "bhyt", label: "BHYT" },
     { id: "san-pham", label: "Sản phẩm" },
     { id: "dang-ky", label: "Đăng ký lưu hành" },
   ].filter(Boolean) as { id: string; label: string }[];
@@ -241,6 +245,8 @@ export default async function DrugDetailPage({ params }: Props) {
           </Fold>
         )}
         {ms.quaLieu && <Fold id="qua-lieu" title="Quá liều và xử trí" source={monoSrc}>{P("quaLieu")}</Fold>}
+
+        {bhyt.length > 0 && <BhytSection items={bhyt} productRoute={drug.route} />}
 
         {(mono || renal || pregnancy) && (
           <p className="dt-srcnote">

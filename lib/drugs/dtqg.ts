@@ -23,20 +23,42 @@ export const DTQG_BOOK = (renal as { source: string }).source;
 
 const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[đĐ]/g, "d").toLowerCase();
 /* Muối, dạng muối và từ nối không thuộc tên hoạt chất. */
-const SALT = new Set(["natri", "sodium", "kali", "potassium", "calci", "calcium", "magnesi", "hydroclorid", "hydrochlorid", "hydrochloride", "hcl",
+const SALT = new Set(["natri", "kali", "calci", "magnesi", "hydroclorid", "hydrochlorid", "hydrochloride", "hcl",
   "dihydroclorid", "sulfat", "sulphate", "sulfate", "phosphat", "phosphate", "mesylat", "mesilat", "besylat", "besilat", "maleat", "fumarat",
-  "tartrat", "succinat", "acetat", "citrat", "trihydrat", "monohydrat", "dihydrat", "hydrat", "bromid", "clorid", "nitrat", "lactat",
-  "gluconat", "dinatri", "disodium", "hyclat", "pentahydrat"]);
-/* Cùng hoạt chất, khác cách viết giữa danh mục và Dược thư. */
-const ALIAS: Record<string, string> = { "acid clavulanic": "clavulanat", "clavulanic acid": "clavulanat", clavulanate: "clavulanat", acetaminophen: "paracetamol" };
+  "tartrat", "succinat", "acetat", "citrat", "bromid", "clorid", "nitrat", "lactat", "gluconat", "dinatri", "hyclat", "hydrocarbonat"]);
+/* Nước kết tinh: không bao giờ là tên hoạt chất – luôn bỏ. */
+const HYDRATE = /^(mono|di|tri|tetra|penta|hexa|hepta|sesqui)?hydrat(e)?$|^khan$|^anhydrous$/;
+/* Tên muối tiếng Anh → tiếng Việt theo từng từ, để thuốc chỉ gồm muối so được đúng cả cation và anion
+   (potassium chloride ↔ kali clorid; natri chlorid ↔ natri clorid; KHÔNG để natri clorid trùng kali clorid). */
+const WORD: Record<string, string> = {
+  potassium: "kali", sodium: "natri", disodium: "dinatri", calcium: "calci", magnesium: "magnesi",
+  chloride: "clorid", chlorid: "clorid", bicarbonate: "hydrocarbonat", bicarbonat: "hydrocarbonat", hydrogencarbonate: "hydrocarbonat",
+};
+/* Cùng hoạt chất, khác cách viết giữa danh mục và Dược thư / Thông tư 20. */
+const ALIAS: Record<string, string> = {
+  "acid clavulanic": "clavulanat", "clavulanic acid": "clavulanat", clavulanate: "clavulanat", acetaminophen: "paracetamol",
+  adrenalin: "epinephrin", noradrenalin: "nor epinephrin", "nor adrenalin": "nor epinephrin",
+  "povidon iod": "povidon iodin", "povidone iodine": "povidon iodin",
+};
 
-/** Bộ hoạt chất chuẩn hóa: "Amoxicilin (dưới dạng ...) + Acid clavulanic" → "amoxicilin|clavulanat". */
+/* Chuẩn hóa chính tả Anh – Việt, áp cho CẢ HAI phía khi so: bỏ "e" cuối của -ine/-one/-ide/-ole/-ate
+   (amiodarone ↔ amiodaron, fluconazole ↔ fluconazol, cefuroxime ↔ cefuroxim), ph → f (cephalexin ↔ cefalexin), y → i (acyclovir ↔ aciclovir). */
+const fold = (w: string) => w.replace(/ph/g, "f").replace(/y/g, "i").replace(/(in|on|id|ol|at|im)e$/, "$1");
+const SALT_F = new Set([...SALT].map(fold));
+
+/** Bộ hoạt chất chuẩn hóa: "Amoxicilin (dưới dạng ...) + Acid clavulanic" → "amoxicilin|clavulanat".
+    Trong mỗi hoạt chất: bỏ từ chỉ muối (trừ khi tên chỉ gồm muối, vd. natri clorid), sắp thứ tự từ, bỏ dấu cách
+    (methyl prednisolon ↔ methylprednisolon, acid tranexamic ↔ tranexamic acid). */
 export function ingredientKey(name: string): string {
   const parts = plain(name).replace(/\*/g, "").replace(/\([^)]*\)?/g, " ")
     .split(/\s*(?:\+|;|,|\bva\b|\band\b|\/)\s*/u)
     .map((p) => p.replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim())
     .map((p) => ALIAS[p] ?? p)
-    .map((p) => p.split(" ").filter((w) => !SALT.has(w)).join(" "))
+    .map((p) => {
+      const words = p.split(" ").filter(Boolean).map((w) => WORD[w] ?? w).filter((w) => !HYDRATE.test(w)).map(fold);
+      const kept = words.filter((w) => !SALT_F.has(w));
+      return (kept.length ? kept : words).sort().join("");
+    })
     .map((p) => ALIAS[p] ?? p)
     .filter(Boolean);
   return Array.from(new Set(parts)).sort().join("|");

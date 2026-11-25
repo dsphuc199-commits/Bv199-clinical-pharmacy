@@ -8,8 +8,8 @@ import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
 type Reg = { s: RegistryStatus; h: LeafletSource };
 type RegistryMap = Record<string, Reg>;
-/** m: có chuyên luận Dược thư; r: Dược thư – suy thận; p: Dược thư – thai kỳ, cho con bú; l: thuộc danh mục LASA. */
-export type DrugFlags = { m: boolean; r: boolean; p: boolean; l: boolean };
+/** b: có trong danh mục BHYT (TT 20/2022); c: thuốc (*) phải hội chẩn; m: có chuyên luận Dược thư; r: Dược thư – suy thận; p: Dược thư – thai kỳ, cho con bú; l: thuộc danh mục LASA. */
+export type DrugFlags = { m: boolean; r: boolean; p: boolean; l: boolean; b: boolean; c: boolean };
 
 /* Bộ lọc nội dung: chỉ nguồn chính thức. */
 const CONTENT_FILTERS: { value: string; label: string; test: (r: Reg | undefined, f: DrugFlags | undefined) => boolean }[] = [
@@ -19,6 +19,8 @@ const CONTENT_FILTERS: { value: string; label: string; test: (r: Reg | undefined
   { value: "renal", label: "Có liều suy thận (Dược thư)", test: (_, f) => !!f?.r },
   { value: "preg", label: "Có thai kỳ, cho con bú (Dược thư)", test: (_, f) => !!f?.p },
   { value: "lasa", label: "Thuốc LASA", test: (_, f) => !!f?.l },
+  { value: "bhyt", label: "Có trong danh mục BHYT (TT 20/2022)", test: (_, f) => !!f?.b },
+  { value: "consult", label: "Thuốc (*) phải hội chẩn", test: (_, f) => !!f?.c },
   { value: "intl", label: "Tài liệu nước ngoài (tiếng Anh)", test: (r) => r?.h === "intl" },
   { value: "none", label: "Chưa có tờ HDSD gốc", test: (r) => r?.h !== "dav" },
 ];
@@ -44,6 +46,7 @@ function Badges({ r, f }: { r?: Reg; f?: DrugFlags }) {
   return (
     <>
       {f?.l && <span className={`${PILL} bg-orange-100 text-orange-900`}>LASA</span>}
+      {f?.c && <span className={`${PILL} bg-amber-100 text-amber-900`}>(*) Hội chẩn</span>}
       {b && <span className={`${PILL} ${b.cls}`}>{b.text}</span>}
       {r?.h === "dav" && <span className={`${PILL} bg-sky-100 text-sky-900`}>Tờ HDSD gốc</span>}
       {f?.m && <span className={`${PILL} bg-emerald-100 text-emerald-900`}>Dược thư</span>}

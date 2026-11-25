@@ -61,3 +61,37 @@ test("fixSubscripts re-attaches displaced Clcr / Css subscripts without touching
   assert.equal(fixSubscripts("Cl bệnh nhân/cr Cl bình thường cr"), "Clcr bệnh nhân/Clcr bình thường");
   assert.equal(fixSubscripts("Clcr ≥ 80 ml/phút; creatinin huyết thanh"), "Clcr ≥ 80 ml/phút; creatinin huyết thanh");
 });
+
+/* ===== Ghép muối và chính tả Anh – Việt; Thông tư 20/2022 (BHYT) ===== */
+import { bhytFor, routeMatches } from "../../lib/drugs/bhyt";
+import tt20 from "../../data/bhyt-tt20.json";
+test("salt-only drugs keep cation AND anion (sodium chloride never matches potassium chloride); English spellings fold to Vietnamese", () => {
+  assert.equal(ingredientKey("Sodium chloride"), ingredientKey("Natri clorid"));
+  assert.equal(ingredientKey("Potassium chloride"), ingredientKey("Kali clorid"));
+  assert.notEqual(ingredientKey("Natri Chlorid"), ingredientKey("Kali clorid"));
+  assert.equal(dtqgFor("Sodium chloride").mono?.id, dtqgFor("Natri clorid").mono?.id);
+  assert.notEqual(dtqgFor("Sodium chloride").mono?.id, "kali-clorid");
+  assert.equal(ingredientKey("Calcium lactate pentahydrat"), ingredientKey("Calci lactat"));
+  assert.equal(ingredientKey("Amiodarone hydrochloride"), ingredientKey("Amiodaron hydroclorid"));
+  assert.equal(ingredientKey("Cefuroxime (dưới dạng Cefuroxime Sodium)"), ingredientKey("Cefuroxim"));
+  assert.equal(ingredientKey("Methylprednisolon"), ingredientKey("Methyl prednisolon"));
+  assert.equal(ingredientKey("Acid tranexamic"), ingredientKey("Tranexamic acid"));
+});
+
+test("TT 20/2022: complete STT 1–1037, consult star, merged notes, multi-route rows, BV199 matching", () => {
+  const items = (tt20 as { items: { stt: number; name: string; consult: boolean; routes: { route: string; hang: boolean[]; note: string }[] }[] }).items;
+  const stts = new Set(items.map((i) => i.stt));
+  for (let i = 1; i <= 1037; i++) assert.ok(stts.has(i), `STT ${i}`);
+  const mero = bhytFor("Meropenem (dưới dạng Meropenem trihydrat)");
+  assert.equal(mero.length, 1);
+  assert.equal(mero[0].consult, true);
+  assert.deepEqual(mero[0].routes[0].hang, [true, true, false, false]);
+  const ppi = ["Omeprazol", "Esomeprazol", "Pantoprazol", "Rabeprazol"].map((n) => bhytFor(n)[0].routes[0].note);
+  assert.ok(ppi.every((n) => n === ppi[0] && /stress ở bệnh nhân hồi sức tích cực\.$/.test(n)));
+  const cipro = bhytFor("Ciprofloxacin")[0];
+  assert.deepEqual(cipro.routes.map((r) => r.route), ["Tiêm", "Uống, nhỏ mắt, nhỏ tai"]);
+  assert.deepEqual(cipro.routes[1].hang, [true, true, true, true]);
+  assert.equal(bhytFor("Levofloxacin").length, 2);
+  assert.ok(routeMatches("Tiêm truyền tĩnh mạch", "Tiêm"));
+  assert.ok(!routeMatches("Uống", "Tiêm"));
+});

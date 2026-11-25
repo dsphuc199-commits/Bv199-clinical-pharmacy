@@ -3,6 +3,7 @@ import { loadDrugPublications } from "@/lib/drugs/catalog-store";
 import { catalogProducts } from "@/lib/drugs/catalog";
 import { dtqgFor } from "@/lib/drugs/dtqg";
 import { lasaFor } from "@/lib/drugs/lasa-match";
+import { bhytFor } from "@/lib/drugs/bhyt";
 import DrugsClient, { type DrugFlags } from "./DrugsClient";
 
 export const dynamic = "force-dynamic";
@@ -14,8 +15,9 @@ export default async function DrugsPage() {
   const flags: Record<string, DrugFlags> = {};
   for (const d of catalogProducts(publications)) {
     const m = dtqgFor(d.ingredientName);
-    const f = { m: !!m.mono, r: !!m.renal, p: !!m.pregnancy, l: lasaFor(d.brandName).length > 0 };
-    if (f.m || f.r || f.p || f.l) flags[d.id] = f;
+    const b = bhytFor(d.ingredientName);
+    const f = { m: !!m.mono, r: !!m.renal, p: !!m.pregnancy, l: lasaFor(d.brandName).length > 0, b: b.length > 0, c: b.some((x) => x.consult) };
+    if (f.m || f.r || f.p || f.l || f.b) flags[d.id] = f;
   }
   return <DrugsClient registry={registrySummary()} syncedAt={REGISTRY_SYNCED_AT} publications={publications} flags={flags} />;
 }
