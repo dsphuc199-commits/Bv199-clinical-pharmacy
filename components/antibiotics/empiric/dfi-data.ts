@@ -6,6 +6,7 @@
   viêm xương ở mức cao của khoảng liều. Không tự điền liều.
   Mức GRADE: S/C = mạnh/có điều kiện; H/M/L = cao/TB/thấp; GPS = thực hành tốt. ref = vị trí trong nguồn (không hiển thị).
 */
+import type { Stratification, StratIntl } from "@/data/antibiotics/empiric/stratification";
 export type DfiRow = { factor: string; bugs: string; rx: string[]; lead?: string };
 export type DfiGroup = { label: string; sub: string; rows: DfiRow[] };
 export type DfiPoint = { k: string; t: string; g?: string; ref: string };
@@ -102,3 +103,67 @@ export const IWGDF_AVOID: DfiPoint[] = [
   { k: "Tigecyclin", t: "Kém hơn ertapenem trong thử nghiệm.", ref: "Rec 12 rationale" },
   { k: "Chưa đủ dữ liệu", t: "Rifampicin trong viêm xương; beta-lactam/ức chế beta-lactamase mới, dalbavancin, oritavancin.", ref: "Rec 16 note; Rec 12 rationale" },
 ];
+
+/* ===== Khung phân tầng (bố cục BV ĐHYD) – dùng trong data/antibiotics/empiric/stratification.ts ===== */
+const VN1530 = "QĐ 1530/QĐ-BYT";
+const IW = "IWGDF/IDSA 2023";
+const groupBlocks = (g: DfiGroup): StratIntl[] => g.rows.map((r) => ({
+  source: r.factor,
+  lead: `Tác nhân: ${r.bugs}.${r.factor.startsWith("Yếu tố nguy cơ MRSA") ? ` ${IWGDF_MRSA_RISK}` : ""}${r.lead ? ` ${r.lead}` : ""}`,
+  items: r.rx.map((text, i) => ({ role: i === 0 ? "Chọn một" : "Hoặc", text, ref: "Table 4" })),
+}));
+const pts = (source: string, items: DfiPoint[]): StratIntl => ({ source, items: items.map((p) => ({ role: p.k, text: p.t, grade: p.g, ref: p.ref })) });
+
+export const DFI_STRAT: Stratification = {
+  diseaseIds: ["v9-1"],
+  title: "Nhiễm trùng bàn chân đái tháo đường",
+  lead: "Phân tầng theo mức độ và yếu tố làm nặng như QĐ 1530/QĐ-BYT; quốc tế theo IWGDF/IDSA 2023.",
+  sampling: [
+    { text: "Cấy mô mềm (xương khi nghi viêm tủy xương) hoặc chọc hút mủ; không lấy gạc bề mặt.", source: VN1530, ref: "tr. 19" },
+    { text: "Không đáp ứng hoặc đáp ứng kém: cấy lại trong điều kiện tối ưu.", source: VN1530, ref: "tr. 24" },
+    { text: "Mẫu mô (nạo hoặc sinh thiết) sau làm sạch, cắt lọc; nghi viêm xương: mẫu xương. Nuôi cấy thường quy, không dùng sinh học phân tử đầu tay.", source: IW, ref: "" },
+  ],
+  pathogens: [],
+  columns: [
+    { id: "vn-mild", label: "Nhẹ", tone: "community",
+      criteria: [{ text: "Wagner độ 1 hoặc PEDIS giai đoạn 1–2.", source: VN1530, ref: "tr. 32" }],
+      byt: ["r-dfi-mild-simple", "r-dfi-mild-recent-abx", "r-dfi-mild-allergy", "r-dfi-mild-mrsa"], intl: [] },
+    { id: "vn-mod", label: "Trung bình hoặc nặng", tone: "hospital",
+      criteria: [
+        { text: "Wagner độ ≥ 2 hoặc PEDIS giai đoạn ≥ 3.", source: VN1530, ref: "tr. 32" },
+        { text: "Tiêm cho mọi nhiễm trùng nặng và một số nhiễm trùng vừa.", source: VN1530, ref: "tr. 24" },
+      ],
+      byt: ["r-dfi-mod-simple", "r-dfi-mod-recent-abx", "r-dfi-mod-ischemic", "r-dfi-mod-pseudo", "r-dfi-mod-mrsa", "r-dfi-mod-esbl"], intl: [] },
+    { id: "iw-mild", label: "Nhẹ (độ 2) – đường uống", tone: "community",
+      criteria: [{ text: IWGDF_GRADES[1].t, source: IW, ref: "Table 1" }],
+      byt: [], intl: groupBlocks(IWGDF_GROUPS[0]) },
+    { id: "iw-mod", label: "Vừa hoặc nặng (độ 3–4)", tone: "hospital",
+      criteria: [
+        { text: `Độ 3: ${IWGDF_GRADES[2].t}`, source: IW, ref: "Table 1" },
+        { text: `Độ 4: ${IWGDF_GRADES[3].t} Không dùng đường uống, trừ khi chuyển tiếp sau tiêm.`, source: IW, ref: "Table 1; Table 4 foot d" },
+      ],
+      byt: [], intl: groupBlocks(IWGDF_GROUPS[1]) },
+  ],
+  settingNote: "QĐ 1530 dùng chung phác đồ cho khoa hồi sức và không hồi sức.",
+  severity: { title: "Nguyên tắc dùng kháng sinh", items: [
+    ...BYT_POINTS.filter((p) => p.k !== "Cấy").map((p) => ({ text: `${p.k}: ${p.t}`, source: VN1530, ref: p.ref })),
+    { text: BYT_LEGEND, source: VN1530, ref: "tr. 32–33" },
+    { text: BYT_FOOT[0].replace(/^\* /, ""), source: VN1530, ref: "tr. 33" },
+  ] },
+  extras: [
+    { title: "Thời gian điều trị", blocks: [], table: { cols: ["Đường dùng", "Thời gian"], rows: IWGDF_DURATION.map((d) => ({ label: d.k, cells: [d.route || "—", d.d] })) } },
+    { title: "Nhập viện, ngoại khoa, viêm xương", blocks: [pts(IW, IWGDF_POINTS.filter((p) => ["Nhập viện", "Ngoại khoa khẩn", "Phẫu thuật sớm", "Viêm xương không mổ"].includes(p.k))), pts(`${IW} – chẩn đoán viêm xương`, IWGDF_OSTEO_DX)] },
+    { title: "Không khuyến cáo", blocks: [pts(IW, IWGDF_AVOID)] },
+  ],
+  principles: { ...pts(IW, IWGDF_POINTS.filter((p) => ["Không nhiễm trùng", "Nhẹ, chưa dùng kháng sinh", "Pseudomonas", "Kéo dài"].includes(p.k))), lead: "Liều thông thường cho nhiễm trùng nặng; viêm xương: mức cao của khoảng liều. Chỉnh khi suy thận, suy gan, béo phì." },
+  antibiogram: {
+    gramNegative: { organisms: ["Escherichia coli", "Klebsiella pneumoniae", "Pseudomonas aeruginosa"], codes: ["AMC", "CRO", "TZP", "MEM", "CIP"] },
+    gramPositive: { organisms: ["Staphylococcus aureus", "Streptococcus spp."], codes: ["FOX", "PEN", "ERY", "CLI", "SXT", "DOX", "VAN", "LZD"] },
+    defaultScope: "toan-vien",
+    note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh; bảng không tách riêng mẫu bàn chân, chỉ dùng để định hướng.",
+  },
+  sources: [
+    "Bộ Y tế. QĐ 1530/QĐ-BYT ngày 24/3/2023 – Hướng dẫn chẩn đoán và điều trị loét bàn chân do đái tháo đường.",
+    "Senneville É và cs. IWGDF/IDSA Guidelines on the Diagnosis and Treatment of Diabetes-related Foot Infections (IWGDF/IDSA 2023). Clin Infect Dis 2023 (doi:10.1093/cid/ciad527); Diabetes Metab Res Rev 2024;40(3):e3687.",
+  ],
+};

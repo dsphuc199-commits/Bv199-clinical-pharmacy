@@ -53,7 +53,7 @@ function Cites({ items }: { items: StratCite[] }) {
 }
 
 /* Ghi chú biên tập dữ liệu (nguồn lấy liều, ngày bổ sung) không phải nội dung lâm sàng. */
-const EDITORIAL_NOTE = /^(?:ĐỐI CHIẾU LIỀU|Liều bổ sung ngày|Văn bản không nêu liều)|không nêu liều;/u;
+const EDITORIAL_NOTE = /^(?:ĐỐI CHIẾU LIỀU|Liều bổ sung ngày|Văn bản không nêu liều|Ghi chú của văn bản:)|không nêu liều;/u;
 const SECTION_NAME: Record<string, string> = {
   "6": "phần viêm phổi bệnh viện của QĐ 708",
   "9": "phần viêm phổi liên quan thở máy của QĐ 708",
@@ -123,7 +123,8 @@ function RegimenDrugs({ regimen }: { regimen: Regimen }) {
   /* Đường mật: liều theo bản HĐT&ĐT đã công bố (trang quản trị) khi có; không tải được thì không hiện liều cũ. */
   const protocol = useBiliaryProtocol();
   const biliary = regimen.diseaseIds.includes(BILIARY_DISEASE_ID);
-  const drugs = resolvedDrugs(regimen).map((drug) => ({ ...drug, dose: panelNote(cleanRef(drug.dose)) }));
+  /* Phác đồ BYT không ghi liều (vd. QĐ 1530): bỏ riêng câu ghi chú này, giữ nguyên tên thuốc. */
+  const drugs = resolvedDrugs(regimen).map((drug) => ({ ...drug, dose: panelNote(cleanRef(drug.dose)).replace(/^Nguồn BYT không nêu liều\.?$/u, "") }));
   const base = structureOf({ ...regimen, id: `${regimen.id}#panel`, drugs }).groups;
   if (biliary && protocol === "unavailable") return <p role="status" className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">Tạm thời chưa tải được bản phác đồ đang dùng. Hãy tải lại trang.</p>;
   const published = protocol && protocol !== "unavailable" ? protocol : null;

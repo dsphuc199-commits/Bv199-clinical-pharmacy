@@ -12,6 +12,7 @@
   - Hồi sức/không hồi sức chỉ tách ở kháng sinh đồ tại chỗ; không tạo phác đồ riêng cho hồi sức
     khi hướng dẫn gốc không tách.
 */
+import { DFI_STRAT } from "@/components/antibiotics/empiric/dfi-data";
 import type { RxItem } from "../../../components/antibiotics/empiric/septic-arthritis-pids2023";
 import { sepsisPlan } from "../../../components/antibiotics/empiric/sepsis-ssc2026";
 import { swabPlan } from "../../../components/antibiotics/empiric/sepsis-swab2021";
@@ -1141,7 +1142,7 @@ const ABSCESS: Stratification = {
 };
 
 export const STRATIFICATIONS: Stratification[] = ([SEPSIS, CAP, hvStrat("hap"), hvStrat("vap"), CYSTITIS, PYELONEPHRITIS, COMPLICATED_UTI, PERITONITIS, BILIARY, CELLULITIS, ABSCESS, MENINGITIS, VENTRICULITIS, ENDOCARDITIS,
-  sinusStrat(["v8-7"], true), sinusStrat(["v8-58"], false), GAS_STRAT, aomStrat(["v8-60"], true), aomStrat(["v8-99"], false), DEEP_NECK_STRAT] as Stratification[]).map(compactStrat);
+  sinusStrat(["v8-7"], true), sinusStrat(["v8-58"], false), GAS_STRAT, aomStrat(["v8-60"], true), aomStrat(["v8-99"], false), DEEP_NECK_STRAT, DFI_STRAT] as Stratification[]).map(compactStrat);
 
 export function stratificationFor(diseaseId: string): Stratification | undefined {
   return STRATIFICATIONS.find(({ diseaseIds }) => diseaseIds.includes(diseaseId));

@@ -7,7 +7,7 @@
   Đồng bộ với stratification.ts và EntEmpiricGuidelines: tests/empiric/stratification.test.ts kiểm tra khớp tuyệt đối.
 */
 const STRAT = ["v8-11", "v8-12", "v8-1", "v8-4", "v8-5", "v8-16", "v8-17", "v8-2", "v8-21", "v8-24", "v8-27", "v8-28", "v8-36", "v8-38", "v8-39",
-  "v8-7", "v8-58", "v8-8", "v8-54", "v8-60", "v8-99", "v8-56", "v8-57", "v8-66"];
+  "v8-7", "v8-58", "v8-8", "v8-54", "v8-60", "v8-99", "v8-56", "v8-57", "v8-66", "v9-1"];
 /** Bệnh có khung phân tầng. */
 export const STRAT_IDS: ReadonlySet<string> = new Set(STRAT);
 /** Bệnh có khung phân tầng kèm cột khuyến cáo quốc tế (tab Quốc tế dùng khung thay cho nội dung cũ). */

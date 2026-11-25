@@ -50,7 +50,6 @@ import SabIntl from "./SabIntl";
 import PaeruginosaIdsa2026 from "./PaeruginosaIdsa2026";
 import SepsisSsc2026 from "./SepsisSsc2026";
 import TbWho2025 from "./TbWho2025";
-import { DfiIwgdf2023 } from "./DfiCompact";
 import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
 import UrologyEau2026 from "./UrologyEau2026";
 import { isEauUrology } from "./urology-eau2026";
@@ -159,7 +158,6 @@ export function IntlTab({ diseaseId, moduleContent }: { diseaseId: string; modul
   if (diseaseId === "v8-11" || diseaseId === "v8-12") return <section className="bv199-panel gt199"><SepsisSsc2026 key={diseaseId} initialShock={diseaseId === "v8-12"} /><GtStyle /></section>;
   if (diseaseId === "v8-141" || diseaseId === "v8-142") return <section className="bv199-panel gt199"><TbWho2025 key={diseaseId} site={diseaseId === "v8-141" ? "tbm" : "ptb"} /><GtStyle /></section>;
   /* Nhiem trung ban chan dai thao duong: cong cu chon khang sinh theo IWGDF/IDSA 2023 (Bang 1, 4, 5). */
-  if (diseaseId === "v9-1") return <section className="bv199-panel gt199"><DfiIwgdf2023 /><GtStyle /></section>;
   /* Nhiem khuan da – mo mem: cong cu chon khang sinh theo IDSA 2014 va ACE Singapore 2026 (Supplement 2). */
   if (diseaseId === "v8-27" || diseaseId === "v8-28" || diseaseId === "v8-107") return <section className="bv199-panel gt199"><SstiIdsaAce key={diseaseId} initialForm={diseaseId === "v8-28" ? "purulent" : "cellulitis"} initialAge={diseaseId === "v8-107" ? "child" : "adult"} /><GtStyle /></section>;
   if (diseaseId === "v8-97") return <section className="bv199-panel gt199"><UtiPregnancyAcog2023 /><GtStyle /></section>;
