@@ -37,6 +37,8 @@ export type DtqgItem = {
   /* Chuyen luan co, nhung khong neu hieu chinh theo chuc nang than (khang sinh uu tien quan ly). */
   noRenalText?: boolean;
   content: DtqgBlock[];
+  /* Số khối nguyên văn khi content đã được bỏ khỏi danh sách gửi xuống trình duyệt (tải lại theo nhu cầu). */
+  contentLen?: number;
   clips?: DtqgClip[];
   contraindications: string[];
   cautions: string[];
@@ -145,3 +147,9 @@ export function doseEntries(): DoseEntry[] {
 }
 
 export const DTQG_SOURCE = (dtqg as { source: string }).source;
+
+/** Danh sách gọn cho trình duyệt: bỏ nguyên văn (phần lớn dung lượng); module tải nguyên văn của thuốc khi được chọn
+    qua /api/dosing/dtqg/<id>. Giảm dữ liệu trang từ ~440 KB, tránh đơ khi mở trang trên điện thoại. */
+export function slimDoseEntries(): DoseEntry[] {
+  return doseEntries().map((e) => (e.dtqg ? { ...e, dtqg: { ...e.dtqg, content: [], contentLen: e.dtqg.content.length } } : e));
+}

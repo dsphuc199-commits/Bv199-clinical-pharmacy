@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import tables from "../../data/antibiotics/antibiogram-bv199-tables.json";
 import { ALL_REGIMENS, getRegimensForDisease } from "../../data/antibiotics/empiric/regimens";
-import { STRATIFICATIONS, cleanRef, hasIntlStratification } from "../../data/antibiotics/empiric/stratification";
+import { STRATIFICATIONS, cleanRef, hasIntlStratification, stratificationFor } from "../../data/antibiotics/empiric/stratification";
 import { CAP_SCENARIOS } from "../../components/antibiotics/CapByt2026";
 import { HAPVAP_SCENARIOS } from "../../components/antibiotics/HapVap2023";
 
@@ -323,5 +323,17 @@ test("ENT compare tables: first column is the primary guideline; every primary a
     const cells = tables.flatMap((t) => t.rows.flatMap((r) => r.cells)).join(" ");
     for (const x of getDisease(did)!.doses.filter((x) => x.status === "EXTRACTED" && x.role !== "reference" && (x.population === pop || x.population === "all")))
       assert.ok(cells.includes(tableName(x.drug)), `${did} ${x.id}: ${x.drug} not in table`);
+  }
+});
+
+/* ===== Chỉ mục nhẹ của trang phác đồ phải khớp tuyệt đối dữ liệu đầy đủ ===== */
+import { ENT_EMPIRIC_IDS, INTL_STRAT_IDS, STRAT_IDS } from "../../data/antibiotics/empiric/stratification-index";
+import { DISEASES as EMPIRIC_DISEASES } from "../../data/antibiotics/empiric/catalog";
+import { isEntDisease } from "../../components/antibiotics/EntEmpiricGuidelines";
+test("stratification-index (loaded eagerly by the empiric page) matches the full stratification data and ENT module", () => {
+  for (const d of EMPIRIC_DISEASES) {
+    assert.equal(STRAT_IDS.has(d.id), Boolean(stratificationFor(d.id)), `STRAT ${d.id}`);
+    assert.equal(INTL_STRAT_IDS.has(d.id), hasIntlStratification(d.id), `INTL ${d.id}`);
+    assert.equal(ENT_EMPIRIC_IDS.has(d.id), d.specialty === "Tai Mũi Họng" && isEntDisease(d.title), `ENT ${d.id}`);
   }
 });

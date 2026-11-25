@@ -58,14 +58,19 @@ export function catalogProducts(approved: DrugPublication[]): CatalogProduct[] {
   return Array.from(ids, (id) => getCatalogProduct(id, changes.get(id))!);
 }
 
-function searchText(value: string): string {
+export function searchText(value: string): string {
   return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
 }
 
-export function drugMatches(drug: DrugProduct, query: string): boolean {
+/** Chuỗi tìm kiếm đã chuẩn hóa của một thuốc – tính một lần, dùng lại cho mọi lần gõ. */
+export function drugSearchKey(drug: DrugProduct): string {
   const terms = [
     drug.drugCode, drug.brandName, drug.ingredientName, drug.ingredientId, drug.strength, drug.route,
     drug.dosageForm, drug.packageSize, drug.registrationNumber, drug.manufacturer, drug.country, drug.unit,
   ];
-  return searchText(terms.filter(Boolean).join(" ")).includes(searchText(query.trim()));
+  return searchText(terms.filter(Boolean).join(" "));
+}
+
+export function drugMatches(drug: DrugProduct, query: string): boolean {
+  return drugSearchKey(drug).includes(searchText(query.trim()));
 }

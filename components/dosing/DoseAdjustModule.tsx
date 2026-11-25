@@ -7,7 +7,7 @@
   - Moi thuoc: nguyen van Duoc thu + anh cat trang goc (bang giu nguyen nhu sach). Khong tu suy ra lieu.
 */
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { memo, startTransition, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { AlertOctagon, BookOpen, Calculator, ChevronRight, FileWarning, Search, ShieldAlert, Table2, X } from "lucide-react";
 
 import BackBar from "@/components/antibiotics/links/BackBar";
@@ -16,7 +16,8 @@ import {
   calculateAdjBW, calculateCrClCG, calculateIBW, convertCreatinineToMgDl, roundNumber,
   type CreatinineUnit, type Sex,
 } from "@/lib/calculations/renal";
-import type { DoseEntry, DoseGroup } from "@/lib/dosing/catalog";
+import type { DoseEntry, DoseGroup, DtqgBlock } from "@/lib/dosing/catalog";
+import { fixSubscripts } from "@/lib/dosing/dtqg-text";
 
 type UrlParams = { get(name: string): string | null };
 
@@ -97,23 +98,28 @@ export default function DoseAdjustModule({ entries, params, source }: { entries:
     return c;
   }, [entries]);
 
+  /* Lọc theo giá trị trễ: ô tìm luôn hiện chữ ngay khi gõ. */
+  const qDeferred = useDeferredValue(q);
   const list = useMemo(() => {
-    const k = norm(q);
+    const k = norm(qDeferred);
     return entries.filter((e) => (group === "all" || e.group === group) && (!k || e.search.includes(k)));
-  }, [entries, group, q]);
+  }, [entries, group, qDeferred]);
 
   const sel = entries.find((e) => e.key === selKey);
   const profiles: RenalDoseProfile[] = sel?.profileId ? renalDosingDatabase.filter((p) => p.ingredientId === sel.profileId) : [];
   const profile = profiles.find((p) => p.indicationId === indication) ?? profiles[0];
   const range = profile && crcl !== null ? profile.ranges.find((r) => matchesRange(crcl, r)) : undefined;
 
-  function pick(key: string) {
-    setSelKey(key);
-    setIndication("");
+  /* Chọn thuốc: cập nhật chi tiết ở mức ưu tiên thấp (startTransition) để chạm phản hồi ngay. */
+  const pick = useCallback((key: string) => {
+    startTransition(() => {
+      setSelKey(key);
+      setIndication("");
+    });
     requestAnimationFrame(() => {
       if (window.innerWidth < 1024) detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  }
+  }, []);
 
   return (
     <main className="da">
@@ -192,24 +198,7 @@ export default function DoseAdjustModule({ entries, params, source }: { entries:
             </label>
             {group !== "all" && <p className="da-group-note">{GROUPS.find((g) => g.id === group)?.label}</p>}
             <ul className="da-items">
-              {list.map((e) => (
-                <li key={e.key}>
-                  <button type="button" className={`da-item ${selKey === e.key ? "on" : ""}`} onClick={() => pick(e.key)}>
-                    <span className={`da-dot ${GROUP_TONE[e.group]}`} aria-hidden />
-                    <span className="da-item-main">
-                      <span className="da-item-name">{e.name}</span>
-                      <span className="da-badges">
-                        {e.profileId && <span className="b-calc">Bảng CrCl</span>}
-                        {e.dtqg?.contraindications.length ? <span className="b-ci">CCĐ suy thận</span> : null}
-                        {e.dtqg?.noAdjust && <span className="b-ok">Không cần HC</span>}
-                        {e.outside && <span className="b-out">Ngoài Dược thư</span>}
-                        {e.dtqg?.noRenalText && !e.profileId && <span className="b-out">Không nêu HC thận</span>}
-                      </span>
-                    </span>
-                    <ChevronRight size={16} aria-hidden />
-                  </button>
-                </li>
-              ))}
+              {list.map((e) => <DoseItem key={e.key} e={e} on={selKey === e.key} onPick={pick} />)}
               {!list.length && <li className="da-empty">Không có thuốc phù hợp.</li>}
             </ul>
           </section>
@@ -232,11 +221,48 @@ export default function DoseAdjustModule({ entries, params, source }: { entries:
   );
 }
 
+/* Một dòng thuốc trong danh sách: ghi nhớ (memo) để chỉ dòng đổi trạng thái mới vẽ lại. */
+const DoseItem = memo(function DoseItem({ e, on, onPick }: { e: DoseEntry; on: boolean; onPick: (key: string) => void }) {
+  return (
+    <li className="da-li">
+      <button type="button" className={`da-item ${on ? "on" : ""}`} onClick={() => onPick(e.key)}>
+        <span className={`da-dot ${GROUP_TONE[e.group]}`} aria-hidden />
+        <span className="da-item-main">
+          <span className="da-item-name">{e.name}</span>
+          <span className="da-badges">
+            {e.profileId && <span className="b-calc">Bảng CrCl</span>}
+            {e.dtqg?.contraindications.length ? <span className="b-ci">CCĐ suy thận</span> : null}
+            {e.dtqg?.noAdjust && <span className="b-ok">Không cần HC</span>}
+            {e.outside && <span className="b-out">Ngoài Dược thư</span>}
+            {e.dtqg?.noRenalText && !e.profileId && <span className="b-out">Không nêu HC thận</span>}
+          </span>
+        </span>
+        <ChevronRight size={16} aria-hidden />
+      </button>
+    </li>
+  );
+});
+
 function Detail({ entry, profiles, profile, range, crcl, setIndication, source }: {
   entry: DoseEntry; profiles: RenalDoseProfile[]; profile?: RenalDoseProfile; range?: RenalDoseRange; crcl: number | null;
   indication: string; setIndication: (v: string) => void; source: string;
 }) {
-  const d = entry.dtqg;
+  /* Nguyên văn: tải theo nhu cầu khi danh sách đã được rút gọn (contentLen > 0, content rỗng). */
+  const base = entry.dtqg;
+  const [loaded, setLoaded] = useState<{ key: string; content: DtqgBlock[] } | null>(null);
+  const [failed, setFailed] = useState("");
+  const needFetch = !!base && base.content.length === 0 && (base.contentLen ?? 0) > 0;
+  useEffect(() => {
+    if (!needFetch || !base || loaded?.key === base.id) return;
+    let live = true;
+    fetch(`/api/dosing/dtqg/${encodeURIComponent(base.id)}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((j: { content: DtqgBlock[] }) => { if (live) { setLoaded({ key: base.id, content: j.content }); setFailed(""); } })
+      .catch(() => { if (live) setFailed(base.id); });
+    return () => { live = false; };
+  }, [needFetch, base, loaded?.key]);
+  const d = base && needFetch ? { ...base, content: loaded?.key === base.id ? loaded.content : [] } : base;
+  const loading = needFetch && loaded?.key !== base?.id && failed !== base?.id;
 
   return (
     <article className="da-card da-doc">
@@ -295,10 +321,12 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source }
       {d && d.contraindications.length > 0 && (
         <section className="da-sec da-ci">
           <h3><AlertOctagon size={17} aria-hidden /> Chống chỉ định liên quan chức năng thận</h3>
-          <ul>{d.contraindications.map((s) => <li key={s}>{s}</li>)}</ul>
+          <ul>{d.contraindications.map((s) => <li key={s}>{fixSubscripts(s)}</li>)}</ul>
         </section>
       )}
 
+      {loading && <p className="da-muted" role="status">Đang tải nguyên văn Dược thư…</p>}
+      {base && failed === base.id && <p className="da-warn">Không tải được nguyên văn Dược thư. Kiểm tra kết nối và chọn lại thuốc.</p>}
       {/* Nguyen van Duoc thu */}
       {d && d.content.length > 0 && (
         <section className="da-sec da-dt">
@@ -310,7 +338,8 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source }
                 return (
                   <p key={i} className={b.head ? "da-dt-h" : undefined}>
                     {b.runs.map((r, k) => {
-                      const el = r.b && r.i ? <strong><em>{r.text}</em></strong> : r.b ? <strong>{r.text}</strong> : r.i ? <em>{r.text}</em> : r.text;
+                      const t = fixSubscripts(r.text);
+                      const el = r.b && r.i ? <strong><em>{t}</em></strong> : r.b ? <strong>{t}</strong> : r.i ? <em>{t}</em> : t;
                       return <span key={k}>{el}</span>;
                     })}
                   </p>
@@ -329,14 +358,14 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source }
                 <div key={i} className="da-table-wrap da-dt-table">
                   <table>
                     {head && (
-                      <thead><tr>{b.rows[0].map((c, k) => <th key={k} rowSpan={c.rs} colSpan={c.cs}>{c.text}</th>)}</tr></thead>
+                      <thead><tr>{b.rows[0].map((c, k) => <th key={k} rowSpan={c.rs} colSpan={c.cs}>{fixSubscripts(c.text)}</th>)}</tr></thead>
                     )}
                     <tbody>
                       {(head ? b.rows.slice(1) : b.rows).map((row, r) => (
                         <tr key={r}>
                           {row.map((c, k) => (
                             <td key={k} rowSpan={c.rs} colSpan={c.cs} className={c.b ? "b" : undefined}>
-                              {c.text.split("\n").map((line, li) => <span key={li} className="ln">{line}</span>)}
+                              {fixSubscripts(c.text).split("\n").map((line, li) => <span key={li} className="ln">{line}</span>)}
                             </td>
                           ))}
                         </tr>
@@ -353,7 +382,7 @@ function Detail({ entry, profiles, profile, range, crcl, setIndication, source }
       {d && d.cautions.length > 0 && (
         <section className="da-sec da-caution">
           <h3><ShieldAlert size={17} aria-hidden /> Thận trọng (ngưỡng chức năng thận)</h3>
-          <ul>{d.cautions.map((s) => <li key={s}>{s}</li>)}</ul>
+          <ul>{d.cautions.map((s) => <li key={s}>{fixSubscripts(s)}</li>)}</ul>
         </section>
       )}
 
@@ -426,6 +455,7 @@ function Styles() {
       .da-search input { flex: 1; border: 0; padding: 10px 0; font: inherit; font-size: 14.5px; outline: none; min-width: 0; }
       .da-search button { border: 0; background: none; color: #6b8293; cursor: pointer; display: grid; }
       .da-group-note { margin: 0; font-size: 12px; color: #6b8293; }
+      .da-li { content-visibility: auto; contain-intrinsic-size: auto 52px; }
       .da-items { list-style: none; margin: 0; padding: 0; overflow-y: auto; display: grid; gap: 2px; align-content: start; }
       .da-item { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 0; border-radius: 10px; background: none; font: inherit; text-align: left; cursor: pointer; color: #9aabb8; }
       .da-item:hover { background: #f4f7fa; }

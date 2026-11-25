@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { ChevronRight, Search } from "lucide-react";
-import { catalogProducts, drugMatches, type DrugPublication } from "@/lib/drugs/catalog";
+import { catalogProducts, drugSearchKey, searchText, type DrugPublication } from "@/lib/drugs/catalog";
 import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
 type Reg = { s: RegistryStatus; h: LeafletSource };
@@ -60,6 +60,9 @@ export default function DrugsClient({ registry, syncedAt, publications, flags }:
   const [status, setStatus] = useState("");
   const [limit, setLimit] = useState(60);
   const drugs = useMemo(() => catalogProducts(publications).filter((d) => d.active), [publications]);
+  /* Chuẩn hóa chữ (bỏ dấu) một lần; lọc theo giá trị trễ để ô nhập luôn hiện chữ ngay khi gõ. */
+  const keys = useMemo(() => new Map(drugs.map((d) => [d.id, drugSearchKey(d)])), [drugs]);
+  const q = searchText(useDeferredValue(keyword).trim());
   const routes = useMemo(() => Array.from(new Set(drugs.map((d) => d.route).filter((r): r is string => Boolean(r)))).sort((a, b) => a.localeCompare(b, "vi")), [drugs]);
   const contentTest = (CONTENT_FILTERS.find((f) => f.value === content) ?? CONTENT_FILTERS[0]).test;
   const statusTest = (STATUS_FILTERS.find((f) => f.value === status) ?? STATUS_FILTERS[0]).test;
@@ -68,8 +71,8 @@ export default function DrugsClient({ registry, syncedAt, publications, flags }:
     if (route && d.route !== route) return false;
     const r = d.registryMatches ? registry[d.id] : undefined;
     if (!contentTest(r, flags[d.id]) || !statusTest(r)) return false;
-    return !keyword.trim() || drugMatches(d, keyword);
-  }), [drugs, keyword, route, contentTest, statusTest, registry, flags]);
+    return !q || (keys.get(d.id) ?? "").includes(q);
+  }), [drugs, keys, q, route, contentTest, statusTest, registry, flags]);
   const filtered = Boolean(keyword || route || content || status);
 
   return (
@@ -107,7 +110,7 @@ export default function DrugsClient({ registry, syncedAt, publications, flags }:
         <ul className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           {results.slice(0, limit).map((d) => (
             <li key={d.id}>
-              <Link href={`/drugs/${encodeURIComponent(d.id)}`} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 focus-visible:bg-slate-50">
+              <Link href={`/drugs/${encodeURIComponent(d.id)}`} prefetch={false} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 focus-visible:bg-slate-50">
                 <span className="min-w-0 flex-1">
                   <span className="block font-bold text-slate-900">{d.brandName || "—"}</span>
                   <span className="block text-sm text-slate-600">{[d.ingredientName, d.strength].filter(Boolean).join(" · ")}</span>

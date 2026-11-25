@@ -6,14 +6,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import DoseAdjustFromUrl from "@/components/dosing/DoseAdjustFromUrl";
-import { DTQG_SOURCE, doseEntries } from "@/lib/dosing/catalog";
+import { DTQG_SOURCE, slimDoseEntries } from "@/lib/dosing/catalog";
 
 export const metadata: Metadata = { title: "Hiệu chỉnh liều" };
 
 export default function AntibioticDosingPage() {
   return (
     <Suspense fallback={<main style={{ minHeight: "100vh", background: "#f4f7fa" }} />}>
-      <DoseAdjustFromUrl entries={doseEntries()} source={DTQG_SOURCE} />
+      <DoseAdjustFromUrl entries={slimDoseEntries()} source={DTQG_SOURCE} />
     </Suspense>
   );
 }

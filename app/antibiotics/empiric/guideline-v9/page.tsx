@@ -4,6 +4,7 @@
 import { icdOf } from "@/data/antibiotics/empiric/icd10";
 import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
 import { AbxLinkProvider } from "../../../../components/antibiotics/links/AbxLinkContext";
@@ -14,18 +15,10 @@ import {
   organismHref,
 } from "../../../../lib/antibiotics/drug-links";
 
-import CapByt2026 from "../../../../components/antibiotics/CapByt2026";
-import CopdByt2026 from "../../../../components/antibiotics/CopdByt2026";
-import HapVap2023 from "../../../../components/antibiotics/HapVap2023";
-import EntEmpiricGuidelines, {
-  isEntDisease,
-} from "../../../../components/antibiotics/EntEmpiricGuidelines";
 import SettingTabs from "@/components/antibiotics/treatment/SettingTabs";
-import AbrsUpToDate2026 from "../../../../components/antibiotics/AbrsUpToDate2026";
 
 import BytRegimenView from "../../../../components/antibiotics/empiric/BytRegimenView";
-import StratificationPanel from "../../../../components/antibiotics/empiric/StratificationPanel";
-import { hasIntlStratification, stratificationFor } from "../../../../data/antibiotics/empiric/stratification";
+import { ENT_EMPIRIC_IDS, INTL_STRAT_IDS, STRAT_IDS } from "../../../../data/antibiotics/empiric/stratification-index";
 import { DiseaseMonitoring, DiseaseOverviewSummary } from "../../../../components/antibiotics/empiric/DiseaseOverview";
 import EmpiricSelector from "../../../../components/antibiotics/empiric/EmpiricSelector";
 import { evidenceFor } from "../../../../lib/antibiotics/evidence-status";
@@ -43,12 +36,19 @@ import {
   ClinicalFilterPanel,
   ClinicalFilterProvider,
 } from "../../../../components/antibiotics/empiric/ClinicalFilters";
-import {
-  CompareTab,
-  IntlTab,
-  TAB_LABELS,
-  type TabKey,
-} from "../../../../components/antibiotics/empiric/GuidelineTabs";
+import { TAB_LABELS, type TabKey } from "../../../../components/antibiotics/empiric/tab-labels";
+
+/* Phần nặng, riêng từng bệnh hoặc từng tab: nạp theo nhu cầu (next/dynamic) – mở trang chỉ tải code của bệnh đang xem.
+   Trước đây nạp tĩnh toàn bộ (~2,8 MB JavaScript) gây đơ luồng chính tới 1 giây trên điện thoại. */
+const Loading = () => <div className="bv199-lazy" role="status" aria-label="Đang tải" style={{ minHeight: 240 }} />;
+const StratificationLazy = dynamic(() => import("../../../../components/antibiotics/empiric/StratificationLazy"), { loading: Loading });
+const CapByt2026 = dynamic(() => import("../../../../components/antibiotics/CapByt2026"), { loading: Loading });
+const CopdByt2026 = dynamic(() => import("../../../../components/antibiotics/CopdByt2026"), { loading: Loading });
+const HapVap2023 = dynamic(() => import("../../../../components/antibiotics/HapVap2023"), { loading: Loading });
+const EntEmpiricGuidelines = dynamic(() => import("../../../../components/antibiotics/EntEmpiricGuidelines"), { loading: Loading });
+const AbrsUpToDate2026 = dynamic(() => import("../../../../components/antibiotics/AbrsUpToDate2026"), { loading: Loading });
+const IntlTab = dynamic(() => import("../../../../components/antibiotics/empiric/GuidelineTabs").then((m) => m.IntlTab), { loading: Loading });
+const CompareTab = dynamic(() => import("../../../../components/antibiotics/empiric/GuidelineTabs").then((m) => m.CompareTab), { loading: Loading });
 import {
   DEFAULT_FILTERS,
   type ClinicalFilterState,
@@ -212,7 +212,7 @@ function GuidelineContent() {
 
   const isEnt =
     selected.specialty === "Tai Mũi Họng" &&
-    isEntDisease(selected.title);
+    ENT_EMPIRIC_IDS.has(selected.id);
 
   const isAbrs = isAdultABRS(selected);
 
@@ -1024,15 +1024,15 @@ function GuidelineContent() {
           {tab === "vn" && (
             <>
               {/* Mặt bệnh đã phân tầng: khung phân tầng nguồn Việt Nam thay toàn bộ phần trình bày cũ. */}
-              {stratificationFor(selected.id) && (
-                <StratificationPanel
-                  data={stratificationFor(selected.id)!}
+              {STRAT_IDS.has(selected.id) && (
+                <StratificationLazy
+                  diseaseId={selected.id}
                   family="vn"
                   overview={<DiseaseOverviewSummary diseaseId={selected.id} />}
                   monitoring={<DiseaseMonitoring diseaseId={selected.id} />}
                 />
               )}
-              {!stratificationFor(selected.id) && (<>
+              {!STRAT_IDS.has(selected.id) && (<>
               {/* PHAC DO THEO VAN BAN BO Y TE.
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
@@ -1069,10 +1069,10 @@ function GuidelineContent() {
             </>
           )}
 
-          {tab === "intl" && hasIntlStratification(selected.id) && <StratificationPanel data={stratificationFor(selected.id)!} family="intl" />}
+          {tab === "intl" && INTL_STRAT_IDS.has(selected.id) && <StratificationLazy diseaseId={selected.id} family="intl" />}
           {/* Mặt bệnh đã có khung phân tầng quốc tế: không hiện thêm công cụ quốc tế cũ bên dưới.
               Chưa có khuyến cáo quốc tế đã đối chiếu (vd. viêm phúc mạc thứ phát): giữ nội dung tab Quốc tế hiện có. */}
-          {tab === "intl" && !hasIntlStratification(selected.id) && (
+          {tab === "intl" && !INTL_STRAT_IDS.has(selected.id) && (
             <IntlTab
               diseaseId={selected.id}
               moduleContent={
