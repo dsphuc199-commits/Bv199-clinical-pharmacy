@@ -23,6 +23,10 @@ const TOOLS = process.env.LEAFLET_TOOLS;
 const PDF = process.argv[2];
 const args = process.argv.slice(3);
 const PREG = args.includes("--pregnancy");
+/* --monograph: trich NGUYEN VAN cac muc lam sang cua chuyen luan (chi dinh, chong chi dinh, than trong, ADR, lieu,
+   tuong tac, qua lieu) -> data/dtqg/<id>.json + data/dtqg-index.json. Tieu de muc phai in dam (tranh cat nham o cau
+   bat dau bang "Thận trọng ...", "Chỉ định ..." trong than doan). */
+const MONO = args.includes("--monograph");
 /* --pages a-b: chi xu ly chuyen luan bat dau trong khoang trang PDF a..b, gop voi ket qua da co (chay tung dot, tranh can bo nho canvas). */
 const PAGES = args.includes("--pages") ? args[args.indexOf("--pages") + 1].split("-").map(Number) : null;
 const ONLY = args.includes("--only") ? args[args.indexOf("--only") + 1].toLowerCase() : null;
@@ -393,7 +397,14 @@ async function extract(m) {
   const startAt = all.findIndex((e) => e.page === m.page && isInnLine(lineText(e)));
   if (startAt > 0) all.splice(0, startAt);
   const nextAt = all.findIndex((e, i) => i > 0 && isInnLine(lineText(e)));
-  if (nextAt > 0) all.splice(Math.max(1, nextAt - 3));
+  if (nextAt > 0 && MONO) {
+    /* Chi bo dung cac dong ten chuyen luan ke tiep (IN HOA) truoc "Ten chung quoc te", khong cat nham noi dung cuoi. */
+    let cut = nextAt;
+    const isTitle = (e) => { const t = lineText(e).trim(); return !!t && t === t.toUpperCase() && /\p{Lu}{3}/u.test(t); };
+    while (cut > 1 && isTitle(all[cut - 1])) cut--;
+    all.splice(cut);
+  } else if (nextAt > 0) all.splice(Math.max(1, nextAt - 3));
+  if (MONO) for (let i = all.length - 1; i >= 0; i--) if (/^Cập nhật lần cuối/.test(lineText(all[i]).trim())) all.splice(i, 1);
 
   const sectionEls = (re) => {
     const a = all.findIndex((e) => re.test(lineText(e).trim()));
@@ -448,6 +459,27 @@ async function extract(m) {
       .filter((s) => RENAL.test(s) && (!needThreshold || /(Cl\s*cr|Clcr|ClCr|thanh thải creatinin|eGFR|lọc cầu thận)[^.]{0,40}\d/i.test(s)))
       .map((s) => s.replace(/Cl\s+cr\b/g, "Clcr").trim()).slice(0, 6);
   };
+  if (MONO) {
+    const isHead = (e, re) => e.kind === "line" && re.test(lineText(e).trim()) && !!e.runs[0]?.b;
+    const els = (re) => {
+      const a = all.findIndex((e) => isHead(e, re));
+      if (a < 0) return [];
+      let b = all.findIndex((e, i) => i > a && isHead(e, MAJOR));
+      if (b < 0) b = all.length;
+      /* Tieu de chay lien noi dung tren cung dong: chi phan chu KHONG in dam la noi dung. */
+      const head = all[a], restRuns = head.runs.filter((r) => !r.b && r.text.trim());
+      const first = restRuns.length ? [{ ...head, runs: restRuns.map((r, i) => (i === 0 ? { ...r, text: r.text.replace(/^\s*[:.]\s*/, "") } : r)) }] : [];
+      return [...first, ...all.slice(a + 1, b)];
+    };
+    const SECS = {
+      chiDinh: /^Chỉ định(?![\p{L}])/u, chongChiDinh: /^Chống chỉ định(?![\p{L}])/u, thanTrong: /^Thận trọng(?![\p{L}])/u,
+      adr: /^Tác dụng không mong muốn(?![\p{L}])/u, adrXuTri: /^Hướng dẫn cách xử trí ADR(?![\p{L}])/u,
+      lieuDung: /^Liều lượng và cách dùng(?![\p{L}])/u, tuongTac: /^Tương tác thuốc(?![\p{L}])/u, quaLieu: /^Quá liều(?![\p{L}])/u,
+    };
+    const out = {};
+    for (const [k, re] of Object.entries(SECS)) out[k] = toBlocks(els(re));
+    return { mono: out };
+  }
   if (PREG) {
     const sec = (re) => toBlocks(sectionEls(re)).filter((b) => b.t !== "formula").map((b) => (b.t === "p" ? { t: "p", runs: b.runs, ...(b.head ? { head: true } : {}) } : { t: "table", rows: b.rows }));
     return { preg: sec(/^Thời kỳ mang thai(?!\p{L})/u), lact: sec(/^Thời kỳ cho con bú(?!\p{L})/u) };
@@ -490,6 +522,23 @@ for (const m of index) {
   name = name.replace(/^Vitamin ([a-z])/i, (_, l) => `Vitamin ${l.toUpperCase()}`);
   const pages = { pdf: [m.page, m.end], printed: [m.page + PAGE_OFFSET, m.end + PAGE_OFFSET] };
   const ex = await extract(m);
+  if (MONO) {
+    const sections = {};
+    let fi = 0;
+    for (const [k, blocks] of Object.entries(ex.mono)) {
+      const content = [];
+      for (const b of blocks) {
+        if (b.t === "p") content.push({ t: "p", runs: b.runs, ...(b.head ? { head: true } : {}) });
+        else if (b.t === "table") content.push({ t: "table", rows: b.rows });
+        else content.push({ t: "img", ...(await cropLines(b.src, id + "-m" + ++fi)), alt: blockText(b) });
+      }
+      if (content.length) sections[k] = fixText(id, k, content);
+    }
+    if (!Object.keys(sections).length) continue;
+    results.push({ id, name, inn: m.inn, group, inFormulary, pages, sections });
+    console.log(`${name} | ${Object.entries(sections).map(([k, v]) => `${k} ${v.length}`).join(", ")}`);
+    continue;
+  }
   if (PREG) {
     if (!ex.preg.length && !ex.lact.length) continue;
     results.push({ id, name, inn: m.inn, group, inFormulary, pages, pregnancy: fixText(id, "pregnancy", ex.preg), lactation: fixText(id, "lactation", ex.lact) });
@@ -514,6 +563,25 @@ for (const m of index) {
   }
   results.push({ id, name, inn: m.inn, group, inFormulary, pages, noAdjust, content, contraindications: ex.ci, cautions: ex.caution });
   console.log(`${group.padEnd(10)} ${name} | ${content.filter((c) => c.t === "p").length} doan, ${content.filter((c) => c.t === "table").length} bang | CCD ${ex.ci.length} | TT ${ex.caution.length}${noAdjust ? " | khong can HC" : ""}`);
+}
+if (MONO) {
+  const dir = join(ROOT, "data", "dtqg");
+  mkdirSync(dir, { recursive: true });
+  const idxFile = join(ROOT, "data", "dtqg-index.json");
+  let prev = [];
+  if (ONLY || PAGES) { try { prev = JSON.parse(readFileSync(idxFile, "utf8")).items; } catch { /* */ } }
+  const ids = new Set(results.map((r) => r.id));
+  for (const r of results) writeFileSync(join(dir, r.id + ".json"), JSON.stringify(r));
+  const items = [...prev.filter((r) => !ids.has(r.id)), ...results.map(({ id, name, inn, group, inFormulary, pages, sections }) => ({ id, name, inn, group, inFormulary, pages, keys: Object.keys(sections) }))]
+    .sort((a, b) => a.name.localeCompare(b.name, "vi"));
+  writeFileSync(idxFile, JSON.stringify({
+    source: "Bộ Y tế – Hội đồng Dược thư quốc gia Việt Nam. Dược thư quốc gia Việt Nam, lần xuất bản thứ ba (2023)",
+    extractedAt: new Date().toISOString().slice(0, 10),
+    note: "Trích nguyên văn các mục Chỉ định, Chống chỉ định, Thận trọng, Tác dụng không mong muốn, Hướng dẫn xử trí ADR, Liều lượng và cách dùng, Tương tác thuốc, Quá liều của từng chuyên luận.",
+    items,
+  }, null, 1));
+  console.log("Tong:", items.length);
+  process.exit(0);
 }
 const OUT_FILE = PREG ? "pregnancy-dtqg.json" : "renal-dtqg.json";
 if (ONLY || PAGES) {

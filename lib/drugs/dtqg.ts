@@ -3,13 +3,18 @@
 
   Ghép thuốc trong danh mục BV199 với chuyên luận Dược thư quốc gia Việt Nam 2023 đã trích nguyên văn:
   - data/renal-dtqg.json: liều ở người suy thận, chống chỉ định/thận trọng liên quan thận;
-  - data/pregnancy-dtqg.json: thời kỳ mang thai, cho con bú.
+  - data/pregnancy-dtqg.json: thời kỳ mang thai, cho con bú;
+  - data/dtqg-index.json + data/dtqg/<id>.json: các mục lâm sàng (chỉ định, chống chỉ định, thận trọng, tác dụng không
+    mong muốn, hướng dẫn xử trí ADR, liều lượng và cách dùng, tương tác, quá liều) – scripts/build-renal-dtqg.mjs
+    --monograph, kiểm tra nguyên văn bằng scripts/verify-dtqg-monographs.mjs.
   Ghép CHẶT để không gán nhầm chuyên luận: chỉ khớp khi bộ hoạt chất (bỏ muối, dạng muối, phần trong ngoặc) trùng
   hoàn toàn với tên Việt hoặc tên INN của chuyên luận. Không khớp thì không hiện – trang thuốc chỉ còn tờ HDSD gốc.
 */
 import renal from "@/data/renal-dtqg.json";
 import pregnancy from "@/data/pregnancy-dtqg.json";
-import type { DtqgItem } from "@/lib/dosing/catalog";
+import monoIndex from "@/data/dtqg-index.json";
+import review from "@/data/dtqg-review.json";
+import type { DtqgBlock, DtqgItem } from "@/lib/dosing/catalog";
 import type { PregnancyItem } from "@/components/safety/PregnancyModule";
 
 const RENAL = (renal as { source: string; items: DtqgItem[] }).items;
@@ -45,10 +50,42 @@ function index<T extends { name: string; inn: string }>(items: T[]) {
 const RENAL_BY = index(RENAL);
 const PREG_BY = index(PREG);
 
-export type DtqgMatch = { renal?: DtqgItem; pregnancy?: PregnancyItem };
+/* Chuyên luận đầy đủ (các mục lâm sàng, nguyên văn): chỉ mục nhỏ nạp sẵn, nội dung từng chuyên luận nạp khi mở trang. */
+export type MonoKey = "chiDinh" | "chongChiDinh" | "thanTrong" | "adr" | "adrXuTri" | "lieuDung" | "tuongTac" | "quaLieu";
+export type MonoIndexItem = { id: string; name: string; inn: string; pages: { pdf: number[]; printed: number[] }; keys: MonoKey[] };
+export type Monograph = MonoIndexItem & { sections: Partial<Record<MonoKey, DtqgBlock[]>> };
+const MONO = (monoIndex as { items: MonoIndexItem[] }).items;
+const MONO_BY = index(MONO);
+
+export type DtqgMatch = { renal?: DtqgItem; pregnancy?: PregnancyItem; mono?: MonoIndexItem };
 /** Chuyên luận Dược thư của một hoạt chất trong danh mục (không khớp chặt thì trả về rỗng). */
 export function dtqgFor(ingredientName?: string | null): DtqgMatch {
   if (!ingredientName) return {};
   const k = ingredientKey(ingredientName);
-  return { renal: RENAL_BY.get(k), pregnancy: PREG_BY.get(k) };
+  return { renal: RENAL_BY.get(k), pregnancy: PREG_BY.get(k), mono: MONO_BY.get(k) };
+}
+/* Mục chưa đạt kiểm tra (scripts/verify-dtqg-monographs.mjs): không khớp nguyên văn PDF, công thức dạng ảnh, hoặc từ hỏng dấu. */
+const REVIEW = (review as { items: Record<string, MonoKey[]> }).items;
+export const flaggedSections = (id: string) => new Set<MonoKey>(REVIEW[id] ?? []);
+
+/* Từ tiếng Việt hỏng do lớp chữ PDF lệch dấu: một âm tiết có ≥ 2 dấu thanh ("thậần"), hoặc chữ có dấu đứng riêng ("b ì nh")
+   – trừ từ một chữ hợp lệ. Dùng cho dữ liệu suy thận, thai kỳ (trích trước đó): có từ hỏng thì ẩn chữ, chỉ số trang. */
+const TONE = /[àáảãạằắẳẵặầấẩẫậèéẻẽẹềếểễệìíỉĩịòóỏõọồốổỗộờớởỡợùúủũụừứửữựỳýỷỹỵ]/giu;
+const ONE_OK = new Set(["ở", "ý", "ổ", "ù", "ợ", "ứ", "ồ", "á", "ủ"]);
+const badWord = (w: string) => (w.match(TONE) ?? []).length >= 2 || (w.length === 1 && (w.match(TONE) ?? []).length === 1 && !ONE_OK.has(w.toLowerCase()));
+const blockText = (b: DtqgBlock) => (b.t === "p" ? b.runs.map((r) => r.text).join("") : b.t === "table" ? b.rows.flat().map((c) => c.text).join(" ") : "");
+/** Chữ sạch (không có từ hỏng dấu, không có công thức dạng ảnh) – được phép hiển thị nguyên văn. */
+export function textOk(blocks: DtqgBlock[] = [], extra: string[] = []): boolean {
+  if (blocks.some((b) => b.t === "img")) return false;
+  return ![...blocks.map(blockText), ...extra].some((t) => t.normalize("NFC").split(/[^\p{L}]+/u).some(badWord));
+}
+
+/** Nội dung nguyên văn các mục lâm sàng của một chuyên luận. */
+export async function loadMonograph(id: string): Promise<Monograph | null> {
+  if (!/^[a-z0-9-]+$/.test(id)) return null;
+  try {
+    return (await import(`@/data/dtqg/${id}.json`)).default as Monograph;
+  } catch {
+    return null;
+  }
 }

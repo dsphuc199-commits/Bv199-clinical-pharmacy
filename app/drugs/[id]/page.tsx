@@ -7,9 +7,11 @@ import { loadDrugPublications } from "@/lib/drugs/catalog-store";
 import { clinicalMonographs } from "@/data/clinical-monographs";
 import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
 import { getIntlReferences, getStoredFiles } from "@/lib/drugs/leaflets";
-import { DTQG_BOOK, dtqgFor } from "@/lib/drugs/dtqg";
+import { DTQG_BOOK, dtqgFor, flaggedSections, loadMonograph, textOk, type MonoKey } from "@/lib/drugs/dtqg";
+import type { DtqgBlock } from "@/lib/dosing/catalog";
 import { lasaFor } from "@/lib/drugs/lasa-match";
 import DtqgProse from "@/components/dosing/DtqgProse";
+import { fixSubscripts } from "@/lib/dosing/dtqg-text";
 
 export const dynamic = "force-dynamic";
 
@@ -51,12 +53,26 @@ export default async function DrugDetailPage({ params }: Props) {
     ? stored.map((f, i) => ({ href: f.href, label: `Tờ HDSD gốc${stored.length > 1 ? ` ${i + 1}` : ""}`, note: f.pages ? `PDF · ${f.pages} trang` : "PDF" }))
     : (reg?.hdsd ?? []).map((f, i) => ({ href: f.url, label: `Tờ HDSD gốc${(reg?.hdsd.length ?? 0) > 1 ? ` ${i + 1}` : ""}`, note: "Cổng Cục QLD" }));
   const intl = drug.registryMatches ? getIntlReferences(drug.id) : [];
-  const { renal, pregnancy } = dtqgFor(drug.ingredientName);
+  const { renal, pregnancy, mono: monoRef } = dtqgFor(drug.ingredientName);
+  const mono = monoRef ? await loadMonograph(monoRef.id) : null;
+  const ms = mono?.sections ?? {};
+  /* Mục chưa đạt kiểm tra nguyên văn: không hiện chữ, chỉ số trang Dược thư. */
+  const flagged = mono ? flaggedSections(mono.id) : new Set<MonoKey>();
+  const monoPages = mono ? pageLabel(mono.pages) : "";
+  const P = (k: MonoKey) => <Verified blocks={ms[k] ?? []} ok={!flagged.has(k)} pages={monoPages} />;
+  const renalOk = !!renal && textOk(renal.content, [...renal.contraindications, ...renal.cautions]);
+  const monoSrc = mono ? `Dược thư quốc gia 2023 – ${mono.name}, ${pageLabel(mono.pages)}` : "";
   const lasa = lasaFor(drug.brandName);
   const sections = [
+    (ms.chiDinh || monograph) && { id: "chi-dinh", label: "Chỉ định" },
+    ms.lieuDung && { id: "lieu-dung", label: "Liều dùng" },
     renal && { id: "suy-than", label: "Suy thận" },
+    ms.chongChiDinh && { id: "chong-chi-dinh", label: "Chống chỉ định" },
+    ms.thanTrong && { id: "than-trong", label: "Thận trọng" },
     pregnancy && { id: "thai-ky", label: "Thai kỳ, cho con bú" },
-    monograph && { id: "chi-dinh", label: "Chỉ định" },
+    ms.tuongTac && { id: "tuong-tac", label: "Tương tác" },
+    ms.adr && { id: "adr", label: "Tác dụng không mong muốn" },
+    ms.quaLieu && { id: "qua-lieu", label: "Quá liều" },
     { id: "san-pham", label: "Sản phẩm" },
     { id: "dang-ky", label: "Đăng ký lưu hành" },
   ].filter(Boolean) as { id: string; label: string }[];
@@ -151,26 +167,55 @@ export default async function DrugDetailPage({ params }: Props) {
           </nav>
         )}
 
-        {/* 2. Dược thư quốc gia 2023 – nguyên văn */}
+        {/* 2. Dược thư quốc gia 2023 – nguyên văn, theo thứ tự kê đơn: chỉ định → liều → suy thận → chống chỉ định → … */}
+        {ms.chiDinh ? (
+          <section id="chi-dinh" className="dt-card">
+            <SectionHead title="Chỉ định" source={monoSrc} />
+            {P("chiDinh")}
+          </section>
+        ) : monograph && (
+          <section id="chi-dinh" className="dt-card">
+            <SectionHead title="Chỉ định" source="Chuyên luận đã thẩm định" />
+            <p className="dt-text">{monograph.indications}</p>
+          </section>
+        )}
+
+        {ms.lieuDung && (
+          <section id="lieu-dung" className="dt-card">
+            <SectionHead title="Liều lượng và cách dùng" source={monoSrc} />
+            {P("lieuDung")}
+          </section>
+        )}
+
         {renal && (
           <section id="suy-than" className="dt-card">
             <SectionHead title="Liều ở người suy thận" source={`Dược thư quốc gia 2023 – ${renal.name}, ${pageLabel(renal.pages)}`} />
-            {renal.contraindications.length > 0 && (
+            {!renalOk && <Verified blocks={[]} ok={false} pages={pageLabel(renal.pages)} />}
+            {renalOk && renal.contraindications.length > 0 && (
               <div className="dt-ci">
                 <p className="dt-ci-t">Chống chỉ định liên quan chức năng thận</p>
-                <ul>{renal.contraindications.map((c) => <li key={c}>{c}</li>)}</ul>
+                <ul>{renal.contraindications.map((c) => <li key={c}>{fixSubscripts(c)}</li>)}</ul>
               </div>
             )}
-            {renal.noAdjust && <p className="dt-okline">Không cần hiệu chỉnh liều theo chức năng thận.</p>}
-            {renal.content.length > 0 && <DtqgProse blocks={renal.content} />}
-            {renal.cautions.length > 0 && (
+            {renalOk && renal.noAdjust && <p className="dt-okline">Không cần hiệu chỉnh liều theo chức năng thận.</p>}
+            {renalOk && renal.content.length > 0 && <DtqgProse blocks={renal.content} />}
+            {renalOk && renal.cautions.length > 0 && (
               <div className="dt-caution">
                 <p className="dt-ci-t">Thận trọng</p>
-                <ul>{renal.cautions.map((c) => <li key={c}>{c}</li>)}</ul>
+                <ul>{renal.cautions.map((c) => <li key={c}>{fixSubscripts(c)}</li>)}</ul>
               </div>
             )}
           </section>
         )}
+
+        {ms.chongChiDinh && (
+          <section id="chong-chi-dinh" className="dt-card dt-card-ci">
+            <SectionHead title="Chống chỉ định" source={monoSrc} />
+            {P("chongChiDinh")}
+          </section>
+        )}
+
+        {ms.thanTrong && <Fold id="than-trong" title="Thận trọng" source={monoSrc}>{P("thanTrong")}</Fold>}
 
         {pregnancy && (
           <section id="thai-ky" className="dt-card">
@@ -178,26 +223,28 @@ export default async function DrugDetailPage({ params }: Props) {
             <div className="dt-two">
               <div>
                 <h3>Thời kỳ mang thai</h3>
-                <DtqgProse blocks={pregnancy.pregnancy} />
+                <Verified blocks={pregnancy.pregnancy} ok={textOk(pregnancy.pregnancy)} pages={pageLabel(pregnancy.pages)} />
               </div>
               <div>
                 <h3>Thời kỳ cho con bú</h3>
-                <DtqgProse blocks={pregnancy.lactation} />
+                <Verified blocks={pregnancy.lactation} ok={textOk(pregnancy.lactation)} pages={pageLabel(pregnancy.pages)} />
               </div>
             </div>
           </section>
         )}
 
-        {monograph && (
-          <section id="chi-dinh" className="dt-card">
-            <SectionHead title="Chỉ định" source="Chuyên luận đã thẩm định" />
-            <p className="dt-text">{monograph.indications}</p>
-          </section>
+        {ms.tuongTac && <Fold id="tuong-tac" title="Tương tác thuốc" source={monoSrc}>{P("tuongTac")}</Fold>}
+        {ms.adr && (
+          <Fold id="adr" title="Tác dụng không mong muốn" source={monoSrc}>
+            {P("adr")}
+            {ms.adrXuTri && <><h3 className="dt-sub3">Hướng dẫn cách xử trí ADR</h3>{P("adrXuTri")}</>}
+          </Fold>
         )}
+        {ms.quaLieu && <Fold id="qua-lieu" title="Quá liều và xử trí" source={monoSrc}>{P("quaLieu")}</Fold>}
 
-        {(renal || pregnancy) && (
+        {(mono || renal || pregnancy) && (
           <p className="dt-srcnote">
-            Trích nguyên văn: {DTQG_BOOK}. Các mục khác (chỉ định, liều dùng, chống chỉ định, tương tác, tác dụng không mong muốn): xem tờ HDSD gốc.
+            Trích nguyên văn: {DTQG_BOOK}. Thông tin riêng của chế phẩm (hàm lượng, tá dược, cách pha): xem tờ HDSD gốc.
           </p>
         )}
 
@@ -310,6 +357,14 @@ export default async function DrugDetailPage({ params }: Props) {
         .dt-dl > div.wide { grid-column: 1 / -1; }
         .dt-dl dt { font-size: 12px; font-weight: 700; color: #7a8fa0; text-transform: uppercase; letter-spacing: .03em; }
         .dt-dl dd { margin: 3px 0 0; font-size: 14.5px; line-height: 1.55; color: #1f3347; overflow-wrap: anywhere; }
+        .dt-card-ci { border-color: #f3c6c6; }
+        .dt-hold { margin: 0; border-radius: 12px; padding: 10px 14px; background: #f4f7fa; border: 1px dashed #c9d6e0; color: #36506a; font-size: 14px; line-height: 1.6; }
+        .dt-fold summary { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; cursor: pointer; }
+        .dt-fold summary::-webkit-details-marker { display: none; }
+        .dt-fold-t { font-size: 18px; font-weight: 800; color: #10243e; margin-right: auto; }
+        .dt-fold:not([open]) .dt-caret { transform: rotate(-90deg); }
+        .dt-fold-b { margin-top: 12px; }
+        .dt-sub3 { margin: 14px 0 8px; font-size: 15px; font-weight: 800; color: #0b3a5b; }
         .dt-reg summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }
         .dt-reg summary::-webkit-details-marker { display: none; }
         .dt-reg-t { display: block; font-size: 16px; font-weight: 800; color: #10243e; }
@@ -334,6 +389,30 @@ export default async function DrugDetailPage({ params }: Props) {
         }
       `}</style>
     </main>
+  );
+}
+
+/** Mục dài (thận trọng, tương tác, ADR, quá liều): thu gọn, bấm để mở. */
+function Fold({ id, title, source, children }: { id: string; title: string; source: string; children: ReactNode }) {
+  return (
+    <details id={id} className="dt-card dt-fold">
+      <summary>
+        <span className="dt-fold-t">{title}</span>
+        <span className="dt-src">{source}</span>
+        <span className="dt-caret" aria-hidden>▾</span>
+      </summary>
+      <div className="dt-fold-b">{children}</div>
+    </details>
+  );
+}
+
+/** Nguyên văn Dược thư nếu đã đạt kiểm tra; chưa đạt thì chỉ chỉ số trang để tra bản in. */
+function Verified({ blocks, ok, pages }: { blocks: DtqgBlock[]; ok: boolean; pages: string }) {
+  if (ok && blocks.length) return <DtqgProse blocks={blocks} />;
+  return (
+    <p className="dt-hold">
+      Mục này có công thức, ký hiệu hoặc chữ chưa trích được chính xác từ bản điện tử nên không hiển thị. Tra Dược thư quốc gia 2023, {pages}.
+    </p>
   );
 }
 

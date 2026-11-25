@@ -8,13 +8,14 @@ import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
 type Reg = { s: RegistryStatus; h: LeafletSource };
 type RegistryMap = Record<string, Reg>;
-/** r: Dược thư – suy thận; p: Dược thư – thai kỳ, cho con bú; l: thuộc danh mục LASA. */
-export type DrugFlags = { r: boolean; p: boolean; l: boolean };
+/** m: có chuyên luận Dược thư; r: Dược thư – suy thận; p: Dược thư – thai kỳ, cho con bú; l: thuộc danh mục LASA. */
+export type DrugFlags = { m: boolean; r: boolean; p: boolean; l: boolean };
 
 /* Bộ lọc nội dung: chỉ nguồn chính thức. */
 const CONTENT_FILTERS: { value: string; label: string; test: (r: Reg | undefined, f: DrugFlags | undefined) => boolean }[] = [
   { value: "", label: "Tất cả", test: () => true },
   { value: "hdsd", label: "Có tờ HDSD gốc (Cục QLD)", test: (r) => r?.h === "dav" },
+  { value: "mono", label: "Có chuyên luận Dược thư", test: (_, f) => !!f?.m },
   { value: "renal", label: "Có liều suy thận (Dược thư)", test: (_, f) => !!f?.r },
   { value: "preg", label: "Có thai kỳ, cho con bú (Dược thư)", test: (_, f) => !!f?.p },
   { value: "lasa", label: "Thuốc LASA", test: (_, f) => !!f?.l },
@@ -45,6 +46,7 @@ function Badges({ r, f }: { r?: Reg; f?: DrugFlags }) {
       {f?.l && <span className={`${PILL} bg-orange-100 text-orange-900`}>LASA</span>}
       {b && <span className={`${PILL} ${b.cls}`}>{b.text}</span>}
       {r?.h === "dav" && <span className={`${PILL} bg-sky-100 text-sky-900`}>Tờ HDSD gốc</span>}
+      {f?.m && <span className={`${PILL} bg-emerald-100 text-emerald-900`}>Dược thư</span>}
       {f?.r && <span className={`${PILL} bg-teal-100 text-teal-900`}>Suy thận</span>}
       {f?.p && <span className={`${PILL} bg-teal-100 text-teal-900`}>Thai kỳ</span>}
     </>

@@ -1,0 +1,179 @@
+{
+ "note": "Mục chưa đạt kiểm tra nguyên văn hoặc có từ hỏng dấu – ẩn chữ, chỉ số trang.",
+ "items": {
+  "adenosin": [
+   "lieuDung"
+  ],
+  "amikacin": [
+   "lieuDung"
+  ],
+  "bortezomib": [
+   "lieuDung",
+   "tuongTac"
+  ],
+  "bosentan": [
+   "adr",
+   "tuongTac"
+  ],
+  "brinzolamid": [
+   "thanTrong"
+  ],
+  "capecitabin": [
+   "lieuDung",
+   "tuongTac"
+  ],
+  "captopril": [
+   "lieuDung"
+  ],
+  "carbamazepin": [
+   "thanTrong"
+  ],
+  "carbidopa-levodopa": [
+   "lieuDung"
+  ],
+  "ceftazidim": [
+   "lieuDung"
+  ],
+  "cetuximab": [
+   "lieuDung"
+  ],
+  "ciprofloxacin": [
+   "lieuDung"
+  ],
+  "colistin": [
+   "lieuDung"
+  ],
+  "diazepam": [
+   "thanTrong"
+  ],
+  "digoxin": [
+   "lieuDung"
+  ],
+  "donepezil-hydroclorid": [
+   "quaLieu"
+  ],
+  "doxorubicin": [
+   "lieuDung"
+  ],
+  "entecavir": [
+   "lieuDung"
+  ],
+  "etoposid": [
+   "lieuDung"
+  ],
+  "everolimus": [
+   "adrXuTri"
+  ],
+  "filgrastim": [
+   "lieuDung"
+  ],
+  "fluconazol": [
+   "lieuDung"
+  ],
+  "fludarabin-phosphat": [
+   "thanTrong",
+   "lieuDung"
+  ],
+  "fluticason-propionat": [
+   "chongChiDinh"
+  ],
+  "fosfomycin": [
+   "lieuDung"
+  ],
+  "furosemid": [
+   "adr",
+   "tuongTac"
+  ],
+  "ganciclovir": [
+   "lieuDung"
+  ],
+  "gentamicin": [
+   "chiDinh"
+  ],
+  "glimepirid": [
+   "lieuDung"
+  ],
+  "heparin": [
+   "thanTrong",
+   "lieuDung"
+  ],
+  "hydrocortison": [
+   "chongChiDinh",
+   "lieuDung",
+   "tuongTac"
+  ],
+  "imatinib": [
+   "adrXuTri"
+  ],
+  "imipenem-va-cilastatin": [
+   "lieuDung"
+  ],
+  "indapamid": [
+   "adr"
+  ],
+  "irinotecan": [
+   "lieuDung"
+  ],
+  "levofloxacin": [
+   "lieuDung"
+  ],
+  "liraglutid": [
+   "chiDinh"
+  ],
+  "midazolam": [
+   "lieuDung"
+  ],
+  "milrinon": [
+   "lieuDung"
+  ],
+  "natri-bicarbonat": [
+   "chiDinh",
+   "lieuDung"
+  ],
+  "pemetrexed": [
+   "lieuDung"
+  ],
+  "perindopril": [
+   "adrXuTri"
+  ],
+  "phenytoin": [
+   "tuongTac"
+  ],
+  "pregabalin": [
+   "lieuDung"
+  ],
+  "progesteron": [
+   "thanTrong"
+  ],
+  "rituximab": [
+   "lieuDung"
+  ],
+  "sertralin": [
+   "lieuDung"
+  ],
+  "sevofluran": [
+   "lieuDung"
+  ],
+  "teicoplanin": [
+   "lieuDung"
+  ],
+  "thiamin": [
+   "lieuDung"
+  ],
+  "tinidazol": [
+   "lieuDung"
+  ],
+  "tobramycin": [
+   "lieuDung"
+  ],
+  "topiramat": [
+   "tuongTac"
+  ],
+  "vac-xin-viem-gan-b-tai-to-hop": [
+   "lieuDung"
+  ],
+  "vitamin-b": [
+   "tuongTac"
+  ]
+ }
+}

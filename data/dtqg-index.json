@@ -1,0 +1,11046 @@
+{
+ "source": "Bộ Y tế – Hội đồng Dược thư quốc gia Việt Nam. Dược thư quốc gia Việt Nam, lần xuất bản thứ ba (2023)",
+ "extractedAt": "2026-11-25",
+ "note": "Trích nguyên văn các mục Chỉ định, Chống chỉ định, Thận trọng, Tác dụng không mong muốn, Hướng dẫn xử trí ADR, Liều lượng và cách dùng, Tương tác thuốc, Quá liều của từng chuyên luận.",
+ "items": [
+  {
+   "id": "acarbose",
+   "name": "Acarbose",
+   "inn": "Acarbose",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     115,
+     116
+    ],
+    "printed": [
+     121,
+     122
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acenocoumarol",
+   "name": "Acenocoumarol",
+   "inn": "Acenocoumarol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     119,
+     121
+    ],
+    "printed": [
+     125,
+     127
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acetazolamid",
+   "name": "Acetazolamid",
+   "inn": "Acetazolamide",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     121,
+     122
+    ],
+    "printed": [
+     127,
+     128
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acetylcystein",
+   "name": "Acetylcystein",
+   "inn": "Acetylcysteine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     122,
+     125
+    ],
+    "printed": [
+     128,
+     131
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "aciclovir",
+   "name": "Aciclovir",
+   "inn": "Aciclovir (Acyclovir)",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     125,
+     128
+    ],
+    "printed": [
+     131,
+     134
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-ascorbic",
+   "name": "Acid ascorbic",
+   "inn": "Ascorbic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     131,
+     134
+    ],
+    "printed": [
+     137,
+     140
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-folic",
+   "name": "Acid folic",
+   "inn": "Folic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     138,
+     140
+    ],
+    "printed": [
+     144,
+     146
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-fusidic",
+   "name": "Acid fusidic",
+   "inn": "Fusidic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     140,
+     142
+    ],
+    "printed": [
+     146,
+     148
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "acid-salicylic",
+   "name": "Acid salicylic",
+   "inn": "Salicylic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     147,
+     148
+    ],
+    "printed": [
+     153,
+     154
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-tranexamic",
+   "name": "Acid tranexamic",
+   "inn": "Tranexamic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     148,
+     149
+    ],
+    "printed": [
+     154,
+     155
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-ursodeoxycholic",
+   "name": "Acid ursodeoxycholic",
+   "inn": "Ursodeoxycholic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     149,
+     150
+    ],
+    "printed": [
+     155,
+     156
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "acid-zoledronic",
+   "name": "Acid zoledronic",
+   "inn": "Zoledronic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     153,
+     155
+    ],
+    "printed": [
+     159,
+     161
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "adapalen",
+   "name": "Adapalen",
+   "inn": "Adapalene",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     157,
+     158
+    ],
+    "printed": [
+     163,
+     164
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "adenosin",
+   "name": "Adenosin",
+   "inn": "Adenosine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     160,
+     163
+    ],
+    "printed": [
+     166,
+     169
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "albendazol",
+   "name": "Albendazol",
+   "inn": "Albendazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     163,
+     164
+    ],
+    "printed": [
+     169,
+     170
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "albumin",
+   "name": "Albumin",
+   "inn": "Albumin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     164,
+     165
+    ],
+    "printed": [
+     170,
+     171
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alendronat-natri",
+   "name": "Alendronat natri",
+   "inn": "Alendronate sodium",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     168,
+     170
+    ],
+    "printed": [
+     174,
+     176
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alfuzosin-hydroclorid",
+   "name": "Alfuzosin hydroclorid",
+   "inn": "Alfuzosin hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     170,
+     172
+    ],
+    "printed": [
+     176,
+     178
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alimemazin",
+   "name": "Alimemazin",
+   "inn": "Alimemazine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     172,
+     174
+    ],
+    "printed": [
+     178,
+     180
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alopurinol",
+   "name": "Alopurinol",
+   "inn": "Allopurinol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     174,
+     177
+    ],
+    "printed": [
+     180,
+     183
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alteplase",
+   "name": "Alteplase",
+   "inn": "Alteplase",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     180,
+     183
+    ],
+    "printed": [
+     186,
+     189
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "alverin-citrat",
+   "name": "Alverin citrat",
+   "inn": "Alverine citrate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     183,
+     185
+    ],
+    "printed": [
+     189,
+     191
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ambroxol",
+   "name": "Ambroxol",
+   "inn": "Ambroxol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     185,
+     186
+    ],
+    "printed": [
+     191,
+     192
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amikacin",
+   "name": "Amikacin",
+   "inn": "Amikacin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     186,
+     188
+    ],
+    "printed": [
+     192,
+     194
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amiodaron",
+   "name": "Amiodaron",
+   "inn": "Amiodarone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     190,
+     195
+    ],
+    "printed": [
+     196,
+     201
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amitriptylin",
+   "name": "Amitriptylin",
+   "inn": "Amitriptyline",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     195,
+     197
+    ],
+    "printed": [
+     201,
+     203
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amlodipin",
+   "name": "Amlodipin",
+   "inn": "Amlodipine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     197,
+     198
+    ],
+    "printed": [
+     203,
+     204
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amoxicilin",
+   "name": "Amoxicilin",
+   "inn": "Amoxicillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     198,
+     202
+    ],
+    "printed": [
+     204,
+     208
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amoxicilin-va-kali-clavulanat",
+   "name": "Amoxicilin và kali clavulanat",
+   "inn": "Amoxicillin and clavulanate potassium",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     202,
+     205
+    ],
+    "printed": [
+     208,
+     211
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "amphotericin-b",
+   "name": "Amphotericin b",
+   "inn": "Amphotericin B",
+   "group": "ks-n1",
+   "inFormulary": false,
+   "pages": {
+    "pdf": [
+     205,
+     209
+    ],
+    "printed": [
+     211,
+     215
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ampicilin",
+   "name": "Ampicilin",
+   "inn": "Ampicillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     209,
+     211
+    ],
+    "printed": [
+     215,
+     217
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ampicilin-va-sulbactam",
+   "name": "Ampicilin và sulbactam",
+   "inn": "Ampicillin and sulbactam",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     211,
+     214
+    ],
+    "printed": [
+     217,
+     220
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "anastrozol",
+   "name": "Anastrozol",
+   "inn": "Anastrozole",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     214,
+     215
+    ],
+    "printed": [
+     220,
+     221
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "apixaban",
+   "name": "Apixaban",
+   "inn": "Apixaban",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     217,
+     221
+    ],
+    "printed": [
+     223,
+     227
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "aspirin",
+   "name": "Aspirin",
+   "inn": "Acetylsalicylic acid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     235,
+     237
+    ],
+    "printed": [
+     241,
+     243
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "atenolol",
+   "name": "Atenolol",
+   "inn": "Atenolol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     240,
+     242
+    ],
+    "printed": [
+     246,
+     248
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "atorvastatin",
+   "name": "Atorvastatin",
+   "inn": "Atorvastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     242,
+     246
+    ],
+    "printed": [
+     248,
+     252
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "atracurium-besylat",
+   "name": "Atracurium besylat",
+   "inn": "Atracurium besylate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     246,
+     248
+    ],
+    "printed": [
+     252,
+     254
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "atropin",
+   "name": "Atropin",
+   "inn": "Atropine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     248,
+     249
+    ],
+    "printed": [
+     254,
+     255
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "atropin-sulfat",
+   "name": "Atropin sulfat",
+   "inn": "Atropine sulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     249,
+     250
+    ],
+    "printed": [
+     255,
+     256
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "azithromycin",
+   "name": "Azithromycin",
+   "inn": "Azithromycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     253,
+     257
+    ],
+    "printed": [
+     259,
+     263
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "baclofen",
+   "name": "Baclofen",
+   "inn": "Baclofen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     260,
+     263
+    ],
+    "printed": [
+     266,
+     269
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "benzathin-penicilin",
+   "name": "Benzathin penicilin",
+   "inn": "Benzathine benzylpenicillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     275,
+     277
+    ],
+    "printed": [
+     281,
+     283
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "betamethason",
+   "name": "Betamethason",
+   "inn": "Betamethasone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     281,
+     284
+    ],
+    "printed": [
+     287,
+     290
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bevacizumab",
+   "name": "Bevacizumab",
+   "inn": "Bevacizumab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     286,
+     289
+    ],
+    "printed": [
+     292,
+     295
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bezafibrat",
+   "name": "Bezafibrat",
+   "inn": "Bezafibrate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     291,
+     292
+    ],
+    "printed": [
+     297,
+     298
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bicalutamid",
+   "name": "Bicalutamid",
+   "inn": "Bicalutamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     292,
+     294
+    ],
+    "printed": [
+     298,
+     300
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bimatoprost",
+   "name": "Bimatoprost",
+   "inn": "Bimatoprost",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     294,
+     295
+    ],
+    "printed": [
+     300,
+     301
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "biotin",
+   "name": "Biotin",
+   "inn": "Biotin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     295,
+     296
+    ],
+    "printed": [
+     301,
+     302
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bisacodyl",
+   "name": "Bisacodyl",
+   "inn": "Bisacodyl",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     296,
+     297
+    ],
+    "printed": [
+     302,
+     303
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bisoprolol",
+   "name": "Bisoprolol",
+   "inn": "Bisoprolol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     297,
+     300
+    ],
+    "printed": [
+     303,
+     306
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bleomycin",
+   "name": "Bleomycin",
+   "inn": "Bleomycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     300,
+     302
+    ],
+    "printed": [
+     306,
+     308
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bortezomib",
+   "name": "Bortezomib",
+   "inn": "Bortezomib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     302,
+     305
+    ],
+    "printed": [
+     308,
+     311
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bosentan",
+   "name": "Bosentan",
+   "inn": "Bosentan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     305,
+     307
+    ],
+    "printed": [
+     311,
+     313
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "brinzolamid",
+   "name": "Brinzolamid",
+   "inn": "Brinzolamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     307,
+     308
+    ],
+    "printed": [
+     313,
+     314
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bromhexin-hydroclorid",
+   "name": "Bromhexin hydroclorid",
+   "inn": "Bromhexine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     308,
+     309
+    ],
+    "printed": [
+     314,
+     315
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "budesonid",
+   "name": "Budesonid",
+   "inn": "Budesonide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     313,
+     315
+    ],
+    "printed": [
+     319,
+     321
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "bupivacain-hydroclorid",
+   "name": "Bupivacain hydroclorid",
+   "inn": "Bupivacaine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     315,
+     320
+    ],
+    "printed": [
+     321,
+     326
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "busulfan",
+   "name": "Busulfan",
+   "inn": "Busulfan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     327,
+     330
+    ],
+    "printed": [
+     333,
+     336
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cafein",
+   "name": "Cafein",
+   "inn": "Caffeine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     332,
+     333
+    ],
+    "printed": [
+     338,
+     339
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "calci-clorid",
+   "name": "Calci clorid",
+   "inn": "Calcium cloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     333,
+     335
+    ],
+    "printed": [
+     339,
+     341
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "calci-gluconat",
+   "name": "Calci gluconat",
+   "inn": "Calcium gluconate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     335,
+     338
+    ],
+    "printed": [
+     341,
+     344
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "calci-lactat",
+   "name": "Calci lactat",
+   "inn": "Calcium lactate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     338,
+     340
+    ],
+    "printed": [
+     344,
+     346
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "calcipotriol",
+   "name": "Calcipotriol",
+   "inn": "Calcipotriol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     340,
+     341
+    ],
+    "printed": [
+     346,
+     347
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "calcitonin",
+   "name": "Calcitonin",
+   "inn": "Calcitonin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     341,
+     343
+    ],
+    "printed": [
+     347,
+     349
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "candesartan-cilexetil",
+   "name": "Candesartan cilexetil",
+   "inn": "Candesartan cilexetil",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     343,
+     345
+    ],
+    "printed": [
+     349,
+     351
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "capecitabin",
+   "name": "Capecitabin",
+   "inn": "Capecitabine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     345,
+     349
+    ],
+    "printed": [
+     351,
+     355
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "capsaicin",
+   "name": "Capsaicin",
+   "inn": "Capsaicin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     351,
+     353
+    ],
+    "printed": [
+     357,
+     359
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "captopril",
+   "name": "Captopril",
+   "inn": "Captopril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     353,
+     355
+    ],
+    "printed": [
+     359,
+     361
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "carbamazepin",
+   "name": "Carbamazepin",
+   "inn": "Carbamazepine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     355,
+     359
+    ],
+    "printed": [
+     361,
+     365
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "carbidopa-levodopa",
+   "name": "Carbidopa - levodopa",
+   "inn": "Carbidopa - levodopa",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     359,
+     362
+    ],
+    "printed": [
+     365,
+     368
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "carboplatin",
+   "name": "Carboplatin",
+   "inn": "Carboplatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     364,
+     365
+    ],
+    "printed": [
+     370,
+     371
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "carvedilol",
+   "name": "Carvedilol",
+   "inn": "Carvedilol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     368,
+     371
+    ],
+    "printed": [
+     374,
+     377
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefaclor",
+   "name": "Cefaclor",
+   "inn": "Cefaclor",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     371,
+     374
+    ],
+    "printed": [
+     377,
+     380
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefadroxil",
+   "name": "Cefadroxil",
+   "inn": "Cefadroxil",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     374,
+     376
+    ],
+    "printed": [
+     380,
+     382
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefalexin",
+   "name": "Cefalexin",
+   "inn": "Cefalexin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     376,
+     379
+    ],
+    "printed": [
+     382,
+     385
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefamandol",
+   "name": "Cefamandol",
+   "inn": "Cefamandole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     381,
+     383
+    ],
+    "printed": [
+     387,
+     389
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefazolin",
+   "name": "Cefazolin",
+   "inn": "Cefazolin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     385,
+     388
+    ],
+    "printed": [
+     391,
+     394
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefdinir",
+   "name": "Cefdinir",
+   "inn": "Cefdinir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     388,
+     390
+    ],
+    "printed": [
+     394,
+     396
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefepim",
+   "name": "Cefepim",
+   "inn": "Cefepime",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     392,
+     395
+    ],
+    "printed": [
+     398,
+     401
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefixim",
+   "name": "Cefixim",
+   "inn": "Cefixime",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     395,
+     398
+    ],
+    "printed": [
+     401,
+     404
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefoperazon",
+   "name": "Cefoperazon",
+   "inn": "Cefoperazone",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     398,
+     400
+    ],
+    "printed": [
+     404,
+     406
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefotaxim",
+   "name": "Cefotaxim",
+   "inn": "Cefotaxime",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     400,
+     403
+    ],
+    "printed": [
+     406,
+     409
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefotiam",
+   "name": "Cefotiam",
+   "inn": "Cefotiam",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     403,
+     404
+    ],
+    "printed": [
+     409,
+     410
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefoxitin",
+   "name": "Cefoxitin",
+   "inn": "Cefoxitin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     404,
+     406
+    ],
+    "printed": [
+     410,
+     412
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefpirom",
+   "name": "Cefpirom",
+   "inn": "Cefpirome",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     406,
+     408
+    ],
+    "printed": [
+     412,
+     414
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefpodoxim-proxetil",
+   "name": "Cefpodoxim proxetil",
+   "inn": "Cefpodoxime proxetil",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     408,
+     411
+    ],
+    "printed": [
+     414,
+     417
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefradin",
+   "name": "Cefradin",
+   "inn": "Cefradine",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     411,
+     413
+    ],
+    "printed": [
+     417,
+     419
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ceftazidim",
+   "name": "Ceftazidim",
+   "inn": "Ceftazidime",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     413,
+     416
+    ],
+    "printed": [
+     419,
+     422
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ceftibuten",
+   "name": "Ceftibuten",
+   "inn": "Ceftibuten",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     416,
+     418
+    ],
+    "printed": [
+     422,
+     424
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ceftriaxon",
+   "name": "Ceftriaxon",
+   "inn": "Ceftriaxone",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     418,
+     421
+    ],
+    "printed": [
+     424,
+     427
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cefuroxim",
+   "name": "Cefuroxim",
+   "inn": "Cefuroxime",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     421,
+     425
+    ],
+    "printed": [
+     427,
+     431
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "celecoxib",
+   "name": "Celecoxib",
+   "inn": "Celecoxib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     425,
+     427
+    ],
+    "printed": [
+     431,
+     433
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cetuximab",
+   "name": "Cetuximab",
+   "inn": "Cetuximab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     429,
+     432
+    ],
+    "printed": [
+     435,
+     438
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "chymotrypsin",
+   "name": "Chymotrypsin",
+   "inn": "Chymotrypsin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     432,
+     434
+    ],
+    "printed": [
+     438,
+     440
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ciclosporin",
+   "name": "Ciclosporin",
+   "inn": "Ciclosporin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     434,
+     436
+    ],
+    "printed": [
+     440,
+     442
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cilostazol",
+   "name": "Cilostazol",
+   "inn": "Cilostazol",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     438,
+     439
+    ],
+    "printed": [
+     444,
+     445
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cimetidin",
+   "name": "Cimetidin",
+   "inn": "Cimetidine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     439,
+     441
+    ],
+    "printed": [
+     445,
+     447
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ciprofloxacin",
+   "name": "Ciprofloxacin",
+   "inn": "Ciprofloxacin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     443,
+     449
+    ],
+    "printed": [
+     449,
+     455
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cisplatin",
+   "name": "Cisplatin",
+   "inn": "Cisplatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     449,
+     452
+    ],
+    "printed": [
+     455,
+     458
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "citalopram",
+   "name": "Citalopram",
+   "inn": "Citalopram",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     452,
+     456
+    ],
+    "printed": [
+     458,
+     462
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clarithromycin",
+   "name": "Clarithromycin",
+   "inn": "Clarithromycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     456,
+     460
+    ],
+    "printed": [
+     462,
+     466
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clindamycin",
+   "name": "Clindamycin",
+   "inn": "Clindamycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     460,
+     463
+    ],
+    "printed": [
+     466,
+     469
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "clobetasol-propionat",
+   "name": "Clobetasol propionat",
+   "inn": "Clobetasol propionate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     463,
+     464
+    ],
+    "printed": [
+     469,
+     470
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clopidogrel",
+   "name": "Clopidogrel",
+   "inn": "Clopidogrel",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     475,
+     478
+    ],
+    "printed": [
+     481,
+     484
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clorpheniramin-maleat",
+   "name": "Clorpheniramin maleat",
+   "inn": "Chlorpheniramine maleate (Chlorphenamine maleate)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     491,
+     493
+    ],
+    "printed": [
+     497,
+     499
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clorpromazin-hydroclorid",
+   "name": "Clorpromazin hydroclorid",
+   "inn": "Chlorpromazine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     493,
+     495
+    ],
+    "printed": [
+     499,
+     501
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clotrimazol",
+   "name": "Clotrimazol",
+   "inn": "Clotrimazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     497,
+     498
+    ],
+    "printed": [
+     503,
+     504
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "cloxacilin",
+   "name": "Cloxacilin",
+   "inn": "Cloxacillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     498,
+     499
+    ],
+    "printed": [
+     504,
+     505
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "clozapin",
+   "name": "Clozapin",
+   "inn": "Clozapine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     499,
+     503
+    ],
+    "printed": [
+     505,
+     509
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "codein",
+   "name": "Codein",
+   "inn": "Codeine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     503,
+     506
+    ],
+    "printed": [
+     509,
+     512
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "colistin",
+   "name": "Colistin",
+   "inn": "Colistin",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     508,
+     513
+    ],
+    "printed": [
+     514,
+     519
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cromolyn",
+   "name": "Cromolyn",
+   "inn": "Sodium cromoglicate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     516,
+     518
+    ],
+    "printed": [
+     522,
+     524
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "crotamiton",
+   "name": "Crotamiton",
+   "inn": "Crotamiton",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     518,
+     519
+    ],
+    "printed": [
+     524,
+     525
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cyclophosphamid",
+   "name": "Cyclophosphamid",
+   "inn": "Cyclophosphamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     520,
+     523
+    ],
+    "printed": [
+     526,
+     529
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "cytarabin",
+   "name": "Cytarabin",
+   "inn": "Cytarabine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     524,
+     527
+    ],
+    "printed": [
+     530,
+     533
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dabigatran-etexilat",
+   "name": "Dabigatran etexilat",
+   "inn": "Dabigatran etexilate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     527,
+     529
+    ],
+    "printed": [
+     533,
+     535
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dactinomycin",
+   "name": "Dactinomycin",
+   "inn": "Dactinomycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     534,
+     535
+    ],
+    "printed": [
+     540,
+     541
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "danazol",
+   "name": "Danazol",
+   "inn": "Danazol",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     538,
+     540
+    ],
+    "printed": [
+     544,
+     546
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dapagliflozin",
+   "name": "Dapagliflozin",
+   "inn": "Dapagliflozin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     542,
+     545
+    ],
+    "printed": [
+     548,
+     551
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "deferasirox",
+   "name": "Deferasirox",
+   "inn": "Deferasirox",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     552,
+     554
+    ],
+    "printed": [
+     558,
+     560
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "deferipron",
+   "name": "Deferipron",
+   "inn": "Deferiprone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     554,
+     555
+    ],
+    "printed": [
+     560,
+     561
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "deferoxamin-mesilat",
+   "name": "Deferoxamin mesilat",
+   "inn": "Deferoxamine mesilate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     555,
+     557
+    ],
+    "printed": [
+     561,
+     563
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "desloratadin",
+   "name": "Desloratadin",
+   "inn": "Desloratadine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     559,
+     560
+    ],
+    "printed": [
+     565,
+     566
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dexamethason",
+   "name": "Dexamethason",
+   "inn": "Dexamethasone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     561,
+     564
+    ],
+    "printed": [
+     567,
+     570
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "diazepam",
+   "name": "Diazepam",
+   "inn": "Diazepam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     575,
+     578
+    ],
+    "printed": [
+     581,
+     584
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "diclofenac",
+   "name": "Diclofenac",
+   "inn": "Diclofenac",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     578,
+     581
+    ],
+    "printed": [
+     584,
+     587
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "digoxin",
+   "name": "Digoxin",
+   "inn": "Digoxin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     585,
+     591
+    ],
+    "printed": [
+     591,
+     597
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dihydroergotamin",
+   "name": "Dihydroergotamin",
+   "inn": "Dihydroergotamine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     591,
+     593
+    ],
+    "printed": [
+     597,
+     599
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "diltiazem-hydroclorid",
+   "name": "Diltiazem hydroclorid",
+   "inn": "Diltiazem hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     593,
+     596
+    ],
+    "printed": [
+     599,
+     602
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dinoproston",
+   "name": "Dinoproston",
+   "inn": "Dinoprostone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     601,
+     602
+    ],
+    "printed": [
+     607,
+     608
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "diosmectit",
+   "name": "Diosmectit",
+   "inn": "Diosmectite",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     602,
+     603
+    ],
+    "printed": [
+     608,
+     609
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "diphenhydramin",
+   "name": "Diphenhydramin",
+   "inn": "Diphenhydramine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     603,
+     605
+    ],
+    "printed": [
+     609,
+     611
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dobutamin",
+   "name": "Dobutamin",
+   "inn": "Dobutamine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     614,
+     616
+    ],
+    "printed": [
+     620,
+     622
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "docetaxel",
+   "name": "Docetaxel",
+   "inn": "Docetaxel",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     616,
+     619
+    ],
+    "printed": [
+     622,
+     625
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "docusat",
+   "name": "Docusat",
+   "inn": "Docusate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     619,
+     620
+    ],
+    "printed": [
+     625,
+     626
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "domperidon",
+   "name": "Domperidon",
+   "inn": "Domperidone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     620,
+     622
+    ],
+    "printed": [
+     626,
+     628
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "donepezil-hydroclorid",
+   "name": "Donepezil hydroclorid",
+   "inn": "Donepezil hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     622,
+     623
+    ],
+    "printed": [
+     628,
+     629
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "doripenem",
+   "name": "Doripenem",
+   "inn": "Doripenem",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     626,
+     628
+    ],
+    "printed": [
+     632,
+     634
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "doxazosin",
+   "name": "Doxazosin",
+   "inn": "Doxazosin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     628,
+     631
+    ],
+    "printed": [
+     634,
+     637
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "doxorubicin",
+   "name": "Doxorubicin",
+   "inn": "Doxorubicin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     633,
+     638
+    ],
+    "printed": [
+     639,
+     644
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "doxycyclin",
+   "name": "Doxycyclin",
+   "inn": "Doxycycline",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     638,
+     641
+    ],
+    "printed": [
+     644,
+     647
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "dutasterid",
+   "name": "Dutasterid",
+   "inn": "Dutasterid",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     642,
+     643
+    ],
+    "printed": [
+     648,
+     649
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "empagliflozin",
+   "name": "Empagliflozin",
+   "inn": "Empagliflozin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     648,
+     652
+    ],
+    "printed": [
+     654,
+     658
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "enalapril",
+   "name": "Enalapril",
+   "inn": "Enalapril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     652,
+     655
+    ],
+    "printed": [
+     658,
+     661
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "enoxaparin-natri",
+   "name": "Enoxaparin natri",
+   "inn": "Enoxaparin sodium",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     655,
+     658
+    ],
+    "printed": [
+     661,
+     664
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "entecavir",
+   "name": "Entecavir",
+   "inn": "Entecavir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     658,
+     660
+    ],
+    "printed": [
+     664,
+     666
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "eperison-hydroclorid",
+   "name": "Eperison hydroclorid",
+   "inn": "Eperisone hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     660,
+     662
+    ],
+    "printed": [
+     666,
+     668
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "epirubicin-hydroclorid",
+   "name": "Epirubicin hydroclorid",
+   "inn": "Epirubicin hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     666,
+     669
+    ],
+    "printed": [
+     672,
+     675
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "epoetin",
+   "name": "Epoetin",
+   "inn": "Epoetin alfa, epoetin beta, epoetin zeta",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     669,
+     671
+    ],
+    "printed": [
+     675,
+     677
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "erlotinib",
+   "name": "Erlotinib",
+   "inn": "Erlotinib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     676,
+     678
+    ],
+    "printed": [
+     682,
+     684
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ertapenem-natri",
+   "name": "Ertapenem natri",
+   "inn": "Ertapenem sodium",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     678,
+     681
+    ],
+    "printed": [
+     684,
+     687
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "erythromycin",
+   "name": "Erythromycin",
+   "inn": "Erythromycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     681,
+     684
+    ],
+    "printed": [
+     687,
+     690
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "esomeprazol",
+   "name": "Esomeprazol",
+   "inn": "Esomeprazol",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     690,
+     692
+    ],
+    "printed": [
+     696,
+     698
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "etamsylat",
+   "name": "Etamsylat",
+   "inn": "Etamsylate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     700,
+     702
+    ],
+    "printed": [
+     706,
+     708
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ethambutol",
+   "name": "Ethambutol",
+   "inn": "Ethambutol",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     702,
+     704
+    ],
+    "printed": [
+     708,
+     710
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "etodolac",
+   "name": "Etodolac",
+   "inn": "Etodolac",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     712,
+     714
+    ],
+    "printed": [
+     718,
+     720
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "etoposid",
+   "name": "Etoposid",
+   "inn": "Etoposide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     716,
+     719
+    ],
+    "printed": [
+     722,
+     725
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "everolimus",
+   "name": "Everolimus",
+   "inn": "Everolimus",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     719,
+     723
+    ],
+    "printed": [
+     725,
+     729
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "exemestan",
+   "name": "Exemestan",
+   "inn": "Exemestane",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     723,
+     724
+    ],
+    "printed": [
+     729,
+     730
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ezetimib",
+   "name": "Ezetimib",
+   "inn": "Ezetimibe",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     724,
+     725
+    ],
+    "printed": [
+     730,
+     731
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "famotidin",
+   "name": "Famotidin",
+   "inn": "Famotidine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     727,
+     729
+    ],
+    "printed": [
+     733,
+     735
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fenofibrat",
+   "name": "Fenofibrat",
+   "inn": "Fenofibrate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     731,
+     733
+    ],
+    "printed": [
+     737,
+     739
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fentanyl",
+   "name": "Fentanyl",
+   "inn": "Fentanyl",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     733,
+     736
+    ],
+    "printed": [
+     739,
+     742
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fexofenadin-hydroclorid",
+   "name": "Fexofenadin hydroclorid",
+   "inn": "Fexofenadine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     736,
+     737
+    ],
+    "printed": [
+     742,
+     743
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "filgrastim",
+   "name": "Filgrastim",
+   "inn": "Filgrastim",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     737,
+     740
+    ],
+    "printed": [
+     743,
+     746
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fluconazol",
+   "name": "Fluconazol",
+   "inn": "Fluconazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     746,
+     751
+    ],
+    "printed": [
+     752,
+     757
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fludarabin-phosphat",
+   "name": "Fludarabin phosphat",
+   "inn": "Fludarabine phosphate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     753,
+     756
+    ],
+    "printed": [
+     759,
+     762
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "flunarizin",
+   "name": "Flunarizin",
+   "inn": "Flunarizine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     760,
+     761
+    ],
+    "printed": [
+     766,
+     767
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fluocinolon-acetonid",
+   "name": "Fluocinolon acetonid",
+   "inn": "Fluocinolone acetonide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     761,
+     762
+    ],
+    "printed": [
+     767,
+     768
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung"
+   ]
+  },
+  {
+   "id": "fluorometholon",
+   "name": "Fluorometholon",
+   "inn": "Fluorometholone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     762,
+     763
+    ],
+    "printed": [
+     768,
+     769
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "fluorouracil",
+   "name": "Fluorouracil",
+   "inn": "Fluorouracil",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     763,
+     766
+    ],
+    "printed": [
+     769,
+     772
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fluoxetin",
+   "name": "Fluoxetin",
+   "inn": "Fluoxetine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     766,
+     769
+    ],
+    "printed": [
+     772,
+     775
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fluticason-propionat",
+   "name": "Fluticason propionat",
+   "inn": "Fluticasone propionate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     776,
+     779
+    ],
+    "printed": [
+     782,
+     785
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fluvastatin",
+   "name": "Fluvastatin",
+   "inn": "Fluvastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     779,
+     781
+    ],
+    "printed": [
+     785,
+     787
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "fosfomycin",
+   "name": "Fosfomycin",
+   "inn": "Fosfomycin",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     787,
+     790
+    ],
+    "printed": [
+     793,
+     796
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "furosemid",
+   "name": "Furosemid",
+   "inn": "Furosemide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     790,
+     792
+    ],
+    "printed": [
+     796,
+     798
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "gabapentin",
+   "name": "Gabapentin",
+   "inn": "Gabapentin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     792,
+     794
+    ],
+    "printed": [
+     798,
+     800
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "galantamin",
+   "name": "Galantamin",
+   "inn": "Galantamine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     794,
+     796
+    ],
+    "printed": [
+     800,
+     802
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ganciclovir",
+   "name": "Ganciclovir",
+   "inn": "Ganciclovir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     796,
+     798
+    ],
+    "printed": [
+     802,
+     804
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "gefitinib",
+   "name": "Gefitinib",
+   "inn": "Gefitinib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     798,
+     800
+    ],
+    "printed": [
+     804,
+     806
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "gemcitabin-hydroclorid",
+   "name": "Gemcitabin hydroclorid",
+   "inn": "Gemcitabine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     800,
+     803
+    ],
+    "printed": [
+     806,
+     809
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "gentamicin",
+   "name": "Gentamicin",
+   "inn": "Gentamicin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     807,
+     810
+    ],
+    "printed": [
+     813,
+     816
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glibenclamid",
+   "name": "Glibenclamid",
+   "inn": "Glibenclamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     810,
+     812
+    ],
+    "printed": [
+     816,
+     818
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "gliclazid",
+   "name": "Gliclazid",
+   "inn": "Gliclazide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     812,
+     814
+    ],
+    "printed": [
+     818,
+     820
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glimepirid",
+   "name": "Glimepirid",
+   "inn": "Glimepiride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     814,
+     815
+    ],
+    "printed": [
+     820,
+     821
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glipizid",
+   "name": "Glipizid",
+   "inn": "Glipizide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     815,
+     818
+    ],
+    "printed": [
+     821,
+     824
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glucose",
+   "name": "Glucose",
+   "inn": "Glucose",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     829,
+     830
+    ],
+    "printed": [
+     835,
+     836
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glycerol",
+   "name": "Glycerol",
+   "inn": "Glycerol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     830,
+     832
+    ],
+    "printed": [
+     836,
+     838
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "glyceryl-trinitrat",
+   "name": "Glyceryl trinitrat",
+   "inn": "Glyceryl trinitrate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     832,
+     834
+    ],
+    "printed": [
+     838,
+     840
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "goserelin",
+   "name": "Goserelin",
+   "inn": "Goserelin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     839,
+     840
+    ],
+    "printed": [
+     845,
+     846
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "granisetron",
+   "name": "Granisetron",
+   "inn": "Granisetron",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     840,
+     842
+    ],
+    "printed": [
+     846,
+     848
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "griseofulvin",
+   "name": "Griseofulvin",
+   "inn": "Griseofulvin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     842,
+     844
+    ],
+    "printed": [
+     848,
+     850
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "haloperidol",
+   "name": "Haloperidol",
+   "inn": "Haloperidol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     845,
+     848
+    ],
+    "printed": [
+     851,
+     854
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "heparin",
+   "name": "Heparin",
+   "inn": "Heparin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     850,
+     853
+    ],
+    "printed": [
+     856,
+     859
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "hydroclorothiazid",
+   "name": "Hydroclorothiazid",
+   "inn": "Hydrochlorothiazide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     860,
+     863
+    ],
+    "printed": [
+     866,
+     869
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "hydrocortison",
+   "name": "Hydrocortison",
+   "inn": "Hydrocortisone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     863,
+     869
+    ],
+    "printed": [
+     869,
+     875
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "hydroxycloroquin",
+   "name": "Hydroxycloroquin",
+   "inn": "Hydroxychloroquine",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     872,
+     875
+    ],
+    "printed": [
+     878,
+     881
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ibuprofen",
+   "name": "Ibuprofen",
+   "inn": "Ibuprofen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     880,
+     882
+    ],
+    "printed": [
+     885,
+     887
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "idarubicin-hydroclorid",
+   "name": "Idarubicin hydroclorid",
+   "inn": "Idarubicin hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     882,
+     884
+    ],
+    "printed": [
+     887,
+     889
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ifosfamid",
+   "name": "Ifosfamid",
+   "inn": "Ifosfamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     884,
+     886
+    ],
+    "printed": [
+     889,
+     891
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "imatinib",
+   "name": "Imatinib",
+   "inn": "Imatinib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     888,
+     891
+    ],
+    "printed": [
+     893,
+     896
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "imidapril",
+   "name": "Imidapril",
+   "inn": "Imidapril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     891,
+     893
+    ],
+    "printed": [
+     896,
+     898
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "imipenem-va-cilastatin",
+   "name": "Imipenem và cilastatin",
+   "inn": "Imipenem and cilastatin",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     893,
+     897
+    ],
+    "printed": [
+     898,
+     902
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "indapamid",
+   "name": "Indapamid",
+   "inn": "Indapamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     899,
+     901
+    ],
+    "printed": [
+     904,
+     906
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "indomethacin",
+   "name": "Indomethacin",
+   "inn": "Indometacin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     901,
+     903
+    ],
+    "printed": [
+     906,
+     908
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "infliximab",
+   "name": "Infliximab",
+   "inn": "Infliximab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     903,
+     905
+    ],
+    "printed": [
+     908,
+     910
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "insulin",
+   "name": "Insulin",
+   "inn": "Insulin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     905,
+     911
+    ],
+    "printed": [
+     910,
+     916
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "iohexol",
+   "name": "Iohexol",
+   "inn": "Iohexol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     922,
+     926
+    ],
+    "printed": [
+     927,
+     931
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ipratropium-bromid",
+   "name": "Ipratropium bromid",
+   "inn": "Ipratropium bromide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     926,
+     927
+    ],
+    "printed": [
+     931,
+     932
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "irbesartan",
+   "name": "Irbesartan",
+   "inn": "Irbesartan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     927,
+     929
+    ],
+    "printed": [
+     932,
+     934
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "irinotecan",
+   "name": "Irinotecan",
+   "inn": "Irinotecan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     929,
+     931
+    ],
+    "printed": [
+     934,
+     936
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "isosorbid-dinitrat",
+   "name": "Isosorbid dinitrat",
+   "inn": "Isosorbide dinitrate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     939,
+     941
+    ],
+    "printed": [
+     944,
+     946
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "isotretinoin",
+   "name": "Isotretinoin",
+   "inn": "Isotretinoin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     941,
+     943
+    ],
+    "printed": [
+     946,
+     948
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "itraconazol",
+   "name": "Itraconazol",
+   "inn": "Itraconazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     945,
+     947
+    ],
+    "printed": [
+     950,
+     952
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ivabradin",
+   "name": "Ivabradin",
+   "inn": "Ivabradin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     947,
+     949
+    ],
+    "printed": [
+     952,
+     954
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ivermectin",
+   "name": "Ivermectin",
+   "inn": "Ivermectin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     949,
+     951
+    ],
+    "printed": [
+     954,
+     956
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "kali-clorid",
+   "name": "Kali clorid",
+   "inn": "Potassium chloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     951,
+     953
+    ],
+    "printed": [
+     956,
+     958
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "kali-iodid",
+   "name": "Kali iodid",
+   "inn": "Potassium iodide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     953,
+     955
+    ],
+    "printed": [
+     958,
+     960
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "kem-oxyd",
+   "name": "Kẽm oxyd",
+   "inn": "Zinc oxide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     957,
+     959
+    ],
+    "printed": [
+     962,
+     964
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung"
+   ]
+  },
+  {
+   "id": "ketoconazol",
+   "name": "Ketoconazol",
+   "inn": "Ketoconazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     961,
+     962
+    ],
+    "printed": [
+     966,
+     967
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ketoprofen",
+   "name": "Ketoprofen",
+   "inn": "Ketoprofen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     962,
+     964
+    ],
+    "printed": [
+     967,
+     969
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ketorolac",
+   "name": "Ketorolac",
+   "inn": "Ketorolac",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     964,
+     966
+    ],
+    "printed": [
+     969,
+     971
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ketotifen",
+   "name": "Ketotifen",
+   "inn": "Ketotifen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     966,
+     967
+    ],
+    "printed": [
+     971,
+     972
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lactobacillus-acidophilus",
+   "name": "Lactobacillus acidophilus",
+   "inn": "Lactobacillus acidophilus",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     973,
+     974
+    ],
+    "printed": [
+     978,
+     979
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lactulose",
+   "name": "Lactulose",
+   "inn": "Lactulose",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     974,
+     975
+    ],
+    "printed": [
+     979,
+     980
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lamivudin",
+   "name": "Lamivudin",
+   "inn": "Lamivudine",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     975,
+     979
+    ],
+    "printed": [
+     980,
+     984
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lamotrigin",
+   "name": "Lamotrigin",
+   "inn": "Lamotrigine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     979,
+     982
+    ],
+    "printed": [
+     984,
+     987
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lansoprazol",
+   "name": "Lansoprazol",
+   "inn": "Lansoprazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     982,
+     984
+    ],
+    "printed": [
+     987,
+     989
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lercanidipin",
+   "name": "Lercanidipin",
+   "inn": "Lercanidipine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     988,
+     989
+    ],
+    "printed": [
+     993,
+     994
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "letrozol",
+   "name": "Letrozol",
+   "inn": "Letrozole",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     989,
+     991
+    ],
+    "printed": [
+     994,
+     996
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levetiracetam",
+   "name": "Levetiracetam",
+   "inn": "Levetiracetam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     996,
+     998
+    ],
+    "printed": [
+     1001,
+     1003
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levocetirizin",
+   "name": "Levocetirizin",
+   "inn": "Levocetirizin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     998,
+     1000
+    ],
+    "printed": [
+     1003,
+     1005
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levodopa-benserazid",
+   "name": "Levodopa - benserazid",
+   "inn": "Levodopa - benserazide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1000,
+     1002
+    ],
+    "printed": [
+     1005,
+     1007
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levofloxacin",
+   "name": "Levofloxacin",
+   "inn": "Levofloxacin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1002,
+     1006
+    ],
+    "printed": [
+     1007,
+     1011
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levomepromazin",
+   "name": "Levomepromazin",
+   "inn": "Levomepromazine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1006,
+     1007
+    ],
+    "printed": [
+     1011,
+     1012
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "levothyroxin",
+   "name": "Levothyroxin",
+   "inn": "Levothyroxine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1011,
+     1014
+    ],
+    "printed": [
+     1016,
+     1019
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lidocain",
+   "name": "Lidocain",
+   "inn": "Lidocaine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1014,
+     1021
+    ],
+    "printed": [
+     1019,
+     1026
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "linezolid",
+   "name": "Linezolid",
+   "inn": "Linezolid",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1023,
+     1026
+    ],
+    "printed": [
+     1028,
+     1031
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "liraglutid",
+   "name": "Liraglutid",
+   "inn": "Liraglutide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1028,
+     1033
+    ],
+    "printed": [
+     1033,
+     1038
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lisinopril",
+   "name": "Lisinopril",
+   "inn": "Lisinopril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1033,
+     1035
+    ],
+    "printed": [
+     1038,
+     1040
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "loperamid-hydroclorid",
+   "name": "Loperamid hydroclorid",
+   "inn": "Loperamide hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1041,
+     1042
+    ],
+    "printed": [
+     1046,
+     1047
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "loratadin",
+   "name": "Loratadin",
+   "inn": "Loratadine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1048,
+     1050
+    ],
+    "printed": [
+     1053,
+     1055
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "losartan",
+   "name": "Losartan",
+   "inn": "Losartan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1052,
+     1054
+    ],
+    "printed": [
+     1057,
+     1059
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "loteprednol-etabonat",
+   "name": "Loteprednol etabonat",
+   "inn": "Loteprednol etabonat",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1054,
+     1055
+    ],
+    "printed": [
+     1059,
+     1060
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "lovastatin",
+   "name": "Lovastatin",
+   "inn": "Lovastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1055,
+     1057
+    ],
+    "printed": [
+     1060,
+     1062
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "magnesi-sulfat",
+   "name": "Magnesi sulfat",
+   "inn": "Magnesium sulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1057,
+     1059
+    ],
+    "printed": [
+     1062,
+     1064
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "manitol",
+   "name": "Manitol",
+   "inn": "Manitol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1059,
+     1061
+    ],
+    "printed": [
+     1064,
+     1066
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mebendazol",
+   "name": "Mebendazol",
+   "inn": "Mebendazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1061,
+     1062
+    ],
+    "printed": [
+     1066,
+     1067
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "meloxicam",
+   "name": "Meloxicam",
+   "inn": "Meloxicam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1069,
+     1070
+    ],
+    "printed": [
+     1074,
+     1075
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "melphalan",
+   "name": "Melphalan",
+   "inn": "Melphalan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1070,
+     1073
+    ],
+    "printed": [
+     1075,
+     1078
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "meropenem",
+   "name": "Meropenem",
+   "inn": "Meropenem",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1079,
+     1081
+    ],
+    "printed": [
+     1084,
+     1086
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mesalazin",
+   "name": "Mesalazin",
+   "inn": "Mesalazine (Fisalamine, Mesalamine)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1081,
+     1083
+    ],
+    "printed": [
+     1086,
+     1088
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mesna",
+   "name": "Mesna",
+   "inn": "Mesna",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1083,
+     1085
+    ],
+    "printed": [
+     1088,
+     1090
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "metformin-hydroclorid",
+   "name": "Metformin hydroclorid",
+   "inn": "Metformin hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1086,
+     1088
+    ],
+    "printed": [
+     1091,
+     1093
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "methocarbamol",
+   "name": "Methocarbamol",
+   "inn": "Methocarbamol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1093,
+     1095
+    ],
+    "printed": [
+     1098,
+     1100
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "methotrexat",
+   "name": "Methotrexat",
+   "inn": "Methotrexate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1095,
+     1098
+    ],
+    "printed": [
+     1100,
+     1103
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "methyldopa",
+   "name": "Methyldopa",
+   "inn": "Methyldopa (Methyldopate hydrochloride)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1100,
+     1102
+    ],
+    "printed": [
+     1105,
+     1107
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "methylprednisolon",
+   "name": "Methylprednisolon",
+   "inn": "Methylprednisolone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1102,
+     1106
+    ],
+    "printed": [
+     1107,
+     1111
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "metoclopramid",
+   "name": "Metoclopramid",
+   "inn": "Metoclopramide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1108,
+     1110
+    ],
+    "printed": [
+     1113,
+     1115
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "metoprolol",
+   "name": "Metoprolol",
+   "inn": "Metoprolol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1110,
+     1114
+    ],
+    "printed": [
+     1115,
+     1119
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "metronidazol",
+   "name": "Metronidazol",
+   "inn": "Metronidazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1114,
+     1117
+    ],
+    "printed": [
+     1119,
+     1122
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "miconazol",
+   "name": "Miconazol",
+   "inn": "Miconazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1120,
+     1121
+    ],
+    "printed": [
+     1125,
+     1126
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "midazolam",
+   "name": "Midazolam",
+   "inn": "Midazolam",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1121,
+     1123
+    ],
+    "printed": [
+     1126,
+     1128
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "milrinon",
+   "name": "Milrinon",
+   "inn": "Milrinone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1123,
+     1126
+    ],
+    "printed": [
+     1128,
+     1131
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mirtazapin",
+   "name": "Mirtazapin",
+   "inn": "Mirtazapine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1129,
+     1131
+    ],
+    "printed": [
+     1134,
+     1136
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "misoprostol",
+   "name": "Misoprostol",
+   "inn": "Misoprostol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1131,
+     1133
+    ],
+    "printed": [
+     1136,
+     1138
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mometason-furoat",
+   "name": "Mometason furoat",
+   "inn": "Mometasone furoate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1138,
+     1140
+    ],
+    "printed": [
+     1143,
+     1145
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "montelukast",
+   "name": "Montelukast",
+   "inn": "Montelukast",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1140,
+     1141
+    ],
+    "printed": [
+     1145,
+     1146
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "morphin",
+   "name": "Morphin",
+   "inn": "Morphine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1141,
+     1146
+    ],
+    "printed": [
+     1146,
+     1151
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "moxifloxacin-hydroclorid",
+   "name": "Moxifloxacin hydroclorid",
+   "inn": "Moxifloxacin hydrochloride",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1146,
+     1149
+    ],
+    "printed": [
+     1151,
+     1154
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "mupirocin",
+   "name": "Mupirocin",
+   "inn": "Mupirocin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1151,
+     1153
+    ],
+    "printed": [
+     1156,
+     1158
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nabumeton",
+   "name": "Nabumeton",
+   "inn": "Nabumetone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1153,
+     1154
+    ],
+    "printed": [
+     1158,
+     1159
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "naloxon",
+   "name": "Naloxon",
+   "inn": "Naloxone hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1158,
+     1160
+    ],
+    "printed": [
+     1163,
+     1165
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "naproxen",
+   "name": "Naproxen",
+   "inn": "Naproxen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1164,
+     1166
+    ],
+    "printed": [
+     1169,
+     1171
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "natri-bicarbonat",
+   "name": "Natri bicarbonat",
+   "inn": "Sodium bicarbonate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1167,
+     1169
+    ],
+    "printed": [
+     1172,
+     1174
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "natri-clorid",
+   "name": "Natri clorid",
+   "inn": "Sodium chloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1169,
+     1171
+    ],
+    "printed": [
+     1174,
+     1176
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "natri-nitrit",
+   "name": "Natri nitrit",
+   "inn": "Sodium nitrite",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1171,
+     1172
+    ],
+    "printed": [
+     1176,
+     1177
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "natri-nitroprusiat",
+   "name": "Natri nitroprusiat",
+   "inn": "Sodium nitroprusside",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1172,
+     1175
+    ],
+    "printed": [
+     1177,
+     1180
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "natri-picosulfat",
+   "name": "Natri picosulfat",
+   "inn": "Sodium picosulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1175,
+     1176
+    ],
+    "printed": [
+     1180,
+     1181
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nebivolol",
+   "name": "Nebivolol",
+   "inn": "Nebivolol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1176,
+     1182
+    ],
+    "printed": [
+     1181,
+     1187
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "neostigmin",
+   "name": "Neostigmin",
+   "inn": "Neostigmine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1183,
+     1186
+    ],
+    "printed": [
+     1188,
+     1191
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "netilmicin",
+   "name": "Netilmicin",
+   "inn": "Netilmicin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1186,
+     1188
+    ],
+    "printed": [
+     1191,
+     1193
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nhom-hydroxyd",
+   "name": "Nhôm hydroxyd",
+   "inn": "Aluminium hydroxide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1191,
+     1193
+    ],
+    "printed": [
+     1196,
+     1198
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "nhom-phosphat",
+   "name": "Nhôm phosphat",
+   "inn": "Aluminium phosphate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1193,
+     1194
+    ],
+    "printed": [
+     1198,
+     1199
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "nicardipin",
+   "name": "Nicardipin",
+   "inn": "Nicardipin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1195,
+     1198
+    ],
+    "printed": [
+     1200,
+     1203
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nicorandil",
+   "name": "Nicorandil",
+   "inn": "Nicorandil",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1199,
+     1200
+    ],
+    "printed": [
+     1204,
+     1205
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nicotinamid",
+   "name": "Nicotinamid",
+   "inn": "Nicotinamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1200,
+     1202
+    ],
+    "printed": [
+     1205,
+     1207
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nifedipin",
+   "name": "Nifedipin",
+   "inn": "Nifedipine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1202,
+     1204
+    ],
+    "printed": [
+     1207,
+     1209
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nilotinib",
+   "name": "Nilotinib",
+   "inn": "Nilotinib",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1204,
+     1207
+    ],
+    "printed": [
+     1209,
+     1212
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nimodipin",
+   "name": "Nimodipin",
+   "inn": "Nimodipine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1207,
+     1209
+    ],
+    "printed": [
+     1212,
+     1214
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nizatidin",
+   "name": "Nizatidin",
+   "inn": "Nizatidine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1211,
+     1213
+    ],
+    "printed": [
+     1216,
+     1218
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "norfloxacin",
+   "name": "Norfloxacin",
+   "inn": "Norfloxacin",
+   "group": "ks-n2",
+   "inFormulary": false,
+   "pages": {
+    "pdf": [
+     1217,
+     1219
+    ],
+    "printed": [
+     1222,
+     1224
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "nystatin",
+   "name": "Nystatin",
+   "inn": "Nystatin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1219,
+     1220
+    ],
+    "printed": [
+     1224,
+     1225
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "octreotid-acetat",
+   "name": "Octreotid acetat",
+   "inn": "Octreotide acetate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1220,
+     1223
+    ],
+    "printed": [
+     1225,
+     1228
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ofloxacin",
+   "name": "Ofloxacin",
+   "inn": "Ofloxacin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1223,
+     1226
+    ],
+    "printed": [
+     1228,
+     1231
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "olanzapin",
+   "name": "Olanzapin",
+   "inn": "Olanzapine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1226,
+     1228
+    ],
+    "printed": [
+     1231,
+     1233
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "omeprazol",
+   "name": "Omeprazol",
+   "inn": "Omeprazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1228,
+     1230
+    ],
+    "printed": [
+     1233,
+     1235
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ondansetron",
+   "name": "Ondansetron",
+   "inn": "Ondansetron",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1230,
+     1232
+    ],
+    "printed": [
+     1235,
+     1237
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "oseltamivir",
+   "name": "Oseltamivir",
+   "inn": "Oseltamivir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1234,
+     1237
+    ],
+    "printed": [
+     1239,
+     1242
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "oxacilin-natri",
+   "name": "Oxacilin natri",
+   "inn": "Oxacillin sodium",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1237,
+     1239
+    ],
+    "printed": [
+     1242,
+     1244
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "oxaliplatin",
+   "name": "Oxaliplatin",
+   "inn": "Oxaliplatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1239,
+     1242
+    ],
+    "printed": [
+     1244,
+     1247
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "oxcarbazepin",
+   "name": "Oxcarbazepin",
+   "inn": "Oxcarbazepine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1243,
+     1246
+    ],
+    "printed": [
+     1248,
+     1251
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "oxytocin",
+   "name": "Oxytocin",
+   "inn": "Oxytocin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1250,
+     1252
+    ],
+    "printed": [
+     1255,
+     1257
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "paclitaxel",
+   "name": "Paclitaxel",
+   "inn": "Paclitaxel",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1252,
+     1254
+    ],
+    "printed": [
+     1257,
+     1259
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "pamidronat",
+   "name": "Pamidronat",
+   "inn": "Pamidronate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1257,
+     1260
+    ],
+    "printed": [
+     1262,
+     1265
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pantoprazol",
+   "name": "Pantoprazol",
+   "inn": "Pantoprazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1263,
+     1265
+    ],
+    "printed": [
+     1268,
+     1270
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "papaverin-hydroclorid",
+   "name": "Papaverin hydroclorid",
+   "inn": "Papaverine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1265,
+     1266
+    ],
+    "printed": [
+     1270,
+     1271
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "paracetamol",
+   "name": "Paracetamol",
+   "inn": "Paracetamol, acetaminophen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1266,
+     1269
+    ],
+    "printed": [
+     1271,
+     1274
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "paroxetin",
+   "name": "Paroxetin",
+   "inn": "Paroxetine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1270,
+     1272
+    ],
+    "printed": [
+     1275,
+     1277
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pefloxacin-mesylat",
+   "name": "Pefloxacin mesylat",
+   "inn": "Pefloxacin mesylate",
+   "group": "ks-n2",
+   "inFormulary": false,
+   "pages": {
+    "pdf": [
+     1272,
+     1275
+    ],
+    "printed": [
+     1277,
+     1280
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pegfilgrastim",
+   "name": "Pegfilgrastim",
+   "inn": "Pegfilgrastim",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1275,
+     1276
+    ],
+    "printed": [
+     1280,
+     1281
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pemetrexed",
+   "name": "Pemetrexed",
+   "inn": "Pemetrexed",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1279,
+     1283
+    ],
+    "printed": [
+     1284,
+     1288
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "perindopril",
+   "name": "Perindopril",
+   "inn": "Perindopril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1288,
+     1290
+    ],
+    "printed": [
+     1293,
+     1295
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "phenobarbital",
+   "name": "Phenobarbital",
+   "inn": "Phenobarbital",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1294,
+     1296
+    ],
+    "printed": [
+     1299,
+     1301
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "phenylephrin-hydroclorid",
+   "name": "Phenylephrin hydroclorid",
+   "inn": "Phenylephrine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1300,
+     1302
+    ],
+    "printed": [
+     1305,
+     1307
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "phenytoin",
+   "name": "Phenytoin",
+   "inn": "Phenytoin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1302,
+     1307
+    ],
+    "printed": [
+     1307,
+     1312
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "phytomenadion",
+   "name": "Phytomenadion",
+   "inn": "Phytomenadione",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1307,
+     1310
+    ],
+    "printed": [
+     1312,
+     1315
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "piperacilin",
+   "name": "Piperacilin",
+   "inn": "Piperacillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1312,
+     1314
+    ],
+    "printed": [
+     1317,
+     1319
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "piperacilin-tazobactam",
+   "name": "Piperacilin - tazobactam",
+   "inn": "Piperacillin - Tazobactam",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1314,
+     1317
+    ],
+    "printed": [
+     1319,
+     1322
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "piracetam",
+   "name": "Piracetam",
+   "inn": "Piracetam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1318,
+     1319
+    ],
+    "printed": [
+     1323,
+     1324
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "piroxicam",
+   "name": "Piroxicam",
+   "inn": "Piroxicam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1319,
+     1321
+    ],
+    "printed": [
+     1324,
+     1326
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "povidon-iod",
+   "name": "Povidon iod",
+   "inn": "Povidone iodine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1326,
+     1327
+    ],
+    "printed": [
+     1331,
+     1332
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pralidoxim",
+   "name": "Pralidoxim",
+   "inn": "Pralidoxime chloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1327,
+     1329
+    ],
+    "printed": [
+     1332,
+     1334
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pramipexol",
+   "name": "Pramipexol",
+   "inn": "Pramipexole",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1329,
+     1331
+    ],
+    "printed": [
+     1334,
+     1336
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pravastatin",
+   "name": "Pravastatin",
+   "inn": "Pravastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1331,
+     1332
+    ],
+    "printed": [
+     1336,
+     1337
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "praziquantel",
+   "name": "Praziquantel",
+   "inn": "Praziquantel",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1332,
+     1334
+    ],
+    "printed": [
+     1337,
+     1339
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "prednisolon",
+   "name": "Prednisolon",
+   "inn": "Prednisolone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1336,
+     1341
+    ],
+    "printed": [
+     1341,
+     1346
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pregabalin",
+   "name": "Pregabalin",
+   "inn": "Pregabaline",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1344,
+     1346
+    ],
+    "printed": [
+     1349,
+     1351
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "progesteron",
+   "name": "Progesteron",
+   "inn": "Progesterone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1360,
+     1362
+    ],
+    "printed": [
+     1365,
+     1367
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "promethazin-hydroclorid",
+   "name": "Promethazin hydroclorid",
+   "inn": "Promethazine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1363,
+     1366
+    ],
+    "printed": [
+     1368,
+     1371
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "propofol",
+   "name": "Propofol",
+   "inn": "Propofol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1370,
+     1373
+    ],
+    "printed": [
+     1375,
+     1378
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "propranolol",
+   "name": "Propranolol",
+   "inn": "Propranolol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1373,
+     1376
+    ],
+    "printed": [
+     1378,
+     1381
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "propylthiouracil",
+   "name": "Propylthiouracil",
+   "inn": "Propylthiouracil",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1376,
+     1378
+    ],
+    "printed": [
+     1381,
+     1383
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "protamin-sulfat",
+   "name": "Protamin sulfat",
+   "inn": "Protamine sulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1378,
+     1380
+    ],
+    "printed": [
+     1383,
+     1385
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pyridostigmin-bromid",
+   "name": "Pyridostigmin bromid",
+   "inn": "Pyridostigmine bromide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1384,
+     1387
+    ],
+    "printed": [
+     1389,
+     1392
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "pyridoxin-hydroclorid",
+   "name": "Pyridoxin hydroclorid",
+   "inn": "Pyridoxine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1387,
+     1388
+    ],
+    "printed": [
+     1392,
+     1393
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "quinapril",
+   "name": "Quinapril",
+   "inn": "Quinapril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1391,
+     1394
+    ],
+    "printed": [
+     1396,
+     1399
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rabeprazol",
+   "name": "Rabeprazol",
+   "inn": "Rabeprazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1397,
+     1398
+    ],
+    "printed": [
+     1402,
+     1403
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ramipril",
+   "name": "Ramipril",
+   "inn": "Ramipril",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1400,
+     1402
+    ],
+    "printed": [
+     1405,
+     1407
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ranibizumab",
+   "name": "Ranibizumab",
+   "inn": "Ranibizumab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1402,
+     1404
+    ],
+    "printed": [
+     1407,
+     1409
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rifampicin",
+   "name": "Rifampicin",
+   "inn": "Rifampicin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1415,
+     1419
+    ],
+    "printed": [
+     1420,
+     1424
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ringer-lactat",
+   "name": "Ringer lactat",
+   "inn": "Ringer lactate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1419,
+     1421
+    ],
+    "printed": [
+     1424,
+     1426
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "risedronat",
+   "name": "Risedronat",
+   "inn": "Risedronate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1421,
+     1423
+    ],
+    "printed": [
+     1426,
+     1428
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "risperidon",
+   "name": "Risperidon",
+   "inn": "Risperidone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1423,
+     1426
+    ],
+    "printed": [
+     1428,
+     1431
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rituximab",
+   "name": "Rituximab",
+   "inn": "Rituximab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1432,
+     1435
+    ],
+    "printed": [
+     1437,
+     1440
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rivaroxaban",
+   "name": "Rivaroxaban",
+   "inn": "Rivaroxaban",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1435,
+     1436
+    ],
+    "printed": [
+     1440,
+     1441
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rocuronium-bromid",
+   "name": "Rocuronium bromid",
+   "inn": "Rocuronium bromide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1438,
+     1440
+    ],
+    "printed": [
+     1443,
+     1445
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "rosuvastatin",
+   "name": "Rosuvastatin",
+   "inn": "Rosuvastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1440,
+     1443
+    ],
+    "printed": [
+     1445,
+     1448
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "roxithromycin",
+   "name": "Roxithromycin",
+   "inn": "Roxithromycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1445,
+     1446
+    ],
+    "printed": [
+     1450,
+     1451
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "salbutamol-dung-trong-ho-hap",
+   "name": "Salbutamol (dùng trong hô hấp)",
+   "inn": "Salbutamol (used in pneumalogy)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1446,
+     1449
+    ],
+    "printed": [
+     1451,
+     1454
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "salbutamol-dung-trong-san-khoa",
+   "name": "Salbutamol (dùng trong sản khoa)",
+   "inn": "Salbutamol (used in obstetrics)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1449,
+     1450
+    ],
+    "printed": [
+     1454,
+     1455
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "salmeterol",
+   "name": "Salmeterol",
+   "inn": "Salmeterol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1450,
+     1452
+    ],
+    "printed": [
+     1455,
+     1457
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "saxagliptin",
+   "name": "Saxagliptin",
+   "inn": "Saxagliptin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1463,
+     1466
+    ],
+    "printed": [
+     1468,
+     1471
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sat-ii-sulfat",
+   "name": "Sắt (II) sulfat",
+   "inn": "Ferrous sulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1461,
+     1463
+    ],
+    "printed": [
+     1466,
+     1468
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sertralin",
+   "name": "Sertralin",
+   "inn": "Sertraline",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1471,
+     1473
+    ],
+    "printed": [
+     1476,
+     1478
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sevofluran",
+   "name": "Sevofluran",
+   "inn": "Sevoflurane",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1473,
+     1477
+    ],
+    "printed": [
+     1478,
+     1482
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "simvastatin",
+   "name": "Simvastatin",
+   "inn": "Simvastatin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1480,
+     1482
+    ],
+    "printed": [
+     1485,
+     1487
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sitagliptin",
+   "name": "Sitagliptin",
+   "inn": "Sitagliptin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1482,
+     1485
+    ],
+    "printed": [
+     1487,
+     1490
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sofosbuvir",
+   "name": "Sofosbuvir",
+   "inn": "Sofosbuvir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1485,
+     1487
+    ],
+    "printed": [
+     1490,
+     1492
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sorafenib-tosylat",
+   "name": "Sorafenib tosylat",
+   "inn": "Sorafenib tosylate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1487,
+     1490
+    ],
+    "printed": [
+     1492,
+     1495
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sorbitol",
+   "name": "Sorbitol",
+   "inn": "Sorbitol",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1490,
+     1491
+    ],
+    "printed": [
+     1495,
+     1496
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "spiramycin",
+   "name": "Spiramycin",
+   "inn": "Spiramycin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1495,
+     1497
+    ],
+    "printed": [
+     1500,
+     1502
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "spironolacton",
+   "name": "Spironolacton",
+   "inn": "Spironolactone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1497,
+     1499
+    ],
+    "printed": [
+     1502,
+     1504
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sucralfat",
+   "name": "Sucralfat",
+   "inn": "Sucralfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1505,
+     1506
+    ],
+    "printed": [
+     1510,
+     1511
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sulpirid",
+   "name": "Sulpirid",
+   "inn": "Sulpiride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1511,
+     1513
+    ],
+    "printed": [
+     1516,
+     1518
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "sumatriptan",
+   "name": "Sumatriptan",
+   "inn": "Sumatriptan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1513,
+     1515
+    ],
+    "printed": [
+     1518,
+     1520
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tacrolimus",
+   "name": "Tacrolimus",
+   "inn": "Tacrolimus",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1517,
+     1521
+    ],
+    "printed": [
+     1522,
+     1526
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tamoxifen",
+   "name": "Tamoxifen",
+   "inn": "Tamoxifen",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1521,
+     1523
+    ],
+    "printed": [
+     1526,
+     1528
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "teicoplanin",
+   "name": "Teicoplanin",
+   "inn": "Teicoplanin",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1523,
+     1525
+    ],
+    "printed": [
+     1528,
+     1530
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "telmisartan",
+   "name": "Telmisartan",
+   "inn": "Telmisartan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1525,
+     1527
+    ],
+    "printed": [
+     1530,
+     1532
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "temozolomid",
+   "name": "Temozolomid",
+   "inn": "Temozolomide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1527,
+     1530
+    ],
+    "printed": [
+     1532,
+     1535
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tenofovir",
+   "name": "Tenofovir",
+   "inn": "Tenofovir",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1532,
+     1534
+    ],
+    "printed": [
+     1537,
+     1539
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tenoxicam",
+   "name": "Tenoxicam",
+   "inn": "Tenoxicam",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1534,
+     1536
+    ],
+    "printed": [
+     1539,
+     1541
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "terbutalin-sulfat",
+   "name": "Terbutalin sulfat",
+   "inn": "Terbutaline sulfate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1540,
+     1542
+    ],
+    "printed": [
+     1545,
+     1547
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tetracyclin",
+   "name": "Tetracyclin",
+   "inn": "Tetracycline",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1550,
+     1553
+    ],
+    "printed": [
+     1555,
+     1558
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "thalidomid",
+   "name": "Thalidomid",
+   "inn": "Thalidomide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1553,
+     1555
+    ],
+    "printed": [
+     1558,
+     1560
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "theophylin",
+   "name": "Theophylin",
+   "inn": "Theophylline",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1556,
+     1560
+    ],
+    "printed": [
+     1561,
+     1565
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "thiamazol",
+   "name": "Thiamazol",
+   "inn": "Thiamazole, methimazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1560,
+     1562
+    ],
+    "printed": [
+     1565,
+     1567
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "thiamin",
+   "name": "Thiamin",
+   "inn": "Thiamine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1562,
+     1563
+    ],
+    "printed": [
+     1567,
+     1568
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "thuoc-chong-acid-chua-magnesi",
+   "name": "Thuốc chống acid chứa magnesi",
+   "inn": "Magnesium antacids",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1568,
+     1570
+    ],
+    "printed": [
+     1573,
+     1575
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ticarcilin",
+   "name": "Ticarcilin",
+   "inn": "Ticarcillin",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1572,
+     1574
+    ],
+    "printed": [
+     1577,
+     1579
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ticarcilin-va-acid-clavulanic",
+   "name": "Ticarcilin và acid clavulanic",
+   "inn": "Ticarcillin and clavulanic acid",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1574,
+     1577
+    ],
+    "printed": [
+     1579,
+     1582
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tigecyclin",
+   "name": "Tigecyclin",
+   "inn": "Tigecycline",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1579,
+     1582
+    ],
+    "printed": [
+     1584,
+     1587
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "timolol-maleate-thuoc-nho-mat",
+   "name": "Timolol maleate (thuốc nhỏ mắt)",
+   "inn": "Timolol maleate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1583,
+     1584
+    ],
+    "printed": [
+     1588,
+     1589
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tinidazol",
+   "name": "Tinidazol",
+   "inn": "Tinidazole",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1584,
+     1587
+    ],
+    "printed": [
+     1589,
+     1592
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tiotropium-bromid",
+   "name": "Tiotropium bromid",
+   "inn": "Tiotropium bromide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1588,
+     1590
+    ],
+    "printed": [
+     1593,
+     1595
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tizanidin-hydroclorid",
+   "name": "Tizanidin hydroclorid",
+   "inn": "Tizanidine hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1590,
+     1591
+    ],
+    "printed": [
+     1595,
+     1596
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tobramycin",
+   "name": "Tobramycin",
+   "inn": "Tobramycin",
+   "group": "ks-n2",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1591,
+     1596
+    ],
+    "printed": [
+     1596,
+     1601
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tocilizumab",
+   "name": "Tocilizumab",
+   "inn": "Tocilizumab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1596,
+     1599
+    ],
+    "printed": [
+     1601,
+     1604
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "topiramat",
+   "name": "Topiramat",
+   "inn": "Topiramate",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1602,
+     1605
+    ],
+    "printed": [
+     1607,
+     1610
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tramadol-hydroclorid",
+   "name": "Tramadol hydroclorid",
+   "inn": "Tramadol hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1605,
+     1609
+    ],
+    "printed": [
+     1610,
+     1614
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "trastuzumab",
+   "name": "Trastuzumab",
+   "inn": "Trastuzumab",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1609,
+     1612
+    ],
+    "printed": [
+     1614,
+     1617
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tretinoin-thuoc-boi",
+   "name": "Tretinoin (thuốc bôi)",
+   "inn": "Tretinoin (topical)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1612,
+     1613
+    ],
+    "printed": [
+     1617,
+     1618
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tretinoin-uong",
+   "name": "Tretinoin (uống)",
+   "inn": "Tretinoin (oral)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1613,
+     1615
+    ],
+    "printed": [
+     1618,
+     1620
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "triamcinolon",
+   "name": "Triamcinolon",
+   "inn": "Triamcinolone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1615,
+     1618
+    ],
+    "printed": [
+     1620,
+     1623
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "trihexyphenidyl-hydroclorid",
+   "name": "Trihexyphenidyl hydroclorid",
+   "inn": "Trihexyphenidyl hydrochloride",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1621,
+     1622
+    ],
+    "printed": [
+     1626,
+     1627
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "trimetazidin",
+   "name": "Trimetazidin",
+   "inn": "Trimetazidine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1622,
+     1623
+    ],
+    "printed": [
+     1627,
+     1628
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "triptorelin",
+   "name": "Triptorelin",
+   "inn": "Triptorelin",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1627,
+     1629
+    ],
+    "printed": [
+     1632,
+     1634
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "tropicamid",
+   "name": "Tropicamid",
+   "inn": "Tropicamide",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1629,
+     1630
+    ],
+    "printed": [
+     1634,
+     1635
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "valsartan",
+   "name": "Valsartan",
+   "inn": "Valsartan",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1633,
+     1635
+    ],
+    "printed": [
+     1638,
+     1640
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vancomycin",
+   "name": "Vancomycin",
+   "inn": "Vancomycin",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1635,
+     1639
+    ],
+    "printed": [
+     1640,
+     1644
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vac-xin-viem-gan-b-tai-to-hop",
+   "name": "Vắc xin viêm gan b tái tổ hợp",
+   "inn": "Recombinant hepatitis B vaccine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1671,
+     1674
+    ],
+    "printed": [
+     1676,
+     1679
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac"
+   ]
+  },
+  {
+   "id": "venlafaxin",
+   "name": "Venlafaxin",
+   "inn": "Venlafaxine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1677,
+     1680
+    ],
+    "printed": [
+     1682,
+     1685
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vincristin-sulfat",
+   "name": "Vincristin sulfat",
+   "inn": "Vincristine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1685,
+     1689
+    ],
+    "printed": [
+     1690,
+     1694
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vinorelbin",
+   "name": "Vinorelbin",
+   "inn": "Vinorelbine",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1689,
+     1692
+    ],
+    "printed": [
+     1694,
+     1697
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vitamin-b",
+   "name": "Vitamin B12",
+   "inn": "Vitamin B 12 (cyanocobalamin, hydroxocobalamin, mecobalamin)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1692,
+     1696
+    ],
+    "printed": [
+     1697,
+     1701
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "vitamin-d-va-cac-thuoc-tuong-tu",
+   "name": "Vitamin D và các thuốc tương tự",
+   "inn": "Vitamin D and analogues",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1696,
+     1702
+    ],
+    "printed": [
+     1701,
+     1707
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "voriconazol",
+   "name": "Voriconazol",
+   "inn": "Voriconazole",
+   "group": "ks-n1",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1702,
+     1705
+    ],
+    "printed": [
+     1707,
+     1710
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "xanh-methylen",
+   "name": "Xanh methylen",
+   "inn": "Methylthioninium chloride (Methylene blue)",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1709,
+     1710
+    ],
+    "printed": [
+     1714,
+     1715
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "xylometazolin-hydroclorid",
+   "name": "Xylometazolin hydroclorid",
+   "inn": "Xylometazoline hydrochloride",
+   "group": "khang-sinh",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1710,
+     1711
+    ],
+    "printed": [
+     1715,
+     1716
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  },
+  {
+   "id": "ziprasidon",
+   "name": "Ziprasidon",
+   "inn": "Ziprasidone",
+   "group": "thuoc-khac",
+   "inFormulary": true,
+   "pages": {
+    "pdf": [
+     1717,
+     1720
+    ],
+    "printed": [
+     1722,
+     1725
+    ]
+   },
+   "keys": [
+    "chiDinh",
+    "chongChiDinh",
+    "thanTrong",
+    "adr",
+    "adrXuTri",
+    "lieuDung",
+    "tuongTac",
+    "quaLieu"
+   ]
+  }
+ ]
+}

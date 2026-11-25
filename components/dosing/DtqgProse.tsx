@@ -1,4 +1,5 @@
 import type { DtqgBlock } from "@/lib/dosing/catalog";
+import { fixSubscripts } from "@/lib/dosing/dtqg-text";
 
 /* Hien thi nguyen van Duoc thu da cau truc: doan (giu dam/nghieng), tieu de rieng, bang (o gop). */
 export default function DtqgProse({ blocks }: { blocks: DtqgBlock[] }) {
@@ -9,7 +10,8 @@ export default function DtqgProse({ blocks }: { blocks: DtqgBlock[] }) {
           return (
             <p key={i} className={b.head ? "dtp-h" : undefined}>
               {b.runs.map((r, k) => {
-                const el = r.b && r.i ? <strong><em>{r.text}</em></strong> : r.b ? <strong>{r.text}</strong> : r.i ? <em>{r.text}</em> : r.text;
+                const t = fixSubscripts(r.text);
+                const el = r.b && r.i ? <strong><em>{t}</em></strong> : r.b ? <strong>{t}</strong> : r.i ? <em>{t}</em> : t;
                 return <span key={k}>{el}</span>;
               })}
             </p>
@@ -23,13 +25,13 @@ export default function DtqgProse({ blocks }: { blocks: DtqgBlock[] }) {
         return (
           <div key={i} className="dtp-table">
             <table>
-              {head && <thead><tr>{b.rows[0].map((c, k) => <th key={k} rowSpan={c.rs} colSpan={c.cs}>{c.text}</th>)}</tr></thead>}
+              {head && <thead><tr>{b.rows[0].map((c, k) => <th key={k} rowSpan={c.rs} colSpan={c.cs}>{fixSubscripts(c.text)}</th>)}</tr></thead>}
               <tbody>
                 {(head ? b.rows.slice(1) : b.rows).map((row, r) => (
                   <tr key={r}>
                     {row.map((c, k) => (
                       <td key={k} rowSpan={c.rs} colSpan={c.cs} className={c.b ? "b" : undefined}>
-                        {c.text.split("\n").map((line, li) => <span key={li} className="ln">{line}</span>)}
+                        {fixSubscripts(c.text).split("\n").map((line, li) => <span key={li} className="ln">{line}</span>)}
                       </td>
                     ))}
                   </tr>
