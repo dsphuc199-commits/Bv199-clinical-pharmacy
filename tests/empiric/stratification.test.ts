@@ -298,3 +298,16 @@ test("ENT: every BYT regimen appears exactly once; intl rows are the ENT rule do
   assert.deepEqual(neck.columns.filter((c) => c.intl.length).map((c) => c.id), ["sf-abscess", "sf-cellulitis", "sf-child"]);
   assert.ok(neck.columns.every((c) => c.intl.every((b) => b.source.startsWith("SFORL 2024") && b.items.every((i) => i.ref === "SFORL 2024"))));
 });
+
+/* ===== Viêm phổi bệnh viện / thở máy: điều trị đích theo tác nhân (IDSA/ATS 2016, IDSA 2026) ===== */
+import { PATHOGENS } from "../../components/antibiotics/empiric/pneumonia-intl";
+test("HAP/VAP: every PATHOGENS drug and dose (IDSA/ATS 2016, IDSA 2026) appears in the targeted-therapy sections", () => {
+  for (const d of ["v8-4", "v8-5"]) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(d))!;
+    const blocks = (s.extras ?? []).filter((e) => e.title.startsWith("Điều trị đích")).flatMap((e) => e.blocks);
+    assert.equal(blocks.length, PATHOGENS.length, d);
+    const shown = blocks.flatMap((b) => b.items);
+    for (const pt of PATHOGENS) for (const it of pt.items)
+      assert.ok(shown.some((i) => i.role === it.role && i.text === compactText(it.text) && nums(i.dose ?? "") === nums(it.dose ?? "")), `${d} ${pt.id}: ${it.text} missing`);
+  }
+});

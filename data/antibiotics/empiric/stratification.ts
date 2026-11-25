@@ -15,7 +15,7 @@
 import type { RxItem } from "../../../components/antibiotics/empiric/septic-arthritis-pids2023";
 import { sepsisPlan } from "../../../components/antibiotics/empiric/sepsis-ssc2026";
 import { swabPlan } from "../../../components/antibiotics/empiric/sepsis-swab2021";
-import { CAP_DIAG, capPlans, hvDiagnosis, hvGrades, hvPlan, type CapIn, type HvIn, type Plan } from "../../../components/antibiotics/empiric/pneumonia-intl";
+import { CAP_DIAG, capPlans, hvDiagnosis, hvGrades, hvPlan, PATHOGENS, type CapIn, type HvIn, type Pathogen, type Plan } from "../../../components/antibiotics/empiric/pneumonia-intl";
 import { CAP_SCENARIOS } from "../../../components/antibiotics/CapByt2026";
 import { HAPVAP_RISK, HAPVAP_SCENARIOS } from "../../../components/antibiotics/HapVap2023";
 import { EAU_UROLOGY_FORMS } from "../../../components/antibiotics/empiric/urology-eau2026";
@@ -397,6 +397,29 @@ const HV_ANTIBIOGRAM: StratAntibiogram = {
   defaultScope: "hscc",
   note: "Tất cả bệnh phẩm, phân lập đầu tiên mỗi người bệnh. Khuyến cáo yêu cầu đối chiếu tỷ lệ kháng tại đơn vị: > 10% kháng thuốc định đơn trị thì phối hợp hai nhóm; MRSA > 10% hoặc chưa rõ thì thêm thuốc chống MRSA.",
 };
+/* Điều trị đích theo tác nhân khi có kết quả cấy: IDSA/ATS 2016 và IDSA 2026 (vi khuẩn Gram âm kháng thuốc), cùng dữ liệu
+   PATHOGENS của công cụ viêm phổi quốc tế – không nhập lại liều. Ghi chú của từng tác nhân thành dòng "Lưu ý". */
+const PATHOGEN_SRC = { "2016": "IDSA/ATS 2016", "2026": "IDSA 2026", both: "IDSA/ATS 2016, IDSA 2026" } as const;
+const pathogenBlock = (pt: Pathogen): StratIntl => ({
+  source: `${PATHOGEN_SRC[pt.source]} – ${pt.label}`,
+  items: [...pt.items, ...(pt.notes ?? []).map((n) => ({ role: "Lưu ý", text: n, ref: pt.id }))],
+});
+const pathogenGroup = (title: string, ids: string[]) => ({
+  title,
+  criteria: "Khi đã có kết quả cấy và kháng sinh đồ.",
+  blocks: ids.map((id) => {
+    const pt = PATHOGENS.find((x) => x.id === id);
+    if (!pt) throw new Error(`Viêm phổi: thiếu tác nhân ${id}`);
+    return pathogenBlock(pt);
+  }),
+});
+export const HV_TARGETED_EXTRAS = [
+  pathogenGroup("Điều trị đích – MRSA, MSSA", ["mrsa", "mssa"]),
+  pathogenGroup("Điều trị đích – Pseudomonas aeruginosa", ["pa", "dtrpa"]),
+  pathogenGroup("Điều trị đích – Enterobacterales (ESBL, AmpC, kháng carbapenem)", ["esbl", "ampc", "cre-kpc", "cre-ndm", "cre-oxa", "cre-non"]),
+  pathogenGroup("Điều trị đích – Acinetobacter, Stenotrophomonas, chỉ nhạy polymyxin", ["crab", "steno", "polyonly"]),
+];
+
 const hvStrat = (kind: "hap" | "vap"): Stratification => ({
   diseaseIds: [kind === "hap" ? "v8-4" : "v8-5"],
   title: kind === "hap" ? "Viêm phổi bệnh viện – người lớn" : "Viêm phổi liên quan thở máy – người lớn",
@@ -410,6 +433,7 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
   ],
   columns: hvColumns(kind),
   ...(kind === "vap" ? { settingNote: "Viêm phổi liên quan thở máy điều trị tại khoa hồi sức." } : {}),
+  extras: HV_TARGETED_EXTRAS,
   principles: {
     source: `${IDSA16} – phạm vi bao phủ kinh nghiệm`,
     items: [...hvGrades(kind), ...hvPlan({ ...HV_BASE, kind, ivAbx: true }).notes.map((n) => ({ role: "Lưu ý", text: n, ref: kind === "hap" ? "Bảng 4" : "Bảng 3" }))],
@@ -420,6 +444,7 @@ const hvStrat = (kind: "hap" | "vap"): Stratification => ({
     "Bộ Y tế. QĐ 708/QĐ-BYT ngày 02/3/2015 – Hướng dẫn sử dụng kháng sinh (tác nhân thường gặp).",
     "Bộ Y tế. QĐ 1493/QĐ-BYT ngày 22/4/2015 – Hướng dẫn chẩn đoán và điều trị một số bệnh về hồi sức tích cực.",
     "Kalil AC và cs. IDSA/ATS 2016 – Clin Infect Dis 2016;63:e61–e111.",
+    "Tamma PD và cs. IDSA 2026 – hướng dẫn điều trị nhiễm khuẩn Gram âm kháng thuốc. Clin Infect Dis 2026 (ciag481).",
   ],
 });
 
