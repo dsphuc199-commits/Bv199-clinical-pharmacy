@@ -74,6 +74,35 @@ const SHORT: Record<string, { role?: string; note?: string }> = {
   "aom-fail-amoxclav": { role: "Thất bại sau 48–72 giờ" },
   "aom-fail-ceftriaxone": { role: "Thất bại sau 48–72 giờ" },
   "aom-fail-clinda": { note: "Thất bại lần hai: kèm cephalosporin thế hệ 3, chọc màng nhĩ, hội chẩn chuyên khoa." },
+  /* Nguồn đối chiếu và tham khảo (IDSA 2012, NICE, Hội Nhi khoa Canada, NHS) */
+  ...Object.fromEntries([
+    ["abrsa-nice-penv", "Đầu tay"], ["abrsp-nice-penv", "Đầu tay"], ["gas-nice-penv-adult", "Đầu tay"], ["gas-nice-penv-child", "Đầu tay"],
+    ["abrsa-idsa-amoxclav", "Đầu tay"], ["abrsp-idsa-amoxclav-dose", "Đầu tay"], ["aom-cps-amox-bid", "Đầu tay"], ["aom-cps-amox-tid", "Đầu tay"], ["aom-nice-amox", "Đầu tay"],
+    ["abrsa-uk-penv", "Đầu tay"], ["aomad-uk-amox", "Đầu tay"],
+    ["abrsa-nice-coamox", "Rất mệt, nguy cơ biến chứng, hoặc thất bại sau 2–3 ngày"], ["abrsp-nice-coamox", "Rất mệt, nguy cơ biến chứng, hoặc thất bại sau 2–3 ngày"],
+    ["abrsa-idsa-amoxclav-high", "Nguy cơ kháng thuốc hoặc thất bại"], ["abrsp-idsa-amoxclav-high", "Nguy cơ kháng thuốc hoặc thất bại"],
+    ["abrsa-idsa-doxy", "Dị ứng beta-lactam"], ["abrsa-idsa-levo", "Dị ứng beta-lactam, nguy cơ kháng thuốc hoặc thất bại"], ["abrsa-idsa-moxi", "Dị ứng beta-lactam, nguy cơ kháng thuốc hoặc thất bại"],
+    ["abrsp-idsa-levo", "Quá mẫn type I với penicilin"], ["abrsp-idsa-clinda-cef", "Quá mẫn không type I với penicilin"],
+    ["abrsp-idsa-fail-clinda-cef", "Thất bại điều trị"], ["abrsp-idsa-fail-levo", "Thất bại điều trị"],
+    ["abrsa-nice-ery", "Dị ứng penicilin, mang thai"], ["abrsp-nice-ery", "Dị ứng penicilin, mang thai"], ["gas-nice-ery", "Dị ứng penicilin, mang thai"], ["aom-nice-ery", "Dị ứng penicilin, mang thai"],
+    ["abrsa-uk-ery", "Dị ứng penicilin, mang thai"], ["gas-uk-ery", "Dị ứng penicilin, mang thai"], ["aomad-uk-ery", "Dị ứng penicilin, mang thai"],
+    ["abrsa-uk-clari", "Dị ứng penicilin"], ["gas-uk-clari", "Dị ứng penicilin"], ["aomad-uk-clari", "Dị ứng penicilin"],
+    ["aom-cps-cefuroxime", "Dị ứng penicilin không đe dọa tính mạng"], ["aom-cps-ceftriaxone", "Dị ứng penicilin"],
+    ["aom-cps-fail-amoxclav", "Thất bại sau 2–3 ngày"], ["aom-cps-fail-ceftriaxone", "Không uống được hoặc thất bại amoxicillin-clavulanate"],
+    ["abrsa-uk-coamox", "Lựa chọn thứ hai hoặc rất mệt"], ["aomad-uk-coamox", "Lựa chọn thứ hai"], ["gas-uk-penv", "Đầu tay"],
+  ].map(([id, role]) => [id, { role }])),
+  ...Object.fromEntries(["abrsa-nice-doxy", "abrsa-nice-clari", "abrsp-nice-clari", "gas-nice-clari-adult", "gas-nice-clari-child", "aom-nice-clari"]
+    .map((id) => [id, { role: "Dị ứng penicilin", note: "Không mang thai." }])),
+  "abrsp-nice-doxy": { role: "Dị ứng penicilin, ≥ 12 tuổi", note: "Không mang thai." },
+  "abrsa-uk-doxy": { role: "Dị ứng penicilin", note: "Không dùng cho trẻ < 12 tuổi." },
+  "aom-nice-coamox": { role: "Thất bại sau 2–3 ngày", note: "Dị ứng penicilin: hỏi ý kiến bác sĩ vi sinh." },
+  "aomad-uk-amox": { role: "Đầu tay", note: "Kháng sinh ngay chỉ khi rất mệt hoặc nguy cơ cao biến chứng." },
+  ...Object.fromEntries(["abrsa-idsa-sam", "abrsa-idsa-levo-iv", "abrsa-idsa-moxi-iv", "abrsa-idsa-cro", "abrsa-idsa-ctx",
+    "abrsp-idsa-hosp-sam", "abrsp-idsa-hosp-cro", "abrsp-idsa-hosp-ctx", "abrsp-idsa-hosp-levo"].map((id) => [id, { role: "Nặng, nhập viện" }])),
+};
+/* Dòng liều có liều, đường dùng và số lần dùng tách theo cân nặng: ghép lại cho đọc liền (cùng số liệu). */
+const DOSE_FIX: Record<string, string> = {
+  "aom-cps-fail-amoxclav": "≤ 35 kg: 45–60 mg/kg/ngày chia 3 lần; > 35 kg: viên 500 mg 3 lần/ngày, uống",
 };
 /** Một dòng liều của module → thẻ thuốc gọn (tên thuốc; liều, đường dùng, số lần dùng; thời gian; ghi chú ngắn; mức khuyến cáo). */
 export function entItem(d: Dose): StratIntl["items"][number] {
@@ -84,7 +113,7 @@ export function entItem(d: Dose): StratIntl["items"][number] {
   return {
     role: sh?.role ?? roleOf(d),
     text: d.drug,
-    ...(noDose ? {} : { dose: `${d.dose} ${d.route}${d.interval ? ` ${d.interval}` : ""}` }),
+    ...(noDose ? {} : { dose: DOSE_FIX[d.id] ?? `${d.dose} ${d.route}${d.interval ? ` ${d.interval}` : ""}` }),
     ...(d.duration ? { course: d.duration.replace(/ hoặc triệu chứng nặng: /u, " hoặc nặng: ").replace(/ nhẹ–vừa: /gu, ": ") } : {}),
     ...(note ? { administration: note } : {}),
     ...(isAlg(d) ? { al: "alt" as const } : {}),
@@ -116,6 +145,26 @@ export function entColumn(diseaseId: string, ruleId: string, pop?: Pop): StratIn
 export function entComparison(diseaseId: string, ruleId: string, pop?: Pop): StratIntl[] {
   const all = ruleDoses(diseaseId, ruleId, pop);
   return all.some((x) => x.role === "primary") ? groupBySource(all.filter((x) => x.role !== "primary"), "đối chiếu") : [];
+}
+/* Thứ tự trong một khối đối chiếu: đầu tay → nguy cơ kháng thuốc → thất bại → nặng, nhập viện → dị ứng. */
+const LINE_RANK: Record<string, number> = { first: 0, risk_resistance: 1, failure: 2, failure_alternative: 2, severe: 3, alternative_allergy: 4 };
+/**
+ * Nguồn đối chiếu theo từng nguồn (không theo luật): mỗi nguồn một khối, đủ mọi dòng liều đã trích của nguồn đó cho nhóm
+ * tuổi, xếp theo thứ tự lâm sàng, bỏ dòng trùng (cùng thuốc, liều, tình huống).
+ */
+export function entCompareBySource(diseaseId: string, pop?: Pop, label = "đối chiếu"): StratIntl[] {
+  const d = disease(diseaseId);
+  const doses = d.doses.filter((x) => x.status === "EXTRACTED" && x.role === "comparison" && (!pop || x.population === pop || x.population === "all"));
+  /* Hội chuyên môn (IDSA, Hội Nhi khoa Canada) trước, NICE sau – khớp tiêu đề mục. */
+  const ids = Array.from(new Set(doses.map((x) => x.citation.sourceId))).sort((a, b) => Number(a.startsWith("NICE")) - Number(b.startsWith("NICE")));
+  return ids.map((sid) => {
+    const seen = new Set<string>();
+    const items = doses.filter((x) => x.citation.sourceId === sid)
+      .sort((a, b) => (LINE_RANK[a.line] ?? 5) - (LINE_RANK[b.line] ?? 5))
+      .map(entItem)
+      .filter((i) => { const k = `${i.role}|${i.text}|${i.dose ?? ""}`; if (seen.has(k)) return false; seen.add(k); return true; });
+    return { source: `${entShort(sid)} – ${label}`, items };
+  });
 }
 /** Dòng liều nguồn tham khảo (module không có nguồn chính, ví dụ viêm tai giữa người lớn) – chỉ dùng trong mục thu gọn. */
 export function entReference(diseaseId: string): StratIntl[] {
