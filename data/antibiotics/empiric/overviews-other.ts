@@ -269,26 +269,26 @@ const PCP = rare("Viêm phổi do Pneumocystis jirovecii", [
 const FOOT = ov("QĐ 1530/QĐ-BYT (24/03/2023) – Hướng dẫn chẩn đoán và điều trị loét bàn chân do đái tháo đường", [
   { label: "Phân độ", points: [
     { text: "Nhẹ: Wagner độ 1 hoặc PEDIS 1–2. Trung bình–nặng: Wagner ≥ 2 hoặc PEDIS ≥ 3.", ref: "tr. 32–33" },
-    { text: "PEDIS ≥ 7: nguy cơ cắt cụt chi cao.", ref: "tr. 24" },
+    { text: "PEDIS ≥ 7: nguy cơ cắt cụt chi cao.", ref: "tr. 23" },
   ] },
   { label: "Yếu tố làm nặng", points: [
     { text: "Dị ứng beta-lactam; dùng kháng sinh gần đây; nguy cơ MRSA; loét ẩm, khí hậu ấm; thiếu máu, hoại tử, sinh hơi; nguy cơ ESBL.", ref: "tr. 32–33" },
   ] },
   { label: "Khởi trị", points: [
-    { text: "Theo kinh nghiệm, tránh phổ rộng không cần thiết; tiêm cho nhiễm trùng nặng.", ref: "tr. 25" },
-    { text: "Tiền sử MRSA, tỷ lệ cấy MRSA cao hoặc nhiễm trùng nặng: xem xét thuốc có hiệu quả trên MRSA.", ref: "tr. 25" },
+    { text: "Theo kinh nghiệm, tránh phổ rộng không cần thiết; tiêm cho nhiễm trùng nặng.", ref: "tr. 24" },
+    { text: "Tiền sử MRSA, tỷ lệ cấy MRSA cao hoặc nhiễm trùng nặng: xem xét thuốc có hiệu quả trên MRSA.", ref: "tr. 24" },
   ] },
   { label: "Thời gian", points: [
-    { text: "Thường 2–4 tuần với nhiễm trùng mô mềm; không cần dùng đến khi loét lành hẳn.", ref: "tr. 25" },
+    { text: "Thường 2–4 tuần với nhiễm trùng mô mềm; không cần dùng đến khi loét lành hẳn.", ref: "tr. 24" },
   ] },
 ], [
-  { text: "Cắt lọc cơ học thường xuyên, lặp lại để loại bỏ màng sinh học; băng gạc kháng khuẩn.", ref: "tr. 25–26" },
+  { text: "Cắt lọc cơ học thường xuyên, lặp lại để loại bỏ màng sinh học; băng gạc kháng khuẩn.", ref: "tr. 24–25" },
   { text: "Kiểm soát đái tháo đường; ưu tiên làm lành vết loét, cắt cụt là lựa chọn sau cùng.", ref: "tr. 24" },
 ], {
-  efficacy: [{ text: "Đáp ứng lâm sàng của nhiễm trùng; kết quả cấy.", ref: "tr. 25" }],
+  efficacy: [{ text: "Đáp ứng lâm sàng của nhiễm trùng; kết quả cấy.", ref: "tr. 24" }],
   reassessment: [
-    { text: "Đáp ứng kém: cấy lại dịch vết thương trong điều kiện tối ưu.", ref: "tr. 25" },
-    { text: "Kiểm soát tốt và có kết quả cấy: cân nhắc chuyển đường uống.", ref: "tr. 25" },
+    { text: "Đáp ứng kém: cấy lại dịch vết thương trong điều kiện tối ưu.", ref: "tr. 24" },
+    { text: "Kiểm soát tốt và có kết quả cấy: cân nhắc chuyển đường uống.", ref: "tr. 24" },
   ],
   safety: [],
 });

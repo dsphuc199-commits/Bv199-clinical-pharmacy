@@ -50,7 +50,7 @@ import SabIntl from "./SabIntl";
 import PaeruginosaIdsa2026 from "./PaeruginosaIdsa2026";
 import SepsisSsc2026 from "./SepsisSsc2026";
 import TbWho2025 from "./TbWho2025";
-import DfiIwgdf2023 from "./DfiIwgdf2023";
+import { DfiIwgdf2023 } from "./DfiCompact";
 import UtiPregnancyAcog2023 from "./UtiPregnancyAcog2023";
 import UrologyEau2026 from "./UrologyEau2026";
 import { isEauUrology } from "./urology-eau2026";

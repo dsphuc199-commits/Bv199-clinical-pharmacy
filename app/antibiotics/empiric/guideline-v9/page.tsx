@@ -43,6 +43,7 @@ import { TAB_LABELS, type TabKey } from "../../../../components/antibiotics/empi
 const Loading = () => <div className="bv199-lazy" role="status" aria-label="Đang tải" style={{ minHeight: 240 }} />;
 const StratificationLazy = dynamic(() => import("../../../../components/antibiotics/empiric/StratificationLazy"), { loading: Loading });
 const CapByt2026 = dynamic(() => import("../../../../components/antibiotics/CapByt2026"), { loading: Loading });
+const DfiByt1530 = dynamic(() => import("../../../../components/antibiotics/empiric/DfiCompact").then((m) => m.DfiByt1530), { loading: Loading });
 const CopdByt2026 = dynamic(() => import("../../../../components/antibiotics/CopdByt2026"), { loading: Loading });
 const HapVap2023 = dynamic(() => import("../../../../components/antibiotics/HapVap2023"), { loading: Loading });
 const EntEmpiricGuidelines = dynamic(() => import("../../../../components/antibiotics/EntEmpiricGuidelines"), { loading: Loading });
@@ -1036,7 +1037,8 @@ function GuidelineContent() {
                   CAP: QĐ 2147/2026 (module) la van ban BYT hien hanh -> chi hien module, khong hien khung BYT cu. */}
               {/* Module rieng (COPD, CAP, HAP, VAP): cung bo cuc 5 tang – tong quan, phac do, theo doi. */}
               {selected.id === "v8-6" && <><DiseaseOverviewSummary diseaseId="v8-6" /><CopdByt2026 afterTreatment={<DiseaseMonitoring diseaseId="v8-6" />} /></>}
-              {selected.id !== "v8-6" && moduleKey !== "cap" && moduleKey !== "hap" && moduleKey !== "vap" && (
+              {selected.id === "v9-1" && <DfiByt1530 />}
+              {selected.id !== "v8-6" && selected.id !== "v9-1" && moduleKey !== "cap" && moduleKey !== "hap" && moduleKey !== "vap" && (
                 <BytRegimenView
                   key={selected.id}
                   diseaseId={selected.id}
