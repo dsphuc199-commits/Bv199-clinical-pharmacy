@@ -2,372 +2,144 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import { catalogProducts, drugMatches, type DrugPublication } from "@/lib/drugs/catalog";
 import type { LeafletSource, RegistryStatus } from "@/lib/drugs/registry";
 
-type RegistryMap = Record<string, { s: RegistryStatus; h: LeafletSource }>;
+type Reg = { s: RegistryStatus; h: LeafletSource };
+type RegistryMap = Record<string, Reg>;
+/** r: Dược thư – suy thận; p: Dược thư – thai kỳ, cho con bú; l: thuộc danh mục LASA. */
+export type DrugFlags = { r: boolean; p: boolean; l: boolean };
 
-/* Bo loc theo doi chieu Cong Cuc QLD. */
-const STATUS_FILTERS: { value: string; label: string; test: (r?: { s: RegistryStatus; h: LeafletSource }) => boolean }[] = [
+/* Bộ lọc nội dung: chỉ nguồn chính thức. */
+const CONTENT_FILTERS: { value: string; label: string; test: (r: Reg | undefined, f: DrugFlags | undefined) => boolean }[] = [
   { value: "", label: "Tất cả", test: () => true },
-  { value: "hdsd", label: "Có HDSD (Cục QLD)", test: (r) => r?.h === "dav" },
-  { value: "hdsd-web", label: "Có thông tin HDSD (web)", test: (r) => r?.h === "web" },
-  { value: "hdsd-ref", label: "HDSD tham khảo (cùng hoạt chất)", test: (r) => r?.h === "ref" },
-  { value: "hdsd-intl", label: "Tài liệu quốc tế (tiếng Anh)", test: (r) => r?.h === "intl" },
-  { value: "chua-hdsd", label: "Chưa có HDSD", test: (r) => !r?.h },
-  { value: "canh-bao", label: "SĐK hết hạn / đã rút", test: (r) => r?.s === "het-han" || r?.s === "da-rut" },
-  { value: "cho-gia-han", label: "SĐK hết hạn – chờ gia hạn", test: (r) => r?.s === "cho-gia-han" },
-  { value: "sap-het-han", label: "SĐK sắp hết hạn (≤ 6 tháng)", test: (r) => r?.s === "sap-het-han" },
+  { value: "hdsd", label: "Có tờ HDSD gốc (Cục QLD)", test: (r) => r?.h === "dav" },
+  { value: "renal", label: "Có liều suy thận (Dược thư)", test: (_, f) => !!f?.r },
+  { value: "preg", label: "Có thai kỳ, cho con bú (Dược thư)", test: (_, f) => !!f?.p },
+  { value: "lasa", label: "Thuốc LASA", test: (_, f) => !!f?.l },
+  { value: "intl", label: "Tài liệu nước ngoài (tiếng Anh)", test: (r) => r?.h === "intl" },
+  { value: "none", label: "Chưa có tờ HDSD gốc", test: (r) => r?.h !== "dav" },
+];
+const STATUS_FILTERS: { value: string; label: string; test: (r?: Reg) => boolean }[] = [
+  { value: "", label: "Tất cả", test: () => true },
+  { value: "canh-bao", label: "Hết hạn hoặc đã rút", test: (r) => r?.s === "het-han" || r?.s === "da-rut" },
+  { value: "cho-gia-han", label: "Hết hạn – chờ gia hạn", test: (r) => r?.s === "cho-gia-han" },
+  { value: "sap-het-han", label: "Sắp hết hạn (≤ 6 tháng)", test: (r) => r?.s === "sap-het-han" },
   { value: "khong-tim-thay", label: "Không tìm thấy SĐK", test: (r) => r?.s === "khong-tim-thay" },
 ];
 
-const BADGE: Partial<Record<RegistryStatus, { text: string; style: React.CSSProperties }>> = {
-  "da-rut": { text: "Đã rút SĐK", style: { background: "#fde2e2", color: "#8f1d1d" } },
-  "het-han": { text: "SĐK hết hiệu lực", style: { background: "#fde2e2", color: "#8f1d1d" } },
-  "cho-gia-han": { text: "SĐK chờ gia hạn", style: { background: "#fff1cc", color: "#7a4b00" } },
-  "sap-het-han": { text: "SĐK sắp hết hạn", style: { background: "#fff1cc", color: "#7a4b00" } },
-  "khong-tim-thay": { text: "Không tìm thấy SĐK", style: { background: "#eef1f4", color: "#4a5a69" } },
+const STATUS_BADGE: Partial<Record<RegistryStatus, { text: string; cls: string }>> = {
+  "da-rut": { text: "Đã rút SĐK", cls: "bg-red-100 text-red-900" },
+  "het-han": { text: "SĐK hết hiệu lực", cls: "bg-red-100 text-red-900" },
+  "cho-gia-han": { text: "SĐK chờ gia hạn", cls: "bg-amber-100 text-amber-900" },
+  "sap-het-han": { text: "SĐK sắp hết hạn", cls: "bg-amber-100 text-amber-900" },
+  "khong-tim-thay": { text: "Không tìm thấy SĐK", cls: "bg-slate-100 text-slate-600" },
 };
+const PILL = "rounded-full px-2.5 py-0.5 text-xs font-bold";
 
-function StatusBadges({ r }: { r?: { s: RegistryStatus; h: LeafletSource } }) {
-  const b = r && BADGE[r.s];
-  const pill: React.CSSProperties = { borderRadius: 999, padding: "4px 10px", fontSize: 12, fontWeight: 700 };
-  return <>
-    {b && <span style={{ ...pill, ...b.style }}>{b.text}</span>}
-    {r?.h === "dav" && <span style={{ ...pill, background: "#e3eefb", color: "#0b3a5b" }}>Có HDSD</span>}
-    {r?.h === "web" && <span style={{ ...pill, background: "#eef2f7", color: "#3c5266" }}>HDSD (web)</span>}
-    {r?.h === "ref" && <span style={{ ...pill, background: "#f4f0fa", color: "#5a3d7a" }}>HDSD cùng hoạt chất</span>}
-    {r?.h === "intl" && <span style={{ ...pill, background: "#eef6f2", color: "#2f5d47" }}>Tài liệu quốc tế</span>}
-  </>;
+function Badges({ r, f }: { r?: Reg; f?: DrugFlags }) {
+  const b = r && STATUS_BADGE[r.s];
+  return (
+    <>
+      {f?.l && <span className={`${PILL} bg-orange-100 text-orange-900`}>LASA</span>}
+      {b && <span className={`${PILL} ${b.cls}`}>{b.text}</span>}
+      {r?.h === "dav" && <span className={`${PILL} bg-sky-100 text-sky-900`}>Tờ HDSD gốc</span>}
+      {f?.r && <span className={`${PILL} bg-teal-100 text-teal-900`}>Suy thận</span>}
+      {f?.p && <span className={`${PILL} bg-teal-100 text-teal-900`}>Thai kỳ</span>}
+    </>
+  );
 }
 
-export default function DrugsClient({ registry, syncedAt, publications }: { registry: RegistryMap; syncedAt: string; publications: DrugPublication[] }) {
+export default function DrugsClient({ registry, syncedAt, publications, flags }: { registry: RegistryMap; syncedAt: string; publications: DrugPublication[]; flags: Record<string, DrugFlags> }) {
   const [keyword, setKeyword] = useState("");
-  const [selectedRoute, setSelectedRoute] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const statusTest = (STATUS_FILTERS.find((f) => f.value === statusFilter) ?? STATUS_FILTERS[0]).test;
-  const [expandedDrug, setExpandedDrug] = useState<string | null>(null);
-  const drugs = useMemo(() => catalogProducts(publications).filter((drug) => drug.active), [publications]);
+  const [route, setRoute] = useState("");
+  const [content, setContent] = useState("");
+  const [status, setStatus] = useState("");
+  const [limit, setLimit] = useState(60);
+  const drugs = useMemo(() => catalogProducts(publications).filter((d) => d.active), [publications]);
+  const routes = useMemo(() => Array.from(new Set(drugs.map((d) => d.route).filter((r): r is string => Boolean(r)))).sort((a, b) => a.localeCompare(b, "vi")), [drugs]);
+  const contentTest = (CONTENT_FILTERS.find((f) => f.value === content) ?? CONTENT_FILTERS[0]).test;
+  const statusTest = (STATUS_FILTERS.find((f) => f.value === status) ?? STATUS_FILTERS[0]).test;
 
-  const routes = useMemo(() => {
-    return Array.from(
-      new Set(
-        drugs
-          .map((drug) => drug.route)
-          .filter(
-            (route): route is string =>
-              Boolean(route)
-          )
-      )
-    ).sort((a, b) => a.localeCompare(b, "vi"));
-  }, [drugs]);
-
-  const results = useMemo(() => {
-    return drugs.filter((drug) => {
-      if (
-        selectedRoute &&
-        drug.route !== selectedRoute
-      ) {
-        return false;
-      }
-
-      if (!statusTest(drug.registryMatches ? registry[drug.id] : undefined)) return false;
-      return !keyword.trim() || drugMatches(drug, keyword);
-    });
-  }, [drugs, keyword, selectedRoute, statusTest, registry]);
+  const results = useMemo(() => drugs.filter((d) => {
+    if (route && d.route !== route) return false;
+    const r = d.registryMatches ? registry[d.id] : undefined;
+    if (!contentTest(r, flags[d.id]) || !statusTest(r)) return false;
+    return !keyword.trim() || drugMatches(d, keyword);
+  }), [drugs, keyword, route, contentTest, statusTest, registry, flags]);
+  const filtered = Boolean(keyword || route || content || status);
 
   return (
-    <main className="bv199-drugs-page min-h-screen bg-slate-50 p-6">
-      <div className="mx-auto max-w-7xl">
+    <main className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6">
+      <div className="mx-auto max-w-5xl">
+        <header className="mb-5">
+          <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Thông tin thuốc</h1>
+          <p className="mt-1 text-sm text-slate-600 sm:text-base">Danh mục thuốc Bệnh viện 199 · tờ HDSD gốc của Cục Quản lý Dược · Dược thư quốc gia 2023.</p>
+        </header>
 
-        <div className="bv199-drugs-heading mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">
-            Danh mục thuốc Bệnh viện 199
-          </h1>
-
-          <p className="mt-2 text-slate-600">
-            Tra cứu theo tên thuốc, hoạt chất,
-            hàm lượng, đường dùng, số đăng ký
-            hoặc nhà sản xuất.
-          </p>
-        </div>
-
-        <section className="bv199-drug-search-panel rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-          <div className="grid gap-4 md:grid-cols-4">
-
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Tìm thuốc
-              </label>
-
-              <input
-                type="text"
-                value={keyword}
-                onChange={(e) =>
-                  setKeyword(e.target.value)
-                }
-                placeholder="Ví dụ: meropenem, ceftriaxone..."
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Đường dùng
-              </label>
-
-              <select
-                value={selectedRoute}
-                onChange={(e) =>
-                  setSelectedRoute(e.target.value)
-                }
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"
-              >
-                <option value="">
-                  Tất cả
-                </option>
-
-                {routes.map((route) => (
-                  <option
-                    key={route}
-                    value={route}
-                  >
-                    {route}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Số đăng ký (Cục QLD)
-              </label>
-              <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3">
-                {STATUS_FILTERS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
-              </select>
-            </div>
+        <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <label htmlFor="drug-q" className="sr-only">Tìm thuốc</label>
+          <div className="relative">
+            <Search size={18} aria-hidden className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input id="drug-q" type="search" value={keyword} onChange={(e) => { setKeyword(e.target.value); setLimit(60); }}
+              placeholder="Tên thuốc, hoạt chất, mã thuốc, số đăng ký…"
+              className="w-full rounded-xl border border-slate-300 py-3 pl-10 pr-4 text-base outline-none focus:border-[#087f89]" />
           </div>
-          <p className="mt-3 text-xs text-slate-500">Tình trạng số đăng ký và Tờ hướng dẫn sử dụng đối chiếu Cổng tra cứu thuốc – Cục Quản lý Dược, cập nhật {syncedAt.split("-").reverse().join("/")}.</p>
-
+          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            <Select label="Đường dùng" value={route} onChange={setRoute} options={[{ value: "", label: "Tất cả" }, ...routes.map((r) => ({ value: r, label: r }))]} />
+            <Select label="Thông tin có sẵn" value={content} onChange={setContent} options={CONTENT_FILTERS} />
+            <Select label="Số đăng ký" value={status} onChange={setStatus} options={STATUS_FILTERS} />
+          </div>
+          <p className="mt-3 text-xs text-slate-500">Số đăng ký và tờ HDSD đối chiếu Cổng tra cứu thuốc – Cục Quản lý Dược, cập nhật {syncedAt.split("-").reverse().join("/")}.</p>
         </section>
 
-        <div className="my-6 flex items-center justify-between">
-
-          <p className="text-sm text-slate-600">
-            Tổng danh mục:{" "}
-            <strong>{drugs.length}</strong>
-            {" • "}
-            Kết quả:{" "}
-            <strong>{results.length}</strong>
-          </p>
-
-          <button
-            type="button"
-            onClick={() => {
-              setKeyword("");
-              setSelectedRoute("");
-              setStatusFilter("");
-            }}
-            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
-          >
-            Xóa bộ lọc
-          </button>
-
+        <div className="my-4 flex items-center justify-between gap-3">
+          <p className="text-sm text-slate-600"><strong>{results.length}</strong> / {drugs.length} thuốc</p>
+          {filtered && (
+            <button type="button" onClick={() => { setKeyword(""); setRoute(""); setContent(""); setStatus(""); setLimit(60); }}
+              className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700">Xóa bộ lọc</button>
+          )}
         </div>
 
-        <div className="bv199-compact-drug-list">
-          {results.slice(0, 100).map((drug, index) => {
-            const key = drug.id || String(index);
-            const expanded = expandedDrug === key;
-            return <article className="bv199-compact-drug" key={key}>
-              <button type="button" className="bv199-compact-drug-summary" onClick={() => setExpandedDrug(expanded ? null : key)} aria-expanded={expanded}>
-                <span className="bv199-compact-drug-text"><strong>{drug.brandName || "Chưa có tên thuốc"}</strong>
-                  <small>{drug.ingredientName || "Chưa có dữ liệu hoạt chất"}</small></span>
-                <ChevronRight size={19} className={expanded ? "bv199-rotate" : ""} />
-              </button>
-              <div className="bv199-compact-tags">
-                {drug.strength && <span>{drug.strength}</span>}
-                {drug.route && <span>{drug.route}</span>}
-                {drug.dosageForm && <span>{drug.dosageForm}</span>}
-                <StatusBadges r={drug.registryMatches ? registry[drug.id] : undefined} />
-              </div>
-              {expanded && <Link href={`/drugs/${encodeURIComponent(drug.id)}`} className="mt-3 inline-block text-sm font-bold text-[#087f89]">Xem chi tiết, SĐK và HDSD →</Link>}
-              {expanded && <div className="bv199-compact-details">
-                <Info title="Mã thuốc" value={drug.drugCode}/><Info title="Hoạt chất" value={drug.ingredientName}/>
-                <Info title="Hàm lượng" value={drug.strength}/><Info title="Đường dùng" value={drug.route}/>
-                <Info title="Dạng bào chế" value={drug.dosageForm}/><Info title="Quy cách" value={drug.packageSize}/>
-                <Info title="SĐK / GPNK" value={drug.registrationNumber}/><Info title="Nhà sản xuất" value={drug.manufacturer}/>
-                <Info title="Xuất xứ" value={drug.country}/><Info title="Đơn vị" value={drug.unit}/>
-                <Info title="Nguồn dữ liệu" value={drug.sourceSheet}/>
-              </div>}
-            </article>;
-          })}
-        </div>
+        <ul className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          {results.slice(0, limit).map((d) => (
+            <li key={d.id}>
+              <Link href={`/drugs/${encodeURIComponent(d.id)}`} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 focus-visible:bg-slate-50">
+                <span className="min-w-0 flex-1">
+                  <span className="block font-bold text-slate-900">{d.brandName || "—"}</span>
+                  <span className="block text-sm text-slate-600">{[d.ingredientName, d.strength].filter(Boolean).join(" · ")}</span>
+                  <span className="mt-1.5 flex flex-wrap gap-1.5">
+                    {[d.dosageForm, d.route].filter(Boolean).map((t) => <span key={t} className={`${PILL} bg-slate-100 font-semibold text-slate-600`}>{t}</span>)}
+                    <Badges r={d.registryMatches ? registry[d.id] : undefined} f={flags[d.id]} />
+                  </span>
+                </span>
+                <ChevronRight size={18} aria-hidden className="flex-none text-slate-400" />
+              </Link>
+            </li>
+          ))}
+          {results.length === 0 && <li className="px-4 py-6 text-sm text-slate-600">Không có thuốc khớp. Thử tên hoạt chất hoặc bỏ bớt bộ lọc.</li>}
+        </ul>
 
-        <div className="bv199-original-drug-list space-y-4">
-
-          {results
-            .slice(0, 100)
-            .map((drug, index) => (
-
-              <article
-                key={drug.id || index}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-              >
-
-                <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900">
-                      <Link href={`/drugs/${encodeURIComponent(drug.id)}`} className="hover:text-[#087f89] hover:underline">
-                        {drug.brandName ||
-                          "Chưa có tên thuốc"}
-                      </Link>
-                    </h2>
-
-                    {drug.ingredientName && (
-                      <p className="mt-1 font-semibold text-blue-700">
-                        {drug.ingredientName}
-                      </p>
-                    )}
-
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {drug.strength && (
-                        <Badge>
-                          {drug.strength}
-                        </Badge>
-                      )}
-
-                      {drug.route && (
-                        <Badge>
-                          {drug.route}
-                        </Badge>
-                      )}
-
-                      {drug.dosageForm && (
-                        <Badge>
-                          {drug.dosageForm}
-                        </Badge>
-                      )}
-                      <span className="bv199-status-badges contents"><StatusBadges r={drug.registryMatches ? registry[drug.id] : undefined} /></span>
-                    </div>
-                  </div>
-
-                  <Link href={`/drugs/${encodeURIComponent(drug.id)}`} className="self-start whitespace-nowrap rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-[#0b3a5b] hover:bg-slate-50">
-                    Chi tiết, SĐK, HDSD →
-                  </Link>
-
-                </div>
-
-                <div className="mt-5 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
-
-                  <Info
-                    title="Mã thuốc"
-                    value={drug.drugCode}
-                  />
-
-                  <Info
-                    title="Hoạt chất"
-                    value={drug.ingredientName}
-                  />
-
-                  <Info
-                    title="Hàm lượng"
-                    value={drug.strength}
-                  />
-
-                  <Info
-                    title="Đường dùng"
-                    value={drug.route}
-                  />
-
-                  <Info
-                    title="Dạng bào chế"
-                    value={drug.dosageForm}
-                  />
-
-                  <Info
-                    title="Quy cách"
-                    value={drug.packageSize}
-                  />
-
-                  <Info
-                    title="SĐK / GPNK"
-                    value={drug.registrationNumber}
-                  />
-
-                  <Info
-                    title="Nhà sản xuất"
-                    value={drug.manufacturer}
-                  />
-
-                  <Info
-                    title="Xuất xứ"
-                    value={drug.country}
-                  />
-
-                  <Info
-                    title="Đơn vị"
-                    value={drug.unit}
-                  />
-
-                  <Info
-                    title="Nguồn dữ liệu"
-                    value={drug.sourceSheet}
-                  />
-
-                </div>
-
-              </article>
-
-            ))}
-        </div>
-
-        {results.length > 100 && (
-          <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-            Có {results.length} kết quả.
-            Hệ thống đang hiển thị 100 thuốc đầu tiên.
-            Hãy nhập tên thuốc hoặc hoạt chất để thu hẹp.
+        {results.length > limit && (
+          <div className="mt-4 text-center">
+            <button type="button" onClick={() => setLimit((n) => n + 60)} className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-[#0b3a5b] hover:bg-slate-50">
+              Xem thêm ({results.length - limit} thuốc)
+            </button>
           </div>
         )}
-
       </div>
     </main>
   );
 }
 
-function Badge({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function Select({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: { value: string; label: string }[] }) {
   return (
-    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
-      {children}
-    </span>
-  );
-}
-
-function Info({
-  title,
-  value,
-}: {
-  title: string;
-  value?: string;
-}) {
-  if (!value) return null;
-
-  return (
-    <div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-        {title}
-      </p>
-
-      <p className="mt-1 text-sm leading-6 text-slate-700">
-        {value}
-      </p>
-    </div>
+    <label className="block text-sm font-semibold text-slate-700">
+      {label}
+      <select value={value} onChange={(e) => onChange(e.target.value)} className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal">
+        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+    </label>
   );
 }

@@ -1,16 +1,25 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { ArrowLeft, FileText, Tag } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Baby, ExternalLink, FileText, FlaskConical, Shuffle, Tag } from "lucide-react";
 import { getCatalogProduct, type DrugProduct } from "@/lib/drugs/catalog";
 import { loadDrugPublications } from "@/lib/drugs/catalog-store";
 import { clinicalMonographs } from "@/data/clinical-monographs";
-import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getLeafletSibling, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
-import { LEAFLET_GROUPS, LEAFLET_SECTIONS, getIntlReferences, getLeaflet, getStoredFiles, getWebLeaflet } from "@/lib/drugs/leaflets";
-import { formatLeaflet } from "@/lib/drugs/format-leaflet";
-import LeafletSections from "@/components/drugs/LeafletSections";
+import { DAV_LOOKUP_URL, REGISTRY_SYNCED_AT, STATUS_LABEL, formatDate, getRegistry, registryStatus, type RegistryStatus } from "@/lib/drugs/registry";
+import { getIntlReferences, getStoredFiles } from "@/lib/drugs/leaflets";
+import { DTQG_BOOK, dtqgFor } from "@/lib/drugs/dtqg";
+import { lasaFor } from "@/lib/drugs/lasa-match";
+import DtqgProse from "@/components/dosing/DtqgProse";
 
 export const dynamic = "force-dynamic";
+
+/*
+  Trang thông tin thuốc – chỉ nội dung từ nguồn chính thức, nguyên văn:
+  1. Tờ HDSD gốc (PDF) do Cục Quản lý Dược công bố – mở bằng một chạm; không hiển thị chữ trích tự động.
+  2. Dược thư quốc gia Việt Nam 2023 – liều ở người suy thận, thời kỳ mang thai và cho con bú (trích nguyên văn, có số trang).
+  3. Danh mục thuốc BV199, đăng ký lưu hành (Cổng Cục QLD), danh mục LASA của Khoa Dược.
+  HDSD lấy từ trang web và HDSD của thuốc cùng hoạt chất không dùng (không bảo đảm chính xác).
+*/
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -24,7 +33,7 @@ const STATUS_TONE: Record<RegistryStatus, string> = {
   "chua-dong-bo": "dt-mute",
 };
 
-const METHOD_LABEL = { text: "đọc trực tiếp từ PDF", ocr: "nhận dạng chữ từ bản scan", mixed: "đọc PDF kết hợp nhận dạng chữ", web: "trang web" } as const;
+const pageLabel = (p: { printed: number[] }) => (p.printed.length > 1 ? `tr. ${p.printed[0]}–${p.printed[p.printed.length - 1]}` : `tr. ${p.printed[0]}`);
 
 export default async function DrugDetailPage({ params }: Props) {
   const { id } = await params;
@@ -36,19 +45,21 @@ export default async function DrugDetailPage({ params }: Props) {
   const monograph = clinicalMonographs[drug.ingredientId?.toLowerCase()] ?? null;
   const reg = drug.registryMatches ? getRegistry(drug.id) : null;
   const status = drug.registryMatches ? registryStatus(drug.id) : "chua-dong-bo";
-  const leaflet = await getLeaflet(reg?.davId);
-  const davOk = !!leaflet && !leaflet.failed;
   const stored = getStoredFiles(reg?.davId);
-  // Thu tu nguon: HDSD Cuc QLD -> trang web (khop SDK hoac ten + nha san xuat) -> thuoc cung hoat chat trong danh muc.
-  const web = davOk || !drug.registryMatches ? null : await getWebLeaflet(drug.id);
-  const sibling = davOk || web || !drug.registryMatches ? null : getLeafletSibling(drug.id);
-  const ref = sibling ? (sibling.src === "dav" ? await getLeaflet(getRegistry(sibling.id)?.davId) : await getWebLeaflet(sibling.id)) : null;
-  const shown = davOk ? leaflet : web ?? (ref && !ref.failed ? ref : null);
-  const kind: "dav" | "web" | "ref" | null = !shown ? null : shown === leaflet ? "dav" : shown === web ? "web" : "ref";
-  const sections = shown?.sections ?? {};
-  const shownSections = LEAFLET_SECTIONS.filter((s) => sections[s.key]);
-  const sourceLabel = { dav: "HDSD Cục QLD", web: "HDSD tham khảo (web)", ref: "HDSD thuốc cùng hoạt chất" } as const;
+  /* Tờ HDSD gốc: bản sao đã lưu (mở nhanh); không có thì liên kết tới file trên Cổng Cục QLD. */
+  const leafletLinks = stored.length
+    ? stored.map((f, i) => ({ href: f.href, label: `Tờ HDSD gốc${stored.length > 1 ? ` ${i + 1}` : ""}`, note: f.pages ? `PDF · ${f.pages} trang` : "PDF" }))
+    : (reg?.hdsd ?? []).map((f, i) => ({ href: f.url, label: `Tờ HDSD gốc${(reg?.hdsd.length ?? 0) > 1 ? ` ${i + 1}` : ""}`, note: "Cổng Cục QLD" }));
   const intl = drug.registryMatches ? getIntlReferences(drug.id) : [];
+  const { renal, pregnancy } = dtqgFor(drug.ingredientName);
+  const lasa = lasaFor(drug.brandName);
+  const sections = [
+    renal && { id: "suy-than", label: "Suy thận" },
+    pregnancy && { id: "thai-ky", label: "Thai kỳ, cho con bú" },
+    monograph && { id: "chi-dinh", label: "Chỉ định" },
+    { id: "san-pham", label: "Sản phẩm" },
+    { id: "dang-ky", label: "Đăng ký lưu hành" },
+  ].filter(Boolean) as { id: string; label: string }[];
 
   return (
     <main className="dt">
@@ -58,7 +69,7 @@ export default async function DrugDetailPage({ params }: Props) {
           Danh mục thuốc
         </Link>
 
-        {/* 1. Dau trang: nhan dien thuoc + hanh dong chinh + canh bao */}
+        {/* 1. Nhận diện thuốc, cảnh báo an toàn, tài liệu gốc */}
         <header className="dt-card dt-hero">
           <p className="dt-eyebrow">Danh mục thuốc · Bệnh viện 199</p>
           <h1>{drug.brandName}</h1>
@@ -68,31 +79,130 @@ export default async function DrugDetailPage({ params }: Props) {
             {drug.dosageForm && <span className="dt-tag">{drug.dosageForm}</span>}
             {drug.route && <span className="dt-tag">{drug.route}</span>}
             <span className={`dt-tag ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</span>
-            <span className={`dt-tag ${kind || intl.length ? "dt-info" : "dt-mute"}`}>{kind ? sourceLabel[kind] : intl.length ? "Tài liệu quốc tế (tiếng Anh)" : "Chưa có HDSD"}</span>
           </div>
 
-          {(stored.length > 0 || (reg?.mauNhan.length ?? 0) > 0) && (
-            <div className="dt-actions">
-              {stored.map((f, i) => (
-                <a key={f.href} className="dt-btn" href={f.href} target="_blank" rel="noreferrer">
-                  <FileText size={16} aria-hidden />
-                  Tờ HDSD{stored.length > 1 ? ` ${i + 1}` : ""} (PDF{f.pages ? ` · ${f.pages} trang` : ""})
-                </a>
-              ))}
-              {reg?.mauNhan.map((f, i) => (
-                <a key={f.url} className="dt-btn dt-btn-sub" href={f.url} target="_blank" rel="noreferrer">
-                  <Tag size={16} aria-hidden />
-                  Mẫu nhãn{reg.mauNhan.length > 1 ? ` ${i + 1}` : ""}
-                </a>
-              ))}
+          {lasa.length > 0 && (
+            <div className="dt-alert dt-lasa" role="note">
+              <p className="dt-alert-t"><AlertTriangle size={16} aria-hidden /> Thuốc nhìn giống, đọc giống (LASA)</p>
+              <ul>
+                {lasa.map((g) => (
+                  <li key={g.id}>
+                    <strong>{g.kind === "look" ? "Nhìn giống" : "Đọc giống"}:</strong> {g.drugs.map((d) => d.name).join(" – ")}. {g.difference}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/safety/lasa">Danh mục LASA của Khoa Dược</Link>
             </div>
           )}
 
           <StatusAlert status={status} drug={drug} reg={reg} />
+
+          <div className="dt-docs">
+            {leafletLinks.map((f) => (
+              <a key={f.href} className="dt-btn" href={f.href} target="_blank" rel="noreferrer">
+                <FileText size={16} aria-hidden />
+                <span>{f.label}<small>{f.note}</small></span>
+              </a>
+            ))}
+            {reg?.mauNhan.map((f, i) => (
+              <a key={f.url} className="dt-btn dt-btn-sub" href={f.url} target="_blank" rel="noreferrer">
+                <Tag size={16} aria-hidden />
+                <span>Mẫu nhãn{reg.mauNhan.length > 1 ? ` ${i + 1}` : ""}<small>Cổng Cục QLD</small></span>
+              </a>
+            ))}
+            {renal && (
+              <Link className="dt-btn dt-btn-sub" href={`/hieu-chinh-lieu?drug=${encodeURIComponent(renal.id)}`}>
+                <FlaskConical size={16} aria-hidden />
+                <span>Hiệu chỉnh liều theo CrCl<small>Công cụ tính</small></span>
+              </Link>
+            )}
+            {pregnancy && (
+              <Link className="dt-btn dt-btn-sub" href={`/safety/pregnancy?thuoc=${encodeURIComponent(pregnancy.id)}`}>
+                <Baby size={16} aria-hidden />
+                <span>Thai kỳ và cho con bú<small>Module an toàn</small></span>
+              </Link>
+            )}
+            <Link className="dt-btn dt-btn-sub" href="/tuong-tac-thuoc">
+              <Shuffle size={16} aria-hidden />
+              <span>Kiểm tra tương tác thuốc<small>Danh mục Bộ Y tế</small></span>
+            </Link>
+          </div>
+          {leafletLinks.length === 0 && (
+            <p className="dt-nodoc">Cổng Cục Quản lý Dược chưa có tờ HDSD cho số đăng ký này. Đối chiếu tờ HDSD kèm sản phẩm.</p>
+          )}
+          {intl.length > 0 && (
+            <div className="dt-intl">
+              <p className="dt-intl-t">Tài liệu sản phẩm của cơ quan quản lý nước ngoài (tiếng Anh)</p>
+              <ul>
+                {intl.map((r) => (
+                  <li key={r.url}>
+                    <a href={r.url} target="_blank" rel="noreferrer">{r.title} <ExternalLink size={12} aria-hidden /></a> <span>– {r.agency}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="dt-intl-n">Cùng sản phẩm, cùng nhà sản xuất. Chỉ định và liều có thể khác tờ HDSD được phê duyệt tại Việt Nam.</p>
+            </div>
+          )}
         </header>
 
-        {/* 2. Thong tin san pham */}
-        <section className="dt-card">
+        {sections.length > 2 && (
+          <nav className="dt-nav" aria-label="Mục trong trang">
+            {sections.map((s) => <a key={s.id} href={`#${s.id}`}>{s.label}</a>)}
+          </nav>
+        )}
+
+        {/* 2. Dược thư quốc gia 2023 – nguyên văn */}
+        {renal && (
+          <section id="suy-than" className="dt-card">
+            <SectionHead title="Liều ở người suy thận" source={`Dược thư quốc gia 2023 – ${renal.name}, ${pageLabel(renal.pages)}`} />
+            {renal.contraindications.length > 0 && (
+              <div className="dt-ci">
+                <p className="dt-ci-t">Chống chỉ định liên quan chức năng thận</p>
+                <ul>{renal.contraindications.map((c) => <li key={c}>{c}</li>)}</ul>
+              </div>
+            )}
+            {renal.noAdjust && <p className="dt-okline">Không cần hiệu chỉnh liều theo chức năng thận.</p>}
+            {renal.content.length > 0 && <DtqgProse blocks={renal.content} />}
+            {renal.cautions.length > 0 && (
+              <div className="dt-caution">
+                <p className="dt-ci-t">Thận trọng</p>
+                <ul>{renal.cautions.map((c) => <li key={c}>{c}</li>)}</ul>
+              </div>
+            )}
+          </section>
+        )}
+
+        {pregnancy && (
+          <section id="thai-ky" className="dt-card">
+            <SectionHead title="Thời kỳ mang thai và cho con bú" source={`Dược thư quốc gia 2023 – ${pregnancy.name}, ${pageLabel(pregnancy.pages)}`} />
+            <div className="dt-two">
+              <div>
+                <h3>Thời kỳ mang thai</h3>
+                <DtqgProse blocks={pregnancy.pregnancy} />
+              </div>
+              <div>
+                <h3>Thời kỳ cho con bú</h3>
+                <DtqgProse blocks={pregnancy.lactation} />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {monograph && (
+          <section id="chi-dinh" className="dt-card">
+            <SectionHead title="Chỉ định" source="Chuyên luận đã thẩm định" />
+            <p className="dt-text">{monograph.indications}</p>
+          </section>
+        )}
+
+        {(renal || pregnancy) && (
+          <p className="dt-srcnote">
+            Trích nguyên văn: {DTQG_BOOK}. Các mục khác (chỉ định, liều dùng, chống chỉ định, tương tác, tác dụng không mong muốn): xem tờ HDSD gốc.
+          </p>
+        )}
+
+        {/* 3. Thông tin sản phẩm trong danh mục BV199 */}
+        <section id="san-pham" className="dt-card">
           <h2>Thông tin sản phẩm</h2>
           <dl className="dt-dl">
             <Item term="Hoạt chất" value={drug.ingredientName} wide />
@@ -107,77 +217,8 @@ export default async function DrugDetailPage({ params }: Props) {
           </dl>
         </section>
 
-        {/* 3. Huong dan su dung */}
-        <section className="dt-card">
-          <h2>Hướng dẫn sử dụng</h2>
-
-          {kind === "dav" && shown && (
-            <Note>
-              <strong>CẦN THẨM ĐỊNH.</strong> Trích tự động ({shown.method ? METHOD_LABEL[shown.method] : "tự động"}
-              {shown.confidence ? `, độ chính xác ~${shown.confidence}%` : ""}) từ Tờ HDSD công bố trên Cổng Cục Quản lý Dược. Đối chiếu{" "}
-              <a href={stored[0]?.href ?? shown.source?.url} target="_blank" rel="noreferrer">bản gốc</a> trước khi dùng cho quyết định điều trị, nhất là liều dùng.
-            </Note>
-          )}
-          {kind === "web" && shown && (
-            <Note>
-              <strong>CẦN THẨM ĐỊNH.</strong> Nguồn tham khảo:{" "}
-              <a href={shown.source?.url} target="_blank" rel="noreferrer">{siteDomain(shown.source?.url)}</a>
-              {shown.matchedBy === "ten-nha-san-xuat" ? " (khớp tên thuốc và nhà sản xuất)" : ""}
-            </Note>
-          )}
-          {kind === "ref" && sibling && ref && (
-            <Note>
-              <strong>CẦN THẨM ĐỊNH – THAM KHẢO THUỐC CÙNG HOẠT CHẤT.</strong> Thuốc này chưa có Tờ HDSD riêng; dưới đây là HDSD của{" "}
-              <Link href={`/drugs/${encodeURIComponent(sibling.id)}`}>{sibling.brand}</Link>
-              {[sibling.strength, sibling.form].filter(Boolean).length ? ` (${[sibling.strength, sibling.form].filter(Boolean).join(", ")})` : ""}.{" "}
-              <strong>Hàm lượng, dạng bào chế và liều có thể khác.</strong> Nguồn: {sibling.src === "dav" ? "Cổng Cục Quản lý Dược" : siteDomain(ref.source?.url)}.
-            </Note>
-          )}
-
-          {intl.length > 0 && (
-            <div className="dt-intl">
-              <p className="dt-intl-t">Tài liệu thông tin sản phẩm chính thức (nước ngoài, tiếng Anh)</p>
-              <ul>
-                {intl.map((r) => (
-                  <li key={r.url}>
-                    <a href={r.url} target="_blank" rel="noreferrer">{r.title}</a> <span>– {r.agency}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="dt-intl-n">Cùng sản phẩm, cùng nhà sản xuất; do cơ quan quản lý dược nước ngoài ban hành. Chỉ định, liều có thể khác HDSD được phê duyệt tại Việt Nam – <strong>cần thẩm định</strong> trước khi áp dụng.</p>
-            </div>
-          )}
-
-          {!shown && !intl.length && (
-            <div className="dt-empty">
-              <p><strong>Chưa có Tờ hướng dẫn sử dụng.</strong></p>
-              <p>
-                {leaflet?.failed
-                  ? "File HDSD trên Cổng Cục Quản lý Dược đang lỗi phía máy chủ của Cổng; chưa tìm thấy nguồn công khai khác khớp thuốc này."
-                  : "Cục Quản lý Dược chưa công bố HDSD cho số đăng ký này và chưa tìm thấy nguồn công khai khớp thuốc. Tham khảo HDSD kèm sản phẩm hoặc hồ sơ thầu."}
-              </p>
-            </div>
-          )}
-
-          {shown && (
-            <LeafletSections
-              sections={[
-                ...shownSections.map((s) => ({ key: s.key, title: s.title, group: LEAFLET_GROUPS[s.group], groupKey: s.group, open: s.open, blocks: formatLeaflet(sections[s.key]) })),
-                ...(shown.rawText ? [{ key: "rawText", title: "Toàn văn trích được", group: "Khác", blocks: formatLeaflet(shown.rawText) }] : []),
-              ]}
-            />
-          )}
-
-          {monograph && (
-            <div className="dt-mono">
-              <p className="dt-mono-t">Chỉ định (chuyên luận đã thẩm định)</p>
-              <p>{monograph.indications}</p>
-            </div>
-          )}
-        </section>
-
-        {/* 4. Dang ky luu hanh (hanh chinh) - thu gon */}
-        <details className="dt-card dt-reg">
+        {/* 4. Đăng ký lưu hành (hành chính) – thu gọn */}
+        <details id="dang-ky" className="dt-card dt-reg">
           <summary>
             <span>
               <span className="dt-reg-t">Đăng ký lưu hành – Cục Quản lý Dược</span>
@@ -205,9 +246,6 @@ export default async function DrugDetailPage({ params }: Props) {
             <p className="dt-muted">Không tìm thấy số đăng ký trên Cổng tra cứu thuốc.</p>
           )}
           <p className="dt-links">
-            {reg?.hdsd.map((f, i) => (
-              <a key={f.url} href={f.url} target="_blank" rel="noreferrer">HDSD bản gốc trên Cổng{reg.hdsd.length > 1 ? ` ${i + 1}` : ""}</a>
-            ))}
             <a href={DAV_LOOKUP_URL} target="_blank" rel="noreferrer">Tra cứu trên Cổng Cục QLD</a>
           </p>
         </details>
@@ -217,9 +255,9 @@ export default async function DrugDetailPage({ params }: Props) {
         .dt { min-height: 100vh; background: #f4f7fa; }
         .dt-wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
         .dt-wrap > * { min-width: 0; }
-        .dt-back { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px 8px 12px; border: 1px solid #dbe4ea; border-radius: 999px; background: #fff; color: #0b3a5b; font-size: 14px; font-weight: 700; box-shadow: 0 1px 2px rgba(16,36,62,.05); transition: border-color .15s, color .15s; }
+        .dt-back { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px 8px 12px; border: 1px solid #dbe4ea; border-radius: 999px; background: #fff; color: #0b3a5b; font-size: 14px; font-weight: 700; box-shadow: 0 1px 2px rgba(16,36,62,.05); }
         .dt-back:hover { border-color: #087f89; color: #087f89; }
-        .dt-card { background: #fff; border: 1px solid #e3eaf0; border-radius: 18px; padding: 22px 24px; box-shadow: 0 2px 12px rgba(16,36,62,.04); }
+        .dt-card { background: #fff; border: 1px solid #e3eaf0; border-radius: 18px; padding: 22px 24px; box-shadow: 0 2px 12px rgba(16,36,62,.04); scroll-margin-top: 80px; }
         .dt-card h2 { margin: 0 0 14px; font-size: 18px; font-weight: 800; color: #10243e; }
         .dt-eyebrow { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #087f89; }
         .dt-hero h1 { margin: 6px 0 0; font-size: 28px; line-height: 1.25; font-weight: 800; color: #0f2236; }
@@ -230,35 +268,48 @@ export default async function DrugDetailPage({ params }: Props) {
         .dt-warn { background: #fff3d6; color: #7a4b00; }
         .dt-bad { background: #fde4e4; color: #8f1d1d; }
         .dt-mute { background: #eef1f4; color: #5b6b7a; }
-        .dt-info { background: #e3f0fb; color: #0b3a5b; }
-        .dt-actions { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
-        .dt-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 10px; background: #0b3a5b; color: #fff; font-size: 14px; font-weight: 700; }
+        .dt-docs { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+        .dt-btn { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: #0b3a5b; color: #fff; font-size: 14px; font-weight: 700; line-height: 1.3; }
+        .dt-btn small { display: block; font-size: 12px; font-weight: 600; opacity: .8; }
         .dt-btn:hover { background: #087f89; }
         .dt-btn-sub { background: #fff; color: #0b3a5b; border: 1px solid #cfdbe4; }
         .dt-btn-sub:hover { background: #f4f8fb; }
+        .dt-nodoc { margin: 12px 0 0; font-size: 14px; color: #4b6576; }
         .dt-alert { margin-top: 16px; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.6; border: 1px solid; }
         .dt-alert.dt-bad { border-color: #f3c6c6; }
         .dt-alert.dt-warn { border-color: #f1d48a; }
         .dt-alert.dt-mute { border-color: #d8dee4; }
-        .dt-dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
-        .dt-dl > div { padding: 10px 0; border-bottom: 1px solid #eef2f5; min-width: 0; }
-        .dt-dl > div.wide { grid-column: 1 / -1; }
-        .dt-dl dt { font-size: 12px; font-weight: 700; color: #7a8fa0; text-transform: uppercase; letter-spacing: .03em; }
-        .dt-dl dd { margin: 3px 0 0; font-size: 14.5px; line-height: 1.55; color: #1f3347; overflow-wrap: anywhere; }
-        .dt-note { margin: 0 0 4px; border-radius: 12px; padding: 10px 14px; background: #fff8e6; border: 1px solid #f3dc9a; color: #5c3d00; font-size: 13.5px; line-height: 1.6; }
-        .dt-note a { font-weight: 700; text-decoration: underline; }
-        .dt-intl { margin: 0 0 12px; border: 1px solid #cfe0ea; border-radius: 12px; padding: 12px 14px; background: #f5f9fc; font-size: 14px; line-height: 1.6; }
+        .dt-lasa { background: #fff6e8; border-color: #f2c98a; color: #5c3d00; }
+        .dt-lasa ul { margin: 4px 0 6px; padding-left: 18px; list-style: disc; }
+        .dt-lasa a { font-weight: 700; text-decoration: underline; color: #7a4b00; }
+        .dt-alert-t { margin: 0; display: flex; align-items: center; gap: 6px; font-weight: 800; }
+        .dt-nav { position: sticky; top: 8px; z-index: 5; display: flex; gap: 6px; overflow-x: auto; padding: 6px; border-radius: 14px; background: rgba(255,255,255,.95); border: 1px solid #e3eaf0; box-shadow: 0 2px 10px rgba(16,36,62,.06); }
+        .dt-nav a { flex: none; padding: 7px 12px; border-radius: 999px; font-size: 13.5px; font-weight: 700; color: #0b3a5b; background: #eef4f8; }
+        .dt-nav a:hover { background: #dcecf3; color: #087f89; }
+        .dt-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-bottom: 12px; }
+        .dt-head h2 { margin: 0; }
+        .dt-src { font-size: 12.5px; font-weight: 700; color: #087f89; background: #e7f5f5; border-radius: 999px; padding: 4px 10px; }
+        .dt-ci, .dt-caution { margin-bottom: 12px; border-radius: 12px; padding: 10px 14px; font-size: 14.5px; line-height: 1.6; }
+        .dt-ci { background: #fdecec; border: 1px solid #f3c6c6; color: #6e1a1a; }
+        .dt-caution { margin: 12px 0 0; background: #fff8e6; border: 1px solid #f3dc9a; color: #5c3d00; }
+        .dt-ci-t { margin: 0 0 2px; font-weight: 800; }
+        .dt-ci ul, .dt-caution ul { margin: 0; padding-left: 18px; list-style: disc; }
+        .dt-okline { margin: 0 0 10px; font-weight: 700; color: #12623c; }
+        .dt-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .dt-two h3 { margin: 0 0 8px; font-size: 15px; font-weight: 800; color: #0b3a5b; }
+        .dt-text { margin: 0; font-size: 15px; line-height: 1.7; color: #24384c; }
+        .dt-srcnote { margin: -4px 4px 0; font-size: 12.5px; line-height: 1.6; color: #5b6b7a; }
+        .dt-intl { margin: 14px 0 0; border: 1px solid #cfe0ea; border-radius: 12px; padding: 12px 14px; background: #f5f9fc; font-size: 14px; line-height: 1.6; }
         .dt-intl-t { margin: 0 0 6px; font-weight: 800; color: #0b3a5b; }
         .dt-intl ul { margin: 0; padding-left: 18px; list-style: disc; }
         .dt-intl a { color: #087f89; font-weight: 700; text-decoration: underline; }
         .dt-intl li span { color: #6b8293; }
         .dt-intl-n { margin: 8px 0 0; font-size: 12.5px; color: #5b6b7a; }
-        .dt-empty { border: 1px dashed #cfdbe4; border-radius: 12px; padding: 16px; color: #4b6576; font-size: 14px; line-height: 1.6; }
-        .dt-empty p { margin: 0; }
-        .dt-empty p + p { margin-top: 4px; }
-        .dt-mono { margin-top: 14px; border-radius: 12px; background: #f4f8fb; padding: 12px 14px; font-size: 14px; line-height: 1.6; }
-        .dt-mono p { margin: 0; }
-        .dt-mono-t { font-weight: 800; margin-bottom: 4px !important; }
+        .dt-dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+        .dt-dl > div { padding: 10px 0; border-bottom: 1px solid #eef2f5; min-width: 0; }
+        .dt-dl > div.wide { grid-column: 1 / -1; }
+        .dt-dl dt { font-size: 12px; font-weight: 700; color: #7a8fa0; text-transform: uppercase; letter-spacing: .03em; }
+        .dt-dl dd { margin: 3px 0 0; font-size: 14.5px; line-height: 1.55; color: #1f3347; overflow-wrap: anywhere; }
         .dt-reg summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }
         .dt-reg summary::-webkit-details-marker { display: none; }
         .dt-reg-t { display: block; font-size: 16px; font-weight: 800; color: #10243e; }
@@ -270,7 +321,6 @@ export default async function DrugDetailPage({ params }: Props) {
         .dt-links { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
         .dt-links a { color: #087f89; font-weight: 700; }
         .dt :is(a, summary, button):focus-visible { outline: 3px solid #087f89; outline-offset: 2px; border-radius: 6px; }
-        /* Dien thoai: thanh tren cung da co nut quay lai -> an nut trung. */
         @media (max-width: 800px) { .dt-back { display: none; } }
         @media (max-width: 640px) {
           .dt-wrap { padding: 14px 12px 40px; gap: 12px; }
@@ -279,10 +329,20 @@ export default async function DrugDetailPage({ params }: Props) {
           .dt-sub { font-size: 14.5px; }
           .dt-dl { gap: 0 14px; }
           .dt-dl dd { font-size: 14px; }
-          .dt-btn { flex: 1 1 auto; justify-content: center; }
+          .dt-two { grid-template-columns: minmax(0, 1fr); }
+          .dt-docs { grid-template-columns: minmax(0, 1fr); }
         }
       `}</style>
     </main>
+  );
+}
+
+function SectionHead({ title, source }: { title: string; source: string }) {
+  return (
+    <div className="dt-head">
+      <h2>{title}</h2>
+      <span className="dt-src">{source}</span>
+    </div>
   );
 }
 
@@ -298,15 +358,6 @@ function StatusAlert({ status, drug, reg }: { status: RegistryStatus; drug: Drug
   return null;
 }
 
-/* "https://www.thuocbietduoc.com.vn/..." -> "thuocbietduoc.com.vn" */
-function siteDomain(url?: string): string {
-  try {
-    return url ? new URL(url).hostname.replace(/^www\./, "") : "trang thông tin thuốc";
-  } catch {
-    return "trang thông tin thuốc";
-  }
-}
-
 function Item({ term, value, wide }: { term: string; value?: string | null; wide?: boolean }) {
   return (
     <div className={wide ? "wide" : undefined}>
@@ -314,8 +365,4 @@ function Item({ term, value, wide }: { term: string; value?: string | null; wide
       <dd>{value || "—"}</dd>
     </div>
   );
-}
-
-function Note({ children }: { children: ReactNode }) {
-  return <p className="dt-note">{children}</p>;
 }

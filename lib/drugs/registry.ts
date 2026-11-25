@@ -11,7 +11,6 @@ const INTL = intlRefs.items as Record<string, unknown[]>;
 
 const LEAFLET_OK = new Set<number>(leafletIndex.ok);
 const LEAFLET_FAILED = new Set<number>(leafletIndex.failed);
-const WEB_LEAFLET = new Set<string>(leafletIndex.web ?? []);
 
 /* Thuoc chua co HDSD rieng -> thuoc khac trong danh muc cung hoat chat + duong dung co HDSD (de tham khao). */
 export type LeafletSibling = { id: string; brand: string; strength: string; form: string; src: "dav" | "web" };
@@ -96,11 +95,12 @@ export type LeafletSource = "dav" | "web" | "ref" | "intl" | null;
 /* Ban rut gon cho trang danh sach (client): trang thai SDK + nguon HDSD. */
 export function registrySummary(): Record<string, { s: RegistryStatus; h: LeafletSource }> {
   const out: Record<string, { s: RegistryStatus; h: LeafletSource }> = {};
-  for (const id of new Set([...Object.keys(registry.items), ...WEB_LEAFLET, ...Object.keys(SIBLINGS)])) {
+  /* Chỉ nguồn chính thức: tờ HDSD gốc (PDF) trên Cổng Cục QLD, hoặc tài liệu sản phẩm của cơ quan quản lý nước ngoài.
+     HDSD lấy từ trang web và HDSD của thuốc cùng hoạt chất không còn dùng. */
+  for (const id of new Set([...Object.keys(registry.items), ...Object.keys(INTL)])) {
     const rec = getRegistry(id);
-    // HDSD Cuc QLD: co file va khong bi Cong bao loi (file chua trich van mo duoc bang link goc).
     const dav = !!rec && rec.hdsd.length > 0 && (LEAFLET_OK.has(rec.davId) || !LEAFLET_FAILED.has(rec.davId));
-    out[id] = { s: registryStatus(id), h: dav ? "dav" : WEB_LEAFLET.has(id) ? "web" : SIBLINGS[id] ? "ref" : INTL[id] ? "intl" : null };
+    out[id] = { s: registryStatus(id), h: dav ? "dav" : INTL[id] ? "intl" : null };
   }
   return out;
 }
