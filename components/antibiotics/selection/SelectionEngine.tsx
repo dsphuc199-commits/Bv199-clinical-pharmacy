@@ -465,7 +465,6 @@ export default function SelectionEngine({ initialDisease }: { initialDisease?: s
                 <div className="se-links">
                   <Link href={empiricHref(diseaseId)}>Phác đồ đầy đủ</Link>
                   {result.intlAvailable && <Link href={`${empiricHref(diseaseId)}&tab=intl`}>Quốc tế</Link>}
-                  <Link href={`${empiricHref(diseaseId)}&tab=compare`}>So sánh hướng dẫn</Link>
                 </div>
               </>
             )}

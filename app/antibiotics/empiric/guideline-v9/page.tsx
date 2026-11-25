@@ -48,7 +48,6 @@ const HapVap2023 = dynamic(() => import("../../../../components/antibiotics/HapV
 const EntEmpiricGuidelines = dynamic(() => import("../../../../components/antibiotics/EntEmpiricGuidelines"), { loading: Loading });
 const AbrsUpToDate2026 = dynamic(() => import("../../../../components/antibiotics/AbrsUpToDate2026"), { loading: Loading });
 const IntlTab = dynamic(() => import("../../../../components/antibiotics/empiric/GuidelineTabs").then((m) => m.IntlTab), { loading: Loading });
-const CompareTab = dynamic(() => import("../../../../components/antibiotics/empiric/GuidelineTabs").then((m) => m.CompareTab), { loading: Loading });
 import {
   DEFAULT_FILTERS,
   type ClinicalFilterState,
@@ -156,9 +155,9 @@ function GuidelineContent() {
 
   /* Buoc 4A: tab nguon va bo loc lam sang. */
   const [tab, setTab] = useState<TabKey>(() => {
-    /* ?tab=vn|intl|compare: mo dung tab. Lien ket sources cu mo tab Viet Nam. */
+    /* ?tab=vn|intl: mo dung tab. Lien ket cu ?tab=sources va ?tab=compare (tab Doi chieu da bo) mo tab Viet Nam. */
     const fromUrl = searchParams.get("tab");
-    if (fromUrl === "sources") return "vn";
+    if (fromUrl === "sources" || fromUrl === "compare") return "vn";
     return fromUrl && Object.hasOwn(TAB_LABELS, fromUrl) ? (fromUrl as TabKey) : defaultTabForDisease(selectedId);
   });
   /* ?tab=sources (lien ket cu) -> mo accordion Nguon. */
@@ -1097,7 +1096,6 @@ function GuidelineContent() {
             />
           )}
 
-          {tab === "compare" && <CompareTab diseaseId={selected.id} />}
 
           </div>
 

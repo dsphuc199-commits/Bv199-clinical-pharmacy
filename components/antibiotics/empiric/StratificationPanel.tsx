@@ -255,7 +255,7 @@ function VnAntibiotics({ col }: { col: StratColumn }) {
         <div className="rounded border border-amber-300 bg-amber-50 p-1.5 text-xs text-amber-950">
           <p className="font-semibold">Liều khác nhau giữa các nguồn – HĐT&amp;ĐT BV199 quyết định liều áp dụng</p>
           <ul className="list-disc pl-4">{conflicts.map(([topic, did]) => (
-            <li key={topic}><Link className="underline" href={`/antibiotics/empiric/guideline-v9?disease=${did}&tab=compare`}>{topic}</Link></li>
+            <li key={topic} data-disease={did}>{topic}</li>
           ))}</ul>
         </div>
       )}
