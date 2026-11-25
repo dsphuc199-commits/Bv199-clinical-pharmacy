@@ -50,6 +50,8 @@ export type StratColumn = {
   /** Ghi chú ngắn cuối ô kháng sinh (vd. quy tắc phối hợp metronidazol của phác đồ đường mật). */
   note?: string;
 };
+/** Bảng so sánh nhanh giữa các nguồn: hàng = tình huống, cột = nguồn, ô = tên thuốc. */
+export type StratTable = { cols: string[]; rows: { label: string; cells: string[] }[] };
 export type StratFocus = { label: string; byt: string[]; diseaseId?: string };
 export type StratAntibiogram = {
   gramNegative: { organisms: string[]; codes: string[] };
@@ -71,7 +73,7 @@ export type Stratification = {
   focusTitle?: string;
   focus?: StratFocus[];
   /** Nhóm đặc biệt của hướng dẫn quốc tế không đặt thành cột (vd. EAU: tái phát, khuẩn niệu không triệu chứng). */
-  extras?: { title: string; criteria?: string; blocks: StratIntl[] }[];
+  extras?: { title: string; criteria?: string; blocks: StratIntl[]; table?: StratTable }[];
   principles: StratIntl;
   antibiogram: StratAntibiogram;
   sources: string[];
@@ -879,10 +881,12 @@ function sinusStrat(diseaseIds: string[], withChild: boolean): Stratification {
     settingNote: "Thể nặng: 10–14 ngày. Rửa mũi nước muối, corticoid xịt mũi; phẫu thuật khi điều trị nội khoa tối đa 4–6 tuần không kết quả.",
     extras: [
       { title: "Dấu hiệu nặng, chuyển viện", blocks: [{ source: "AAO-HNSF 2025, NICE NG79 – dấu hiệu nặng", items: ENT.entRedFlags("abrs-adult") }] },
-      { title: "Nguồn đối chiếu – người lớn (IDSA 2012, NICE NG79)", blocks: ENT.entCompareBySource("abrs-adult", "adult", "người lớn") },
+      { title: "So sánh nhanh các khuyến cáo – người lớn", criteria: ENT.ENT_GUIDE, blocks: [], table: ENT.entCompareTable("abrs-adult", "adult") },
+      ...(withChild ? [{ title: "So sánh nhanh các khuyến cáo – trẻ em", criteria: ENT.ENT_GUIDE, blocks: [], table: ENT.entCompareTable("abrs-peds", "child", [{ label: "Nhi khoa Ý 2025", block: EX.ITALY_SINUSITIS }]) }] : []),
+      { title: "Tham khảo thêm – người lớn (IDSA 2012, NICE NG79)", criteria: ENT.ENT_GUIDE, blocks: ENT.entCompareBySource("abrs-adult", "adult", "người lớn") },
       ...(withChild ? [
-        { title: "Nguồn đối chiếu – trẻ em (IDSA 2012, NICE NG79)", blocks: ENT.entCompareBySource("abrs-peds", "child", "trẻ em") },
-        { title: "Nguồn đối chiếu – trẻ em (Nhi khoa Ý 2025)", blocks: [EX.ITALY_SINUSITIS] },
+        { title: "Tham khảo thêm – trẻ em (IDSA 2012, NICE NG79)", criteria: ENT.ENT_GUIDE, blocks: ENT.entCompareBySource("abrs-peds", "child", "trẻ em") },
+        { title: "Tham khảo thêm – trẻ em (Nhi khoa Ý 2025)", criteria: ENT.ENT_GUIDE, blocks: [EX.ITALY_SINUSITIS] },
       ] : []),
     ],
     principles: ENT.entPrinciples("abrs-adult", "AAO-HNSF 2025 – khuyến cáo cho người lớn"),
@@ -890,6 +894,14 @@ function sinusStrat(diseaseIds: string[], withChild: boolean): Stratification {
     sources: [SRC_5643("Viêm mũi xoang cấp tính"), ...ENT.entSources("abrs-adult"), ...(withChild ? [...ENT.entSources("abrs-peds"), EX.ITALY_SINUSITIS_SOURCE] : [])].filter((s, i, a) => a.indexOf(s) === i),
   };
 }
+
+/* Bảng so sánh viêm họng: người lớn và trẻ em trùng tên thuốc thì gộp một bảng. */
+const GAS_TABLE_A = ENT.entCompareTable("gas-pharyngitis", "adult");
+const GAS_TABLE_C = ENT.entCompareTable("gas-pharyngitis", "child");
+const GAS_TABLES = JSON.stringify(GAS_TABLE_A) === JSON.stringify(GAS_TABLE_C)
+  ? [{ title: "So sánh nhanh các khuyến cáo – người lớn và trẻ em", criteria: ENT.ENT_GUIDE, blocks: [], table: GAS_TABLE_A }]
+  : [{ title: "So sánh nhanh các khuyến cáo – người lớn", criteria: ENT.ENT_GUIDE, blocks: [], table: GAS_TABLE_A },
+    { title: "So sánh nhanh các khuyến cáo – trẻ em", criteria: ENT.ENT_GUIDE, blocks: [], table: GAS_TABLE_C }];
 
 const GAS_STRAT: Stratification = {
   diseaseIds: ["v8-8", "v8-54"],
@@ -927,7 +939,8 @@ const GAS_STRAT: Stratification = {
   settingNote: "Penicilin V hoặc erythromycin uống đủ 10 ngày; benzathin penicilin tiêm bắp một lần. Thể nặng hoặc có biến chứng: chuyển chuyên khoa.",
   extras: [
     { title: "Dấu hiệu nặng, chuyển viện", blocks: [{ source: "IDSA 2012, NICE NG84 – dấu hiệu nặng", items: ENT.entRedFlags("gas-pharyngitis") }] },
-    { title: "Nguồn đối chiếu (NICE NG84)", blocks: [
+    ...GAS_TABLES,
+    { title: "Tham khảo thêm (NICE NG84)", criteria: ENT.ENT_GUIDE, blocks: [
       ...ENT.entCompareBySource("gas-pharyngitis", "adult", "người lớn"),
       ...ENT.entCompareBySource("gas-pharyngitis", "child", "trẻ em"),
     ] },
@@ -962,10 +975,11 @@ function aomStrat(diseaseIds: string[], withAdult: boolean): Stratification {
     settingNote: "Chích rạch màng nhĩ khi có mủ hòm nhĩ, triệu chứng toàn thân xấu, kéo dài trên 4 ngày.",
     extras: [
       { title: "Dấu hiệu nặng, chuyển viện", blocks: [{ source: "AAP 2013, NICE NG91 – dấu hiệu nặng", items: ENT.entRedFlags("aom-peds") }] },
-      { title: "Nguồn đối chiếu (Hội Nhi khoa Canada 2016, NICE NG91)", blocks: [
+      { title: "So sánh nhanh các khuyến cáo – trẻ em", criteria: ENT.ENT_GUIDE, blocks: [], table: ENT.entCompareTable("aom-peds", "child", [{ label: "Nhi khoa Ý 2025", block: EX.ITALY_AOM }]) },
+      { title: "Tham khảo thêm (Hội Nhi khoa Canada 2016, NICE NG91)", criteria: ENT.ENT_GUIDE, blocks: [
         ...ENT.entCompareBySource("aom-peds", "child"),
       ] },
-      { title: "Nguồn đối chiếu (Nhi khoa Ý 2025)", blocks: [EX.ITALY_AOM] },
+      { title: "Tham khảo thêm (Nhi khoa Ý 2025)", criteria: ENT.ENT_GUIDE, blocks: [EX.ITALY_AOM] },
       ...(withAdult ? [{ title: "Người lớn (NHS, tham khảo)", criteria: "AAP 2013 dành cho trẻ em.", blocks: ENT.entReference("aom-adult") }] : []),
     ],
     principles: ENT.entPrinciples("aom-peds", "AAP 2013 – khuyến cáo"),

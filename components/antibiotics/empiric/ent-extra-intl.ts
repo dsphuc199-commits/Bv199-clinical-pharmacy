@@ -32,7 +32,7 @@ const ABS_COURSE = "10 ngày (7 ngày nếu đã dẫn lưu)";
 const CELL_COURSE = "14 ngày từ lần mổ cuối";
 
 export const SFORL_ADULT_ABSCESS: StratIntl[] = [{
-  source: `${SF} – áp xe quanh amidan, cạnh họng, sau họng`,
+  source: `${SF} – khuyến cáo chính: áp xe quanh amidan, cạnh họng, sau họng`,
   items: [
     SF_AMC(ABS_COURSE, "T:Mức C"),
     { role: "Dị ứng penicilin", text: "Cefazolin", dose: "100 mg/kg/ngày TM chia 3 lần", course: ABS_COURSE, al: "alt", grade: DT, ref: SF },
@@ -43,7 +43,7 @@ export const SFORL_ADULT_ABSCESS: StratIntl[] = [{
 }];
 
 export const SFORL_ADULT_CELLULITIS: StratIntl[] = [{
-  source: `${SF} – viêm mô tế bào cổ sâu lan tỏa, viêm trung thất`,
+  source: `${SF} – khuyến cáo chính: viêm mô tế bào cổ sâu lan tỏa, viêm trung thất`,
   items: [
     { ...SF_AMC(CELL_COURSE, DT), administration: "TM; acid clavulanic tối đa 1200 mg/ngày." },
     { role: "Chọn một", text: "Cefotaxim", dose: "100 mg/kg/ngày TM chia 3–4 lần (2 g/lần, truyền 4 giờ)", course: CELL_COURSE, grade: DT, ref: SF },
@@ -60,7 +60,7 @@ export const SFORL_ADULT_CELLULITIS: StratIntl[] = [{
 /* ---------- SFORL 2024 – trẻ em ---------- */
 const CHILD_COURSE = "Áp xe quanh amidan 10 ngày; thể khác 15 ngày";
 export const SFORL_CHILD: StratIntl[] = [{
-  source: `${SF} – trẻ em`,
+  source: `${SF} – khuyến cáo chính: trẻ em`,
   items: [
     { role: "Chọn một", text: "Amoxicillin/acid clavulanic", dose: "150 mg/kg/ngày TM chia 3 lần (tối đa 6 g/ngày)", course: CHILD_COURSE, grade: DT, ref: SF },
     { role: "Dị ứng penicilin", text: "Cefotaxim", dose: "200 mg/kg/ngày TM chia 3 lần (tối đa 12 g/ngày)", course: CHILD_COURSE, al: "alt", grade: DT, ref: SF },
@@ -117,6 +117,7 @@ export const SFORL_SOURCE = "Société Française d'ORL et de Chirurgie de la Fa
 const IT = "Nhi khoa Ý 2025";
 export const ITALY_SINUSITIS: StratIntl = {
   source: "Nhi khoa Ý 2025 – viêm xoang cấp trẻ em",
+  lead: "Đồng thuận liên hội Nhi khoa Ý (2025). Có thêm: amoxicillin chia 3 lần/ngày, phân tầng nguy cơ dị ứng penicilin.",
   items: [
     { role: "Chọn một", text: "Amoxicillin (triệu chứng kéo dài ≥ 10 ngày)", dose: "90 mg/kg/ngày uống chia 3 lần", course: "≥ 10 ngày", grade: "T:Yếu · rất thấp", ref: IT },
     { role: "Chọn một", text: "Amoxicillin/acid clavulanic (nặng lên lại hoặc khởi phát nặng)", dose: "90 mg/kg/ngày (theo amoxicillin) chia 3 lần", course: "≥ 10 ngày", grade: "T:Yếu · rất thấp", ref: IT },
@@ -130,6 +131,7 @@ export const ITALY_SINUSITIS_SOURCE = "Venturini E, et al. Treatment of sinusiti
 
 export const ITALY_AOM: StratIntl = {
   source: "Nhi khoa Ý 2025 – viêm tai giữa cấp trẻ em",
+  lead: "Đồng thuận liên hội Nhi khoa Ý (2025). Có thêm: liệu trình 5 ngày khi không có yếu tố nguy cơ, phân tầng nguy cơ dị ứng penicilin.",
   items: [
     { role: "Kháng sinh ngay", text: "Trẻ < 6 tháng; 6–24 tháng viêm hai bên; chảy mủ tai hoặc nặng. Còn lại: theo dõi 48–72 giờ.", grade: "T:Mạnh · TB", ref: IT },
     { role: "Chọn một", text: "Amoxicillin", dose: "80–90 mg/kg/ngày uống chia 3 lần", course: "5 ngày (> 2 tuổi, không nguy cơ); 7–10 ngày nếu nguy cơ cao hoặc nặng", grade: "T:Mạnh · thấp", ref: IT },

@@ -22,7 +22,7 @@ const disease = (id: string): Disease => {
 /** Tên nguồn ngắn: "AAO-HNSF 2025". */
 export const entShort = (sourceId: string) => {
   const s = SOURCES.find((x) => x.id === sourceId);
-  return s ? `${s.org.replace(" (DailyMed)", "")} ${s.year}` : sourceId;
+  return s ? `${s.org.replace(" (DailyMed)", "").replace("Canadian Paediatric Society", "Hội Nhi khoa Canada")} ${s.year}` : sourceId;
 };
 export const entSourceLine = (sourceId: string) => {
   const s = SOURCES.find((x) => x.id === sourceId);
@@ -139,7 +139,7 @@ function groupBySource(doses: Dose[], label: string): StratIntl[] {
 export function entColumn(diseaseId: string, ruleId: string, pop?: Pop): StratIntl[] {
   const all = ruleDoses(diseaseId, ruleId, pop);
   const primary = all.filter((x) => x.role === "primary");
-  return primary.length ? groupBySource(primary, "khuyến cáo") : groupBySource(all, "đối chiếu");
+  return primary.length ? groupBySource(primary, "khuyến cáo chính") : groupBySource(all, "đối chiếu");
 }
 /** Nguồn đối chiếu của một cột (khi cột đã có nguồn chính) – đặt trong mục thu gọn. */
 export function entComparison(diseaseId: string, ruleId: string, pop?: Pop): StratIntl[] {
@@ -163,8 +163,70 @@ export function entCompareBySource(diseaseId: string, pop?: Pop, label = "đối
       .sort((a, b) => (LINE_RANK[a.line] ?? 5) - (LINE_RANK[b.line] ?? 5))
       .map(entItem)
       .filter((i) => { const k = `${i.role}|${i.text}|${i.dose ?? ""}`; if (seen.has(k)) return false; seen.add(k); return true; });
-    return { source: `${entShort(sid)} – ${label}`, items };
+    return { source: `${entShort(sid)} – ${label}`, ...(SOURCE_NOTE[sid] ? { lead: SOURCE_NOTE[sid] } : {}), items };
   });
+}
+
+/* Dòng giới thiệu nguồn tham khảo: chỉ dữ kiện về nguồn (tổ chức, năm, phạm vi) và phần nguồn đó có thêm so với khuyến
+   cáo chính – rút từ chính các dòng liều đã trích, không đánh giá thuốc. */
+const SOURCE_NOTE: Record<string, string> = {
+  "IDSA-2012-ABRS": "Hội Bệnh truyền nhiễm Hoa Kỳ (2012). Có thêm: phác đồ tĩnh mạch khi nặng, nhập viện.",
+  "NICE-NG79": "Viện NICE, Anh (2017) – chăm sóc ban đầu. Có thêm: liều theo tuổi cho trẻ, phương án khi mang thai.",
+  "NICE-NG84": "Viện NICE, Anh (2018) – chăm sóc ban đầu. Có thêm: liều theo tuổi cho trẻ, phương án khi mang thai.",
+  "NICE-NG91": "Viện NICE, Anh (2018) – chăm sóc ban đầu. Có thêm: liều theo tuổi cho trẻ, phương án khi mang thai.",
+  "CPS-AOM": "Hội Nhi khoa Canada (2016). Có thêm: amoxicillin chia 2 hoặc 3 lần/ngày, ceftriaxon 3 ngày.",
+};
+/** Câu hướng dẫn khi các nguồn khác nhau – đặt đầu bảng so sánh và mỗi mục tham khảo. */
+export const ENT_GUIDE = "Khi các nguồn khác nhau: chọn theo khuyến cáo chính ở các cột trên và kháng sinh đồ BV199. Nguồn tham khảo chỉ dùng cho tình huống khuyến cáo chính không đề cập (ví dụ liều theo tuổi, mang thai).";
+
+/* ---------- Bảng so sánh nhanh: hàng = tình huống, cột = nguồn, ô = tên thuốc (liều xem ở khối thuốc) ---------- */
+const ROWS = ["Đầu tay", "Nguy cơ kháng thuốc", "Thất bại", "Nặng, nhập viện", "Dị ứng penicilin"] as const;
+type Row = (typeof ROWS)[number];
+/** Thống nhất tên thuốc giữa các nguồn để so được (cùng hoạt chất, khác cách viết). */
+export const tableName = (drug: string) => drug
+  .replace(/^Co-amoxiclav.*$/u, "Amoxicillin-clavulanate").replace(/Amoxicillin\/acid clavulanic/gu, "Amoxicillin-clavulanate")
+  .replace(/Phenoxymethylpenicillin|Penicillin V/gu, "Penicilin V").replace(/Benzathine penicillin G/gu, "Benzathin penicilin G")
+  .replace(/ \(công thức 7:1\)| \(liều chuẩn\)| \(cách dùng thay thế\)|-axetil/gu, "").replace(/ \(liều cao\)/gu, " liều cao");
+function rowOf(d: Dose): Row | null {
+  if (isAlg(d)) return "Dị ứng penicilin";
+  return ({ first: "Đầu tay", risk_resistance: "Nguy cơ kháng thuốc", failure: "Thất bại", failure_alternative: "Thất bại", severe: "Nặng, nhập viện" } as Record<string, Row>)[d.line] ?? null;
+}
+function cellName(d: Dose): string {
+  const a = d.allergy ?? [];
+  const tag = /mang thai/u.test(d.condition ?? "") && !/không mang thai/u.test(d.condition ?? "") ? " (mang thai)"
+    : a.length === 1 && a[0] === "nonsevere" ? " (không nặng)" : a.length === 1 && a[0] === "severe" ? " (nặng)" : "";
+  const high = d.line === "risk_resistance" && !/liều cao/u.test(d.drug) ? " liều cao" : "";
+  return `${tableName(d.drug)}${high}${tag}`;
+}
+export type CompareTable = { cols: string[]; rows: { label: string; cells: string[] }[] };
+/**
+ * Bảng so sánh của một bệnh và nhóm tuổi: cột đầu là khuyến cáo chính (gộp các nguồn chính), sau đó từng nguồn đối chiếu
+ * (hội chuyên môn trước, NICE sau), cuối cùng các khối bổ sung (vd. Nhi khoa Ý 2025) map theo nhãn tình huống.
+ */
+export function entCompareTable(diseaseId: string, pop: Pop, extra: { label: string; block: StratIntl }[] = []): CompareTable {
+  const d = disease(diseaseId);
+  const doses = d.doses.filter((x) => x.status === "EXTRACTED" && (x.population === pop || x.population === "all"));
+  const primary = doses.filter((x) => x.role === "primary");
+  const cmpIds = Array.from(new Set(doses.filter((x) => x.role === "comparison").map((x) => x.citation.sourceId)))
+    .sort((a, b) => Number(a.startsWith("NICE")) - Number(b.startsWith("NICE")));
+  const primLabel = `${Array.from(new Set(primary.map((x) => entShort(x.citation.sourceId)))).join(", ")} (chính)`;
+  const groups: { label: string; rows: Map<Row, string[]> }[] = [];
+  const add = (label: string, pairs: [Row | null, string][]) => {
+    const rows = new Map<Row, string[]>();
+    for (const [r, n] of pairs) if (r) rows.set(r, Array.from(new Set([...(rows.get(r) ?? []), n])));
+    groups.push({ label, rows });
+  };
+  add(primLabel, primary.map((x) => [rowOf(x), cellName(x)]));
+  for (const sid of cmpIds) add(entShort(sid), doses.filter((x) => x.role === "comparison" && x.citation.sourceId === sid).map((x) => [rowOf(x), cellName(x)]));
+  for (const e of extra) add(e.label, e.block.items.map((i) => {
+    const r: Row | null = /^Chọn một/u.test(i.role) ? "Đầu tay" : /Thất bại/u.test(i.role) ? "Thất bại" : /Dị ứng/u.test(i.role) ? "Dị ứng penicilin" : null;
+    return [r, tableName(i.text.replace(/ \([^)]*\)/gu, ""))];
+  }));
+  return {
+    cols: groups.map((g) => g.label),
+    rows: ROWS.map((r) => ({ label: r, cells: groups.map((g) => (g.rows.get(r) ?? []).join("; ") || "—") }))
+      .filter((r) => r.cells.some((c) => c !== "—")),
+  };
 }
 /** Dòng liều nguồn tham khảo (module không có nguồn chính, ví dụ viêm tai giữa người lớn) – chỉ dùng trong mục thu gọn. */
 export function entReference(diseaseId: string): StratIntl[] {

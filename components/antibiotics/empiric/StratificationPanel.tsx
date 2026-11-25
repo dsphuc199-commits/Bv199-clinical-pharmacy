@@ -502,7 +502,28 @@ export default function StratificationPanel({ data, family, overview, monitoring
           <details key={x.title} className="min-w-0 rounded-xl border border-slate-200 bg-white p-3">
             <summary className="cursor-pointer font-bold text-slate-900">{x.title}</summary>
             {x.criteria && <p className="mt-1 text-sm text-slate-700">{x.criteria}</p>}
-            <div className="mt-2 space-y-2">{x.blocks.map((b) => <Intl key={b.source} block={b} />)}</div>
+            {x.table && (
+              /* Bảng so sánh nhanh: cuộn ngang trong khung trên màn hình hẹp, cột đầu (tình huống) cố định. */
+              <div className="mt-2 max-w-full overflow-x-auto rounded-lg border border-slate-200">
+                <table className="w-full min-w-[34rem] border-collapse text-left text-xs">
+                  <thead className="bg-slate-50 text-slate-700">
+                    <tr>
+                      <th scope="col" className="sticky left-0 bg-slate-50 p-2 font-semibold">Tình huống</th>
+                      {x.table.cols.map((c, ci) => <th key={c} scope="col" className={`p-2 font-semibold ${ci === 0 ? "text-teal-800" : ""}`}>{c}</th>)}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {x.table.rows.map((r) => (
+                      <tr key={r.label} className="border-t border-slate-200 align-top">
+                        <th scope="row" className="sticky left-0 bg-white p-2 font-semibold text-slate-800">{r.label}</th>
+                        {r.cells.map((c, ci) => <td key={ci} className={`p-2 ${ci === 0 ? "bg-teal-50 font-medium text-slate-900" : "text-slate-700"}`}>{c}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {x.blocks.length > 0 && <div className="mt-2 space-y-2">{x.blocks.map((b) => <Intl key={b.source} block={b} />)}</div>}
           </details>
         ))}
         {!vn && (

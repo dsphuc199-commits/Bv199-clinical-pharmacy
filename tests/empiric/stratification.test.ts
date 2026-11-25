@@ -311,3 +311,17 @@ test("HAP/VAP: every PATHOGENS drug and dose (IDSA/ATS 2016, IDSA 2026) appears 
       assert.ok(shown.some((i) => i.role === it.role && i.text === compactText(it.text) && nums(i.dose ?? "") === nums(it.dose ?? "")), `${d} ${pt.id}: ${it.text} missing`);
   }
 });
+
+/* ===== Tai mũi họng: bảng so sánh nhanh ===== */
+import { tableName } from "../../components/antibiotics/empiric/ent-strat";
+test("ENT compare tables: first column is the primary guideline; every primary and comparison drug of the age group is in the table", () => {
+  const pairs: [string, string, string][] = [["v8-7", "abrs-adult", "adult"], ["v8-7", "abrs-peds", "child"], ["v8-8", "gas-pharyngitis", "adult"], ["v8-60", "aom-peds", "child"]];
+  for (const [sid, did, pop] of pairs) {
+    const s = STRATIFICATIONS.find((x) => x.diseaseIds.includes(sid))!;
+    const tables = (s.extras ?? []).filter((e) => e.table).map((e) => e.table!);
+    assert.ok(tables.length > 0 && tables.every((t) => t.cols[0].endsWith("(chính)")), sid);
+    const cells = tables.flatMap((t) => t.rows.flatMap((r) => r.cells)).join(" ");
+    for (const x of getDisease(did)!.doses.filter((x) => x.status === "EXTRACTED" && x.role !== "reference" && (x.population === pop || x.population === "all")))
+      assert.ok(cells.includes(tableName(x.drug)), `${did} ${x.id}: ${x.drug} not in table`);
+  }
+});
